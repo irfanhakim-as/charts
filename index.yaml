@@ -1,0 +1,93 @@
+apiVersion: v1
+entries:
+  postgres:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-09-23T19:21:40.790231849Z"
+    description: A Helm chart for deploying PostgreSQL
+    digest: 51c4b62e8ba87bfa3b936ad532b8d08883439dd76ecc5ff879d8a8e5de8d4498
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
+    version: 0.1.0
+  postgres-createdb:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-09-23T19:21:41.049636279Z"
+    description: A Helm chart for deploying createdb job for PostgreSQL
+    digest: 1009b8fe2a91ba78ad604950b15771580b9207aad094bb1d8237b23fdb5dbea0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.0/postgres-createdb-0.1.0.tgz
+    version: 0.1.0
+  postgres-dropdb:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-09-23T19:21:41.326285741Z"
+    description: A Helm chart for deploying dropdb job for PostgreSQL
+    digest: 25d7ff4964e3c8a8c25a9dc1d595ea799b8ccf84cf53c0e9682dd6323ade7555
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - dropdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-dropdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.0/postgres-dropdb-0.1.0.tgz
+    version: 0.1.0
+  vpbot:
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
+    created: "2022-09-23T19:21:41.596752725Z"
+    description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+    digest: 99cc5009fa14faf78bf2f69b26e358a61a091960709749b6558f5d5bc5f786df
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
+    version: 0.1.1
+generated: "2022-09-23T19:21:41.596760026Z"
