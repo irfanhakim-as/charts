@@ -1,0 +1,28 @@
+# helm pvc
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-vpbot-logs-pvc
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.logs.storage }}
+  storageClassName: {{ .Values.pvc.logs.storageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-vpbot-static-pvc
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.static.storage }}
+  storageClassName: {{ .Values.pvc.static.storageClassName }}

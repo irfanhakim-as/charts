@@ -1,0 +1,17 @@
+apiVersion: v2
+name: postgres
+description: A Helm chart for deploying PostgreSQL
+type: application
+version: 0.1.0
+appVersion: 13.3
+keywords:
+  - postgres
+  - database
+home: https://github.com/irfanhakim-as/charts
+icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+sources:
+  - https://github.com/irfanhakim-as/charts
+maintainers:
+  - name: Irfan Hakim
+    email: irfanhakim.as@yahoo.com
+    url: https://github.com/irfanhakim-as

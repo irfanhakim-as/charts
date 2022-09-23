@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-CHART_NAME-svc
+  labels:
+    {{- include "CHART_NAME.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: CHART_NAME
+      protocol: TCP
+      name: {{ .Release.Name }}-CHART_NAME
+  selector:
+    {{- include "CHART_NAME.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,14 @@
+# helm pvc
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-postgres-data-pvc
+  labels:
+    {{- include "postgres.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.data.storage }}
+  storageClassName: {{ .Values.pvc.data.storageClassName }}

@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-vpbot
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "vpbot.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "vpbot.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: init-vpbot
+          image: "{{ .Values.image.init_vpbot.repository }}:{{ .Values.image.init_vpbot.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.init_vpbot.pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                set -x &&
+                chmod -R 775 /static /quarantine-bot &&
+                chown -R www-data: /static /quarantine-bot
+          volumeMounts:
+            - name: {{ .Release.Name }}-vpbot-static
+              mountPath: /static
+            - name: {{ .Release.Name }}-vpbot-logs
+              mountPath: /quarantine-bot/logs
+      containers:
+        - name: vpbot
+          image: "{{ .Values.image.vpbot.registry }}/{{ .Values.image.vpbot.repository }}:{{ .Values.image.vpbot.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.vpbot.pullPolicy }}
+          ports:
+            - name: vpbot
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-secret
+                  key: SECRET_KEY
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: DEBUG
+            - name: DJANGO_WEBHOOK_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: DJANGO_WEBHOOK_URI
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-secret
+                  key: TELEGRAM_BOT_TOKEN
+            - name: TELEGRAM_ADMIN_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-secret
+                  key: TELEGRAM_ADMIN_ID
+            - name: TELEGRAM_DEVEL_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-secret
+                  key: TELEGRAM_DEVEL_ID
+            - name: DEFAULT_USER_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-secret
+                  key: DEFAULT_USER_PASS
+            - name: NGROK_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-secret
+                  key: NGROK_AUTH_TOKEN
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-cm
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-cm
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
+                  key: DB_PASS
+          volumeMounts:
+            - name: {{ .Release.Name }}-vpbot-site-config
+              mountPath: /etc/apache2/sites-available/000-default.conf
+              subPath: site-config.conf
+              readOnly: true
+            - name: {{ .Release.Name }}-vpbot-static
+              mountPath: /static
+            - name: {{ .Release.Name }}-vpbot-logs
+              mountPath: /quarantine-bot/logs
+        - name: ngrok
+          image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                ngrok authtoken $(NGROK_AUTH) &&
+                ngrok http 80 --bind-tls=true
+          ports:
+            - name: ngrok
+              containerPort: 4040
+              protocol: TCP
+          env:
+            - name: NGROK_AUTH
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-secret
+                  key: NGROK_AUTH_TOKEN
+      volumes:
+        - name: {{ .Release.Name }}-vpbot-site-config
+          configMap:
+            name: {{ .Release.Name }}-vpbot-site-config
+            items:
+              - key: site-config.conf
+                path: site-config.conf
+        - name: {{ .Release.Name }}-vpbot-static
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-vpbot-static-pvc
+        - name: {{ .Release.Name }}-vpbot-logs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-vpbot-logs-pvc

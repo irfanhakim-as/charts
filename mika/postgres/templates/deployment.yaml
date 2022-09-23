@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-postgres
+  labels:
+    {{- include "postgres.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "postgres.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "postgres.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: init-postgres
+          image: "{{ .Values.image.init_postgres.registry }}/{{ .Values.image.init_postgres.repository }}:{{ .Values.image.init_postgres.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.init_postgres.pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                set -x &&
+                mkdir -p /var/lib/postgresql/data &&
+                chmod -R 777 /var/lib/postgresql
+          volumeMounts:
+            - name: {{ .Release.Name }}-postgres-data
+              mountPath: /var/lib/postgresql
+      containers:
+        - name: postgres
+          image: "{{ .Values.image.init_postgres.registry }}/{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
+          ports:
+            - name: postgres
+              containerPort: 5432
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-postgres-cm
+                  key: DB_NAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-secret
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-secret
+                  key: DB_PASS
+          volumeMounts:
+            - name: {{ .Release.Name }}-postgres-data
+              mountPath: /var/lib/postgresql
+      volumes:
+        - name: {{ .Release.Name }}-postgres-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-postgres-data-pvc

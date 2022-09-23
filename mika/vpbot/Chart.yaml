@@ -1,0 +1,17 @@
+apiVersion: v2
+name: vpbot
+description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+type: application
+version: 0.1.1
+appVersion: "1.5.0-stable"
+keywords:
+  - quarantine-bot
+home: https://github.com/irfanhakim-as/quarantine-bot
+icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+sources:
+  - https://github.com/irfanhakim-as/quarantine-bot
+  - https://github.com/irfanhakim-as/charts
+maintainers:
+  - name: Irfan Hakim
+    email: irfanhakim.as@yahoo.com
+    url: https://github.com/irfanhakim-as

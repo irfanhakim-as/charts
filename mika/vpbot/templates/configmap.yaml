@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-vpbot-cm
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+data:
+  DEBUG: "{{ .Values.configmap.vpbot.DEBUG }}"
+  DJANGO_WEBHOOK_URI: "{{ .Values.configmap.vpbot.DJANGO_WEBHOOK_URI }}"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-vpbot-postgres-cm
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+data:
+  DB_HOST: "{{ .Values.configmap.postgres.DB_HOST }}"
+  DB_NAME: "{{ .Values.configmap.postgres.DB_NAME }}"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-vpbot-site-config
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+data:
+  site-config.conf: |-
+    <VirtualHost *:80>
+      ServerName $(NGROK_URI):443
+      UseCanonicalName On
+      ServerAdmin support@mika-homelab.com
+      DocumentRoot /quarantine-bot
+      WSGIScriptAlias / /quarantine-bot/quarantine_bot/wsgi.py
+      WSGIDaemonProcess $(NGROK_URI) python-path=/quarantine-bot
+      WSGIProcessGroup $(NGROK_URI)
+      
+      <Directory /quarantine-bot/quarantine_bot>
+        <Files wsgi.py>
+          Require all granted
+        </Files>
+      </Directory>
+
+      Alias /static /static
+      <Directory /static>
+        Require all granted
+      </Directory>
+
+      Alias /media /quarantine-bot/media
+      <Directory /quarantine-bot/media>
+        Require all granted
+      </Directory>
+      
+      ErrorLog /quarantine-bot/logs/apache.error.log
+      CustomLog /quarantine-bot/logs/apache.access.log combined
+    </VirtualHost>

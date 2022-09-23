@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-vpbot-svc
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: vpbot
+      protocol: TCP
+      name: {{ .Release.Name }}-vpbot
+  selector:
+    {{- include "vpbot.selectorLabels" . | nindent 4 }}

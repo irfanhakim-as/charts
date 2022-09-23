@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-postgres-dropdb-cm
+  labels:
+    {{- include "postgres-dropdb.labels" . | nindent 4 }}
+data:
+  DB_HOST: "{{ .Values.configmap.postgres.DB_HOST }}"
+  DB_NAME: "{{ .Values.configmap.postgres.DB_NAME }}"

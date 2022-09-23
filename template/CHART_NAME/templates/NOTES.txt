@@ -1,0 +1,1 @@
+CHART_NAME is now installed and configured.

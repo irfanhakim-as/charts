@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-postgres-createdb
+  labels:
+    {{- include "postgres-createdb.labels" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 120
+  backoffLimit: 1
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "postgres-createdb.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: postgres-createdb
+          image: "{{ .Values.image.postgres.registry }}/{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          command: ["createdb"]
+          args: ["-h", "$(DB_HOST)", "-U", "$(DB_USER)", "$(DB_NAME)"]
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-postgres-createdb-cm
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-postgres-createdb-cm
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-createdb-secret
+                  key: DB_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-createdb-secret
+                  key: DB_PASS
+      restartPolicy: Never

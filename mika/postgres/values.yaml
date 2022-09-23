@@ -1,0 +1,40 @@
+# Default values for postgres.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  init_postgres:
+    registry: docker.io
+    repository: busybox
+    tag: "1.34"
+    pullPolicy: IfNotPresent
+  
+  postgres:
+    registry: docker.io
+    repository: postgres
+    tag: "13.3"
+    pullPolicy: IfNotPresent
+
+configmap:
+  postgres:
+    DB_NAME: "mydb" # name of default database
+
+secret:
+  postgres:
+    DB_USER: "secret" # database user
+    DB_PASS: "secret" # database user password
+
+pvc:
+  data:
+    storage: "500Mi" # data storage size
+    storageClassName: "longhorn" # data storage class name
+
+resources:
+  requests:
+    cpu: "10m" # postgres cpu request
+    memory: "10Mi" # postgres memory request
+  limits:
+    cpu: "1" # postgres cpu limit
+    memory: "1Gi" # postgres memory limit

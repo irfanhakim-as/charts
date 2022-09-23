@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-CHART_NAME
+  labels:
+    {{- include "CHART_NAME.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "CHART_NAME.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "CHART_NAME.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: init
+          image: "{{ .Values.image.CHART_NAME.registry }}/{{ .Values.image.init.repository }}:{{ .Values.image.init.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.init.pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                mkdir -p /opt/CHART_NAME/data &&
+                chmod -R 777 /opt/CHART_NAME
+          volumeMounts:
+            - name: {{ .Release.Name }}-CHART_NAME-data
+              mountPath: /opt/CHART_NAME
+      containers:
+        - name: CHART_NAME
+          image: "{{ .Values.image.CHART_NAME.registry }}/{{ .Values.image.CHART_NAME.repository }}:{{ .Values.image.CHART_NAME.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.CHART_NAME.pullPolicy }}
+          ports:
+            - name: CHART_NAME
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: FOO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-CHART_NAME-cm
+                  key: FOO
+            - name: BAR
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-CHART_NAME-secret
+                  key: BAR
+          volumeMounts:
+            - name: {{ .Release.Name }}-CHART_NAME-data
+              mountPath: /opt/CHART_NAME
+      volumes:
+        - name: {{ .Release.Name }}-CHART_NAME-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-CHART_NAME-data-pvc

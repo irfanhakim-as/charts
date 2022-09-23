@@ -1,0 +1,18 @@
+apiVersion: v2
+name: postgres-createdb
+description: A Helm chart for deploying createdb job for PostgreSQL
+type: application
+version: 0.1.0
+appVersion: 0.0.1
+keywords:
+  - postgres
+  - createdb
+  - job
+home: https://github.com/irfanhakim-as/charts
+icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+sources:
+  - https://github.com/irfanhakim-as/charts
+maintainers:
+  - name: Irfan Hakim
+    email: irfanhakim.as@yahoo.com
+    url: https://github.com/irfanhakim-as

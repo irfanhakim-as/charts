@@ -1,6 +1,4 @@
-# Mika Chart Library for Kubernetes
-
-Applications, developed or curated by [mika](https://github.com/irfanhakim-as), ready to install using [Helm](https://helm.sh).
+# `postgres`
 
 ## Prerequisites
 
@@ -21,14 +19,14 @@ Update the repo to retrieve the latest versions of the packages.
 helm repo update
 ```
 
-## How to install a chart
+## How to install
 
 ### Prepare chart values
 
-Copy `values.yaml` from the chart you would like to install. Replace `$helm_chart` accordingly.
+Copy `values.yaml` from the chart you would like to install.
 
 ```sh
-cp mika/$helm_chart/values.yaml .
+cp mika/postgres/values.yaml .
 ```
 
 Edit `values.yaml` with the appropriate values.
@@ -39,10 +37,10 @@ nano values.yaml
 
 ### Perform installation
 
-Install the desired chart. Replace `$release_name`, `$helm_chart` and `$namespace` accordingly.
+Install the desired chart. Replace `$release_name` and `$namespace` accordingly.
 
 ```sh
-helm install $release_name mika/$helm_chart --namespace $namespace --create-namespace --values values.yaml --wait
+helm install $release_name mika/postgres --namespace $namespace --create-namespace --values values.yaml --wait
 ```
 
 Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
@@ -51,7 +49,7 @@ Verify that your chart has been installed. Replace `$namespace` and `$release_na
 helm ls --namespace $namespace | grep "$release_name"
 ```
 
-## How to uninstall a chart
+## How to uninstall
 
 Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
 
