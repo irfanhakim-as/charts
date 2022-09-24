@@ -1,0 +1,1 @@
+clog is now installed and configured.

@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-clog-svc
+  labels:
+    {{- include "clog.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: clog
+      protocol: TCP
+      name: {{ .Release.Name }}-clog
+  selector:
+    {{- include "clog.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-clog-nginx-svc
+  labels:
+    {{- include "clog.labels" . | nindent 4 }}
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: nginx
+      protocol: TCP
+      name: {{ .Release.Name }}-clog-nginx
+  selector:
+    {{- include "clog.selectorLabels" . | nindent 4 }}

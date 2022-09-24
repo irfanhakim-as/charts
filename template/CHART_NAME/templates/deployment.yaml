@@ -19,7 +19,7 @@ spec:
     spec:
       initContainers:
         - name: init
-          image: "{{ .Values.image.CHART_NAME.registry }}/{{ .Values.image.init.repository }}:{{ .Values.image.init.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.init.registry }}/{{ .Values.image.init.repository }}:{{ .Values.image.init.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.init.pullPolicy }}
           command: ["/bin/sh"]
           args:
