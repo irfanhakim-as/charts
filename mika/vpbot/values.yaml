@@ -6,6 +6,7 @@ replicaCount: 1
 
 image:
   init_vpbot:
+    registry: docker.io
     repository: busybox
     tag: "1.34"
     pullPolicy: IfNotPresent
