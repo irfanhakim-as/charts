@@ -3,7 +3,7 @@ name: postgres
 description: A Helm chart for deploying PostgreSQL
 type: application
 version: 0.1.0
-appVersion: 13.3
+appVersion: "13.3"
 keywords:
   - postgres
   - database
