@@ -1,0 +1,68 @@
+# Default values for clog.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  clog:
+    registry: ghcr.io
+    repository: irfanhakim-as/clog
+    tag: "0.0.1-dev"
+    pullPolicy: IfNotPresent
+  
+  nginx:
+    registry: docker.io
+    repository: nginx
+    tag: "1.19-alpine"
+    pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: ghcr-secret-token # name of the secret containing the token to access the clog image
+
+configmap:
+  clog:
+    SITE_NAME: "foo" # name of the clog site
+    DEBUG: "False" # django debug mode
+  
+  postgres:
+    DB_HOST: "postgres" # remote postgres host
+    DB_NAME: "postgres" # clog postgres database name
+
+secret:
+  clog:
+    SECRET_KEY: "secret" # django secret key
+  
+  postgres:
+    DB_USER: "secret" # remote postgres user
+    DB_PASS: "secret" # remote postgres user password
+
+pvc:
+  static:
+    storage: "storage" # static files storage size
+    storageClassName: "storageClassName" # static files storage class name
+  
+  media:
+    storage: "storage" # media files storage size
+    storageClassName: "storageClassName" # media files storage class name
+
+service:
+  nginx:
+    nodePort: 30080 # nginx service node port
+
+resources:
+  clog:
+    requests:
+      cpu: "cpu" # clog cpu request
+      memory: "memory" # clog memory request
+    limits:
+      cpu: "cpu" # clog cpu limit
+      memory: "memory" # clog memory limit
+  
+  nginx:
+    requests:
+      cpu: "cpu" # nginx cpu request
+      memory: "memory" # nginx memory request
+    limits:
+      cpu: "cpu" # nginx cpu limit
+      memory: "memory" # nginx memory limit
