@@ -23,7 +23,7 @@ spec:
       {{- end }}
       initContainers:
         - name: init-vpbot
-          image: "{{ .Values.image.init_vpbot.repository }}:{{ .Values.image.init_vpbot.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.init_vpbot.registry }}/{{ .Values.image.init_vpbot.repository }}:{{ .Values.image.init_vpbot.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.init_vpbot.pullPolicy }}
           command: ["/bin/sh"]
           args:
