@@ -22,12 +22,12 @@ imagePullSecrets:
 
 configmap:
   clog:
-    SITE_NAME: "foo" # name of the clog site
+    SITE_NAME: "Clog" # name of the clog site
     DEBUG: "False" # django debug mode
   
   postgres:
-    DB_HOST: "postgres" # remote postgres host
-    DB_NAME: "postgres" # clog postgres database name
+    DB_HOST: "postgres.default.svc.cluster.local" # remote postgres host
+    DB_NAME: "clog-db" # clog postgres database name
 
 secret:
   clog:
@@ -39,12 +39,12 @@ secret:
 
 pvc:
   static:
-    storage: "storage" # static files storage size
-    storageClassName: "storageClassName" # static files storage class name
+    storage: "20Mi" # static files storage size
+    storageClassName: "longhorn" # static files storage class name
   
   media:
-    storage: "storage" # media files storage size
-    storageClassName: "storageClassName" # media files storage class name
+    storage: "100Mi" # media files storage size
+    storageClassName: "longhorn" # media files storage class name
 
 service:
   nginx:
@@ -53,16 +53,16 @@ service:
 resources:
   clog:
     requests:
-      cpu: "cpu" # clog cpu request
-      memory: "memory" # clog memory request
+      cpu: "10m" # clog cpu request
+      memory: "10Mi" # clog memory request
     limits:
-      cpu: "cpu" # clog cpu limit
-      memory: "memory" # clog memory limit
+      cpu: "300m" # clog cpu limit
+      memory: "300Mi" # clog memory limit
   
   nginx:
     requests:
-      cpu: "cpu" # nginx cpu request
-      memory: "memory" # nginx memory request
+      cpu: "10m" # nginx cpu request
+      memory: "10Mi" # nginx memory request
     limits:
-      cpu: "cpu" # nginx cpu limit
-      memory: "memory" # nginx memory limit
+      cpu: "50m" # nginx cpu limit
+      memory: "100Mi" # nginx memory limit
