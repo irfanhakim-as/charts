@@ -88,22 +88,22 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-secret
                   key: NGROK_AUTH_TOKEN
-            - name: DB_HOST
+            - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-postgres-cm
                   key: DB_HOST
-            - name: DB_NAME
+            - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-postgres-cm
                   key: DB_NAME
-            - name: DB_USER
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-postgres-secret
                   key: DB_USER
-            - name: DB_PASS
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-postgres-secret
