@@ -3,6 +3,27 @@ entries:
   postgres:
   - apiVersion: v2
     appVersion: "13.3"
+    created: "2022-09-24T10:09:12.327213189Z"
+    description: A Helm chart for deploying PostgreSQL
+    digest: 74b25d3fb8710fc3329c76fff81db88b9c9a53b25dff90d60c7758ba694430b5
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.1/postgres-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: "13.3"
     created: "2022-09-23T19:21:40.790231849Z"
     description: A Helm chart for deploying PostgreSQL
     digest: 51c4b62e8ba87bfa3b936ad532b8d08883439dd76ecc5ff879d8a8e5de8d4498
@@ -23,6 +44,28 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
   postgres-createdb:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-09-24T10:09:12.462400768Z"
+    description: A Helm chart for deploying createdb job for PostgreSQL
+    digest: 022d2a24014c7864fdc9a9835f971c97af6dcd303400c9da36cf4f4014ceca9e
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.1/postgres-createdb-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: 0.0.1
     created: "2022-09-23T19:21:41.049636279Z"
@@ -47,6 +90,28 @@ entries:
     version: 0.1.0
   postgres-dropdb:
   - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-09-24T10:09:12.603078279Z"
+    description: A Helm chart for deploying dropdb job for PostgreSQL
+    digest: 0e50cd1a63720201c8eb0f51ec3b367623582b159373c4a689c4b335e18e926f
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - dropdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-dropdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.1/postgres-dropdb-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.0.1
     created: "2022-09-23T19:21:41.326285741Z"
     description: A Helm chart for deploying dropdb job for PostgreSQL
@@ -69,6 +134,27 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.0/postgres-dropdb-0.1.0.tgz
     version: 0.1.0
   vpbot:
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
+    created: "2022-09-24T10:09:12.757344513Z"
+    description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+    digest: 91a00e123e4345ce67bce437e689f5355f2c411863862910270ba5ebf6e06b7f
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.3/vpbot-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: 1.5.0-stable
     created: "2022-09-24T06:40:08.877909287Z"
@@ -111,4 +197,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-09-24T06:40:08.877918787Z"
+generated: "2022-09-24T10:09:12.757375515Z"
