@@ -3,7 +3,7 @@ name: postgres-createdb
 description: A Helm chart for deploying createdb job for PostgreSQL
 type: application
 version: 0.1.0
-appVersion: 0.0.1
+appVersion: "13.3"
 keywords:
   - postgres
   - createdb
