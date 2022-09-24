@@ -71,6 +71,27 @@ entries:
   vpbot:
   - apiVersion: v2
     appVersion: 1.5.0-stable
+    created: "2022-09-24T06:40:08.877909287Z"
+    description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+    digest: c6dca14bd48210324020f41deccb0b0ac897137656e0d57f3774968bdf753e41
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.2/vpbot-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
     created: "2022-09-23T19:21:41.596752725Z"
     description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
     digest: 99cc5009fa14faf78bf2f69b26e358a61a091960709749b6558f5d5bc5f786df
@@ -90,4 +111,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-09-23T19:21:41.596760026Z"
+generated: "2022-09-24T06:40:08.877918787Z"
