@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-telego-svc
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: telego
+      protocol: TCP
+      name: {{ .Release.Name }}-telego
+  selector:
+    {{- include "telego.selectorLabels" . | nindent 4 }}

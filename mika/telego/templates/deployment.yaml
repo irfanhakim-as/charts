@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-telego
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "telego.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+        "helm.sh/hook-weight": "1"
+      {{- end }}
+      labels:
+        {{- include "telego.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: telego
+          image: "{{ .Values.image.telego.registry }}/{{ .Values.image.telego.repository }}:{{ .Values.image.telego.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.telego.pullPolicy }}
+          ports:
+            - name: telego
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-database-cm
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-database-cm
+                  key: DB_PORT
+            - name: DB_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: DB_TYPE
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-database-cm
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-telego-database-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-telego-database-secret
+                  key: DB_PASS
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: DEBUG
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-telego-secret
+                  key: SECRET_KEY
+            - name: TELEGRAM_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-telego-secret
+                  key: TELEGRAM_BOT_TOKEN
+            - name: NGROK_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-telego-secret
+                  key: NGROK_AUTH_TOKEN
+            - name: DJANGO_WEBHOOK_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: DJANGO_WEBHOOK_URI
+          volumeMounts:
+            - name: {{ .Release.Name }}-telego-site-config
+              mountPath: /etc/apache2/sites-available/000-default.conf
+              subPath: site-config.conf
+              readOnly: true
+            - name: {{ .Release.Name }}-telego-static
+              mountPath: /static
+            - name: {{ .Release.Name }}-telego-logs
+              mountPath: /telego/logs
+        - name: ngrok
+          image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                ngrok authtoken $(NGROK_AUTH) &&
+                ngrok http 80 --bind-tls=true
+          ports:
+            - name: ngrok
+              containerPort: 4040
+              protocol: TCP
+          env:
+            - name: NGROK_AUTH
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-telego-secret
+                  key: NGROK_AUTH_TOKEN
+      volumes:
+        - name: {{ .Release.Name }}-telego-site-config
+          secret:
+            secretName: {{ .Release.Name }}-telego-site-config
+            items:
+              - key: site-config.conf
+                path: site-config.conf
+        - name: {{ .Release.Name }}-telego-static
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-telego-static-pvc
+        - name: {{ .Release.Name }}-telego-logs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-telego-logs-pvc

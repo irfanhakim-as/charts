@@ -1,0 +1,17 @@
+apiVersion: v2
+name: telego
+description: Telego is a Telegram bot framework built on top of Django.
+type: application
+version: 0.1.0
+appVersion: "0.0.1-dev"
+keywords:
+  - telego
+home: https://github.com/irfanhakim-as/telego
+icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+sources:
+  - https://github.com/irfanhakim-as/telego
+  - https://github.com/irfanhakim-as/charts
+maintainers:
+  - name: Irfan Hakim
+    email: irfanhakim.as@yahoo.com
+    url: https://github.com/irfanhakim-as

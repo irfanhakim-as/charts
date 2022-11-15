@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-cm
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  DB_TYPE: "{{ .Values.configmap.telego.DB_TYPE }}"
+  DEBUG: "{{ .Values.configmap.telego.DEBUG }}"
+  DJANGO_WEBHOOK_URI: "{{ .Values.configmap.telego.DJANGO_WEBHOOK_URI }}"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-database-cm
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  DB_HOST: "{{ .Values.configmap.database.DB_HOST }}"
+  DB_PORT: "{{ .Values.configmap.database.DB_PORT }}"
+  DB_NAME: "{{ .Values.configmap.database.DB_NAME }}"

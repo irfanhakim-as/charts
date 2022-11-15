@@ -1,0 +1,56 @@
+# Default values for telego.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  telego:
+    registry: ghcr.io
+    repository: irfanhakim-as/telego
+    tag: "0.0.1-dev"
+    pullPolicy: IfNotPresent
+  
+  ngrok:
+    registry: docker.io
+    repository: wernight/ngrok
+    tag: "latest"
+    pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: ghcr-token-secret # name of the secret containing the token to access the telego image
+
+configmap:
+  telego:
+    DB_TYPE: "postgresql" # database type
+    DEBUG: "False" # django debug mode
+    DJANGO_WEBHOOK_URI: "telegram/webhooks/" # telegram webhook path
+  database:
+    DB_HOST: "postgres.default.svc.cluster.local" # remote host
+    DB_PORT: "5432" # remote database port
+    DB_NAME: "telego-db" # telego database name
+
+secret:
+  telego:
+    SECRET_KEY: "secret" # django secret key
+    TELEGRAM_BOT_TOKEN: "secret" # telegram bot token
+    NGROK_AUTH_TOKEN: "secret" # ngrok auth token
+  database:
+    DB_USER: "secret" # remote database user
+    DB_PASS: "secret" # remote database user password
+
+pvc:
+  static:
+    storage: "10Mi" # static files storage size
+    storageClassName: "longhorn" # static files storage class name
+  logs:
+    storage: "10Mi" # log files storage size
+    storageClassName: "longhorn" # log files storage class name
+
+resources:
+  requests:
+    cpu: "10m" # telego cpu request
+    memory: "10Mi" # telego memory request
+  limits:
+    cpu: "100m" # telego cpu limit
+    memory: "100Mi" # telego memory limit
