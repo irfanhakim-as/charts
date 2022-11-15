@@ -20,3 +20,5 @@ secret:
   postgres:
     DB_USER: "secret" # remote postgres user
     DB_PASS: "secret" # remote postgres user password
+    ROOT_USER: "secret" # root postgres user
+    ROOT_PASS: "secret" # root postgres user password

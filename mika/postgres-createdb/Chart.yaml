@@ -1,8 +1,8 @@
 apiVersion: v2
 name: postgres-createdb
-description: A Helm chart for deploying createdb job for PostgreSQL
+description: A Helm chart for deploying a database and user in a remote PostgreSQL instance
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "13.3"
 keywords:
   - postgres
