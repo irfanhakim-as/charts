@@ -133,6 +133,28 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.0/postgres-dropdb-0.1.0.tgz
     version: 0.1.0
+  telego:
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-11-15T12:27:50.066206158Z"
+    description: Telego is a Telegram bot framework built on top of Django.
+    digest: c8a13a98dfe2fd7d490ebb3225016c0b0b29ea475c1aa6187b8a2eb145e53a95
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - telego
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.0/telego-0.1.0.tgz
+    version: 0.1.0
   vpbot:
   - apiVersion: v2
     appVersion: 1.5.0-stable
@@ -197,4 +219,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-09-24T10:09:12.757375515Z"
+generated: "2022-11-15T12:27:50.066220254Z"
