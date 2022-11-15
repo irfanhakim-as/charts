@@ -1,0 +1,1 @@
+Telego for {{ .Release.Name }} is now installed and configured.
