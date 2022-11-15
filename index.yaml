@@ -46,6 +46,29 @@ entries:
   postgres-createdb:
   - apiVersion: v2
     appVersion: "13.3"
+    created: "2022-11-15T18:44:52.621681236Z"
+    description: A Helm chart for deploying a database and user in a remote PostgreSQL
+      instance
+    digest: 3107621e3c4011343e7f92fad215e04a57f89cfb2833c4b261cc651ab681aef0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.2/postgres-createdb-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "13.3"
     created: "2022-09-24T10:09:12.462400768Z"
     description: A Helm chart for deploying createdb job for PostgreSQL
     digest: 022d2a24014c7864fdc9a9835f971c97af6dcd303400c9da36cf4f4014ceca9e
@@ -219,4 +242,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-11-15T12:27:50.066220254Z"
+generated: "2022-11-15T18:44:52.621736836Z"
