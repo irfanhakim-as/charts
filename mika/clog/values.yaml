@@ -18,7 +18,7 @@ image:
     pullPolicy: IfNotPresent
 
 imagePullSecrets:
-  - name: ghcr-secret-token # name of the secret containing the token to access the clog image
+  - name: ghcr-token-secret # name of the secret containing the token to access the clog image
 
 configmap:
   clog:
