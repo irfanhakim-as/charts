@@ -1,8 +1,8 @@
 apiVersion: v2
 name: postgres-createdb
-description: A Helm chart for deploying a database and user in a remote PostgreSQL instance
+description: Easily deploy a database and create a user in a remote PostgreSQL instance.
 type: application
-version: 0.1.2
+version: 0.1.3
 appVersion: "13.3"
 keywords:
   - postgres
