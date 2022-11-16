@@ -1,6 +1,49 @@
 apiVersion: v1
 entries:
+  clog:
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-11-16T10:11:02.943172587Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: ca15d61e82377e95cbedd5ad782031b1a86f4007c0fe96246caab6de5174f5b0
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.1/clog-0.1.1.tgz
+    version: 0.1.1
   postgres:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-11-16T10:11:03.155025028Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 69cd5cee317f0d9610ac8c9e26d466eeeace935acb4bfa5722bff95bd1ad0ec9
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.2/postgres-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: "13.3"
     created: "2022-09-24T10:09:12.327213189Z"
@@ -44,6 +87,29 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
   postgres-createdb:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-11-16T10:11:03.351382091Z"
+    description: Easily deploy a database and create a user in a remote PostgreSQL
+      instance.
+    digest: 2def0d95e96f8ec269901f1dd80c204f01395415c7a1152356d2ffbda2293635
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.3/postgres-createdb-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: "13.3"
     created: "2022-11-15T18:44:52.621681236Z"
@@ -114,6 +180,28 @@ entries:
   postgres-dropdb:
   - apiVersion: v2
     appVersion: "13.3"
+    created: "2022-11-16T10:11:03.539530542Z"
+    description: Delete a database easily in a remote PostgreSQL instance.
+    digest: 6704efeb4316b15601436ea1481e3283ee785871f0d04b383ddd0439ad583a43
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - dropdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-dropdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.2/postgres-dropdb-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "13.3"
     created: "2022-09-24T10:09:12.603078279Z"
     description: A Helm chart for deploying dropdb job for PostgreSQL
     digest: 0e50cd1a63720201c8eb0f51ec3b367623582b159373c4a689c4b335e18e926f
@@ -159,6 +247,27 @@ entries:
   telego:
   - apiVersion: v2
     appVersion: 0.0.1-dev
+    created: "2022-11-16T10:11:03.729750197Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 2264070c200d3bc8fc24f07a3058e79b5d00b329fff3535df17ba9a706ea5b04
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - telego
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.1/telego-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
     created: "2022-11-15T12:27:50.066206158Z"
     description: Telego is a Telegram bot framework built on top of Django.
     digest: c8a13a98dfe2fd7d490ebb3225016c0b0b29ea475c1aa6187b8a2eb145e53a95
@@ -179,6 +288,28 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.0/telego-0.1.0.tgz
     version: 0.1.0
   vpbot:
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
+    created: "2022-11-16T10:11:03.911826842Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 7f2181a78209c4997ba5017bf6bfef8367f65c9eba5434a4bea9730d5c30bc0f
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.4/vpbot-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: 1.5.0-stable
     created: "2022-09-24T10:09:12.757344513Z"
@@ -242,4 +373,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-11-15T18:44:52.621736836Z"
+generated: "2022-11-16T10:11:03.911870145Z"
