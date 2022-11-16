@@ -1,8 +1,8 @@
 apiVersion: v2
 name: postgres-dropdb
-description: A Helm chart for deploying dropdb job for PostgreSQL
+description: Delete a database easily in a remote PostgreSQL instance.
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "13.3"
 keywords:
   - postgres
