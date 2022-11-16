@@ -1,8 +1,8 @@
 apiVersion: v2
 name: vpbot
-description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+description: Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more.
 type: application
-version: 0.1.3
+version: 0.1.4
 appVersion: "1.5.0-stable"
 keywords:
   - quarantine-bot

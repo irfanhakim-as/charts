@@ -1,8 +1,8 @@
 apiVersion: v2
 name: postgres
-description: A Helm chart for deploying PostgreSQL
+description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "13.3"
 keywords:
   - postgres
