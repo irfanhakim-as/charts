@@ -17,23 +17,9 @@ spec:
       labels:
         {{- include "postgres.selectorLabels" . | nindent 8 }}
     spec:
-      initContainers:
-        - name: init-postgres
-          image: "{{ .Values.image.init_postgres.registry }}/{{ .Values.image.init_postgres.repository }}:{{ .Values.image.init_postgres.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.init_postgres.pullPolicy }}
-          command: ["/bin/sh"]
-          args:
-            - -c
-            - >-
-                set -x &&
-                mkdir -p /var/lib/postgresql/data &&
-                chmod -R 777 /var/lib/postgresql
-          volumeMounts:
-            - name: {{ .Release.Name }}-postgres-data
-              mountPath: /var/lib/postgresql
       containers:
         - name: postgres
-          image: "{{ .Values.image.init_postgres.registry }}/{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.postgres.registry }}/{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
           ports:
             - name: postgres
@@ -57,9 +43,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-postgres-secret
                   key: DB_PASS
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
             - name: {{ .Release.Name }}-postgres-data
-              mountPath: /var/lib/postgresql
+              mountPath: /var/lib/postgresql/data
       volumes:
         - name: {{ .Release.Name }}-postgres-data
           persistentVolumeClaim:
