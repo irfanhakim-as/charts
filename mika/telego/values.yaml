@@ -26,6 +26,7 @@ configmap:
     DEBUG: "False" # django debug mode
     DJANGO_WEBHOOK_URI: "telegram/webhooks/" # telegram webhook path
     CUSTOM_COMMANDS: # custom telegram commands.py file
+    CUSTOM_MESSAGES: # custom telegram messages.py file
   database:
     DB_HOST: "postgres.default.svc.cluster.local" # remote host
     DB_PORT: "5432" # remote database port
