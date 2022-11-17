@@ -31,3 +31,15 @@ data:
   commands.py: |-
     {{ .Values.configmap.telego.CUSTOM_COMMANDS | toString | nindent 4 | trim }}
 {{- end }}
+{{- if .Values.configmap.telego.CUSTOM_MESSAGES }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-messages-cm
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  messages.py: |-
+    {{ .Values.configmap.telego.CUSTOM_MESSAGES | toString | nindent 4 | trim }}
+{{- end }}

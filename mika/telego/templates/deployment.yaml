@@ -99,6 +99,12 @@ spec:
               subPath: commands.py
               readOnly: true
             {{- end }}
+            {{- if .Values.configmap.telego.CUSTOM_MESSAGES }}
+            - name: {{ .Release.Name }}-telego-messages-cm
+              mountPath: /telego/telego/messages.py
+              subPath: messages.py
+              readOnly: true
+            {{- end }}
             - name: {{ .Release.Name }}-telego-static
               mountPath: /static
             - name: {{ .Release.Name }}-telego-logs
@@ -136,6 +142,14 @@ spec:
             items:
               - key: commands.py
                 path: commands.py
+        {{- end }}
+        {{- if .Values.configmap.telego.CUSTOM_MESSAGES }}
+        - name: {{ .Release.Name }}-telego-messages-cm
+          configMap:
+            name: {{ .Release.Name }}-telego-messages-cm
+            items:
+              - key: messages.py
+                path: messages.py
         {{- end }}
         - name: {{ .Release.Name }}-telego-static
           persistentVolumeClaim:
