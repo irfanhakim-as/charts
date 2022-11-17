@@ -21,22 +21,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      initContainers:
-        - name: init-vpbot
-          image: "{{ .Values.image.init_vpbot.registry }}/{{ .Values.image.init_vpbot.repository }}:{{ .Values.image.init_vpbot.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.init_vpbot.pullPolicy }}
-          command: ["/bin/sh"]
-          args:
-            - -c
-            - >-
-                set -x &&
-                chmod -R 775 /static /quarantine-bot &&
-                chown -R www-data: /static /quarantine-bot
-          volumeMounts:
-            - name: {{ .Release.Name }}-vpbot-static
-              mountPath: /static
-            - name: {{ .Release.Name }}-vpbot-logs
-              mountPath: /quarantine-bot/logs
       containers:
         - name: vpbot
           image: "{{ .Values.image.vpbot.registry }}/{{ .Values.image.vpbot.repository }}:{{ .Values.image.vpbot.tag | default .Chart.AppVersion }}"
