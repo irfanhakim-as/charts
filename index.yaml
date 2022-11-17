@@ -247,6 +247,27 @@ entries:
   telego:
   - apiVersion: v2
     appVersion: 0.0.1-dev
+    created: "2022-11-17T03:51:21.31303573Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: e69cfe781042d6c1580ee70e89029f9cdc9a39c0a0349fa324db434f2fdf8e3b
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - telego
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.2/telego-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
     created: "2022-11-16T10:11:03.729750197Z"
     description: Telego is an easy to use Telegram bot framework built on top of Django.
     digest: 2264070c200d3bc8fc24f07a3058e79b5d00b329fff3535df17ba9a706ea5b04
@@ -373,4 +394,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-11-16T10:11:03.911870145Z"
+generated: "2022-11-17T03:51:21.31310123Z"
