@@ -1,1 +1,1 @@
-vpbot is now installed and configured.
+Vpbot for {{ .Release.Name }} is now installed and configured.
