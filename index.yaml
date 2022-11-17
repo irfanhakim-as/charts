@@ -25,6 +25,28 @@ entries:
   postgres:
   - apiVersion: v2
     appVersion: "13.3"
+    created: "2022-11-17T15:10:23.922365272Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: b160a45cadf86e44f2392c576b8f356bde8e0e71d6e0372ff6574f149577d208
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.3/postgres-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: "13.3"
     created: "2022-11-16T10:11:03.155025028Z"
     description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
     digest: 69cd5cee317f0d9610ac8c9e26d466eeeace935acb4bfa5722bff95bd1ad0ec9
@@ -394,4 +416,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-11-17T03:51:21.31310123Z"
+generated: "2022-11-17T15:10:23.922404072Z"
