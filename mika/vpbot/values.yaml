@@ -8,7 +8,7 @@ image:
   vpbot:
     registry: ghcr.io
     repository: irfanhakim-as/quarantine-bot
-    tag: "1.5.0-stable"
+    tag: "1.5.1-stable"
     pullPolicy: IfNotPresent
   
   ngrok:
@@ -26,7 +26,7 @@ configmap:
     DJANGO_WEBHOOK_URI: "telegram/webhooks/" # telegram webhook path
   postgres:
     DB_HOST: "postgres.default.svc.cluster.local" # remote postgres host
-    DB_NAME: "vpbot-db" # vpbot postgres database name
+    DB_NAME: "vpbot" # vpbot postgres database name
 
 secret:
   vpbot:
@@ -34,7 +34,7 @@ secret:
     TELEGRAM_BOT_TOKEN: "secret" # telegram bot token
     TELEGRAM_ADMIN_ID: "secret" # admin telegram chat id
     TELEGRAM_DEVEL_ID: "secret" # admin telegram chat id
-    DEFAULT_USER_PASS: "vpbot" # default user password
+    DEFAULT_USER_PASS: "secret" # default user password
     NGROK_AUTH_TOKEN: "secret" # ngrok auth token
   postgres:
     DB_USER: "secret" # remote postgres user
