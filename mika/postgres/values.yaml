@@ -13,7 +13,7 @@ image:
 
 configmap:
   postgres:
-    DB_NAME: "mydb" # name of default database
+    DB_NAME: "default" # name of default database
 
 secret:
   postgres:
@@ -22,7 +22,7 @@ secret:
 
 pvc:
   data:
-    storage: "500Mi" # data storage size
+    storage: "1Gi" # data storage size
     storageClassName: "longhorn" # data storage class name
 
 resources:
