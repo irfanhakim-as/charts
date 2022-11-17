@@ -69,6 +69,53 @@ Verify that your chart has been installed. Replace `$namespace` and `$release_na
 helm ls --namespace $namespace | grep "$release_name"
 ```
 
+### Add custom files
+
+To implement additional Telegram commands, create a custom `commands.py` file with a `Commands` class inheriting from `telego.methods.BaseCommand`.
+
+```python
+"""
+Commands repository for the telego project.
+Telegram commands for the telego module should be placed and called from here.
+"""
+from telego.messages import telego_msg
+from telego.methods import (
+    BaseCommand,
+    gen_inline_keyboard
+)
+
+class Commands(BaseCommand):
+    def __init__(self):
+        super().__init__()
+
+        # add commands here
+        self.commands.update({
+            'test': {
+                'description': 'simple debug command returning your input',
+                'emoji': '🤵‍♂️',
+                'method': self.test,
+            },
+        })
+
+    # add command methods here
+    def test(self, **kwargs):
+        msg = None
+        inline_keyboard = None
+        sender = kwargs.get('sender')
+        first_name = kwargs.get('first_name')
+        command = kwargs.get('command')
+        param = kwargs.get('param')
+        
+        msg = telego_msg(chat_id=sender, first_name=first_name, command=command, param=param)['TEST_COMMAND']
+        return msg, inline_keyboard
+```
+
+Upgrade (or install) the chart while adding the `commands.py` file with the `--set-file` flag.
+
+```sh
+helm upgrade $release_name mika/telego --namespace $namespace --create-namespace --values values.yaml --set-file configmap.telego.CUSTOM_COMMANDS=commands.py --wait
+```
+
 ## How to uninstall
 
 Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
