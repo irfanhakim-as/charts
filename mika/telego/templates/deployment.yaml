@@ -93,6 +93,12 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            {{- if .Values.configmap.telego.CUSTOM_COMMANDS }}
+            - name: {{ .Release.Name }}-telego-commands-cm
+              mountPath: /telego/telego/commands.py
+              subPath: commands.py
+              readOnly: true
+            {{- end }}
             - name: {{ .Release.Name }}-telego-static
               mountPath: /static
             - name: {{ .Release.Name }}-telego-logs
@@ -123,6 +129,14 @@ spec:
             items:
               - key: site-config.conf
                 path: site-config.conf
+        {{- if .Values.configmap.telego.CUSTOM_COMMANDS }}
+        - name: {{ .Release.Name }}-telego-commands-cm
+          configMap:
+            name: {{ .Release.Name }}-telego-commands-cm
+            items:
+              - key: commands.py
+                path: commands.py
+        {{- end }}
         - name: {{ .Release.Name }}-telego-static
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-telego-static-pvc

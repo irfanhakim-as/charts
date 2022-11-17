@@ -19,3 +19,15 @@ data:
   DB_HOST: "{{ .Values.configmap.database.DB_HOST }}"
   DB_PORT: "{{ .Values.configmap.database.DB_PORT }}"
   DB_NAME: "{{ .Values.configmap.database.DB_NAME }}"
+{{- if .Values.configmap.telego.CUSTOM_COMMANDS }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-commands-cm
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  commands.py: |-
+    {{ .Values.configmap.telego.CUSTOM_COMMANDS | toString | nindent 4 | trim }}
+{{- end }}
