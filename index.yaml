@@ -355,6 +355,31 @@ entries:
     version: 0.1.0
   vpbot:
   - apiVersion: v2
+    appVersion: 1.5.2-stable
+    created: "2022-11-18T17:45:41.479668061Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 12493780ce49cbae660873b8acb63ae876d6da82bc4189bd1b99be8c4a209316
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.6/vpbot-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
     appVersion: 1.5.1-stable
     created: "2022-11-17T19:54:48.544279433Z"
     description: Vpbot is a Telegram bot with support for a number of useful features
@@ -464,4 +489,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-11-17T19:54:48.544477235Z"
+generated: "2022-11-18T17:45:41.479836161Z"
