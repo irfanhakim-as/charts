@@ -24,6 +24,7 @@ configmap:
   vpbot:
     DEBUG: "False" # django debug mode
     DJANGO_WEBHOOK_URI: "telegram/webhooks/" # telegram webhook path
+    LOG_SIZE_LIMIT: "5" # log file size limit in MiB
   postgres:
     DB_HOST: "postgres.default.svc.cluster.local" # remote postgres host
     DB_NAME: "vpbot" # vpbot postgres database name
