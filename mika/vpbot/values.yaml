@@ -8,7 +8,7 @@ image:
   vpbot:
     registry: ghcr.io
     repository: irfanhakim-as/quarantine-bot
-    tag: "1.5.1-stable"
+    tag: ""
     pullPolicy: IfNotPresent
   
   ngrok:
@@ -24,7 +24,7 @@ configmap:
   vpbot:
     DEBUG: "False" # django debug mode
     DJANGO_WEBHOOK_URI: "telegram/webhooks/" # telegram webhook path
-    LOG_SIZE_LIMIT: "5" # log file size limit in MiB
+    LOG_SIZE_LIMIT: "4" # log file size limit in MiB
   postgres:
     DB_HOST: "postgres.default.svc.cluster.local" # remote postgres host
     DB_NAME: "vpbot" # vpbot postgres database name
@@ -43,13 +43,13 @@ secret:
 
 pvc:
   static:
-    storage: "10Mi" # static files storage size
+    storage: "50Mi" # static files storage size
     storageClassName: "longhorn" # static files storage class name
   logs:
-    storage: "10Mi" # log files storage size
+    storage: "50Mi" # log files storage size
     storageClassName: "longhorn" # log files storage class name
   migrations:
-    storage: "10Mi" # migrations files storage size
+    storage: "50Mi" # migrations files storage size
     storageClassName: "longhorn" # migrations files storage class name
 
 resources:
