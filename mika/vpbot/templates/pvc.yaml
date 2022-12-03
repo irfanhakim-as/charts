@@ -26,3 +26,17 @@ spec:
     requests:
       storage: {{ .Values.pvc.static.storage }}
   storageClassName: {{ .Values.pvc.static.storageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-vpbot-migrations-pvc
+  labels:
+    {{- include "vpbot.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.migrations.storage }}
+  storageClassName: {{ .Values.pvc.migrations.storageClassName }}

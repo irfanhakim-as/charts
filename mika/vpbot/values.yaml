@@ -48,6 +48,9 @@ pvc:
   logs:
     storage: "10Mi" # log files storage size
     storageClassName: "longhorn" # log files storage class name
+  migrations:
+    storage: "10Mi" # migrations files storage size
+    storageClassName: "longhorn" # migrations files storage class name
 
 resources:
   requests:

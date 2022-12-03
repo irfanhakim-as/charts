@@ -111,6 +111,8 @@ spec:
               mountPath: /static
             - name: {{ .Release.Name }}-vpbot-logs
               mountPath: /quarantine-bot/logs
+            - name: {{ .Release.Name }}-vpbot-migrations
+              mountPath: /quarantine-bot/quarantine_bot/migrations
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
@@ -143,3 +145,6 @@ spec:
         - name: {{ .Release.Name }}-vpbot-logs
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-vpbot-logs-pvc
+        - name: {{ .Release.Name }}-vpbot-migrations
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-vpbot-migrations-pvc
