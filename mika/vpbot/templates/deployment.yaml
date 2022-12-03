@@ -52,6 +52,11 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-cm
                   key: LOG_SIZE_LIMIT
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: APP_VERSION
             - name: TELEGRAM_BOT_TOKEN
               valueFrom:
                 secretKeyRef:
