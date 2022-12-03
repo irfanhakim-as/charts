@@ -8,6 +8,7 @@ data:
   DEBUG: "{{ .Values.configmap.vpbot.DEBUG }}"
   DJANGO_WEBHOOK_URI: "{{ .Values.configmap.vpbot.DJANGO_WEBHOOK_URI }}"
   LOG_SIZE_LIMIT: "{{ .Values.configmap.vpbot.LOG_SIZE_LIMIT }}"
+  APP_VERSION: "{{ .Values.image.vpbot.tag | default .Chart.AppVersion }}"
 ---
 apiVersion: v1
 kind: ConfigMap
