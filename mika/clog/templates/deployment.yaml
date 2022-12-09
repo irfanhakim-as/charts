@@ -76,6 +76,8 @@ spec:
               mountPath: /static
             - name: {{ .Release.Name }}-clog-media
               mountPath: /clog/media
+            - name: {{ .Release.Name }}-clog-logs
+              mountPath: /var/log/apache2
             - name: {{ .Release.Name }}-clog-core-migrations
               mountPath: /clog/core/migrations
             - name: {{ .Release.Name }}-clog-money-migrations
@@ -112,6 +114,9 @@ spec:
         - name: {{ .Release.Name }}-clog-media
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-media-pvc
+        - name: {{ .Release.Name }}-clog-logs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-clog-logs-pvc
         - name: {{ .Release.Name }}-clog-core-migrations
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-core-migrations-pvc
