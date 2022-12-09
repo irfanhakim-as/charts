@@ -72,6 +72,10 @@ spec:
               mountPath: /static
             - name: {{ .Release.Name }}-clog-media
               mountPath: /clog/media
+            - name: {{ .Release.Name }}-clog-core-migrations
+              mountPath: /clog/core/migrations
+            - name: {{ .Release.Name }}-clog-money-migrations
+              mountPath: /clog/money/migrations
       volumes:
         - name: {{ .Release.Name }}-clog-static
           persistentVolumeClaim:
@@ -79,6 +83,12 @@ spec:
         - name: {{ .Release.Name }}-clog-media
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-media-pvc
+        - name: {{ .Release.Name }}-clog-core-migrations
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-clog-core-migrations-pvc
+        - name: {{ .Release.Name }}-clog-money-migrations
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-clog-money-migrations-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
