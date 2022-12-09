@@ -32,6 +32,7 @@ configmap:
 secret:
   clog:
     SECRET_KEY: "secret" # django secret key
+    NGROK_AUTH_TOKEN: "secret" # ngrok auth token
   
   postgres:
     DB_USER: "secret" # remote postgres user
