@@ -8,13 +8,13 @@ image:
   clog:
     registry: ghcr.io
     repository: irfanhakim-as/clog
-    tag: "0.0.1-dev"
+    tag: ""
     pullPolicy: IfNotPresent
   
-  nginx:
+  ngrok:
     registry: docker.io
-    repository: nginx
-    tag: "1.19-alpine"
+    repository: wernight/ngrok
+    tag: "latest"
     pullPolicy: IfNotPresent
 
 imagePullSecrets:
@@ -62,11 +62,3 @@ resources:
     limits:
       cpu: "300m" # clog cpu limit
       memory: "300Mi" # clog memory limit
-  
-  nginx:
-    requests:
-      cpu: "10m" # nginx cpu request
-      memory: "10Mi" # nginx memory request
-    limits:
-      cpu: "50m" # nginx cpu limit
-      memory: "100Mi" # nginx memory limit
