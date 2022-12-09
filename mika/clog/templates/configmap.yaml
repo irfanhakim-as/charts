@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 data:
-  SITE_NAME: "{{ .Values.configmap.clog.SITE_NAME }}"
-  DEBUG: "{{ .Values.configmap.clog.DEBUG }}"
+  SITE_NAME: "{{ .Values.configmap.clog.SITE_NAME | toString }}"
+  DEBUG: "{{ .Values.configmap.clog.DEBUG | toString }}"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -15,8 +15,8 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 data:
-  DB_HOST: "{{ .Values.configmap.postgres.DB_HOST }}"
-  DB_NAME: "{{ .Values.configmap.postgres.DB_NAME }}"
+  DB_HOST: "{{ .Values.configmap.postgres.DB_HOST | toString }}"
+  DB_NAME: "{{ .Values.configmap.postgres.DB_NAME | toString }}"
 ---
 apiVersion: v1
 kind: ConfigMap
