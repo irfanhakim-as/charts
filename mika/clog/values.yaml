@@ -46,6 +46,14 @@ pvc:
     storage: "100Mi" # media files storage size
     storageClassName: "longhorn" # media files storage class name
 
+  migrations:
+    core:
+      storage: "20Mi" # core migrations files storage size
+      storageClassName: "longhorn" # core migrations files storage class name
+    money:
+      storage: "20Mi" # money migrations files storage size
+      storageClassName: "longhorn" # money migrations files storage class name
+
 resources:
   clog:
     requests:

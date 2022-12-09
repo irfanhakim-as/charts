@@ -25,3 +25,31 @@ spec:
     requests:
       storage: {{ .Values.pvc.media.storage }}
   storageClassName: {{ .Values.pvc.media.storageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-clog-core-migrations-pvc
+  labels:
+    {{- include "clog.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.migrations.core.storage }}
+  storageClassName: {{ .Values.pvc.migrations.core.storageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-clog-money-migrations-pvc
+  labels:
+    {{- include "clog.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.migrations.money.storage }}
+  storageClassName: {{ .Values.pvc.migrations.money.storageClassName }}
