@@ -29,6 +29,20 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: {{ .Release.Name }}-clog-logs-pvc
+  labels:
+    {{- include "clog.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.logs.storage }}
+  storageClassName: {{ .Values.pvc.logs.storageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: {{ .Release.Name }}-clog-core-migrations-pvc
   labels:
     {{- include "clog.labels" . | nindent 4 }}
