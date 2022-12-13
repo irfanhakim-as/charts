@@ -27,24 +27,24 @@ configmap:
   
   postgres:
     DB_HOST: "postgres.default.svc.cluster.local" # remote postgres host
-    DB_NAME: "clog-db" # clog postgres database name
+    DB_NAME: "" # remote postgres database name
 
 secret:
   clog:
-    SECRET_KEY: "secret" # django secret key
-    NGROK_AUTH_TOKEN: "secret" # ngrok auth token
+    SECRET_KEY: "" # django secret key
+    NGROK_AUTH_TOKEN: "" # ngrok auth token
   
   postgres:
-    DB_USER: "secret" # remote postgres user
-    DB_PASS: "secret" # remote postgres user password
+    DB_USER: "" # remote postgres database user
+    DB_PASS: "" # remote postgres database user password
 
 pvc:
   static:
-    storage: "20Mi" # static files storage size
+    storage: "50Mi" # static files storage size
     storageClassName: "longhorn" # static files storage class name
   
   media:
-    storage: "20Mi" # media files storage size
+    storage: "100Mi" # media files storage size
     storageClassName: "longhorn" # media files storage class name
 
   logs:
