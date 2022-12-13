@@ -2,8 +2,8 @@ apiVersion: v2
 name: clog
 description: Creative blog, Career blog, Coin blog, you name it.
 type: application
-version: 0.1.5
-appVersion: "0.0.1-dev"
+version: 0.1.6
+appVersion: "0.0.1-stable"
 keywords:
   - clog
 home: https://github.com/irfanhakim-as/clog
