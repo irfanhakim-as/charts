@@ -24,7 +24,9 @@ clog:
   site_name: "Clog" # name of the clog site
   debug: false # django debug mode
   secret: "" # django secret key
-  ngrok_auth_token: "" # ngrok auth token
+  ngrok:
+    enabled: false # enable ngrok
+    auth_token: "" # ngrok auth token
 
 db:
   host: "postgres.default.svc.cluster.local" # remote postgres host
