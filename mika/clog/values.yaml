@@ -22,7 +22,7 @@ imagePullSecrets:
 
 clog:
   site_name: "Clog" # name of the clog site
-  debug: "False" # django debug mode
+  debug: false # django debug mode
   secret: "" # django secret key
   ngrok_auth_token: "" # ngrok auth token
 
