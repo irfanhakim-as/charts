@@ -127,6 +127,30 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.1/clog-0.1.1.tgz
     version: 0.1.1
+  cloudflared:
+  - apiVersion: v2
+    appVersion: 2022.3.0
+    created: "2022-12-18T18:12:12.577789666Z"
+    description: Cloudflare Tunnel is a tunneling software that lets you quickly secure
+      and encrypt application traffic to any type of infrastructure.
+    digest: 13a0966108874ea374d22a97b46fd439148d90736367e3187ab9e48a1f7a557a
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+    keywords:
+    - cloudflared
+    - cloudflare
+    - tunnel
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflared
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
+    version: 0.1.0
   postgres:
   - apiVersion: v2
     appVersion: "13.3"
@@ -644,4 +668,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-12-13T16:37:33.40462768Z"
+generated: "2022-12-18T18:12:12.577917866Z"
