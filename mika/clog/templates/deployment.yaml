@@ -47,6 +47,13 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-clog-cm
                   key: NGROK
+            {{- if .Values.clog.cloudflared.enabled }}
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-clog-cm
+                  key: DOMAIN
+            {{- end }}
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
