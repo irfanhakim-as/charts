@@ -27,6 +27,9 @@ clog:
   ngrok:
     enabled: false # enable ngrok
     auth_token: "" # ngrok auth token
+  cloudflared:
+    enabled: true # enable cloudflared
+    domain: "" # cloudflared domain
 
 db:
   host: "postgres.default.svc.cluster.local" # remote postgres host
