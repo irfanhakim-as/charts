@@ -15,7 +15,7 @@ Replace `$github-username`, `$github-pass`, `$github-email` and `$namespace` acc
 kubectl create secret docker-registry ghcr-token-secret --docker-server=https://ghcr.io --docker-username="$github-username" --docker-password="$github-pass" --docker-email="$github-email" -n $namespace
 ```
 
-### Generate secret key for [`secret.clog.SECRET_KEY`](values.yaml)
+### Generate secret key for [`clog.secret`](values.yaml)
 
 ```sh
 python -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)]))'
