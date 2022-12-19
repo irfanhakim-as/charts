@@ -28,6 +28,9 @@ vpbot:
   ngrok:
     enabled: false # enable ngrok
     auth_token: "secret" # ngrok auth token
+  cloudflared:
+    enabled: true # enable cloudflared
+    domain: "" # cloudflared domain
 
 telegram:
   webhook: "telegram/webhooks/" # telegram webhook path

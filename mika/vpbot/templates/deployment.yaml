@@ -47,6 +47,13 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-cm
                   key: NGROK
+            {{- if .Values.vpbot.cloudflared.enabled }}
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: DOMAIN
+            {{- end }}
             - name: DJANGO_WEBHOOK_URI
               valueFrom:
                 configMapKeyRef:
