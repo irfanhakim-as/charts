@@ -1,3 +1,4 @@
+{{- $domain := .Values.clog.cloudflared.domain | default "localhost" | toString }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,8 +6,12 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 data:
-  SITE_NAME: "{{ .Values.configmap.clog.SITE_NAME | toString }}"
-  DEBUG: "{{ .Values.configmap.clog.DEBUG | toString }}"
+  SITE_NAME: "{{ .Values.clog.site_name | toString }}"
+  DEBUG: "{{ .Values.clog.debug | toString }}"
+  NGROK: "{{ .Values.clog.ngrok.enabled | toString }}"
+  {{- if .Values.clog.cloudflared.enabled }}
+  DOMAIN: "{{ $domain }}"
+  {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -15,8 +20,8 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 data:
-  DB_HOST: "{{ .Values.configmap.postgres.DB_HOST | toString }}"
-  DB_NAME: "{{ .Values.configmap.postgres.DB_NAME | toString }}"
+  DB_HOST: "{{ .Values.db.host | toString }}"
+  DB_NAME: "{{ .Values.db.name | toString }}"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -27,13 +32,13 @@ metadata:
 data:
   site-config.conf: |-
     <VirtualHost *:80>
-      ServerName $(NGROK_URI):443
+      {{ "ServerName $domain:443" | replace "$domain" $domain }}
       UseCanonicalName On
       ServerAdmin support@mika-homelab.com
       DocumentRoot /clog
       WSGIScriptAlias / /clog/clog/wsgi.py
-      WSGIDaemonProcess $(NGROK_URI) python-path=/clog
-      WSGIProcessGroup $(NGROK_URI)
+      {{ "WSGIDaemonProcess $domain python-path=/clog" | replace "$domain" $domain }}
+      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
       
       <Directory /clog/clog>
         <Files wsgi.py>

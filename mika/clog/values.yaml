@@ -20,23 +20,22 @@ image:
 imagePullSecrets:
   - name: ghcr-token-secret # name of the secret containing the token to access the clog image
 
-configmap:
-  clog:
-    SITE_NAME: "Clog" # name of the clog site
-    DEBUG: "False" # django debug mode
-  
-  postgres:
-    DB_HOST: "postgres.default.svc.cluster.local" # remote postgres host
-    DB_NAME: "" # remote postgres database name
+clog:
+  site_name: "Clog" # name of the clog site
+  debug: false # django debug mode
+  secret: "" # django secret key
+  ngrok:
+    enabled: false # enable ngrok
+    auth_token: "" # ngrok auth token
+  cloudflared:
+    enabled: true # enable cloudflared
+    domain: "" # cloudflared domain
 
-secret:
-  clog:
-    SECRET_KEY: "" # django secret key
-    NGROK_AUTH_TOKEN: "" # ngrok auth token
-  
-  postgres:
-    DB_USER: "" # remote postgres database user
-    DB_PASS: "" # remote postgres database user password
+db:
+  host: "postgres.default.svc.cluster.local" # remote postgres host
+  name: "" # remote postgres database name
+  user: "" # remote postgres database user
+  pass: "" # remote postgres database user password
 
 pvc:
   static:

@@ -42,6 +42,18 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-clog-cm
                   key: DEBUG
+            - name: NGROK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-clog-cm
+                  key: NGROK
+            {{- if .Values.clog.cloudflared.enabled }}
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-clog-cm
+                  key: DOMAIN
+            {{- end }}
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
@@ -82,6 +94,7 @@ spec:
               mountPath: /clog/core/migrations
             - name: {{ .Release.Name }}-clog-money-migrations
               mountPath: /clog/money/migrations
+        {{- if .Values.clog.ngrok.enabled }}
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
@@ -101,6 +114,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-clog-secret
                   key: NGROK_AUTH_TOKEN
+        {{- end }}
       volumes:
         - name: {{ .Release.Name }}-clog-site-config
           configMap:
