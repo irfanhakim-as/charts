@@ -6,6 +6,7 @@ metadata:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
   DEBUG: "{{ .Values.vpbot.debug | toString }}"
+  NGROK: "{{ .Values.vpbot.ngrok.enabled | toString }}"
   DJANGO_WEBHOOK_URI: "{{ .Values.telegram.webhook | toString }}"
   LOG_SIZE_LIMIT: "{{ .Values.vpbot.log_size_limit | toString }}"
   APP_VERSION: "{{ .Values.image.vpbot.tag | default .Chart.AppVersion | toString }}"
