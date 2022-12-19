@@ -20,26 +20,29 @@ image:
 imagePullSecrets:
   - name: ghcr-token-secret # name of the secret containing the token to access the vpbot image
 
-configmap:
-  vpbot:
-    DEBUG: "False" # django debug mode
-    DJANGO_WEBHOOK_URI: "telegram/webhooks/" # telegram webhook path
-    LOG_SIZE_LIMIT: "4" # log file size limit in MiB
-  postgres:
-    DB_HOST: "postgres.default.svc.cluster.local" # remote postgres host
-    DB_NAME: "vpbot" # vpbot postgres database name
+vpbot:
+  debug: false # django debug mode
+  log_size_limit: "4" # log file size limit in MiB
+  secret: "secret" # django secret key
+  user_pass: "secret" # default user password
+  ngrok:
+    enabled: false # enable ngrok
+    auth_token: "secret" # ngrok auth token
+  cloudflared:
+    enabled: true # enable cloudflared
+    domain: "" # cloudflared domain
 
-secret:
-  vpbot:
-    SECRET_KEY: "secret" # django secret key
-    TELEGRAM_BOT_TOKEN: "secret" # telegram bot token
-    TELEGRAM_ADMIN_ID: "secret" # admin telegram chat id
-    TELEGRAM_DEVEL_ID: "secret" # admin telegram chat id
-    DEFAULT_USER_PASS: "secret" # default user password
-    NGROK_AUTH_TOKEN: "secret" # ngrok auth token
-  postgres:
-    DB_USER: "secret" # remote postgres user
-    DB_PASS: "secret" # remote postgres user password
+telegram:
+  webhook: "telegram/webhooks/" # telegram webhook path
+  token: "secret" # telegram bot token
+  admin_id: "secret" # admin telegram chat id
+  devel_id: "secret" # admin telegram chat id
+
+db:
+  host: "postgres.default.svc.cluster.local" # remote postgres host
+  name: "vpbot" # vpbot postgres database name
+  user: "secret" # remote postgres user
+  pass: "secret" # remote postgres user password
 
 pvc:
   static:

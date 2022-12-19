@@ -42,6 +42,18 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-cm
                   key: DEBUG
+            - name: NGROK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: NGROK
+            {{- if .Values.vpbot.cloudflared.enabled }}
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: DOMAIN
+            {{- end }}
             - name: DJANGO_WEBHOOK_URI
               valueFrom:
                 configMapKeyRef:
@@ -77,11 +89,13 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-secret
                   key: DEFAULT_USER_PASS
+            {{- if .Values.vpbot.ngrok.enabled }}
             - name: NGROK_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-secret
                   key: NGROK_AUTH_TOKEN
+            {{- end }}
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
@@ -113,6 +127,7 @@ spec:
               mountPath: /quarantine-bot/logs
             - name: {{ .Release.Name }}-vpbot-migrations
               mountPath: /quarantine-bot/quarantine_bot/migrations
+        {{- if .Values.vpbot.ngrok.enabled }}
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
@@ -132,6 +147,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-secret
                   key: NGROK_AUTH_TOKEN
+        {{- end }}
       volumes:
         - name: {{ .Release.Name }}-vpbot-site-config
           configMap:

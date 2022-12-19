@@ -1,3 +1,4 @@
+{{- $domain := .Values.vpbot.cloudflared.domain | default "localhost" | toString }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,10 +6,14 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
-  DEBUG: "{{ .Values.configmap.vpbot.DEBUG }}"
-  DJANGO_WEBHOOK_URI: "{{ .Values.configmap.vpbot.DJANGO_WEBHOOK_URI }}"
-  LOG_SIZE_LIMIT: "{{ .Values.configmap.vpbot.LOG_SIZE_LIMIT }}"
-  APP_VERSION: "{{ .Values.image.vpbot.tag | default .Chart.AppVersion }}"
+  DEBUG: "{{ .Values.vpbot.debug | toString }}"
+  NGROK: "{{ .Values.vpbot.ngrok.enabled | toString }}"
+  {{- if .Values.vpbot.cloudflared.enabled }}
+  DOMAIN: "{{ $domain }}"
+  {{- end }}
+  DJANGO_WEBHOOK_URI: "{{ .Values.telegram.webhook | toString }}"
+  LOG_SIZE_LIMIT: "{{ .Values.vpbot.log_size_limit | toString }}"
+  APP_VERSION: "{{ .Values.image.vpbot.tag | default .Chart.AppVersion | toString }}"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -17,8 +22,8 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
-  DB_HOST: "{{ .Values.configmap.postgres.DB_HOST }}"
-  DB_NAME: "{{ .Values.configmap.postgres.DB_NAME }}"
+  DB_HOST: "{{ .Values.db.host | toString }}"
+  DB_NAME: "{{ .Values.db.name | toString }}"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -29,13 +34,13 @@ metadata:
 data:
   site-config.conf: |-
     <VirtualHost *:80>
-      ServerName $(NGROK_URI):443
+      {{ "ServerName $domain:443" | replace "$domain" $domain }}
       UseCanonicalName On
       ServerAdmin support@mika-homelab.com
       DocumentRoot /quarantine-bot
       WSGIScriptAlias / /quarantine-bot/quarantine_bot/wsgi.py
-      WSGIDaemonProcess $(NGROK_URI) python-path=/quarantine-bot
-      WSGIProcessGroup $(NGROK_URI)
+      {{ "WSGIDaemonProcess $domain python-path=/quarantine-bot" | replace "$domain" $domain }}
+      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
       
       <Directory /quarantine-bot/quarantine_bot>
         <Files wsgi.py>
