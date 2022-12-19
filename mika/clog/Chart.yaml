@@ -2,7 +2,7 @@ apiVersion: v2
 name: clog
 description: Creative blog, Career blog, Coin blog, you name it.
 type: application
-version: 0.1.7
+version: 0.1.8
 appVersion: "0.0.1-cf"
 keywords:
   - clog
