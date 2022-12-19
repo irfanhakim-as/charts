@@ -2,6 +2,27 @@ apiVersion: v1
 entries:
   clog:
   - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2022-12-19T03:17:06.399778271Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: e71dd62645bbc35b90b65e08e22f2de3f9f269fc838da4962bce60f496bc3710
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.9/clog-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
     appVersion: 0.0.1-cf
     created: "2022-12-19T02:32:08.493979658Z"
     description: Creative blog, Career blog, Coin blog, you name it.
@@ -710,4 +731,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-12-19T02:32:08.494040959Z"
+generated: "2022-12-19T03:17:06.399850873Z"
