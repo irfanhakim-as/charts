@@ -5,10 +5,10 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
-  DEBUG: "{{ .Values.vpbot.debug }}"
-  DJANGO_WEBHOOK_URI: "{{ .Values.telegram.webhook }}"
-  LOG_SIZE_LIMIT: "{{ .Values.vpbot.log_size_limit }}"
-  APP_VERSION: "{{ .Values.image.vpbot.tag | default .Chart.AppVersion }}"
+  DEBUG: "{{ .Values.vpbot.debug | toString }}"
+  DJANGO_WEBHOOK_URI: "{{ .Values.telegram.webhook | toString }}"
+  LOG_SIZE_LIMIT: "{{ .Values.vpbot.log_size_limit | toString }}"
+  APP_VERSION: "{{ .Values.image.vpbot.tag | default .Chart.AppVersion | toString }}"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -17,8 +17,8 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
-  DB_HOST: "{{ .Values.db.host }}"
-  DB_NAME: "{{ .Values.db.name }}"
+  DB_HOST: "{{ .Values.db.host | toString }}"
+  DB_NAME: "{{ .Values.db.name | toString }}"
 ---
 apiVersion: v1
 kind: ConfigMap
