@@ -45,8 +45,8 @@ spec:
                   key: DB_PORT
             - name: DB_TYPE
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-telego-database-secret
                   key: DB_TYPE
             - name: DB_NAME
               valueFrom:

@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "telego.labels" . | nindent 4 }}
 data:
-  DB_TYPE: {{ .Values.db.type | toString | quote }}
   DEBUG: {{ .Values.telego.debug | toString | quote }}
   DJANGO_WEBHOOK_URI: {{ .Values.telego.webhook | toString | quote }}
   NGROK: {{ .Values.telego.ngrok.enabled | toString | quote }}
