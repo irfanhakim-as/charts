@@ -9,6 +9,9 @@ data:
   DEBUG: {{ .Values.telego.debug | toString | quote }}
   DJANGO_WEBHOOK_URI: {{ .Values.telego.webhook | toString | quote }}
   NGROK: {{ .Values.telego.ngrok.enabled | toString | quote }}
+  {{- if .Values.telego.cloudflared.enabled }}
+  DOMAIN: {{ .Values.telego.cloudflared.domain | toString | quote }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
