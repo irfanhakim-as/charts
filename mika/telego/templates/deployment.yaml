@@ -35,12 +35,12 @@ spec:
           env:
             - name: DB_HOST
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ .Release.Name }}-telego-database-secret
                   key: DB_HOST
             - name: DB_PORT
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ .Release.Name }}-telego-database-secret
                   key: DB_PORT
             - name: DB_TYPE
@@ -50,7 +50,7 @@ spec:
                   key: DB_TYPE
             - name: DB_NAME
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ .Release.Name }}-telego-database-secret
                   key: DB_NAME
             - name: DB_USER
