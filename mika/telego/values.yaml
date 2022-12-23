@@ -38,11 +38,11 @@ telego:
 
 db:
   type: "postgresql" # database type
-  host: "postgres.default.svc.cluster.local" # remote host
-  port: "5432" # remote database port
-  name: "" # telego database name
-  user: "" # remote database user
-  password: "" # remote database user password
+  host: "postgres.default.svc.cluster.local" # database server
+  port: "5432" # database port
+  name: "" # database name
+  user: "" # database user
+  password: "" # database user password
 
 pvc:
   logs:
