@@ -21,6 +21,7 @@ imagePullSecrets:
   - name: ghcr-token-secret # name of the secret containing the token to access the telego image
 
 telego:
+  name: "Telego" # telego name
   debug: false # django debug mode
   secret: "" # django secret key
   telegram:
