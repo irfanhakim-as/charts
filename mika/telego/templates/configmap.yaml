@@ -13,17 +13,6 @@ data:
   {{- if .Values.telego.cloudflared.enabled }}
   DOMAIN: {{ .Values.telego.cloudflared.domain | toString | quote }}
   {{- end }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-telego-database-cm
-  labels:
-    {{- include "telego.labels" . | nindent 4 }}
-data:
-  DB_HOST: {{ .Values.db.host | toString | quote }}
-  DB_PORT: {{ .Values.db.port | toString | quote }}
-  DB_NAME: {{ .Values.db.name | toString | quote }}
 {{- if .Values.telego.commands }}
 ---
 apiVersion: v1
