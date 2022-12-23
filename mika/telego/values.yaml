@@ -8,7 +8,7 @@ image:
   telego:
     registry: ghcr.io
     repository: irfanhakim-as/telego
-    tag: "0.0.1-dev"
+    tag: ""
     pullPolicy: IfNotPresent
   
   ngrok:
