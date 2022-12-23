@@ -146,24 +146,15 @@ spec:
         - name: {{ .Release.Name }}-telego-site-config
           configMap:
             name: {{ .Release.Name }}-telego-site-config
-            items:
-              - key: site-config.conf
-                path: site-config.conf
         {{- if .Values.telego.commands }}
         - name: {{ .Release.Name }}-telego-commands-cm
           configMap:
             name: {{ .Release.Name }}-telego-commands-cm
-            items:
-              - key: commands.py
-                path: commands.py
         {{- end }}
         {{- if .Values.telego.messages }}
         - name: {{ .Release.Name }}-telego-messages-cm
           configMap:
             name: {{ .Release.Name }}-telego-messages-cm
-            items:
-              - key: messages.py
-                path: messages.py
         {{- end }}
         - name: {{ .Release.Name }}-telego-logs
           persistentVolumeClaim:
