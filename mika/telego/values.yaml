@@ -27,7 +27,7 @@ telego:
     token: "" # telegram bot token
     webhook: "telegram/webhooks/" # telegram webhook path
   ngrok:
-    enabled: false # enable ngrok
+    enabled: true # enable ngrok
     token: "" # ngrok auth token
   cloudflared:
     enabled: false # enable cloudflared
