@@ -141,7 +141,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-telego-secret
                   key: NGROK_AUTH_TOKEN
-          {{- end }}
+        {{- end }}
       volumes:
         - name: {{ .Release.Name }}-telego-site-config
           configMap:
