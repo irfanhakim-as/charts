@@ -1,3 +1,4 @@
+{{- $domain := .Values.telego.cloudflared.domain | default "localhost" | toString }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -47,3 +48,36 @@ data:
   messages.py: |-
     {{ .Values.telego.messages | toString | nindent 4 | trim }}
 {{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-site-config
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+type: Opaque
+data:
+  site-config.conf: |-
+    <VirtualHost *:80>
+      {{ "ServerName $domain:443" | replace "$domain" $domain }}
+      UseCanonicalName On
+      ServerAdmin support@domain.org
+      DocumentRoot /telego
+      WSGIScriptAlias / /telego/telego/wsgi.py
+      {{ "WSGIDaemonProcess $domain python-path=/telego" | replace "$domain" $domain }}
+      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
+      
+      <Directory /telego/telego>
+        <Files wsgi.py>
+          Require all granted
+        </Files>
+      </Directory>
+
+      Alias /static /static
+      <Directory /static>
+        Require all granted
+      </Directory>
+
+      ErrorLog /telego/logs/apache.error.log
+      CustomLog /telego/logs/apache.access.log combined
+    </VirtualHost>

@@ -144,8 +144,8 @@ spec:
           {{- end }}
       volumes:
         - name: {{ .Release.Name }}-telego-site-config
-          secret:
-            secretName: {{ .Release.Name }}-telego-site-config
+          configMap:
+            name: {{ .Release.Name }}-telego-site-config
             items:
               - key: site-config.conf
                 path: site-config.conf
