@@ -12,17 +12,3 @@ spec:
     requests:
       storage: {{ .Values.pvc.logs.storage }}
   storageClassName: {{ .Values.pvc.logs.storageClassName }}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ .Release.Name }}-telego-static-pvc
-  labels:
-    {{- include "telego.labels" . | nindent 4 }}
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: {{ .Values.pvc.static.storage }}
-  storageClassName: {{ .Values.pvc.static.storageClassName }}
