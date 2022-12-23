@@ -95,6 +95,13 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-telego-cm
                   key: NGROK
+            {{- if .Values.telego.cloudflared.enabled }}
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: DOMAIN
+            {{- end }}
           volumeMounts:
             - name: {{ .Release.Name }}-telego-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf

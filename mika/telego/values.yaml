@@ -29,6 +29,9 @@ telego:
   ngrok:
     enabled: false # enable ngrok
     token: "" # ngrok auth token
+  cloudflared:
+    enabled: false # enable cloudflared
+    domain: "" # cloudflared domain
   commands: "" # custom telegram commands.py file
   messages: "" # custom telegram messages.py file
 
