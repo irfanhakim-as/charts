@@ -5,9 +5,9 @@ metadata:
   labels:
     {{- include "telego.labels" . | nindent 4 }}
 data:
-  DB_TYPE: "{{ .Values.configmap.telego.DB_TYPE }}"
-  DEBUG: "{{ .Values.configmap.telego.DEBUG }}"
-  DJANGO_WEBHOOK_URI: "{{ .Values.configmap.telego.DJANGO_WEBHOOK_URI }}"
+  DB_TYPE: {{ .Values.configmap.telego.DB_TYPE | toString | quote }}
+  DEBUG: {{ .Values.configmap.telego.DEBUG | toString | quote }}
+  DJANGO_WEBHOOK_URI: {{ .Values.configmap.telego.DJANGO_WEBHOOK_URI | toString | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -16,9 +16,9 @@ metadata:
   labels:
     {{- include "telego.labels" . | nindent 4 }}
 data:
-  DB_HOST: "{{ .Values.configmap.database.DB_HOST }}"
-  DB_PORT: "{{ .Values.configmap.database.DB_PORT }}"
-  DB_NAME: "{{ .Values.configmap.database.DB_NAME }}"
+  DB_HOST: {{ .Values.configmap.database.DB_HOST | toString | quote }}
+  DB_PORT: {{ .Values.configmap.database.DB_PORT | toString | quote }}
+  DB_NAME: {{ .Values.configmap.database.DB_NAME | toString | quote }}
 {{- if .Values.configmap.telego.CUSTOM_COMMANDS }}
 ---
 apiVersion: v1
