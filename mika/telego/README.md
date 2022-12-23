@@ -49,7 +49,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/telego/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values.
+Edit `values.yaml` with the appropriate values. Refer to the [Configuration](#Configuration) section for the available options.
 
 ```sh
 nano values.yaml
@@ -186,3 +186,40 @@ helm uninstall $release_name --namespace $namespace --wait
 ### Delete database
 
 Install [`mika/postgres-dropdb`](../postgres-dropdb/).
+
+## Configuration
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| db.host | string | `"postgres.default.svc.cluster.local"` | Database server |
+| db.name | string | `""` | Database name |
+| db.password | string | `""` | Database user password |
+| db.port | string | `"5432"` | Database port |
+| db.type | string | `"postgresql"` | Database type |
+| db.user | string | `""` | Database user |
+| image.ngrok.pullPolicy | string | `"IfNotPresent"` | Ngrok image pull policy |
+| image.ngrok.registry | string | `"docker.io"` | Ngrok image registry |
+| image.ngrok.repository | string | `"wernight/ngrok"` | Ngrok image repository |
+| image.ngrok.tag | string | `"latest"` | Ngrok image version |
+| image.telego.pullPolicy | string | `"IfNotPresent"` | Telego image pull policy |
+| image.telego.registry | string | `"ghcr.io"` | Telego image registry |
+| image.telego.repository | string | `"irfanhakim-as/telego"` | Telego image repository |
+| image.telego.tag | string | `""` | Telego image version |
+| imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Name of the image pull secret |
+| pvc.logs.storage | string | `"10Mi"` | Log files storage size |
+| pvc.logs.storageClassName | string | `"longhorn"` | Log files storage class name |
+| resources.limits.cpu | string | `"100m"` | Maximum CPU allocation |
+| resources.limits.memory | string | `"100Mi"` | Maximum memory allocation |
+| resources.requests.cpu | string | `"10m"` | Minimum CPU allocation |
+| resources.requests.memory | string | `"10Mi"` | Minimum memory allocation |
+| telego.cloudflared.domain | string | `""` | Telego domain |
+| telego.cloudflared.enabled | bool | `false` | Enable cloudflare tunnel |
+| telego.commands | file | `""` | Custom `commands.py` file |
+| telego.debug | bool | `false` | Enable debug mode |
+| telego.messages | file | `""` | Custom `messages.py` file |
+| telego.name | string | `"Telego"` | Telego application name |
+| telego.ngrok.enabled | bool | `true` | Enable ngrok tunnel |
+| telego.ngrok.token | string | `""` | Ngrok authentication token |
+| telego.secret | string | `""` | Telego secret key |
+| telego.telegram.token | string | `""` | Telegram bot token |
+| telego.telegram.webhook | string | `"telegram/webhooks/"` | Telegram webhook path |
