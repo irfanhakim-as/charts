@@ -44,7 +44,6 @@ metadata:
   name: {{ .Release.Name }}-telego-site-config
   labels:
     {{- include "telego.labels" . | nindent 4 }}
-type: Opaque
 data:
   site-config.conf: |-
     <VirtualHost *:80>
