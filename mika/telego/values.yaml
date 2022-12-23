@@ -27,6 +27,7 @@ telego:
     token: "" # telegram bot token
     webhook: "telegram/webhooks/" # telegram webhook path
   ngrok:
+    enabled: false # enable ngrok
     token: "" # ngrok auth token
   commands: "" # custom telegram commands.py file
   messages: "" # custom telegram messages.py file
