@@ -78,16 +78,23 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-telego-secret
                   key: TELEGRAM_BOT_TOKEN
+            {{- if .Values.telego.ngrok.enabled }}
             - name: NGROK_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-telego-secret
                   key: NGROK_AUTH_TOKEN
+            {{- end }}
             - name: DJANGO_WEBHOOK_URI
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-telego-cm
                   key: DJANGO_WEBHOOK_URI
+            - name: NGROK
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: NGROK
           volumeMounts:
             - name: {{ .Release.Name }}-telego-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
@@ -107,6 +114,7 @@ spec:
             {{- end }}
             - name: {{ .Release.Name }}-telego-logs
               mountPath: /telego/logs
+        {{- if .Values.telego.ngrok.enabled }}
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
@@ -126,6 +134,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-telego-secret
                   key: NGROK_AUTH_TOKEN
+          {{- end }}
       volumes:
         - name: {{ .Release.Name }}-telego-site-config
           secret:
