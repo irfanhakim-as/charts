@@ -42,9 +42,6 @@ secret:
     DB_PASS: "secret" # remote database user password
 
 pvc:
-  static:
-    storage: "10Mi" # static files storage size
-    storageClassName: "longhorn" # static files storage class name
   logs:
     storage: "10Mi" # log files storage size
     storageClassName: "longhorn" # log files storage class name
