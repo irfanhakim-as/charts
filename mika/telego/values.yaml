@@ -20,26 +20,24 @@ image:
 imagePullSecrets:
   - name: ghcr-token-secret # name of the secret containing the token to access the telego image
 
-configmap:
-  telego:
-    DB_TYPE: "postgresql" # database type
-    DEBUG: "False" # django debug mode
-    DJANGO_WEBHOOK_URI: "telegram/webhooks/" # telegram webhook path
-    CUSTOM_COMMANDS: # custom telegram commands.py file
-    CUSTOM_MESSAGES: # custom telegram messages.py file
-  database:
-    DB_HOST: "postgres.default.svc.cluster.local" # remote host
-    DB_PORT: "5432" # remote database port
-    DB_NAME: "telego-db" # telego database name
+telego:
+  debug: "False" # django debug mode
+  secret: "secret" # django secret key
+  telegram:
+    token: "secret" # telegram bot token
+    webhook: "telegram/webhooks/" # telegram webhook path
+  ngrok:
+    token: "secret" # ngrok auth token
+  commands: # custom telegram commands.py file
+  messages: # custom telegram messages.py file
 
-secret:
-  telego:
-    SECRET_KEY: "secret" # django secret key
-    TELEGRAM_BOT_TOKEN: "secret" # telegram bot token
-    NGROK_AUTH_TOKEN: "secret" # ngrok auth token
-  database:
-    DB_USER: "secret" # remote database user
-    DB_PASS: "secret" # remote database user password
+db:
+  type: "postgresql" # database type
+  host: "postgres.default.svc.cluster.local" # remote host
+  port: "5432" # remote database port
+  name: "telego-db" # telego database name
+  user: "secret" # remote database user
+  password: "secret" # remote database user password
 
 pvc:
   logs:
