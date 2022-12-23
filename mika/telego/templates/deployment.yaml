@@ -33,6 +33,11 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: APP_NAME
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
