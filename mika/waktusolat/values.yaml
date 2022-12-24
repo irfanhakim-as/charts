@@ -4,6 +4,7 @@
 
 replicaCount: 1
 
+# Waktu Solat image configuration
 image:
   waktusolat:
     registry: ghcr.io
@@ -19,7 +20,7 @@ imagePullSecrets:
 waktusolat:
   # Waktu Solat debug mode
   debug: false
-  # Waktu Solat secret
+  # Waktu Solat secret key
   secret: ""
   # Default location code
   location: "wlp-0"
