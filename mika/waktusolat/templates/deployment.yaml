@@ -17,6 +17,10 @@ spec:
       labels:
         {{- include "waktusolat.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: waktusolat
           image: "{{ .Values.image.waktusolat.registry }}/{{ .Values.image.waktusolat.repository }}:{{ .Values.image.waktusolat.tag | default .Chart.AppVersion }}"
