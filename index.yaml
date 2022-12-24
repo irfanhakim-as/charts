@@ -825,4 +825,29 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
     version: 0.1.1
-generated: "2022-12-23T11:54:09.088837868Z"
+  waktusolat:
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-12-24T17:33:24.485376902Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: e90efcabb24137794e18f99672ac3de4271a2a87f9105ce9e4cb411f828ce23a
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-12-24T17:33:24.485439902Z"
