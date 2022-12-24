@@ -11,6 +11,10 @@ image:
     tag: ""
     pullPolicy: IfNotPresent
 
+# Image pull secrets for private registries
+imagePullSecrets:
+  - name: ghcr-token-secret
+
 # Waktu Solat configuration
 waktusolat:
   # Waktu Solat debug mode
