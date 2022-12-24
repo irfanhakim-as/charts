@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-waktusolat
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "waktusolat.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "waktusolat.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: waktusolat
+          image: "{{ .Values.image.waktusolat.registry }}/{{ .Values.image.waktusolat.repository }}:{{ .Values.image.waktusolat.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.waktusolat.pullPolicy }}
+          ports:
+            - name: waktusolat
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: DEBUG
+            - name: LOCATION_CODE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: LOCATION_CODE
+            - name: SCHEDULER_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: SCHEDULER_TIMEZONE
+            - name: API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: API_BASE_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: SECRET_KEY
+            - name: DB_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_TYPE
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_PASS
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_PORT
+          volumeMounts:
+            - name: {{ .Release.Name }}-waktusolat-site-config
+              mountPath: /etc/apache2/sites-available/000-default.conf
+              subPath: site-config.conf
+              readOnly: true
+            - name: {{ .Release.Name }}-waktusolat-token-secret
+              mountPath: /base/base/mastodon.secret
+              subPath: mastodon.secret
+              readOnly: true
+      volumes:
+        - name: {{ .Release.Name }}-waktusolat-site-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-site-config
+        - name: {{ .Release.Name }}-waktusolat-token-secret
+          secret:
+            secretName: {{ .Release.Name }}-waktusolat-token-secret
