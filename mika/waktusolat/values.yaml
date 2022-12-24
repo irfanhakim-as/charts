@@ -11,27 +11,47 @@ image:
     tag: ""
     pullPolicy: IfNotPresent
 
+# Waktu Solat configuration
 waktusolat:
-  debug: ""
-  location: ""
-  scheduler_timezone: ""
-  mastodon:
-    api: ""
-    token: ""
+  # Waktu Solat debug mode
+  debug: false
+  # Waktu Solat secret
   secret: ""
+  # Default location code
+  location: "wlp-0"
+  # Timezone of the background scheduler
+  scheduler_timezone: "Asia/Kuala_Lumpur"
+  # Mastodon configuration
+  mastodon:
+    # Base API URL
+    api: "https://botsin.space/"
+    # Mastodon token secret
+    token: ""
 
+# Database configuration
 db:
-  type: ""
+  # Database type
+  type: "postgresql"
+  # Database name
   name: ""
+  # Database user
   user: ""
+  # Database user password
   password: ""
-  host: ""
-  port: ""
+  # Database server
+  host: "postgres.default.svc.cluster.local"
+  # Database port
+  port: "5432"
 
+# Waktu Solat system resources
 resources:
   requests:
+    # Minimum CPU allocation
     cpu: "10m"
+    # Minimum memory allocation
     memory: "10Mi"
   limits:
+    # Maximum CPU allocation
     cpu: "100m"
+    # Maximum memory allocation
     memory: "100Mi"
