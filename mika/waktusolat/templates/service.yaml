@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-waktusolat-svc
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: waktusolat
+      protocol: TCP
+      name: {{ .Release.Name }}-waktusolat
+  selector:
+    {{- include "waktusolat.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,37 @@
+# Default values for waktusolat.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  waktusolat:
+    registry: ghcr.io
+    repository: irfanhakim-as/waktusolat
+    tag: ""
+    pullPolicy: IfNotPresent
+
+waktusolat:
+  debug: ""
+  location: ""
+  scheduler_timezone: ""
+  mastodon:
+    api: ""
+    token: ""
+  secret: ""
+
+db:
+  type: ""
+  name: ""
+  user: ""
+  password: ""
+  host: ""
+  port: ""
+
+resources:
+  requests:
+    cpu: "10m"
+    memory: "10Mi"
+  limits:
+    cpu: "100m"
+    memory: "100Mi"
