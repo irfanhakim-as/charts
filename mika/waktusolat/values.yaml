@@ -76,6 +76,6 @@ resources:
       memory: "10Mi"
     limits:
       # Maximum CPU allocation
-      cpu: "100m"
+      cpu: "50m"
       # Maximum memory allocation
-      memory: "100Mi"
+      memory: "50Mi"
