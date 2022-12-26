@@ -8,8 +8,10 @@ metadata:
 data:
   DEBUG: {{ .Values.waktusolat.debug | toString | quote }}
   LOCATION_CODE: {{ .Values.waktusolat.location | toString | quote }}
-  SCHEDULER_TIMEZONE: {{ .Values.waktusolat.scheduler_timezone | toString | quote }}
   API_BASE_URL: {{ .Values.waktusolat.mastodon.api | toString | quote }}
+  CELERY_BROKER: redis://{{ .Release.Name }}-waktusolat-redis-svc:6379/0
+  CELERY_BACKEND: redis://{{ .Release.Name }}-waktusolat-redis-svc:6379/0
+  CELERY_TIMEZONE: {{ .Values.waktusolat.celery_timezone | toString | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

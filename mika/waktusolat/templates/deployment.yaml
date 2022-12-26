@@ -42,16 +42,26 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-waktusolat-cm
                   key: LOCATION_CODE
-            - name: SCHEDULER_TIMEZONE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-cm
-                  key: SCHEDULER_TIMEZONE
             - name: API_BASE_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-waktusolat-cm
                   key: API_BASE_URL
+            - name: CELERY_BROKER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: CELERY_BROKER
+            - name: CELERY_BACKEND
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: CELERY_BACKEND
+            - name: CELERY_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: CELERY_TIMEZONE
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:

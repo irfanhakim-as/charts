@@ -25,7 +25,7 @@ waktusolat:
   # Default location code
   location: "wlp-0"
   # Timezone of the background scheduler
-  scheduler_timezone: "Asia/Kuala_Lumpur"
+  celery_timezone: "Asia/Kuala_Lumpur"
   # Mastodon configuration
   mastodon:
     # Base API URL
