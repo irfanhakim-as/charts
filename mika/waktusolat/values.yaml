@@ -11,6 +11,11 @@ image:
     repository: irfanhakim-as/waktusolat
     tag: ""
     pullPolicy: IfNotPresent
+  redis:
+    registry: docker.io
+    repository: redis
+    tag: "alpine"
+    pullPolicy: IfNotPresent
 
 # Image pull secrets for private registries
 imagePullSecrets:
@@ -25,7 +30,7 @@ waktusolat:
   # Default location code
   location: "wlp-0"
   # Timezone of the background scheduler
-  scheduler_timezone: "Asia/Kuala_Lumpur"
+  celery_timezone: "Asia/Kuala_Lumpur"
   # Mastodon configuration
   mastodon:
     # Base API URL
@@ -50,13 +55,27 @@ db:
 
 # Waktu Solat system resources
 resources:
-  requests:
-    # Minimum CPU allocation
-    cpu: "10m"
-    # Minimum memory allocation
-    memory: "10Mi"
-  limits:
-    # Maximum CPU allocation
-    cpu: "100m"
-    # Maximum memory allocation
-    memory: "100Mi"
+  # Waktu Solat container resources
+  waktusolat:
+    requests:
+      # Minimum CPU allocation
+      cpu: "10m"
+      # Minimum memory allocation
+      memory: "10Mi"
+    limits:
+      # Maximum CPU allocation
+      cpu: "100m"
+      # Maximum memory allocation
+      memory: "250Mi"
+  # Redis container resources
+  redis:
+    requests:
+      # Minimum CPU allocation
+      cpu: "10m"
+      # Minimum memory allocation
+      memory: "10Mi"
+    limits:
+      # Maximum CPU allocation
+      cpu: "50m"
+      # Maximum memory allocation
+      memory: "50Mi"

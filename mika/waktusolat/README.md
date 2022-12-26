@@ -83,18 +83,26 @@ helm uninstall $release_name --namespace $namespace --wait
 | db.port | string | `"5432"` | Database port |
 | db.type | string | `"postgresql"` | Database type |
 | db.user | string | `""` | Database user |
+| image.redis.pullPolicy | string | `"IfNotPresent"` | Redis image pull policy |
+| image.redis.registry | string | `"docker.io"` | Redis image registry |
+| image.redis.repository | string | `"redis"` | Redis image repository |
+| image.redis.tag | string | `"alpine"` | Redis image version |
 | image.waktusolat.pullPolicy | string | `"IfNotPresent"` | Waktu Solat image pull policy |
 | image.waktusolat.registry | string | `"ghcr.io"` | Waktu Solat image registry |
 | image.waktusolat.repository | string | `"irfanhakim-as/waktusolat"` | Waktu Solat image repository |
 | image.waktusolat.tag | string | `""` | Waktu Solat image version |
 | imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Image pull secret name |
-| resources.limits.cpu | string | `"100m"` | Maximum cpu allocation |
-| resources.limits.memory | string | `"100Mi"` | Maximum memory allocation |
-| resources.requests.cpu | string | `"10m"` | Minimum cpu allocation |
-| resources.requests.memory | string | `"10Mi"` | Minimum memory allocation |
+| resources.redis.limits.cpu | string | `"50m"` | Redis maximum cpu allocation |
+| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
+| resources.redis.requests.cpu | string | `"10m"` | Redis minimum cpu allocation |
+| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
+| resources.waktusolat.limits.cpu | string | `"100m"` | Waktu Solat maximum cpu allocation |
+| resources.waktusolat.limits.memory | string | `"250Mi"` | Waktu Solat maximum memory allocation |
+| resources.waktusolat.requests.cpu | string | `"10m"` | Waktu Solat minimum cpu allocation |
+| resources.waktusolat.requests.memory | string | `"10Mi"` | Waktu Solat minimum memory allocation |
+| waktusolat.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Timezone of the background scheduler |
 | waktusolat.debug | bool | `false` | Waktu Solat debug mode |
 | waktusolat.location | string | `"wlp-0"` | Default location code |
 | waktusolat.mastodon.api | string | `"https://botsin.space/"` | Mastodon base API URL |
 | waktusolat.mastodon.token | string | `""` | Mastodon token secret |
-| waktusolat.scheduler_timezone | string | `"Asia/Kuala_Lumpur"` | Timezone of the background scheduler |
 | waktusolat.secret | string | `""` | Waktu Solat secret key |
