@@ -11,6 +11,12 @@ image:
     tag: ""
     pullPolicy: IfNotPresent
   
+  redis:
+    registry: docker.io
+    repository: redis
+    tag: "alpine"
+    pullPolicy: IfNotPresent
+  
   ngrok:
     registry: docker.io
     repository: wernight/ngrok
@@ -51,9 +57,17 @@ pvc:
     storageClassName: "longhorn" # log files storage class name
 
 resources:
-  requests:
-    cpu: "10m" # telego cpu request
-    memory: "10Mi" # telego memory request
-  limits:
-    cpu: "100m" # telego cpu limit
-    memory: "100Mi" # telego memory limit
+  telego:
+    requests:
+      cpu: "10m" # telego cpu request
+      memory: "10Mi" # telego memory request
+    limits:
+      cpu: "100m" # telego cpu limit
+      memory: "100Mi" # telego memory limit
+  redis:
+    requests:
+      cpu: "10m" # redis cpu request
+      memory: "10Mi" # redis memory request
+    limits:
+      cpu: "50m" # redis cpu limit
+      memory: "50Mi" # redis memory limit

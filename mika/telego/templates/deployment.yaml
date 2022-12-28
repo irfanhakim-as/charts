@@ -31,7 +31,7 @@ spec:
               containerPort: 80
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.telego | nindent 12 }}
           env:
             - name: APP_NAME
               valueFrom:
@@ -179,3 +179,33 @@ spec:
         - name: {{ .Release.Name }}-telego-logs
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-telego-logs-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-telego-redis
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "telego.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "telego.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: redis
+          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
