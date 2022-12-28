@@ -100,6 +100,21 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-telego-cm
                   key: NGROK
+            - name: CELERY_BROKER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: CELERY_BROKER
+            - name: CELERY_BACKEND
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: CELERY_BACKEND
+            - name: CELERY_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: CELERY_TIMEZONE
             {{- if .Values.telego.cloudflared.enabled }}
             - name: ALLOWED_HOSTS
               valueFrom:

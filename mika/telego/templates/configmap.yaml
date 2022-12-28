@@ -9,6 +9,9 @@ data:
   APP_NAME: {{ .Values.telego.name | toString | quote }}
   DEBUG: {{ .Values.telego.debug | toString | quote }}
   DJANGO_WEBHOOK_URI: {{ .Values.telego.webhook | toString | quote }}
+  CELERY_BROKER: redis://{{ .Release.Name }}-telego-redis-svc
+  CELERY_BACKEND: redis://{{ .Release.Name }}-telego-redis-svc
+  CELERY_TIMEZONE: {{ .Values.telego.celery_timezone | toString | quote }}
   NGROK: {{ .Values.telego.ngrok.enabled | toString | quote }}
   {{- if .Values.telego.cloudflared.enabled }}
   DOMAIN: {{ .Values.telego.cloudflared.domain | toString | quote }}

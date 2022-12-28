@@ -24,6 +24,7 @@ telego:
   name: "Telego" # telego name
   debug: false # django debug mode
   secret: "" # django secret key
+  celery_timezone: "Asia/Kuala_Lumpur" # scheduler timezone
   telegram:
     token: "" # telegram bot token
     webhook: "telegram/webhooks/" # telegram webhook path
