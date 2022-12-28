@@ -63,7 +63,7 @@ resources:
       memory: "10Mi" # telego memory request
     limits:
       cpu: "100m" # telego cpu limit
-      memory: "100Mi" # telego memory limit
+      memory: "300Mi" # telego memory limit
   redis:
     requests:
       cpu: "10m" # redis cpu request
