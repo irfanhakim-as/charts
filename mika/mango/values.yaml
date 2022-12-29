@@ -27,6 +27,8 @@ mango:
   debug: false
   # Mango secret key
   secret: ""
+  # Mango support email address
+  support: "support@mikahomelab.com"
   # Timezone of the background scheduler
   celery_timezone: "Asia/Kuala_Lumpur"
   # Mastodon configuration

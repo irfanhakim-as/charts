@@ -23,7 +23,7 @@ data:
     <VirtualHost *:80>
       {{ "ServerName $domain:443" | replace "$domain" $domain }}
       UseCanonicalName On
-      ServerAdmin support@mikahomelab.com
+      ServerAdmin {{ .Values.mango.support | toString }}
       DocumentRoot /base
       WSGIScriptAlias / /base/base/wsgi.py
       {{ "WSGIDaemonProcess $domain python-path=/base" | replace "$domain" $domain }}
