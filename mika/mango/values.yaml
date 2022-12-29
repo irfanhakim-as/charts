@@ -1,0 +1,81 @@
+# Default values for mango.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# Mango image configuration
+image:
+  mango:
+    registry: ghcr.io
+    repository: irfanhakim-as/mango
+    tag: ""
+    pullPolicy: IfNotPresent
+  redis:
+    registry: docker.io
+    repository: redis
+    tag: "alpine"
+    pullPolicy: IfNotPresent
+
+# Image pull secrets for private registries
+imagePullSecrets:
+  - name: ghcr-token-secret
+
+# Mango configuration
+mango:
+  # Mango debug mode
+  debug: false
+  # Mango secret key
+  secret: ""
+  # Default location code
+  location: "wlp-0"
+  # Timezone of the background scheduler
+  celery_timezone: "Asia/Kuala_Lumpur"
+  # Mastodon configuration
+  mastodon:
+    # Base API URL
+    api: "https://botsin.space/"
+    # Mastodon token secret
+    token: ""
+
+# Database configuration
+db:
+  # Database type
+  type: "postgresql"
+  # Database name
+  name: ""
+  # Database user
+  user: ""
+  # Database user password
+  password: ""
+  # Database server
+  host: "postgres.default.svc.cluster.local"
+  # Database port
+  port: "5432"
+
+# Mango system resources
+resources:
+  # Mango container resources
+  mango:
+    requests:
+      # Minimum CPU allocation
+      cpu: "10m"
+      # Minimum memory allocation
+      memory: "10Mi"
+    limits:
+      # Maximum CPU allocation
+      cpu: "100m"
+      # Maximum memory allocation
+      memory: "250Mi"
+  # Redis container resources
+  redis:
+    requests:
+      # Minimum CPU allocation
+      cpu: "10m"
+      # Minimum memory allocation
+      memory: "10Mi"
+    limits:
+      # Maximum CPU allocation
+      cpu: "50m"
+      # Maximum memory allocation
+      memory: "50Mi"
