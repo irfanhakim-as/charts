@@ -102,59 +102,10 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            - name: {{ .Release.Name }}-waktusolat-celeryd
-              mountPath: /etc/default/celeryd
-              subPath: celeryd
-            - name: {{ .Release.Name }}-waktusolat-celeryd-initd
-              mountPath: /etc/init.d/celeryd
-              subPath: celeryd
-            - name: {{ .Release.Name }}-waktusolat-celerybeat-initd
-              mountPath: /etc/init.d/celerybeat
-              subPath: celerybeat
             - name: {{ .Release.Name }}-waktusolat-token-secret
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
               readOnly: true
-      volumes:
-        - name: {{ .Release.Name }}-waktusolat-site-config
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-site-config
-        - name: {{ .Release.Name }}-waktusolat-celeryd
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-celeryd
-            defaultMode: 0640
-        - name: {{ .Release.Name }}-waktusolat-celeryd-initd
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-celeryd-initd
-            defaultMode: 0755
-        - name: {{ .Release.Name }}-waktusolat-celerybeat-initd
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-celerybeat-initd
-            defaultMode: 0755
-        - name: {{ .Release.Name }}-waktusolat-token-secret
-          secret:
-            secretName: {{ .Release.Name }}-waktusolat-token-secret
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Release.Name }}-waktusolat-redis
-  labels:
-    {{- include "waktusolat.labels" . | nindent 4 }}
-spec:
-  selector:
-    matchLabels:
-      {{- include "waktusolat.selectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      labels:
-        {{- include "waktusolat.selectorLabels" . | nindent 8 }}
-    spec:
-      containers:
         - name: redis
           image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
@@ -164,3 +115,10 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.redis | nindent 12 }}
+      volumes:
+        - name: {{ .Release.Name }}-waktusolat-site-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-site-config
+        - name: {{ .Release.Name }}-waktusolat-token-secret
+          secret:
+            secretName: {{ .Release.Name }}-waktusolat-token-secret
