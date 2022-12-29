@@ -214,6 +214,30 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
     version: 0.1.0
+  mango:
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2022-12-29T17:30:52.275283367Z"
+    description: Mango is an easy to use Mastodon bot framework built on top of Django.
+    digest: 46e7f8d71d8d742ffe258f39674cfa0af357076d2d232e391e30dfb89f1bc249
+    home: https://github.com/irfanhakim-as/mango
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - mango
+    - django
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mango
+    sources:
+    - https://github.com/irfanhakim-as/mango
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mango-0.1.0/mango-0.1.0.tgz
+    version: 0.1.0
   postgres:
   - apiVersion: v2
     appVersion: "13.3"
@@ -944,4 +968,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-29T12:22:22.255047163Z"
+generated: "2022-12-29T17:30:52.275363266Z"
