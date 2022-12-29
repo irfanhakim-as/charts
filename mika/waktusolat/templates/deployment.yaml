@@ -102,15 +102,6 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            - name: {{ .Release.Name }}-waktusolat-celeryd
-              mountPath: /etc/default/celeryd
-              subPath: celeryd
-            - name: {{ .Release.Name }}-waktusolat-celeryd-initd
-              mountPath: /etc/init.d/celeryd
-              subPath: celeryd
-            - name: {{ .Release.Name }}-waktusolat-celerybeat-initd
-              mountPath: /etc/init.d/celerybeat
-              subPath: celerybeat
             - name: {{ .Release.Name }}-waktusolat-token-secret
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
@@ -128,18 +119,6 @@ spec:
         - name: {{ .Release.Name }}-waktusolat-site-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-site-config
-        - name: {{ .Release.Name }}-waktusolat-celeryd
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-celeryd
-            defaultMode: 0640
-        - name: {{ .Release.Name }}-waktusolat-celeryd-initd
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-celeryd-initd
-            defaultMode: 0755
-        - name: {{ .Release.Name }}-waktusolat-celerybeat-initd
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-celerybeat-initd
-            defaultMode: 0755
         - name: {{ .Release.Name }}-waktusolat-token-secret
           secret:
             secretName: {{ .Release.Name }}-waktusolat-token-secret
