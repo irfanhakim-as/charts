@@ -141,6 +141,15 @@ spec:
             {{- end }}
             - name: {{ .Release.Name }}-telego-logs
               mountPath: /telego/logs
+        - name: redis
+          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
         {{- if .Values.telego.ngrok.enabled }}
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
@@ -179,33 +188,3 @@ spec:
         - name: {{ .Release.Name }}-telego-logs
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-telego-logs-pvc
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Release.Name }}-telego-redis
-  labels:
-    {{- include "telego.labels" . | nindent 4 }}
-spec:
-  selector:
-    matchLabels:
-      {{- include "telego.selectorLabels" . | nindent 6 }}
-  template:
-    metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      labels:
-        {{- include "telego.selectorLabels" . | nindent 8 }}
-    spec:
-      containers:
-        - name: redis
-          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
-          ports:
-            - name: redis
-              containerPort: 6379
-              protocol: TCP
-          resources:
-            {{- toYaml .Values.resources.redis | nindent 12 }}
