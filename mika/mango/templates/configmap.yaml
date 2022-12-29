@@ -7,7 +7,6 @@ metadata:
     {{- include "mango.labels" . | nindent 4 }}
 data:
   DEBUG: {{ .Values.mango.debug | toString | quote }}
-  LOCATION_CODE: {{ .Values.mango.location | toString | quote }}
   API_BASE_URL: {{ .Values.mango.mastodon.api | toString | quote }}
   CELERY_BROKER: redis://{{ .Release.Name }}-mango-svc
   CELERY_BACKEND: redis://{{ .Release.Name }}-mango-svc

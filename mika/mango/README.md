@@ -102,7 +102,6 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.mango.requests.memory | string | `"10Mi"` | Mango minimum memory allocation |
 | mango.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Timezone of the background scheduler |
 | mango.debug | bool | `false` | Mango debug mode |
-| mango.location | string | `"wlp-0"` | Default location code |
 | mango.mastodon.api | string | `"https://botsin.space/"` | Mastodon base API URL |
 | mango.mastodon.token | string | `""` | Mastodon token secret |
 | mango.secret | string | `""` | Mango secret key |

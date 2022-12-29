@@ -37,11 +37,6 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-mango-cm
                   key: DEBUG
-            - name: LOCATION_CODE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-mango-cm
-                  key: LOCATION_CODE
             - name: API_BASE_URL
               valueFrom:
                 configMapKeyRef:

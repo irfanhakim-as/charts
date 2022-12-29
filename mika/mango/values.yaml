@@ -27,8 +27,6 @@ mango:
   debug: false
   # Mango secret key
   secret: ""
-  # Default location code
-  location: "wlp-0"
   # Timezone of the background scheduler
   celery_timezone: "Asia/Kuala_Lumpur"
   # Mastodon configuration
