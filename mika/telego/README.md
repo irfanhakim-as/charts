@@ -201,6 +201,10 @@ Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 | image.ngrok.registry | string | `"docker.io"` | Ngrok image registry |
 | image.ngrok.repository | string | `"wernight/ngrok"` | Ngrok image repository |
 | image.ngrok.tag | string | `"latest"` | Ngrok image version |
+| image.redis.pullPolicy | string | `"IfNotPresent"` | Redis image pull policy |
+| image.redis.registry | string | `"docker.io"` | Redis image registry |
+| image.redis.repository | string | `"redis"` | Redis image repository |
+| image.redis.tag | string | `"alpine"` | Redis image version |
 | image.telego.pullPolicy | string | `"IfNotPresent"` | Telego image pull policy |
 | image.telego.registry | string | `"ghcr.io"` | Telego image registry |
 | image.telego.repository | string | `"irfanhakim-as/telego"` | Telego image repository |
@@ -208,10 +212,15 @@ Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 | imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Name of the image pull secret |
 | pvc.logs.storage | string | `"10Mi"` | Log files storage size |
 | pvc.logs.storageClassName | string | `"longhorn"` | Log files storage class name |
-| resources.limits.cpu | string | `"100m"` | Maximum CPU allocation |
-| resources.limits.memory | string | `"100Mi"` | Maximum memory allocation |
-| resources.requests.cpu | string | `"10m"` | Minimum CPU allocation |
-| resources.requests.memory | string | `"10Mi"` | Minimum memory allocation |
+| resources.redis.limits.cpu | string | `"50m"` | Redis maximum CPU allocation |
+| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
+| resources.redis.requests.cpu | string | `"10m"` | Redis minimum CPU allocation |
+| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
+| resources.telego.limits.cpu | string | `"100m"` | Telego maximum CPU allocation |
+| resources.telego.limits.memory | string | `"300Mi"` | Telego maximum memory allocation |
+| resources.telego.requests.cpu | string | `"10m"` | Telego minimum CPU allocation |
+| resources.telego.requests.memory | string | `"10Mi"` | Telego minimum memory allocation |
+| telego.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Background scheduler timezone |
 | telego.cloudflared.domain | string | `""` | Telego domain |
 | telego.cloudflared.enabled | bool | `false` | Enable cloudflare tunnel |
 | telego.commands | file | `""` | Custom `commands.py` file |
