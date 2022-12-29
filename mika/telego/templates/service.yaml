@@ -11,5 +11,9 @@ spec:
       targetPort: telego
       protocol: TCP
       name: {{ .Release.Name }}-telego
+    - port: 6379
+      targetPort: redis
+      protocol: TCP
+      name: {{ .Release.Name }}-redis
   selector:
     {{- include "telego.selectorLabels" . | nindent 4 }}

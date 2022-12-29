@@ -31,7 +31,7 @@ spec:
               containerPort: 80
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.telego | nindent 12 }}
           env:
             - name: APP_NAME
               valueFrom:
@@ -100,6 +100,21 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-telego-cm
                   key: NGROK
+            - name: CELERY_BROKER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: CELERY_BROKER
+            - name: CELERY_BACKEND
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: CELERY_BACKEND
+            - name: CELERY_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-telego-cm
+                  key: CELERY_TIMEZONE
             {{- if .Values.telego.cloudflared.enabled }}
             - name: ALLOWED_HOSTS
               valueFrom:
@@ -126,6 +141,15 @@ spec:
             {{- end }}
             - name: {{ .Release.Name }}-telego-logs
               mountPath: /telego/logs
+        - name: redis
+          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
         {{- if .Values.telego.ngrok.enabled }}
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
