@@ -33,6 +33,8 @@ mango:
   celery_timezone: "Asia/Kuala_Lumpur"
   # Mastodon configuration
   mastodon:
+    # ID of the bot account
+    id: "mango"
     # Base API URL
     api: "https://botsin.space/"
     # Mastodon token secret

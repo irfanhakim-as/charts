@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "mango.labels" . | nindent 4 }}
 data:
+  BOT_ID: {{ .Values.mango.mastodon.id | toString | quote }}
   DEBUG: {{ .Values.mango.debug | toString | quote }}
   API_BASE_URL: {{ .Values.mango.mastodon.api | toString | quote }}
   CELERY_BROKER: redis://{{ .Release.Name }}-mango-svc

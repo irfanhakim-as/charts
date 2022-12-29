@@ -32,6 +32,11 @@ spec:
           resources:
             {{- toYaml .Values.resources.mango | nindent 12 }}
           env:
+            - name: BOT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-mango-cm
+                  key: BOT_ID
             - name: DEBUG
               valueFrom:
                 configMapKeyRef:
