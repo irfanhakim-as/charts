@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mango
+  labels:
+    {{- include "mango.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "mango.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mango.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: mango
+          image: "{{ .Values.image.mango.registry }}/{{ .Values.image.mango.repository }}:{{ .Values.image.mango.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.mango.pullPolicy }}
+          ports:
+            - name: mango
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.mango | nindent 12 }}
+          env:
+            - name: BOT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-mango-cm
+                  key: BOT_ID
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-mango-cm
+                  key: DEBUG
+            - name: API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-mango-cm
+                  key: API_BASE_URL
+            - name: CELERY_BROKER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-mango-cm
+                  key: CELERY_BROKER
+            - name: CELERY_BACKEND
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-mango-cm
+                  key: CELERY_BACKEND
+            - name: CELERY_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-mango-cm
+                  key: CELERY_TIMEZONE
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mango-secret
+                  key: SECRET_KEY
+            - name: DB_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mango-secret
+                  key: DB_TYPE
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mango-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mango-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mango-secret
+                  key: DB_PASS
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mango-secret
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mango-secret
+                  key: DB_PORT
+          volumeMounts:
+            - name: {{ .Release.Name }}-mango-site-config
+              mountPath: /etc/apache2/sites-available/000-default.conf
+              subPath: site-config.conf
+              readOnly: true
+            - name: {{ .Release.Name }}-mango-token-secret
+              mountPath: /base/base/mastodon.secret
+              subPath: mastodon.secret
+              readOnly: true
+        - name: redis
+          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
+      volumes:
+        - name: {{ .Release.Name }}-mango-site-config
+          configMap:
+            name: {{ .Release.Name }}-mango-site-config
+        - name: {{ .Release.Name }}-mango-token-secret
+          secret:
+            secretName: {{ .Release.Name }}-mango-token-secret

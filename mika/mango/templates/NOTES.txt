@@ -1,0 +1,1 @@
+mango is now installed and configured for {{ .Release.Name }}.

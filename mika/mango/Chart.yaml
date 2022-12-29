@@ -1,0 +1,19 @@
+apiVersion: v2
+name: mango
+description: Mango is an easy to use Mastodon bot framework built on top of Django.
+type: application
+version: 0.1.0
+appVersion: "0.0.1-stable"
+keywords:
+  - mango
+  - django
+  - mastodon
+home: https://github.com/irfanhakim-as/mango
+icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+sources:
+  - https://github.com/irfanhakim-as/mango
+  - https://github.com/irfanhakim-as/charts
+maintainers:
+  - name: Irfan Hakim
+    email: irfanhakim.as@yahoo.com
+    url: https://github.com/irfanhakim-as
