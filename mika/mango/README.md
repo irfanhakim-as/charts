@@ -83,25 +83,27 @@ helm uninstall $release_name --namespace $namespace --wait
 | db.port | string | `"5432"` | Database port |
 | db.type | string | `"postgresql"` | Database type |
 | db.user | string | `""` | Database user |
-| image.redis.pullPolicy | string | `"IfNotPresent"` | Redis image pull policy |
-| image.redis.registry | string | `"docker.io"` | Redis image registry |
-| image.redis.repository | string | `"redis"` | Redis image repository |
-| image.redis.tag | string | `"alpine"` | Redis image version |
 | image.mango.pullPolicy | string | `"IfNotPresent"` | Mango image pull policy |
 | image.mango.registry | string | `"ghcr.io"` | Mango image registry |
 | image.mango.repository | string | `"irfanhakim-as/mango"` | Mango image repository |
 | image.mango.tag | string | `""` | Mango image version |
+| image.redis.pullPolicy | string | `"IfNotPresent"` | Redis image pull policy |
+| image.redis.registry | string | `"docker.io"` | Redis image registry |
+| image.redis.repository | string | `"redis"` | Redis image repository |
+| image.redis.tag | string | `"alpine"` | Redis image version |
 | imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Image pull secret name |
-| resources.redis.limits.cpu | string | `"50m"` | Redis maximum cpu allocation |
-| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
-| resources.redis.requests.cpu | string | `"10m"` | Redis minimum cpu allocation |
-| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
+| mango.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Timezone of the background scheduler |
+| mango.debug | bool | `false` | Mango debug mode |
+| mango.mastodon.api | string | `"https://botsin.space/"` | Mastodon base API URL |
+| mango.mastodon.id | string | `"mango"` | Mastodon bot ID |
+| mango.mastodon.token | string | `""` | Mastodon token secret |
+| mango.secret | string | `""` | Mango secret key |
+| mango.support | string | `"support@mikahomelab.com"` | Support email address |
 | resources.mango.limits.cpu | string | `"100m"` | Mango maximum cpu allocation |
 | resources.mango.limits.memory | string | `"250Mi"` | Mango maximum memory allocation |
 | resources.mango.requests.cpu | string | `"10m"` | Mango minimum cpu allocation |
 | resources.mango.requests.memory | string | `"10Mi"` | Mango minimum memory allocation |
-| mango.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Timezone of the background scheduler |
-| mango.debug | bool | `false` | Mango debug mode |
-| mango.mastodon.api | string | `"https://botsin.space/"` | Mastodon base API URL |
-| mango.mastodon.token | string | `""` | Mastodon token secret |
-| mango.secret | string | `""` | Mango secret key |
+| resources.redis.limits.cpu | string | `"50m"` | Redis maximum cpu allocation |
+| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
+| resources.redis.requests.cpu | string | `"10m"` | Redis minimum cpu allocation |
+| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
