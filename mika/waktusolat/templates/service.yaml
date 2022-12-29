@@ -11,21 +11,9 @@ spec:
       targetPort: waktusolat
       protocol: TCP
       name: {{ .Release.Name }}-waktusolat
-  selector:
-    {{- include "waktusolat.selectorLabels" . | nindent 4 }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Release.Name }}-waktusolat-redis-svc
-  labels:
-    {{- include "waktusolat.labels" . | nindent 4 }}
-spec:
-  type: ClusterIP
-  ports:
     - port: 6379
       targetPort: redis
       protocol: TCP
-      name: {{ .Release.Name }}-waktusolat-redis
+      name: {{ .Release.Name }}-redis
   selector:
     {{- include "waktusolat.selectorLabels" . | nindent 4 }}
