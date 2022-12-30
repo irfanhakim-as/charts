@@ -176,9 +176,6 @@ spec:
         - name: {{ .Release.Name }}-vpbot-site-config
           configMap:
             name: {{ .Release.Name }}-vpbot-site-config
-            items:
-              - key: site-config.conf
-                path: site-config.conf
         - name: {{ .Release.Name }}-vpbot-static
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-vpbot-static-pvc
