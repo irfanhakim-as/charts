@@ -21,16 +21,6 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-vpbot-postgres-cm
-  labels:
-    {{- include "vpbot.labels" . | nindent 4 }}
-data:
-  DB_HOST: "{{ .Values.db.host | toString }}"
-  DB_NAME: "{{ .Values.db.name | toString }}"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: {{ .Release.Name }}-vpbot-site-config
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}

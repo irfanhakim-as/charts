@@ -113,13 +113,13 @@ spec:
             {{- end }}
             - name: POSTGRES_HOST
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
                   key: DB_HOST
             - name: POSTGRES_DB
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
                   key: DB_NAME
             - name: POSTGRES_USER
               valueFrom:
