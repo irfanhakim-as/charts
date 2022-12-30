@@ -30,18 +30,38 @@ spec:
               containerPort: 80
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.vpbot | nindent 12 }}
           env:
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-secret
                   key: SECRET_KEY
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: APP_NAME
             - name: DEBUG
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-cm
                   key: DEBUG
+            - name: CELERY_BROKER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: CELERY_BROKER
+            - name: CELERY_BACKEND
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: CELERY_BACKEND
+            - name: CELERY_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: CELERY_TIMEZONE
             - name: NGROK
               valueFrom:
                 configMapKeyRef:
@@ -96,22 +116,32 @@ spec:
                   name: {{ .Release.Name }}-vpbot-secret
                   key: NGROK_AUTH_TOKEN
             {{- end }}
-            - name: POSTGRES_HOST
+            - name: DB_HOST
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
                   key: DB_HOST
-            - name: POSTGRES_DB
+            - name: DB_TYPE
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
+                  key: DB_TYPE
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
+                  key: DB_PORT
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
                   key: DB_NAME
-            - name: POSTGRES_USER
+            - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-postgres-secret
                   key: DB_USER
-            - name: POSTGRES_PASSWORD
+            - name: DB_PASS
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-postgres-secret
@@ -127,6 +157,15 @@ spec:
               mountPath: /quarantine-bot/logs
             - name: {{ .Release.Name }}-vpbot-migrations
               mountPath: /quarantine-bot/quarantine_bot/migrations
+        - name: redis
+          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
         {{- if .Values.vpbot.ngrok.enabled }}
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
@@ -152,9 +191,6 @@ spec:
         - name: {{ .Release.Name }}-vpbot-site-config
           configMap:
             name: {{ .Release.Name }}-vpbot-site-config
-            items:
-              - key: site-config.conf
-                path: site-config.conf
         - name: {{ .Release.Name }}-vpbot-static
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-vpbot-static-pvc

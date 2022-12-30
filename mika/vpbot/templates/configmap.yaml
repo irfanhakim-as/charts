@@ -6,24 +6,18 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
-  DEBUG: "{{ .Values.vpbot.debug | toString }}"
-  NGROK: "{{ .Values.vpbot.ngrok.enabled | toString }}"
+  APP_NAME: {{ .Values.vpbot.name | toString | quote }}
+  DEBUG: {{ .Values.vpbot.debug | toString | quote }}
+  CELERY_BROKER: redis://{{ .Release.Name }}-vpbot-svc
+  CELERY_BACKEND: redis://{{ .Release.Name }}-vpbot-svc
+  CELERY_TIMEZONE: {{ .Values.vpbot.celery_timezone | toString | quote }}
+  NGROK: {{ .Values.vpbot.ngrok.enabled | toString | quote }}
   {{- if .Values.vpbot.cloudflared.enabled }}
-  DOMAIN: "{{ $domain }}"
+  DOMAIN: {{ $domain | quote }}
   {{- end }}
-  DJANGO_WEBHOOK_URI: "{{ .Values.telegram.webhook | toString }}"
-  LOG_SIZE_LIMIT: "{{ .Values.vpbot.log_size_limit | toString }}"
-  APP_VERSION: "{{ .Values.image.vpbot.tag | default .Chart.AppVersion | toString }}"
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-vpbot-postgres-cm
-  labels:
-    {{- include "vpbot.labels" . | nindent 4 }}
-data:
-  DB_HOST: "{{ .Values.db.host | toString }}"
-  DB_NAME: "{{ .Values.db.name | toString }}"
+  DJANGO_WEBHOOK_URI: {{ .Values.telegram.webhook | toString | quote }}
+  LOG_SIZE_LIMIT: {{ .Values.vpbot.log_size_limit | toString | quote }}
+  APP_VERSION: {{ .Values.image.vpbot.tag | default .Chart.AppVersion | toString | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

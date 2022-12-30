@@ -11,6 +11,12 @@ image:
     tag: ""
     pullPolicy: IfNotPresent
   
+  redis:
+    registry: docker.io
+    repository: redis
+    tag: "alpine"
+    pullPolicy: IfNotPresent
+  
   ngrok:
     registry: docker.io
     repository: wernight/ngrok
@@ -21,28 +27,32 @@ imagePullSecrets:
   - name: ghcr-token-secret # name of the secret containing the token to access the vpbot image
 
 vpbot:
+  name: "Vpbot" # application name
   debug: false # django debug mode
   log_size_limit: "4" # log file size limit in MiB
-  secret: "secret" # django secret key
-  user_pass: "secret" # default user password
+  secret: "" # django secret key
+  user_pass: "" # default user password
+  celery_timezone: "Asia/Kuala_Lumpur" # scheduler timezone
   ngrok:
     enabled: false # enable ngrok
-    auth_token: "secret" # ngrok auth token
+    auth_token: "" # ngrok auth token
   cloudflared:
     enabled: true # enable cloudflared
     domain: "" # cloudflared domain
 
 telegram:
   webhook: "telegram/webhooks/" # telegram webhook path
-  token: "secret" # telegram bot token
-  admin_id: "secret" # admin telegram chat id
-  devel_id: "secret" # admin telegram chat id
+  token: "" # telegram bot token
+  admin_id: "" # admin telegram chat id
+  devel_id: "" # admin telegram chat id
 
 db:
-  host: "postgres.default.svc.cluster.local" # remote postgres host
-  name: "vpbot" # vpbot postgres database name
-  user: "secret" # remote postgres user
-  pass: "secret" # remote postgres user password
+  host: "postgres.default.svc.cluster.local" # database host
+  type: "postgresql" # database type
+  port: "5432" # database port
+  name: "" # database name
+  user: "" # database user
+  pass: "" # database user password
 
 pvc:
   static:
@@ -56,9 +66,17 @@ pvc:
     storageClassName: "longhorn" # migrations files storage class name
 
 resources:
-  requests:
-    cpu: "10m" # vpbot cpu request
-    memory: "10Mi" # vpbot memory request
-  limits:
-    cpu: "1" # vpbot cpu limit
-    memory: "1Gi" # vpbot memory limit
+  vpbot:
+    requests:
+      cpu: "10m" # vpbot cpu request
+      memory: "10Mi" # vpbot memory request
+    limits:
+      cpu: "1" # vpbot cpu limit
+      memory: "1Gi" # vpbot memory limit
+  redis:
+    requests:
+      cpu: "10m" # redis cpu request
+      memory: "10Mi" # redis memory request
+    limits:
+      cpu: "50m" # redis cpu limit
+      memory: "50Mi" # redis memory limit

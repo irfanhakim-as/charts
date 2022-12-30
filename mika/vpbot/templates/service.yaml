@@ -11,5 +11,9 @@ spec:
       targetPort: vpbot
       protocol: TCP
       name: {{ .Release.Name }}-vpbot
+    - port: 6379
+      targetPort: redis
+      protocol: TCP
+      name: {{ .Release.Name }}-redis
   selector:
     {{- include "vpbot.selectorLabels" . | nindent 4 }}
