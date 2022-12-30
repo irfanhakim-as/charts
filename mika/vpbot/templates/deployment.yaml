@@ -42,6 +42,21 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-cm
                   key: DEBUG
+            - name: CELERY_BROKER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: CELERY_BROKER
+            - name: CELERY_BACKEND
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: CELERY_BACKEND
+            - name: CELERY_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: CELERY_TIMEZONE
             - name: NGROK
               valueFrom:
                 configMapKeyRef:

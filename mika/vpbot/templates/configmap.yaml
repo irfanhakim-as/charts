@@ -7,6 +7,9 @@ metadata:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
   DEBUG: "{{ .Values.vpbot.debug | toString }}"
+  CELERY_BROKER: redis://{{ .Release.Name }}-vpbot-svc
+  CELERY_BACKEND: redis://{{ .Release.Name }}-vpbot-svc
+  CELERY_TIMEZONE: {{ .Values.vpbot.celery_timezone | toString | quote }}
   NGROK: "{{ .Values.vpbot.ngrok.enabled | toString }}"
   {{- if .Values.vpbot.cloudflared.enabled }}
   DOMAIN: "{{ $domain }}"

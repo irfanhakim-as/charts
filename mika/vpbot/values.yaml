@@ -25,6 +25,7 @@ vpbot:
   log_size_limit: "4" # log file size limit in MiB
   secret: "secret" # django secret key
   user_pass: "secret" # default user password
+  celery_timezone: "Asia/Kuala_Lumpur" # scheduler timezone
   ngrok:
     enabled: false # enable ngrok
     auth_token: "secret" # ngrok auth token
