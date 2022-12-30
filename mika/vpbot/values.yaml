@@ -11,6 +11,12 @@ image:
     tag: ""
     pullPolicy: IfNotPresent
   
+  redis:
+    registry: docker.io
+    repository: redis
+    tag: "alpine"
+    pullPolicy: IfNotPresent
+  
   ngrok:
     registry: docker.io
     repository: wernight/ngrok
@@ -57,9 +63,17 @@ pvc:
     storageClassName: "longhorn" # migrations files storage class name
 
 resources:
-  requests:
-    cpu: "10m" # vpbot cpu request
-    memory: "10Mi" # vpbot memory request
-  limits:
-    cpu: "1" # vpbot cpu limit
-    memory: "1Gi" # vpbot memory limit
+  vpbot:
+    requests:
+      cpu: "10m" # vpbot cpu request
+      memory: "10Mi" # vpbot memory request
+    limits:
+      cpu: "1" # vpbot cpu limit
+      memory: "1Gi" # vpbot memory limit
+  redis:
+    requests:
+      cpu: "10m" # redis cpu request
+      memory: "10Mi" # redis memory request
+    limits:
+      cpu: "50m" # redis cpu limit
+      memory: "50Mi" # redis memory limit

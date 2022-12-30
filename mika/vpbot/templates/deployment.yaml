@@ -30,7 +30,7 @@ spec:
               containerPort: 80
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.vpbot | nindent 12 }}
           env:
             - name: SECRET_KEY
               valueFrom:
@@ -142,6 +142,15 @@ spec:
               mountPath: /quarantine-bot/logs
             - name: {{ .Release.Name }}-vpbot-migrations
               mountPath: /quarantine-bot/quarantine_bot/migrations
+        - name: redis
+          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
         {{- if .Values.vpbot.ngrok.enabled }}
         - name: ngrok
           image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
