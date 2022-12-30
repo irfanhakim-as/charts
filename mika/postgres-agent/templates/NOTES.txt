@@ -1,0 +1,1 @@
+postgres-agent job has been deployed for {{ .Release.Name }}.
