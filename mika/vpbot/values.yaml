@@ -47,12 +47,12 @@ telegram:
   devel_id: "" # admin telegram chat id
 
 db:
-  host: "postgres.default.svc.cluster.local" # remote postgres host
-  type: "postgresql" # vpbot database type
-  port: "5432" # vpbot database port
-  name: "" # vpbot postgres database name
-  user: "" # remote postgres user
-  pass: "" # remote postgres user password
+  host: "postgres.default.svc.cluster.local" # database host
+  type: "postgresql" # database type
+  port: "5432" # database port
+  name: "" # database name
+  user: "" # database user
+  pass: "" # database user password
 
 pvc:
   static:
