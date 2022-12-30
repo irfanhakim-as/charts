@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
+  APP_NAME: {{ .Values.vpbot.name | toString | quote }}
   DEBUG: {{ .Values.vpbot.debug | toString | quote }}
   CELERY_BROKER: redis://{{ .Release.Name }}-vpbot-svc
   CELERY_BACKEND: redis://{{ .Release.Name }}-vpbot-svc

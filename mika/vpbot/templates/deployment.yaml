@@ -37,6 +37,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-secret
                   key: SECRET_KEY
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-vpbot-cm
+                  key: APP_NAME
             - name: DEBUG
               valueFrom:
                 configMapKeyRef:

@@ -27,6 +27,7 @@ imagePullSecrets:
   - name: ghcr-token-secret # name of the secret containing the token to access the vpbot image
 
 vpbot:
+  name: "Vpbot" # application name
   debug: false # django debug mode
   log_size_limit: "4" # log file size limit in MiB
   secret: "" # django secret key
