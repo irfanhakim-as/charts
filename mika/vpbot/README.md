@@ -88,6 +88,8 @@ Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 | db.host | string | `"postgres.default.svc.cluster.local"` | Database server |
 | db.name | string | `""` | Database name |
 | db.pass | string | `""` | Database user password |
+| db.port | string | `"5432"` | Database port |
+| db.type | string | `"postgresql"` | Database type |
 | db.user | string | `""` | Database user |
 | image.ngrok.pullPolicy | string | `"IfNotPresent"` | Ngrok image pull policy |
 | image.ngrok.registry | string | `"docker.io"` | Ngrok image registry |

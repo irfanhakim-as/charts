@@ -48,6 +48,8 @@ telegram:
 
 db:
   host: "postgres.default.svc.cluster.local" # remote postgres host
+  type: "postgresql" # vpbot database type
+  port: "5432" # vpbot database port
   name: "" # vpbot postgres database name
   user: "" # remote postgres user
   pass: "" # remote postgres user password

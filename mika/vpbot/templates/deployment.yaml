@@ -121,6 +121,16 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-vpbot-postgres-secret
                   key: DB_HOST
+            - name: DB_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
+                  key: DB_TYPE
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-vpbot-postgres-secret
+                  key: DB_PORT
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
