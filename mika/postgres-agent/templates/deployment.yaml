@@ -1,0 +1,72 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-postgres-agent
+  labels:
+    {{- include "postgres-agent.labels" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 120
+  backoffLimit: 0
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "postgres-agent.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: postgres-agent
+          image: "{{ .Values.image.postgres.registry }}/{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.postgres.mode.create }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+              psql -v ON_ERROR_STOP=1 -h $(DB_HOST) -U $(ROOT_USER) -d postgres <<-EOSQL
+                SELECT 'CREATE DATABASE $(DB_NAME)' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
+                SELECT 'CREATE USER $(DB_USER) WITH PASSWORD ''$(DB_PASS)''' WHERE NOT EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
+                GRANT ALL PRIVILEGES ON DATABASE $(DB_NAME) TO $(DB_USER)\gexec
+              EOSQL
+          {{- else }}
+          command: ["dropdb"]
+          args: ["-h", "$(DB_HOST)", "-U", "$(ROOT_USER)", "$(DB_NAME)"]
+          {{- end }}
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-agent-secret
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-agent-secret
+                  key: DB_NAME
+            {{- if .Values.postgres.mode.create }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-agent-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-agent-secret
+                  key: DB_PASS
+            {{- end }}
+            - name: ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-agent-secret
+                  key: ROOT_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-agent-secret
+                  key: ROOT_PASS
+      restartPolicy: Never
