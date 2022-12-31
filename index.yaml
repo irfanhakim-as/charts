@@ -241,6 +241,28 @@ entries:
   postgres:
   - apiVersion: v2
     appVersion: "13.3"
+    created: "2022-12-31T03:50:05.847502102Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 119affa9ab3efd9a4d5c59ea1e85948bc4a21d450c6407a610118ad462c95579
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.4/postgres-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: "13.3"
     created: "2022-11-17T15:10:23.922365272Z"
     description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
     digest: b160a45cadf86e44f2392c576b8f356bde8e0e71d6e0372ff6574f149577d208
@@ -1017,4 +1039,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-30T19:24:46.054820126Z"
+generated: "2022-12-31T03:50:05.847739403Z"
