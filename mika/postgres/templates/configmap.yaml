@@ -5,4 +5,4 @@ metadata:
   labels:
     {{- include "postgres.labels" . | nindent 4 }}
 data:
-  DB_NAME: "{{ .Values.configmap.postgres.DB_NAME }}"
+  DB_NAME: "{{ .Values.postgres.name }}"

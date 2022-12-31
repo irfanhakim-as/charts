@@ -11,14 +11,10 @@ image:
     tag: "13.3"
     pullPolicy: IfNotPresent
 
-configmap:
-  postgres:
-    DB_NAME: "default" # name of default database
-
-secret:
-  postgres:
-    DB_USER: "secret" # database user
-    DB_PASS: "secret" # database user password
+postgres:
+  name: "default" # name of default database
+  user: "secret" # database user
+  pass: "secret" # database user password
 
 pvc:
   data:
