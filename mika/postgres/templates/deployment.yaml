@@ -30,8 +30,8 @@ spec:
           env:
             - name: POSTGRES_DB
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-postgres-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgres-secret
                   key: DB_NAME
             - name: POSTGRES_USER
               valueFrom:
