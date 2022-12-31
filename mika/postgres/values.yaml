@@ -8,17 +8,13 @@ image:
   postgres:
     registry: docker.io
     repository: postgres
-    tag: "13.3"
+    tag: ""
     pullPolicy: IfNotPresent
 
-configmap:
-  postgres:
-    DB_NAME: "default" # name of default database
-
-secret:
-  postgres:
-    DB_USER: "secret" # database user
-    DB_PASS: "secret" # database user password
+postgres:
+  name: "default" # name of default database
+  user: "root" # database user
+  pass: "" # database user password
 
 pvc:
   data:
@@ -30,5 +26,5 @@ resources:
     cpu: "10m" # postgres cpu request
     memory: "10Mi" # postgres memory request
   limits:
-    cpu: "1" # postgres cpu limit
-    memory: "1Gi" # postgres memory limit
+    cpu: "250m" # postgres cpu limit
+    memory: "250Mi" # postgres memory limit
