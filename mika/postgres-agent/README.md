@@ -76,6 +76,6 @@ helm uninstall $release_name --namespace $namespace --wait
 | postgres.mode.drop | bool | `false` | Enable drop database mode |
 | postgres.name | string | `""` | Database name |
 | postgres.pass | string | `""` | Database user password. Only required in create mode. |
-| postgres.root | string | `""` | Database root user |
-| postgres.root_pass | string | `""` | Database root user password |
+| postgres.root.pass | string | `""` | Database root user password |
+| postgres.root.user | string | `""` | Database root user |
 | postgres.user | string | `""` | Database user. Only required in create mode. |

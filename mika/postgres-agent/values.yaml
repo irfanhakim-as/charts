@@ -24,7 +24,9 @@ postgres:
   user: ""
   # postgres database user password
   pass: ""
-  # root postgres user
-  root: ""
-  # root postgres user password
-  root_pass: ""
+  # postgres database root
+  root:
+    # root postgres user
+    user: ""
+    # root postgres user password
+    pass: ""
