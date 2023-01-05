@@ -349,6 +349,29 @@ entries:
   postgres-agent:
   - apiVersion: v2
     appVersion: "13.3"
+    created: "2023-01-05T04:43:42.985307739Z"
+    description: Easily deploy a database and create a user in a remote PostgreSQL
+      instance or delete a database.
+    digest: 1276c9c16f4e62bccc6ecbaf8c5994ceefe0f7df5357b45e1499b0adf820a505
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.1.1/postgres-agent-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: "13.3"
     created: "2022-12-30T19:24:46.054740225Z"
     description: Easily deploy a database and create a user in a remote PostgreSQL
       instance or delete a database.
@@ -1039,4 +1062,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-31T03:50:05.847739403Z"
+generated: "2023-01-05T04:43:42.985526344Z"
