@@ -1,0 +1,28 @@
+# helm pvc
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-jellyfin-config-pvc
+  labels:
+    {{- include "jellyfin.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.config.storage }}
+  storageClassName: {{ .Values.pvc.config.storageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-jellyfin-data-pvc
+  labels:
+    {{- include "jellyfin.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.pvc.data.storage }}
+  storageClassName: {{ .Values.pvc.data.storageClassName }}

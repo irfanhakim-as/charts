@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-jellyfin
+  labels:
+    {{- include "jellyfin.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "jellyfin.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "jellyfin.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: jellyfin
+          image: "{{ .Values.image.jellyfin.registry }}/{{ .Values.image.jellyfin.repository }}:{{ .Values.image.jellyfin.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.jellyfin.pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                echo {{ .Values.jellyfin.host | toString }} >> /etc/hosts &&
+                echo {{ .Values.jellyfin.fstab | toString }} >> /etc/fstab &&
+                mount -a
+          ports:
+            - name: jellyfin
+              containerPort: 8096
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-jellyfin-cm
+                  key: TZ
+            - name: PUID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-jellyfin-cm
+                  key: PUID
+            - name: PGID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-jellyfin-cm
+                  key: PGID
+          volumeMounts:
+            - name: {{ .Release.Name }}-jellyfin-smb-secret
+              mountPath: /home/root/.config/smb/.smbcreds
+              subPath: .smbcreds
+              readOnly: true
+            - name: {{ .Release.Name }}-jellyfin-config
+              mountPath: /config
+            - name: {{ .Release.Name }}-jellyfin-data
+              mountPath: /data
+      volumes:
+        - name: {{ .Release.Name }}-jellyfin-smb-secret
+          secret:
+            secretName: {{ .Release.Name }}-jellyfin-smb-secret
+            defaultMode: 420
+        - name: {{ .Release.Name }}-jellyfin-config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-jellyfin-config-pvc
+        - name: {{ .Release.Name }}-jellyfin-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-jellyfin-data-pvc

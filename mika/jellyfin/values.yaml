@@ -1,0 +1,41 @@
+# Default values for jellyfin.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  jellyfin:
+    registry: docker.io
+    repository: linuxserver/jellyfin
+    tag: ""
+    pullPolicy: IfNotPresent
+
+jellyfin:
+  timezone: "Asia/Kuala_Lumpur"
+  user:
+    uid: 1000
+    gid: 1000
+  smb:
+    user: ""
+    password: ""
+    # Example: "10.11.0.11 truenas-server.mika-homelab"
+    host: ""
+    # Example: "//truenas-server.mika-homelab/mika.truenas /mnt/mika.truenas cifs _netdev,nofail,mfsymlinks,credentials=/home/root/.config/smb/.smbcreds,vers=3.0,uid=1000,gid=1000,iocharset=utf8 0 0"
+    fstab: ""
+
+pvc:
+  config:
+    storage: "2Gi"
+    storageClassName: "longhorn"
+  data:
+    storage: "64Gi"
+    storageClassName: "longhorn"
+
+resources:
+  requests:
+    cpu: "10m"
+    memory: "10Mi"
+  limits:
+    cpu: "2"
+    memory: "3Gi"

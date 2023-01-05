@@ -1,0 +1,1 @@
+jellyfin is now installed and configured for {{ .Release.Name }}.

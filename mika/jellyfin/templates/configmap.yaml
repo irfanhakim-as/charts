@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-jellyfin-cm
+  labels:
+    {{- include "jellyfin.labels" . | nindent 4 }}
+data:
+  TZ: {{ .Values.jellyfin.timezone | toString | quote }}
+  PUID: {{ .Values.jellyfin.user.uid | toString | quote }}
+  PGID: {{ .Values.jellyfin.user.gid | toString | quote }}

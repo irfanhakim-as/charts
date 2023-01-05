@@ -1,0 +1,19 @@
+apiVersion: v2
+name: jellyfin
+description: Jellyfin is a Free Software Media System that puts you in control of managing and streaming your media.
+type: application
+version: 0.1.0
+appVersion: "10.8.8"
+keywords:
+  - jellyfin
+  - media
+  - streaming
+  - plex
+home: https://github.com/irfanhakim-as/charts
+icon: https://irfanhakim-as.github.io/charts/logos/jellyfin.png
+sources:
+  - https://github.com/irfanhakim-as/charts
+maintainers:
+  - name: Irfan Hakim
+    email: irfanhakim.as@yahoo.com
+    url: https://github.com/irfanhakim-as
