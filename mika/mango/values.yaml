@@ -63,21 +63,21 @@ resources:
       # Minimum CPU allocation
       cpu: "10m"
       # Minimum memory allocation
-      memory: "10Mi"
-    limits:
-      # Maximum CPU allocation
-      cpu: "100m"
-      # Maximum memory allocation
       memory: "250Mi"
-  # Redis container resources
-  redis:
-    requests:
-      # Minimum CPU allocation
-      cpu: "10m"
-      # Minimum memory allocation
-      memory: "10Mi"
     limits:
       # Maximum CPU allocation
       cpu: "50m"
       # Maximum memory allocation
-      memory: "50Mi"
+      memory: "500Mi"
+  # Redis container resources
+  redis:
+    requests:
+      # Minimum CPU allocation
+      cpu: "5m"
+      # Minimum memory allocation
+      memory: "30Mi"
+    limits:
+      # Maximum CPU allocation
+      cpu: "15m"
+      # Maximum memory allocation
+      memory: "80Mi"

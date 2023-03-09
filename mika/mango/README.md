@@ -99,11 +99,11 @@ helm uninstall $release_name --namespace $namespace --wait
 | mango.mastodon.token | string | `""` | Mastodon token secret |
 | mango.secret | string | `""` | Mango secret key |
 | mango.support | string | `"support@mikahomelab.com"` | Support email address |
-| resources.mango.limits.cpu | string | `"100m"` | Mango maximum cpu allocation |
-| resources.mango.limits.memory | string | `"250Mi"` | Mango maximum memory allocation |
+| resources.mango.limits.cpu | string | `"50m"` | Mango maximum cpu allocation |
+| resources.mango.limits.memory | string | `"500Mi"` | Mango maximum memory allocation |
 | resources.mango.requests.cpu | string | `"10m"` | Mango minimum cpu allocation |
-| resources.mango.requests.memory | string | `"10Mi"` | Mango minimum memory allocation |
-| resources.redis.limits.cpu | string | `"50m"` | Redis maximum cpu allocation |
-| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
-| resources.redis.requests.cpu | string | `"10m"` | Redis minimum cpu allocation |
-| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
+| resources.mango.requests.memory | string | `"250Mi"` | Mango minimum memory allocation |
+| resources.redis.limits.cpu | string | `"15m"` | Redis maximum cpu allocation |
+| resources.redis.limits.memory | string | `"80Mi"` | Redis maximum memory allocation |
+| resources.redis.requests.cpu | string | `"5m"` | Redis minimum cpu allocation |
+| resources.redis.requests.memory | string | `"30Mi"` | Redis minimum memory allocation |
