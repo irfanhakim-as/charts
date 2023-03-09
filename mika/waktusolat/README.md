@@ -92,14 +92,14 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.waktusolat.repository | string | `"irfanhakim-as/waktusolat"` | Waktu Solat image repository |
 | image.waktusolat.tag | string | `""` | Waktu Solat image version |
 | imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Image pull secret name |
-| resources.redis.limits.cpu | string | `"50m"` | Redis maximum cpu allocation |
+| resources.redis.limits.cpu | string | `"15m"` | Redis maximum cpu allocation |
 | resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
-| resources.redis.requests.cpu | string | `"10m"` | Redis minimum cpu allocation |
-| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
-| resources.waktusolat.limits.cpu | string | `"100m"` | Waktu Solat maximum cpu allocation |
-| resources.waktusolat.limits.memory | string | `"250Mi"` | Waktu Solat maximum memory allocation |
-| resources.waktusolat.requests.cpu | string | `"10m"` | Waktu Solat minimum cpu allocation |
-| resources.waktusolat.requests.memory | string | `"10Mi"` | Waktu Solat minimum memory allocation |
+| resources.redis.requests.cpu | string | `"5m"` | Redis minimum cpu allocation |
+| resources.redis.requests.memory | string | `"30Mi"` | Redis minimum memory allocation |
+| resources.waktusolat.limits.cpu | string | `"50m"` | Waktu Solat maximum cpu allocation |
+| resources.waktusolat.limits.memory | string | `"450Mi"` | Waktu Solat maximum memory allocation |
+| resources.waktusolat.requests.cpu | string | `"20m"` | Waktu Solat minimum cpu allocation |
+| resources.waktusolat.requests.memory | string | `"250Mi"` | Waktu Solat minimum memory allocation |
 | waktusolat.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Timezone of the background scheduler |
 | waktusolat.debug | bool | `false` | Waktu Solat debug mode |
 | waktusolat.location | string | `"wlp-0"` | Default location code |
