@@ -110,14 +110,14 @@ Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 | pvc.migrations.storageClassName | string | `"longhorn"` | Migrations storage class name |
 | pvc.static.storage | string | `"50Mi"` | Static files storage size |
 | pvc.static.storageClassName | string | `"longhorn"` | Static files storage class name |
-| resources.redis.limits.cpu | string | `"50m"` | Redis maximum CPU allocation |
-| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
-| resources.redis.requests.cpu | string | `"10m"` | Redis minimum CPU allocation |
-| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
-| resources.vpbot.limits.cpu | string | `"1"` | Vpbot maximum CPU allocation |
-| resources.vpbot.limits.memory | string | `"1Gi"` | Vpbot maximum memory allocation |
+| resources.redis.limits.cpu | string | `"15m"` | Redis maximum CPU allocation |
+| resources.redis.limits.memory | string | `"60Mi"` | Redis maximum memory allocation |
+| resources.redis.requests.cpu | string | `"5m"` | Redis minimum CPU allocation |
+| resources.redis.requests.memory | string | `"30Mi"` | Redis minimum memory allocation |
+| resources.vpbot.limits.cpu | string | `"50m"` | Vpbot maximum CPU allocation |
+| resources.vpbot.limits.memory | string | `"500Mi"` | Vpbot maximum memory allocation |
 | resources.vpbot.requests.cpu | string | `"10m"` | Vpbot minimum CPU allocation |
-| resources.vpbot.requests.memory | string | `"10Mi"` | Vpbot minimum memory allocation |
+| resources.vpbot.requests.memory | string | `"250Mi"` | Vpbot minimum memory allocation |
 | telegram.admin_id | string | `""` | Telegram admin Chat ID |
 | telegram.devel_id | string | `""` | Telegram developer Chat ID |
 | telegram.token | string | `""` | Telegram bot token |
