@@ -59,23 +59,23 @@ resources:
   waktusolat:
     requests:
       # Minimum CPU allocation
-      cpu: "10m"
+      cpu: "20m"
       # Minimum memory allocation
-      memory: "10Mi"
+      memory: "250Mi"
     limits:
       # Maximum CPU allocation
-      cpu: "100m"
+      cpu: "50m"
       # Maximum memory allocation
-      memory: "250Mi"
+      memory: "450Mi"
   # Redis container resources
   redis:
     requests:
       # Minimum CPU allocation
-      cpu: "10m"
+      cpu: "5m"
       # Minimum memory allocation
-      memory: "10Mi"
+      memory: "30Mi"
     limits:
       # Maximum CPU allocation
-      cpu: "50m"
+      cpu: "15m"
       # Maximum memory allocation
       memory: "50Mi"
