@@ -212,14 +212,14 @@ Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 | imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Name of the image pull secret |
 | pvc.logs.storage | string | `"10Mi"` | Log files storage size |
 | pvc.logs.storageClassName | string | `"longhorn"` | Log files storage class name |
-| resources.redis.limits.cpu | string | `"50m"` | Redis maximum CPU allocation |
-| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
-| resources.redis.requests.cpu | string | `"10m"` | Redis minimum CPU allocation |
-| resources.redis.requests.memory | string | `"10Mi"` | Redis minimum memory allocation |
-| resources.telego.limits.cpu | string | `"100m"` | Telego maximum CPU allocation |
-| resources.telego.limits.memory | string | `"300Mi"` | Telego maximum memory allocation |
+| resources.redis.limits.cpu | string | `"15m"` | Redis maximum CPU allocation |
+| resources.redis.limits.memory | string | `"60Mi"` | Redis maximum memory allocation |
+| resources.redis.requests.cpu | string | `"5m"` | Redis minimum CPU allocation |
+| resources.redis.requests.memory | string | `"30Mi"` | Redis minimum memory allocation |
+| resources.telego.limits.cpu | string | `"50m"` | Telego maximum CPU allocation |
+| resources.telego.limits.memory | string | `"500Mi"` | Telego maximum memory allocation |
 | resources.telego.requests.cpu | string | `"10m"` | Telego minimum CPU allocation |
-| resources.telego.requests.memory | string | `"10Mi"` | Telego minimum memory allocation |
+| resources.telego.requests.memory | string | `"250Mi"` | Telego minimum memory allocation |
 | telego.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Background scheduler timezone |
 | telego.cloudflared.domain | string | `""` | Telego domain |
 | telego.cloudflared.enabled | bool | `false` | Enable cloudflare tunnel |
