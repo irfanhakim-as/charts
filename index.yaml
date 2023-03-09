@@ -3,6 +3,27 @@ entries:
   clog:
   - apiVersion: v2
     appVersion: 0.0.1-stable
+    created: "2023-03-09T18:42:41.132590713Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 2f702b6a7ff33dedb1450a69d1dc14d922834c6db732b4c4cb148bbf4f29c9a8
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.10/clog-0.1.10.tgz
+    version: 0.1.10
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
     created: "2022-12-19T03:17:06.399778271Z"
     description: Creative blog, Career blog, Coin blog, you name it.
     digest: e71dd62645bbc35b90b65e08e22f2de3f9f269fc838da4962bce60f496bc3710
@@ -215,6 +236,29 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
     version: 0.1.0
   mango:
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2023-03-09T18:42:41.307516742Z"
+    description: Mango is an easy to use Mastodon bot framework built on top of Django.
+    digest: 20fc40e7766d4c44b04ff27c2585392090e32f154952f1b5f7aa085a82535c02
+    home: https://github.com/irfanhakim-as/mango
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - mango
+    - django
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mango
+    sources:
+    - https://github.com/irfanhakim-as/mango
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mango-0.1.1/mango-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: 0.0.1-stable
     created: "2022-12-29T17:30:52.275283367Z"
@@ -554,6 +598,29 @@ entries:
   telego:
   - apiVersion: v2
     appVersion: 0.0.3-stable
+    created: "2023-03-09T18:42:41.574703725Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 03a050ff1e5f6b438d85c78b65498fdb1f129859e8129df772ef4c6aae47b109
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.9/telego-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 0.0.3-stable
     created: "2022-12-29T05:05:18.515168636Z"
     description: Telego is an easy to use Telegram bot framework built on top of Django.
     digest: 6a4693f47b06b269dcbd491e43a34b0ec32e7f054589a867f50cac44a32e9fb1
@@ -754,6 +821,31 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.0/telego-0.1.0.tgz
     version: 0.1.0
   vpbot:
+  - apiVersion: v2
+    appVersion: 1.5.6-stable
+    created: "2023-03-09T18:42:41.740075172Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: be12921e2d9f8333be3781942c18a0ffdea9533ba373d79ab8ef135e0d1e57c9
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - telegram
+    - bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.2.1/vpbot-0.2.1.tgz
+    version: 0.2.1
   - apiVersion: v2
     appVersion: 1.5.6-stable
     created: "2022-12-30T16:31:39.412775545Z"
@@ -1062,4 +1154,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2023-01-05T04:43:42.985526344Z"
+generated: "2023-03-09T18:42:41.740356477Z"
