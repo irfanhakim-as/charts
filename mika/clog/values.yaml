@@ -62,7 +62,7 @@ resources:
   clog:
     requests:
       cpu: "10m" # clog cpu request
-      memory: "10Mi" # clog memory request
+      memory: "100Mi" # clog memory request
     limits:
-      cpu: "300m" # clog cpu limit
-      memory: "300Mi" # clog memory limit
+      cpu: "50m" # clog cpu limit
+      memory: "200Mi" # clog memory limit
