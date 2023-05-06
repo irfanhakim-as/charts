@@ -92,6 +92,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.waktusolat.repository | string | `"irfanhakim-as/waktusolat"` | Waktu Solat image repository |
 | image.waktusolat.tag | string | `""` | Waktu Solat image version |
 | imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Image pull secret name |
+| replicaCount | int | `1` | Waktu Solat replica count |
 | resources.redis.limits.cpu | string | `"15m"` | Redis maximum cpu allocation |
 | resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
 | resources.redis.requests.cpu | string | `"5m"` | Redis minimum cpu allocation |

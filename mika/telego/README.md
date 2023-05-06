@@ -212,6 +212,7 @@ Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 | imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Name of the image pull secret |
 | pvc.logs.storage | string | `"10Mi"` | Log files storage size |
 | pvc.logs.storageClassName | string | `"longhorn"` | Log files storage class name |
+| replicaCount | int | `1` | Telego replica count |
 | resources.redis.limits.cpu | string | `"15m"` | Redis maximum CPU allocation |
 | resources.redis.limits.memory | string | `"60Mi"` | Redis maximum memory allocation |
 | resources.redis.requests.cpu | string | `"5m"` | Redis minimum CPU allocation |

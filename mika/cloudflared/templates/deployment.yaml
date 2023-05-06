@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "cloudflared.labels" . | nindent 4 }}
 spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
       {{- include "cloudflared.selectorLabels" . | nindent 6 }}

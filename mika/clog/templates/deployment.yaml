@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
       {{- include "clog.selectorLabels" . | nindent 6 }}

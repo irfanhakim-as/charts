@@ -70,6 +70,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | postgres.user | string | `"root"` | Root postgres user |
 | pvc.data.storage | string | `"1Gi"` | Data storage size |
 | pvc.data.storageClassName | string | `"longhorn"` | Data storage class name |
+| replicaCount | int | `1` | Postgres replica count |
 | resources.limits.cpu | string | `"250m"` | Maximum cpu allocation |
 | resources.limits.memory | string | `"250Mi"` | Maximum memory allocation |
 | resources.requests.cpu | string | `"10m"` | Minimum cpu allocation |

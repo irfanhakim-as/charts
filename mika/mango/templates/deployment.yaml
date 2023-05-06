@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "mango.labels" . | nindent 4 }}
 spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
       {{- include "mango.selectorLabels" . | nindent 6 }}

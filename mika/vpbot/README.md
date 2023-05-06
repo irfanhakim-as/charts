@@ -110,6 +110,7 @@ Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 | pvc.migrations.storageClassName | string | `"longhorn"` | Migrations storage class name |
 | pvc.static.storage | string | `"50Mi"` | Static files storage size |
 | pvc.static.storageClassName | string | `"longhorn"` | Static files storage class name |
+| replicaCount | int | `1` | Vpbot replica count |
 | resources.redis.limits.cpu | string | `"15m"` | Redis maximum CPU allocation |
 | resources.redis.limits.memory | string | `"60Mi"` | Redis maximum memory allocation |
 | resources.redis.requests.cpu | string | `"5m"` | Redis minimum CPU allocation |

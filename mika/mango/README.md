@@ -99,6 +99,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | mango.mastodon.token | string | `""` | Mastodon token secret |
 | mango.secret | string | `""` | Mango secret key |
 | mango.support | string | `"support@mikahomelab.com"` | Support email address |
+| replicaCount | int | `1` | Mango replica count |
 | resources.mango.limits.cpu | string | `"50m"` | Mango maximum cpu allocation |
 | resources.mango.limits.memory | string | `"500Mi"` | Mango maximum memory allocation |
 | resources.mango.requests.cpu | string | `"10m"` | Mango minimum cpu allocation |

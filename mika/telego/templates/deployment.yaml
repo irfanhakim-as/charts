@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "telego.labels" . | nindent 4 }}
 spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
       {{- include "telego.selectorLabels" . | nindent 6 }}

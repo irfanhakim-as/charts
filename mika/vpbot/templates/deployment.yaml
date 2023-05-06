@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
       {{- include "vpbot.selectorLabels" . | nindent 6 }}
