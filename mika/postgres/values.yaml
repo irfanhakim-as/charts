@@ -5,11 +5,10 @@
 replicaCount: 1
 
 image:
-  postgres:
-    registry: docker.io
-    repository: postgres
-    tag: ""
-    pullPolicy: IfNotPresent
+  registry: docker.io
+  repository: postgres
+  tag: ""
+  pullPolicy: IfNotPresent
 
 postgres:
   name: "default" # name of default database
