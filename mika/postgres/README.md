@@ -61,10 +61,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.pullPolicy | string | `"IfNotPresent"` | Postgres image pull policy |
-| image.registry | string | `"docker.io"` | Postgres image registry |
-| image.repository | string | `"postgres"` | Postgres image repository |
-| image.tag | string | `""` | Postgres image version |
+| image.pullPolicy | string | `""` | PostgreSQL image pull policy. Default: `"IfNotPresent"`. |
+| image.registry | string | `""` | PostgreSQL image registry. Default: `"docker.io"`. |
+| image.repository | string | `""` | PostgreSQL image repository. Default: `"postgres"`. |
+| image.tag | string | `""` | PostgreSQL image version. Default: `Chart appVersion`. |
 | postgres.data.storage | string | `"1Gi"` | Data storage size. Default: `"1Gi"`. |
 | postgres.data.storageClassName | string | `"longhorn"` | Data storage class name. Default: `"longhorn"`. |
 | postgres.name | string | `"default"` | Default database name |

@@ -4,11 +4,20 @@
 
 replicaCount: 1
 
+# Container image used for the PostgreSQL database.
 image:
-  registry: docker.io
-  repository: postgres
+  # PostgreSQL image registry.
+  # Default: "docker.io"
+  registry: ""
+  # PostgreSQL image repository.
+  # Default: "postgres"
+  repository: ""
+  # PostgreSQL image version.
+  # Default: Chart appVersion
   tag: ""
-  pullPolicy: IfNotPresent
+  # PostgreSQL image pull policy.
+  # Default: "IfNotPresent"
+  pullPolicy: ""
 
 postgres:
   name: "default" # name of default database
