@@ -15,11 +15,17 @@ postgres:
   name: "default" # name of default database
   user: "root" # database user
   pass: "" # database user password
-
-pvc:
   data:
-    storage: "1Gi" # data storage size
-    storageClassName: "longhorn" # data storage class name
+    # Data storage size.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # Data storage class name.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
 
 resources:
   requests:

@@ -65,11 +65,11 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.postgres.registry | string | `"docker.io"` | Postgres image registry |
 | image.postgres.repository | string | `"postgres"` | Postgres image repository |
 | image.postgres.tag | string | `""` | Postgres image version |
+| postgres.data.storage | string | `"1Gi"` | Data storage size. Default: `"1Gi"`. |
+| postgres.data.storageClassName | string | `"longhorn"` | Data storage class name. Default: `"longhorn"`. |
 | postgres.name | string | `"default"` | Default database name |
 | postgres.pass | string | `""` | Root postgres password |
 | postgres.user | string | `"root"` | Root postgres user |
-| pvc.data.storage | string | `"1Gi"` | Data storage size |
-| pvc.data.storageClassName | string | `"longhorn"` | Data storage class name |
 | replicaCount | int | `1` | Postgres replica count |
 | resources.limits.cpu | string | `"250m"` | Maximum cpu allocation |
 | resources.limits.memory | string | `"250Mi"` | Maximum memory allocation |
