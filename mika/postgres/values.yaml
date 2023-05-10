@@ -37,10 +37,25 @@ postgres:
     # storageClassName: "longhorn"
     storageClassName: ""
 
+# Resource requirements and limits for PostgreSQL.
 resources:
+  # The minimum amount of resources required by PostgreSQL to run.
   requests:
-    cpu: "10m" # postgres cpu request
-    memory: "10Mi" # postgres memory request
+    # The minimum amount of CPU resources required by PostgreSQL.
+    # Example:
+    # cpu: "10m"
+    cpu: "10m"
+    # The minimum amount of memory required by PostgreSQL.
+    # Example:
+    # memory: "10Mi"
+    memory: "10Mi"
+  # The maximum amount of resources allowed for PostgreSQL.
   limits:
-    cpu: "250m" # postgres cpu limit
-    memory: "250Mi" # postgres memory limit
+    # The maximum amount of CPU resources allowed for PostgreSQL.
+    # Example:
+    # cpu: "250m"
+    cpu: "250m"
+    # The maximum amount of memory allowed for PostgreSQL.
+    # Example:
+    # memory: "250Mi"
+    memory: "250Mi"
