@@ -61,10 +61,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the PostgreSQL image. Default: `"IfNotPresent"`. |
-| image.registry | string | `""` | The registry where the PostgreSQL image is hosted. Default: `"docker.io"`. |
-| image.repository | string | `""` | The name of the repository that contains the PostgreSQL image used. Default: `"postgres"`. |
-| image.tag | string | `""` | The tag that specifies the version of the PostgreSQL image used. Default: `Chart appVersion`. |
+| image.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the PostgreSQL container image. Default: `"IfNotPresent"`. |
+| image.registry | string | `""` | The registry where the PostgreSQL container image is hosted. Default: `"docker.io"`. |
+| image.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"postgres"`. |
+| image.tag | string | `""` | The tag that specifies the version of the PostgreSQL container image used. Default: `Chart appVersion`. |
 | postgres.data.storage | string | `"1Gi"` | The amount of persistent storage allocated for the PostgreSQL instance. Default: `"1Gi"`. |
 | postgres.data.storageClassName | string | `"longhorn"` | The storage class name used for dynamically provisioning a persistent volume for the PostgreSQL storage. Default: `"longhorn"`. |
 | postgres.name | string | `""` | The name of the default PostgreSQL database. Default: `"default"`. |
