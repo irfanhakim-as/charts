@@ -22,9 +22,20 @@ image:
   pullPolicy: ""
 
 postgres:
-  name: "default" # name of default database
-  user: "root" # database user
-  pass: "" # database user password
+  # The name of the default PostgreSQL database.
+  # Default: "default"
+  # Example:
+  # name: "default"
+  name: ""
+  # The username for accessing the PostgreSQL instance.
+  # Default: "root"
+  # Example:
+  # user: "root"
+  user: ""
+  # The password for accessing the PostgreSQL instance.
+  # Example:
+  # pass: "password"
+  pass: ""
   data:
     # Data storage size.
     # Default: "1Gi"

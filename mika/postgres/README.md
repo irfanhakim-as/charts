@@ -67,9 +67,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.tag | string | `""` | PostgreSQL image version. Default: `Chart appVersion`. |
 | postgres.data.storage | string | `"1Gi"` | Data storage size. Default: `"1Gi"`. |
 | postgres.data.storageClassName | string | `"longhorn"` | Data storage class name. Default: `"longhorn"`. |
-| postgres.name | string | `"default"` | Default database name |
-| postgres.pass | string | `""` | Root postgres password |
-| postgres.user | string | `"root"` | Root postgres user |
+| postgres.name | string | `""` | The name of the default PostgreSQL database. Default: `"default"`. |
+| postgres.pass | string | `""` | The password for accessing the PostgreSQL instance. |
+| postgres.user | string | `""` | The username for accessing the PostgreSQL instance. Default: `"root"`. |
 | replicaCount | int | `1` | Desired number of running replicas for PostgreSQL. Default: `"1"`. |
 | resources.limits.cpu | string | `"250m"` | The maximum amount of CPU resources allowed for PostgreSQL. |
 | resources.limits.memory | string | `"250Mi"` | The maximum amount of memory allowed for PostgreSQL. |
