@@ -1,1 +1,10 @@
-CHART_NAME is now installed and configured.
+CHART_NAME is now installed and configured for {{ .Release.Name | toString }}.
+
+Shown below are some of the values that were configured for this release:
+
+Foo: {{ .Values.CHART_NAME.foo | toString }}
+Bar: {{ .Values.CHART_NAME.bar | toString }}
+
+See the values.yaml file of this chart for more configuration options.
+
+Please refer to the official documentation for more information on how to use CHART_NAME.

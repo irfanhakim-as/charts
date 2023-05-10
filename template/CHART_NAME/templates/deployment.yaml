@@ -1,3 +1,12 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $CHART_NAME_registry := .Values.image.CHART_NAME.registry | default "docker.io" | toString }}
+{{- $CHART_NAME_repository := .Values.image.CHART_NAME.repository | default "CHART_NAME" | toString }}
+{{- $CHART_NAME_tag := .Values.image.CHART_NAME.tag | default .Chart.AppVersion | toString }}
+{{- $CHART_NAME_pullPolicy := .Values.image.CHART_NAME.pullPolicy | default "IfNotPresent" | toString | quote }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,7 +14,7 @@ metadata:
   labels:
     {{- include "CHART_NAME.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount | default 1 }}
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "CHART_NAME.selectorLabels" . | nindent 6 }}
@@ -20,8 +29,8 @@ spec:
     spec:
       initContainers:
         - name: init
-          image: "{{ .Values.image.init.registry }}/{{ .Values.image.init.repository }}:{{ .Values.image.init.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.init.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
           command: ["/bin/sh"]
           args:
             - -c
@@ -33,8 +42,8 @@ spec:
               mountPath: /opt/CHART_NAME
       containers:
         - name: CHART_NAME
-          image: "{{ .Values.image.CHART_NAME.registry }}/{{ .Values.image.CHART_NAME.repository }}:{{ .Values.image.CHART_NAME.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.CHART_NAME.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $CHART_NAME_registry $CHART_NAME_repository $CHART_NAME_tag | quote }}
+          imagePullPolicy: {{ $CHART_NAME_pullPolicy }}
           ports:
             - name: CHART_NAME
               containerPort: 80

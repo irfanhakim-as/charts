@@ -2,38 +2,85 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# The desired number of running replicas for CHART_NAME.
+# Default: "1"
+replicaCount: ""
 
+# Container images used for CHART_NAME.
 image:
+  # Init container image configurations.
   init:
-    registry: docker.io
-    repository: busybox
-    tag: "1.34"
-    pullPolicy: IfNotPresent
-  
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.34"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # CHART_NAME container image configurations.
   CHART_NAME:
-    registry: docker.io
-    repository: CHART_NAME
-    tag: "13.3"
-    pullPolicy: IfNotPresent
+    # The registry where the CHART_NAME container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the CHART_NAME container image used.
+    # Default: "CHART_NAME"
+    repository: ""
+    # The tag that specifies the version of the CHART_NAME container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the CHART_NAME container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
-configmap:
-  CHART_NAME:
-    FOO: "foo"
-
-secret:
-  CHART_NAME:
-    BAR: "bar"
-
-pvc:
+# CHART_NAME configurations.
+CHART_NAME:
+  # The value of the CHART_NAME foo.
+  # Default: "foo"
+  # Example:
+  # foo: "foo"
+  foo: ""
+  # The secret value of the CHART_NAME bar.
+  # Default: "bar"
+  # Example:
+  # bar: "bar"
+  bar: ""
+  # CHART_NAME data configurations.
   data:
-    storage: "storage"
-    storageClassName: "storageClassName"
+    # The amount of persistent storage allocated for the CHART_NAME instance.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the CHART_NAME storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
 
+# Resource requirements and limits for CHART_NAME.
 resources:
+  # The minimum amount of resources required by CHART_NAME to run.
   requests:
-    cpu: "cpu"
-    memory: "memory"
+    # The minimum amount of CPU resources required by CHART_NAME.
+    # Example:
+    # cpu: "10m"
+    cpu: "10m"
+    # The minimum amount of memory required by CHART_NAME.
+    # Example:
+    # memory: "10Mi"
+    memory: "10Mi"
+  # The maximum amount of resources allowed for CHART_NAME.
   limits:
-    cpu: "cpu"
-    memory: "memory"
+    # The maximum amount of CPU resources allowed for CHART_NAME.
+    # Example:
+    # cpu: "250m"
+    cpu: "250m"
+    # The maximum amount of memory allowed for CHART_NAME.
+    # Example:
+    # memory: "250Mi"
+    memory: "250Mi"

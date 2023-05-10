@@ -1,3 +1,4 @@
+{{- $foo := .Values.CHART_NAME.foo | default "foo" | toString | quote }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,4 +6,4 @@ metadata:
   labels:
     {{- include "CHART_NAME.labels" . | nindent 4 }}
 data:
-  FOO: "{{ .Values.configmap.CHART_NAME.FOO }}"
+  FOO: {{ $foo }}
