@@ -2,25 +2,26 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Desired number of running replicas for PostgreSQL.
+# The desired number of running replicas for PostgreSQL.
 # Default: "1"
 replicaCount: ""
 
-# Container image used for the PostgreSQL database.
+# Container image used for PostgreSQL.
 image:
-  # PostgreSQL image registry.
+  # The registry where the PostgreSQL image is hosted.
   # Default: "docker.io"
   registry: ""
-  # PostgreSQL image repository.
+  # The name of the repository that contains the PostgreSQL image used.
   # Default: "postgres"
   repository: ""
-  # PostgreSQL image version.
+  # The tag that specifies the version of the PostgreSQL image used.
   # Default: Chart appVersion
   tag: ""
-  # PostgreSQL image pull policy.
+  # The policy that determines when Kubernetes should pull the PostgreSQL image.
   # Default: "IfNotPresent"
   pullPolicy: ""
 
+# PostgreSQL configurations.
 postgres:
   # The name of the default PostgreSQL database.
   # Default: "default"
@@ -37,12 +38,12 @@ postgres:
   # pass: "password"
   pass: ""
   data:
-    # Data storage size.
+    # The amount of persistent storage allocated for the PostgreSQL instance.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # Data storage class name.
+    # The storage class name used for dynamically provisioning a persistent volume for the PostgreSQL storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"

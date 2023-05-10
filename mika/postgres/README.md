@@ -61,16 +61,16 @@ helm uninstall $release_name --namespace $namespace --wait
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.pullPolicy | string | `""` | PostgreSQL image pull policy. Default: `"IfNotPresent"`. |
-| image.registry | string | `""` | PostgreSQL image registry. Default: `"docker.io"`. |
-| image.repository | string | `""` | PostgreSQL image repository. Default: `"postgres"`. |
-| image.tag | string | `""` | PostgreSQL image version. Default: `Chart appVersion`. |
-| postgres.data.storage | string | `"1Gi"` | Data storage size. Default: `"1Gi"`. |
-| postgres.data.storageClassName | string | `"longhorn"` | Data storage class name. Default: `"longhorn"`. |
+| image.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the PostgreSQL image. Default: `"IfNotPresent"`. |
+| image.registry | string | `""` | The registry where the PostgreSQL image is hosted. Default: `"docker.io"`. |
+| image.repository | string | `""` | The name of the repository that contains the PostgreSQL image used. Default: `"postgres"`. |
+| image.tag | string | `""` | The tag that specifies the version of the PostgreSQL image used. Default: `Chart appVersion`. |
+| postgres.data.storage | string | `"1Gi"` | The amount of persistent storage allocated for the PostgreSQL instance. Default: `"1Gi"`. |
+| postgres.data.storageClassName | string | `"longhorn"` | The storage class name used for dynamically provisioning a persistent volume for the PostgreSQL storage. Default: `"longhorn"`. |
 | postgres.name | string | `""` | The name of the default PostgreSQL database. Default: `"default"`. |
 | postgres.pass | string | `""` | The password for accessing the PostgreSQL instance. |
 | postgres.user | string | `""` | The username for accessing the PostgreSQL instance. Default: `"root"`. |
-| replicaCount | int | `1` | Desired number of running replicas for PostgreSQL. Default: `"1"`. |
+| replicaCount | int | `""` | The desired number of running replicas for PostgreSQL. Default: `"1"`. |
 | resources.limits.cpu | string | `"250m"` | The maximum amount of CPU resources allowed for PostgreSQL. |
 | resources.limits.memory | string | `"250Mi"` | The maximum amount of memory allowed for PostgreSQL. |
 | resources.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by PostgreSQL. |
