@@ -70,7 +70,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | postgres.name | string | `"default"` | Default database name |
 | postgres.pass | string | `""` | Root postgres password |
 | postgres.user | string | `"root"` | Root postgres user |
-| replicaCount | int | `1` | Postgres replica count |
+| replicaCount | int | `1` | Desired number of running replicas for PostgreSQL. Default: `"1"`. |
 | resources.limits.cpu | string | `"250m"` | Maximum cpu allocation |
 | resources.limits.memory | string | `"250Mi"` | Maximum memory allocation |
 | resources.requests.cpu | string | `"10m"` | Minimum cpu allocation |

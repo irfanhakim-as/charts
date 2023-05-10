@@ -2,7 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# Desired number of running replicas for PostgreSQL.
+# Default: "1"
+replicaCount: ""
 
 # Container image used for the PostgreSQL database.
 image:

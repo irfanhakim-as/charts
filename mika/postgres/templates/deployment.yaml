@@ -1,3 +1,4 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $registry := .Values.image.registry | default "docker.io" | toString }}
 {{- $repository := .Values.image.repository | default "postgres" | toString }}
 {{- $tag := .Values.image.tag | default .Chart.AppVersion | toString }}
@@ -9,7 +10,7 @@ metadata:
   labels:
     {{- include "postgres.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount | default 1 }}
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "postgres.selectorLabels" . | nindent 6 }}
