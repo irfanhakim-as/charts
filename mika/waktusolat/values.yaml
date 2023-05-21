@@ -46,6 +46,7 @@ imagePullSecrets: []
 # WaktuSolat configurations.
 waktusolat:
   # Specifies whether WaktuSolat should run in debug mode.
+  # Default: false
   # Example:
   # debug: true
   debug: false
