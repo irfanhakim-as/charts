@@ -1,1 +1,5 @@
-waktusolat is now installed and configured for {{ .Release.Name }}.
+waktusolat is now installed and configured for {{ .Release.Name | toString }}.
+
+See the values.yaml file of this chart for more configuration options.
+
+Please refer to the official documentation for more information on how to use waktusolat.
