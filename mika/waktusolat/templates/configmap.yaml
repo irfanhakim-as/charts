@@ -1,3 +1,8 @@
+{{- $debug := .Values.waktusolat.debug | default "false" | toString | quote }}
+{{- $location := .Values.waktusolat.location | default "wlp-0" | toString | quote }}
+{{- $api := .Values.waktusolat.mastodon.api | toString | quote }}
+{{- $redis_service := printf "redis://%s-waktusolat-svc" .Release.Name | quote }}
+{{- $celery_timezone := .Values.waktusolat.celery_timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.waktusolat.domain | default "localhost" | toString }}
 apiVersion: v1
 kind: ConfigMap
@@ -6,12 +11,12 @@ metadata:
   labels:
     {{- include "waktusolat.labels" . | nindent 4 }}
 data:
-  DEBUG: {{ .Values.waktusolat.debug | toString | quote }}
-  LOCATION_CODE: {{ .Values.waktusolat.location | toString | quote }}
-  API_BASE_URL: {{ .Values.waktusolat.mastodon.api | toString | quote }}
-  CELERY_BROKER: redis://{{ .Release.Name }}-waktusolat-svc
-  CELERY_BACKEND: redis://{{ .Release.Name }}-waktusolat-svc
-  CELERY_TIMEZONE: {{ .Values.waktusolat.celery_timezone | toString | quote }}
+  DEBUG: {{ $debug }}
+  LOCATION_CODE: {{ $location }}
+  API_BASE_URL: {{ $api }}
+  CELERY_BROKER: {{ $redis_service }}
+  CELERY_BACKEND: {{ $redis_service }}
+  CELERY_TIMEZONE: {{ $celery_timezone }}
 ---
 apiVersion: v1
 kind: ConfigMap

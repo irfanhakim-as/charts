@@ -1,3 +1,12 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $waktusolat_registry := .Values.image.waktusolat.registry | default "ghcr.io" | toString }}
+{{- $waktusolat_repository := .Values.image.waktusolat.repository | default "irfanhakim-as/waktusolat" | toString }}
+{{- $waktusolat_tag := .Values.image.waktusolat.tag | default .Chart.AppVersion | toString }}
+{{- $waktusolat_pullPolicy := .Values.image.waktusolat.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
+{{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
+{{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,7 +14,7 @@ metadata:
   labels:
     {{- include "waktusolat.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount | default 1 }}
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "waktusolat.selectorLabels" . | nindent 6 }}
@@ -24,8 +33,8 @@ spec:
       {{- end }}
       containers:
         - name: waktusolat
-          image: "{{ .Values.image.waktusolat.registry }}/{{ .Values.image.waktusolat.repository }}:{{ .Values.image.waktusolat.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.waktusolat.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $waktusolat_registry $waktusolat_repository $waktusolat_tag | quote }}
+          imagePullPolicy: {{ $waktusolat_pullPolicy }}
           ports:
             - name: waktusolat
               containerPort: 80
@@ -108,8 +117,8 @@ spec:
               subPath: mastodon.secret
               readOnly: true
         - name: redis
-          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
+          imagePullPolicy: {{ $redis_pullPolicy }}
           ports:
             - name: redis
               containerPort: 6379
