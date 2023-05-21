@@ -73,37 +73,37 @@ Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingl
 helm uninstall $release_name --namespace $namespace --wait
 ```
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| db.host | string | `"postgres.default.svc.cluster.local"` | Database server |
-| db.name | string | `""` | Database name |
-| db.password | string | `""` | Database user password |
-| db.port | string | `"5432"` | Database port |
-| db.type | string | `"postgresql"` | Database type |
-| db.user | string | `""` | Database user |
-| image.redis.pullPolicy | string | `"IfNotPresent"` | Redis image pull policy |
-| image.redis.registry | string | `"docker.io"` | Redis image registry |
-| image.redis.repository | string | `"redis"` | Redis image repository |
-| image.redis.tag | string | `"alpine"` | Redis image version |
-| image.waktusolat.pullPolicy | string | `"IfNotPresent"` | Waktu Solat image pull policy |
-| image.waktusolat.registry | string | `"ghcr.io"` | Waktu Solat image registry |
-| image.waktusolat.repository | string | `"irfanhakim-as/waktusolat"` | Waktu Solat image repository |
-| image.waktusolat.tag | string | `""` | Waktu Solat image version |
-| imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Image pull secret name |
-| replicaCount | int | `1` | Waktu Solat replica count |
-| resources.redis.limits.cpu | string | `"15m"` | Redis maximum cpu allocation |
-| resources.redis.limits.memory | string | `"50Mi"` | Redis maximum memory allocation |
-| resources.redis.requests.cpu | string | `"5m"` | Redis minimum cpu allocation |
-| resources.redis.requests.memory | string | `"30Mi"` | Redis minimum memory allocation |
-| resources.waktusolat.limits.cpu | string | `"50m"` | Waktu Solat maximum cpu allocation |
-| resources.waktusolat.limits.memory | string | `"450Mi"` | Waktu Solat maximum memory allocation |
-| resources.waktusolat.requests.cpu | string | `"20m"` | Waktu Solat minimum cpu allocation |
-| resources.waktusolat.requests.memory | string | `"250Mi"` | Waktu Solat minimum memory allocation |
-| waktusolat.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Timezone of the background scheduler |
-| waktusolat.debug | bool | `false` | Waktu Solat debug mode |
-| waktusolat.location | string | `"wlp-0"` | Default location code |
-| waktusolat.mastodon.api | string | `"https://botsin.space/"` | Mastodon base API URL |
-| waktusolat.mastodon.token | string | `""` | Mastodon token secret |
-| waktusolat.secret | string | `""` | Waktu Solat secret key |
+| db.host | string | `""` | The hostname or IP address of the WaktuSolat database server. |
+| db.name | string | `""` | The name of the database used by WaktuSolat. |
+| db.password | string | `""` | The password associated with the WaktuSolat database's user. |
+| db.port | string | `""` | The port number on which the WaktuSolat database server is listening. Default: `"5432"`. |
+| db.type | string | `""` | The type of the database used by WaktuSolat. Default: `"postgresql"`. |
+| db.user | string | `""` | The username or user account for accessing the WaktuSolat database. |
+| image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"alpine"`. |
+| image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |
+| image.redis.repository | string | `""` | The name of the repository that contains the Redis container image used. Default: `"redis"`. |
+| image.redis.tag | string | `""` | The tag that specifies the version of the Redis container image used. Default: `"alpine"`. |
+| image.waktusolat.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the WaktuSolat container image. Default: `"IfNotPresent"`. |
+| image.waktusolat.registry | string | `""` | The registry where the WaktuSolat container image is hosted. Default: `"ghcr.io"`. |
+| image.waktusolat.repository | string | `""` | The name of the repository that contains the WaktuSolat container image used. Default: `"irfanhakim-as/waktusolat"`. |
+| image.waktusolat.tag | string | `""` | The tag that specifies the version of the WaktuSolat container image used. Default: `Chart appVersion`. |
+| imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
+| replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
+| resources.redis.limits.cpu | string | `"15m"` | The maximum amount of CPU resources allowed for Redis. |
+| resources.redis.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for Redis. |
+| resources.redis.requests.cpu | string | `"5m"` | The minimum amount of CPU resources required by Redis. |
+| resources.redis.requests.memory | string | `"30Mi"` | The minimum amount of memory required by Redis. |
+| resources.waktusolat.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for WaktuSolat. |
+| resources.waktusolat.limits.memory | string | `"450Mi"` | The maximum amount of memory allowed for WaktuSolat. |
+| resources.waktusolat.requests.cpu | string | `"20m"` | The minimum amount of CPU resources required by WaktuSolat. |
+| resources.waktusolat.requests.memory | string | `"250Mi"` | The minimum amount of memory required by WaktuSolat. |
+| waktusolat.celery_timezone | string | `"Asia/Kuala_Lumpur"` | The timezone for the Celery task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
+| waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
+| waktusolat.location | string | `""` | The default location code used by WaktuSolat and its services. Default: `"wlp-0"`. |
+| waktusolat.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the WaktuSolat bot. |
+| waktusolat.mastodon.token | string | `""` | A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API. |
+| waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |
