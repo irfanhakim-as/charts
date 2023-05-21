@@ -62,7 +62,7 @@ CHART_NAME:
     # storageClassName: "longhorn"
     storageClassName: ""
 
-# Resource requirements and limits for CHART_NAME.
+# Resource requirements and limits for CHART_NAME container.
 resources:
   # The minimum amount of resources required by CHART_NAME to run.
   requests:
