@@ -72,8 +72,8 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.postgres.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"postgres"`. |
 | image.postgres.tag | string | `""` | The tag that specifies the version of the PostgreSQL container image used. Default: `Chart appVersion`. |
 | postgres.host | string | `""` | The hostname or IP address of the PostgreSQL database server. |
-| postgres.mode.create | bool | `true` | Specifies whether to create a database and user in a remote PostgreSQL instance. Default: `true`. |
-| postgres.mode.drop | bool | `false` | Specifies whether to delete a database in a remote PostgreSQL instance. Default: `false`. |
+| postgres.mode.create | bool | `true` | Specifies whether to create a database and user in a remote PostgreSQL instance. |
+| postgres.mode.drop | bool | `false` | Specifies whether to delete a database in a remote PostgreSQL instance. |
 | postgres.name | string | `""` | The name of the intended PostgreSQL database. |
 | postgres.password | string | `""` | The password associated with the intended PostgreSQL database user. |
 | postgres.root.password | string | `""` | The password associated with the PostgreSQL database server root user. |

@@ -3,7 +3,7 @@
 {{- $repository := .Values.image.postgres.repository | default "postgres" | toString }}
 {{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $create_mode := .Values.postgres.mode.create | default true }}
+{{- $create_mode := .Values.postgres.mode.create }}
 apiVersion: batch/v1
 kind: Job
 metadata:

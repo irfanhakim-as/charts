@@ -24,12 +24,10 @@ postgres:
   # Defines the mode of operation for the PostgreSQL agent chart.
   mode:
     # Specifies whether to create a database and user in a remote PostgreSQL instance.
-    # Default: true
     # Example:
     # create: false
     create: true
     # Specifies whether to delete a database in a remote PostgreSQL instance.
-    # Default: false
     # Example:
     # drop: true
     drop: false
