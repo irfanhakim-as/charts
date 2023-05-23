@@ -39,8 +39,14 @@ spec:
                 GRANT ALL PRIVILEGES ON DATABASE "$(DB_NAME)" TO "$(DB_USER)"\gexec
               EOSQL
           {{- else }}
-          command: ["dropdb"]
-          args: ["-h", "$(DB_HOST)", "-U", "$(ROOT_USER)", "$(DB_NAME)"]
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              psql -v ON_ERROR_STOP=1 -h $(DB_HOST) -U $(ROOT_USER) -d postgres <<-EOSQL
+                SELECT 'DROP DATABASE "$(DB_NAME)"' WHERE EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
+                SELECT 'DROP USER "$(DB_USER)"' WHERE EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
+              EOSQL
           {{- end }}
           env:
             - name: DB_HOST
@@ -53,12 +59,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-postgres-agent-secret
                   key: DB_NAME
-            {{- if $create_mode }}
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-postgres-agent-secret
                   key: DB_USER
+            {{- if $create_mode }}
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
