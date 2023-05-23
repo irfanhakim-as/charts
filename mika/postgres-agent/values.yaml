@@ -2,29 +2,61 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Container images used for PostgreSQL.
 image:
+  # PostgreSQL container image configurations.
   postgres:
-    registry: docker.io
-    repository: postgres
+    # The registry where the PostgreSQL container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the PostgreSQL container image used.
+    # Default: "postgres"
+    repository: ""
+    # The tag that specifies the version of the PostgreSQL container image used.
+    # Default: Chart appVersion
     tag: ""
-    pullPolicy: IfNotPresent
+    # The policy that determines when Kubernetes should pull the PostgreSQL container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
+# PostgreSQL configurations.
 postgres:
-  # agent mode
+  # Defines the mode of operation for the PostgreSQL agent chart.
   mode:
+    # Specifies whether to create a database and user in a remote PostgreSQL instance.
+    # Default: true
+    # Example:
+    # create: false
     create: true
+    # Specifies whether to delete a database in a remote PostgreSQL instance.
+    # Default: false
+    # Example:
+    # drop: true
     drop: false
-  # postgres host
-  host: "postgres.default.svc.cluster.local"
-  # postgres database name
+  # The hostname or IP address of the PostgreSQL database server.
+  # Example:
+  # host: "postgres.default.svc.cluster.local"
+  host: ""
+  # The name of the intended PostgreSQL database.
+  # Example:
+  # name: "postgres"
   name: ""
-  # postgres database user
+  # The username or user account for accessing the intended PostgreSQL database.
+  # Example:
+  # user: "postgres"
   user: ""
-  # postgres database user password
-  pass: ""
-  # postgres database root
+  # The password associated with the intended PostgreSQL database user.
+  # Example:
+  # password: "password"
+  password: ""
+  # PostgreSQL database server root user configurations.
   root:
-    # root postgres user
+    # The username or user account for accessing the PostgreSQL database server as root.
+    # Default: "root"
+    # Example:
+    # user: "root"
     user: ""
-    # root postgres user password
-    pass: ""
+    # The password associated with the PostgreSQL database server root user.
+    # Example:
+    # password: "password"
+    password: ""

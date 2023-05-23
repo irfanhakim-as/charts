@@ -1,3 +1,8 @@
+{{- $registry := .Values.image.postgres.registry | default "docker.io" | toString }}
+{{- $repository := .Values.image.postgres.repository | default "postgres" | toString }}
+{{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
+{{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $create_mode := .Values.postgres.mode.create | default true }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -18,11 +23,11 @@ spec:
     spec:
       containers:
         - name: postgres-agent
-          image: "{{ .Values.image.postgres.registry }}/{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
+          imagePullPolicy: {{ $pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.postgres.mode.create }}
+          {{- if $create_mode }}
           command: ["/bin/sh"]
           args:
             - -c
@@ -47,7 +52,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-postgres-agent-secret
                   key: DB_NAME
-            {{- if .Values.postgres.mode.create }}
+            {{- if $create_mode }}
             - name: DB_USER
               valueFrom:
                 secretKeyRef:

@@ -29,7 +29,7 @@ Install [`mika/postgres`](../postgres/). This step can be skipped if you have an
 
 ### Prepare chart values
 
-Copy `values.yaml` from the chart you would like to install. Refer to the [Configuration](#configuration) section for more information.
+Copy `values.yaml` from the chart you would like to install. Refer to the [Configurations](#configurations) section for more information.
 
 ```sh
 cp mika/postgres-agent/values.yaml .
@@ -63,19 +63,19 @@ Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingl
 helm uninstall $release_name --namespace $namespace --wait
 ```
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.postgres.pullPolicy | string | `"IfNotPresent"` | Postgres image pull policy |
-| image.postgres.registry | string | `"docker.io"` | Postgres image registry |
-| image.postgres.repository | string | `"postgres"` | Postgres image repository |
-| image.postgres.tag | string | `""` | Postgres image version |
-| postgres.host | string | `"postgres.default.svc.cluster.local"` | Postgres server |
-| postgres.mode.create | bool | `true` | Enable create database and user mode |
-| postgres.mode.drop | bool | `false` | Enable drop database mode |
-| postgres.name | string | `""` | Database name |
-| postgres.pass | string | `""` | Database user password. Only required in create mode. |
-| postgres.root.pass | string | `""` | Database root user password |
-| postgres.root.user | string | `""` | Database root user |
-| postgres.user | string | `""` | Database user. Only required in create mode. |
+| image.postgres.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the PostgreSQL container image. Default: `"IfNotPresent"`. |
+| image.postgres.registry | string | `""` | The registry where the PostgreSQL container image is hosted. Default: `"docker.io"`. |
+| image.postgres.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"postgres"`. |
+| image.postgres.tag | string | `""` | The tag that specifies the version of the PostgreSQL container image used. Default: `Chart appVersion`. |
+| postgres.host | string | `""` | The hostname or IP address of the PostgreSQL database server. |
+| postgres.mode.create | bool | `true` | Specifies whether to create a database and user in a remote PostgreSQL instance. Default: `true`. |
+| postgres.mode.drop | bool | `false` | Specifies whether to delete a database in a remote PostgreSQL instance. Default: `false`. |
+| postgres.name | string | `""` | The name of the intended PostgreSQL database. |
+| postgres.password | string | `""` | The password associated with the intended PostgreSQL database user. |
+| postgres.root.password | string | `""` | The password associated with the PostgreSQL database server root user. |
+| postgres.root.user | string | `""` | The username or user account for accessing the PostgreSQL database server as root. Default: `"root"`. |
+| postgres.user | string | `""` | The username or user account for accessing the intended PostgreSQL database. |
