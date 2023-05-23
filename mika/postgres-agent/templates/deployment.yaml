@@ -29,14 +29,14 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if $create_mode }}
-          command: ["/bin/sh"]
+          command: ["/bin/bash"]
           args:
             - -c
             - >-
               psql -v ON_ERROR_STOP=1 -h $(DB_HOST) -U $(ROOT_USER) -d postgres <<-EOSQL
-                SELECT 'CREATE DATABASE $(DB_NAME)' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
-                SELECT 'CREATE USER $(DB_USER) WITH PASSWORD ''$(DB_PASS)''' WHERE NOT EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
-                GRANT ALL PRIVILEGES ON DATABASE $(DB_NAME) TO $(DB_USER)\gexec
+                SELECT 'CREATE DATABASE "$(DB_NAME)"' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
+                SELECT 'CREATE USER "$(DB_USER)" WITH PASSWORD ''$(DB_PASS)''' WHERE NOT EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
+                GRANT ALL PRIVILEGES ON DATABASE "$(DB_NAME)" TO "$(DB_USER)"\gexec
               EOSQL
           {{- else }}
           command: ["dropdb"]
