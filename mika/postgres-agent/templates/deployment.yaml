@@ -1,3 +1,4 @@
+{{- $host := .Values.postgres.host | default "postgres" | toString }}
 {{- $registry := .Values.image.postgres.registry | default "docker.io" | toString }}
 {{- $repository := .Values.image.postgres.repository | default "postgres" | toString }}
 {{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
@@ -6,7 +7,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-postgres-agent
+  name: {{ printf "%s-%s-%s" (index (splitList "." $host) 0) .Release.Name "postgres-agent" }}
   labels:
     {{- include "postgres-agent.labels" . | nindent 4 }}
 spec:
