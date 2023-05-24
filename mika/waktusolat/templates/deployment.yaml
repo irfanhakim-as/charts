@@ -111,6 +111,7 @@ spec:
             - name: {{ .Release.Name }}-waktusolat-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
+              readOnly: true
             - name: {{ .Release.Name }}-waktusolat-default-celery-config
               mountPath: /etc/default/celeryd
               subPath: celeryd
