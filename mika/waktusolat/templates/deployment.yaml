@@ -67,11 +67,11 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-waktusolat-cm
                   key: CELERY_BACKEND
-            - name: CELERY_TIMEZONE
+            - name: SCHEDULER_TIMEZONE
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-waktusolat-cm
-                  key: CELERY_TIMEZONE
+                  key: SCHEDULER_TIMEZONE
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:

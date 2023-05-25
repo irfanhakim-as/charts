@@ -101,9 +101,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.waktusolat.limits.memory | string | `"450Mi"` | The maximum amount of memory allowed for WaktuSolat. |
 | resources.waktusolat.requests.cpu | string | `"20m"` | The minimum amount of CPU resources required by WaktuSolat. |
 | resources.waktusolat.requests.memory | string | `"250Mi"` | The minimum amount of memory required by WaktuSolat. |
-| waktusolat.celery_timezone | string | `"Asia/Kuala_Lumpur"` | The timezone for the Celery task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
 | waktusolat.location | string | `""` | The default location code used by WaktuSolat and its services. Default: `"wlp-0"`. |
 | waktusolat.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the WaktuSolat bot. |
 | waktusolat.mastodon.token | string | `""` | A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API. |
+| waktusolat.scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |

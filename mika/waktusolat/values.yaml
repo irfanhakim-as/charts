@@ -59,11 +59,6 @@ waktusolat:
   # Example:
   # location: "wlp-0"
   location: ""
-  # The timezone for the Celery task scheduler used by WaktuSolat to schedule time-dependent operations.
-  # Default: "Asia/Kuala_Lumpur"
-  # Example:
-  # celery_timezone: "Asia/Kuala_Lumpur"
-  celery_timezone: "Asia/Kuala_Lumpur"
   # WaktuSolat Mastodon configurations.
   mastodon:
     # API endpoint or URL for the Mastodon instance of the WaktuSolat bot.
@@ -74,6 +69,13 @@ waktusolat:
     # Example:
     # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
     token: ""
+  # WaktuSolat scheduler configurations.
+  scheduler:
+    # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
+    # Default: "Asia/Kuala_Lumpur"
+    # Example:
+    # timezone: "Asia/Kuala_Lumpur"
+    timezone: ""
 
 # Database configurations.
 db:

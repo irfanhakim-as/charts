@@ -2,7 +2,7 @@
 {{- $location := .Values.waktusolat.location | default "wlp-0" | toString | quote }}
 {{- $api := .Values.waktusolat.mastodon.api | toString | quote }}
 {{- $redis_service := printf "redis://%s-waktusolat-svc" .Release.Name | quote }}
-{{- $celery_timezone := .Values.waktusolat.celery_timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
+{{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.waktusolat.domain | default "localhost" | toString }}
 apiVersion: v1
 kind: ConfigMap
@@ -16,7 +16,7 @@ data:
   API_BASE_URL: {{ $api }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
-  CELERY_TIMEZONE: {{ $celery_timezone }}
+  SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
 ---
 apiVersion: v1
 kind: ConfigMap
