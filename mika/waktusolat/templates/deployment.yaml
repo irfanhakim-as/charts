@@ -7,6 +7,7 @@
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
 {{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $celery := .Values.waktusolat.scheduler.celery }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -57,6 +58,7 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-waktusolat-cm
                   key: API_BASE_URL
+            {{- if $celery }}
             - name: CELERY_BROKER
               valueFrom:
                 configMapKeyRef:
@@ -67,6 +69,7 @@ spec:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-waktusolat-cm
                   key: CELERY_BACKEND
+            {{- end }}
             - name: SCHEDULER_TIMEZONE
               valueFrom:
                 configMapKeyRef:
@@ -112,6 +115,7 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            {{- if $celery }}
             - name: {{ .Release.Name }}-waktusolat-default-celery-config
               mountPath: /etc/default/celeryd
               subPath: celeryd
@@ -127,6 +131,7 @@ spec:
             - name: {{ .Release.Name }}-waktusolat-scheduler-config
               mountPath: /base/base/__init__.py
               subPath: init.py
+            {{- end }}
             - name: {{ .Release.Name }}-waktusolat-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
@@ -134,6 +139,7 @@ spec:
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
               readOnly: true
+        {{- if $celery }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
@@ -143,10 +149,12 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.redis | nindent 12 }}
+        {{- end }}
       volumes:
         - name: {{ .Release.Name }}-waktusolat-site-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-site-config
+        {{- if $celery }}
         - name: {{ .Release.Name }}-waktusolat-default-celery-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-default-celery-config
@@ -163,15 +171,18 @@ spec:
                 path: celerybeat
               - key: celeryd
                 path: celeryd
+        {{- end }}
         - name: {{ .Release.Name }}-waktusolat-scheduler-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-scheduler-config
             defaultMode: 0775
             items:
+              {{- if $celery }}
               - key: celery.py
                 path: celery.py
               - key: init.py
                 path: init.py
+              {{- end }}
               - key: tasks.py
                 path: tasks.py
         - name: {{ .Release.Name }}-waktusolat-token-secret

@@ -4,6 +4,7 @@
 {{- $redis_service := printf "redis://%s-waktusolat-svc" .Release.Name | quote }}
 {{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.waktusolat.domain | default "localhost" | toString }}
+{{- $celery := .Values.waktusolat.scheduler.celery }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,8 +15,10 @@ data:
   DEBUG: {{ $debug }}
   LOCATION_CODE: {{ $location }}
   API_BASE_URL: {{ $api }}
+  {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
+  {{- end }}
   SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
 ---
 apiVersion: v1
@@ -49,6 +52,7 @@ data:
       ErrorLog /var/log/apache2/apache.error.log
       CustomLog /var/log/apache2/apache.access.log combined
     </VirtualHost>
+{{- if $celery }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -71,6 +75,7 @@ data:
     {{- include "waktusolat.initd-celerybeat" . | nindent 4 }}
   celeryd: |-
     {{- include "waktusolat.initd-celeryd" . | nindent 4 }}
+{{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -79,9 +84,11 @@ metadata:
   labels:
     {{- include "waktusolat.labels" . | nindent 4 }}
 data:
+  {{- if $celery }}
   celery.py: |-
     {{- include "waktusolat.celery-py" . | nindent 4 }}
   init.py: |-
     {{- include "waktusolat.init-py" . | nindent 4 }}
+  {{- end }}
   tasks.py: |-
     {{- include "waktusolat.tasks-py" . | nindent 4 }}
