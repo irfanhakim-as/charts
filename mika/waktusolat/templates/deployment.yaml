@@ -121,6 +121,15 @@ spec:
             - name: {{ .Release.Name }}-waktusolat-initd-celery-config
               mountPath: /etc/init.d/celeryd
               subPath: celeryd
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/celery.py
+              subPath: celery.py
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/__init__.py
+              subPath: init.py
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
             - name: {{ .Release.Name }}-waktusolat-token-secret
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
@@ -154,6 +163,17 @@ spec:
                 path: celerybeat
               - key: celeryd
                 path: celeryd
+        - name: {{ .Release.Name }}-waktusolat-scheduler-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-scheduler-config
+            defaultMode: 0775
+            items:
+              - key: celery.py
+                path: celery.py
+              - key: init.py
+                path: init.py
+              - key: tasks.py
+                path: tasks.py
         - name: {{ .Release.Name }}-waktusolat-token-secret
           secret:
             secretName: {{ .Release.Name }}-waktusolat-token-secret

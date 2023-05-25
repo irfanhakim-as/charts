@@ -872,3 +872,91 @@ esac
 
 exit 0
 {{- end }}
+
+{{/*
+/base/base/celery.py template
+*/}}
+{{- define "waktusolat.celery-py" -}}
+from __future__ import absolute_import, unicode_literals
+import os
+from celery import Celery
+from celery.schedules import crontab
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "base.settings")
+app = Celery("base")
+app.config_from_object("django.conf:settings", namespace="CELERY")
+app.autodiscover_tasks()
+
+
+app.conf.beat_schedule = {
+    # clean and update prayer times every 0000 hour
+    "clean_db_every_0000": {
+        "task": "base.tasks.clean_db_task",
+        "schedule": crontab(hour=0, minute=0),
+    },
+    # notify solat schedule every 0500 hour
+    "notify_solat_schedule_every_0500": {
+        "task": "base.tasks.notify_solat_schedule_task",
+        "schedule": crontab(hour=5, minute=0),
+    },
+    # check and notify solat time every sharp minute
+    "notify_solat_times_every_minute": {
+        "task": "base.tasks.notify_solat_times_task",
+        "schedule": crontab(minute="*"),
+    },
+    # check for any posts that need to be posted every 1 second
+    "post_scheduler_every_1s": {
+        "task": "base.tasks.post_scheduler_task",
+        "schedule": 1.0,
+    },
+}
+
+
+@app.task(bind=True)
+def debug_task(self):
+    print("Request: {0!r}".format(self.request))
+{{- end }}
+
+{{/*
+/base/base/__init__.py template
+*/}}
+{{- define "waktusolat.init-py" -}}
+from .celery import app as celery_app
+
+__all__ = ("celery_app",)
+{{- end }}
+
+{{/*
+/base/base/tasks.py template
+*/}}
+{{- define "waktusolat.tasks-py" -}}
+from __future__ import absolute_import, unicode_literals
+import logging
+from celery import shared_task
+from base.methods import post_scheduler
+from lib import solat
+logger=logging.getLogger('base')
+
+
+# clean and update prayer times
+@shared_task
+def clean_db_task():
+    solat.clean_db()
+
+
+# notify solat schedule
+@shared_task
+def notify_solat_schedule_task():
+    solat.notify_solat_schedule()
+
+
+# check and notify solat time
+@shared_task
+def notify_solat_times_task():
+    solat.notify_solat_times()
+
+
+# check for any posts that need to be posted
+@shared_task
+def post_scheduler_task():
+    post_scheduler()
+{{- end }}
