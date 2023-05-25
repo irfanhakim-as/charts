@@ -177,3 +177,5 @@ spec:
         - name: {{ .Release.Name }}-waktusolat-token-secret
           secret:
             secretName: {{ .Release.Name }}-waktusolat-token-secret
+      securityContext:
+        fsGroup: 33
