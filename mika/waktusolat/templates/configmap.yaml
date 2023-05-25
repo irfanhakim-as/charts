@@ -4,6 +4,7 @@
 {{- $redis_service := printf "redis://%s-waktusolat-svc" .Release.Name | quote }}
 {{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.waktusolat.domain | default "localhost" | toString }}
+{{- $apscheduler := .Values.waktusolat.scheduler.apscheduler }}
 {{- $celery := .Values.waktusolat.scheduler.celery }}
 apiVersion: v1
 kind: ConfigMap
@@ -76,6 +77,7 @@ data:
   celeryd: |-
     {{- include "waktusolat.initd-celeryd" . | nindent 4 }}
 {{- end }}
+{{- if or $apscheduler $celery }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -89,6 +91,14 @@ data:
     {{- include "waktusolat.celery-py" . | nindent 4 }}
   init.py: |-
     {{- include "waktusolat.init-py" . | nindent 4 }}
+  {{- else if $apscheduler }}
+  apps.py: |-
+    {{- include "waktusolat.apps-py" . | nindent 4 }}
   {{- end }}
   tasks.py: |-
-    {{- include "waktusolat.tasks-py" . | nindent 4 }}
+    {{- if $celery }}
+      {{- include "waktusolat.celery-tasks-py" . | nindent 4 }}
+    {{- else if $apscheduler }}
+      {{- include "waktusolat.apscheduler-tasks-py" . | nindent 4 }}
+    {{- end }}
+{{- end }}

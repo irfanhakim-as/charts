@@ -7,6 +7,7 @@
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
 {{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $apscheduler := .Values.waktusolat.scheduler.apscheduler }}
 {{- $celery := .Values.waktusolat.scheduler.celery }}
 apiVersion: apps/v1
 kind: Deployment
@@ -131,10 +132,16 @@ spec:
             - name: {{ .Release.Name }}-waktusolat-scheduler-config
               mountPath: /base/base/__init__.py
               subPath: init.py
+            {{- else if $apscheduler }}
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/apps.py
+              subPath: apps.py
             {{- end }}
+            {{- if or $apscheduler $celery }}
             - name: {{ .Release.Name }}-waktusolat-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
+            {{- end }}
             - name: {{ .Release.Name }}-waktusolat-token-secret
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
@@ -172,6 +179,7 @@ spec:
               - key: celeryd
                 path: celeryd
         {{- end }}
+        {{- if or $apscheduler $celery }}
         - name: {{ .Release.Name }}-waktusolat-scheduler-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-scheduler-config
@@ -182,9 +190,13 @@ spec:
                 path: celery.py
               - key: init.py
                 path: init.py
+              {{- else if $apscheduler }}
+              - key: apps.py
+                path: apps.py
               {{- end }}
               - key: tasks.py
                 path: tasks.py
+        {{- end }}
         - name: {{ .Release.Name }}-waktusolat-token-secret
           secret:
             secretName: {{ .Release.Name }}-waktusolat-token-secret
