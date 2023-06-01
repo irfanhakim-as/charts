@@ -73,12 +73,12 @@ waktusolat:
   scheduler:
     # Specifies whether APScheduler should be used by WaktuSolat as the task scheduler.
     # Example:
-    # apscheduler: true
-    apscheduler: false
+    # apscheduler: false
+    apscheduler: true
     # Specifies whether Celery should be used by WaktuSolat as the task scheduler.
     # Example:
-    # celery: false
-    celery: true
+    # celery: true
+    celery: false
     # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
     # Default: "Asia/Kuala_Lumpur"
     # Example:

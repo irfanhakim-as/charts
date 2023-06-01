@@ -105,7 +105,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | waktusolat.location | string | `""` | The default location code used by WaktuSolat and its services. Default: `"wlp-0"`. |
 | waktusolat.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the WaktuSolat bot. |
 | waktusolat.mastodon.token | string | `""` | A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API. |
-| waktusolat.scheduler.apscheduler | bool | `false` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
-| waktusolat.scheduler.celery | bool | `true` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
+| waktusolat.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
+| waktusolat.scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |
