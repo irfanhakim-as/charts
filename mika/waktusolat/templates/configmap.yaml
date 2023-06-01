@@ -97,19 +97,19 @@ metadata:
   labels:
     {{- include "waktusolat.labels" . | nindent 4 }}
 data:
-  {{- if $celery }}
+  {{- if $apscheduler }}
+  apps.py: |-
+    {{- include "waktusolat.apps-py" . | nindent 4 }}
+  {{- else if $celery }}
   celery.py: |-
     {{- include "waktusolat.celery-py" . | nindent 4 }}
   init.py: |-
     {{- include "waktusolat.init-py" . | nindent 4 }}
-  {{- else if $apscheduler }}
-  apps.py: |-
-    {{- include "waktusolat.apps-py" . | nindent 4 }}
   {{- end }}
   tasks.py: |-
-    {{- if $celery }}
-      {{- include "waktusolat.celery-tasks-py" . | nindent 4 }}
-    {{- else if $apscheduler }}
+    {{- if $apscheduler }}
       {{- include "waktusolat.apscheduler-tasks-py" . | nindent 4 }}
+    {{- else if $celery }}
+      {{- include "waktusolat.celery-tasks-py" . | nindent 4 }}
     {{- end }}
 {{- end }}

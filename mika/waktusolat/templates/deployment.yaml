@@ -130,23 +130,97 @@ spec:
               mountPath: /base/base/celery.py
               subPath: celery.py
             - name: {{ .Release.Name }}-waktusolat-scheduler-config
-              mountPath: /base/base/__init__.py
-              subPath: init.py
-            {{- else if $apscheduler }}
-            - name: {{ .Release.Name }}-waktusolat-scheduler-config
-              mountPath: /base/base/apps.py
-              subPath: apps.py
-            {{- end }}
-            {{- if or $apscheduler $celery }}
-            - name: {{ .Release.Name }}-waktusolat-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/__init__.py
+              subPath: init.py
             {{- end }}
             - name: {{ .Release.Name }}-waktusolat-token-secret
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
               readOnly: true
-        {{- if $celery }}
+        {{- if $apscheduler }}
+        - name: apscheduler
+          image: {{ printf "%s/%s:%s" $waktusolat_registry $waktusolat_repository $waktusolat_tag | quote }}
+          imagePullPolicy: {{ $waktusolat_pullPolicy }}
+          ports:
+            - name: waktusolat
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          env:
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: DEBUG
+            - name: LOCATION_CODE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: LOCATION_CODE
+            - name: API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: API_BASE_URL
+            - name: SCHEDULER_TIMEZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-cm
+                  key: SCHEDULER_TIMEZONE
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: SECRET_KEY
+            - name: DB_TYPE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_TYPE
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_PASS
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-waktusolat-secret
+                  key: DB_PORT
+          volumeMounts:
+            - name: {{ .Release.Name }}-waktusolat-apscheduler-config
+              mountPath: /entrypoint.sh
+              subPath: entrypoint.sh
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/apps.py
+              subPath: apps.py
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            - name: {{ .Release.Name }}-waktusolat-token-secret
+              mountPath: /base/base/mastodon.secret
+              subPath: mastodon.secret
+              readOnly: true
+        {{- else if $celery }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
