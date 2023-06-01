@@ -20,7 +20,9 @@ data:
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
   {{- end }}
+  {{- if or $apscheduler $celery }}
   SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
