@@ -161,7 +161,15 @@ spec:
         - name: {{ .Release.Name }}-waktusolat-site-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-site-config
-        {{- if $celery }}
+        {{- if $apscheduler }}
+        - name: {{ .Release.Name }}-waktusolat-apscheduler-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-apscheduler-config
+            defaultMode: 0755
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+        {{- else if $celery }}
         - name: {{ .Release.Name }}-waktusolat-default-celery-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-default-celery-config

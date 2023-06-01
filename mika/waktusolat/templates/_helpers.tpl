@@ -993,6 +993,23 @@ def start():
 {{- end }}
 
 {{/*
+APScheduler /entrypoint.sh template
+*/}}
+{{- define "waktusolat.apscheduler-entrypoint-sh" -}}
+#!/bin/bash
+
+export APP_ROOT="base"
+
+# ================= DO NOT EDIT BEYOND THIS LINE =================
+
+python3 manage.py makemigrations
+
+python3 manage.py migrate
+
+tail -f /dev/null
+{{- end }}
+
+{{/*
 /base/base/apps.py template
 */}}
 {{- define "waktusolat.apps-py" -}}

@@ -53,7 +53,18 @@ data:
       ErrorLog /var/log/apache2/apache.error.log
       CustomLog /var/log/apache2/apache.access.log combined
     </VirtualHost>
-{{- if $celery }}
+{{- if $apscheduler }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-waktusolat-apscheduler-config
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+data:
+  entrypoint.sh: |-
+    {{- include "waktusolat.apscheduler-entrypoint-sh" . | nindent 4 }}
+{{- else if $celery }}
 ---
 apiVersion: v1
 kind: ConfigMap
