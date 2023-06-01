@@ -968,14 +968,14 @@ APScheduler /base/base/tasks.py template
 from django.conf import settings
 from base.methods import post_scheduler
 from lib import solat
-from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE", None)
 
 
 def start():
-    scheduler = BackgroundScheduler(timezone=SCHEDULER_TIMEZONE)
+    scheduler = BlockingScheduler(timezone=SCHEDULER_TIMEZONE)
 
     job_name = "clean_db"
     scheduler.add_job(solat.clean_db, 'cron', hour='0', id=job_name, replace_existing=True)
