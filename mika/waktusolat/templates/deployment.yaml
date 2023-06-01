@@ -155,7 +155,7 @@ spec:
               containerPort: 6379
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources.redis | nindent 12 }}
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
         {{- end }}
       volumes:
         - name: {{ .Release.Name }}-waktusolat-site-config

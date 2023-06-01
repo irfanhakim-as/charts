@@ -93,10 +93,10 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.waktusolat.tag | string | `""` | The tag that specifies the version of the WaktuSolat container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
-| resources.redis.limits.cpu | string | `"15m"` | The maximum amount of CPU resources allowed for Redis. |
-| resources.redis.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for Redis. |
-| resources.redis.requests.cpu | string | `"5m"` | The minimum amount of CPU resources required by Redis. |
-| resources.redis.requests.memory | string | `"30Mi"` | The minimum amount of memory required by Redis. |
+| resources.scheduler.limits.cpu | string | `"15m"` | The maximum amount of CPU resources allowed for Scheduler. |
+| resources.scheduler.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for Scheduler. |
+| resources.scheduler.requests.cpu | string | `"5m"` | The minimum amount of CPU resources required by Scheduler. |
+| resources.scheduler.requests.memory | string | `"30Mi"` | The minimum amount of memory required by Scheduler. |
 | resources.waktusolat.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for WaktuSolat. |
 | resources.waktusolat.limits.memory | string | `"450Mi"` | The maximum amount of memory allowed for WaktuSolat. |
 | resources.waktusolat.requests.cpu | string | `"20m"` | The minimum amount of CPU resources required by WaktuSolat. |
