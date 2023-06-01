@@ -99,12 +99,12 @@ metadata:
 data:
   {{- if $apscheduler }}
   apps.py: |-
-    {{- include "waktusolat.apps-py" . | nindent 4 }}
+    {{- include "waktusolat.apscheduler-apps-py" . | nindent 4 }}
   {{- else if $celery }}
   celery.py: |-
     {{- include "waktusolat.celery-py" . | nindent 4 }}
   init.py: |-
-    {{- include "waktusolat.init-py" . | nindent 4 }}
+    {{- include "waktusolat.celery-init-py" . | nindent 4 }}
   {{- end }}
   tasks.py: |-
     {{- if $apscheduler }}

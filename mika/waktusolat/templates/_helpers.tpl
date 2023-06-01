@@ -62,7 +62,7 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-/etc/default/celeryd template
+Celery /etc/default/celeryd template
 */}}
 {{- define "waktusolat.default-celeryd" -}}
 # Names of nodes to start
@@ -122,7 +122,7 @@ CELERY_CREATE_DIRS=1
 {{- end }}
 
 {{/*
-/etc/init.d/celerybeat template
+Celery /etc/init.d/celerybeat template
 */}}
 {{- define "waktusolat.initd-celerybeat" -}}
 #!/bin/sh -e
@@ -457,7 +457,7 @@ exit 0
 {{- end }}
 
 {{/*
-/etc/init.d/celeryd template
+Celery /etc/init.d/celeryd template
 */}}
 {{- define "waktusolat.initd-celeryd" -}}
 #!/bin/sh -e
@@ -874,7 +874,7 @@ exit 0
 {{- end }}
 
 {{/*
-/base/base/celery.py template
+Celery /base/base/celery.py template
 */}}
 {{- define "waktusolat.celery-py" -}}
 from __future__ import absolute_import, unicode_literals
@@ -917,9 +917,9 @@ def debug_task(self):
 {{- end }}
 
 {{/*
-/base/base/__init__.py template
+Celery /base/base/__init__.py template
 */}}
-{{- define "waktusolat.init-py" -}}
+{{- define "waktusolat.celery-init-py" -}}
 from .celery import app as celery_app
 
 __all__ = ("celery_app",)
@@ -1010,9 +1010,9 @@ tail -f /dev/null
 {{- end }}
 
 {{/*
-/base/base/apps.py template
+APScheduler /base/base/apps.py template
 */}}
-{{- define "waktusolat.apps-py" -}}
+{{- define "waktusolat.apscheduler-apps-py" -}}
 from django.apps import AppConfig
 
 class BaseConfig(AppConfig):
