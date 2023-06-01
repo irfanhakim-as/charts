@@ -93,14 +93,14 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.waktusolat.tag | string | `""` | The tag that specifies the version of the WaktuSolat container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
-| resources.scheduler.limits.cpu | string | `"15m"` | The maximum amount of CPU resources allowed for Scheduler. |
-| resources.scheduler.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for Scheduler. |
-| resources.scheduler.requests.cpu | string | `"5m"` | The minimum amount of CPU resources required by Scheduler. |
-| resources.scheduler.requests.memory | string | `"30Mi"` | The minimum amount of memory required by Scheduler. |
+| resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
+| resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
+| resources.scheduler.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Scheduler. |
+| resources.scheduler.requests.memory | string | `"100Mi"` | The minimum amount of memory required by Scheduler. |
 | resources.waktusolat.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for WaktuSolat. |
-| resources.waktusolat.limits.memory | string | `"450Mi"` | The maximum amount of memory allowed for WaktuSolat. |
-| resources.waktusolat.requests.cpu | string | `"20m"` | The minimum amount of CPU resources required by WaktuSolat. |
-| resources.waktusolat.requests.memory | string | `"250Mi"` | The minimum amount of memory required by WaktuSolat. |
+| resources.waktusolat.limits.memory | string | `"120Mi"` | The maximum amount of memory allowed for WaktuSolat. |
+| resources.waktusolat.requests.cpu | string | `"30m"` | The minimum amount of CPU resources required by WaktuSolat. |
+| resources.waktusolat.requests.memory | string | `"60Mi"` | The minimum amount of memory required by WaktuSolat. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
 | waktusolat.location | string | `""` | The default location code used by WaktuSolat and its services. Default: `"wlp-0"`. |
 | waktusolat.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the WaktuSolat bot. |

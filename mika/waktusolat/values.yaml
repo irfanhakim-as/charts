@@ -125,11 +125,11 @@ resources:
       # The minimum amount of CPU resources required by WaktuSolat.
       # Example:
       # cpu: "20m"
-      cpu: "20m"
+      cpu: "30m"
       # The minimum amount of memory required by WaktuSolat.
       # Example:
       # memory: "250Mi"
-      memory: "250Mi"
+      memory: "60Mi"
     # The maximum amount of resources allowed for WaktuSolat.
     limits:
       # The maximum amount of CPU resources allowed for WaktuSolat.
@@ -139,7 +139,7 @@ resources:
       # The maximum amount of memory allowed for WaktuSolat.
       # Example:
       # memory: "450Mi"
-      memory: "450Mi"
+      memory: "120Mi"
   # Scheduler container resources.
   scheduler:
     # The minimum amount of resources required by Scheduler to run.
@@ -147,18 +147,18 @@ resources:
       # The minimum amount of CPU resources required by Scheduler.
       # Example:
       # cpu: "5m"
-      cpu: "5m"
+      cpu: "10m"
       # The minimum amount of memory required by Scheduler.
       # Example:
       # memory: "30Mi"
-      memory: "30Mi"
+      memory: "100Mi"
     # The maximum amount of resources allowed for Scheduler.
     limits:
       # The maximum amount of CPU resources allowed for Scheduler.
       # Example:
       # cpu: "15m"
-      cpu: "15m"
+      cpu: "20m"
       # The maximum amount of memory allowed for Scheduler.
       # Example:
       # memory: "50Mi"
-      memory: "50Mi"
+      memory: "200Mi"
