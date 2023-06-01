@@ -62,6 +62,68 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+APScheduler /entrypoint.sh template
+*/}}
+{{- define "waktusolat.apscheduler-entrypoint-sh" -}}
+#!/bin/bash
+
+export APP_ROOT="base"
+
+# ================= DO NOT EDIT BEYOND THIS LINE =================
+
+python3 manage.py makemigrations
+
+python3 manage.py migrate
+
+tail -f /dev/null
+{{- end }}
+
+{{/*
+APScheduler /base/base/apps.py template
+*/}}
+{{- define "waktusolat.apscheduler-apps-py" -}}
+from django.apps import AppConfig
+
+class BaseConfig(AppConfig):
+    name = 'base'
+
+    def ready(self):
+        from base import tasks
+        tasks.start()
+{{- end }}
+
+{{/*
+APScheduler /base/base/tasks.py template
+*/}}
+{{- define "waktusolat.apscheduler-tasks-py" -}}
+from django.conf import settings
+from base.methods import post_scheduler
+from lib import solat
+from apscheduler.schedulers.blocking import BlockingScheduler
+
+
+SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE", None)
+
+
+def start():
+    scheduler = BlockingScheduler(timezone=SCHEDULER_TIMEZONE)
+
+    job_name = "clean_db"
+    scheduler.add_job(solat.clean_db, 'cron', hour='0', id=job_name, replace_existing=True)
+
+    job_name = "notify_solat_schedule"
+    scheduler.add_job(solat.notify_solat_schedule, 'cron', hour='5', id=job_name, replace_existing=True)
+
+    job_name = "notify_solat_times"
+    scheduler.add_job(solat.notify_solat_times, 'cron', minute='*', id=job_name, replace_existing=True)
+
+    job_name = "post_scheduler"
+    scheduler.add_job(post_scheduler, 'cron', second='*/1', id=job_name, replace_existing=True)
+
+    scheduler.start()
+{{- end }}
+
+{{/*
 Celery /etc/default/celeryd template
 */}}
 {{- define "waktusolat.default-celeryd" -}}
@@ -959,66 +1021,4 @@ def notify_solat_times_task():
 @shared_task
 def post_scheduler_task():
     post_scheduler()
-{{- end }}
-
-{{/*
-APScheduler /base/base/tasks.py template
-*/}}
-{{- define "waktusolat.apscheduler-tasks-py" -}}
-from django.conf import settings
-from base.methods import post_scheduler
-from lib import solat
-from apscheduler.schedulers.blocking import BlockingScheduler
-
-
-SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE", None)
-
-
-def start():
-    scheduler = BlockingScheduler(timezone=SCHEDULER_TIMEZONE)
-
-    job_name = "clean_db"
-    scheduler.add_job(solat.clean_db, 'cron', hour='0', id=job_name, replace_existing=True)
-
-    job_name = "notify_solat_schedule"
-    scheduler.add_job(solat.notify_solat_schedule, 'cron', hour='5', id=job_name, replace_existing=True)
-
-    job_name = "notify_solat_times"
-    scheduler.add_job(solat.notify_solat_times, 'cron', minute='*', id=job_name, replace_existing=True)
-
-    job_name = "post_scheduler"
-    scheduler.add_job(post_scheduler, 'cron', second='*/1', id=job_name, replace_existing=True)
-
-    scheduler.start()
-{{- end }}
-
-{{/*
-APScheduler /entrypoint.sh template
-*/}}
-{{- define "waktusolat.apscheduler-entrypoint-sh" -}}
-#!/bin/bash
-
-export APP_ROOT="base"
-
-# ================= DO NOT EDIT BEYOND THIS LINE =================
-
-python3 manage.py makemigrations
-
-python3 manage.py migrate
-
-tail -f /dev/null
-{{- end }}
-
-{{/*
-APScheduler /base/base/apps.py template
-*/}}
-{{- define "waktusolat.apscheduler-apps-py" -}}
-from django.apps import AppConfig
-
-class BaseConfig(AppConfig):
-    name = 'base'
-
-    def ready(self):
-        from base import tasks
-        tasks.start()
 {{- end }}
