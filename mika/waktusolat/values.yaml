@@ -72,12 +72,10 @@ waktusolat:
   # WaktuSolat scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by WaktuSolat as the task scheduler.
-    # Default: false
     # Example:
     # apscheduler: true
     apscheduler: false
     # Specifies whether Celery should be used by WaktuSolat as the task scheduler.
-    # Default: true
     # Example:
     # celery: false
     celery: true
