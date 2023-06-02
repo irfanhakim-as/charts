@@ -105,6 +105,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | waktusolat.domain | string | `""` | The domain name of the WaktuSolat service. Default: `"localhost"`. |
 | waktusolat.location | string | `""` | The default location code used by WaktuSolat and its services. Default: `"wlp-0"`. |
 | waktusolat.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the WaktuSolat bot. |
+| waktusolat.mastodon.bot | string | `""` | The username or user account for the Mastodon instance of the WaktuSolat bot. |
 | waktusolat.mastodon.token | string | `""` | A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API. |
 | waktusolat.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |

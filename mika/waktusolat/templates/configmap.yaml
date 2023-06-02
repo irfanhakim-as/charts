@@ -1,6 +1,7 @@
 {{- $debug := .Values.waktusolat.debug | default "false" | toString | quote }}
 {{- $location := .Values.waktusolat.location | default "wlp-0" | toString | quote }}
 {{- $api := .Values.waktusolat.mastodon.api | toString | quote }}
+{{- $bot := .Values.waktusolat.mastodon.bot | toString | quote }}
 {{- $redis_service := printf "redis://%s-waktusolat-svc" .Release.Name | quote }}
 {{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.waktusolat.domain | default "localhost" | toString }}
@@ -16,6 +17,7 @@ data:
   DEBUG: {{ $debug }}
   LOCATION_CODE: {{ $location }}
   API_BASE_URL: {{ $api }}
+  BOT_ID: {{ $bot }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}

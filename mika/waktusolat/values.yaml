@@ -70,6 +70,10 @@ waktusolat:
     # Example:
     # api: "https://botsin.space/"
     api: ""
+    # The username or user account for the Mastodon instance of the WaktuSolat bot.
+    # Example:
+    # bot: "waktusolat"
+    bot: ""
     # A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API.
     # Example:
     # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
