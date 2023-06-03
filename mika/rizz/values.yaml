@@ -1,0 +1,177 @@
+# Default values for rizz.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Rizz.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Rizz.
+image:
+  # Rizz container image configurations.
+  rizz:
+    # The registry where the Rizz container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Rizz container image used.
+    # Default: "irfanhakim-as/rizz"
+    repository: ""
+    # The tag that specifies the version of the Rizz container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Rizz container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Redis container image configurations.
+  redis:
+    # The registry where the Redis container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Redis container image used.
+    # Default: "redis"
+    repository: ""
+    # The tag that specifies the version of the Redis container image used.
+    # Default: "alpine"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Redis container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Rizz configurations.
+rizz:
+  # Specifies whether Rizz should run in debug mode.
+  # Default: false
+  # Example:
+  # debug: true
+  debug: false
+  # The domain name of the Rizz service.
+  # Default: "localhost"
+  # Example:
+  # domain: "localhost"
+  domain: ""
+  # A 50-character secret key used for secure session management and cryptographic operations within the Rizz service.
+  # Example:
+  # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  secret: ""
+  # Rizz Mastodon configurations.
+  mastodon:
+    # API endpoint or URL for the Mastodon instance of the Rizz bot.
+    # Example:
+    # api: "https://botsin.space/"
+    api: ""
+    # The username or user account for the Mastodon instance of the Rizz bot.
+    # Example:
+    # bot: "rizz"
+    bot: ""
+    # A secure token required to authenticate the Rizz service with the Mastodon instance's API.
+    # Example:
+    # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+    token: ""
+  # Rizz RSS configurations.
+  rss:
+    # The URL of the RSS feed to be tracked by Rizz.
+    # Example:
+    # feed: "https://www.reddit.com/r/programming/.rss"
+    feed: ""
+    # The limit number of posts to be scheduled for posting by Rizz per run.
+    # Default: "3"
+    # Example:
+    # post_limit: "5"
+    post_limit: ""
+  # Rizz scheduler configurations.
+  scheduler:
+    # Specifies whether APScheduler should be used by Rizz as the task scheduler.
+    # Example:
+    # apscheduler: false
+    apscheduler: true
+    # Specifies whether Celery should be used by Rizz as the task scheduler.
+    # Example:
+    # celery: true
+    celery: false
+    # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
+    # Default: "Asia/Kuala_Lumpur"
+    # Example:
+    # timezone: "Asia/Kuala_Lumpur"
+    timezone: ""
+
+# Database configurations.
+db:
+  # The type of the database used by Rizz.
+  # Default: "postgresql"
+  # Example:
+  # type: "postgresql"
+  type: ""
+  # The name of the database used by Rizz.
+  # Example:
+  # name: "rizz"
+  name: ""
+  # The username or user account for accessing the Rizz database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Rizz database's user.
+  # Example:
+  # password: "password"
+  password: ""
+  # The hostname or IP address of the Rizz database server.
+  # Example:
+  # host: "rizz.default.svc.cluster.local"
+  host: ""
+  # The port number on which the Rizz database server is listening.
+  # Default: "5432"
+  # Example:
+  # port: "5432"
+  port: ""
+
+# Resource requirements and limits for Rizz containers.
+resources:
+  # Rizz container resources.
+  rizz:
+    # The minimum amount of resources required by Rizz to run.
+    requests:
+      # The minimum amount of CPU resources required by Rizz.
+      # Example:
+      # cpu: "20m"
+      cpu: "30m"
+      # The minimum amount of memory required by Rizz.
+      # Example:
+      # memory: "250Mi"
+      memory: "60Mi"
+    # The maximum amount of resources allowed for Rizz.
+    limits:
+      # The maximum amount of CPU resources allowed for Rizz.
+      # Example:
+      # cpu: "50m"
+      cpu: "50m"
+      # The maximum amount of memory allowed for Rizz.
+      # Example:
+      # memory: "450Mi"
+      memory: "120Mi"
+  # Scheduler container resources.
+  scheduler:
+    # The minimum amount of resources required by Scheduler to run.
+    requests:
+      # The minimum amount of CPU resources required by Scheduler.
+      # Example:
+      # cpu: "5m"
+      cpu: "10m"
+      # The minimum amount of memory required by Scheduler.
+      # Example:
+      # memory: "30Mi"
+      memory: "100Mi"
+    # The maximum amount of resources allowed for Scheduler.
+    limits:
+      # The maximum amount of CPU resources allowed for Scheduler.
+      # Example:
+      # cpu: "15m"
+      cpu: "20m"
+      # The maximum amount of memory allowed for Scheduler.
+      # Example:
+      # memory: "50Mi"
+      memory: "200Mi"

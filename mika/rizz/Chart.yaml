@@ -1,0 +1,19 @@
+apiVersion: v2
+name: rizz
+description: Rizz is a simple web application that tracks and posts content from RSS Feeds on Mastodon.
+type: application
+version: 0.0.1
+appVersion: "0.0.1-preview-r1"
+keywords:
+  - "rss"
+  - "monitor"
+  - "mastodon"
+home: "https://github.com/irfanhakim-as/rizz"
+icon: "https://irfanhakim-as.github.io/charts/logos/mika.png"
+sources:
+  - "https://github.com/irfanhakim-as/rizz"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

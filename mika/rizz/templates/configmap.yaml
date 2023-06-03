@@ -1,0 +1,121 @@
+{{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
+{{- $api := .Values.rizz.mastodon.api | toString | quote }}
+{{- $bot := .Values.rizz.mastodon.bot | toString | quote }}
+{{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
+{{- $scheduler_timezone := .Values.rizz.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
+{{- $domain := .Values.rizz.domain | default "localhost" | toString }}
+{{- $feed := .Values.rizz.rss.feed | toString | quote }}
+{{- $post_limit := .Values.rizz.rss.post_limit | default "3" | toString | quote }}
+{{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
+{{- $celery := .Values.rizz.scheduler.celery }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-cm
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  DEBUG: {{ $debug }}
+  API_BASE_URL: {{ $api }}
+  BOT_ID: {{ $bot }}
+  RSS_FEED_URL: {{ $feed }}
+  RSS_POST_LIMIT: {{ $post_limit }}
+  {{- if $celery }}
+  CELERY_BROKER: {{ $redis_service }}
+  CELERY_BACKEND: {{ $redis_service }}
+  {{- end }}
+  {{- if or $apscheduler $celery }}
+  SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
+  {{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-site-config
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  site-config.conf: |-
+    <VirtualHost *:80>
+      {{ "ServerName $domain:443" | replace "$domain" $domain }}
+      UseCanonicalName On
+      ServerAdmin support@mikahomelab.com
+      DocumentRoot /base
+      WSGIScriptAlias / /base/base/wsgi.py
+      {{ "WSGIDaemonProcess $domain python-path=/base" | replace "$domain" $domain }}
+      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
+      
+      <Directory /base/base>
+        <Files wsgi.py>
+          Require all granted
+        </Files>
+      </Directory>
+
+      Alias /static /static
+      <Directory /static>
+        Require all granted
+      </Directory>
+      
+      ErrorLog /var/log/apache2/apache.error.log
+      CustomLog /var/log/apache2/apache.access.log combined
+    </VirtualHost>
+{{- if $apscheduler }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-apscheduler-config
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  entrypoint.sh: |-
+    {{- include "rizz.apscheduler-entrypoint-sh" . | nindent 4 }}
+{{- else if $celery }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-default-celery-config
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  celeryd: |-
+    {{- include "rizz.default-celeryd" . | nindent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-initd-celery-config
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  celerybeat: |-
+    {{- include "rizz.initd-celerybeat" . | nindent 4 }}
+  celeryd: |-
+    {{- include "rizz.initd-celeryd" . | nindent 4 }}
+{{- end }}
+{{- if or $apscheduler $celery }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-scheduler-config
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  {{- if $apscheduler }}
+  apps.py: |-
+    {{- include "rizz.apscheduler-apps-py" . | nindent 4 }}
+  {{- else if $celery }}
+  celery.py: |-
+    {{- include "rizz.celery-py" . | nindent 4 }}
+  init.py: |-
+    {{- include "rizz.celery-init-py" . | nindent 4 }}
+  {{- end }}
+  tasks.py: |-
+    {{- if $apscheduler }}
+      {{- include "rizz.apscheduler-tasks-py" . | nindent 4 }}
+    {{- else if $celery }}
+      {{- include "rizz.celery-tasks-py" . | nindent 4 }}
+    {{- end }}
+{{- end }}
