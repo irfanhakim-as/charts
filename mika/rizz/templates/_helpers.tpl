@@ -116,7 +116,7 @@ def start():
     scheduler.add_job(rss.update_data, 'cron', hour='7,12,14,16,20,22', id=job_name, replace_existing=True)
 
     job_name = "post_scheduler"
-    scheduler.add_job(post_scheduler, 'cron', second='9,13,15,17,19,21,23', id=job_name, replace_existing=True)
+    scheduler.add_job(post_scheduler, 'cron', hour='9,13,15,17,19,21,23', id=job_name, replace_existing=True)
 
     scheduler.start()
 {{- end }}
