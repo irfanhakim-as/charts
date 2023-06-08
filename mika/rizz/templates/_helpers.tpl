@@ -116,7 +116,7 @@ def start():
     scheduler.add_job(rss.update_data, 'cron', hour='7,12,14,16,20,22', id=job_name, replace_existing=True)
 
     job_name = "post_scheduler"
-    scheduler.add_job(post_scheduler, 'cron', hour='9,13,15,17,19,21,23', id=job_name, replace_existing=True)
+    scheduler.add_job(post_scheduler, 'cron', hour='9,10,13,15,17,19,21,23', id=job_name, replace_existing=True)
 
     scheduler.start()
 {{- end }}
@@ -961,7 +961,7 @@ app.conf.beat_schedule = {
     # check for any posts that need to be posted
     "post_scheduler": {
         "task": "base.tasks.post_scheduler_task",
-        "schedule": crontab(hour='9,13,15,17,19,21,23', minute=0),
+        "schedule": crontab(hour='9,10,13,15,17,19,21,23', minute=0),
     },
 }
 
