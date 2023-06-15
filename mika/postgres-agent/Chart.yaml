@@ -5,7 +5,7 @@ type: application
 version: 0.1.2
 appVersion: "13.3"
 keywords:
-  - "postgres"
+  - "postgresql"
   - "agent"
   - "job"
 home: "https://github.com/irfanhakim-as/charts"
