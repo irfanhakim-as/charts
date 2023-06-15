@@ -1,12 +1,12 @@
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
-{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
-{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $CHART_NAME_registry := .Values.image.CHART_NAME.registry | default "docker.io" | toString }}
 {{- $CHART_NAME_repository := .Values.image.CHART_NAME.repository | default "CHART_NAME" | toString }}
 {{- $CHART_NAME_tag := .Values.image.CHART_NAME.tag | default .Chart.AppVersion | toString }}
 {{- $CHART_NAME_pullPolicy := .Values.image.CHART_NAME.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
