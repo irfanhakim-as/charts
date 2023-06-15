@@ -951,17 +951,17 @@ app.conf.beat_schedule = {
     # clean data
     "clean_data" : {
         "task" : "base.tasks.clean_data_task",
-        "schedule" : crontab(hour=0, minute=0),
+        "schedule" : crontab(hour="0", minute="0"),
     },
     # update data
     "update_data" : {
         "task" : "base.tasks.update_data_task",
-        "schedule" : crontab(hour="7,12,14,16,20,22", minute=0),
+        "schedule" : crontab(hour="7,12,14,16,20,22", minute="0"),
     },
     # check for any posts that need to be posted
     "post_scheduler" : {
         "task" : "base.tasks.post_scheduler_task",
-        "schedule" : crontab(hour="9,10,13,15,17,19,21,23", minute=0),
+        "schedule" : crontab(hour="9,10,13,15,17,19,21,23", minute="0"),
     },
 }
 
