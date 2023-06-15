@@ -103,7 +103,7 @@ from lib import rss
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
-SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE", None)
+SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE")
 
 
 def start():
