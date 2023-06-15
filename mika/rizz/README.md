@@ -65,6 +65,14 @@ Verify that your chart has been installed. Replace `$namespace` and `$release_na
 helm ls --namespace $namespace | grep "$release_name"
 ```
 
+## How to upgrade
+
+After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+
+```sh
+helm upgrade $release_name mika/rizz --namespace $namespace --values values.yaml --wait
+```
+
 ## How to uninstall
 
 Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
