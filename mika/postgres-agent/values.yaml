@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Container images used for PostgreSQL.
+# Container image used for PostgreSQL.
 image:
   # PostgreSQL container image configurations.
   postgres:
