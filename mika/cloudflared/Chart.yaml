@@ -5,14 +5,14 @@ type: application
 version: 0.1.0
 appVersion: "2022.3.0"
 keywords:
-  - cloudflared
-  - cloudflare
-  - tunnel
-home: https://github.com/irfanhakim-as/charts
-icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+  - "cloudflared"
+  - "cloudflare"
+  - "tunnel"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/cloudflare.png"
 sources:
-  - https://github.com/irfanhakim-as/charts
+  - "https://github.com/irfanhakim-as/charts"
 maintainers:
-  - name: Irfan Hakim
-    email: irfanhakim.as@yahoo.com
-    url: https://github.com/irfanhakim-as
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

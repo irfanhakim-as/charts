@@ -2,39 +2,68 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# The desired number of running replicas for Cloudflared.
+# Default: "1"
+replicaCount: ""
 
-# Cloudflared image configuration
+# Container image used for Cloudflared.
 image:
+  # Cloudflared container image configurations.
   cloudflared:
-    registry: docker.io
-    repository: cloudflare/cloudflared
+    # The registry where the Cloudflared container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Cloudflared container image used.
+    # Default: "cloudflare/cloudflared"
+    repository: ""
+    # The tag that specifies the version of the Cloudflared container image used.
+    # Default: Chart appVersion
     tag: ""
-    pullPolicy: IfNotPresent
+    # The policy that determines when Kubernetes should pull the Cloudflared container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
-# Cloudflare tunnel configuration
+# Cloudflare tunnel configurations.
 tunnel:
-  # Cloudflare tunnel name
+  # The name of the Cloudflare tunnel.
+  # Example:
+  # name: "cloudflare"
   name: ""
-  # Cloudflare tunnel credentials file
+  # The Cloudflare tunnel's credentials JSON file.
   file: ""
 
-# Ingress rules
+# Cloudflare ingress configurations.
 # Example:
 # ingress:
 #   - hostname: cloudflared.example.com
 #     service: cloudflared.default.svc.cluster.local
+#   - hostname: dashboard.example.com
+#     service: http://11.22.64.13
+#   - hostname: network.example.com
+#     originRequest:
+#       noTLSVerify: true
+#     service: https://11.22.64.15
 ingress: []
 
-# Cloudflared system resources
+# Resource requirements and limits for Cloudflared container.
 resources:
+  # The minimum amount of resources required by Cloudflared to run.
   requests:
-    # Minimum cpu allocation
+    # The minimum amount of CPU resources required by Cloudflared.
+    # Example:
+    # cpu: "20m"
     cpu: "10m"
-    # Minimum ram allocation
+    # The minimum amount of memory required by Cloudflared.
+    # Example:
+    # memory: "250Mi"
     memory: "10Mi"
+  # The maximum amount of resources allowed for Cloudflared.
   limits:
-    # Maximum cpu allocation
+    # The maximum amount of CPU resources allowed for Cloudflared.
+    # Example:
+    # cpu: "50m"
     cpu: "500m"
-    # Maximum ram allocation
+    # The maximum amount of memory allowed for Cloudflared.
+    # Example:
+    # memory: "450Mi"
     memory: "500Mi"
