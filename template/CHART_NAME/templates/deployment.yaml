@@ -54,17 +54,11 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-            - name: FOO
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-CHART_NAME-cm
-                  key: FOO
-            - name: BAR
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-CHART_NAME-secret
-                  key: BAR
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-CHART_NAME-cm
+            - secretRef:
+                name: {{ .Release.Name }}-CHART_NAME-secret
           volumeMounts:
             - name: {{ .Release.Name }}-CHART_NAME-data
               mountPath: /opt/CHART_NAME
