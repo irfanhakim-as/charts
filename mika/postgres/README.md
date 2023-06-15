@@ -65,7 +65,7 @@ Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingl
 helm uninstall $release_name --namespace $namespace --wait
 ```
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
