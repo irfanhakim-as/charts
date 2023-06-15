@@ -110,5 +110,8 @@ helm uninstall $release_name --namespace $namespace --wait
 | rizz.rss.post_limit | string | `""` | The limit number of posts to be scheduled for posting by Rizz per run. Default: `"3"`. |
 | rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
 | rizz.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
+| rizz.scheduler.schedule.clean_data | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| rizz.scheduler.schedule.post_scheduler | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"8-23/3"`. |
+| rizz.scheduler.schedule.update_data | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
 | rizz.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Rizz to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | rizz.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Rizz service. |

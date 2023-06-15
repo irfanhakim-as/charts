@@ -94,6 +94,23 @@ rizz:
     # Example:
     # celery: true
     celery: false
+    # The schedule for the task scheduler used by Rizz.
+    schedule:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # clean_data: "0"
+      clean_data: ""
+      # The hours at which the task scheduler posts scheduled posts.
+      # Default: "8-23/3"
+      # Example:
+      # post_scheduler: "9,10,13,15,17,19,21,23"
+      post_scheduler: ""
+      # The hours at which the task scheduler updates the database.
+      # Default: "7-22/3"
+      # Example:
+      # update_data: "7,12,14,16,20,22"
+      update_data: ""
     # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
     # Default: "Asia/Kuala_Lumpur"
     # Example:

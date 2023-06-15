@@ -8,6 +8,9 @@
 {{- $post_limit := .Values.rizz.rss.post_limit | default "3" | toString | quote }}
 {{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
 {{- $celery := .Values.rizz.scheduler.celery }}
+{{- $clean_data := .Values.rizz.scheduler.schedule.clean_data | default "0" | toString | quote }}
+{{- $post_scheduler := .Values.rizz.scheduler.schedule.post_scheduler | default "8-23/3" | toString | quote }}
+{{- $update_data := .Values.rizz.scheduler.schedule.update_data | default "7-22/3" | toString | quote }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -114,8 +117,8 @@ data:
   {{- end }}
   tasks.py: |-
     {{- if $apscheduler }}
-      {{- include "rizz.apscheduler-tasks-py" . | nindent 4 }}
+      {{- include "rizz.apscheduler-tasks-py" . | replace "CLEAN_DATA_HOURS" $clean_data | replace "UPDATE_DATA_HOURS" $update_data | replace "POST_SCHEDULER_HOURS" $post_scheduler | nindent 4 }}
     {{- else if $celery }}
-      {{- include "rizz.celery-tasks-py" . | nindent 4 }}
+      {{- include "rizz.celery-tasks-py" . | replace "CLEAN_DATA_HOURS" $clean_data | replace "UPDATE_DATA_HOURS" $update_data | replace "POST_SCHEDULER_HOURS" $post_scheduler | nindent 4 }}
     {{- end }}
 {{- end }}
