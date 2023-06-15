@@ -985,7 +985,6 @@ Celery /base/base/tasks.py template
 */}}
 {{- define "rizz.celery-tasks-py" -}}
 from __future__ import absolute_import, unicode_literals
-import logging
 from celery import shared_task
 from base.methods import post_scheduler
 from lib import rss
