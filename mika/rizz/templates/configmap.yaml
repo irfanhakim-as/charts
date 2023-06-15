@@ -39,29 +39,7 @@ metadata:
     {{- include "rizz.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    <VirtualHost *:80>
-      {{ "ServerName $domain:443" | replace "$domain" $domain }}
-      UseCanonicalName On
-      ServerAdmin support@mikahomelab.com
-      DocumentRoot /base
-      WSGIScriptAlias / /base/base/wsgi.py
-      {{ "WSGIDaemonProcess $domain python-path=/base" | replace "$domain" $domain }}
-      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
-
-      <Directory /base/base>
-        <Files wsgi.py>
-          Require all granted
-        </Files>
-      </Directory>
-
-      Alias /static /static
-      <Directory /static>
-        Require all granted
-      </Directory>
-
-      ErrorLog /var/log/apache2/apache.error.log
-      CustomLog /var/log/apache2/apache.access.log combined
-    </VirtualHost>
+    {{- include "rizz.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
 {{- if $apscheduler }}
 ---
 apiVersion: v1
