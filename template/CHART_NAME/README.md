@@ -81,6 +81,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
 | image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.34"`. |
+| imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | replicaCount | int | `""` | The desired number of running replicas for CHART_NAME. Default: `"1"`. |
 | resources.limits.cpu | string | `"250m"` | The maximum amount of CPU resources allowed for CHART_NAME. |
 | resources.limits.memory | string | `"250Mi"` | The maximum amount of memory allowed for CHART_NAME. |

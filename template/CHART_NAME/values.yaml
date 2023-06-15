@@ -37,6 +37,12 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
 
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
 # CHART_NAME configurations.
 CHART_NAME:
   # The value of the CHART_NAME foo.

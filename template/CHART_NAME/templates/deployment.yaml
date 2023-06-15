@@ -27,6 +27,10 @@ spec:
       labels:
         {{- include "CHART_NAME.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       initContainers:
         - name: init
           image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
