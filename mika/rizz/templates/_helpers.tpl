@@ -85,7 +85,7 @@ APScheduler /base/base/apps.py template
 from django.apps import AppConfig
 
 class BaseConfig(AppConfig):
-    name = 'base'
+    name = "base"
 
     def ready(self):
         from . import signals
@@ -110,13 +110,13 @@ def start():
     scheduler = BlockingScheduler(timezone=SCHEDULER_TIMEZONE)
 
     job_name = "clean_data"
-    scheduler.add_job(rss.clean_data, 'cron', hour='0', id=job_name, replace_existing=True)
+    scheduler.add_job(rss.clean_data, "cron", hour="0", id=job_name, replace_existing=True)
 
     job_name = "update_data"
-    scheduler.add_job(rss.update_data, 'cron', hour='7,12,14,16,20,22', id=job_name, replace_existing=True)
+    scheduler.add_job(rss.update_data, "cron", hour="7,12,14,16,20,22", id=job_name, replace_existing=True)
 
     job_name = "post_scheduler"
-    scheduler.add_job(post_scheduler, 'cron', hour='9,10,13,15,17,19,21,23', id=job_name, replace_existing=True)
+    scheduler.add_job(post_scheduler, "cron", hour="9,10,13,15,17,19,21,23", id=job_name, replace_existing=True)
 
     scheduler.start()
 {{- end }}
@@ -949,19 +949,19 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     # clean data
-    "clean_data": {
-        "task": "base.tasks.clean_data_task",
-        "schedule": crontab(hour=0, minute=0),
+    "clean_data" : {
+        "task" : "base.tasks.clean_data_task",
+        "schedule" : crontab(hour=0, minute=0),
     },
     # update data
-    "update_data": {
-        "task": "base.tasks.update_data_task",
-        "schedule": crontab(hour='7,12,14,16,20,22', minute=0),
+    "update_data" : {
+        "task" : "base.tasks.update_data_task",
+        "schedule" : crontab(hour="7,12,14,16,20,22", minute=0),
     },
     # check for any posts that need to be posted
-    "post_scheduler": {
-        "task": "base.tasks.post_scheduler_task",
-        "schedule": crontab(hour='9,10,13,15,17,19,21,23', minute=0),
+    "post_scheduler" : {
+        "task" : "base.tasks.post_scheduler_task",
+        "schedule" : crontab(hour="9,10,13,15,17,19,21,23", minute=0),
     },
 }
 
