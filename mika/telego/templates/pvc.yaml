@@ -1,4 +1,5 @@
-# helm pvc
+{{- $storage := .Values.pvc.logs.storage | default "10Mi" | toString | quote }}
+{{- $storage_class_name := .Values.pvc.logs.storageClassName | default "longhorn" | toString | quote }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -10,5 +11,5 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.logs.storage }}
-  storageClassName: {{ .Values.pvc.logs.storageClassName }}
+      storage: {{ $storage }}
+  storageClassName: {{ $storage_class_name }}

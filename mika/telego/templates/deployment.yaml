@@ -1,3 +1,17 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $telego_registry := .Values.image.telego.registry | default "ghcr.io" | toString }}
+{{- $telego_repository := .Values.image.telego.repository | default "irfanhakim-as/telego" | toString }}
+{{- $telego_tag := .Values.image.telego.tag | default .Chart.AppVersion | toString }}
+{{- $telego_pullPolicy := .Values.image.telego.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
+{{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
+{{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $ngrok_registry := .Values.image.ngrok.registry | default "docker.io" | toString }}
+{{- $ngrok_repository := .Values.image.ngrok.repository | default "wernight/ngrok" | toString }}
+{{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
+{{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $cloudflared := .Values.telego.cloudflared.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,7 +19,7 @@ metadata:
   labels:
     {{- include "telego.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount | default 1 }}
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "telego.selectorLabels" . | nindent 6 }}
@@ -25,109 +39,36 @@ spec:
       {{- end }}
       containers:
         - name: telego
-          image: "{{ .Values.image.telego.registry }}/{{ .Values.image.telego.repository }}:{{ .Values.image.telego.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.telego.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $telego_registry $telego_repository $telego_tag | quote }}
+          imagePullPolicy: {{ $telego_pullPolicy }}
           ports:
             - name: telego
               containerPort: 80
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.telego | nindent 12 }}
+          {{- if $cloudflared }}
           env:
-            - name: APP_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: APP_NAME
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-database-secret
-                  key: DB_HOST
-            - name: DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-database-secret
-                  key: DB_PORT
-            - name: DB_TYPE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-database-secret
-                  key: DB_TYPE
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-database-secret
-                  key: DB_NAME
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-database-secret
-                  key: DB_USER
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-database-secret
-                  key: DB_PASS
-            - name: DEBUG
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: DEBUG
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-secret
-                  key: SECRET_KEY
-            - name: TELEGRAM_BOT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-secret
-                  key: TELEGRAM_BOT_TOKEN
-            {{- if .Values.telego.ngrok.enabled }}
-            - name: NGROK_AUTH_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-telego-secret
-                  key: NGROK_AUTH_TOKEN
-            {{- end }}
-            - name: DJANGO_WEBHOOK_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: DJANGO_WEBHOOK_URI
-            - name: NGROK
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: NGROK
-            - name: CELERY_BROKER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: CELERY_BROKER
-            - name: CELERY_BACKEND
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: CELERY_BACKEND
-            - name: CELERY_TIMEZONE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: CELERY_TIMEZONE
-            {{- if .Values.telego.cloudflared.enabled }}
             - name: ALLOWED_HOSTS
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-telego-cm
                   key: DOMAIN
-            {{- end }}
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-telego-cm
+            - secretRef:
+                name: {{ .Release.Name }}-telego-secret
+            - secretRef:
+                name: {{ .Release.Name }}-telego-database-secret
           volumeMounts:
             - name: {{ .Release.Name }}-telego-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            - name: {{ .Release.Name }}-telego-logs
+              mountPath: /telego/logs
             {{- if .Values.telego.commands }}
             - name: {{ .Release.Name }}-telego-commands-cm
               mountPath: /telego/telego/commands.py
@@ -140,11 +81,9 @@ spec:
               subPath: messages.py
               readOnly: true
             {{- end }}
-            - name: {{ .Release.Name }}-telego-logs
-              mountPath: /telego/logs
         - name: redis
-          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
+          imagePullPolicy: {{ $redis_pullPolicy }}
           ports:
             - name: redis
               containerPort: 6379
@@ -153,8 +92,8 @@ spec:
             {{- toYaml .Values.resources.redis | nindent 12 }}
         {{- if .Values.telego.ngrok.enabled }}
         - name: ngrok
-          image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $ngrok_registry $ngrok_repository $ngrok_tag | quote }}
+          imagePullPolicy: {{ $ngrok_pullPolicy }}
           command: ["/bin/sh"]
           args:
             - -c
@@ -176,6 +115,9 @@ spec:
         - name: {{ .Release.Name }}-telego-site-config
           configMap:
             name: {{ .Release.Name }}-telego-site-config
+        - name: {{ .Release.Name }}-telego-logs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-telego-logs-pvc
         {{- if .Values.telego.commands }}
         - name: {{ .Release.Name }}-telego-commands-cm
           configMap:
@@ -186,6 +128,3 @@ spec:
           configMap:
             name: {{ .Release.Name }}-telego-messages-cm
         {{- end }}
-        - name: {{ .Release.Name }}-telego-logs
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-telego-logs-pvc

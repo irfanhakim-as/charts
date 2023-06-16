@@ -60,3 +60,32 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Apache site-config.conf template
+*/}}
+{{- define "telego.site-config-conf" -}}
+<VirtualHost *:80>
+    ServerName DOMAIN:443
+    UseCanonicalName On
+    ServerAdmin support@domain.org
+    DocumentRoot /telego
+    WSGIScriptAlias / /telego/telego/wsgi.py
+    WSGIDaemonProcess DOMAIN python-path=/telego
+    WSGIProcessGroup DOMAIN
+
+    <Directory /telego/telego>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    Alias /static /static
+    <Directory /static>
+        Require all granted
+    </Directory>
+
+    ErrorLog /telego/logs/apache.error.log
+    CustomLog /telego/logs/apache.access.log combined
+</VirtualHost>
+{{- end }}
