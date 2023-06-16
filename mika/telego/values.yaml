@@ -107,7 +107,7 @@ telego:
     storageClassName: ""
   # Telego Ngrok configurations.
   ngrok:
-    # Specifies whether Telego should run using Ngrok.
+    # Specifies whether Telego should run using an Ngrok tunnel.
     # Example:
     # enabled: true
     enabled: false
@@ -117,11 +117,11 @@ telego:
     token: ""
   # Telego Cloudflare configurations.
   cloudflared:
-    # Specifies whether Telego should run using Cloudflare.
+    # Specifies whether Telego should run using a Cloudflare tunnel.
     # Example:
     # enabled: true
     enabled: false
-    # Cloudflare domain name used for Telego.
+    # Registered domain name on Cloudflare used for Telego.
     # Example:
     # domain: "telego.example.com"
     domain: ""
