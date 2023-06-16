@@ -19,7 +19,7 @@ data:
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
   CELERY_TIMEZONE: {{ $celery_timezone }}
-  NGROK: {{ $ngrok | default "true" | toString | quote }}
+  NGROK: {{ $ngrok | toString | quote }}
   {{- if $cloudflared }}
   DOMAIN: {{ $domain }}
   {{- end }}
