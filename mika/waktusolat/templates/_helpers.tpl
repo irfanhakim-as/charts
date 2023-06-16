@@ -190,7 +190,7 @@ CELERYD_OPTS="--time-limit=300 --concurrency=8 --without-gossip --without-mingle
 
 # Set logging level
 #CELERYD_LOG_LEVEL="DEBUG"
-CELERYD_LOG_LEVEL="INFO"
+CELERYD_LOG_LEVEL="WARNING"
 
 # %n will be replaced with the first part of the nodename.
 #CELERYD_LOG_FILE="/var/log/celery/%n%I.log"
@@ -327,7 +327,7 @@ CELERY_BIN=${CELERY_BIN:-"celery"}
 DEFAULT_USER="celery"
 DEFAULT_PID_FILE="/var/run/celery/beat.pid"
 DEFAULT_LOG_FILE="/var/log/celery/beat.log"
-DEFAULT_LOG_LEVEL="INFO"
+DEFAULT_LOG_LEVEL="WARNING"
 DEFAULT_CELERYBEAT="$CELERY_BIN"
 
 CELERYBEAT=${CELERYBEAT:-$DEFAULT_CELERYBEAT}
@@ -606,7 +606,7 @@ SCRIPT_NAME="$(basename "$SCRIPT_FILE")"
 DEFAULT_USER="celery"
 DEFAULT_PID_FILE="/var/run/celery/%n.pid"
 DEFAULT_LOG_FILE="/var/log/celery/%n%I.log"
-DEFAULT_LOG_LEVEL="INFO"
+DEFAULT_LOG_LEVEL="WARNING"
 DEFAULT_NODES="celery"
 DEFAULT_CELERYD="-m celery worker --detach"
 
