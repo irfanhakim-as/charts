@@ -2,72 +2,206 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# The desired number of running replicas for Telego.
+# Default: "1"
+replicaCount: ""
 
+# Container images used for Telego.
 image:
+  # Telego container image configurations.
   telego:
-    registry: ghcr.io
-    repository: irfanhakim-as/telego
+    # The registry where the Telego container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Telego container image used.
+    # Default: "irfanhakim-as/telego"
+    repository: ""
+    # The tag that specifies the version of the Telego container image used.
+    # Default: Chart appVersion
     tag: ""
-    pullPolicy: IfNotPresent
-  
+    # The policy that determines when Kubernetes should pull the Telego container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Redis container image configurations.
   redis:
-    registry: docker.io
-    repository: redis
-    tag: "alpine"
-    pullPolicy: IfNotPresent
-  
-  ngrok:
-    registry: docker.io
-    repository: wernight/ngrok
-    tag: "latest"
-    pullPolicy: IfNotPresent
+    # The registry where the Redis container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Redis container image used.
+    # Default: "redis"
+    repository: ""
+    # The tag that specifies the version of the Redis container image used.
+    # Default: "alpine"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Redis container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Ngrok container image configurations.
+  redis:
+    # The registry where the Ngrok container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Ngrok container image used.
+    # Default: "wernight/ngrok"
+    repository: ""
+    # The tag that specifies the version of the Ngrok container image used.
+    # Default: "latest"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Ngrok container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
-imagePullSecrets:
-  - name: ghcr-token-secret # name of the secret containing the token to access the telego image
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
 
+# Telego configurations.
 telego:
-  name: "Telego" # telego name
-  debug: false # django debug mode
-  secret: "" # django secret key
-  celery_timezone: "Asia/Kuala_Lumpur" # scheduler timezone
+  # The name of the Telego service.
+  # Default: "Telego"
+  # Example:
+  # name: "Telego"
+  name: ""
+  # Specifies whether Telego should run in debug mode.
+  # Default: false
+  # Example:
+  # debug: true
+  debug: ""
+  # A 50-character secret key used for secure session management and cryptographic operations within the Telego service.
+  # Example:
+  # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  secret: ""
+  # The timezone for the task scheduler used by Telego to schedule time-dependent operations.
+  # Default: "Asia/Kuala_Lumpur"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  celery_timezone: ""
+  # Telego Telegram configurations.
   telegram:
-    token: "" # telegram bot token
-    webhook: "telegram/webhooks/" # telegram webhook path
+    # The Telegram bot token used by Telego to communicate with Telegram.
+    # Example:
+    # token: "1282813559:RrqoFIuWZwNfMLrx3Jd2mdFJnxrMObgQEvz"
+    token: ""
+    # The Telegram bot webhook path used by Telego to communicate with Telegram.
+    # Default: "telegram/webhooks/"
+    # Example:
+    # webhook: "bot/jbbhb73f6s/"
+    webhook: "telegram/webhooks/"
+  # Telego log persistence configurations.
+  persistence:
+    # Specifies whether Telego should persist its logs.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The amount of persistent storage allocated for Telego logs.
+    # Default: "10Mi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the Telego logs storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Telego Ngrok configurations.
   ngrok:
-    enabled: true # enable ngrok
-    token: "" # ngrok auth token
+    # Specifies whether Telego should run using Ngrok.
+    # Example:
+    # enabled: true
+    enabled: false
+    # Ngrok authentication token.
+    # Example:
+    # token: "s7Ed4IO23nw1HWRJwumSgcyB7BtcXr4ZYLtziJCDDLIVDv7uq"
+    token: ""
+  # Telego Cloudflare configurations.
   cloudflared:
-    enabled: false # enable cloudflared
-    domain: "" # cloudflared domain
-  commands: "" # custom telegram commands.py file
-  messages: "" # custom telegram messages.py file
+    # Specifies whether Telego should run using Cloudflare.
+    # Example:
+    # enabled: true
+    enabled: false
+    # Cloudflare domain name used for Telego.
+    # Example:
+    # domain: "telego.example.com"
+    domain: ""
+  # Custom Telegram commands.py file for Telego.
+  commands: ""
+  # Custom Telegram messages.py file for Telego.
+  messages: ""
 
+# Database configurations.
 db:
-  type: "postgresql" # database type
-  host: "postgres.default.svc.cluster.local" # database server
-  port: "5432" # database port
-  name: "" # database name
-  user: "" # database user
-  password: "" # database user password
+  # The type of the database used by Telego.
+  # Default: "postgresql"
+  # Example:
+  # type: "postgresql"
+  type: ""
+  # The name of the database used by Telego.
+  # Example:
+  # name: "telego"
+  name: ""
+  # The username or user account for accessing the Telego database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Telego database's user.
+  # Example:
+  # password: "password"
+  password: ""
+  # The hostname or IP address of the Telego database server.
+  # Example:
+  # host: "telego.default.svc.cluster.local"
+  host: ""
+  # The port number on which the Telego database server is listening.
+  # Default: "5432"
+  # Example:
+  # port: "5432"
+  port: ""
 
-pvc:
-  logs:
-    storage: "10Mi" # log files storage size
-    storageClassName: "longhorn" # log files storage class name
-
+# Resource requirements and limits for Telego containers.
 resources:
+  # Telego container resources.
   telego:
+    # The minimum amount of resources required by Telego to run.
     requests:
-      cpu: "10m" # telego cpu request
-      memory: "250Mi" # telego memory request
+      # The minimum amount of CPU resources required by Telego.
+      # Example:
+      # cpu: "20m"
+      cpu: "10m"
+      # The minimum amount of memory required by Telego.
+      # Example:
+      # memory: "250Mi"
+      memory: "250Mi"
+    # The maximum amount of resources allowed for Telego.
     limits:
-      cpu: "50m" # telego cpu limit
-      memory: "500Mi" # telego memory limit
+      # The maximum amount of CPU resources allowed for Telego.
+      # Example:
+      # cpu: "50m"
+      cpu: "50m"
+      # The maximum amount of memory allowed for Telego.
+      # Example:
+      # memory: "450Mi"
+      memory: "500Mi"
+  # Redis container resources.
   redis:
+    # The minimum amount of resources required by Redis to run.
     requests:
-      cpu: "5m" # redis cpu request
-      memory: "30Mi" # redis memory request
+      # The minimum amount of CPU resources required by Redis.
+      # Example:
+      # cpu: "5m"
+      cpu: "5m"
+      # The minimum amount of memory required by Redis.
+      # Example:
+      # memory: "30Mi"
+      memory: "30Mi"
+    # The maximum amount of resources allowed for Redis.
     limits:
-      cpu: "15m" # redis cpu limit
-      memory: "60Mi" # redis memory limit
+      # The maximum amount of CPU resources allowed for Redis.
+      # Example:
+      # cpu: "15m"
+      cpu: "15m"
+      # The maximum amount of memory allowed for Redis.
+      # Example:
+      # memory: "50Mi"
+      memory: "60Mi"
