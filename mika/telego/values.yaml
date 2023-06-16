@@ -88,7 +88,7 @@ telego:
     # Default: "telegram/webhooks/"
     # Example:
     # webhook: "bot/jbbhb73f6s/"
-    webhook: "telegram/webhooks/"
+    webhook: ""
   # Telego log persistence configurations.
   persistence:
     # Specifies whether Telego should persist its logs.
