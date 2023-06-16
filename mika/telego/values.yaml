@@ -37,7 +37,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Ngrok container image configurations.
-  redis:
+  ngrok:
     # The registry where the Ngrok container image is hosted.
     # Default: "docker.io"
     registry: ""
