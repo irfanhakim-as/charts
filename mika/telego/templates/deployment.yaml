@@ -12,6 +12,7 @@
 {{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
 {{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $cloudflared := .Values.telego.cloudflared.enabled }}
+{{- $persistence := .Values.telego.persistence.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -67,8 +68,10 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            {{- if $persistence }}
             - name: {{ .Release.Name }}-telego-logs
               mountPath: /telego/logs
+            {{- end }}
             {{- if .Values.telego.commands }}
             - name: {{ .Release.Name }}-telego-commands-cm
               mountPath: /telego/telego/commands.py
@@ -115,9 +118,11 @@ spec:
         - name: {{ .Release.Name }}-telego-site-config
           configMap:
             name: {{ .Release.Name }}-telego-site-config
+        {{- if $persistence }}
         - name: {{ .Release.Name }}-telego-logs
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-telego-logs-pvc
+        {{- end }}
         {{- if .Values.telego.commands }}
         - name: {{ .Release.Name }}-telego-commands-cm
           configMap:
