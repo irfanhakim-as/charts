@@ -49,7 +49,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/vpbot/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values. Refer to the [Configuration](#Configuration) section for the available options.
+Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for the available options.
 
 ```sh
 nano values.yaml
@@ -69,6 +69,14 @@ Verify that your chart has been installed. Replace `$namespace` and `$release_na
 helm ls --namespace $namespace | grep "$release_name"
 ```
 
+## How to upgrade
+
+After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+
+```sh
+helm upgrade $release_name mika/vpbot --namespace $namespace --values values.yaml --wait
+```
+
 ## How to uninstall
 
 Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
@@ -81,55 +89,54 @@ helm uninstall $release_name --namespace $namespace --wait
 
 Install [`mika/postgres-dropdb`](../postgres-dropdb/).
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| db.host | string | `"postgres.default.svc.cluster.local"` | Database server |
-| db.name | string | `""` | Database name |
-| db.pass | string | `""` | Database user password |
-| db.port | string | `"5432"` | Database port |
-| db.type | string | `"postgresql"` | Database type |
-| db.user | string | `""` | Database user |
-| image.ngrok.pullPolicy | string | `"IfNotPresent"` | Ngrok image pull policy |
-| image.ngrok.registry | string | `"docker.io"` | Ngrok image registry |
-| image.ngrok.repository | string | `"wernight/ngrok"` | Ngrok image repository |
-| image.ngrok.tag | string | `"latest"` | Ngrok image version |
-| image.redis.pullPolicy | string | `"IfNotPresent"` | Redis image pull policy |
-| image.redis.registry | string | `"docker.io"` | Redis image registry |
-| image.redis.repository | string | `"redis"` | Redis image repository |
-| image.redis.tag | string | `"alpine"` | Redis image version |
-| image.vpbot.pullPolicy | string | `"IfNotPresent"` | Vpbot image pull policy |
-| image.vpbot.registry | string | `"ghcr.io"` | Vpbot image registry |
-| image.vpbot.repository | string | `"irfanhakim-as/quarantine-bot"` | Vpbot image repository |
-| image.vpbot.tag | string | `""` | Vpbot image version |
-| imagePullSecrets[0].name | string | `"ghcr-token-secret"` | Name of the image pull secret |
-| pvc.logs.storage | string | `"50Mi"` | Logs storage size |
-| pvc.logs.storageClassName | string | `"longhorn"` | Logs storage class name |
-| pvc.migrations.storage | string | `"50Mi"` | Migrations storage size |
-| pvc.migrations.storageClassName | string | `"longhorn"` | Migrations storage class name |
-| pvc.static.storage | string | `"50Mi"` | Static files storage size |
-| pvc.static.storageClassName | string | `"longhorn"` | Static files storage class name |
-| replicaCount | int | `1` | Vpbot replica count |
-| resources.redis.limits.cpu | string | `"15m"` | Redis maximum CPU allocation |
-| resources.redis.limits.memory | string | `"60Mi"` | Redis maximum memory allocation |
-| resources.redis.requests.cpu | string | `"5m"` | Redis minimum CPU allocation |
-| resources.redis.requests.memory | string | `"30Mi"` | Redis minimum memory allocation |
-| resources.vpbot.limits.cpu | string | `"50m"` | Vpbot maximum CPU allocation |
-| resources.vpbot.limits.memory | string | `"500Mi"` | Vpbot maximum memory allocation |
-| resources.vpbot.requests.cpu | string | `"10m"` | Vpbot minimum CPU allocation |
-| resources.vpbot.requests.memory | string | `"250Mi"` | Vpbot minimum memory allocation |
-| telegram.admin_id | string | `""` | Telegram admin Chat ID |
-| telegram.devel_id | string | `""` | Telegram developer Chat ID |
-| telegram.token | string | `""` | Telegram bot token |
-| telegram.webhook | string | `"telegram/webhooks/"` | Telegram webhook path |
-| vpbot.celery_timezone | string | `"Asia/Kuala_Lumpur"` | Background scheduler timezone |
-| vpbot.cloudflared.domain | string | `""` | Vpbot domain |
-| vpbot.cloudflared.enabled | bool | `true` | Enable cloudflare tunnel |
-| vpbot.debug | bool | `false` | Enable debug mode |
-| vpbot.log_size_limit | string | `"4"` | Individual log file size limit |
-| vpbot.name | string | `"Vpbot"` | Application name |
-| vpbot.ngrok.auth_token | string | `""` | Ngrok authentication token |
-| vpbot.ngrok.enabled | bool | `false` | Enable ngrok tunnel |
-| vpbot.secret | string | `""` | Vpbot secret key |
-| vpbot.user_pass | string | `""` | Vpbot default user password |
+| db.host | string | `""` | The hostname or IP address of the Vpbot database server. |
+| db.name | string | `""` | The name of the database used by Vpbot. |
+| db.password | string | `""` | The password associated with the Vpbot database's user. |
+| db.port | string | `""` | The port number on which the Vpbot database server is listening. Default: `"5432"`. |
+| db.type | string | `""` | The type of the database used by Vpbot. Default: `"postgresql"`. |
+| db.user | string | `""` | The username or user account for accessing the Vpbot database. |
+| image.ngrok.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Ngrok container image. Default: `"IfNotPresent"`. |
+| image.ngrok.registry | string | `""` | The registry where the Ngrok container image is hosted. Default: `"docker.io"`. |
+| image.ngrok.repository | string | `""` | The name of the repository that contains the Ngrok container image used. Default: `"wernight/ngrok"`. |
+| image.ngrok.tag | string | `""` | The tag that specifies the version of the Ngrok container image used. Default: `"latest"`. |
+| image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"IfNotPresent"`. |
+| image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |
+| image.redis.repository | string | `""` | The name of the repository that contains the Redis container image used. Default: `"redis"`. |
+| image.redis.tag | string | `""` | The tag that specifies the version of the Redis container image used. Default: `"alpine"`. |
+| image.vpbot.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Vpbot container image. Default: `"IfNotPresent"`. |
+| image.vpbot.registry | string | `""` | The registry where the Vpbot container image is hosted. Default: `"ghcr.io"`. |
+| image.vpbot.repository | string | `""` | The name of the repository that contains the Vpbot container image used. Default: `"irfanhakim-as/vpbot"`. |
+| image.vpbot.tag | string | `""` | The tag that specifies the version of the Vpbot container image used. Default: `"Chart appVersion"`. |
+| imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
+| replicaCount | string | `""` | The desired number of running replicas for Vpbot. Default: `"1"`. |
+| resources.redis.limits.cpu | string | `"15m"` | The maximum amount of CPU resources allowed for Redis. |
+| resources.redis.limits.memory | string | `"60Mi"` | The maximum amount of memory allowed for Redis. |
+| resources.redis.requests.cpu | string | `"5m"` | The minimum amount of CPU resources required by Redis. |
+| resources.redis.requests.memory | string | `"30Mi"` | The minimum amount of memory required by Redis. |
+| resources.vpbot.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for Vpbot. |
+| resources.vpbot.limits.memory | string | `"500Mi"` | The maximum amount of memory allowed for Vpbot. |
+| resources.vpbot.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Vpbot. |
+| resources.vpbot.requests.memory | string | `"250Mi"` | The minimum amount of memory required by Vpbot. |
+| telegram.admin_id | string | `""` | The unique Telegram chat ID of the Vpbot administrator. |
+| telegram.devel_id | string | `""` | The unique Telegram chat ID of the Vpbot developer. |
+| telegram.token | string | `""` | The Telegram bot token used by Vpbot to communicate with Telegram. |
+| telegram.webhook | string | `""` | The Telegram bot webhook path used by Vpbot to communicate with Telegram. Default: `"telegram/webhooks/"`. |
+| vpbot.celery_timezone | string | `""` | The timezone for the task scheduler used by Vpbot to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
+| vpbot.cloudflared.domain | string | `""` | Registered domain name on Cloudflare used for Vpbot. |
+| vpbot.cloudflared.enabled | bool | `false` | Specifies whether Vpbot should run using a Cloudflare tunnel. |
+| vpbot.debug | string | `""` | Specifies whether Vpbot should run in debug mode. Default: `false`. |
+| vpbot.log_size_limit | string | `""` | The log file size limit in megabytes. Default: `"4"`. |
+| vpbot.name | string | `""` | The name of the Vpbot service. Default: `"Vpbot"`. |
+| vpbot.ngrok.enabled | bool | `false` | Specifies whether Vpbot should run using an Ngrok tunnel. |
+| vpbot.ngrok.token | string | `""` | Ngrok authentication token. |
+| vpbot.persistence.enabled | bool | `false` | Specifies whether Vpbot should persist its storage. |
+| vpbot.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for Vpbot logs. Default: `"50Mi"`. |
+| vpbot.persistence.migrations.storage | string | `""` | The amount of persistent storage allocated for Vpbot migration files. Default: `"50Mi"`. |
+| vpbot.persistence.static.storage | string | `""` | The amount of persistent storage allocated for Vpbot static files. Default: `"50Mi"`. |
+| vpbot.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Vpbot storage. Default: `"longhorn"`. |
+| vpbot.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Vpbot service. |
+| vpbot.user_pass | string | `""` | The default user password for users created by Vpbot. |
