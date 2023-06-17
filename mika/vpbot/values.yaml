@@ -2,81 +2,234 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# The desired number of running replicas for Vpbot.
+# Default: "1"
+replicaCount: ""
 
+# Container images used for Vpbot.
 image:
+  # Vpbot container image configurations.
   vpbot:
-    registry: ghcr.io
-    repository: irfanhakim-as/quarantine-bot
+    # The registry where the Vpbot container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Vpbot container image used.
+    # Default: "irfanhakim-as/quarantine-bot"
+    repository: ""
+    # The tag that specifies the version of the Vpbot container image used.
+    # Default: Chart appVersion
     tag: ""
-    pullPolicy: IfNotPresent
-  
+    # The policy that determines when Kubernetes should pull the Vpbot container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Redis container image configurations.
   redis:
-    registry: docker.io
-    repository: redis
-    tag: "alpine"
-    pullPolicy: IfNotPresent
-  
+    # The registry where the Redis container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Redis container image used.
+    # Default: "redis"
+    repository: ""
+    # The tag that specifies the version of the Redis container image used.
+    # Default: "alpine"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Redis container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Ngrok container image configurations.
   ngrok:
-    registry: docker.io
-    repository: wernight/ngrok
-    tag: "latest"
-    pullPolicy: IfNotPresent
+    # The registry where the Ngrok container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Ngrok container image used.
+    # Default: "wernight/ngrok"
+    repository: ""
+    # The tag that specifies the version of the Ngrok container image used.
+    # Default: "latest"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Ngrok container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
-imagePullSecrets:
-  - name: ghcr-token-secret # name of the secret containing the token to access the vpbot image
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
 
+# Vpbot configurations.
 vpbot:
-  name: "Vpbot" # application name
-  debug: false # django debug mode
-  log_size_limit: "4" # log file size limit in MiB
-  secret: "" # django secret key
-  user_pass: "" # default user password
-  celery_timezone: "Asia/Kuala_Lumpur" # scheduler timezone
+  # The name of the Vpbot service.
+  # Default: "Vpbot"
+  # Example:
+  # name: "Vpbot"
+  name: ""
+  # Specifies whether Vpbot should run in debug mode.
+  # Default: false
+  # Example:
+  # debug: true
+  debug: ""
+  # The log file size limit in megabytes.
+  # Default: "4"
+  # Example:
+  # log_size_limit: "3"
+  log_size_limit: ""
+  # A 50-character secret key used for secure session management and cryptographic operations within the Vpbot service.
+  # Example:
+  # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  secret: ""
+  # default user password
+  user_pass: ""
+  # The timezone for the task scheduler used by Vpbot to schedule time-dependent operations.
+  # Default: "Asia/Kuala_Lumpur"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  celery_timezone: ""
+  # Vpbot storage persistence configurations.
+  persistence:
+    # Specifies whether Vpbot should persist its storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The storage class name used for dynamically provisioning a persistent volume for the Vpbot storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+    # Vpbot logs persistence configurations.
+    logs:
+      # The amount of persistent storage allocated for Vpbot logs.
+      # Default: "50Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
+    # Vpbot static files persistence configurations.
+    static:
+      # The amount of persistent storage allocated for Vpbot static files.
+      # Default: "50Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
+    # Vpbot migration files persistence configurations.
+    migrations:
+      # The amount of persistent storage allocated for Vpbot migration files.
+      # Default: "50Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
+  # Vpbot Ngrok configurations.
   ngrok:
-    enabled: false # enable ngrok
-    auth_token: "" # ngrok auth token
+    # Specifies whether Vpbot should run using an Ngrok tunnel.
+    # Example:
+    # enabled: true
+    enabled: false
+    # Ngrok authentication token.
+    # Example:
+    # token: "s7Ed4IO23nw1HWRJwumSgcyB7BtcXr4ZYLtziJCDDLIVDv7uq"
+    token: ""
+  # Vpbot Cloudflare configurations.
   cloudflared:
-    enabled: true # enable cloudflared
-    domain: "" # cloudflared domain
+    # Specifies whether Vpbot should run using a Cloudflare tunnel.
+    # Example:
+    # enabled: true
+    enabled: true
+    # Registered domain name on Cloudflare used for Vpbot.
+    # Example:
+    # domain: "vpbot.example.com"
+    domain: ""
 
+# Vpbot Telegram configurations.
 telegram:
-  webhook: "telegram/webhooks/" # telegram webhook path
-  token: "" # telegram bot token
-  admin_id: "" # admin telegram chat id
-  devel_id: "" # admin telegram chat id
+  # The Telegram bot webhook path used by Vpbot to communicate with Telegram.
+  # Default: "telegram/webhooks/"
+  # Example:
+  # webhook: "bot/jbbhb73f6s/"
+  webhook: ""
+  # The Telegram bot token used by Vpbot to communicate with Telegram.
+  # Example:
+  # token: "1282813559:RrqoFIuWZwNfMLrx3Jd2mdFJnxrMObgQEvz"
+  token: ""
+  # The unique Telegram chat ID of the Vpbot administrator.
+  # Example:
+  # admin_id: "6649538406"
+  admin_id: ""
+  # The unique Telegram chat ID of the Vpbot developer.
+  # Example:
+  # devel_id: "4637142749"
+  devel_id: ""
 
+# Database configurations.
 db:
-  host: "postgres.default.svc.cluster.local" # database host
-  type: "postgresql" # database type
-  port: "5432" # database port
-  name: "" # database name
-  user: "" # database user
-  pass: "" # database user password
+  # The type of the database used by Vpbot.
+  # Default: "postgresql"
+  # Example:
+  # type: "postgresql"
+  type: ""
+  # The name of the database used by Vpbot.
+  # Example:
+  # name: "vpbot"
+  name: ""
+  # The username or user account for accessing the Vpbot database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Vpbot database's user.
+  # Example:
+  # password: "password"
+  password: ""
+  # The hostname or IP address of the Vpbot database server.
+  # Example:
+  # host: "vpbot.default.svc.cluster.local"
+  host: ""
+  # The port number on which the Vpbot database server is listening.
+  # Default: "5432"
+  # Example:
+  # port: "5432"
+  port: ""
 
-pvc:
-  static:
-    storage: "50Mi" # static files storage size
-    storageClassName: "longhorn" # static files storage class name
-  logs:
-    storage: "50Mi" # log files storage size
-    storageClassName: "longhorn" # log files storage class name
-  migrations:
-    storage: "50Mi" # migrations files storage size
-    storageClassName: "longhorn" # migrations files storage class name
-
+# Resource requirements and limits for Vpbot containers.
 resources:
+  # Vpbot container resources.
   vpbot:
+    # The minimum amount of resources required by Vpbot to run.
     requests:
-      cpu: "10m" # vpbot cpu request
-      memory: "250Mi" # vpbot memory request
+      # The minimum amount of CPU resources required by Vpbot.
+      # Example:
+      # cpu: "20m"
+      cpu: "10m"
+      # The minimum amount of memory required by Vpbot.
+      # Example:
+      # memory: "250Mi"
+      memory: "250Mi"
+    # The maximum amount of resources allowed for Vpbot.
     limits:
-      cpu: "50m" # vpbot cpu limit
-      memory: "500Mi" # vpbot memory limit
+      # The maximum amount of CPU resources allowed for Vpbot.
+      # Example:
+      # cpu: "50m"
+      cpu: "50m"
+      # The maximum amount of memory allowed for Vpbot.
+      # Example:
+      # memory: "450Mi"
+      memory: "500Mi"
+  # Redis container resources.
   redis:
+    # The minimum amount of resources required by Redis to run.
     requests:
-      cpu: "5m" # redis cpu request
-      memory: "30Mi" # redis memory request
+      # The minimum amount of CPU resources required by Redis.
+      # Example:
+      # cpu: "5m"
+      cpu: "5m"
+      # The minimum amount of memory required by Redis.
+      # Example:
+      # memory: "30Mi"
+      memory: "30Mi"
+    # The maximum amount of resources allowed for Redis.
     limits:
-      cpu: "15m" # redis cpu limit
-      memory: "60Mi" # redis memory limit
+      # The maximum amount of CPU resources allowed for Redis.
+      # Example:
+      # cpu: "15m"
+      cpu: "15m"
+      # The maximum amount of memory allowed for Redis.
+      # Example:
+      # memory: "50Mi"
+      memory: "60Mi"

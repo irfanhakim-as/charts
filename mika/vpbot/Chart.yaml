@@ -5,16 +5,16 @@ type: application
 version: 0.2.1
 appVersion: "1.5.6-stable"
 keywords:
-  - vpbot
-  - quarantine-bot
-  - telegram
-  - bot
-home: https://github.com/irfanhakim-as/quarantine-bot
-icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+  - "vpbot"
+  - "quarantine-bot"
+  - "telegram"
+  - "bot"
+home: "https://github.com/irfanhakim-as/quarantine-bot"
+icon: "https://irfanhakim-as.github.io/charts/logos/vpbot.png"
 sources:
-  - https://github.com/irfanhakim-as/quarantine-bot
-  - https://irfanhakim-as.github.io/charts/mika/vpbot
+  - "https://github.com/irfanhakim-as/quarantine-bot"
+  - "https://irfanhakim-as.github.io/charts/mika/vpbot"
 maintainers:
-  - name: Irfan Hakim
-    email: irfanhakim.as@yahoo.com
-    url: https://github.com/irfanhakim-as
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

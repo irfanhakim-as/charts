@@ -1,4 +1,9 @@
-# helm pvc
+{{- $logs_storage := .Values.vpbot.persistence.logs.storage | default "50Mi" | toString | quote }}
+{{- $static_storage := .Values.vpbot.persistence.static.storage | default "50Mi" | toString | quote }}
+{{- $migrations_storage := .Values.vpbot.persistence.migrations.storage | default "50Mi" | toString | quote }}
+{{- $storage_class_name := .Values.vpbot.persistence.storageClassName | default "longhorn" | toString | quote }}
+{{- $persistence := .Values.vpbot.persistence.enabled }}
+{{- if $persistence }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -10,8 +15,8 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.logs.storage }}
-  storageClassName: {{ .Values.pvc.logs.storageClassName }}
+      storage: {{ $logs_storage }}
+  storageClassName: {{ $storage_class_name }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -24,8 +29,8 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.static.storage }}
-  storageClassName: {{ .Values.pvc.static.storageClassName }}
+      storage: {{ $static_storage }}
+  storageClassName: {{ $storage_class_name }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -38,5 +43,6 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.migrations.storage }}
-  storageClassName: {{ .Values.pvc.migrations.storageClassName }}
+      storage: {{ $migrations_storage }}
+  storageClassName: {{ $storage_class_name }}
+{{- end }}
