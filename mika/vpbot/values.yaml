@@ -78,7 +78,9 @@ vpbot:
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
-  # default user password
+  # The default user password for users created by Vpbot.
+  # Example:
+  # user_pass: "password"
   user_pass: ""
   # The timezone for the task scheduler used by Vpbot to schedule time-dependent operations.
   # Default: "Asia/Kuala_Lumpur"
