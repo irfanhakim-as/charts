@@ -6,6 +6,8 @@
 {{- $domain := .Values.telego.cloudflared.domain | default "localhost" | toString }}
 {{- $cloudflared := .Values.telego.cloudflared.enabled }}
 {{- $ngrok := .Values.telego.ngrok.enabled }}
+{{- $commands := .Values.telego.commands }}
+{{- $messages := .Values.telego.messages }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -33,7 +35,7 @@ metadata:
 data:
   site-config.conf: |-
     {{- include "telego.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
-{{- if .Values.telego.commands }}
+{{- if $commands }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -43,9 +45,9 @@ metadata:
     {{- include "telego.labels" . | nindent 4 }}
 data:
   commands.py: |-
-    {{ .Values.telego.commands | toString | nindent 4 | trim }}
+    {{ $commands | toString | nindent 4 | trim }}
 {{- end }}
-{{- if .Values.telego.messages }}
+{{- if $messages }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -55,5 +57,5 @@ metadata:
     {{- include "telego.labels" . | nindent 4 }}
 data:
   messages.py: |-
-    {{ .Values.telego.messages | toString | nindent 4 | trim }}
+    {{ $messages | toString | nindent 4 | trim }}
 {{- end }}

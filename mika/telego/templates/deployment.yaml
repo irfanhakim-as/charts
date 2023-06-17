@@ -12,7 +12,10 @@
 {{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
 {{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $cloudflared := .Values.telego.cloudflared.enabled }}
+{{- $ngrok := .Values.telego.ngrok.enabled }}
 {{- $persistence := .Values.telego.persistence.enabled }}
+{{- $commands := .Values.telego.commands }}
+{{- $messages := .Values.telego.messages }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -72,13 +75,13 @@ spec:
             - name: {{ .Release.Name }}-telego-logs
               mountPath: /telego/logs
             {{- end }}
-            {{- if .Values.telego.commands }}
+            {{- if $commands }}
             - name: {{ .Release.Name }}-telego-commands-cm
               mountPath: /telego/telego/commands.py
               subPath: commands.py
               readOnly: true
             {{- end }}
-            {{- if .Values.telego.messages }}
+            {{- if $messages }}
             - name: {{ .Release.Name }}-telego-messages-cm
               mountPath: /telego/telego/messages.py
               subPath: messages.py
@@ -93,7 +96,7 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.redis | nindent 12 }}
-        {{- if .Values.telego.ngrok.enabled }}
+        {{- if $ngrok }}
         - name: ngrok
           image: {{ printf "%s/%s:%s" $ngrok_registry $ngrok_repository $ngrok_tag | quote }}
           imagePullPolicy: {{ $ngrok_pullPolicy }}
@@ -123,12 +126,12 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-telego-logs-pvc
         {{- end }}
-        {{- if .Values.telego.commands }}
+        {{- if $commands }}
         - name: {{ .Release.Name }}-telego-commands-cm
           configMap:
             name: {{ .Release.Name }}-telego-commands-cm
         {{- end }}
-        {{- if .Values.telego.messages }}
+        {{- if $messages }}
         - name: {{ .Release.Name }}-telego-messages-cm
           configMap:
             name: {{ .Release.Name }}-telego-messages-cm
