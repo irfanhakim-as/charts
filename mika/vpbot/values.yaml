@@ -134,7 +134,7 @@ vpbot:
     # Specifies whether Vpbot should run using a Cloudflare tunnel.
     # Example:
     # enabled: true
-    enabled: true
+    enabled: false
     # Registered domain name on Cloudflare used for Vpbot.
     # Example:
     # domain: "vpbot.example.com"
