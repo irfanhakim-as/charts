@@ -39,7 +39,7 @@ helm repo update
 
 ### Create database
 
-Install [`mika/postgres-createdb`](../postgres-createdb/). This step can be skipped if you have an existing PostgreSQL database.
+Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.create` set to `true`. This step can be skipped if you have an existing PostgreSQL database.
 
 ### Prepare chart values
 
@@ -87,7 +87,7 @@ helm uninstall $release_name --namespace $namespace --wait
 
 ### Delete database
 
-Install [`mika/postgres-dropdb`](../postgres-dropdb/).
+Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set to `true`.
 
 ## Configurations
 
