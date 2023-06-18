@@ -45,7 +45,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/mango/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values. Refer to the [Configuration](#Configuration) section for available options.
+Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
 
 ```sh
 nano values.yaml
@@ -73,7 +73,7 @@ Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingl
 helm uninstall $release_name --namespace $namespace --wait
 ```
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|

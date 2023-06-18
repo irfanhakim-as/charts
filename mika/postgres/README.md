@@ -29,7 +29,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/postgres/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values. Please refer to the [Configuration](#configuration) section below for more details.
+Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
 
 ```sh
 nano values.yaml

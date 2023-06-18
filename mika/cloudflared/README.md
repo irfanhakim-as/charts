@@ -53,7 +53,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/cloudflared/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values.
+Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
 
 ```sh
 nano values.yaml
