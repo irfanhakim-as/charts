@@ -5,13 +5,14 @@ type: application
 version: 0.1.10
 appVersion: "0.0.1-stable"
 keywords:
-  - clog
-home: https://github.com/irfanhakim-as/clog
-icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+  - "clog"
+  - "blog"
+home: "https://github.com/irfanhakim-as/clog"
+icon: "https://irfanhakim-as.github.io/charts/logos/clog.png"
 sources:
-  - https://github.com/irfanhakim-as/clog
-  - https://github.com/irfanhakim-as/charts
+  - "https://github.com/irfanhakim-as/clog"
+  - "https://github.com/irfanhakim-as/charts"
 maintainers:
-  - name: Irfan Hakim
-    email: irfanhakim.as@yahoo.com
-    url: https://github.com/irfanhakim-as
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
