@@ -23,7 +23,7 @@ data:
   CELERY_TIMEZONE: {{ $celery_timezone }}
   NGROK: {{ $ngrok | toString | quote }}
   {{- if $cloudflared }}
-  DOMAIN: {{ $domain }}
+  DOMAIN: {{ $domain | quote }}
   {{- end }}
 ---
 apiVersion: v1
