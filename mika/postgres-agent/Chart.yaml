@@ -2,7 +2,7 @@ apiVersion: v2
 name: postgres-agent
 description: Easily deploy a database and create a user in a remote PostgreSQL instance or delete a database.
 type: application
-version: 0.1.2
+version: 0.2.0
 appVersion: "13.3"
 keywords:
   - "postgresql"

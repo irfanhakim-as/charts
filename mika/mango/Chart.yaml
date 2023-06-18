@@ -2,7 +2,7 @@ apiVersion: v2
 name: mango
 description: Mango is an easy to use Mastodon bot framework built on top of Django.
 type: application
-version: 0.1.1
+version: 0.2.0
 appVersion: "0.0.1-stable"
 keywords:
   - mango
