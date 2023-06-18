@@ -2,67 +2,172 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# The desired number of running replicas for Clog.
+# Default: "1"
+replicaCount: ""
 
+# Container images used for Clog.
 image:
+  # Clog container image configurations.
   clog:
-    registry: ghcr.io
-    repository: irfanhakim-as/clog
+    # The registry where the Clog container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Clog container image used.
+    # Default: "irfanhakim-as/clog"
+    repository: ""
+    # The tag that specifies the version of the Clog container image used.
+    # Default: Chart appVersion
     tag: ""
-    pullPolicy: IfNotPresent
-  
+    # The policy that determines when Kubernetes should pull the Clog container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Ngrok container image configurations.
   ngrok:
-    registry: docker.io
-    repository: wernight/ngrok
-    tag: "latest"
-    pullPolicy: IfNotPresent
+    # The registry where the Ngrok container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Ngrok container image used.
+    # Default: "wernight/ngrok"
+    repository: ""
+    # The tag that specifies the version of the Ngrok container image used.
+    # Default: "latest"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Ngrok container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
-imagePullSecrets:
-  - name: ghcr-token-secret # name of the secret containing the token to access the clog image
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
 
 clog:
-  site_name: "Clog" # name of the clog site
-  debug: false # django debug mode
-  secret: "" # django secret key
-  ngrok:
-    enabled: false # enable ngrok
-    auth_token: "" # ngrok auth token
+  # The name of the Clog service.
+  # Default: "Clog"
+  # Example:
+  # name: "Clog"
+  name: "" 
+  # Specifies whether Clog should run in debug mode.
+  # Default: false
+  # Example:
+  # debug: true
+  debug: "" 
+  # A 50-character secret key used for secure session management and cryptographic operations within the Clog service.
+  # Example:
+  # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  secret: "" 
+  # Clog storage persistence configurations.
+  persistence:
+    # Specifies whether Clog should persist its storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The storage class name used for dynamically provisioning a persistent volume for the Clog storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+    # Clog static files persistence configurations.
+    static:
+      # The amount of persistent storage allocated for Clog static files.
+      # Default: "50Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
+    # Clog media files persistence configurations.
+    media:
+      # The amount of persistent storage allocated for Clog media files.
+      # Default: "100Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
+    # Clog logs persistence configurations.
+    logs:
+      # The amount of persistent storage allocated for Clog logs.
+      # Default: "50Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
+    # Clog migration files persistence configurations.
+    migrations:
+      # The amount of persistent storage allocated for Clog migration files.
+      # Default: "20Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
+  # Clog Cloudflare configurations.
   cloudflared:
-    enabled: true # enable cloudflared
-    domain: "" # cloudflared domain
+    # Specifies whether Clog should run using a Cloudflare tunnel.
+    # Example:
+    # enabled: true
+    enabled: false
+    # Registered domain name on Cloudflare used for Clog.
+    # Example:
+    # domain: "clog.example.com"
+    domain: ""
+  # Clog Ngrok configurations.
+  ngrok:
+    # Specifies whether Clog should run using an Ngrok tunnel.
+    # Example:
+    # enabled: true
+    enabled: false
+    # Ngrok authentication token.
+    # Example:
+    # token: "s7Ed4IO23nw1HWRJwumSgcyB7BtcXr4ZYLtziJCDDLIVDv7uq"
+    token: ""
 
+# Database configurations.
 db:
-  host: "postgres.default.svc.cluster.local" # remote postgres host
-  name: "" # remote postgres database name
-  user: "" # remote postgres database user
-  pass: "" # remote postgres database user password
+  # The type of the database used by Clog.
+  # Default: "postgresql"
+  # Example:
+  # type: "postgresql"
+  type: ""
+  # The name of the database used by Clog.
+  # Example:
+  # name: "clog"
+  name: ""
+  # The username or user account for accessing the Clog database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Clog database's user.
+  # Example:
+  # password: "password"
+  password: ""
+  # The hostname or IP address of the Clog database server.
+  # Example:
+  # host: "clog.default.svc.cluster.local"
+  host: ""
+  # The port number on which the Clog database server is listening.
+  # Default: "5432"
+  # Example:
+  # port: "5432"
+  port: ""
 
-pvc:
-  static:
-    storage: "50Mi" # static files storage size
-    storageClassName: "longhorn" # static files storage class name
-  
-  media:
-    storage: "100Mi" # media files storage size
-    storageClassName: "longhorn" # media files storage class name
-
-  logs:
-    storage: "50Mi" # logs files storage size
-    storageClassName: "longhorn" # logs files storage class name
-
-  migrations:
-    core:
-      storage: "20Mi" # core migrations files storage size
-      storageClassName: "longhorn" # core migrations files storage class name
-    money:
-      storage: "20Mi" # money migrations files storage size
-      storageClassName: "longhorn" # money migrations files storage class name
-
+# Resource requirements and limits for Clog containers.
 resources:
+  # Clog container resources.
   clog:
+    # The minimum amount of resources required by Clog to run.
     requests:
-      cpu: "10m" # clog cpu request
-      memory: "100Mi" # clog memory request
+      # The minimum amount of CPU resources required by Clog.
+      # Example:
+      # cpu: "20m"
+      cpu: "10m"
+      # The minimum amount of memory required by Clog.
+      # Example:
+      # memory: "250Mi"
+      memory: "100Mi"
+    # The maximum amount of resources allowed for Clog.
     limits:
-      cpu: "50m" # clog cpu limit
-      memory: "200Mi" # clog memory limit
+      # The maximum amount of CPU resources allowed for Clog.
+      # Example:
+      # cpu: "50m"
+      cpu: "50m"
+      # The maximum amount of memory allowed for Clog.
+      # Example:
+      # memory: "450Mi"
+      memory: "200Mi"
