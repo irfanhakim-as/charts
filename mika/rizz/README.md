@@ -114,6 +114,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | rizz.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the Rizz bot. |
 | rizz.mastodon.bot | string | `""` | The username or user account for the Mastodon instance of the Rizz bot. |
 | rizz.mastodon.token | string | `""` | A secure token required to authenticate the Rizz service with the Mastodon instance's API. |
+| rizz.persistence.enabled | bool | `false` | Specifies whether Rizz should persist its storage. |
+| rizz.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for Rizz logs. Default: `"20Mi"`. |
+| rizz.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Rizz storage. Default: `"longhorn"`. |
 | rizz.rss.feed | string | `""` | The URL of the RSS feed to be tracked by Rizz. |
 | rizz.rss.post_limit | string | `""` | The limit number of posts to be scheduled for posting by Rizz per run. Default: `"3"`. |
 | rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
