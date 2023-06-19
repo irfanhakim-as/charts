@@ -4,6 +4,7 @@
 {{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
 {{- $scheduler_timezone := .Values.rizz.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.rizz.domain | default "localhost" | toString }}
+{{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $feed := .Values.rizz.rss.feed | toString | quote }}
 {{- $post_limit := .Values.rizz.rss.post_limit | default "3" | toString | quote }}
 {{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
@@ -21,6 +22,7 @@ data:
   DEBUG: {{ $debug }}
   API_BASE_URL: {{ $api }}
   BOT_ID: {{ $bot }}
+  DEFAULT_VISIBILITY: {{ $visibility }}
   RSS_FEED_URL: {{ $feed }}
   RSS_POST_LIMIT: {{ $post_limit }}
   {{- if $celery }}

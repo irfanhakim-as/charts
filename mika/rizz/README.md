@@ -123,3 +123,4 @@ helm uninstall $release_name --namespace $namespace --wait
 | rizz.scheduler.schedule.update_data | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
 | rizz.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Rizz to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | rizz.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Rizz service. |
+| rizz.visibility | string | `""` | The default visibility of posts made by the Rizz service. Default: `"public"`. |
