@@ -1,17 +1,17 @@
 {{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
 {{- $api := .Values.rizz.mastodon.api | toString | quote }}
 {{- $bot := .Values.rizz.mastodon.bot | toString | quote }}
-{{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
 {{- $scheduler_timezone := .Values.rizz.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
-{{- $domain := .Values.rizz.domain | default "localhost" | toString }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $feed := .Values.rizz.rss.feed | toString | quote }}
 {{- $post_limit := .Values.rizz.rss.post_limit | default "3" | toString | quote }}
-{{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
-{{- $celery := .Values.rizz.scheduler.celery }}
 {{- $clean_data := .Values.rizz.scheduler.schedule.clean_data | default "0" | toString | quote }}
 {{- $post_scheduler := .Values.rizz.scheduler.schedule.post_scheduler | default "8-23/3" | toString | quote }}
 {{- $update_data := .Values.rizz.scheduler.schedule.update_data | default "7-22/3" | toString | quote }}
+{{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
+{{- $domain := .Values.rizz.domain | default "localhost" | toString }}
+{{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
+{{- $celery := .Values.rizz.scheduler.celery }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
