@@ -9,6 +9,7 @@
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $apscheduler := .Values.waktusolat.scheduler.apscheduler }}
 {{- $celery := .Values.waktusolat.scheduler.celery }}
+{{- $persistence := .Values.waktusolat.persistence.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,6 +78,10 @@ spec:
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
               readOnly: true
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-waktusolat-logs
+              mountPath: /var/log/apache2
+            {{- end }}
         {{- if $apscheduler }}
         - name: apscheduler
           image: {{ printf "%s/%s:%s" $waktusolat_registry $waktusolat_repository $waktusolat_tag | quote }}
@@ -106,6 +111,10 @@ spec:
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
               readOnly: true
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-waktusolat-logs
+              mountPath: /var/log/apache2
+            {{- end }}
         {{- else if $celery }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
@@ -168,5 +177,11 @@ spec:
         - name: {{ .Release.Name }}-waktusolat-token-secret
           secret:
             secretName: {{ .Release.Name }}-waktusolat-token-secret
+        {{- if $persistence }}
+        - name: {{ .Release.Name }}-waktusolat-logs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-waktusolat-logs-pvc
+            defaultMode: 0775
+        {{- end }}
       securityContext:
         fsGroup: 33

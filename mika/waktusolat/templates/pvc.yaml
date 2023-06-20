@@ -1,0 +1,18 @@
+{{- $logs_storage := .Values.waktusolat.persistence.logs.storage | default "20Mi" | toString | quote }}
+{{- $storage_class_name := .Values.waktusolat.persistence.storageClassName | default "longhorn" | toString | quote }}
+{{- $persistence := .Values.waktusolat.persistence.enabled }}
+{{- if $persistence }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-waktusolat-logs-pvc
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $logs_storage }}
+  storageClassName: {{ $storage_class_name }}
+{{- end }}

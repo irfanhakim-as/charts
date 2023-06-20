@@ -115,6 +115,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | waktusolat.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the WaktuSolat bot. |
 | waktusolat.mastodon.bot | string | `""` | The username or user account for the Mastodon instance of the WaktuSolat bot. |
 | waktusolat.mastodon.token | string | `""` | A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API. |
+| waktusolat.persistence.enabled | bool | `false` | Specifies whether WaktuSolat should persist its storage. |
+| waktusolat.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for WaktuSolat logs. Default: `"20Mi"`. |
+| waktusolat.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage. Default: `"longhorn"`. |
 | waktusolat.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |

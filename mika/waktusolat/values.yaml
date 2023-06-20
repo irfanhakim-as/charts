@@ -78,6 +78,24 @@ waktusolat:
     # Example:
     # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
     token: ""
+  # WaktuSolat storage persistence configurations.
+  persistence:
+    # Specifies whether WaktuSolat should persist its storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+    # WaktuSolat logs persistence configurations.
+    logs:
+      # The amount of persistent storage allocated for WaktuSolat logs.
+      # Default: "20Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
   # WaktuSolat scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by WaktuSolat as the task scheduler.
