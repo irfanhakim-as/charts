@@ -181,7 +181,6 @@ spec:
         - name: {{ .Release.Name }}-rizz-logs
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-rizz-logs-pvc
-            defaultMode: 0775
         {{- end }}
       securityContext:
         fsGroup: 33

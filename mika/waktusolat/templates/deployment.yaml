@@ -181,7 +181,6 @@ spec:
         - name: {{ .Release.Name }}-waktusolat-logs
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-waktusolat-logs-pvc
-            defaultMode: 0775
         {{- end }}
       securityContext:
         fsGroup: 33
