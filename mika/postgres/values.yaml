@@ -61,7 +61,7 @@ resources:
     # The minimum amount of memory required by PostgreSQL.
     # Example:
     # memory: "10Mi"
-    memory: "10Mi"
+    memory: "100Mi"
   # The maximum amount of resources allowed for PostgreSQL.
   limits:
     # The maximum amount of CPU resources allowed for PostgreSQL.

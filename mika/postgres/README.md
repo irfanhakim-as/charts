@@ -82,4 +82,4 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.limits.cpu | string | `"250m"` | The maximum amount of CPU resources allowed for PostgreSQL. |
 | resources.limits.memory | string | `"250Mi"` | The maximum amount of memory allowed for PostgreSQL. |
 | resources.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by PostgreSQL. |
-| resources.requests.memory | string | `"10Mi"` | The minimum amount of memory required by PostgreSQL. |
+| resources.requests.memory | string | `"100Mi"` | The minimum amount of memory required by PostgreSQL. |
