@@ -5,6 +5,7 @@
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $feed := .Values.rizz.rss.feed | toString | quote }}
 {{- $post_limit := .Values.rizz.rss.post_limit | default "3" | toString | quote }}
+{{- $pubdate_format := .Values.rizz.rss.pubdate_format | default "%a, %d %b %Y %H:%M:%S %z" | toString | quote }}
 {{- $clean_data := .Values.rizz.scheduler.schedule.clean_data | default "0" | toString | quote }}
 {{- $post_scheduler := .Values.rizz.scheduler.schedule.post_scheduler | default "8-23/3" | toString | quote }}
 {{- $update_data := .Values.rizz.scheduler.schedule.update_data | default "7-22/3" | toString | quote }}
@@ -25,6 +26,7 @@ data:
   DEFAULT_VISIBILITY: {{ $visibility }}
   RSS_FEED_URL: {{ $feed }}
   RSS_POST_LIMIT: {{ $post_limit }}
+  RSS_PUBDATE_FORMAT: {{ $pubdate_format }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}

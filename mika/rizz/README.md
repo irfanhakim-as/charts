@@ -119,6 +119,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | rizz.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Rizz storage. Default: `"longhorn"`. |
 | rizz.rss.feed | string | `""` | The URL of the RSS feed to be tracked by Rizz. |
 | rizz.rss.post_limit | string | `""` | The limit number of posts to be scheduled for posting by Rizz per run. Default: `"3"`. |
+| rizz.rss.pubdate_format | string | `""` | The publishing date format of the RSS feed entry. Default: `"%a, %d %b %Y %H:%M:%S %z"`. |
 | rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
 | rizz.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
 | rizz.scheduler.schedule.clean_data | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |

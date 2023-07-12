@@ -107,6 +107,11 @@ rizz:
     # Example:
     # post_limit: "5"
     post_limit: ""
+    # The publishing date format of the RSS feed entry.
+    # Default: "%a, %d %b %Y %H:%M:%S %z"
+    # Example:
+    # pubdate_format: "%a, %d %b %Y %H:%M:%S %Z"
+    pubdate_format: ""
   # Rizz scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by Rizz as the task scheduler.
