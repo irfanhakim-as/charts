@@ -1,1 +1,0 @@
-postgres-dropdb job has been deployed.
