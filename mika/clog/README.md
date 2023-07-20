@@ -1,4 +1,4 @@
-# `clog` 🔒
+# [`clog`](https://github.com/irfanhakim-as/clog) 🔒
 
 ## Prerequisites
 

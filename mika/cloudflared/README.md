@@ -1,4 +1,4 @@
-# `cloudflared`
+# [`cloudflared`](https://github.com/cloudflare/cloudflared)
 
 ## Prerequisites
 

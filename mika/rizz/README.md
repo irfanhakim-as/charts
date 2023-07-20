@@ -1,4 +1,4 @@
-# `rizz` 🔒
+# [`rizz`](https://github.com/irfanhakim-as/rizz) 🔒
 
 ## Prerequisites
 

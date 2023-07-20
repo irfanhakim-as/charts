@@ -1,4 +1,4 @@
-# `mango` 🔒
+# [`mango`](https://github.com/irfanhakim-as/mango) 🔒
 
 ## Prerequisites
 

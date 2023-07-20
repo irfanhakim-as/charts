@@ -1,4 +1,4 @@
-# `postgres-agent`
+# [`postgres-agent`](https://github.com/postgres/postgres)
 
 ## Prerequisites
 

@@ -1,4 +1,4 @@
-# `grocy`
+# [`grocy`](https://github.com/grocy/grocy)
 
 ## Prerequisites
 

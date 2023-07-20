@@ -1,4 +1,4 @@
-# `waktusolat` 🔒
+# [`waktusolat`](https://github.com/irfanhakim-as/waktusolat) 🔒
 
 ## Prerequisites
 
