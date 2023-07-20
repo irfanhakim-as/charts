@@ -235,6 +235,29 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
     version: 0.1.0
+  grocy:
+  - apiVersion: v2
+    appVersion: v3.3.2
+    created: "2023-07-20T09:25:12.154565563Z"
+    description: Grocy is a web-based self-hosted groceries & household management
+      solution for your home.
+    digest: 5ce3d95c125730aa1aaa9c23fae6547512e5e6267419d5cf7485660032e10d9a
+    home: https://github.com/grocy/grocy
+    icon: https://raw.githubusercontent.com/grocy/grocy/master/public/img/logo.svg
+    keywords:
+    - grocy
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: grocy
+    sources:
+    - https://github.com/grocy/grocy
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/grocy-0.1.0/grocy-0.1.0.tgz
+    version: 0.1.0
   mango:
   - apiVersion: v2
     appVersion: 0.0.1-stable
@@ -1275,4 +1298,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2023-07-20T09:07:24.672393283Z"
+generated: "2023-07-20T09:25:12.154708265Z"
