@@ -1,3 +1,15 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $clog_registry := .Values.image.clog.registry | default "ghcr.io" | toString }}
+{{- $clog_repository := .Values.image.clog.repository | default "irfanhakim-as/clog" | toString }}
+{{- $clog_tag := .Values.image.clog.tag | default .Chart.AppVersion | toString }}
+{{- $clog_pullPolicy := .Values.image.clog.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $ngrok_registry := .Values.image.ngrok.registry | default "docker.io" | toString }}
+{{- $ngrok_repository := .Values.image.ngrok.repository | default "wernight/ngrok" | toString }}
+{{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
+{{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $cloudflared := .Values.clog.cloudflared.enabled }}
+{{- $ngrok := .Values.clog.ngrok.enabled }}
+{{- $persistence := .Values.clog.persistence.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,6 +17,7 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "clog.selectorLabels" . | nindent 6 }}
@@ -23,8 +36,8 @@ spec:
       {{- end }}
       containers:
         - name: clog
-          image: "{{ .Values.image.clog.registry }}/{{ .Values.image.clog.repository }}:{{ .Values.image.clog.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.clog.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $clog_registry $clog_repository $clog_tag | quote }}
+          imagePullPolicy: {{ $clog_pullPolicy }}
           ports:
             - name: clog
               containerPort: 80
@@ -32,22 +45,7 @@ spec:
           resources:
             {{- toYaml .Values.resources.clog | nindent 12 }}
           env:
-            - name: SITE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-clog-cm
-                  key: SITE_NAME
-            - name: DEBUG
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-clog-cm
-                  key: DEBUG
-            - name: NGROK
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-clog-cm
-                  key: NGROK
-            {{- if .Values.clog.cloudflared.enabled }}
+            {{- if $cloudflared }}
             - name: ALLOWED_HOSTS
               valueFrom:
                 configMapKeyRef:
@@ -56,13 +54,13 @@ spec:
             {{- end }}
             - name: POSTGRES_HOST
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-clog-postgres-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-clog-postgres-secret
                   key: DB_HOST
             - name: POSTGRES_DB
               valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-clog-postgres-cm
+                secretKeyRef:
+                  name: {{ .Release.Name }}-clog-postgres-secret
                   key: DB_NAME
             - name: POSTGRES_USER
               valueFrom:
@@ -74,16 +72,17 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-clog-postgres-secret
                   key: DB_PASS
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-clog-secret
-                  key: SECRET_KEY
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-clog-cm
+            - secretRef:
+                name: {{ .Release.Name }}-clog-secret
           volumeMounts:
             - name: {{ .Release.Name }}-clog-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            {{- if $persistence }}
             - name: {{ .Release.Name }}-clog-static
               mountPath: /static
             - name: {{ .Release.Name }}-clog-media
@@ -94,10 +93,11 @@ spec:
               mountPath: /clog/core/migrations
             - name: {{ .Release.Name }}-clog-money-migrations
               mountPath: /clog/money/migrations
-        {{- if .Values.clog.ngrok.enabled }}
+            {{- end }}
+        {{- if $ngrok }}
         - name: ngrok
-          image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $ngrok_registry $ngrok_repository $ngrok_tag | quote }}
+          imagePullPolicy: {{ $ngrok_pullPolicy }}
           command: ["/bin/sh"]
           args:
             - -c
@@ -122,6 +122,7 @@ spec:
             items:
               - key: site-config.conf
                 path: site-config.conf
+        {{- if $persistence }}
         - name: {{ .Release.Name }}-clog-static
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-static-pvc
@@ -137,3 +138,4 @@ spec:
         - name: {{ .Release.Name }}-clog-money-migrations
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-money-migrations-pvc
+        {{- end }}

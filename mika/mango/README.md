@@ -1,4 +1,4 @@
-# `mango`
+# [`mango`](https://github.com/irfanhakim-as/mango) 🔒
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/mango/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values. Refer to the [Configuration](#Configuration) section for available options.
+Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
 
 ```sh
 nano values.yaml
@@ -73,7 +73,7 @@ Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingl
 helm uninstall $release_name --namespace $namespace --wait
 ```
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -99,6 +99,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | mango.mastodon.token | string | `""` | Mastodon token secret |
 | mango.secret | string | `""` | Mango secret key |
 | mango.support | string | `"support@mikahomelab.com"` | Support email address |
+| replicaCount | int | `1` | Mango replica count |
 | resources.mango.limits.cpu | string | `"50m"` | Mango maximum cpu allocation |
 | resources.mango.limits.memory | string | `"500Mi"` | Mango maximum memory allocation |
 | resources.mango.requests.cpu | string | `"10m"` | Mango minimum cpu allocation |

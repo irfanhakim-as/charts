@@ -1,3 +1,19 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $vpbot_registry := .Values.image.vpbot.registry | default "ghcr.io" | toString }}
+{{- $vpbot_repository := .Values.image.vpbot.repository | default "irfanhakim-as/quarantine-bot" | toString }}
+{{- $vpbot_tag := .Values.image.vpbot.tag | default .Chart.AppVersion | toString }}
+{{- $vpbot_pullPolicy := .Values.image.vpbot.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
+{{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
+{{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $ngrok_registry := .Values.image.ngrok.registry | default "docker.io" | toString }}
+{{- $ngrok_repository := .Values.image.ngrok.repository | default "wernight/ngrok" | toString }}
+{{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
+{{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $cloudflared := .Values.vpbot.cloudflared.enabled }}
+{{- $ngrok := .Values.vpbot.ngrok.enabled }}
+{{- $persistence := .Values.vpbot.persistence.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,6 +21,7 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 spec:
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "vpbot.selectorLabels" . | nindent 6 }}
@@ -23,153 +40,55 @@ spec:
       {{- end }}
       containers:
         - name: vpbot
-          image: "{{ .Values.image.vpbot.registry }}/{{ .Values.image.vpbot.repository }}:{{ .Values.image.vpbot.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.vpbot.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $vpbot_registry $vpbot_repository $vpbot_tag | quote }}
+          imagePullPolicy: {{ $vpbot_pullPolicy }}
           ports:
             - name: vpbot
               containerPort: 80
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.vpbot | nindent 12 }}
+          {{- if $cloudflared }}
           env:
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-secret
-                  key: SECRET_KEY
-            - name: APP_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: APP_NAME
-            - name: DEBUG
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: DEBUG
-            - name: CELERY_BROKER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: CELERY_BROKER
-            - name: CELERY_BACKEND
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: CELERY_BACKEND
-            - name: CELERY_TIMEZONE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: CELERY_TIMEZONE
-            - name: NGROK
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: NGROK
-            {{- if .Values.vpbot.cloudflared.enabled }}
             - name: ALLOWED_HOSTS
               valueFrom:
                 configMapKeyRef:
                   name: {{ .Release.Name }}-vpbot-cm
                   key: DOMAIN
-            {{- end }}
-            - name: DJANGO_WEBHOOK_URI
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: DJANGO_WEBHOOK_URI
-            - name: LOG_SIZE_LIMIT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: LOG_SIZE_LIMIT
-            - name: APP_VERSION
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: APP_VERSION
-            - name: TELEGRAM_BOT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-secret
-                  key: TELEGRAM_BOT_TOKEN
-            - name: TELEGRAM_ADMIN_ID
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-secret
-                  key: TELEGRAM_ADMIN_ID
-            - name: TELEGRAM_DEVEL_ID
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-secret
-                  key: TELEGRAM_DEVEL_ID
-            - name: DEFAULT_USER_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-secret
-                  key: DEFAULT_USER_PASS
-            {{- if .Values.vpbot.ngrok.enabled }}
-            - name: NGROK_AUTH_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-secret
-                  key: NGROK_AUTH_TOKEN
-            {{- end }}
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-secret
-                  key: DB_HOST
-            - name: DB_TYPE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-secret
-                  key: DB_TYPE
-            - name: DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-secret
-                  key: DB_PORT
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-secret
-                  key: DB_NAME
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-secret
-                  key: DB_USER
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-vpbot-postgres-secret
-                  key: DB_PASS
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-vpbot-cm
+            - secretRef:
+                name: {{ .Release.Name }}-vpbot-secret
+            - secretRef:
+                name: {{ .Release.Name }}-vpbot-postgres-secret
           volumeMounts:
             - name: {{ .Release.Name }}-vpbot-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            {{- if $persistence }}
             - name: {{ .Release.Name }}-vpbot-static
               mountPath: /static
             - name: {{ .Release.Name }}-vpbot-logs
               mountPath: /quarantine-bot/logs
             - name: {{ .Release.Name }}-vpbot-migrations
               mountPath: /quarantine-bot/quarantine_bot/migrations
+            {{- end }}
         - name: redis
-          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
+          imagePullPolicy: {{ $redis_pullPolicy }}
           ports:
             - name: redis
               containerPort: 6379
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.redis | nindent 12 }}
-        {{- if .Values.vpbot.ngrok.enabled }}
+        {{- if $ngrok }}
         - name: ngrok
-          image: "{{ .Values.image.ngrok.registry }}/{{ .Values.image.ngrok.repository }}:{{ .Values.image.ngrok.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.ngrok.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $ngrok_registry $ngrok_repository $ngrok_tag | quote }}
+          imagePullPolicy: {{ $ngrok_pullPolicy }}
           command: ["/bin/sh"]
           args:
             - -c
@@ -191,6 +110,7 @@ spec:
         - name: {{ .Release.Name }}-vpbot-site-config
           configMap:
             name: {{ .Release.Name }}-vpbot-site-config
+        {{- if $persistence }}
         - name: {{ .Release.Name }}-vpbot-static
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-vpbot-static-pvc
@@ -200,3 +120,4 @@ spec:
         - name: {{ .Release.Name }}-vpbot-migrations
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-vpbot-migrations-pvc
+        {{- end }}

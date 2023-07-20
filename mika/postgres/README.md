@@ -1,4 +1,4 @@
-# `postgres`
+# [`postgres`](https://github.com/postgres/postgres)
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/postgres/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values. Please refer to the [Configuration](#configuration) section below for more details.
+Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
 
 ```sh
 nano values.yaml
@@ -49,6 +49,14 @@ Verify that your chart has been installed. Replace `$namespace` and `$release_na
 helm ls --namespace $namespace | grep "$release_name"
 ```
 
+## How to upgrade
+
+After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+
+```sh
+helm upgrade $release_name mika/postgres --namespace $namespace --values values.yaml --wait
+```
+
 ## How to uninstall
 
 Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
@@ -57,20 +65,21 @@ Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingl
 helm uninstall $release_name --namespace $namespace --wait
 ```
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.postgres.pullPolicy | string | `"IfNotPresent"` | Postgres image pull policy |
-| image.postgres.registry | string | `"docker.io"` | Postgres image registry |
-| image.postgres.repository | string | `"postgres"` | Postgres image repository |
-| image.postgres.tag | string | `""` | Postgres image version |
-| postgres.name | string | `"default"` | Default database name |
-| postgres.pass | string | `""` | Root postgres password |
-| postgres.user | string | `"root"` | Root postgres user |
-| pvc.data.storage | string | `"1Gi"` | Data storage size |
-| pvc.data.storageClassName | string | `"longhorn"` | Data storage class name |
-| resources.limits.cpu | string | `"250m"` | Maximum cpu allocation |
-| resources.limits.memory | string | `"250Mi"` | Maximum memory allocation |
-| resources.requests.cpu | string | `"10m"` | Minimum cpu allocation |
-| resources.requests.memory | string | `"10Mi"` | Minimum memory allocation |
+| image.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the PostgreSQL container image. Default: `"IfNotPresent"`. |
+| image.registry | string | `""` | The registry where the PostgreSQL container image is hosted. Default: `"docker.io"`. |
+| image.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"postgres"`. |
+| image.tag | string | `""` | The tag that specifies the version of the PostgreSQL container image used. Default: `Chart appVersion`. |
+| postgres.data.storage | string | `"1Gi"` | The amount of persistent storage allocated for the PostgreSQL instance. Default: `"1Gi"`. |
+| postgres.data.storageClassName | string | `"longhorn"` | The storage class name used for dynamically provisioning a persistent volume for the PostgreSQL storage. Default: `"longhorn"`. |
+| postgres.name | string | `""` | The name of the default PostgreSQL database. Default: `"default"`. |
+| postgres.pass | string | `""` | The password for accessing the PostgreSQL instance. |
+| postgres.user | string | `""` | The username for accessing the PostgreSQL instance. Default: `"root"`. |
+| replicaCount | int | `""` | The desired number of running replicas for PostgreSQL. Default: `"1"`. |
+| resources.limits.cpu | string | `"250m"` | The maximum amount of CPU resources allowed for PostgreSQL. |
+| resources.limits.memory | string | `"250Mi"` | The maximum amount of memory allowed for PostgreSQL. |
+| resources.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by PostgreSQL. |
+| resources.requests.memory | string | `"100Mi"` | The minimum amount of memory required by PostgreSQL. |

@@ -1,3 +1,15 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $waktusolat_registry := .Values.image.waktusolat.registry | default "ghcr.io" | toString }}
+{{- $waktusolat_repository := .Values.image.waktusolat.repository | default "irfanhakim-as/waktusolat" | toString }}
+{{- $waktusolat_tag := .Values.image.waktusolat.tag | default .Chart.AppVersion | toString }}
+{{- $waktusolat_pullPolicy := .Values.image.waktusolat.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
+{{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
+{{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $apscheduler := .Values.waktusolat.scheduler.apscheduler }}
+{{- $celery := .Values.waktusolat.scheduler.celery }}
+{{- $persistence := .Values.waktusolat.persistence.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,6 +17,7 @@ metadata:
   labels:
     {{- include "waktusolat.labels" . | nindent 4 }}
 spec:
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "waktusolat.selectorLabels" . | nindent 6 }}
@@ -23,102 +36,151 @@ spec:
       {{- end }}
       containers:
         - name: waktusolat
-          image: "{{ .Values.image.waktusolat.registry }}/{{ .Values.image.waktusolat.repository }}:{{ .Values.image.waktusolat.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.waktusolat.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $waktusolat_registry $waktusolat_repository $waktusolat_tag | quote }}
+          imagePullPolicy: {{ $waktusolat_pullPolicy }}
           ports:
             - name: waktusolat
               containerPort: 80
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.waktusolat | nindent 12 }}
-          env:
-            - name: DEBUG
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-cm
-                  key: DEBUG
-            - name: LOCATION_CODE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-cm
-                  key: LOCATION_CODE
-            - name: API_BASE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-cm
-                  key: API_BASE_URL
-            - name: CELERY_BROKER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-cm
-                  key: CELERY_BROKER
-            - name: CELERY_BACKEND
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-cm
-                  key: CELERY_BACKEND
-            - name: CELERY_TIMEZONE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-cm
-                  key: CELERY_TIMEZONE
-            - name: SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-secret
-                  key: SECRET_KEY
-            - name: DB_TYPE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-secret
-                  key: DB_TYPE
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-secret
-                  key: DB_NAME
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-secret
-                  key: DB_USER
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-secret
-                  key: DB_PASS
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-secret
-                  key: DB_HOST
-            - name: DB_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-waktusolat-secret
-                  key: DB_PORT
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-waktusolat-cm
+            - secretRef:
+                name: {{ .Release.Name }}-waktusolat-secret
           volumeMounts:
             - name: {{ .Release.Name }}-waktusolat-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            {{- if $celery }}
+            - name: {{ .Release.Name }}-waktusolat-default-celery-config
+              mountPath: /etc/default/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-waktusolat-initd-celery-config
+              mountPath: /etc/init.d/celerybeat
+              subPath: celerybeat
+            - name: {{ .Release.Name }}-waktusolat-initd-celery-config
+              mountPath: /etc/init.d/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/celery.py
+              subPath: celery.py
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/__init__.py
+              subPath: init.py
+            {{- end }}
             - name: {{ .Release.Name }}-waktusolat-token-secret
               mountPath: /base/base/mastodon.secret
               subPath: mastodon.secret
               readOnly: true
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-waktusolat-logs
+              mountPath: /var/log/apache2
+            {{- end }}
+        {{- if $apscheduler }}
+        - name: apscheduler
+          image: {{ printf "%s/%s:%s" $waktusolat_registry $waktusolat_repository $waktusolat_tag | quote }}
+          imagePullPolicy: {{ $waktusolat_pullPolicy }}
+          ports:
+            - name: waktusolat
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-waktusolat-cm
+            - secretRef:
+                name: {{ .Release.Name }}-waktusolat-secret
+          volumeMounts:
+            - name: {{ .Release.Name }}-waktusolat-apscheduler-config
+              mountPath: /entrypoint.sh
+              subPath: entrypoint.sh
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/apps.py
+              subPath: apps.py
+            - name: {{ .Release.Name }}-waktusolat-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            - name: {{ .Release.Name }}-waktusolat-token-secret
+              mountPath: /base/base/mastodon.secret
+              subPath: mastodon.secret
+              readOnly: true
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-waktusolat-logs
+              mountPath: /var/log/apache2
+            {{- end }}
+        {{- else if $celery }}
         - name: redis
-          image: "{{ .Values.image.redis.registry }}/{{ .Values.image.redis.repository }}:{{ .Values.image.redis.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.redis.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
+          imagePullPolicy: {{ $redis_pullPolicy }}
           ports:
             - name: redis
               containerPort: 6379
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources.redis | nindent 12 }}
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+        {{- end }}
       volumes:
         - name: {{ .Release.Name }}-waktusolat-site-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-site-config
+        {{- if $apscheduler }}
+        - name: {{ .Release.Name }}-waktusolat-apscheduler-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-apscheduler-config
+            defaultMode: 0755
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+        {{- else if $celery }}
+        - name: {{ .Release.Name }}-waktusolat-default-celery-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-default-celery-config
+            defaultMode: 0640
+            items:
+              - key: celeryd
+                path: celeryd
+        - name: {{ .Release.Name }}-waktusolat-initd-celery-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-initd-celery-config
+            defaultMode: 0755
+            items:
+              - key: celerybeat
+                path: celerybeat
+              - key: celeryd
+                path: celeryd
+        {{- end }}
+        {{- if or $apscheduler $celery }}
+        - name: {{ .Release.Name }}-waktusolat-scheduler-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-scheduler-config
+            defaultMode: 0775
+            items:
+              {{- if $celery }}
+              - key: celery.py
+                path: celery.py
+              - key: init.py
+                path: init.py
+              {{- else if $apscheduler }}
+              - key: apps.py
+                path: apps.py
+              {{- end }}
+              - key: tasks.py
+                path: tasks.py
+        {{- end }}
         - name: {{ .Release.Name }}-waktusolat-token-secret
           secret:
             secretName: {{ .Release.Name }}-waktusolat-token-secret
+        {{- if $persistence }}
+        - name: {{ .Release.Name }}-waktusolat-logs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-waktusolat-logs-pvc
+        {{- end }}
+      securityContext:
+        fsGroup: 33

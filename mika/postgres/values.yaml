@@ -2,29 +2,73 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+# The desired number of running replicas for PostgreSQL.
+# Default: "1"
+replicaCount: ""
 
+# Container image used for PostgreSQL.
 image:
-  postgres:
-    registry: docker.io
-    repository: postgres
-    tag: ""
-    pullPolicy: IfNotPresent
+  # The registry where the PostgreSQL container image is hosted.
+  # Default: "docker.io"
+  registry: ""
+  # The name of the repository that contains the PostgreSQL container image used.
+  # Default: "postgres"
+  repository: ""
+  # The tag that specifies the version of the PostgreSQL container image used.
+  # Default: Chart appVersion
+  tag: ""
+  # The policy that determines when Kubernetes should pull the PostgreSQL container image.
+  # Default: "IfNotPresent"
+  pullPolicy: ""
 
+# PostgreSQL configurations.
 postgres:
-  name: "default" # name of default database
-  user: "root" # database user
-  pass: "" # database user password
-
-pvc:
+  # The name of the default PostgreSQL database.
+  # Default: "default"
+  # Example:
+  # name: "default"
+  name: ""
+  # The username for accessing the PostgreSQL instance.
+  # Default: "root"
+  # Example:
+  # user: "root"
+  user: ""
+  # The password for accessing the PostgreSQL instance.
+  # Example:
+  # pass: "password"
+  pass: ""
+  # PostgreSQL data configurations.
   data:
-    storage: "1Gi" # data storage size
-    storageClassName: "longhorn" # data storage class name
+    # The amount of persistent storage allocated for the PostgreSQL instance.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the PostgreSQL storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
 
+# Resource requirements and limits for PostgreSQL.
 resources:
+  # The minimum amount of resources required by PostgreSQL to run.
   requests:
-    cpu: "10m" # postgres cpu request
-    memory: "10Mi" # postgres memory request
+    # The minimum amount of CPU resources required by PostgreSQL.
+    # Example:
+    # cpu: "10m"
+    cpu: "10m"
+    # The minimum amount of memory required by PostgreSQL.
+    # Example:
+    # memory: "10Mi"
+    memory: "100Mi"
+  # The maximum amount of resources allowed for PostgreSQL.
   limits:
-    cpu: "250m" # postgres cpu limit
-    memory: "250Mi" # postgres memory limit
+    # The maximum amount of CPU resources allowed for PostgreSQL.
+    # Example:
+    # cpu: "250m"
+    cpu: "250m"
+    # The maximum amount of memory allowed for PostgreSQL.
+    # Example:
+    # memory: "250Mi"
+    memory: "250Mi"

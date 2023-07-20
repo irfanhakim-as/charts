@@ -1,0 +1,88 @@
+{{- $backend_registry := .Values.image.backend.registry | default "docker.io" | toString }}
+{{- $backend_repository := .Values.image.backend.repository | default "grocy/backend" | toString }}
+{{- $backend_tag := .Values.image.backend.tag | default .Chart.AppVersion | toString }}
+{{- $backend_pullPolicy := .Values.image.backend.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $frontend_registry := .Values.image.frontend.registry | default "docker.io" | toString }}
+{{- $frontend_repository := .Values.image.frontend.repository | default "grocy/frontend" | toString }}
+{{- $frontend_tag := .Values.image.frontend.tag | default .Chart.AppVersion | toString }}
+{{- $frontend_pullPolicy := .Values.image.frontend.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-grocy
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "grocy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "grocy.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: copy-data
+          image: {{ printf "%s/%s:%s" $backend_registry $backend_repository $backend_tag | quote }}
+          imagePullPolicy: {{ $backend_pullPolicy }}
+          command: ["sh", "-c", "cp -rf /var/www/data/. /scratch/data"]
+          volumeMounts:
+            - name: {{ .Release.Name }}-grocy-data
+              mountPath: /scratch/data
+      containers:
+        - name: backend
+          image: {{ printf "%s/%s:%s" $backend_registry $backend_repository $backend_tag | quote }}
+          imagePullPolicy: {{ $backend_pullPolicy }}
+          ports:
+            - name: backend
+              containerPort: 9000
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.backend | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-grocy-cm
+          volumeMounts:
+            - name: {{ .Release.Name }}-tmp-volume
+              mountPath: /tmp
+            - name: {{ .Release.Name }}-grocy-data
+              mountPath: /var/www/data
+        - name: frontend
+          image: {{ printf "%s/%s:%s" $frontend_registry $frontend_repository $frontend_tag | quote }}
+          imagePullPolicy: {{ $frontend_pullPolicy }}
+          ports:
+            - name: frontend
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.frontend | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-grocy-cm
+          volumeMounts:
+            - name: {{ .Release.Name }}-tmp-volume
+              mountPath: /tmp
+            - name: {{ .Release.Name }}-grocy-nginx-config
+              mountPath: /etc/nginx/common.conf
+              subPath: common.conf
+      volumes:
+        - name: {{ .Release.Name }}-tmp-volume
+          emptyDir: {}
+        - name: {{ .Release.Name }}-grocy-nginx-config
+          configMap:
+            name: {{ .Release.Name }}-grocy-nginx-config
+        - name: {{ .Release.Name }}-grocy-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-grocy-data-pvc
+      securityContext:
+        fsGroup: 82

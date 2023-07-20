@@ -1,3 +1,10 @@
+{{- $static_storage := .Values.clog.persistence.static.storage | default "50Mi" | toString | quote }}
+{{- $media_storage := .Values.clog.persistence.media.storage | default "100Mi" | toString | quote }}
+{{- $logs_storage := .Values.clog.persistence.logs.storage | default "50Mi" | toString | quote }}
+{{- $migrations_storage := .Values.clog.persistence.migrations.storage | default "20Mi" | toString | quote }}
+{{- $storage_class_name := .Values.clog.persistence.storageClassName | default "longhorn" | toString | quote }}
+{{- $persistence := .Values.clog.persistence.enabled }}
+{{- if $persistence }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -9,8 +16,8 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.static.storage }}
-  storageClassName: {{ .Values.pvc.static.storageClassName }}
+      storage: {{ $static_storage }}
+  storageClassName: {{ $storage_class_name }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -23,8 +30,8 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.media.storage }}
-  storageClassName: {{ .Values.pvc.media.storageClassName }}
+      storage: {{ $media_storage }}
+  storageClassName: {{ $storage_class_name }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -37,8 +44,8 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.logs.storage }}
-  storageClassName: {{ .Values.pvc.logs.storageClassName }}
+      storage: {{ $logs_storage }}
+  storageClassName: {{ $storage_class_name }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -51,8 +58,8 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.migrations.core.storage }}
-  storageClassName: {{ .Values.pvc.migrations.core.storageClassName }}
+      storage: {{ $migrations_storage }}
+  storageClassName: {{ $storage_class_name }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -65,5 +72,6 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.migrations.money.storage }}
-  storageClassName: {{ .Values.pvc.migrations.money.storageClassName }}
+      storage: {{ $migrations_storage }}
+  storageClassName: {{ $storage_class_name }}
+{{- end }}

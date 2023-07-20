@@ -1,4 +1,12 @@
+{{- $debug := .Values.waktusolat.debug | default "false" | toString | quote }}
+{{- $location := .Values.waktusolat.location | default "wlp-0" | toString | quote }}
+{{- $api := .Values.waktusolat.mastodon.api | toString | quote }}
+{{- $bot := .Values.waktusolat.mastodon.bot | toString | quote }}
+{{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
+{{- $redis_service := printf "redis://%s-waktusolat-svc" .Release.Name | quote }}
 {{- $domain := .Values.waktusolat.domain | default "localhost" | toString }}
+{{- $apscheduler := .Values.waktusolat.scheduler.apscheduler }}
+{{- $celery := .Values.waktusolat.scheduler.celery }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,12 +14,17 @@ metadata:
   labels:
     {{- include "waktusolat.labels" . | nindent 4 }}
 data:
-  DEBUG: {{ .Values.waktusolat.debug | toString | quote }}
-  LOCATION_CODE: {{ .Values.waktusolat.location | toString | quote }}
-  API_BASE_URL: {{ .Values.waktusolat.mastodon.api | toString | quote }}
-  CELERY_BROKER: redis://{{ .Release.Name }}-waktusolat-svc
-  CELERY_BACKEND: redis://{{ .Release.Name }}-waktusolat-svc
-  CELERY_TIMEZONE: {{ .Values.waktusolat.celery_timezone | toString | quote }}
+  DEBUG: {{ $debug }}
+  LOCATION_CODE: {{ $location }}
+  API_BASE_URL: {{ $api }}
+  BOT_ID: {{ $bot }}
+  {{- if $celery }}
+  CELERY_BROKER: {{ $redis_service }}
+  CELERY_BACKEND: {{ $redis_service }}
+  {{- end }}
+  {{- if or $apscheduler $celery }}
+  SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -21,26 +34,64 @@ metadata:
     {{- include "waktusolat.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    <VirtualHost *:80>
-      {{ "ServerName $domain:443" | replace "$domain" $domain }}
-      UseCanonicalName On
-      ServerAdmin support@mikahomelab.com
-      DocumentRoot /base
-      WSGIScriptAlias / /base/base/wsgi.py
-      {{ "WSGIDaemonProcess $domain python-path=/base" | replace "$domain" $domain }}
-      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
-      
-      <Directory /base/base>
-        <Files wsgi.py>
-          Require all granted
-        </Files>
-      </Directory>
-
-      Alias /static /static
-      <Directory /static>
-        Require all granted
-      </Directory>
-      
-      ErrorLog /var/log/apache2/apache.error.log
-      CustomLog /var/log/apache2/apache.access.log combined
-    </VirtualHost>
+    {{- include "waktusolat.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+{{- if $apscheduler }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-waktusolat-apscheduler-config
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+data:
+  entrypoint.sh: |-
+    {{- include "waktusolat.apscheduler-entrypoint-sh" . | nindent 4 }}
+{{- else if $celery }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-waktusolat-default-celery-config
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+data:
+  celeryd: |-
+    {{- include "waktusolat.default-celeryd" . | nindent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-waktusolat-initd-celery-config
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+data:
+  celerybeat: |-
+    {{- include "waktusolat.initd-celerybeat" . | nindent 4 }}
+  celeryd: |-
+    {{- include "waktusolat.initd-celeryd" . | nindent 4 }}
+{{- end }}
+{{- if or $apscheduler $celery }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-waktusolat-scheduler-config
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+data:
+  {{- if $apscheduler }}
+  apps.py: |-
+    {{- include "waktusolat.apscheduler-apps-py" . | nindent 4 }}
+  {{- else if $celery }}
+  celery.py: |-
+    {{- include "waktusolat.celery-py" . | nindent 4 }}
+  init.py: |-
+    {{- include "waktusolat.celery-init-py" . | nindent 4 }}
+  {{- end }}
+  tasks.py: |-
+    {{- if $apscheduler }}
+      {{- include "waktusolat.apscheduler-tasks-py" . | nindent 4 }}
+    {{- else if $celery }}
+      {{- include "waktusolat.celery-tasks-py" . | nindent 4 }}
+    {{- end }}
+{{- end }}

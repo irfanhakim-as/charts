@@ -1,4 +1,13 @@
+{{- $name := .Values.telego.name | default "Telego" | toString | quote }}
+{{- $debug := .Values.telego.debug | default "false" | toString | quote }}
+{{- $webhook := .Values.telego.telegram.webhook | default "telegram/webhooks/" | toString | quote }}
+{{- $redis_service := printf "redis://%s-telego-svc" .Release.Name | quote }}
+{{- $celery_timezone := .Values.telego.celery_timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.telego.cloudflared.domain | default "localhost" | toString }}
+{{- $cloudflared := .Values.telego.cloudflared.enabled }}
+{{- $ngrok := .Values.telego.ngrok.enabled }}
+{{- $commands := .Values.telego.commands }}
+{{- $messages := .Values.telego.messages }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,40 +15,16 @@ metadata:
   labels:
     {{- include "telego.labels" . | nindent 4 }}
 data:
-  APP_NAME: {{ .Values.telego.name | toString | quote }}
-  DEBUG: {{ .Values.telego.debug | toString | quote }}
-  DJANGO_WEBHOOK_URI: {{ .Values.telego.webhook | toString | quote }}
-  CELERY_BROKER: redis://{{ .Release.Name }}-telego-svc
-  CELERY_BACKEND: redis://{{ .Release.Name }}-telego-svc
-  CELERY_TIMEZONE: {{ .Values.telego.celery_timezone | toString | quote }}
-  NGROK: {{ .Values.telego.ngrok.enabled | toString | quote }}
-  {{- if .Values.telego.cloudflared.enabled }}
-  DOMAIN: {{ .Values.telego.cloudflared.domain | toString | quote }}
+  APP_NAME: {{ $name }}
+  DEBUG: {{ $debug }}
+  DJANGO_WEBHOOK_URI: {{ $webhook }}
+  CELERY_BROKER: {{ $redis_service }}
+  CELERY_BACKEND: {{ $redis_service }}
+  CELERY_TIMEZONE: {{ $celery_timezone }}
+  NGROK: {{ $ngrok | toString | quote }}
+  {{- if $cloudflared }}
+  DOMAIN: {{ $domain | quote }}
   {{- end }}
-{{- if .Values.telego.commands }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-telego-commands-cm
-  labels:
-    {{- include "telego.labels" . | nindent 4 }}
-data:
-  commands.py: |-
-    {{ .Values.telego.commands | toString | nindent 4 | trim }}
-{{- end }}
-{{- if .Values.telego.messages }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-telego-messages-cm
-  labels:
-    {{- include "telego.labels" . | nindent 4 }}
-data:
-  messages.py: |-
-    {{ .Values.telego.messages | toString | nindent 4 | trim }}
-{{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -49,26 +34,28 @@ metadata:
     {{- include "telego.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    <VirtualHost *:80>
-      {{ "ServerName $domain:443" | replace "$domain" $domain }}
-      UseCanonicalName On
-      ServerAdmin support@domain.org
-      DocumentRoot /telego
-      WSGIScriptAlias / /telego/telego/wsgi.py
-      {{ "WSGIDaemonProcess $domain python-path=/telego" | replace "$domain" $domain }}
-      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
-      
-      <Directory /telego/telego>
-        <Files wsgi.py>
-          Require all granted
-        </Files>
-      </Directory>
-
-      Alias /static /static
-      <Directory /static>
-        Require all granted
-      </Directory>
-
-      ErrorLog /telego/logs/apache.error.log
-      CustomLog /telego/logs/apache.access.log combined
-    </VirtualHost>
+    {{- include "telego.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+{{- if $commands }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-commands-cm
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  commands.py: |-
+    {{ $commands | toString | nindent 4 | trim }}
+{{- end }}
+{{- if $messages }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-messages-cm
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  messages.py: |-
+    {{ $messages | toString | nindent 4 | trim }}
+{{- end }}

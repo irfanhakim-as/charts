@@ -1,3 +1,8 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $registry := .Values.image.cloudflared.registry | default "docker.io" | toString }}
+{{- $repository := .Values.image.cloudflared.repository | default "cloudflare/cloudflared" | toString }}
+{{- $tag := .Values.image.cloudflared.tag | default .Chart.AppVersion | toString }}
+{{- $pullPolicy := .Values.image.cloudflared.pullPolicy | default "IfNotPresent" | toString | quote }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,6 +10,7 @@ metadata:
   labels:
     {{- include "cloudflared.labels" . | nindent 4 }}
 spec:
+  replicas: {{ int $replica_count }}
   selector:
     matchLabels:
       {{- include "cloudflared.selectorLabels" . | nindent 6 }}
@@ -19,7 +25,8 @@ spec:
     spec:
       containers:
         - name: cloudflared
-          image: "{{ .Values.image.cloudflared.registry }}/{{ .Values.image.cloudflared.repository }}:{{ .Values.image.cloudflared.tag | default .Chart.AppVersion }}"
+          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
+          imagePullPolicy: {{ $pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           args:

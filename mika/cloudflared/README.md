@@ -1,4 +1,4 @@
-# `cloudflared`
+# [`cloudflared`](https://github.com/cloudflare/cloudflared)
 
 ## Prerequisites
 
@@ -15,14 +15,18 @@ cloudflared tunnel login
 
 ### Create Cloudflare tunnel
 
+Replace `$tunnel` accordingly.
+
 ```sh
-cloudflared tunnel create <tunnel>
+cloudflared tunnel create $tunnel
 ```
 
 ### Associate Cloudflare tunnel with a DNS record
 
+Replace `$tunnel` and `$hostname` accordingly.
+
 ```sh
-cloudflared tunnel route dns <tunnel> <hostname>
+cloudflared tunnel route dns $tunnel $hostname
 ```
 
 ## How to add repo
@@ -49,7 +53,7 @@ Copy `values.yaml` from the chart you would like to install.
 cp mika/cloudflared/values.yaml .
 ```
 
-Edit `values.yaml` with the appropriate values.
+Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
 
 ```sh
 nano values.yaml
@@ -61,17 +65,29 @@ Install the desired chart. Replace `$release_name`, `$namespace` and `$credentia
 
 ```sh
 helm install $release_name \
-        --namespace $namespace \
-        --create-namespace \
-        --set-file tunnel.file=$credentials.json \
-        --values values.yaml \
-        --wait mika/cloudflared
+--namespace $namespace \
+--create-namespace \
+--set-file tunnel.file=$credentials.json \
+--values values.yaml \
+--wait mika/cloudflared
 ```
 
 Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
 
 ```sh
 helm ls --namespace $namespace | grep "$release_name"
+```
+
+## How to upgrade
+
+After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name`, `$namespace` and `$credentials.json` accordingly.
+
+```sh
+helm upgrade $release_name \
+--namespace $namespace \
+--set-file tunnel.file=$credentials.json \
+--values values.yaml \
+--wait mika/cloudflared
 ```
 
 ## How to uninstall
@@ -82,19 +98,19 @@ Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingl
 helm uninstall $release_name --namespace $namespace --wait
 ```
 
-## Configuration
+## Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.cloudflared.pullPolicy | string | `"IfNotPresent"` | Cloudflared image pull policy |
-| image.cloudflared.registry | string | `"docker.io"` | Cloudflared image registry |
-| image.cloudflared.repository | string | `"cloudflare/cloudflared"` | Cloudflared image repository |
-| image.cloudflared.tag | string | `""` | Cloudflared image version |
-| ingress | list | `[]` | Cloudflare ingress rules |
-| replicaCount | int | `1` | Cloudflared replica count |
-| resources.limits.cpu | string | `"500m"` | Maximum cpu allocation |
-| resources.limits.memory | string | `"500Mi"` | Maximum ram allocation |
-| resources.requests.cpu | string | `"10m"` | Minimum cpu allocation |
-| resources.requests.memory | string | `"10Mi"` | Minimum ram allocation |
-| tunnel.file | file | `""` | Cloudflare tunnel credentials file |
-| tunnel.name | string | `""` | Cloudflare tunnel name |
+| image.cloudflared.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Cloudflared container image. Default: `"IfNotPresent"`. |
+| image.cloudflared.registry | string | `""` | The registry where the Cloudflared container image is hosted. Default: `"docker.io"`. |
+| image.cloudflared.repository | string | `""` | The name of the repository that contains the Cloudflared container image used. Default: `"cloudflare/cloudflared"`. |
+| image.cloudflared.tag | string | `""` | The tag that specifies the version of the Cloudflared container image used. Default: `Chart appVersion`. |
+| ingress | list | `[]` | Cloudflare ingress configurations. |
+| replicaCount | string | `""` | The desired number of running replicas for Cloudflared. Default: `"1"`. |
+| resources.limits.cpu | string | `"500m"` | The maximum amount of CPU resources allowed for Cloudflared. |
+| resources.limits.memory | string | `"500Mi"` | The maximum amount of memory allowed for Cloudflared. |
+| resources.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Cloudflared. |
+| resources.requests.memory | string | `"10Mi"` | The minimum amount of memory required by Cloudflared. |
+| tunnel.file | file | `""` | The Cloudflare tunnel's credentials JSON file. |
+| tunnel.name | string | `""` | The name of the Cloudflare tunnel. |

@@ -1,18 +1,18 @@
 apiVersion: v2
 name: postgres-agent
-description: Easily deploy a database and create a user in a remote PostgreSQL instance or delete a database.
+description: Easily deploy a database and create a user, or delete a database in a remote PostgreSQL instance.
 type: application
-version: 0.1.1
+version: 0.2.0
 appVersion: "13.3"
 keywords:
-  - postgres
-  - agent
-  - job
-home: https://github.com/irfanhakim-as/charts
-icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+  - "postgresql"
+  - "agent"
+  - "job"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/postgres.png"
 sources:
-  - https://github.com/irfanhakim-as/charts
+  - "https://github.com/irfanhakim-as/charts"
 maintainers:
-  - name: Irfan Hakim
-    email: irfanhakim.as@yahoo.com
-    url: https://github.com/irfanhakim-as
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

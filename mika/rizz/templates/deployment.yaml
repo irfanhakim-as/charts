@@ -1,0 +1,186 @@
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
+{{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
+{{- $rizz_tag := .Values.image.rizz.tag | default .Chart.AppVersion | toString }}
+{{- $rizz_pullPolicy := .Values.image.rizz.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
+{{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
+{{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
+{{- $celery := .Values.rizz.scheduler.celery }}
+{{- $persistence := .Values.rizz.persistence.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-rizz
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "rizz.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rizz.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: rizz
+          image: {{ printf "%s/%s:%s" $rizz_registry $rizz_repository $rizz_tag | quote }}
+          imagePullPolicy: {{ $rizz_pullPolicy }}
+          ports:
+            - name: rizz
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.rizz | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-rizz-cm
+            - secretRef:
+                name: {{ .Release.Name }}-rizz-secret
+          volumeMounts:
+            - name: {{ .Release.Name }}-rizz-site-config
+              mountPath: /etc/apache2/sites-available/000-default.conf
+              subPath: site-config.conf
+              readOnly: true
+            {{- if $celery }}
+            - name: {{ .Release.Name }}-rizz-default-celery-config
+              mountPath: /etc/default/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-rizz-initd-celery-config
+              mountPath: /etc/init.d/celerybeat
+              subPath: celerybeat
+            - name: {{ .Release.Name }}-rizz-initd-celery-config
+              mountPath: /etc/init.d/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-rizz-scheduler-config
+              mountPath: /base/base/celery.py
+              subPath: celery.py
+            - name: {{ .Release.Name }}-rizz-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            - name: {{ .Release.Name }}-rizz-scheduler-config
+              mountPath: /base/base/__init__.py
+              subPath: init.py
+            {{- end }}
+            - name: {{ .Release.Name }}-rizz-token-secret
+              mountPath: /base/base/mastodon.secret
+              subPath: mastodon.secret
+              readOnly: true
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-rizz-logs
+              mountPath: /var/log/apache2
+            {{- end }}
+        {{- if $apscheduler }}
+        - name: apscheduler
+          image: {{ printf "%s/%s:%s" $rizz_registry $rizz_repository $rizz_tag | quote }}
+          imagePullPolicy: {{ $rizz_pullPolicy }}
+          ports:
+            - name: rizz
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-rizz-cm
+            - secretRef:
+                name: {{ .Release.Name }}-rizz-secret
+          volumeMounts:
+            - name: {{ .Release.Name }}-rizz-apscheduler-config
+              mountPath: /entrypoint.sh
+              subPath: entrypoint.sh
+            - name: {{ .Release.Name }}-rizz-scheduler-config
+              mountPath: /base/base/apps.py
+              subPath: apps.py
+            - name: {{ .Release.Name }}-rizz-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            - name: {{ .Release.Name }}-rizz-token-secret
+              mountPath: /base/base/mastodon.secret
+              subPath: mastodon.secret
+              readOnly: true
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-rizz-logs
+              mountPath: /var/log/apache2
+            {{- end }}
+        {{- else if $celery }}
+        - name: redis
+          image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
+          imagePullPolicy: {{ $redis_pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+        {{- end }}
+      volumes:
+        - name: {{ .Release.Name }}-rizz-site-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-site-config
+        {{- if $apscheduler }}
+        - name: {{ .Release.Name }}-rizz-apscheduler-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-apscheduler-config
+            defaultMode: 0755
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+        {{- else if $celery }}
+        - name: {{ .Release.Name }}-rizz-default-celery-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-default-celery-config
+            defaultMode: 0640
+            items:
+              - key: celeryd
+                path: celeryd
+        - name: {{ .Release.Name }}-rizz-initd-celery-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-initd-celery-config
+            defaultMode: 0755
+            items:
+              - key: celerybeat
+                path: celerybeat
+              - key: celeryd
+                path: celeryd
+        {{- end }}
+        {{- if or $apscheduler $celery }}
+        - name: {{ .Release.Name }}-rizz-scheduler-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-scheduler-config
+            defaultMode: 0775
+            items:
+              {{- if $celery }}
+              - key: celery.py
+                path: celery.py
+              - key: init.py
+                path: init.py
+              {{- else if $apscheduler }}
+              - key: apps.py
+                path: apps.py
+              {{- end }}
+              - key: tasks.py
+                path: tasks.py
+        {{- end }}
+        - name: {{ .Release.Name }}-rizz-token-secret
+          secret:
+            secretName: {{ .Release.Name }}-rizz-token-secret
+        {{- if $persistence }}
+        - name: {{ .Release.Name }}-rizz-logs
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-rizz-logs-pvc
+        {{- end }}
+      securityContext:
+        fsGroup: 33

@@ -1,0 +1,18 @@
+{{- $logs_storage := .Values.rizz.persistence.logs.storage | default "20Mi" | toString | quote }}
+{{- $storage_class_name := .Values.rizz.persistence.storageClassName | default "longhorn" | toString | quote }}
+{{- $persistence := .Values.rizz.persistence.enabled }}
+{{- if $persistence }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-rizz-logs-pvc
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $logs_storage }}
+  storageClassName: {{ $storage_class_name }}
+{{- end }}

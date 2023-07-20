@@ -7,6 +7,23 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 - Kubernetes 1.19+
 - Helm 3.2.0+
 
+## Chart Directory
+
+| Chart Name | Description | Support | Access |
+| ---------- | ----------- | ------- | ------ |
+| [clog](https://github.com/irfanhakim-as/charts/tree/master/mika/clog) | Creative blog, Career blog, Coin blog, you name it. | ✅ | 🔒 |
+| [cloudflared](https://github.com/irfanhakim-as/charts/tree/master/mika/cloudflared) | Cloudflare Tunnel is a tunneling software that lets you quickly secure and encrypt application traffic to any type of infrastructure. | ✅ | ✅ |
+| [grocy](https://github.com/irfanhakim-as/charts/tree/master/mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
+| [mango](https://github.com/irfanhakim-as/charts/tree/master/mika/mango) | Mango is an easy to use Mastodon bot framework built on top of Django. | ✅ | 🔒 |
+| [postgres](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
+| [postgres-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-agent) | Easily deploy a database and create a user, or delete a database in a remote PostgreSQL instance. | ✅ | ✅ |
+| [postgres-createdb](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-createdb) | Easily deploy a database and create a user in a remote PostgreSQL instance. | ❌ | ✅ |
+| [postgres-dropdb](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-dropdb) | Delete a database easily in a remote PostgreSQL instance. | ❌ | ✅ |
+| [rizz](https://github.com/irfanhakim-as/charts/tree/master/mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon. | ✅ | 🔒 |
+| [telego](https://github.com/irfanhakim-as/charts/tree/master/mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
+| [vpbot](https://github.com/irfanhakim-as/charts/tree/master/mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
+| [waktusolat](https://github.com/irfanhakim-as/charts/tree/master/mika/waktusolat) | Waktu Solat is a simple web application that posts local prayer times on Mastodon. | ✅ | 🔒 |
+
 ## How to add repo
 
 Add the repo to your local helm client.
@@ -49,6 +66,14 @@ Verify that your chart has been installed. Replace `$namespace` and `$release_na
 
 ```sh
 helm ls --namespace $namespace | grep "$release_name"
+```
+
+## How to upgrade a chart
+
+After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name`, `$helm_chart` and `$namespace` accordingly.
+
+```sh
+helm upgrade $release_name mika/$helm_chart --namespace $namespace --values values.yaml --wait
 ```
 
 ## How to uninstall a chart

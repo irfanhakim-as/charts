@@ -1,3 +1,4 @@
+{{- $name := .Values.tunnel.name | toString | quote }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,7 +8,7 @@ metadata:
 data:
   config.yaml: |
     # Name of the tunnel you want to run
-    tunnel: {{ .Values.tunnel.name }}
+    tunnel: {{ $name }}
     credentials-file: /etc/cloudflared/creds/credentials.json
     # Serves the metrics server under /metrics and the readiness server under /ready
     metrics: 0.0.0.0:2000

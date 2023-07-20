@@ -1,4 +1,13 @@
+{{- $name := .Values.vpbot.name | default "Vpbot" | toString | quote }}
+{{- $debug := .Values.vpbot.debug | default "false" | toString | quote }}
+{{- $redis_service := printf "redis://%s-vpbot-svc" .Release.Name | quote }}
+{{- $celery_timezone := .Values.vpbot.celery_timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
+{{- $webhook := .Values.telegram.webhook | default "telegram/webhooks/" | toString | quote }}
+{{- $log_size_limit := .Values.vpbot.log_size_limit | default "4" | toString | quote }}
+{{- $app_version := .Values.image.vpbot.tag | default .Chart.AppVersion | toString | quote }}
 {{- $domain := .Values.vpbot.cloudflared.domain | default "localhost" | toString }}
+{{- $cloudflared := .Values.vpbot.cloudflared.enabled }}
+{{- $ngrok := .Values.vpbot.ngrok.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,18 +15,18 @@ metadata:
   labels:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
-  APP_NAME: {{ .Values.vpbot.name | toString | quote }}
-  DEBUG: {{ .Values.vpbot.debug | toString | quote }}
-  CELERY_BROKER: redis://{{ .Release.Name }}-vpbot-svc
-  CELERY_BACKEND: redis://{{ .Release.Name }}-vpbot-svc
-  CELERY_TIMEZONE: {{ .Values.vpbot.celery_timezone | toString | quote }}
-  NGROK: {{ .Values.vpbot.ngrok.enabled | toString | quote }}
-  {{- if .Values.vpbot.cloudflared.enabled }}
+  APP_NAME: {{ $name }}
+  DEBUG: {{ $debug }}
+  CELERY_BROKER: {{ $redis_service }}
+  CELERY_BACKEND: {{ $redis_service }}
+  CELERY_TIMEZONE: {{ $celery_timezone }}
+  NGROK: {{ $ngrok | toString | quote }}
+  DJANGO_WEBHOOK_URI: {{ $webhook }}
+  LOG_SIZE_LIMIT: {{ $log_size_limit }}
+  APP_VERSION: {{ $app_version }}
+  {{- if $cloudflared }}
   DOMAIN: {{ $domain | quote }}
   {{- end }}
-  DJANGO_WEBHOOK_URI: {{ .Values.telegram.webhook | toString | quote }}
-  LOG_SIZE_LIMIT: {{ .Values.vpbot.log_size_limit | toString | quote }}
-  APP_VERSION: {{ .Values.image.vpbot.tag | default .Chart.AppVersion | toString | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -27,31 +36,4 @@ metadata:
     {{- include "vpbot.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    <VirtualHost *:80>
-      {{ "ServerName $domain:443" | replace "$domain" $domain }}
-      UseCanonicalName On
-      ServerAdmin support@mika-homelab.com
-      DocumentRoot /quarantine-bot
-      WSGIScriptAlias / /quarantine-bot/quarantine_bot/wsgi.py
-      {{ "WSGIDaemonProcess $domain python-path=/quarantine-bot" | replace "$domain" $domain }}
-      {{ "WSGIProcessGroup $domain" | replace "$domain" $domain }}
-      
-      <Directory /quarantine-bot/quarantine_bot>
-        <Files wsgi.py>
-          Require all granted
-        </Files>
-      </Directory>
-
-      Alias /static /static
-      <Directory /static>
-        Require all granted
-      </Directory>
-
-      Alias /media /quarantine-bot/media
-      <Directory /quarantine-bot/media>
-        Require all granted
-      </Directory>
-      
-      ErrorLog /quarantine-bot/logs/apache.error.log
-      CustomLog /quarantine-bot/logs/apache.access.log combined
-    </VirtualHost>
+    {{- include "vpbot.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}

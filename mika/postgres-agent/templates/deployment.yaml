@@ -1,7 +1,13 @@
+{{- $host := .Values.postgres.host | default "postgres" | toString }}
+{{- $registry := .Values.image.postgres.registry | default "docker.io" | toString }}
+{{- $repository := .Values.image.postgres.repository | default "postgres" | toString }}
+{{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
+{{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $create_mode := .Values.postgres.mode.create }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-postgres-agent
+  name: {{ printf "%s-%s-%s" (index (splitList "." $host) 0) .Release.Name "postgres-agent" }}
   labels:
     {{- include "postgres-agent.labels" . | nindent 4 }}
 spec:
@@ -18,23 +24,29 @@ spec:
     spec:
       containers:
         - name: postgres-agent
-          image: "{{ .Values.image.postgres.registry }}/{{ .Values.image.postgres.repository }}:{{ .Values.image.postgres.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.postgres.pullPolicy }}
+          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
+          imagePullPolicy: {{ $pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.postgres.mode.create }}
-          command: ["/bin/sh"]
+          {{- if $create_mode }}
+          command: ["/bin/bash"]
           args:
             - -c
             - >-
               psql -v ON_ERROR_STOP=1 -h $(DB_HOST) -U $(ROOT_USER) -d postgres <<-EOSQL
-                SELECT 'CREATE DATABASE $(DB_NAME)' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
-                SELECT 'CREATE USER $(DB_USER) WITH PASSWORD ''$(DB_PASS)''' WHERE NOT EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
-                GRANT ALL PRIVILEGES ON DATABASE $(DB_NAME) TO $(DB_USER)\gexec
+                SELECT 'CREATE DATABASE "$(DB_NAME)"' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
+                SELECT 'CREATE USER "$(DB_USER)" WITH PASSWORD ''$(DB_PASS)''' WHERE NOT EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
+                GRANT ALL PRIVILEGES ON DATABASE "$(DB_NAME)" TO "$(DB_USER)"\gexec
               EOSQL
           {{- else }}
-          command: ["dropdb"]
-          args: ["-h", "$(DB_HOST)", "-U", "$(ROOT_USER)", "$(DB_NAME)"]
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              psql -v ON_ERROR_STOP=1 -h $(DB_HOST) -U $(ROOT_USER) -d postgres <<-EOSQL
+                SELECT 'DROP DATABASE "$(DB_NAME)"' WHERE EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
+                SELECT 'DROP USER "$(DB_USER)"' WHERE EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
+              EOSQL
           {{- end }}
           env:
             - name: DB_HOST
@@ -47,12 +59,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Release.Name }}-postgres-agent-secret
                   key: DB_NAME
-            {{- if .Values.postgres.mode.create }}
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ .Release.Name }}-postgres-agent-secret
                   key: DB_USER
+            {{- if $create_mode }}
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:

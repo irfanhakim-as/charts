@@ -1,4 +1,7 @@
-# helm pvc
+{{- $storage := .Values.telego.persistence.storage | default "10Mi" | toString | quote }}
+{{- $storage_class_name := .Values.telego.persistence.storageClassName | default "longhorn" | toString | quote }}
+{{- $persistence := .Values.telego.persistence.enabled }}
+{{- if $persistence }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -10,5 +13,6 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.pvc.logs.storage }}
-  storageClassName: {{ .Values.pvc.logs.storageClassName }}
+      storage: {{ $storage }}
+  storageClassName: {{ $storage_class_name }}
+{{- end }}
