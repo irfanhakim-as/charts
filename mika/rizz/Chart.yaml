@@ -1,6 +1,6 @@
 apiVersion: v2
 name: rizz
-description: Rizz is a simple web application that tracks and posts content from RSS Feeds on Mastodon.
+description: Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon.
 type: application
 version: 0.0.1
 appVersion: "0.0.1-beta-r2"
