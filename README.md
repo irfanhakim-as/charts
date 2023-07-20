@@ -17,8 +17,6 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [mango](https://github.com/irfanhakim-as/charts/tree/master/mika/mango) | Mango is an easy to use Mastodon bot framework built on top of Django. | ✅ | 🔒 |
 | [postgres](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
 | [postgres-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-agent) | Easily deploy a database and create a user, or delete a database in a remote PostgreSQL instance. | ✅ | ✅ |
-| [postgres-createdb](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-createdb) | Easily deploy a database and create a user in a remote PostgreSQL instance. | ❌ | ✅ |
-| [postgres-dropdb](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-dropdb) | Delete a database easily in a remote PostgreSQL instance. | ❌ | ✅ |
 | [rizz](https://github.com/irfanhakim-as/charts/tree/master/mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon. | ✅ | 🔒 |
 | [telego](https://github.com/irfanhakim-as/charts/tree/master/mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
 | [vpbot](https://github.com/irfanhakim-as/charts/tree/master/mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
