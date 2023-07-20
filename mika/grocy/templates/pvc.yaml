@@ -1,0 +1,15 @@
+{{- $storage := .Values.grocy.data.storage | default "500Mi" | toString | quote }}
+{{- $storage_class_name := .Values.grocy.data.storageClassName | default "longhorn" | toString | quote }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-grocy-data-pvc
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $storage }}
+  storageClassName: {{ $storage_class_name }}

@@ -1,0 +1,36 @@
+{{- $frontend_tag := .Values.image.frontend.tag | default .Chart.AppVersion | toString }}
+{{- $mode := .Values.grocy.mode | default "production" | toString | quote }}
+{{- $culture := .Values.grocy.culture | default "en_GB" | toString | quote }}
+{{- $currency := .Values.grocy.currency | default "MYR" | toString | quote }}
+{{- $energy := .Values.grocy.energy | default "kcal" | toString | quote }}
+{{- $upload_limit := .Values.grocy.php.upload_limit | default "50M" | toString | quote }}
+{{- $file_limit := .Values.grocy.php.file_limit | default "200" | toString | quote }}
+{{- $post_limit := .Values.grocy.php.post_limit | default "100M" | toString | quote }}
+{{- $memory_limit := .Values.grocy.php.memory_limit | default "512M" | toString | quote }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-grocy-cm
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+data:
+  GROCY_VERSION: {{ $frontend_tag }}
+  PLATFORM: "linux/amd64"
+  GROCY_MODE: {{ $mode }}
+  GROCY_CULTURE: {{ $culture }}
+  GROCY_CURRENCY: {{ $currency }}
+  GROCY_ENERGY_UNIT: {{ $energy }}
+  MAX_UPLOAD: {{ $upload_limit }}
+  PHP_MAX_FILE_UPLOAD: {{ $file_limit }}
+  PHP_MAX_POST: {{ $post_limit }}
+  PHP_MEMORY_LIMIT: {{ $memory_limit }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-grocy-nginx-config
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+data:
+  common.conf: |
+    {{- include "grocy.common-conf" . | nindent 4 }}

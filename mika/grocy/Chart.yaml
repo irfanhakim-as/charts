@@ -1,0 +1,17 @@
+apiVersion: v2
+name: grocy
+description: Grocy is a web-based self-hosted groceries & household management solution for your home.
+type: application
+version: 0.0.1
+appVersion: "v3.3.2"
+keywords:
+  - "grocy"
+home: "https://github.com/grocy/grocy"
+icon: "https://raw.githubusercontent.com/grocy/grocy/master/public/img/logo.svg"
+sources:
+  - "https://github.com/grocy/grocy"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
