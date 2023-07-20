@@ -1,4 +1,4 @@
-# `clog`
+# `clog` 🔒
 
 ## Prerequisites
 

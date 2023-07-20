@@ -1,4 +1,4 @@
-# `waktusolat`
+# `waktusolat` 🔒
 
 ## Prerequisites
 

@@ -1,4 +1,4 @@
-# [`telego`](https://github.com/irfanhakim-as/telego)
+# [`telego`](https://github.com/irfanhakim-as/telego) 🔒
 
 ## Prerequisites
 

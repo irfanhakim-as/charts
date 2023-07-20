@@ -1,4 +1,4 @@
-# `mango`
+# `mango` 🔒
 
 ## Prerequisites
 

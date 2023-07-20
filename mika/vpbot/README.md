@@ -1,4 +1,4 @@
-# [`vpbot`](https://github.com/irfanhakim-as/quarantine-bot)
+# [`vpbot`](https://github.com/irfanhakim-as/quarantine-bot) 🔒
 
 ## Prerequisites
 

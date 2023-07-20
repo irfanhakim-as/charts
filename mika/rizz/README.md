@@ -1,4 +1,4 @@
-# `rizz`
+# `rizz` 🔒
 
 ## Prerequisites
 
