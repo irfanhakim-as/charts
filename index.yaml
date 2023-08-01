@@ -236,6 +236,29 @@ entries:
   cloudflared:
   - apiVersion: v2
     appVersion: 2022.3.0
+    created: "2023-08-01T18:24:49.912312841Z"
+    description: Cloudflare Tunnel is a tunneling software that lets you quickly secure
+      and encrypt application traffic to any type of infrastructure.
+    digest: dd5a1409f30cd85b6e327f5c0c5c3d1a0e076c570fd91f38e88cef825c36d4ea
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+    keywords:
+    - cloudflared
+    - cloudflare
+    - tunnel
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflared
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.2.2/cloudflared-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 2022.3.0
     created: "2023-07-20T09:32:53.725405063Z"
     description: Cloudflare Tunnel is a tunneling software that lets you quickly secure
       and encrypt application traffic to any type of infrastructure.
@@ -1413,4 +1436,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2023-07-20T09:32:54.088836332Z"
+generated: "2023-08-01T18:24:49.912511544Z"
