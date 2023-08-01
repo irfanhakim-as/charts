@@ -2,7 +2,7 @@ apiVersion: v2
 name: cloudflared
 description: Cloudflare Tunnel is a tunneling software that lets you quickly secure and encrypt application traffic to any type of infrastructure.
 type: application
-version: 0.2.1
+version: 0.2.2
 appVersion: "2022.3.0"
 keywords:
   - "cloudflared"
