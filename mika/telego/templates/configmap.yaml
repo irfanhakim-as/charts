@@ -97,7 +97,11 @@ data:
     {{- include "telego.celery-init-py" . | nindent 4 }}
   {{- end }}
   tasks.py: |-
-    {{- include "telego.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
+    {{- if $apscheduler }}
+      {{- include "telego.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
+    {{- else if $celery }}
+      {{- include "telego.celery-tasks-py" . | nindent 4 }}
+    {{- end }}
 {{- end }}
 {{- if $commands }}
 ---
