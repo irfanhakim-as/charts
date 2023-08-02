@@ -93,7 +93,7 @@ data:
     {{- include "rizz.apscheduler-apps-py" . | nindent 4 }}
   {{- else if $celery }}
   celery.py: |-
-    {{- include "rizz.celery-py" . | nindent 4 }}
+    {{- include "rizz.celery-py" . | replace "CLEAN_DATA_HOURS" $clean_data | replace "UPDATE_DATA_HOURS" $update_data | replace "POST_SCHEDULER_HOURS" $post_scheduler | nindent 4 }}
   init.py: |-
     {{- include "rizz.celery-init-py" . | nindent 4 }}
   {{- end }}
@@ -101,6 +101,6 @@ data:
     {{- if $apscheduler }}
       {{- include "rizz.apscheduler-tasks-py" . | replace "CLEAN_DATA_HOURS" $clean_data | replace "UPDATE_DATA_HOURS" $update_data | replace "POST_SCHEDULER_HOURS" $post_scheduler | nindent 4 }}
     {{- else if $celery }}
-      {{- include "rizz.celery-tasks-py" . | replace "CLEAN_DATA_HOURS" $clean_data | replace "UPDATE_DATA_HOURS" $update_data | replace "POST_SCHEDULER_HOURS" $post_scheduler | nindent 4 }}
+      {{- include "rizz.celery-tasks-py" . | nindent 4 }}
     {{- end }}
 {{- end }}
