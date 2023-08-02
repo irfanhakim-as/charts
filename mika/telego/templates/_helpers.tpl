@@ -997,3 +997,12 @@ app.conf.beat_schedule = {
 def debug_task(self):
     print("Request: {0!r}".format(self.request))
 {{- end }}
+
+{{/*
+Celery /base/base/__init__.py template
+*/}}
+{{- define "telego.celery-init-py" -}}
+from .celery import app as celery_app
+
+__all__ = ("celery_app",)
+{{- end }}
