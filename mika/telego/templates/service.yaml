@@ -1,3 +1,4 @@
+{{- $celery := .Values.telego.scheduler.celery }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,9 +12,11 @@ spec:
       targetPort: telego
       protocol: TCP
       name: {{ .Release.Name }}-telego
+    {{- if $celery }}
     - port: 6379
       targetPort: redis
       protocol: TCP
       name: {{ .Release.Name }}-redis
+    {{- end }}
   selector:
     {{- include "telego.selectorLabels" . | nindent 4 }}
