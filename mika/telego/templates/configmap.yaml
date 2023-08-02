@@ -54,18 +54,6 @@ metadata:
 data:
   entrypoint.sh: |-
     {{- include "telego.apscheduler-entrypoint-sh" . | nindent 4 }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-telego-scheduler-config
-  labels:
-    {{- include "telego.labels" . | nindent 4 }}
-data:
-  apps.py: |-
-    {{- include "telego.apscheduler-apps-py" . | nindent 4 }}
-  tasks.py: |-
-    {{- include "telego.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
 {{- else if $celery }}
 ---
 apiVersion: v1
@@ -89,6 +77,25 @@ data:
     {{- include "telego.initd-celerybeat" . | nindent 4 }}
   celeryd: |-
     {{- include "telego.initd-celeryd" . | nindent 4 }}
+{{- end }}
+{{- if or $apscheduler $celery }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-scheduler-config
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  {{- if $apscheduler }}
+  apps.py: |-
+    {{- include "telego.apscheduler-apps-py" . | nindent 4 }}
+  {{- else if $celery }}
+  celery.py: |-
+    {{- include "telego.celery-py" . | nindent 4 }}
+  {{- end }}
+  tasks.py: |-
+    {{- include "telego.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
 {{- end }}
 {{- if $commands }}
 ---
