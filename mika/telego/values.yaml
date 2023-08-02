@@ -76,8 +76,8 @@ telego:
   # The timezone for the task scheduler used by Telego to schedule time-dependent operations.
   # Default: "Asia/Kuala_Lumpur"
   # Example:
-  # timezone: "Asia/Kuala_Lumpur"
-  celery_timezone: ""
+  # scheduler_timezone: "Asia/Kuala_Lumpur"
+  scheduler_timezone: ""
   # Telego Telegram configurations.
   telegram:
     # The Telegram bot token used by Telego to communicate with Telegram.
