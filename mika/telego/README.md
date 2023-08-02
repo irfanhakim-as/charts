@@ -215,7 +215,7 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 | resources.telego.limits.memory | string | `"500Mi"` | The maximum amount of memory allowed for Telego. |
 | resources.telego.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Telego. |
 | resources.telego.requests.memory | string | `"250Mi"` | The minimum amount of memory required by Telego. |
-| telego.scheduler_timezone | string | `""` | The timezone for the task scheduler used by Telego to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
+| telego.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Telego to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | telego.cloudflared.domain | string | `""` | Registered domain name on Cloudflare used for Telego. |
 | telego.cloudflared.enabled | bool | `false` | Specifies whether Telego should run using a Cloudflare tunnel. |
 | telego.commands | file | `""` | Custom Telegram `commands.py` file for Telego. |

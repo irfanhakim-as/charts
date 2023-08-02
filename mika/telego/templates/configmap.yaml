@@ -2,7 +2,7 @@
 {{- $debug := .Values.telego.debug | default "false" | toString | quote }}
 {{- $webhook := .Values.telego.telegram.webhook | default "telegram/webhooks/" | toString | quote }}
 {{- $redis_service := printf "redis://%s-telego-svc" .Release.Name | quote }}
-{{- $scheduler_timezone := .Values.telego.scheduler_timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
+{{- $scheduler_timezone := .Values.telego.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.telego.cloudflared.domain | default "localhost" | toString }}
 {{- $cloudflared := .Values.telego.cloudflared.enabled }}
 {{- $ngrok := .Values.telego.ngrok.enabled }}
