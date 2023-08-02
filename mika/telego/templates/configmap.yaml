@@ -87,6 +87,8 @@ metadata:
 data:
   celerybeat: |-
     {{- include "telego.initd-celerybeat" . | nindent 4 }}
+  celeryd: |-
+    {{- include "telego.initd-celeryd" . | nindent 4 }}
 {{- end }}
 {{- if $commands }}
 ---
