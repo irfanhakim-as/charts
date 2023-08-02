@@ -106,10 +106,10 @@ telego:
     # Example:
     # token: "1282813559:RrqoFIuWZwNfMLrx3Jd2mdFJnxrMObgQEvz"
     token: ""
-    # The Telegram bot webhook path used by Telego to communicate with Telegram.
-    # Default: "telegram/webhooks/"
+    # The Telegram bot webhook path used by Telego to communicate with Telegram. Must contain a trailing slash.
+    # Default: "webhook/telegram/"
     # Example:
-    # webhook: "bot/jbbhb73f6s/"
+    # webhook: "telegram/jbbhb73f6s/"
     webhook: ""
   # Telego log persistence configurations.
   persistence:
