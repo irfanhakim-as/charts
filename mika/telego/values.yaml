@@ -205,25 +205,25 @@ resources:
       # Example:
       # memory: "450Mi"
       memory: "500Mi"
-  # Redis container resources.
-  redis:
-    # The minimum amount of resources required by Redis to run.
+  # Scheduler container resources.
+  scheduler:
+    # The minimum amount of resources required by Scheduler to run.
     requests:
-      # The minimum amount of CPU resources required by Redis.
+      # The minimum amount of CPU resources required by Scheduler.
       # Example:
       # cpu: "5m"
-      cpu: "5m"
-      # The minimum amount of memory required by Redis.
+      cpu: "10m"
+      # The minimum amount of memory required by Scheduler.
       # Example:
       # memory: "30Mi"
-      memory: "30Mi"
-    # The maximum amount of resources allowed for Redis.
+      memory: "100Mi"
+    # The maximum amount of resources allowed for Scheduler.
     limits:
-      # The maximum amount of CPU resources allowed for Redis.
+      # The maximum amount of CPU resources allowed for Scheduler.
       # Example:
       # cpu: "15m"
-      cpu: "15m"
-      # The maximum amount of memory allowed for Redis.
+      cpu: "20m"
+      # The maximum amount of memory allowed for Scheduler.
       # Example:
       # memory: "50Mi"
-      memory: "60Mi"
+      memory: "200Mi"
