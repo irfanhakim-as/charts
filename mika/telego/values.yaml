@@ -95,10 +95,10 @@ telego:
       # Example:
       # clean_model: "0,6,12,18"
       clean_model: ""
-      # The seconds at which the task scheduler sends scheduled messages.
+      # The seconds at which the task scheduler sends scheduled messages. Must contain only numbers when using Celery as the task scheduler.
       # Default: "*/2"
       # Example:
-      # object_scheduler: "*"
+      # object_scheduler: "3"
       object_scheduler: ""
   # Telego Telegram configurations.
   telegram:
