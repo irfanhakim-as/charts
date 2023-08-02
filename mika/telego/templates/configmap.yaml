@@ -23,15 +23,15 @@ data:
   DEBUG: {{ $debug }}
   TELEGRAM_WEBHOOK_PATH: {{ $webhook }}
   NGROK: {{ $ngrok | toString | quote }}
+  {{- if $cloudflared }}
+  DOMAIN: {{ $domain | quote }}
+  {{- end }}
   {{- if or $apscheduler $celery }}
   SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
   {{- end }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
-  {{- end }}
-  {{- if $cloudflared }}
-  DOMAIN: {{ $domain | quote }}
   {{- end }}
 ---
 apiVersion: v1
