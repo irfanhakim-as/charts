@@ -87,6 +87,12 @@ metadata:
   labels:
     {{- include "telego.labels" . | nindent 4 }}
 data:
+  tasks.py: |-
+    {{- if $apscheduler }}
+      {{- include "telego.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
+    {{- else if $celery }}
+      {{- include "telego.celery-tasks-py" . | nindent 4 }}
+    {{- end }}
   {{- if $apscheduler }}
   apps.py: |-
     {{- include "telego.apscheduler-apps-py" . | nindent 4 }}
@@ -96,12 +102,6 @@ data:
   init.py: |-
     {{- include "telego.celery-init-py" . | nindent 4 }}
   {{- end }}
-  tasks.py: |-
-    {{- if $apscheduler }}
-      {{- include "telego.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
-    {{- else if $celery }}
-      {{- include "telego.celery-tasks-py" . | nindent 4 }}
-    {{- end }}
 {{- end }}
 {{- if $commands }}
 ---
