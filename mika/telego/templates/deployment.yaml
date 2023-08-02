@@ -235,3 +235,5 @@ spec:
           configMap:
             name: {{ .Release.Name }}-telego-messages-cm
         {{- end }}
+      securityContext:
+        fsGroup: 33
