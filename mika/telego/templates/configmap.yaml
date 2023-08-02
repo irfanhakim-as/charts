@@ -77,6 +77,16 @@ metadata:
 data:
   celeryd: |-
     {{- include "telego.default-celeryd" . | nindent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-initd-celery-config
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  celerybeat: |-
+    {{- include "telego.initd-celerybeat" . | nindent 4 }}
 {{- end }}
 {{- if $commands }}
 ---
