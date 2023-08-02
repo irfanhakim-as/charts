@@ -92,7 +92,7 @@ data:
     {{- include "telego.apscheduler-apps-py" . | nindent 4 }}
   {{- else if $celery }}
   celery.py: |-
-    {{- include "telego.celery-py" . | nindent 4 }}
+    {{- include "telego.celery-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
   init.py: |-
     {{- include "telego.celery-init-py" . | nindent 4 }}
   {{- end }}
