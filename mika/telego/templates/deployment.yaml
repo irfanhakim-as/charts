@@ -64,8 +64,6 @@ spec:
                 name: {{ .Release.Name }}-telego-cm
             - secretRef:
                 name: {{ .Release.Name }}-telego-secret
-            - secretRef:
-                name: {{ .Release.Name }}-telego-database-secret
           volumeMounts:
             - name: {{ .Release.Name }}-telego-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
