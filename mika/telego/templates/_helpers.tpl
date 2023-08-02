@@ -89,3 +89,20 @@ Apache site-config.conf template
     CustomLog /telego/logs/apache.access.log combined
 </VirtualHost>
 {{- end }}
+
+{{/*
+APScheduler /entrypoint.sh template
+*/}}
+{{- define "telego.apscheduler-entrypoint-sh" -}}
+#!/bin/bash
+
+export APP_ROOT="base"
+
+# ================= DO NOT EDIT BEYOND THIS LINE =================
+
+python3 manage.py makemigrations
+
+python3 manage.py migrate
+
+tail -f /dev/null
+{{- end }}

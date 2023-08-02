@@ -41,6 +41,18 @@ metadata:
 data:
   site-config.conf: |-
     {{- include "telego.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+{{- if $apscheduler }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-telego-apscheduler-config
+  labels:
+    {{- include "telego.labels" . | nindent 4 }}
+data:
+  entrypoint.sh: |-
+    {{- include "telego.apscheduler-entrypoint-sh" . | nindent 4 }}
+{{- end }}
 {{- if $commands }}
 ---
 apiVersion: v1
