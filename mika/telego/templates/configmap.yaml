@@ -4,6 +4,8 @@
 {{- $redis_service := printf "redis://%s-telego-svc" .Release.Name | quote }}
 {{- $scheduler_timezone := .Values.telego.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.telego.cloudflared.domain | default "localhost" | toString }}
+{{- $apscheduler := .Values.telego.scheduler.apscheduler }}
+{{- $celery := .Values.telego.scheduler.celery }}
 {{- $cloudflared := .Values.telego.cloudflared.enabled }}
 {{- $ngrok := .Values.telego.ngrok.enabled }}
 {{- $commands := .Values.telego.commands }}
@@ -18,10 +20,14 @@ data:
   APP_NAME: {{ $name }}
   DEBUG: {{ $debug }}
   DJANGO_WEBHOOK_URI: {{ $webhook }}
+  NGROK: {{ $ngrok | toString | quote }}
+  {{- if or $apscheduler $celery }}
+  SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
+  {{- end }}
+  {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
-  SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
-  NGROK: {{ $ngrok | toString | quote }}
+  {{- end }}
   {{- if $cloudflared }}
   DOMAIN: {{ $domain | quote }}
   {{- end }}
