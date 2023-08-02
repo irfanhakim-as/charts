@@ -88,6 +88,18 @@ telego:
     # Example:
     # timezone: "Asia/Kuala_Lumpur"
     timezone: ""
+    # The schedule for the task scheduler used by Telego.
+    schedule:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # clean_model: "0,6,12,18"
+      clean_model: ""
+      # The seconds at which the task scheduler sends scheduled messages.
+      # Default: "*/2"
+      # Example:
+      # object_scheduler: "*"
+      object_scheduler: ""
   # Telego Telegram configurations.
   telegram:
     # The Telegram bot token used by Telego to communicate with Telegram.
