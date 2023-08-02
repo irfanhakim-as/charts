@@ -1,4 +1,5 @@
 {{- $celery := .Values.telego.scheduler.celery }}
+{{- $ngrok := .Values.telego.ngrok.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -17,6 +18,12 @@ spec:
       targetPort: redis
       protocol: TCP
       name: {{ .Release.Name }}-redis
+    {{- end }}
+    {{- if $ngrok }}
+    - port: 4040
+      targetPort: ngrok
+      protocol: TCP
+      name: {{ .Release.Name }}-ngrok
     {{- end }}
   selector:
     {{- include "telego.selectorLabels" . | nindent 4 }}
