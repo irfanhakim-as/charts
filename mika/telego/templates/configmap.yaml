@@ -19,7 +19,7 @@ metadata:
 data:
   APP_NAME: {{ $name }}
   DEBUG: {{ $debug }}
-  DJANGO_WEBHOOK_URI: {{ $webhook }}
+  TELEGRAM_WEBHOOK_PATH: {{ $webhook }}
   NGROK: {{ $ngrok | toString | quote }}
   {{- if or $apscheduler $celery }}
   SCHEDULER_TIMEZONE: {{ $scheduler_timezone }}
