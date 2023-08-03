@@ -142,7 +142,7 @@ def start():
     scheduler.add_job(clean_model, "cron", hour=CLEAN_MODEL_HOURS, id=job_name, replace_existing=True)
 
     job_name = "object_scheduler"
-    scheduler.add_job(object_scheduler, "cron", second=OBJECT_SCHEDULER_SECONDS, id=job_name, replace_existing=True)
+    scheduler.add_job(object_scheduler, "cron", second="*/" + OBJECT_SCHEDULER_SECONDS, id=job_name, replace_existing=True)
 
     scheduler.start()
 {{- end }}

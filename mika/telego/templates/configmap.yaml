@@ -6,7 +6,7 @@
 {{- $scheduler_timezone := .Values.telego.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $domain := .Values.telego.cloudflared.domain | default "localhost" | toString }}
 {{- $clean_model := .Values.telego.scheduler.schedule.clean_model | default "0" | toString | quote }}
-{{- $object_scheduler := .Values.telego.scheduler.schedule.object_scheduler | default "*/2" | toString | quote }}
+{{- $object_scheduler := .Values.telego.scheduler.schedule.object_scheduler | default "2" | toString | quote }}
 {{- $apscheduler := .Values.telego.scheduler.apscheduler }}
 {{- $celery := .Values.telego.scheduler.celery }}
 {{- $cloudflared := .Values.telego.cloudflared.enabled }}

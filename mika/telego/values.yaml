@@ -95,8 +95,8 @@ telego:
       # Example:
       # clean_model: "0,6,12,18"
       clean_model: ""
-      # The seconds at which the task scheduler sends scheduled messages. Must contain only numbers when using Celery as the task scheduler.
-      # Default: "*/2"
+      # The second intervals at which the task scheduler sends scheduled messages.
+      # Default: "2"
       # Example:
       # object_scheduler: "3"
       object_scheduler: ""
