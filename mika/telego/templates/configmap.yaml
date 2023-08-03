@@ -1,5 +1,6 @@
 {{- $name := .Values.telego.name | default "Telego" | toString | quote }}
 {{- $debug := .Values.telego.debug | default "false" | toString | quote }}
+{{- $api := .Values.telego.telegram.api | default "https://api.telegram.org/bot" | toString | quote }}
 {{- $webhook := .Values.telego.telegram.webhook | default "webhook/telegram/" | toString | quote }}
 {{- $redis_service := printf "redis://%s-telego-svc" .Release.Name | quote }}
 {{- $scheduler_timezone := .Values.telego.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
@@ -21,6 +22,7 @@ metadata:
 data:
   APP_NAME: {{ $name }}
   DEBUG: {{ $debug }}
+  TELEGRAM_BOT_API_URL: {{ $api }}
   TELEGRAM_WEBHOOK_PATH: {{ $webhook }}
   NGROK: {{ $ngrok | toString | quote }}
   {{- if $cloudflared }}

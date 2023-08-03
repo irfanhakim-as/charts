@@ -102,6 +102,11 @@ telego:
       object_scheduler: ""
   # Telego Telegram configurations.
   telegram:
+    # API endpoint or URL for the Telegram bot.
+    # Default: "https://api.telegram.org/bot"
+    # Example:
+    # api: "https://api.telegram.org/bot"
+    api: ""
     # The Telegram bot token used by Telego to communicate with Telegram.
     # Example:
     # token: "1282813559:RrqoFIuWZwNfMLrx3Jd2mdFJnxrMObgQEvz"
