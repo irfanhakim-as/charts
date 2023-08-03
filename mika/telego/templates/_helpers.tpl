@@ -68,13 +68,13 @@ Apache site-config.conf template
 <VirtualHost *:80>
     ServerName DOMAIN:443
     UseCanonicalName On
-    ServerAdmin support@domain.org
-    DocumentRoot /telego
-    WSGIScriptAlias / /telego/telego/wsgi.py
-    WSGIDaemonProcess DOMAIN python-path=/telego
+    ServerAdmin support@mikahomelab.com
+    DocumentRoot /base
+    WSGIScriptAlias / /base/base/wsgi.py
+    WSGIDaemonProcess DOMAIN python-path=/base
     WSGIProcessGroup DOMAIN
 
-    <Directory /telego/telego>
+    <Directory /base/base>
         <Files wsgi.py>
             Require all granted
         </Files>
@@ -85,8 +85,8 @@ Apache site-config.conf template
         Require all granted
     </Directory>
 
-    ErrorLog /telego/logs/apache.error.log
-    CustomLog /telego/logs/apache.access.log combined
+    ErrorLog /var/log/apache2/apache.error.log
+    CustomLog /var/log/apache2/apache.access.log combined
 </VirtualHost>
 {{- end }}
 
