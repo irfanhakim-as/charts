@@ -759,6 +759,30 @@ entries:
   rizz:
   - apiVersion: v2
     appVersion: 0.0.1-beta-r2
+    created: "2023-08-04T10:08:44.144016898Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 8db718ddcb7057906e63b83bec76c9dfae7e48ecabdfb445f4f0d5b95eedd6ca
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.4/rizz-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 0.0.1-beta-r2
     created: "2023-08-04T04:42:52.696494004Z"
     description: Rizz is a simple web application that tracks and posts content from
       RSS Feeds to Mastodon.
@@ -1483,4 +1507,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-04T04:42:52.805401253Z"
+generated: "2023-08-04T10:08:44.1443129Z"
