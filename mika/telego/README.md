@@ -71,94 +71,9 @@ helm ls --namespace $namespace | grep "$release_name"
 
 ### Add custom files
 
-To implement additional Telegram commands, create a custom `commands.py` file with a `Commands` class inheriting from `telego.methods.BaseCommand`.
+To implement additional Telegram commands, create a custom `commands.py` file with a `Commands` class inheriting from `lib.telegram.BaseCommand`. Refer to `/base/lib/commands.py` from the container for more information.
 
-```python
-from telego.methods import (
-    BaseCommand,
-    gen_inline_keyboard,
-    icon,
-    message,
-)
-
-# these variables must always be returned by the command methods
-msg = None
-inline_keyboard = None
-
-
-class Commands(BaseCommand):
-    def __init__(self):
-        super().__init__()
-
-# ================= DO NOT EDIT BEFORE THIS LINE =================
-
-        # add command details
-        self.commands.update({
-            "test" : {
-                "description" : "simple debug command returning your input",
-                "emoji" : "🤵‍♂️",
-                "method" : self.test,
-                "admin" : True,
-            },
-            "menu" : {
-                "description" : "returns a menu of command prompts to choose from",
-                "emoji" : "🔮",
-                "method" : self.menu,
-            },
-        })
-
-    # add command methods
-    def test(self, **kwargs):
-        user = kwargs.get("user")
-        command = kwargs.get("command")
-        command_obj = self.commands.get(command)
-        param = kwargs.get("param")
-
-        if param and (param.lower() == "help" or param.lower() == "?"):
-            msg = message("TEST_HELP", emoji=command_obj.get("emoji"), command=command)
-        else:
-            msg = message("TEST_COMMAND", emoji=command_obj.get("emoji"), chat_id=user.chat_id, first_name=user.first_name, command=command, param=param)
-        return msg, inline_keyboard
-
-    def menu(self, **kwargs):
-        command_prompts = dict()
-        user = kwargs.get("user")
-        command = kwargs.get("command")
-        commands = self.commands
-        command_obj = commands.get(command)
-
-        for key, command_dict in commands.items():
-            emoji = command_dict.get("emoji")
-            if not command_dict.get("admin") or is_admin(user):
-                command_prompts[key] = "%s %s" % (emoji, key.title())
-
-        msg = message("MENU_COMMAND", emoji=command_obj.get("emoji"))
-        inline_keyboard = gen_inline_keyboard(command_prompts)
-        return msg, inline_keyboard
-```
-
-To add additional Telegram messages, create a custom `messages.py` file with both `messages` and `icons` dict.
-
-```python
-# messages dict
-messages = {
-    "TEST_COMMAND" : "{emoji} Chat ID: {chat_id}" \
-                    "\n📛 First name: {first_name}" \
-                    "\n🎤 Command: {command}" \
-                    "\n💬 Param: {param}",
-    "TEST_HELP" : "{emoji} `{command}`" \
-                    "\n• Submit the command '`{command}`' as is to receive a simple response from the bot" \
-                    "\n• Option: Add whatever message after the command to verify that the bot receives your message correctly" \
-                    "\n• Example: '`{command} abc 123`' to test if the bot receives '`abc 123`' as a parameter correctly",
-    "MENU_COMMAND" : "{emoji} Please select a command",
-}
-
-# icons dict
-icons = {
-    "MENU" : "crystal_ball",
-    "TEST" : "man_in_tuxedo",
-}
-```
+To add additional Telegram messages, create a custom `messages.py` file with both `MESSAGES` and `ICONS` dict. Refer to `/base/lib/messages.py` from the container for more information.
 
 Upgrade (or install) the chart while adding the `commands.py` and `messages.py files with the `--set-file` flag.
 
