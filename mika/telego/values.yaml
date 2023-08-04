@@ -195,7 +195,7 @@ resources:
       # The minimum amount of CPU resources required by Telego.
       # Example:
       # cpu: "20m"
-      cpu: "20m"
+      cpu: "50m"
       # The minimum amount of memory required by Telego.
       # Example:
       # memory: "250Mi"
@@ -205,7 +205,7 @@ resources:
       # The maximum amount of CPU resources allowed for Telego.
       # Example:
       # cpu: "50m"
-      cpu: "50m"
+      cpu: "200m"
       # The maximum amount of memory allowed for Telego.
       # Example:
       # memory: "450Mi"
