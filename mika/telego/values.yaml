@@ -232,3 +232,25 @@ resources:
       # Example:
       # memory: "50Mi"
       memory: "200Mi"
+  # Ngrok container resources.
+  ngrok:
+    # The minimum amount of resources required by Ngrok to run.
+    requests:
+      # The minimum amount of CPU resources required by Ngrok.
+      # Example:
+      # cpu: "5m"
+      cpu: "10m"
+      # The minimum amount of memory required by Ngrok.
+      # Example:
+      # memory: "30Mi"
+      memory: "20Mi"
+    # The maximum amount of resources allowed for Ngrok.
+    limits:
+      # The maximum amount of CPU resources allowed for Ngrok.
+      # Example:
+      # cpu: "15m"
+      cpu: "20m"
+      # The maximum amount of memory allowed for Ngrok.
+      # Example:
+      # memory: "50Mi"
+      memory: "50Mi"

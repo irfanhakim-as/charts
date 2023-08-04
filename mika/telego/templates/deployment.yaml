@@ -165,6 +165,8 @@ spec:
             - name: ngrok
               containerPort: 4040
               protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.ngrok | nindent 12 }}
           env:
             - name: NGROK_AUTH
               valueFrom:
