@@ -89,13 +89,13 @@ spec:
             {{- end }}
             {{- if $commands }}
             - name: {{ .Release.Name }}-telego-commands-cm
-              mountPath: /telego/telego/commands.py
+              mountPath: /base/lib/commands.py
               subPath: commands.py
               readOnly: true
             {{- end }}
             {{- if $messages }}
             - name: {{ .Release.Name }}-telego-messages-cm
-              mountPath: /telego/telego/messages.py
+              mountPath: /base/lib/messages.py
               subPath: messages.py
               readOnly: true
             {{- end }}
@@ -130,13 +130,13 @@ spec:
             {{- end }}
             {{- if $commands }}
             - name: {{ .Release.Name }}-telego-commands-cm
-              mountPath: /telego/telego/commands.py
+              mountPath: /base/lib/commands.py
               subPath: commands.py
               readOnly: true
             {{- end }}
             {{- if $messages }}
             - name: {{ .Release.Name }}-telego-messages-cm
-              mountPath: /telego/telego/messages.py
+              mountPath: /base/lib/messages.py
               subPath: messages.py
               readOnly: true
             {{- end }}
