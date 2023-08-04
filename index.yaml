@@ -759,6 +759,30 @@ entries:
   rizz:
   - apiVersion: v2
     appVersion: 0.0.1-beta-r2
+    created: "2023-08-04T04:42:52.696494004Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 4ea223dcf06488f31be63ae86b3a2da9dd9935f795eb527a20c6e1f3026dda4d
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.3/rizz-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 0.0.1-beta-r2
     created: "2023-07-20T09:07:24.294324435Z"
     description: Rizz is a simple web application that tracks and posts content from
       RSS Feeds to Mastodon.
@@ -782,6 +806,29 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.2/rizz-0.0.2.tgz
     version: 0.0.2
   telego:
+  - apiVersion: v2
+    appVersion: 0.1.0-stable-r1
+    created: "2023-08-04T04:42:52.805262753Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: d70c648882a9b6f731d3eb21db83232fe3b2830a374ea44b024dbb01f487aef6
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.3.0/telego-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v2
     appVersion: 0.0.3-stable
     created: "2023-07-20T09:07:24.421082238Z"
@@ -1436,4 +1483,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-01T18:24:49.912511544Z"
+generated: "2023-08-04T04:42:52.805401253Z"
