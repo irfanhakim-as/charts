@@ -91,7 +91,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | db.port | string | `""` | The port number on which the Rizz database server is listening. Default: `"5432"`. |
 | db.type | string | `""` | The type of the database used by Rizz. Default: `"postgresql"`. |
 | db.user | string | `""` | The username or user account for accessing the Rizz database. |
-| image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"alpine"`. |
+| image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"IfNotPresent"`. |
 | image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |
 | image.redis.repository | string | `""` | The name of the repository that contains the Redis container image used. Default: `"redis"`. |
 | image.redis.tag | string | `""` | The tag that specifies the version of the Redis container image used. Default: `"alpine"`. |
