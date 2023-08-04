@@ -11,6 +11,8 @@
 {{- $ngrok_repository := .Values.image.ngrok.repository | default "wernight/ngrok" | toString }}
 {{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
 {{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $apscheduler := .Values.telego.scheduler.apscheduler }}
+{{- $celery := .Values.telego.scheduler.celery }}
 {{- $cloudflared := .Values.telego.cloudflared.enabled }}
 {{- $ngrok := .Values.telego.ngrok.enabled }}
 {{- $persistence := .Values.telego.persistence.enabled }}
@@ -51,42 +53,94 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.telego | nindent 12 }}
-          {{- if $cloudflared }}
-          env:
-            - name: ALLOWED_HOSTS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-telego-cm
-                  key: DOMAIN
-          {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-telego-cm
             - secretRef:
                 name: {{ .Release.Name }}-telego-secret
-            - secretRef:
-                name: {{ .Release.Name }}-telego-database-secret
           volumeMounts:
             - name: {{ .Release.Name }}-telego-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            {{- if $celery }}
+            - name: {{ .Release.Name }}-telego-default-celery-config
+              mountPath: /etc/default/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-telego-initd-celery-config
+              mountPath: /etc/init.d/celerybeat
+              subPath: celerybeat
+            - name: {{ .Release.Name }}-telego-initd-celery-config
+              mountPath: /etc/init.d/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-telego-scheduler-config
+              mountPath: /base/base/celery.py
+              subPath: celery.py
+            - name: {{ .Release.Name }}-telego-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            - name: {{ .Release.Name }}-telego-scheduler-config
+              mountPath: /base/base/__init__.py
+              subPath: init.py
+            {{- end }}
             {{- if $persistence }}
             - name: {{ .Release.Name }}-telego-logs
               mountPath: /telego/logs
             {{- end }}
             {{- if $commands }}
             - name: {{ .Release.Name }}-telego-commands-cm
-              mountPath: /telego/telego/commands.py
+              mountPath: /base/lib/commands.py
               subPath: commands.py
               readOnly: true
             {{- end }}
             {{- if $messages }}
             - name: {{ .Release.Name }}-telego-messages-cm
-              mountPath: /telego/telego/messages.py
+              mountPath: /base/lib/messages.py
               subPath: messages.py
               readOnly: true
             {{- end }}
+        {{- if $apscheduler }}
+        - name: apscheduler
+          image: {{ printf "%s/%s:%s" $telego_registry $telego_repository $telego_tag | quote }}
+          imagePullPolicy: {{ $telego_pullPolicy }}
+          ports:
+            - name: telego
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-telego-cm
+            - secretRef:
+                name: {{ .Release.Name }}-telego-secret
+          volumeMounts:
+            - name: {{ .Release.Name }}-telego-apscheduler-config
+              mountPath: /entrypoint.sh
+              subPath: entrypoint.sh
+            - name: {{ .Release.Name }}-telego-scheduler-config
+              mountPath: /base/base/apps.py
+              subPath: apps.py
+            - name: {{ .Release.Name }}-telego-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-telego-logs
+              mountPath: /var/log/apache2
+            {{- end }}
+            {{- if $commands }}
+            - name: {{ .Release.Name }}-telego-commands-cm
+              mountPath: /base/lib/commands.py
+              subPath: commands.py
+              readOnly: true
+            {{- end }}
+            {{- if $messages }}
+            - name: {{ .Release.Name }}-telego-messages-cm
+              mountPath: /base/lib/messages.py
+              subPath: messages.py
+              readOnly: true
+            {{- end }}
+        {{- else if $celery }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
@@ -95,7 +149,8 @@ spec:
               containerPort: 6379
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources.redis | nindent 12 }}
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+        {{- end }}
         {{- if $ngrok }}
         - name: ngrok
           image: {{ printf "%s/%s:%s" $ngrok_registry $ngrok_repository $ngrok_tag | quote }}
@@ -110,6 +165,8 @@ spec:
             - name: ngrok
               containerPort: 4040
               protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.ngrok | nindent 12 }}
           env:
             - name: NGROK_AUTH
               valueFrom:
@@ -121,6 +178,50 @@ spec:
         - name: {{ .Release.Name }}-telego-site-config
           configMap:
             name: {{ .Release.Name }}-telego-site-config
+        {{- if $apscheduler }}
+        - name: {{ .Release.Name }}-telego-apscheduler-config
+          configMap:
+            name: {{ .Release.Name }}-telego-apscheduler-config
+            defaultMode: 0755
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+        {{- else if $celery }}
+        - name: {{ .Release.Name }}-telego-default-celery-config
+          configMap:
+            name: {{ .Release.Name }}-telego-default-celery-config
+            defaultMode: 0640
+            items:
+              - key: celeryd
+                path: celeryd
+        - name: {{ .Release.Name }}-telego-initd-celery-config
+          configMap:
+            name: {{ .Release.Name }}-telego-initd-celery-config
+            defaultMode: 0755
+            items:
+              - key: celerybeat
+                path: celerybeat
+              - key: celeryd
+                path: celeryd
+        {{- end }}
+        {{- if or $apscheduler $celery }}
+        - name: {{ .Release.Name }}-telego-scheduler-config
+          configMap:
+            name: {{ .Release.Name }}-telego-scheduler-config
+            defaultMode: 0775
+            items:
+              - key: tasks.py
+                path: tasks.py
+              {{- if $apscheduler }}
+              - key: apps.py
+                path: apps.py
+              {{- else if $celery }}
+              - key: celery.py
+                path: celery.py
+              - key: init.py
+                path: init.py
+              {{- end }}
+        {{- end }}
         {{- if $persistence }}
         - name: {{ .Release.Name }}-telego-logs
           persistentVolumeClaim:
@@ -136,3 +237,5 @@ spec:
           configMap:
             name: {{ .Release.Name }}-telego-messages-cm
         {{- end }}
+      securityContext:
+        fsGroup: 33

@@ -73,21 +73,48 @@ telego:
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
-  # The timezone for the task scheduler used by Telego to schedule time-dependent operations.
-  # Default: "Asia/Kuala_Lumpur"
-  # Example:
-  # timezone: "Asia/Kuala_Lumpur"
-  celery_timezone: ""
+  # Telego scheduler configurations.
+  scheduler:
+    # Specifies whether APScheduler should be used by Telego as the task scheduler.
+    # Example:
+    # apscheduler: false
+    apscheduler: true
+    # Specifies whether Celery should be used by Telego as the task scheduler.
+    # Example:
+    # celery: true
+    celery: false
+    # The timezone for the task scheduler used by Telego to schedule time-dependent operations.
+    # Default: "Asia/Kuala_Lumpur"
+    # Example:
+    # timezone: "Asia/Kuala_Lumpur"
+    timezone: ""
+    # The schedule for the task scheduler used by Telego.
+    schedule:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # clean_model: "0,6,12,18"
+      clean_model: ""
+      # The second intervals at which the task scheduler sends scheduled messages.
+      # Default: "2"
+      # Example:
+      # object_scheduler: "3"
+      object_scheduler: ""
   # Telego Telegram configurations.
   telegram:
+    # API endpoint or URL for the Telegram bot.
+    # Default: "https://api.telegram.org/bot"
+    # Example:
+    # api: "https://api.telegram.org/bot"
+    api: ""
     # The Telegram bot token used by Telego to communicate with Telegram.
     # Example:
     # token: "1282813559:RrqoFIuWZwNfMLrx3Jd2mdFJnxrMObgQEvz"
     token: ""
-    # The Telegram bot webhook path used by Telego to communicate with Telegram.
-    # Default: "telegram/webhooks/"
+    # The Telegram bot webhook path used by Telego to communicate with Telegram. Must contain a trailing slash.
+    # Default: "webhook/telegram/"
     # Example:
-    # webhook: "bot/jbbhb73f6s/"
+    # webhook: "telegram/jbbhb73f6s/"
     webhook: ""
   # Telego log persistence configurations.
   persistence:
@@ -168,40 +195,62 @@ resources:
       # The minimum amount of CPU resources required by Telego.
       # Example:
       # cpu: "20m"
-      cpu: "10m"
+      cpu: "50m"
       # The minimum amount of memory required by Telego.
       # Example:
       # memory: "250Mi"
-      memory: "250Mi"
+      memory: "300Mi"
     # The maximum amount of resources allowed for Telego.
     limits:
       # The maximum amount of CPU resources allowed for Telego.
       # Example:
       # cpu: "50m"
-      cpu: "50m"
+      cpu: "200m"
       # The maximum amount of memory allowed for Telego.
       # Example:
       # memory: "450Mi"
       memory: "500Mi"
-  # Redis container resources.
-  redis:
-    # The minimum amount of resources required by Redis to run.
+  # Scheduler container resources.
+  scheduler:
+    # The minimum amount of resources required by Scheduler to run.
     requests:
-      # The minimum amount of CPU resources required by Redis.
+      # The minimum amount of CPU resources required by Scheduler.
       # Example:
       # cpu: "5m"
-      cpu: "5m"
-      # The minimum amount of memory required by Redis.
+      cpu: "10m"
+      # The minimum amount of memory required by Scheduler.
       # Example:
       # memory: "30Mi"
-      memory: "30Mi"
-    # The maximum amount of resources allowed for Redis.
+      memory: "100Mi"
+    # The maximum amount of resources allowed for Scheduler.
     limits:
-      # The maximum amount of CPU resources allowed for Redis.
+      # The maximum amount of CPU resources allowed for Scheduler.
       # Example:
       # cpu: "15m"
-      cpu: "15m"
-      # The maximum amount of memory allowed for Redis.
+      cpu: "20m"
+      # The maximum amount of memory allowed for Scheduler.
       # Example:
       # memory: "50Mi"
-      memory: "60Mi"
+      memory: "200Mi"
+  # Ngrok container resources.
+  ngrok:
+    # The minimum amount of resources required by Ngrok to run.
+    requests:
+      # The minimum amount of CPU resources required by Ngrok.
+      # Example:
+      # cpu: "5m"
+      cpu: "10m"
+      # The minimum amount of memory required by Ngrok.
+      # Example:
+      # memory: "30Mi"
+      memory: "20Mi"
+    # The maximum amount of resources allowed for Ngrok.
+    limits:
+      # The maximum amount of CPU resources allowed for Ngrok.
+      # Example:
+      # cpu: "15m"
+      cpu: "20m"
+      # The maximum amount of memory allowed for Ngrok.
+      # Example:
+      # memory: "50Mi"
+      memory: "50Mi"
