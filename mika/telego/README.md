@@ -204,18 +204,21 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 | image.telego.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Telego container image. Default: `"IfNotPresent"`. |
 | image.telego.registry | string | `""` | The registry where the Telego container image is hosted. Default: `"ghcr.io"`. |
 | image.telego.repository | string | `""` | The name of the repository that contains the Telego container image used. Default: `"irfanhakim-as/telego"`. |
-| image.telego.tag | string | `""` | The tag that specifies the version of the Telego container image used. Default: `"Chart appVersion"`. |
+| image.telego.tag | string | `""` | The tag that specifies the version of the Telego container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | replicaCount | string | `""` | The desired number of running replicas for Telego. Default: `"1"`. |
-| resources.redis.limits.cpu | string | `"15m"` | The maximum amount of CPU resources allowed for Redis. |
-| resources.redis.limits.memory | string | `"60Mi"` | The maximum amount of memory allowed for Redis. |
-| resources.redis.requests.cpu | string | `"5m"` | The minimum amount of CPU resources required by Redis. |
-| resources.redis.requests.memory | string | `"30Mi"` | The minimum amount of memory required by Redis. |
-| resources.telego.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for Telego. |
+| resources.ngrok.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Ngrok. |
+| resources.ngrok.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for Ngrok. |
+| resources.ngrok.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Ngrok. |
+| resources.ngrok.requests.memory | string | `"20Mi"` | The minimum amount of memory required by Ngrok. |
+| resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
+| resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
+| resources.scheduler.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Scheduler. |
+| resources.scheduler.requests.memory | string | `"100Mi"` | The minimum amount of memory required by Scheduler. |
+| resources.telego.limits.cpu | string | `"200m"` | The maximum amount of CPU resources allowed for Telego. |
 | resources.telego.limits.memory | string | `"500Mi"` | The maximum amount of memory allowed for Telego. |
-| resources.telego.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Telego. |
-| resources.telego.requests.memory | string | `"250Mi"` | The minimum amount of memory required by Telego. |
-| telego.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Telego to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
+| resources.telego.requests.cpu | string | `"50m"` | The minimum amount of CPU resources required by Telego. |
+| resources.telego.requests.memory | string | `"300Mi"` | The minimum amount of memory required by Telego. |
 | telego.cloudflared.domain | string | `""` | Registered domain name on Cloudflare used for Telego. |
 | telego.cloudflared.enabled | bool | `false` | Specifies whether Telego should run using a Cloudflare tunnel. |
 | telego.commands | file | `""` | Custom Telegram `commands.py` file for Telego. |
@@ -227,6 +230,12 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 | telego.persistence.enabled | bool | `false` | Specifies whether Telego should persist its logs. |
 | telego.persistence.storage | string | `""` | The amount of persistent storage allocated for Telego logs. Default: `"10Mi"`. |
 | telego.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Telego logs storage. Default: `"longhorn"`. |
+| telego.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Telego as the task scheduler. |
+| telego.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Telego as the task scheduler. |
+| telego.scheduler.schedule.clean_model | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| telego.scheduler.schedule.object_scheduler | string | `""` | The second intervals at which the task scheduler sends scheduled messages. Default: `"2"`. |
+| telego.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Telego to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | telego.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Telego service. |
+| telego.telegram.api | string | `""` | API endpoint or URL for the Telegram bot. Default: `"https://api.telegram.org/bot"`. |
 | telego.telegram.token | string | `""` | The Telegram bot token used by Telego to communicate with Telegram. |
-| telego.telegram.webhook | string | `""` | The Telegram bot webhook path used by Telego to communicate with Telegram. |
+| telego.telegram.webhook | string | `""` | The Telegram bot webhook path used by Telego to communicate with Telegram. Must contain a trailing slash. Default: `"webhook/telegram/"`. |
