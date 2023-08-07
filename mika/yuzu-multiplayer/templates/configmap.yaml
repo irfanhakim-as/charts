@@ -1,0 +1,31 @@
+{{- $api := .Values.yuzu.api | default "https://api.yuzu-emu.org" | toString | quote }}
+{{- $country := .Values.yuzu.country | default "US" | toString }}
+{{- $game_id := .Values.yuzu.game.id | toString | quote }}
+{{- $game_name := .Values.yuzu.game.name | toString }}
+{{- $region := .Values.yuzu.region | toString }}
+{{- $room_desc := .Values.yuzu.room.description }}
+{{- $room_limit := .Values.yuzu.room.limit | default "2" | toString | quote }}
+{{- $room_name := .Values.yuzu.room.name }}
+{{- $mods := .Values.yuzu.mods }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-yuzu-multiplayer-cm
+  labels:
+    {{- include "yuzu-multiplayer.labels" . | nindent 4 }}
+data:
+  web-api-url: {{ $api }}
+  preferred-game-id: {{ $game_id }}
+  preferred-game: {{ $game_name | quote }}
+  {{- if $room_desc }}
+  room-description: {{ $room_desc | toString | quote }}
+  {{- end }}
+  max_members: {{ $room_limit }}
+  {{- if $room_name }}
+  room-name: {{ $room_name }}
+  {{- else }}
+  room-name: {{ printf "%s %s - %s" $country $region $game_name | quote }}
+  {{- end }}
+  {{- if $mods }}
+  enable-yuzu-mods: {{ $mods | toString | quote }}
+  {{- end }}

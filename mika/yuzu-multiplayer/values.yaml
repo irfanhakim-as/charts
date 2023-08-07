@@ -1,0 +1,113 @@
+# Default values for yuzu-multiplayer.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for yuzu-multiplayer.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for yuzu-multiplayer.
+image:
+  # yuzu-multiplayer container image configurations.
+  yuzu:
+    # The registry where the yuzu-multiplayer container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the yuzu-multiplayer container image used.
+    # Default: "yuzuemu/yuzu-multiplayer-dedicated"
+    repository: ""
+    # The tag that specifies the version of the yuzu-multiplayer container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the yuzu-multiplayer container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# yuzu-multiplayer configurations.
+yuzu:
+  # The API endpoint for the Yuzu emulator.
+  # Default: "https://api.yuzu-emu.org"
+  # Example:
+  # api: "https://api.yuzu-emu.org"
+  api: ""
+  # The Alpha-2 code of the country where the multiplayer server is hosted.
+  # Default: "US"
+  # Example:
+  # country: "MY"
+  country: ""
+  # Specify whether to allow Yuzu Community Moderators to moderate on your room.
+  # Example:
+  # mods: true
+  mods: false
+  # The port number that the multiplayer server will be hosted on (0-65535).
+  # Default: 24872
+  # Example:
+  # port: 5000
+  port: ""
+  # The name of the region where the multiplayer server is hosted.
+  # Example:
+  # region: "East"
+  region: ""
+  # The Yuzu Community user token required to host the multiplayer server.
+  # Example:
+  # token: "Q9X52poUs1eWlUcFMLKcYOeNmOyvuPvw4eUXixVpwK8iJK3OXa"
+  token: ""
+  # yuzu-multiplayer game configurations.
+  game:
+    # The Title ID of the preferred game to be hosted on the multiplayer room.
+    # Example:
+    # id: "0100152000022000"
+    id: ""
+    # The name of the preferred game to be hosted on the multiplayer room.
+    # Example:
+    # name: "Mario Kart 8 Deluxe"
+    name: ""
+  # yuzu-multiplayer room configurations.
+  room:
+    # An optional description of the multiplayer room.
+    # Example:
+    # description: "Private room for Mario Kart 8 Deluxe"
+    description: ""
+    # The maximum number of players allowed in the multiplayer room (2-16).
+    # Default: "2"
+    # Example:
+    # limit: "4"
+    limit: ""
+    # The name of the multiplayer room.
+    # Default: "$country $region - $game_name"
+    # Example:
+    # name: "USA East - Mario Kart 8 Deluxe"
+    name: ""
+    # An optional password to restrict access to the multiplayer room.
+    # Example:
+    # password: "yuzu"
+    password: ""
+
+# Resource requirements and limits for yuzu-multiplayer container.
+resources:
+  # The minimum amount of resources required by yuzu-multiplayer to run.
+  requests:
+    # The minimum amount of CPU resources required by yuzu-multiplayer.
+    # Example:
+    # cpu: "10m"
+    cpu: "50m"
+    # The minimum amount of memory required by yuzu-multiplayer.
+    # Example:
+    # memory: "10Mi"
+    memory: "50Mi"
+  # The maximum amount of resources allowed for yuzu-multiplayer.
+  limits:
+    # The maximum amount of CPU resources allowed for yuzu-multiplayer.
+    # Example:
+    # cpu: "250m"
+    cpu: "300m"
+    # The maximum amount of memory allowed for yuzu-multiplayer.
+    # Example:
+    # memory: "250Mi"
+    memory: "300Mi"

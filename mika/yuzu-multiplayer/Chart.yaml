@@ -1,0 +1,20 @@
+apiVersion: v2
+name: yuzu-multiplayer
+description: Quickly stand up new dedicated multiplayer lobbies that will be broadcasted on yuzu.
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - "yuzu"
+  - "multiplayer"
+  - "yuzu-multiplayer-dedicated"
+  - "yuzu Multiplayer Dedicated Lobby"
+home: "https://github.com/yuzu-emu/yuzu-multiplayer-dedicated"
+icon: "https://raw.githubusercontent.com/yuzu-emu/yuzu-assets/master/icons/icon.png"
+sources:
+  - "https://github.com/yuzu-emu/yuzu-multiplayer-dedicated"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
