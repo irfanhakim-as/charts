@@ -1,0 +1,64 @@
+{{- $registry := .Values.image.yuzu.registry | default "docker.io" | toString }}
+{{- $repository := .Values.image.yuzu.repository | default "yuzuemu/yuzu-multiplayer-dedicated" | toString }}
+{{- $tag := .Values.image.yuzu.tag | default .Chart.AppVersion | toString }}
+{{- $pullPolicy := .Values.image.yuzu.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $port := .Values.yuzu.port | default "24872" | toString }}
+{{- $password := .Values.yuzu.room.password }}
+{{- $room_desc := .Values.yuzu.room.description }}
+{{- $mods := .Values.yuzu.mods }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-yuzu-multiplayer
+  labels:
+    {{- include "yuzu-multiplayer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "yuzu-multiplayer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "yuzu-multiplayer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: yuzu-multiplayer
+          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
+          imagePullPolicy: {{ $pullPolicy }}
+          ports:
+            - name: yuzu
+              containerPort: {{ int $port }}
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          args:
+            - "--web-api-url=$(web-api-url)"
+            - "--preferred-game-id=$(preferred-game-id)"
+            - "--preferred-game=$(preferred-game)"
+            {{- if $room_desc }}
+            - "--room-description=$(room-description)"
+            {{- end }}
+            - "--max_members=$(max_members)"
+            - "--room-name=$(room-name)"
+            {{- if $mods }}
+            - "--enable-yuzu-mods=$(enable-yuzu-mods)"
+            {{- end }}
+            {{- if $password }}
+            - "--password=$(password)"
+            {{- end }}
+            - "--token=$(token)"
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-yuzu-multiplayer-cm
+            - secretRef:
+                name: {{ .Release.Name }}-yuzu-multiplayer-secret

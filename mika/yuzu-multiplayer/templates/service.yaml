@@ -1,0 +1,16 @@
+{{- $port := .Values.yuzu.port | default "24872" | toString }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-yuzu-multiplayer-svc
+  labels:
+    {{- include "yuzu-multiplayer.labels" . | nindent 4 }}
+spec:
+  type: NodePort
+  ports:
+    - port: {{ int $port }}
+      targetPort: yuzu
+      protocol: UDP
+      name: {{ .Release.Name }}-yuzu-multiplayer
+  selector:
+    {{- include "yuzu-multiplayer.selectorLabels" . | nindent 4 }}
