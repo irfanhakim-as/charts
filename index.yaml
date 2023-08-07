@@ -1531,4 +1531,30 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-04T15:15:28.957092902Z"
+  yuzu-multiplayer:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2023-08-07T17:44:31.243363271Z"
+    description: Quickly stand up new dedicated multiplayer lobbies that will be broadcasted
+      on yuzu.
+    digest: 3cb7f9abb8742847c64d8567c5fcd709784354d5caea3e939468e816bbcbe18a
+    home: https://github.com/yuzu-emu/yuzu-multiplayer-dedicated
+    icon: https://raw.githubusercontent.com/yuzu-emu/yuzu-assets/master/icons/icon.png
+    keywords:
+    - yuzu
+    - multiplayer
+    - yuzu-multiplayer-dedicated
+    - yuzu Multiplayer Dedicated Lobby
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: yuzu-multiplayer
+    sources:
+    - https://github.com/yuzu-emu/yuzu-multiplayer-dedicated
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-08-07T17:44:31.243928921Z"
