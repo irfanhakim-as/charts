@@ -1,6 +1,4 @@
-{{- $logs_storage := .Values.vpbot.persistence.logs.storage | default "50Mi" | toString | quote }}
-{{- $static_storage := .Values.vpbot.persistence.static.storage | default "50Mi" | toString | quote }}
-{{- $migrations_storage := .Values.vpbot.persistence.migrations.storage | default "50Mi" | toString | quote }}
+{{- $storage := .Values.vpbot.persistence.storage | default "10Mi" | toString | quote }}
 {{- $storage_class_name := .Values.vpbot.persistence.storageClassName | default "longhorn" | toString | quote }}
 {{- $persistence := .Values.vpbot.persistence.enabled }}
 {{- if $persistence }}
@@ -15,34 +13,6 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ $logs_storage }}
-  storageClassName: {{ $storage_class_name }}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ .Release.Name }}-vpbot-static-pvc
-  labels:
-    {{- include "vpbot.labels" . | nindent 4 }}
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: {{ $static_storage }}
-  storageClassName: {{ $storage_class_name }}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ .Release.Name }}-vpbot-migrations-pvc
-  labels:
-    {{- include "vpbot.labels" . | nindent 4 }}
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: {{ $migrations_storage }}
+      storage: {{ $storage }}
   storageClassName: {{ $storage_class_name }}
 {{- end }}
