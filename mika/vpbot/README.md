@@ -138,6 +138,7 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 | vpbot.cloudflared.enabled | bool | `false` | Specifies whether Vpbot should run using a Cloudflare tunnel. |
 | vpbot.commands | file | `""` | Custom Telegram `commands.py` file for Vpbot. |
 | vpbot.debug | string | `""` | Specifies whether Vpbot should run in debug mode. Default: `false`. |
+| vpbot.defaults.location | string | `""` | The default user location code used for personalised services. Default: `"wlp-0"`. |
 | vpbot.messages | file | `""` | Custom Telegram `messages.py` file for Vpbot. |
 | vpbot.name | string | `""` | The name of the Vpbot service. Default: `"Vpbot"`. |
 | vpbot.ngrok.enabled | bool | `false` | Specifies whether Vpbot should run using an Ngrok tunnel. |

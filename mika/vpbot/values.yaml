@@ -73,6 +73,13 @@ vpbot:
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
+  # Vpbot defaults configurations.
+  defaults:
+    # The default user location code used for personalised services.
+    # Default: "wlp-0"
+    # Example:
+    # location: "phg-0"
+    location: ""
   # Vpbot scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by Vpbot as the task scheduler.

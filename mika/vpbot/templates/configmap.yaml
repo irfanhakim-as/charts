@@ -1,5 +1,6 @@
 {{- $name := .Values.vpbot.name | default "Vpbot" | toString | quote }}
 {{- $debug := .Values.vpbot.debug | default "false" | toString | quote }}
+{{- $location := .Values.vpbot.defaults.location | default "wlp-0" | toString | quote }}
 {{- $api := .Values.vpbot.telegram.api | default "https://api.telegram.org/bot" | toString | quote }}
 {{- $webhook := .Values.vpbot.telegram.webhook | default "webhook/telegram/" | toString | quote }}
 {{- $redis_service := printf "redis://%s-vpbot-svc" .Release.Name | quote }}
@@ -22,6 +23,7 @@ metadata:
 data:
   APP_NAME: {{ $name }}
   DEBUG: {{ $debug }}
+  DEFAULT_LOCATION_CODE: {{ $location }}
   TELEGRAM_BOT_API_URL: {{ $api }}
   TELEGRAM_WEBHOOK_PATH: {{ $webhook }}
   NGROK: {{ $ngrok | toString | quote }}
