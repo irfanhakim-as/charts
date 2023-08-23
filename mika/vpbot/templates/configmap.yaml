@@ -1,5 +1,7 @@
 {{- $name := .Values.vpbot.name | default "Vpbot" | toString | quote }}
 {{- $debug := .Values.vpbot.debug | default "false" | toString | quote }}
+{{- $solat_api_id := .Values.vpbot.api.solat.id | default "https://api.myquran.com/v1/sholat/jadwal/%s" | toString | quote }}
+{{- $solat_api_my := .Values.vpbot.api.solat.my | default "https://mpt.i906.my/api/prayer/%s" | toString | quote }}
 {{- $location := .Values.vpbot.defaults.location | default "wlp-0" | toString | quote }}
 {{- $api := .Values.vpbot.telegram.api | default "https://api.telegram.org/bot" | toString | quote }}
 {{- $webhook := .Values.vpbot.telegram.webhook | default "webhook/telegram/" | toString | quote }}
@@ -23,6 +25,8 @@ metadata:
 data:
   APP_NAME: {{ $name }}
   DEBUG: {{ $debug }}
+  PRAY_API_ID_URI: {{ $solat_api_id }}
+  PRAY_API_MY_URI: {{ $solat_api_my }}
   DEFAULT_LOCATION_CODE: {{ $location }}
   TELEGRAM_BOT_API_URL: {{ $api }}
   TELEGRAM_WEBHOOK_PATH: {{ $webhook }}

@@ -80,6 +80,20 @@ vpbot:
     # Example:
     # location: "phg-0"
     location: ""
+  # Vpbot API configurations.
+  api:
+    # Solat module API configurations.
+    solat:
+      # The API endpoint for acquiring Indonesian prayer times.
+      # Default: "https://api.myquran.com/v1/sholat/jadwal/%s"
+      # Example:
+      # id: "https://api.myquran.com/v1/sholat/jadwal/%s"
+      id: ""
+      # The API endpoint for acquiring Malaysian prayer times.
+      # Default: "https://mpt.i906.my/api/prayer/%s"
+      # Example:
+      # my: "https://mpt.i906.my/api/prayer/%s"
+      my: ""
   # Vpbot scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by Vpbot as the task scheduler.

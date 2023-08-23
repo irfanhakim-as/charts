@@ -134,6 +134,8 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 | resources.vpbot.limits.memory | string | `"500Mi"` | The maximum amount of memory allowed for Vpbot. |
 | resources.vpbot.requests.cpu | string | `"50m"` | The minimum amount of CPU resources required by Vpbot. |
 | resources.vpbot.requests.memory | string | `"300Mi"` | The minimum amount of memory required by Vpbot. |
+| vpbot.api.solat.id | string | `""` | The API endpoint for acquiring Indonesian prayer times. Default: `"https://api.myquran.com/v1/sholat/jadwal/%s"`. |
+| vpbot.api.solat.my | string | `""` | The API endpoint for acquiring Malaysian prayer times. Default: `"https://mpt.i906.my/api/prayer/%s"`. |
 | vpbot.cloudflared.domain | string | `""` | Registered domain name on Cloudflare used for Vpbot. |
 | vpbot.cloudflared.enabled | bool | `false` | Specifies whether Vpbot should run using a Cloudflare tunnel. |
 | vpbot.commands | file | `""` | Custom Telegram `commands.py` file for Vpbot. |
