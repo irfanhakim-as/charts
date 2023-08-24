@@ -10,6 +10,8 @@
 {{- $domain := .Values.vpbot.cloudflared.domain | default "localhost" | toString }}
 {{- $clean_model := .Values.vpbot.scheduler.schedule.clean_model | default "0" | toString | quote }}
 {{- $object_scheduler := .Values.vpbot.scheduler.schedule.object_scheduler | default "2" | toString | quote }}
+{{- $solat_clean_db := .Values.vpbot.scheduler.schedule.solat_clean_db | default "0" | toString | quote }}
+{{- $solat_notification := .Values.vpbot.scheduler.schedule.solat_notification | default "1" | toString | quote }}
 {{- $apscheduler := .Values.vpbot.scheduler.apscheduler }}
 {{- $celery := .Values.vpbot.scheduler.celery }}
 {{- $cloudflared := .Values.vpbot.cloudflared.enabled }}
@@ -97,7 +99,7 @@ metadata:
 data:
   tasks.py: |-
     {{- if $apscheduler }}
-      {{- include "vpbot.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
+      {{- include "vpbot.apscheduler-tasks-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | replace "SOLAT_CLEAN_DB_HOURS" $solat_clean_db | replace "SOLAT_NOTIF_MINUTES" $solat_notification | nindent 4 }}
     {{- else if $celery }}
       {{- include "vpbot.celery-tasks-py" . | nindent 4 }}
     {{- end }}
