@@ -108,7 +108,7 @@ data:
     {{- include "vpbot.apscheduler-apps-py" . | nindent 4 }}
   {{- else if $celery }}
   celery.py: |-
-    {{- include "vpbot.celery-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | nindent 4 }}
+    {{- include "vpbot.celery-py" . | replace "CLEAN_MODEL_HOURS" $clean_model | replace "OBJECT_SCHEDULER_SECONDS" $object_scheduler | replace "SOLAT_CLEAN_DB_HOURS" $solat_clean_db | replace "SOLAT_NOTIF_MINUTES" $solat_notification | nindent 4 }}
   init.py: |-
     {{- include "vpbot.celery-init-py" . | nindent 4 }}
   {{- end }}

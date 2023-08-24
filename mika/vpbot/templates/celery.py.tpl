@@ -19,15 +19,25 @@ object_scheduler_seconds = int(re.sub(r"\D", "", OBJECT_SCHEDULER_SECONDS))
 
 
 app.conf.beat_schedule = {
-    # clean model
-    "clean_model" : {
-        "task" : "base.tasks.clean_model_task",
+    # clean telegram model
+    "telegram_clean_model" : {
+        "task" : "base.tasks.telegram_clean_model_task",
         "schedule" : crontab(hour=CLEAN_MODEL_HOURS, minute="0"),
     },
     # check for any objects that need to be sent
     "object_scheduler" : {
         "task" : "base.tasks.object_scheduler_task",
         "schedule" : timedelta(seconds=object_scheduler_seconds),
+    },
+    # clean solat db
+    "solat_clean_db" : {
+        "task" : "base.tasks.solat_clean_db_task",
+        "schedule" : crontab(hour=SOLAT_CLEAN_DB_HOURS, minute="0"),
+    },
+    # send prayer time notifications
+    "solat_notify_solat_times" : {
+        "task" : "base.tasks.solat_notify_solat_times_task",
+        "schedule" : crontab(minute="*/" + SOLAT_NOTIF_MINUTES),
     },
 }
 

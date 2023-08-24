@@ -39,17 +39,32 @@ Celery /base/base/tasks.py template
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from base.scheduler import object_scheduler
-from lib.telegram import clean_model
+from lib import (
+    solat,
+    telegram,
+)
 
 
-# clean model
+# clean telegram model
 @shared_task
-def clean_model_task():
-    clean_model()
+def telegram_clean_model_task():
+    telegram.clean_model()
 
 
 # check for any objects that need to be sent
 @shared_task
 def object_scheduler_task():
     object_scheduler()
+
+
+# clean solat db
+@shared_task
+def solat_clean_db_task():
+    solat.clean_db()
+
+
+# send prayer time notifications
+@shared_task
+def solat_notify_solat_times_task():
+    solat.notify_solat_times()
 {{- end }}
