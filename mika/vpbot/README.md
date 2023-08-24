@@ -152,6 +152,8 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 | vpbot.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Vpbot as the task scheduler. |
 | vpbot.scheduler.schedule.clean_model | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
 | vpbot.scheduler.schedule.object_scheduler | string | `""` | The second intervals at which the task scheduler sends scheduled messages. Default: `"2"`. |
+| vpbot.scheduler.schedule.solat_clean_db | string | `""` | The hours at which the task scheduler cleans up the solat module database. Default: `"0"`. |
+| vpbot.scheduler.schedule.solat_notification | string | `""` | The minute intervals at which the task scheduler sends prayer time notifications. Default: `"1"`. |
 | vpbot.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Vpbot to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | vpbot.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Vpbot service. |
 | vpbot.telegram.api | string | `""` | API endpoint or URL for the Telegram bot. Default: `"https://api.telegram.org/bot"`. |

@@ -121,6 +121,16 @@ vpbot:
       # Example:
       # object_scheduler: "3"
       object_scheduler: ""
+      # The hours at which the task scheduler cleans up the solat module database.
+      # Default: "0"
+      # Example:
+      # solat_clean_db: "0,6,12,18"
+      solat_clean_db: ""
+      # The minute intervals at which the task scheduler sends prayer time notifications.
+      # Default: "1"
+      # Example:
+      # solat_notification: "3"
+      solat_notification: ""
   # Vpbot Telegram configurations.
   telegram:
     # API endpoint or URL for the Telegram bot.
