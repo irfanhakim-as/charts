@@ -2,8 +2,8 @@ apiVersion: v2
 name: telego
 description: Telego is an easy to use Telegram bot framework built on top of Django.
 type: application
-version: 0.3.0
-appVersion: "0.1.0-stable-r1"
+version: 0.4.0
+appVersion: "0.2.0-stable-r1"
 keywords:
   - "Telego"
   - "Telegram"
