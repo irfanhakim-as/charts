@@ -1,4 +1,4 @@
-# [`vpbot`](https://github.com/irfanhakim-as/quarantine-bot) 🔒
+# [`vpbot`](https://github.com/irfanhakim-as/vpbot) 🔒
 
 ## Prerequisites
 
@@ -69,12 +69,21 @@ Verify that your chart has been installed. Replace `$namespace` and `$release_na
 helm ls --namespace $namespace | grep "$release_name"
 ```
 
-## How to upgrade
+### Add custom files
 
-After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+To implement additional Telegram commands, create a custom `commands.py` file with a `Commands` class inheriting from `lib.telegram.BaseCommand`. Refer to `/base/lib/commands.py` from the container for more information.
+
+To add additional Telegram messages, create a custom `messages.py` file with both `MESSAGES` and `ICONS` dict. Refer to `/base/lib/messages.py` from the container for more information.
+
+Upgrade (or install) the chart while adding the `commands.py` and `messages.py files with the `--set-file` flag.
 
 ```sh
-helm upgrade $release_name mika/vpbot --namespace $namespace --values values.yaml --wait
+helm upgrade --install $release_name mika/vpbot \
+--namespace $namespace \
+--values values.yaml \
+--set-file vpbot.commands=commands.py \
+--set-file vpbot.messages=messages.py \
+--wait
 ```
 
 ## How to uninstall
@@ -110,33 +119,43 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 | image.vpbot.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Vpbot container image. Default: `"IfNotPresent"`. |
 | image.vpbot.registry | string | `""` | The registry where the Vpbot container image is hosted. Default: `"ghcr.io"`. |
 | image.vpbot.repository | string | `""` | The name of the repository that contains the Vpbot container image used. Default: `"irfanhakim-as/vpbot"`. |
-| image.vpbot.tag | string | `""` | The tag that specifies the version of the Vpbot container image used. Default: `"Chart appVersion"`. |
+| image.vpbot.tag | string | `""` | The tag that specifies the version of the Vpbot container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | replicaCount | string | `""` | The desired number of running replicas for Vpbot. Default: `"1"`. |
-| resources.redis.limits.cpu | string | `"15m"` | The maximum amount of CPU resources allowed for Redis. |
-| resources.redis.limits.memory | string | `"60Mi"` | The maximum amount of memory allowed for Redis. |
-| resources.redis.requests.cpu | string | `"5m"` | The minimum amount of CPU resources required by Redis. |
-| resources.redis.requests.memory | string | `"30Mi"` | The minimum amount of memory required by Redis. |
-| resources.vpbot.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for Vpbot. |
+| resources.ngrok.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Ngrok. |
+| resources.ngrok.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for Ngrok. |
+| resources.ngrok.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Ngrok. |
+| resources.ngrok.requests.memory | string | `"20Mi"` | The minimum amount of memory required by Ngrok. |
+| resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
+| resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
+| resources.scheduler.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Scheduler. |
+| resources.scheduler.requests.memory | string | `"100Mi"` | The minimum amount of memory required by Scheduler. |
+| resources.vpbot.limits.cpu | string | `"200m"` | The maximum amount of CPU resources allowed for Vpbot. |
 | resources.vpbot.limits.memory | string | `"500Mi"` | The maximum amount of memory allowed for Vpbot. |
-| resources.vpbot.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Vpbot. |
-| resources.vpbot.requests.memory | string | `"250Mi"` | The minimum amount of memory required by Vpbot. |
-| telegram.admin_id | string | `""` | The unique Telegram chat ID of the Vpbot administrator. |
-| telegram.devel_id | string | `""` | The unique Telegram chat ID of the Vpbot developer. |
-| telegram.token | string | `""` | The Telegram bot token used by Vpbot to communicate with Telegram. |
-| telegram.webhook | string | `""` | The Telegram bot webhook path used by Vpbot to communicate with Telegram. Default: `"telegram/webhooks/"`. |
-| vpbot.celery_timezone | string | `""` | The timezone for the task scheduler used by Vpbot to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
+| resources.vpbot.requests.cpu | string | `"50m"` | The minimum amount of CPU resources required by Vpbot. |
+| resources.vpbot.requests.memory | string | `"300Mi"` | The minimum amount of memory required by Vpbot. |
+| vpbot.api.solat.id | string | `""` | The API endpoint for acquiring Indonesian prayer times. Default: `"https://api.myquran.com/v1/sholat/jadwal/%s"`. |
+| vpbot.api.solat.my | string | `""` | The API endpoint for acquiring Malaysian prayer times. Default: `"https://mpt.i906.my/api/prayer/%s"`. |
 | vpbot.cloudflared.domain | string | `""` | Registered domain name on Cloudflare used for Vpbot. |
 | vpbot.cloudflared.enabled | bool | `false` | Specifies whether Vpbot should run using a Cloudflare tunnel. |
+| vpbot.commands | file | `""` | Custom Telegram `commands.py` file for Vpbot. |
 | vpbot.debug | string | `""` | Specifies whether Vpbot should run in debug mode. Default: `false`. |
-| vpbot.log_size_limit | string | `""` | The log file size limit in megabytes. Default: `"4"`. |
+| vpbot.defaults.location | string | `""` | The default user location code used for personalised services. Default: `"wlp-0"`. |
+| vpbot.messages | file | `""` | Custom Telegram `messages.py` file for Vpbot. |
 | vpbot.name | string | `""` | The name of the Vpbot service. Default: `"Vpbot"`. |
 | vpbot.ngrok.enabled | bool | `false` | Specifies whether Vpbot should run using an Ngrok tunnel. |
 | vpbot.ngrok.token | string | `""` | Ngrok authentication token. |
-| vpbot.persistence.enabled | bool | `false` | Specifies whether Vpbot should persist its storage. |
-| vpbot.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for Vpbot logs. Default: `"50Mi"`. |
-| vpbot.persistence.migrations.storage | string | `""` | The amount of persistent storage allocated for Vpbot migration files. Default: `"50Mi"`. |
-| vpbot.persistence.static.storage | string | `""` | The amount of persistent storage allocated for Vpbot static files. Default: `"50Mi"`. |
-| vpbot.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Vpbot storage. Default: `"longhorn"`. |
+| vpbot.persistence.enabled | bool | `false` | Specifies whether Vpbot should persist its logs. |
+| vpbot.persistence.storage | string | `""` | The amount of persistent storage allocated for Vpbot logs. Default: `"10Mi"`. |
+| vpbot.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Vpbot logs storage. Default: `"longhorn"`. |
+| vpbot.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Vpbot as the task scheduler. |
+| vpbot.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Vpbot as the task scheduler. |
+| vpbot.scheduler.schedule.clean_model | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| vpbot.scheduler.schedule.object_scheduler | string | `""` | The second intervals at which the task scheduler sends scheduled messages. Default: `"2"`. |
+| vpbot.scheduler.schedule.solat_clean_db | string | `""` | The hours at which the task scheduler cleans up the solat module database. Default: `"0"`. |
+| vpbot.scheduler.schedule.solat_notification | string | `""` | The minute intervals at which the task scheduler sends prayer time notifications. Default: `"1"`. |
+| vpbot.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Vpbot to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | vpbot.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Vpbot service. |
-| vpbot.user_pass | string | `""` | The default user password for users created by Vpbot. |
+| vpbot.telegram.api | string | `""` | API endpoint or URL for the Telegram bot. Default: `"https://api.telegram.org/bot"`. |
+| vpbot.telegram.token | string | `""` | The Telegram bot token used by Vpbot to communicate with Telegram. |
+| vpbot.telegram.webhook | string | `""` | The Telegram bot webhook path used by Vpbot to communicate with Telegram. Must contain a trailing slash. Default: `"webhook/telegram/"`. |

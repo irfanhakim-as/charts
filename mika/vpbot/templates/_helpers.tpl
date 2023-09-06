@@ -60,37 +60,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Apache site-config.conf template
-*/}}
-{{- define "vpbot.site-config-conf" -}}
-<VirtualHost *:80>
-    ServerName DOMAIN:443
-    UseCanonicalName On
-    ServerAdmin support@mikahomelab.com
-    DocumentRoot /quarantine-bot
-    WSGIScriptAlias / /quarantine-bot/quarantine_bot/wsgi.py
-    WSGIDaemonProcess DOMAIN python-path=/quarantine-bot
-    WSGIProcessGroup DOMAIN
-
-    <Directory /quarantine-bot/quarantine_bot>
-        <Files wsgi.py>
-            Require all granted
-        </Files>
-    </Directory>
-
-    Alias /static /static
-    <Directory /static>
-        Require all granted
-    </Directory>
-
-    Alias /media /quarantine-bot/media
-    <Directory /quarantine-bot/media>
-        Require all granted
-    </Directory>
-
-    ErrorLog /quarantine-bot/logs/apache.error.log
-    CustomLog /quarantine-bot/logs/apache.access.log combined
-</VirtualHost>
-{{- end }}

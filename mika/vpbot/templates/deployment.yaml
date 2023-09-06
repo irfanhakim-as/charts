@@ -1,8 +1,8 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $vpbot_registry := .Values.image.vpbot.registry | default "ghcr.io" | toString }}
-{{- $vpbot_repository := .Values.image.vpbot.repository | default "irfanhakim-as/quarantine-bot" | toString }}
-{{- $vpbot_tag := .Values.image.vpbot.tag | default .Chart.AppVersion | toString }}
-{{- $vpbot_pullPolicy := .Values.image.vpbot.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $telego_registry := .Values.image.vpbot.registry | default "ghcr.io" | toString }}
+{{- $telego_repository := .Values.image.vpbot.repository | default "irfanhakim-as/vpbot" | toString }}
+{{- $telego_tag := .Values.image.vpbot.tag | default .Chart.AppVersion | toString }}
+{{- $telego_pullPolicy := .Values.image.vpbot.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
 {{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
@@ -11,9 +11,13 @@
 {{- $ngrok_repository := .Values.image.ngrok.repository | default "wernight/ngrok" | toString }}
 {{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
 {{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $apscheduler := .Values.vpbot.scheduler.apscheduler }}
+{{- $celery := .Values.vpbot.scheduler.celery }}
 {{- $cloudflared := .Values.vpbot.cloudflared.enabled }}
 {{- $ngrok := .Values.vpbot.ngrok.enabled }}
 {{- $persistence := .Values.vpbot.persistence.enabled }}
+{{- $commands := .Values.vpbot.commands }}
+{{- $messages := .Values.vpbot.messages }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,6 +34,7 @@ spec:
       {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
+        "helm.sh/hook-weight": "1"
       {{- end }}
       labels:
         {{- include "vpbot.selectorLabels" . | nindent 8 }}
@@ -40,42 +45,102 @@ spec:
       {{- end }}
       containers:
         - name: vpbot
-          image: {{ printf "%s/%s:%s" $vpbot_registry $vpbot_repository $vpbot_tag | quote }}
-          imagePullPolicy: {{ $vpbot_pullPolicy }}
+          image: {{ printf "%s/%s:%s" $telego_registry $telego_repository $telego_tag | quote }}
+          imagePullPolicy: {{ $telego_pullPolicy }}
           ports:
             - name: vpbot
               containerPort: 80
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.vpbot | nindent 12 }}
-          {{- if $cloudflared }}
-          env:
-            - name: ALLOWED_HOSTS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-vpbot-cm
-                  key: DOMAIN
-          {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-vpbot-cm
             - secretRef:
                 name: {{ .Release.Name }}-vpbot-secret
-            - secretRef:
-                name: {{ .Release.Name }}-vpbot-postgres-secret
           volumeMounts:
             - name: {{ .Release.Name }}-vpbot-site-config
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            {{- if $persistence }}
-            - name: {{ .Release.Name }}-vpbot-static
-              mountPath: /static
-            - name: {{ .Release.Name }}-vpbot-logs
-              mountPath: /quarantine-bot/logs
-            - name: {{ .Release.Name }}-vpbot-migrations
-              mountPath: /quarantine-bot/quarantine_bot/migrations
+            {{- if $celery }}
+            - name: {{ .Release.Name }}-vpbot-default-celery-config
+              mountPath: /etc/default/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-vpbot-initd-celery-config
+              mountPath: /etc/init.d/celerybeat
+              subPath: celerybeat
+            - name: {{ .Release.Name }}-vpbot-initd-celery-config
+              mountPath: /etc/init.d/celeryd
+              subPath: celeryd
+            - name: {{ .Release.Name }}-vpbot-scheduler-config
+              mountPath: /base/base/celery.py
+              subPath: celery.py
+            - name: {{ .Release.Name }}-vpbot-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            - name: {{ .Release.Name }}-vpbot-scheduler-config
+              mountPath: /base/base/__init__.py
+              subPath: init.py
             {{- end }}
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-vpbot-logs
+              mountPath: /vpbot/logs
+            {{- end }}
+            {{- if $commands }}
+            - name: {{ .Release.Name }}-vpbot-commands-cm
+              mountPath: /base/lib/commands.py
+              subPath: commands.py
+              readOnly: true
+            {{- end }}
+            {{- if $messages }}
+            - name: {{ .Release.Name }}-vpbot-messages-cm
+              mountPath: /base/lib/messages.py
+              subPath: messages.py
+              readOnly: true
+            {{- end }}
+        {{- if $apscheduler }}
+        - name: apscheduler
+          image: {{ printf "%s/%s:%s" $telego_registry $telego_repository $telego_tag | quote }}
+          imagePullPolicy: {{ $telego_pullPolicy }}
+          ports:
+            - name: vpbot
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-vpbot-cm
+            - secretRef:
+                name: {{ .Release.Name }}-vpbot-secret
+          volumeMounts:
+            - name: {{ .Release.Name }}-vpbot-apscheduler-config
+              mountPath: /entrypoint.sh
+              subPath: entrypoint.sh
+            - name: {{ .Release.Name }}-vpbot-scheduler-config
+              mountPath: /base/base/apps.py
+              subPath: apps.py
+            - name: {{ .Release.Name }}-vpbot-scheduler-config
+              mountPath: /base/base/tasks.py
+              subPath: tasks.py
+            {{- if $persistence }}
+            - name: {{ .Release.Name }}-vpbot-logs
+              mountPath: /var/log/apache2
+            {{- end }}
+            {{- if $commands }}
+            - name: {{ .Release.Name }}-vpbot-commands-cm
+              mountPath: /base/lib/commands.py
+              subPath: commands.py
+              readOnly: true
+            {{- end }}
+            {{- if $messages }}
+            - name: {{ .Release.Name }}-vpbot-messages-cm
+              mountPath: /base/lib/messages.py
+              subPath: messages.py
+              readOnly: true
+            {{- end }}
+        {{- else if $celery }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
@@ -84,7 +149,8 @@ spec:
               containerPort: 6379
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources.redis | nindent 12 }}
+            {{- toYaml .Values.resources.scheduler | nindent 12 }}
+        {{- end }}
         {{- if $ngrok }}
         - name: ngrok
           image: {{ printf "%s/%s:%s" $ngrok_registry $ngrok_repository $ngrok_tag | quote }}
@@ -99,6 +165,8 @@ spec:
             - name: ngrok
               containerPort: 4040
               protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.ngrok | nindent 12 }}
           env:
             - name: NGROK_AUTH
               valueFrom:
@@ -110,14 +178,64 @@ spec:
         - name: {{ .Release.Name }}-vpbot-site-config
           configMap:
             name: {{ .Release.Name }}-vpbot-site-config
+        {{- if $apscheduler }}
+        - name: {{ .Release.Name }}-vpbot-apscheduler-config
+          configMap:
+            name: {{ .Release.Name }}-vpbot-apscheduler-config
+            defaultMode: 0755
+            items:
+              - key: entrypoint.sh
+                path: entrypoint.sh
+        {{- else if $celery }}
+        - name: {{ .Release.Name }}-vpbot-default-celery-config
+          configMap:
+            name: {{ .Release.Name }}-vpbot-default-celery-config
+            defaultMode: 0640
+            items:
+              - key: celeryd
+                path: celeryd
+        - name: {{ .Release.Name }}-vpbot-initd-celery-config
+          configMap:
+            name: {{ .Release.Name }}-vpbot-initd-celery-config
+            defaultMode: 0755
+            items:
+              - key: celerybeat
+                path: celerybeat
+              - key: celeryd
+                path: celeryd
+        {{- end }}
+        {{- if or $apscheduler $celery }}
+        - name: {{ .Release.Name }}-vpbot-scheduler-config
+          configMap:
+            name: {{ .Release.Name }}-vpbot-scheduler-config
+            defaultMode: 0775
+            items:
+              - key: tasks.py
+                path: tasks.py
+              {{- if $apscheduler }}
+              - key: apps.py
+                path: apps.py
+              {{- else if $celery }}
+              - key: celery.py
+                path: celery.py
+              - key: init.py
+                path: init.py
+              {{- end }}
+        {{- end }}
         {{- if $persistence }}
-        - name: {{ .Release.Name }}-vpbot-static
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-vpbot-static-pvc
         - name: {{ .Release.Name }}-vpbot-logs
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-vpbot-logs-pvc
-        - name: {{ .Release.Name }}-vpbot-migrations
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-vpbot-migrations-pvc
         {{- end }}
+        {{- if $commands }}
+        - name: {{ .Release.Name }}-vpbot-commands-cm
+          configMap:
+            name: {{ .Release.Name }}-vpbot-commands-cm
+        {{- end }}
+        {{- if $messages }}
+        - name: {{ .Release.Name }}-vpbot-messages-cm
+          configMap:
+            name: {{ .Release.Name }}-vpbot-messages-cm
+        {{- end }}
+      securityContext:
+        fsGroup: 33

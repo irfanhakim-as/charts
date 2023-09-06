@@ -14,7 +14,7 @@ image:
     # Default: "ghcr.io"
     registry: ""
     # The name of the repository that contains the Vpbot container image used.
-    # Default: "irfanhakim-as/quarantine-bot"
+    # Default: "irfanhakim-as/vpbot"
     repository: ""
     # The tag that specifies the version of the Vpbot container image used.
     # Default: Chart appVersion
@@ -69,56 +69,100 @@ vpbot:
   # Example:
   # debug: true
   debug: ""
-  # The log file size limit in megabytes.
-  # Default: "4"
-  # Example:
-  # log_size_limit: "3"
-  log_size_limit: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the Vpbot service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
-  # The default user password for users created by Vpbot.
-  # Example:
-  # user_pass: "password"
-  user_pass: ""
-  # The timezone for the task scheduler used by Vpbot to schedule time-dependent operations.
-  # Default: "Asia/Kuala_Lumpur"
-  # Example:
-  # timezone: "Asia/Kuala_Lumpur"
-  celery_timezone: ""
-  # Vpbot storage persistence configurations.
+  # Vpbot defaults configurations.
+  defaults:
+    # The default user location code used for personalised services.
+    # Default: "wlp-0"
+    # Example:
+    # location: "phg-0"
+    location: ""
+  # Vpbot API configurations.
+  api:
+    # Solat module API configurations.
+    solat:
+      # The API endpoint for acquiring Indonesian prayer times.
+      # Default: "https://api.myquran.com/v1/sholat/jadwal/%s"
+      # Example:
+      # id: "https://api.myquran.com/v1/sholat/jadwal/%s"
+      id: ""
+      # The API endpoint for acquiring Malaysian prayer times.
+      # Default: "https://mpt.i906.my/api/prayer/%s"
+      # Example:
+      # my: "https://mpt.i906.my/api/prayer/%s"
+      my: ""
+  # Vpbot scheduler configurations.
+  scheduler:
+    # Specifies whether APScheduler should be used by Vpbot as the task scheduler.
+    # Example:
+    # apscheduler: false
+    apscheduler: true
+    # Specifies whether Celery should be used by Vpbot as the task scheduler.
+    # Example:
+    # celery: true
+    celery: false
+    # The timezone for the task scheduler used by Vpbot to schedule time-dependent operations.
+    # Default: "Asia/Kuala_Lumpur"
+    # Example:
+    # timezone: "Asia/Kuala_Lumpur"
+    timezone: ""
+    # The schedule for the task scheduler used by Vpbot.
+    schedule:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # clean_model: "0,6,12,18"
+      clean_model: ""
+      # The second intervals at which the task scheduler sends scheduled messages.
+      # Default: "2"
+      # Example:
+      # object_scheduler: "3"
+      object_scheduler: ""
+      # The hours at which the task scheduler cleans up the solat module database.
+      # Default: "0"
+      # Example:
+      # solat_clean_db: "0,6,12,18"
+      solat_clean_db: ""
+      # The minute intervals at which the task scheduler sends prayer time notifications.
+      # Default: "1"
+      # Example:
+      # solat_notification: "3"
+      solat_notification: ""
+  # Vpbot Telegram configurations.
+  telegram:
+    # API endpoint or URL for the Telegram bot.
+    # Default: "https://api.telegram.org/bot"
+    # Example:
+    # api: "https://api.telegram.org/bot"
+    api: ""
+    # The Telegram bot token used by Vpbot to communicate with Telegram.
+    # Example:
+    # token: "1282813559:RrqoFIuWZwNfMLrx3Jd2mdFJnxrMObgQEvz"
+    token: ""
+    # The Telegram bot webhook path used by Vpbot to communicate with Telegram. Must contain a trailing slash.
+    # Default: "webhook/telegram/"
+    # Example:
+    # webhook: "telegram/jbbhb73f6s/"
+    webhook: ""
+  # Vpbot log persistence configurations.
   persistence:
-    # Specifies whether Vpbot should persist its storage.
+    # Specifies whether Vpbot should persist its logs.
     # Example:
     # enabled: true
     enabled: false
-    # The storage class name used for dynamically provisioning a persistent volume for the Vpbot storage.
+    # The amount of persistent storage allocated for Vpbot logs.
+    # Default: "10Mi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the Vpbot logs storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
     storageClassName: ""
-    # Vpbot logs persistence configurations.
-    logs:
-      # The amount of persistent storage allocated for Vpbot logs.
-      # Default: "50Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Vpbot static files persistence configurations.
-    static:
-      # The amount of persistent storage allocated for Vpbot static files.
-      # Default: "50Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Vpbot migration files persistence configurations.
-    migrations:
-      # The amount of persistent storage allocated for Vpbot migration files.
-      # Default: "50Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
   # Vpbot Ngrok configurations.
   ngrok:
     # Specifies whether Vpbot should run using an Ngrok tunnel.
@@ -139,26 +183,10 @@ vpbot:
     # Example:
     # domain: "vpbot.example.com"
     domain: ""
-
-# Vpbot Telegram configurations.
-telegram:
-  # The Telegram bot webhook path used by Vpbot to communicate with Telegram.
-  # Default: "telegram/webhooks/"
-  # Example:
-  # webhook: "bot/jbbhb73f6s/"
-  webhook: ""
-  # The Telegram bot token used by Vpbot to communicate with Telegram.
-  # Example:
-  # token: "1282813559:RrqoFIuWZwNfMLrx3Jd2mdFJnxrMObgQEvz"
-  token: ""
-  # The unique Telegram chat ID of the Vpbot administrator.
-  # Example:
-  # admin_id: "6649538406"
-  admin_id: ""
-  # The unique Telegram chat ID of the Vpbot developer.
-  # Example:
-  # devel_id: "4637142749"
-  devel_id: ""
+  # Custom Telegram commands.py file for Vpbot.
+  commands: ""
+  # Custom Telegram messages.py file for Vpbot.
+  messages: ""
 
 # Database configurations.
 db:
@@ -198,40 +226,62 @@ resources:
       # The minimum amount of CPU resources required by Vpbot.
       # Example:
       # cpu: "20m"
-      cpu: "10m"
+      cpu: "50m"
       # The minimum amount of memory required by Vpbot.
       # Example:
       # memory: "250Mi"
-      memory: "250Mi"
+      memory: "300Mi"
     # The maximum amount of resources allowed for Vpbot.
     limits:
       # The maximum amount of CPU resources allowed for Vpbot.
       # Example:
       # cpu: "50m"
-      cpu: "50m"
+      cpu: "200m"
       # The maximum amount of memory allowed for Vpbot.
       # Example:
       # memory: "450Mi"
       memory: "500Mi"
-  # Redis container resources.
-  redis:
-    # The minimum amount of resources required by Redis to run.
+  # Scheduler container resources.
+  scheduler:
+    # The minimum amount of resources required by Scheduler to run.
     requests:
-      # The minimum amount of CPU resources required by Redis.
+      # The minimum amount of CPU resources required by Scheduler.
       # Example:
       # cpu: "5m"
-      cpu: "5m"
-      # The minimum amount of memory required by Redis.
+      cpu: "10m"
+      # The minimum amount of memory required by Scheduler.
       # Example:
       # memory: "30Mi"
-      memory: "30Mi"
-    # The maximum amount of resources allowed for Redis.
+      memory: "100Mi"
+    # The maximum amount of resources allowed for Scheduler.
     limits:
-      # The maximum amount of CPU resources allowed for Redis.
+      # The maximum amount of CPU resources allowed for Scheduler.
       # Example:
       # cpu: "15m"
-      cpu: "15m"
-      # The maximum amount of memory allowed for Redis.
+      cpu: "20m"
+      # The maximum amount of memory allowed for Scheduler.
       # Example:
       # memory: "50Mi"
-      memory: "60Mi"
+      memory: "200Mi"
+  # Ngrok container resources.
+  ngrok:
+    # The minimum amount of resources required by Ngrok to run.
+    requests:
+      # The minimum amount of CPU resources required by Ngrok.
+      # Example:
+      # cpu: "5m"
+      cpu: "10m"
+      # The minimum amount of memory required by Ngrok.
+      # Example:
+      # memory: "30Mi"
+      memory: "20Mi"
+    # The maximum amount of resources allowed for Ngrok.
+    limits:
+      # The maximum amount of CPU resources allowed for Ngrok.
+      # Example:
+      # cpu: "15m"
+      cpu: "20m"
+      # The maximum amount of memory allowed for Ngrok.
+      # Example:
+      # memory: "50Mi"
+      memory: "50Mi"

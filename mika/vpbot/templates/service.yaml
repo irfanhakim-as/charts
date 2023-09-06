@@ -1,3 +1,5 @@
+{{- $celery := .Values.vpbot.scheduler.celery }}
+{{- $ngrok := .Values.vpbot.ngrok.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,9 +13,17 @@ spec:
       targetPort: vpbot
       protocol: TCP
       name: {{ .Release.Name }}-vpbot
+    {{- if $celery }}
     - port: 6379
       targetPort: redis
       protocol: TCP
       name: {{ .Release.Name }}-redis
+    {{- end }}
+    {{- if $ngrok }}
+    - port: 4040
+      targetPort: ngrok
+      protocol: TCP
+      name: {{ .Release.Name }}-ngrok
+    {{- end }}
   selector:
     {{- include "vpbot.selectorLabels" . | nindent 4 }}
