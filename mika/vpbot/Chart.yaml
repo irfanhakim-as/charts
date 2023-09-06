@@ -3,7 +3,7 @@ name: vpbot
 description: Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more.
 type: application
 version: 0.4.0
-appVersion: "0.1.0-stable-r1"
+appVersion: "0.1.0-preview-r4-1"
 keywords:
   - "Vpbot"
   - "Telegram"
