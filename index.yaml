@@ -758,6 +758,30 @@ entries:
     version: 0.1.0
   rizz:
   - apiVersion: v2
+    appVersion: 0.0.1-stable-r2
+    created: "2023-09-06T18:51:40.665534286Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: d6db093786b02f32fc2182f7e7f55f0a2bfa0e196df08176a4120fc470d9a13e
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.6/rizz-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
     appVersion: 0.0.1-stable-r1
     created: "2023-08-04T15:15:28.956660002Z"
     description: Rizz is a simple web application that tracks and posts content from
@@ -854,6 +878,29 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.2/rizz-0.0.2.tgz
     version: 0.0.2
   telego:
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r1
+    created: "2023-09-06T18:51:40.807926269Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 4264000e2a04616cd0015e3aba97e6641c9605b7f8b71fb194085772f13b80f3
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.4.0/telego-0.4.0.tgz
+    version: 0.4.0
   - apiVersion: v2
     appVersion: 0.1.0-stable-r1
     created: "2023-08-04T04:42:52.805262753Z"
@@ -1125,6 +1172,30 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.0/telego-0.1.0.tgz
     version: 0.1.0
   vpbot:
+  - apiVersion: v2
+    appVersion: 0.1.0-preview-r4-1
+    created: "2023-09-06T18:51:40.949918846Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 096a337de30fbe4ce01e7c00ad17e989899569ade574a5d8c7333531d0709aec
+    home: https://github.com/irfanhakim-as/vpbot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - Vpbot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/vpbot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.4.0/vpbot-0.4.0.tgz
+    version: 0.4.0
   - apiVersion: v2
     appVersion: 1.5.6-stable
     created: "2023-07-20T09:07:24.547726937Z"
@@ -1557,4 +1628,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-07T17:44:31.243928921Z"
+generated: "2023-09-06T18:51:40.95017895Z"
