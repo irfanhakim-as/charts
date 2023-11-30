@@ -3,6 +3,28 @@ entries:
   clog:
   - apiVersion: v2
     appVersion: 0.0.1-stable
+    created: "2023-11-30T18:33:05.383439559Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 1a8b93804200cd50a9da616b53d85d28d99e6ad271229613e972666ebf46e58d
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    - blog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.2.2/clog-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
     created: "2023-07-20T09:32:53.620126282Z"
     description: Creative blog, Career blog, Coin blog, you name it.
     digest: 6cc7eaef7dcb41750e383d41303baa30998b0c1071ca4c98c54e3f27aa362319
@@ -302,6 +324,31 @@ entries:
     type: application
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
+    version: 0.1.0
+  cloudflareddns:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2023-11-30T18:33:05.540652205Z"
+    description: Access your home network remotely via a custom domain name without
+      a static IP!
+    digest: ac83ed4465ebb859103ed8eaefcb0ae08b7676755f7da34622a66417818ca85d
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+    keywords:
+    - cloudflareddns
+    - cloudflare
+    - ddns
+    - cloudflare-ddns
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflareddns
+    sources:
+    - https://github.com/timothymiller/cloudflare-ddns
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflareddns-0.1.0/cloudflareddns-0.1.0.tgz
     version: 0.1.0
   grocy:
   - apiVersion: v2
@@ -1628,4 +1675,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2023-09-06T18:51:40.95017895Z"
+generated: "2023-11-30T18:33:05.540970817Z"
