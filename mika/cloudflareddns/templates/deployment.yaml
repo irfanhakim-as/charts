@@ -1,0 +1,51 @@
+{{- $registry := .Values.image.cloudflareddns.registry | default "docker.io" | toString }}
+{{- $repository := .Values.image.cloudflareddns.repository | default "timothyjmiller/cloudflare-ddns" | toString }}
+{{- $tag := .Values.image.cloudflareddns.tag | default .Chart.AppVersion | toString }}
+{{- $pullPolicy := .Values.image.cloudflareddns.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $config_path := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-cloudflareddns
+  labels:
+    {{- include "cloudflareddns.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "cloudflareddns.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cloudflareddns.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: cloudflareddns
+          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
+          imagePullPolicy: {{ $pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-cloudflareddns-cm
+          volumeMounts:
+            - name: {{ .Release.Name }}-cloudflareddns-config
+              mountPath: {{ $config_path }}/config.json
+              subPath: config.json
+              readOnly: true
+      volumes:
+        - name: {{ .Release.Name }}-cloudflareddns-config
+          secret:
+            secretName: {{ .Release.Name }}-cloudflareddns-config
+            items:
+              - key: config.json
+                path: config.json

@@ -93,9 +93,12 @@ Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.drop` set
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| clog.cloudflared.domain | string | `""` | Registered domain name on Cloudflare used for Clog. |
+| clog.cloudflared.domain | string | `""` | Registered domain name on Cloudflare used for Clog. Default: `"localhost"`. |
 | clog.cloudflared.enabled | bool | `false` | Specifies whether Clog should run using a Cloudflare tunnel. |
 | clog.debug | string | `""` | Specifies whether Clog should run in debug mode. Default: `false`. |
+| clog.ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
+| clog.ingress.domain | string | `""` | Registered domain name for Clog. Default: `"localhost"`. |
+| clog.ingress.enabled | bool | `false` | Specifies whether Clog should be hosted using an Ingress. |
 | clog.name | string | `""` | The name of the Clog service. Default: `"Clog"`. |
 | clog.ngrok.enabled | bool | `false` | Specifies whether Clog should run using an Ngrok tunnel. |
 | clog.ngrok.token | string | `""` | Ngrok authentication token. |

@@ -1,0 +1,89 @@
+# Default values for cloudflareddns.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for cloudflareddns.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for cloudflareddns.
+image:
+  # cloudflareddns container image configurations.
+  cloudflareddns:
+    # The registry where the cloudflareddns container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the cloudflareddns container image used.
+    # Default: "timothyjmiller/cloudflare-ddns"
+    repository: ""
+    # The tag that specifies the version of the cloudflareddns container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the cloudflareddns container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# cloudflareddns configurations.
+cloudflareddns:
+  # The path to the cloudflareddns configuration directory.
+  # Default: "/etc/cloudflare-ddns"
+  # Example:
+  # configPath: "/etc/cloudflare-ddns"
+  configPath: ""
+  # Specify whether to add an A record for each subdomain.
+  # Default: "true"
+  # Example:
+  # ipv4: "false"
+  ipv4: ""
+  # Specify whether to add an AAAA record for each subdomain.
+  # Default: "false"
+  # Example
+  # ipv6: "true"
+  ipv6: ""
+  # The list of subdomains to be updated, each with their own hostname and proxied setting.
+  # Example:
+  # subdomains:
+  #   - hostname: ""
+  #     proxied: true
+  #   - hostname: "foo"
+  #     proxied: false
+  #   - hostname: "bar"
+  #     proxied: false
+  subdomains: []
+  # The Cloudflare API token used to authenticate with the Cloudflare API.
+  # Example:
+  # token: "Na9E7VEY58COhA03l1ytm1r70u7jBsf8bNqh5AlZ"
+  token: ""
+  # The ID of the zone that will get the records.
+  # Example:
+  # zoneID: "71fovu74p100z856k795umzl32h3240p"
+  zoneID: ""
+
+# Resource requirements and limits for cloudflareddns container.
+resources:
+  # The minimum amount of resources required by cloudflareddns to run.
+  requests:
+    # The minimum amount of CPU resources required by cloudflareddns.
+    # Example:
+    # cpu: "10m"
+    cpu: "10m"
+    # The minimum amount of memory required by cloudflareddns.
+    # Example:
+    # memory: "10Mi"
+    memory: "10Mi"
+  # The maximum amount of resources allowed for cloudflareddns.
+  limits:
+    # The maximum amount of CPU resources allowed for cloudflareddns.
+    # Example:
+    # cpu: "250m"
+    cpu: "50m"
+    # The maximum amount of memory allowed for cloudflareddns.
+    # Example:
+    # memory: "250Mi"
+    memory: "32Mi"

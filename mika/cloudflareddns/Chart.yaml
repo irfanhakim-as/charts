@@ -1,0 +1,19 @@
+apiVersion: v2
+name: cloudflareddns
+description: Access your home network remotely via a custom domain name without a static IP!
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - "cloudflareddns"
+  - "cloudflare"
+  - "ddns"
+  - "cloudflare-ddns"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/cloudflare.png"
+sources:
+  - "https://github.com/timothymiller/cloudflare-ddns"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
