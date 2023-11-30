@@ -104,6 +104,21 @@ clog:
     # enabled: true
     enabled: false
     # Registered domain name on Cloudflare used for Clog.
+    # Default: "localhost"
+    # Example:
+    # domain: "clog.example.com"
+    domain: ""
+  # Clog Ingress configurations.
+  ingress:
+    # Specifies whether Clog should be hosted using an Ingress.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The name of the cluster issuer for Ingress.
+    # Default: "letsencrypt-dns-prod"
+    clusterIssuer: ""
+    # Registered domain name for Clog.
+    # Default: "localhost"
     # Example:
     # domain: "clog.example.com"
     domain: ""

@@ -1,8 +1,16 @@
 {{- $name := .Values.clog.name | default "Clog" | toString | quote }}
 {{- $debug := .Values.clog.debug | default "false" | toString | quote }}
-{{- $domain := .Values.clog.cloudflared.domain | default "localhost" | toString }}
 {{- $cloudflared := .Values.clog.cloudflared.enabled }}
+{{- $ingress := .Values.clog.ingress.enabled }}
 {{- $ngrok := .Values.clog.ngrok.enabled }}
+{{- $domain := "" -}}
+{{- if $cloudflared }}
+{{- $domain = .Values.clog.cloudflared.domain | default "localhost" | toString }}
+{{- else if $ingress }}
+{{- $domain = .Values.clog.ingress.domain | default "localhost" | toString }}
+{{- else }}
+{{- $domain = "localhost" }}
+{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -13,7 +21,7 @@ data:
   SITE_NAME: {{ $name }}
   DEBUG: {{ $debug }}
   NGROK: {{ $ngrok | toString | quote }}
-  {{- if $cloudflared }}
+  {{- if or $cloudflared $ingress }}
   DOMAIN: {{ $domain | quote }}
   {{- end }}
 ---

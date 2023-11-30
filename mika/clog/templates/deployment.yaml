@@ -8,6 +8,7 @@
 {{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
 {{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $cloudflared := .Values.clog.cloudflared.enabled }}
+{{- $ingress := .Values.clog.ingress.enabled }}
 {{- $ngrok := .Values.clog.ngrok.enabled }}
 {{- $persistence := .Values.clog.persistence.enabled }}
 apiVersion: apps/v1
@@ -45,7 +46,7 @@ spec:
           resources:
             {{- toYaml .Values.resources.clog | nindent 12 }}
           env:
-            {{- if $cloudflared }}
+            {{- if or $cloudflared $ingress }}
             - name: ALLOWED_HOSTS
               valueFrom:
                 configMapKeyRef:
