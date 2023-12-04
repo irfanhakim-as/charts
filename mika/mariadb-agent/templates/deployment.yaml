@@ -3,7 +3,6 @@
 {{- $repository := .Values.image.mariadb.repository | default "bitnami/mariadb" | toString }}
 {{- $tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $create_mode := .Values.mariadb.mode.create }}
 {{- $databases := .Values.mariadb.databases }}
 apiVersion: batch/v1
 kind: Job
@@ -29,33 +28,24 @@ spec:
           imagePullPolicy: {{ $pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if $create_mode }}
           command: ["/bin/bash"]
           args:
             - -c
             - >-
               mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
                 {{- range $databases }}
+                {{- if .create }}
                 CREATE DATABASE IF NOT EXISTS {{ .name }};
                 CREATE USER IF NOT EXISTS '{{ .user }}'@'%';
                 SET PASSWORD FOR '{{ .user }}'@'%' = PASSWORD('{{ .password }}');
                 GRANT ALL PRIVILEGES ON {{ .name }}.* TO '{{ .user }}'@'%';
-                {{- end }}
-                FLUSH PRIVILEGES;
-              EOSQL
-          {{- else }}
-          command: ["/bin/bash"]
-          args:
-            - -c
-            - >-
-              mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
-                {{- range $databases }}
+                {{- else if .drop }}
                 DROP DATABASE IF EXISTS {{ .name }};
                 DROP USER IF EXISTS '{{ .user }}'@'%';
                 {{- end }}
+                {{- end }}
                 FLUSH PRIVILEGES;
               EOSQL
-          {{- end }}
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-mariadb-agent-secret

@@ -40,17 +40,15 @@ mariadb:
   #   # Example:
   #   # password: "password"
   #     password: ""
+  #   # Specifies whether to create a database and user in a remote MariaDB instance.
+  #   # Example:
+  #   # create: false
+  #     create: true
+  #   # Specifies whether to delete a database and user in a remote MariaDB instance.
+  #   # Example:
+  #   # drop: true
+  #     drop: false
   databases: []
-  # Defines the mode of operation for the MariaDB agent chart.
-  mode:
-    # Specifies whether to create a database and user in a remote MariaDB instance.
-    # Example:
-    # create: false
-    create: true
-    # Specifies whether to delete a database and user in a remote MariaDB instance.
-    # Example:
-    # drop: true
-    drop: false
   # MariaDB database server root user configurations.
   root:
     # The username or user account for accessing the MariaDB database server as root.
