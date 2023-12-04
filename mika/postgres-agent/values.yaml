@@ -27,7 +27,7 @@ postgres:
     # Example:
     # create: false
     create: true
-    # Specifies whether to delete a database in a remote PostgreSQL instance.
+    # Specifies whether to delete a database and user in a remote PostgreSQL instance.
     # Example:
     # drop: true
     drop: false
