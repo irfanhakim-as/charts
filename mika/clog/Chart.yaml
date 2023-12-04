@@ -3,7 +3,7 @@ name: clog
 description: Creative blog, Career blog, Coin blog, you name it.
 type: application
 version: 0.2.3
-appVersion: "0.0.2-stable"
+appVersion: "0.0.2-stable-r1"
 keywords:
   - "clog"
   - "blog"
