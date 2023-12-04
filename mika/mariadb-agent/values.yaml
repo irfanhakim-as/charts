@@ -1,0 +1,60 @@
+# Default values for mariadb-agent.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Container image used for MariaDB.
+image:
+  # MariaDB container image configurations.
+  mariadb:
+    # The registry where the MariaDB container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the MariaDB container image used.
+    # Default: "bitnami/mariadb"
+    repository: ""
+    # The tag that specifies the version of the MariaDB container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the MariaDB container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# MariaDB configurations.
+mariadb:
+  # Defines the mode of operation for the MariaDB agent chart.
+  mode:
+    # Specifies whether to create a database and user in a remote MariaDB instance.
+    # Example:
+    # create: false
+    create: true
+    # Specifies whether to delete a database and user in a remote MariaDB instance.
+    # Example:
+    # drop: true
+    drop: false
+  # The hostname or IP address of the MariaDB database server.
+  # Example:
+  # host: "mariadb.default.svc.cluster.local"
+  host: ""
+  # The name of the intended MariaDB database.
+  # Example:
+  # name: "mariadb"
+  name: ""
+  # The username or user account for accessing the intended MariaDB database.
+  # Example:
+  # user: "mariadb"
+  user: ""
+  # The password associated with the intended MariaDB database user.
+  # Example:
+  # password: "password"
+  password: ""
+  # MariaDB database server root user configurations.
+  root:
+    # The username or user account for accessing the MariaDB database server as root.
+    # Default: "root"
+    # Example:
+    # user: "root"
+    user: ""
+    # The password associated with the MariaDB database server root user.
+    # Example:
+    # password: "password"
+    password: ""

@@ -1,0 +1,87 @@
+{{- $host := .Values.mariadb.host | default "mariadb" | toString }}
+{{- $registry := .Values.image.mariadb.registry | default "docker.io" | toString }}
+{{- $repository := .Values.image.mariadb.repository | default "bitnami/mariadb" | toString }}
+{{- $tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
+{{- $pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $create_mode := .Values.mariadb.mode.create }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-%s-%s" (index (splitList "." $host) 0) .Release.Name "mariadb-agent" }}
+  labels:
+    {{- include "mariadb-agent.labels" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 120
+  backoffLimit: 0
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mariadb-agent.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: mariadb-agent
+          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
+          imagePullPolicy: {{ $pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- if $create_mode }}
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
+                CREATE DATABASE IF NOT EXISTS $(DB_NAME);
+                CREATE USER IF NOT EXISTS $(DB_USER)@localhost;
+                SET PASSWORD FOR $(DB_USER)@localhost = PASSWORD('$(DB_PASS)');
+                GRANT ALL PRIVILEGES ON $(DB_NAME).* TO $(DB_USER)@localhost;
+                FLUSH PRIVILEGES;
+              EOSQL
+          {{- else }}
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
+                DROP DATABASE IF EXISTS $(DB_NAME);
+                DROP USER IF EXISTS $(DB_USER)@localhost;
+                FLUSH PRIVILEGES;
+              EOSQL
+          {{- end }}
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mariadb-agent-secret
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mariadb-agent-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mariadb-agent-secret
+                  key: DB_USER
+            {{- if $create_mode }}
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mariadb-agent-secret
+                  key: DB_PASS
+            {{- end }}
+            - name: ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mariadb-agent-secret
+                  key: ROOT_USER
+            - name: MYSQL_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-mariadb-agent-secret
+                  key: ROOT_PASS
+      restartPolicy: Never
