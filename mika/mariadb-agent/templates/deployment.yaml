@@ -4,6 +4,7 @@
 {{- $tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $create_mode := .Values.mariadb.mode.create }}
+{{- $databases := .Values.mariadb.databases }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -34,10 +35,12 @@ spec:
             - -c
             - >-
               mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
-                CREATE DATABASE IF NOT EXISTS $(DB_NAME);
-                CREATE USER IF NOT EXISTS '$(DB_USER)'@'%';
-                SET PASSWORD FOR '$(DB_USER)'@'%' = PASSWORD('$(DB_PASS)');
-                GRANT ALL PRIVILEGES ON $(DB_NAME).* TO '$(DB_USER)'@'%';
+                {{- range $databases }}
+                CREATE DATABASE IF NOT EXISTS {{ .name }};
+                CREATE USER IF NOT EXISTS '{{ .user }}'@'%';
+                SET PASSWORD FOR '{{ .user }}'@'%' = PASSWORD('{{ .password }}');
+                GRANT ALL PRIVILEGES ON {{ .name }}.* TO '{{ .user }}'@'%';
+                {{- end }}
                 FLUSH PRIVILEGES;
               EOSQL
           {{- else }}
@@ -46,42 +49,14 @@ spec:
             - -c
             - >-
               mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
-                DROP DATABASE IF EXISTS $(DB_NAME);
-                DROP USER IF EXISTS '$(DB_USER)'@'%';
+                {{- range $databases }}
+                DROP DATABASE IF EXISTS {{ .name }};
+                DROP USER IF EXISTS '{{ .user }}'@'%';
+                {{- end }}
                 FLUSH PRIVILEGES;
               EOSQL
           {{- end }}
-          env:
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-mariadb-agent-secret
-                  key: DB_HOST
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-mariadb-agent-secret
-                  key: DB_NAME
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-mariadb-agent-secret
-                  key: DB_USER
-            {{- if $create_mode }}
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-mariadb-agent-secret
-                  key: DB_PASS
-            {{- end }}
-            - name: ROOT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-mariadb-agent-secret
-                  key: ROOT_USER
-            - name: MYSQL_PWD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-mariadb-agent-secret
-                  key: ROOT_PASS
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-mariadb-agent-secret
       restartPolicy: Never

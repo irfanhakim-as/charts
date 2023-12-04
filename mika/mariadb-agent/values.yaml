@@ -21,6 +21,26 @@ image:
 
 # MariaDB configurations.
 mariadb:
+  # The hostname or IP address of the MariaDB database server.
+  # Example:
+  # host: "mariadb.default.svc.cluster.local"
+  host: ""
+  # MariaDB database configurations.
+  # Example:
+  # databases:
+  #   # The name of the intended MariaDB database.
+  #   # Example:
+  #   # name: "mariadb"
+  #   - name: ""
+  #   # The username or user account for accessing the intended MariaDB database.
+  #   # Example:
+  #   # user: "mariadb"
+  #     user: ""
+  #   # The password associated with the intended MariaDB database user.
+  #   # Example:
+  #   # password: "password"
+  #     password: ""
+  databases: []
   # Defines the mode of operation for the MariaDB agent chart.
   mode:
     # Specifies whether to create a database and user in a remote MariaDB instance.
@@ -31,22 +51,6 @@ mariadb:
     # Example:
     # drop: true
     drop: false
-  # The hostname or IP address of the MariaDB database server.
-  # Example:
-  # host: "mariadb.default.svc.cluster.local"
-  host: ""
-  # The name of the intended MariaDB database.
-  # Example:
-  # name: "mariadb"
-  name: ""
-  # The username or user account for accessing the intended MariaDB database.
-  # Example:
-  # user: "mariadb"
-  user: ""
-  # The password associated with the intended MariaDB database user.
-  # Example:
-  # password: "password"
-  password: ""
   # MariaDB database server root user configurations.
   root:
     # The username or user account for accessing the MariaDB database server as root.
