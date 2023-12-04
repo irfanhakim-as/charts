@@ -35,9 +35,9 @@ spec:
             - >-
               mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
                 CREATE DATABASE IF NOT EXISTS $(DB_NAME);
-                CREATE USER IF NOT EXISTS $(DB_USER)@localhost;
-                SET PASSWORD FOR $(DB_USER)@localhost = PASSWORD('$(DB_PASS)');
-                GRANT ALL PRIVILEGES ON $(DB_NAME).* TO $(DB_USER)@localhost;
+                CREATE USER IF NOT EXISTS '$(DB_USER)'@'%';
+                SET PASSWORD FOR '$(DB_USER)'@'%' = PASSWORD('$(DB_PASS)');
+                GRANT ALL PRIVILEGES ON $(DB_NAME).* TO '$(DB_USER)'@'%';
                 FLUSH PRIVILEGES;
               EOSQL
           {{- else }}
@@ -47,7 +47,7 @@ spec:
             - >-
               mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
                 DROP DATABASE IF EXISTS $(DB_NAME);
-                DROP USER IF EXISTS $(DB_USER)@localhost;
+                DROP USER IF EXISTS '$(DB_USER)'@'%';
                 FLUSH PRIVILEGES;
               EOSQL
           {{- end }}
