@@ -32,20 +32,23 @@ spec:
           args:
             - -c
             - >-
-              mysql -h $(DB_HOST) -u $(ROOT_USER) <<-EOSQL
+              mysql -h $(DB_HOST) -u $(ROOT_USER) -e '
                 {{- range $databases }}
                 {{- if .create }}
                 CREATE DATABASE IF NOT EXISTS {{ .name }};
-                CREATE USER IF NOT EXISTS '{{ .user }}'@'%';
-                SET PASSWORD FOR '{{ .user }}'@'%' = PASSWORD('{{ .password }}');
-                GRANT ALL PRIVILEGES ON {{ .name }}.* TO '{{ .user }}'@'%';
+                CREATE USER IF NOT EXISTS "{{ .user }}"@"%";
+                SET PASSWORD FOR "{{ .user }}"@"%" = PASSWORD("{{ .password }}");
+                GRANT ALL PRIVILEGES ON {{ .name }}.* TO "{{ .user }}"@"%";
                 {{- else if .drop }}
                 DROP DATABASE IF EXISTS {{ .name }};
-                DROP USER IF EXISTS '{{ .user }}'@'%';
+                DROP USER IF EXISTS "{{ .user }}"@"%";
+                {{- end }}
+                {{- if .custom_command }}
+                {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
                 {{- end }}
                 {{- end }}
                 FLUSH PRIVILEGES;
-              EOSQL
+              '
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-mariadb-agent-secret

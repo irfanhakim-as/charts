@@ -48,6 +48,19 @@ mariadb:
   #   # Example:
   #   # drop: true
   #     drop: false
+  #   # Specify a custom command to run against a remote MariaDB instance.
+  #   # Example:
+  #   # custom_command: >-
+  #   #   CREATE TABLE IF NOT EXISTS `$.name`.`StorageRecords` (
+  #   #     `id` int(11) NOT NULL AUTO_INCREMENT,
+  #   #     `key` varchar(255) NOT NULL,
+  #   #     `value` text NOT NULL,
+  #   #     `created_at` datetime NOT NULL,
+  #   #     `updated_at` datetime NOT NULL,
+  #   #     PRIMARY KEY (`id`),
+  #   #     UNIQUE KEY `key` (`key`)
+  #   #   );
+  #     custom_command: ""
   databases: []
   # MariaDB database server root user configurations.
   root:
