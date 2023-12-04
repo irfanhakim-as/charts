@@ -16,8 +16,9 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [cloudflareddns](https://github.com/irfanhakim-as/charts/tree/master/mika/cloudflareddns) | Access your home network remotely via a custom domain name without a static IP! | ✅ | ✅ |
 | [grocy](https://github.com/irfanhakim-as/charts/tree/master/mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
 | [mango](https://github.com/irfanhakim-as/charts/tree/master/mika/mango) | Mango is an easy to use Mastodon bot framework built on top of Django. | ✅ | 🔒 |
+| [mariadb-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB instance. | ✅ | ✅ |
 | [postgres](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
-| [postgres-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-agent) | Easily deploy a database and create a user, or delete a database in a remote PostgreSQL instance. | ✅ | ✅ |
+| [postgres-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-agent) | Easily create or delete a database and user pair in a remote PostgreSQL instance. | ✅ | ✅ |
 | [rizz](https://github.com/irfanhakim-as/charts/tree/master/mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon. | ✅ | 🔒 |
 | [telego](https://github.com/irfanhakim-as/charts/tree/master/mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
 | [vpbot](https://github.com/irfanhakim-as/charts/tree/master/mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
