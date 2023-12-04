@@ -45,34 +45,6 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.clog | nindent 12 }}
-          env:
-            {{- if or $cloudflared $ingress }}
-            - name: ALLOWED_HOSTS
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Release.Name }}-clog-cm
-                  key: DOMAIN
-            {{- end }}
-            - name: POSTGRES_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-clog-postgres-secret
-                  key: DB_HOST
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-clog-postgres-secret
-                  key: DB_NAME
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-clog-postgres-secret
-                  key: DB_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-clog-postgres-secret
-                  key: DB_PASS
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-clog-cm
