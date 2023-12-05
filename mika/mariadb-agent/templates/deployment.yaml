@@ -43,7 +43,7 @@ spec:
                 DROP DATABASE IF EXISTS {{ .name }};
                 DROP USER IF EXISTS "{{ .user }}"@"%";
                 {{- end }}
-                {{- if .custom_command }}
+                {{- if and .custom .custom_command }}
                 {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
                 {{- end }}
                 {{- end }}
