@@ -125,10 +125,10 @@ class BaseConfig(AppConfig):
 APScheduler /base/base/tasks.py template
 */}}
 {{- define "waktusolat.apscheduler-tasks-py" -}}
+from apscheduler.schedulers.blocking import BlockingScheduler
 from django.conf import settings
 from lib import solat
 from lib.scheduler import post_scheduler
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE", None)
