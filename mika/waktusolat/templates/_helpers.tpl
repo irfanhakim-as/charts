@@ -126,8 +126,8 @@ APScheduler /base/base/tasks.py template
 */}}
 {{- define "waktusolat.apscheduler-tasks-py" -}}
 from django.conf import settings
-from base.methods import post_scheduler
 from lib import solat
+from lib.scheduler import post_scheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
@@ -1023,8 +1023,8 @@ Celery /base/base/tasks.py template
 from __future__ import absolute_import, unicode_literals
 import logging
 from celery import shared_task
-from base.methods import post_scheduler
 from lib import solat
+from lib.scheduler import post_scheduler
 logger=logging.getLogger('base')
 
 
