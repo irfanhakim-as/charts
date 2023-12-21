@@ -3,11 +3,11 @@ APScheduler /base/base/tasks.py template
 */}}
 {{- define "rizz.apscheduler-tasks-py" -}}
 from django.conf import settings
-from base.scheduler import post_scheduler
 from lib.rss import (
     clean_data,
     update_data,
 )
+from lib.scheduler import post_scheduler
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
@@ -35,11 +35,11 @@ Celery /base/base/tasks.py template
 {{- define "rizz.celery-tasks-py" -}}
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
-from base.scheduler import post_scheduler
 from lib.rss import (
     clean_data,
     update_data,
 )
+from lib.scheduler import post_scheduler
 
 
 # clean data
