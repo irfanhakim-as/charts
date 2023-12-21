@@ -2,13 +2,13 @@
 APScheduler /base/base/tasks.py template
 */}}
 {{- define "rizz.apscheduler-tasks-py" -}}
+from apscheduler.schedulers.blocking import BlockingScheduler
 from django.conf import settings
 from lib.rss import (
     clean_data,
     update_data,
 )
 from lib.scheduler import post_scheduler
-from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE")
