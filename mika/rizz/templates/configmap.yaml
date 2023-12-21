@@ -3,6 +3,7 @@
 {{- $bot := .Values.rizz.mastodon.bot | toString | quote }}
 {{- $scheduler_timezone := .Values.rizz.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
+{{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $feed := .Values.rizz.rss.feed | toString | quote }}
 {{- $post_limit := .Values.rizz.rss.post_limit | default "3" | toString | quote }}
 {{- $pubdate_format := .Values.rizz.rss.pubdate_format | default "%a, %d %b %Y %H:%M:%S %z" | toString | quote }}
@@ -24,6 +25,7 @@ data:
   API_BASE_URL: {{ $api }}
   BOT_ID: {{ $bot }}
   DEFAULT_VISIBILITY: {{ $visibility }}
+  ORGANIC_POSTS: {{ $organic }}
   RSS_FEED_URL: {{ $feed }}
   RSS_POST_LIMIT: {{ $post_limit }}
   RSS_PUBDATE_FORMAT: {{ $pubdate_format }}
