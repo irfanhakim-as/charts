@@ -19,16 +19,16 @@ def start():
     scheduler = BlockingScheduler(timezone=SCHEDULER_TIMEZONE)
 
     job_name = "clean_db"
-    scheduler.add_job(clean_db, "cron", hour="0", id=job_name, replace_existing=True)
+    scheduler.add_job(clean_db, "cron", hour=CLEAN_DB_HOURS, id=job_name, replace_existing=True)
 
     job_name = "notify_solat_schedule"
-    scheduler.add_job(notify_solat_schedule, "cron", hour="5", id=job_name, replace_existing=True)
+    scheduler.add_job(notify_solat_schedule, "cron", hour=SOLAT_SCHED_HOURS, id=job_name, replace_existing=True)
 
     job_name = "notify_solat_times"
-    scheduler.add_job(notify_solat_times, "cron", minute="*", id=job_name, replace_existing=True)
+    scheduler.add_job(notify_solat_times, "cron", minute="*/" + SOLAT_NOTIF_MINUTES, id=job_name, replace_existing=True)
 
     job_name = "post_scheduler"
-    scheduler.add_job(post_scheduler, "cron", second="*/1", id=job_name, replace_existing=True)
+    scheduler.add_job(post_scheduler, "cron", second="*/" + POST_SCHEDULER_SECONDS, id=job_name, replace_existing=True)
 
     scheduler.start()
 {{- end }}

@@ -4,6 +4,7 @@ Celery /base/base/celery.py template
 {{- define "waktusolat.celery-py" -}}
 from __future__ import absolute_import, unicode_literals
 import os
+import re
 from celery import Celery
 from celery.schedules import crontab
 from datetime import timedelta
@@ -13,26 +14,30 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
 
+# make integer from object scheduler seconds string
+post_scheduler_seconds = int(re.sub(r"\D", "", POST_SCHEDULER_SECONDS))
+
+
 app.conf.beat_schedule = {
-    # clean and update prayer times every 0000 hour
-    "clean_db_every_0000": {
+    # clean and update prayer times
+    "clean_db": {
         "task": "base.tasks.clean_db_task",
-        "schedule": crontab(hour=0, minute=0),
+        "schedule": crontab(hour=CLEAN_DB_HOURS, minute="0"),
     },
-    # notify solat schedule every 0500 hour
-    "notify_solat_schedule_every_0500": {
+    # notify solat schedule
+    "notify_solat_schedule": {
         "task": "base.tasks.notify_solat_schedule_task",
-        "schedule": crontab(hour=5, minute=0),
+        "schedule": crontab(hour=SOLAT_SCHED_HOURS, minute="0"),
     },
-    # check and notify solat time every sharp minute
-    "notify_solat_times_every_minute": {
+    # check and notify solat time
+    "notify_solat_times": {
         "task": "base.tasks.notify_solat_times_task",
-        "schedule": crontab(minute="*/1"),
+        "schedule": crontab(minute="*/" + SOLAT_NOTIF_MINUTES),
     },
-    # check for any posts that need to be posted every 1 second
-    "post_scheduler_every_1s": {
+    # check for any posts that need to be posted
+    "post_scheduler": {
         "task": "base.tasks.post_scheduler_task",
-        "schedule": timedelta(seconds=1),
+        "schedule": timedelta(seconds=post_scheduler_seconds),
     },
 }
 
