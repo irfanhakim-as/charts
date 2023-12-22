@@ -8,7 +8,7 @@ from lib import solat
 from lib.scheduler import post_scheduler
 
 
-SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE", None)
+SCHEDULER_TIMEZONE = getattr(settings, "SCHEDULER_TIMEZONE")
 
 
 def start():
