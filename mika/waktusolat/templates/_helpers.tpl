@@ -114,10 +114,11 @@ APScheduler /base/base/apps.py template
 from django.apps import AppConfig
 
 class BaseConfig(AppConfig):
-    name = 'base'
+    name = "base"
 
     def ready(self):
-        from base import tasks
+        from . import signals
+        from . import tasks
         tasks.start()
 {{- end }}
 
