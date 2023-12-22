@@ -6,6 +6,7 @@ from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
 from celery.schedules import crontab
+from datetime import timedelta
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "base.settings.main")
 app = Celery("base")
 app.config_from_object("django.conf:settings", namespace="CELERY")
@@ -26,12 +27,12 @@ app.conf.beat_schedule = {
     # check and notify solat time every sharp minute
     "notify_solat_times_every_minute": {
         "task": "base.tasks.notify_solat_times_task",
-        "schedule": crontab(minute="*"),
+        "schedule": crontab(minute="*/1"),
     },
     # check for any posts that need to be posted every 1 second
     "post_scheduler_every_1s": {
         "task": "base.tasks.post_scheduler_task",
-        "schedule": 1.0,
+        "schedule": timedelta(seconds=1),
     },
 }
 
