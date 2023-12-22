@@ -121,12 +121,12 @@ waktusolat:
       # The minute intervals at which the task scheduler schedules prayer time notifications.
       # Default: "1"
       # Example:
-      # notify_solat_times: "9-18"
+      # notify_solat_times: "2"
       notify_solat_times: ""
       # The second intervals at which the task scheduler posts scheduled posts.
       # Default: "1"
       # Example:
-      # post_scheduler: "9-18"
+      # post_scheduler: "10"
       post_scheduler: ""
     # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
     # Default: "Asia/Kuala_Lumpur"
