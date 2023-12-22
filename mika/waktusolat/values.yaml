@@ -106,6 +106,28 @@ waktusolat:
     # Example:
     # celery: true
     celery: false
+    # The schedule for the task scheduler used by WaktuSolat.
+    schedule:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # clean_db: "0,6,12,18"
+      clean_db: ""
+      # The hours at which the task scheduler schedules the daily prayer time schedule posts.
+      # Default: "5"
+      # Example:
+      # notify_solat_schedule: "*"
+      notify_solat_schedule: ""
+      # The minute intervals at which the task scheduler schedules prayer time notifications.
+      # Default: "1"
+      # Example:
+      # notify_solat_times: "9-18"
+      notify_solat_times: ""
+      # The second intervals at which the task scheduler posts scheduled posts.
+      # Default: "1"
+      # Example:
+      # post_scheduler: "9-18"
+      post_scheduler: ""
     # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
     # Default: "Asia/Kuala_Lumpur"
     # Example:
