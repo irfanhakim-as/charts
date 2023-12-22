@@ -186,20 +186,24 @@ resources:
     # The minimum amount of resources required by Rizz to run.
     requests:
       # The minimum amount of CPU resources required by Rizz.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "20m"
       cpu: "30m"
       # The minimum amount of memory required by Rizz.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "250Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "250Mi"
       memory: "60Mi"
     # The maximum amount of resources allowed for Rizz.
     limits:
       # The maximum amount of CPU resources allowed for Rizz.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "200m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "50m"
       cpu: "50m"
       # The maximum amount of memory allowed for Rizz.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "400Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "450Mi"
       memory: "120Mi"
