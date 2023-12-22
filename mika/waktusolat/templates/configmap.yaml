@@ -88,13 +88,13 @@ data:
     {{- include "waktusolat.apscheduler-apps-py" . | nindent 4 }}
   {{- else if $celery }}
   celery.py: |-
-    {{- include "waktusolat.celery-py" . | nindent 4 }}
+    {{- include "waktusolat.celery-py" . | replace "CLEAN_DB_HOURS" $clean_db | replace "SOLAT_SCHED_HOURS" $notify_solat_schedule | replace "SOLAT_NOTIF_MINUTES" $notify_solat_times | replace "POST_SCHEDULER_SECONDS" $post_scheduler | nindent 4 }}
   init.py: |-
     {{- include "waktusolat.celery-init-py" . | nindent 4 }}
   {{- end }}
   tasks.py: |-
     {{- if $apscheduler }}
-      {{- include "waktusolat.apscheduler-tasks-py" . | nindent 4 }}
+      {{- include "waktusolat.apscheduler-tasks-py" . | replace "CLEAN_DB_HOURS" $clean_db | replace "SOLAT_SCHED_HOURS" $notify_solat_schedule | replace "SOLAT_NOTIF_MINUTES" $notify_solat_times | replace "POST_SCHEDULER_SECONDS" $post_scheduler | nindent 4 }}
     {{- else if $celery }}
       {{- include "waktusolat.celery-tasks-py" . | nindent 4 }}
     {{- end }}
