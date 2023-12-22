@@ -2,6 +2,7 @@
 {{- $location := .Values.waktusolat.location | default "wlp-0" | toString | quote }}
 {{- $api := .Values.waktusolat.mastodon.api | toString | quote }}
 {{- $bot := .Values.waktusolat.mastodon.bot | toString | quote }}
+{{- $visibility := .Values.waktusolat.visibility | default "public" | toString | quote }}
 {{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $clean_db := .Values.waktusolat.scheduler.schedule.clean_db | default "0" | toString | quote }}
 {{- $notify_solat_schedule := .Values.waktusolat.scheduler.schedule.notify_solat_schedule | default "5" | toString | quote }}
@@ -22,6 +23,7 @@ data:
   LOCATION_CODE: {{ $location }}
   API_BASE_URL: {{ $api }}
   BOT_ID: {{ $bot }}
+  DEFAULT_VISIBILITY: {{ $visibility }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
