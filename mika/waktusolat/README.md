@@ -120,5 +120,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | waktusolat.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage. Default: `"longhorn"`. |
 | waktusolat.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
+| waktusolat.scheduler.schedule.clean_db | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| waktusolat.scheduler.schedule.notify_solat_schedule | string | `""` | The hours at which the task scheduler schedules the daily prayer time schedule posts. Default: `"5"`. |
+| waktusolat.scheduler.schedule.notify_solat_times | string | `""` | The minute intervals at which the task scheduler schedules prayer time notifications. Default: `"1"`. |
+| waktusolat.scheduler.schedule.post_scheduler | string | `""` | The second intervals at which the task scheduler posts scheduled posts. Default: `"1"`. |
 | waktusolat.scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |
