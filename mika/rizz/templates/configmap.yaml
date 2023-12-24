@@ -4,8 +4,8 @@
 {{- $scheduler_timezone := .Values.rizz.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
+{{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
 {{- $feed := .Values.rizz.rss.feed | toString | quote }}
-{{- $post_limit := .Values.rizz.rss.post_limit | default "3" | toString | quote }}
 {{- $pubdate_format := .Values.rizz.rss.pubdate_format | default "%a, %d %b %Y %H:%M:%S %z" | toString | quote }}
 {{- $clean_data := .Values.rizz.scheduler.schedule.clean_data | default "0" | toString | quote }}
 {{- $post_scheduler := .Values.rizz.scheduler.schedule.post_scheduler | default "8-23/3" | toString | quote }}

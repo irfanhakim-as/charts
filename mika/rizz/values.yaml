@@ -60,6 +60,11 @@ rizz:
   # Example:
   # organic: false
   organic: true
+  # The limit number of posts to be scheduled for posting per run.
+  # Default: "3"
+  # Example:
+  # post_limit: "5"
+  post_limit: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the Rizz service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
@@ -107,11 +112,6 @@ rizz:
     # Example:
     # feed: "https://www.reddit.com/r/programming/.rss"
     feed: ""
-    # The limit number of posts to be scheduled for posting by Rizz per run.
-    # Default: "3"
-    # Example:
-    # post_limit: "5"
-    post_limit: ""
     # The publishing date format of the RSS feed entry.
     # Default: "%a, %d %b %Y %H:%M:%S %z"
     # Example:
