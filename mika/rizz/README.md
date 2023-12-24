@@ -118,7 +118,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | rizz.persistence.enabled | bool | `false` | Specifies whether Rizz should persist its storage. |
 | rizz.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for Rizz logs. Default: `"20Mi"`. |
 | rizz.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Rizz storage. Default: `"longhorn"`. |
-| rizz.rss.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"3"`. |
+| rizz.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"3"`. |
 | rizz.rss.feed | string | `""` | The URL of the RSS feed to be tracked by Rizz. |
 | rizz.rss.pubdate_format | string | `""` | The publishing date format of the RSS feed entry. Default: `"%a, %d %b %Y %H:%M:%S %z"`. |
 | rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
