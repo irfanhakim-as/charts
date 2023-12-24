@@ -55,6 +55,11 @@ waktusolat:
   # Example:
   # domain: "localhost"
   domain: ""
+  # The limit number of posts to be scheduled for posting per run.
+  # Default: "0" (Unlimited)
+  # Example:
+  # post_limit: "5"
+  post_limit: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"

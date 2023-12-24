@@ -118,6 +118,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | waktusolat.persistence.enabled | bool | `false` | Specifies whether WaktuSolat should persist its storage. |
 | waktusolat.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for WaktuSolat logs. Default: `"20Mi"`. |
 | waktusolat.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage. Default: `"longhorn"`. |
+| waktusolat.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"0"` (Unlimited). |
 | waktusolat.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.schedule.clean_db | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
