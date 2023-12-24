@@ -26,8 +26,8 @@ data:
   BOT_ID: {{ $bot }}
   DEFAULT_VISIBILITY: {{ $visibility }}
   ORGANIC_POSTS: {{ $organic }}
+  POST_LIMIT: {{ $post_limit }}
   RSS_FEED_URL: {{ $feed }}
-  RSS_POST_LIMIT: {{ $post_limit }}
   RSS_PUBDATE_FORMAT: {{ $pubdate_format }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
