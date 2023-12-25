@@ -8,7 +8,7 @@ import re
 from celery import Celery
 from celery.schedules import crontab
 from datetime import timedelta
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "base.settings.main")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "base.conf.main")
 app = Celery("base")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
