@@ -75,19 +75,57 @@ rizz:
   # visibility: "unlisted"
   visibility: ""
   # Rizz Mastodon configurations.
-  mastodon:
-    # API endpoint or URL for the Mastodon instance of the Rizz bot.
-    # Example:
-    # api: "https://botsin.space/"
-    api: ""
-    # The username or user account for the Mastodon instance of the Rizz bot.
-    # Example:
-    # bot: "rizz"
-    bot: ""
-    # A secure token required to authenticate the Rizz service with the Mastodon instance's API.
-    # Example:
-    # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
-    token: ""
+  # Example:
+  # mastodon:
+  #   # API endpoint or URL for the Mastodon instance of the Rizz bot.
+  #   # Example:
+  #   # api: "https://botsin.space/"
+  #   - api: ""
+  #   # The username or user account for the Mastodon instance of the Rizz bot.
+  #   # Example:
+  #   # id: "rizz"
+  #     id: ""
+  #   # A secure token required to authenticate the Rizz service with the Mastodon instance's API.
+  #   # Example:
+  #   # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  #     token: ""
+  #   # Specifies whether the Rizz bot should be marked as a bot.
+  #   # Default: true
+  #   # Example:
+  #   # bot: false
+  #     bot: ""
+  #   # Specifies whether the Rizz bot should appear in the user directory.
+  #   # Default: true
+  #   # Example:
+  #   # discoverable: false
+  #     discoverable: ""
+  #   # The display name of the Rizz bot.
+  #   # Default: null
+  #   # Example:
+  #   # display_name: "Rizz"
+  #     display_name: ""
+  #   # A list of up to four name-value pairs information to be displayed on the Rizz bot's profile.
+  #   # Default: []
+  #   # Example:
+  #   # fields:
+  #   #   - name: "Website 1"
+  #   #     value: "https://domain1.example.org"
+  #   #   - name: "Website 2"
+  #   #     value: "https://domain2.example.org"
+  #     fields:
+  #       - name: ""
+  #         value: ""
+  #   # Specifies whether the Rizz bot needs to manually approve follow requests.
+  #   # Default: false
+  #   # Example:
+  #   # locked: true
+  #     locked: ""
+  #   # The bio of the Rizz bot.
+  #   # Default: null
+  #   # Example:
+  #   # note: "This is the bio of the Rizz bot."
+  #     note: ""
+  mastodon: []
   # Rizz storage persistence configurations.
   persistence:
     # Specifies whether Rizz should persist its storage.
@@ -107,16 +145,22 @@ rizz:
       # storage: "1Gi"
       storage: ""
   # Rizz RSS configurations.
-  rss:
-    # The URL of the RSS feed to be tracked by Rizz.
-    # Example:
-    # feed: "https://www.reddit.com/r/programming/.rss"
-    feed: ""
-    # The publishing date format of the RSS feed entry.
-    # Default: "%a, %d %b %Y %H:%M:%S %z"
-    # Example:
-    # pubdate_format: "%a, %d %b %Y %H:%M:%S %Z"
-    pubdate_format: ""
+  # Example:
+  # rss:
+  #   # The URL of the RSS feed to be tracked by Rizz.
+  #   # Example:
+  #   # feed: "https://www.reddit.com/r/programming/.rss"
+  #   - feed: ""
+  #   # The publishing date format of the RSS feed entry.
+  #   # Default: "%a, %d %b %Y %H:%M:%S %z"
+  #   # Example:
+  #   # pubdate_format: "%a, %d %b %Y %H:%M:%S %Z"
+  #     pubdate_format: ""
+  #   # The unique identifier of the RSS feed entry.
+  #   # Example:
+  #   # id: "MyFeed"
+  #     id: ""
+  rss: []
   # Rizz scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by Rizz as the task scheduler.
