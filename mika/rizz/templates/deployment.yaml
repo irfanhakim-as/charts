@@ -55,6 +55,10 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            - name: {{ .Release.Name }}-rizz-rss-config
+              mountPath: /base/lib/feeds.json
+              subPath: feeds.json
+              readOnly: true
             {{- if $celery }}
             - name: {{ .Release.Name }}-rizz-default-celery-config
               mountPath: /etc/default/celeryd
@@ -101,6 +105,10 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-rizz-secret
           volumeMounts:
+            - name: {{ .Release.Name }}-rizz-rss-config
+              mountPath: /base/lib/feeds.json
+              subPath: feeds.json
+              readOnly: true
             - name: {{ .Release.Name }}-rizz-apscheduler-config
               mountPath: /entrypoint.sh
               subPath: entrypoint.sh
@@ -135,6 +143,9 @@ spec:
         - name: {{ .Release.Name }}-rizz-site-config
           configMap:
             name: {{ .Release.Name }}-rizz-site-config
+        - name: {{ .Release.Name }}-rizz-rss-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-rss-config
         {{- if $apscheduler }}
         - name: {{ .Release.Name }}-rizz-apscheduler-config
           configMap:
