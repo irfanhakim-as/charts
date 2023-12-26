@@ -38,6 +38,16 @@ metadata:
 data:
   site-config.conf: |-
     {{- include "rizz.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-rss-config
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  feeds.json: |-
+    {{- include "rizz.feeds-json" . | toString | nindent 4 }}
 {{- if $apscheduler }}
 ---
 apiVersion: v1
