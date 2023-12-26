@@ -1,3 +1,4 @@
+{{- $release_name := .Release.Name | toString }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
@@ -74,10 +75,12 @@ spec:
               mountPath: /base/base/__init__.py
               subPath: init.py
             {{- end }}
-            - name: {{ .Release.Name }}-rizz-token-secret
-              mountPath: /base/base/mastodon.secret
-              subPath: mastodon.secret
+            {{- range .Values.rizz.mastodon }}
+            - name: {{ $release_name }}-rizz-token-secret
+              mountPath: {{ printf "/base/base/%s.secret" .id | toString }}
+              subPath: {{ printf "%s.secret" .id | toString }}
               readOnly: true
+            {{- end }}
             {{- if $persistence }}
             - name: {{ .Release.Name }}-rizz-logs
               mountPath: /var/log/apache2
@@ -107,10 +110,12 @@ spec:
             - name: {{ .Release.Name }}-rizz-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
-            - name: {{ .Release.Name }}-rizz-token-secret
-              mountPath: /base/base/mastodon.secret
-              subPath: mastodon.secret
+            {{- range .Values.rizz.mastodon }}
+            - name: {{ $release_name }}-rizz-token-secret
+              mountPath: {{ printf "/base/base/%s.secret" .id | toString }}
+              subPath: {{ printf "%s.secret" .id | toString }}
               readOnly: true
+            {{- end }}
             {{- if $persistence }}
             - name: {{ .Release.Name }}-rizz-logs
               mountPath: /var/log/apache2
@@ -174,9 +179,16 @@ spec:
               - key: tasks.py
                 path: tasks.py
         {{- end }}
+        {{- if .Values.rizz.mastodon }}
         - name: {{ .Release.Name }}-rizz-token-secret
           secret:
             secretName: {{ .Release.Name }}-rizz-token-secret
+            items:
+              {{- range .Values.rizz.mastodon }}
+              - key: {{ printf "%s.secret" .id | toString }}
+                path: {{ printf "%s.secret" .id | toString }}
+              {{- end }}
+        {{- end }}
         {{- if $persistence }}
         - name: {{ .Release.Name }}-rizz-logs
           persistentVolumeClaim:
