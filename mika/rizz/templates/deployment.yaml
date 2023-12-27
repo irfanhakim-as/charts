@@ -56,11 +56,11 @@ spec:
               subPath: site-config.conf
               readOnly: true
             - name: {{ .Release.Name }}-rizz-rss-config
-              mountPath: /base/lib/feeds.json
+              mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
             - name: {{ .Release.Name }}-rizz-mastodon-config
-              mountPath: /base/lib/accounts.json
+              mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
             {{- if $celery }}
@@ -110,11 +110,11 @@ spec:
                 name: {{ .Release.Name }}-rizz-secret
           volumeMounts:
             - name: {{ .Release.Name }}-rizz-rss-config
-              mountPath: /base/lib/feeds.json
+              mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
             - name: {{ .Release.Name }}-rizz-mastodon-config
-              mountPath: /base/lib/accounts.json
+              mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
             - name: {{ .Release.Name }}-rizz-apscheduler-config
