@@ -99,6 +99,11 @@ rizz:
   #   # Example:
   #   # discoverable: false
   #     discoverable: ""
+  #   # Specifies whether the Rizz bot should be active.
+  #   # Default: true
+  #   # Example:
+  #   # enabled: false
+  #     enabled: ""
   #   # The display name of the Rizz bot.
   #   # Default: null
   #   # Example:
@@ -160,6 +165,11 @@ rizz:
   #   # Example:
   #   # id: "MyFeed"
   #     id: ""
+  #   # Specifies whether the RSS feed entry should be actively processed.
+  #   # Default: true
+  #   # Example:
+  #   # enabled: false
+  #     enabled: ""
   rss: []
   # Rizz scheduler configurations.
   scheduler:

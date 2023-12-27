@@ -12,6 +12,7 @@ Mastodon /base/lib/accounts.json template
             "api_base_url": {{ $account.api | toString | quote }},
             "is_bot": {{ $account.bot | default "true" | toString }},
             "is_discoverable": {{ $account.discoverable | default "true" | toString }},
+            "is_enabled": {{ $account.enabled | default "true" | toString }},
             {{- if $account.display_name }}
             "display_name": {{ $account.display_name | toString | quote }}
             {{- else }}
