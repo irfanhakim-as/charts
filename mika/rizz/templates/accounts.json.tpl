@@ -7,11 +7,11 @@ Mastodon /base/lib/accounts.json template
         {{- $accounts := .Values.rizz.mastodon }}
         {{- range $index, $account := $accounts }}
         {
-            "id": {{ $account.id | toString | quote }},
+            "uid": {{ $account.id | toString | quote }},
             "access_token": {{ printf "/base/base/%s.secret" $account.id | toString | quote }},
             "api_base_url": {{ $account.api | toString | quote }},
-            "bot": {{ $account.bot | default "true" | toString }},
-            "discoverable": {{ $account.discoverable | default "true" | toString }},
+            "is_bot": {{ $account.bot | default "true" | toString }},
+            "is_discoverable": {{ $account.discoverable | default "true" | toString }},
             {{- if $account.display_name }}
             "display_name": {{ $account.display_name | toString | quote }}
             {{- else }}
@@ -26,7 +26,7 @@ Mastodon /base/lib/accounts.json template
                 }{{ if ne $i (sub (len $fields) 1) }},{{ end }}
                 {{- end }}
             ],
-            "locked": {{ $account.locked | default "false" | toString }},
+            "is_locked": {{ $account.locked | default "false" | toString }},
             {{- if $account.note }}
             "note": {{ $account.note | toString | quote }}
             {{- else }}
