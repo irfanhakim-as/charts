@@ -3,7 +3,7 @@ name: rizz
 description: Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon.
 type: application
 version: 0.1.0
-appVersion: "0.1.0-mango-r7"
+appVersion: "0.1.0-multiple-r2"
 keywords:
   - "rss"
   - "monitor"
