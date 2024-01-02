@@ -3,7 +3,7 @@ Mastodon /base/lib/accounts.json template
 */}}
 {{- define "rizz.accounts-json" -}}
 {
-    "feeds": [
+    "accounts": [
         {{- $accounts := .Values.rizz.mastodon }}
         {{- range $index, $account := $accounts }}
         {
