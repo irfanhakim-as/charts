@@ -21,10 +21,10 @@ Mastodon /base/lib/accounts.json template
             "fields": [
                 {{- $fields := $account.fields }}
                 {{- range $i, $field := $fields }}
-                {
-                    "name": {{ $field.name | toString | quote }},
-                    "value": {{ $field.value | toString | quote }}
-                }{{ if ne $i (sub (len $fields) 1) }},{{ end }}
+                [
+                    {{ $field.name | toString | quote }},
+                    {{ $field.value | toString | quote }}
+                ]{{ if ne $i (sub (len $fields) 1) }},{{ end }}
                 {{- end }}
             ],
             "is_locked": {{ $account.locked | default "false" | toString }},
