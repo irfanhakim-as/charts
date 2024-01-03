@@ -117,9 +117,7 @@ rizz:
   #   #     value: "https://domain1.example.org"
   #   #   - name: "Website 2"
   #   #     value: "https://domain2.example.org"
-  #     fields:
-  #       - name: ""
-  #         value: ""
+  #     fields: []
   #   # Specifies whether the Rizz bot needs to manually approve follow requests.
   #   # Default: false
   #   # Example:
