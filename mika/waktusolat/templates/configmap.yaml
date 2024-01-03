@@ -39,6 +39,7 @@ metadata:
 data:
   site-config.conf: |-
     {{- include "waktusolat.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+{{- if .Values.waktusolat.feed }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -49,6 +50,7 @@ metadata:
 data:
   feeds.json: |-
     {{- include "waktusolat.feeds-json" . | toString | nindent 4 }}
+{{- end }}
 {{- if $apscheduler }}
 ---
 apiVersion: v1

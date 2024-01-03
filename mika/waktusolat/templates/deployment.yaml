@@ -55,14 +55,16 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            - name: {{ .Release.Name }}-waktusolat-feed-config
-              mountPath: /base/data/feeds.json
-              subPath: feeds.json
-              readOnly: true
             - name: {{ .Release.Name }}-waktusolat-mastodon-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
+            {{- if .Values.waktusolat.feed }}
+            - name: {{ .Release.Name }}-waktusolat-feed-config
+              mountPath: /base/data/feeds.json
+              subPath: feeds.json
+              readOnly: true
+            {{- end }}
             {{- if $celery }}
             - name: {{ .Release.Name }}-waktusolat-default-celery-config
               mountPath: /etc/default/celeryd
@@ -109,10 +111,6 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-waktusolat-secret
           volumeMounts:
-            - name: {{ .Release.Name }}-waktusolat-feed-config
-              mountPath: /base/data/feeds.json
-              subPath: feeds.json
-              readOnly: true
             - name: {{ .Release.Name }}-waktusolat-mastodon-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
@@ -130,6 +128,12 @@ spec:
             - name: {{ $release_name }}-waktusolat-token-secret
               mountPath: {{ printf "/base/base/%s.secret" .id | toString }}
               subPath: {{ printf "%s.secret" .id | toString }}
+              readOnly: true
+            {{- end }}
+            {{- if .Values.waktusolat.feed }}
+            - name: {{ .Release.Name }}-waktusolat-feed-config
+              mountPath: /base/data/feeds.json
+              subPath: feeds.json
               readOnly: true
             {{- end }}
             {{- if $persistence }}
@@ -151,12 +155,14 @@ spec:
         - name: {{ .Release.Name }}-waktusolat-site-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-site-config
-        - name: {{ .Release.Name }}-waktusolat-feed-config
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-feed-config
         - name: {{ .Release.Name }}-waktusolat-mastodon-config
           secret:
             secretName: {{ .Release.Name }}-waktusolat-mastodon-config
+        {{- if .Values.waktusolat.feed }}
+        - name: {{ .Release.Name }}-waktusolat-feed-config
+          configMap:
+            name: {{ .Release.Name }}-waktusolat-feed-config
+        {{- end }}
         {{- if $apscheduler }}
         - name: {{ .Release.Name }}-waktusolat-apscheduler-config
           configMap:
