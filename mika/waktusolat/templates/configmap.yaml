@@ -19,7 +19,7 @@ metadata:
     {{- include "waktusolat.labels" . | nindent 4 }}
 data:
   DEBUG: {{ $debug }}
-  LOCATION_CODE: {{ $location }}
+  LOCATION_CODES: {{ $location }}
   DEFAULT_VISIBILITY: {{ $visibility }}
   POST_LIMIT: {{ $post_limit }}
   {{- if $celery }}
