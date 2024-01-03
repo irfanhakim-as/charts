@@ -42,7 +42,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-rizz-rss-config
+  name: {{ .Release.Name }}-rizz-feed-config
   labels:
     {{- include "rizz.labels" . | nindent 4 }}
 data:

@@ -55,7 +55,7 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            - name: {{ .Release.Name }}-rizz-rss-config
+            - name: {{ .Release.Name }}-rizz-feed-config
               mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
@@ -109,7 +109,7 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-rizz-secret
           volumeMounts:
-            - name: {{ .Release.Name }}-rizz-rss-config
+            - name: {{ .Release.Name }}-rizz-feed-config
               mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
@@ -151,9 +151,9 @@ spec:
         - name: {{ .Release.Name }}-rizz-site-config
           configMap:
             name: {{ .Release.Name }}-rizz-site-config
-        - name: {{ .Release.Name }}-rizz-rss-config
+        - name: {{ .Release.Name }}-rizz-feed-config
           configMap:
-            name: {{ .Release.Name }}-rizz-rss-config
+            name: {{ .Release.Name }}-rizz-feed-config
         - name: {{ .Release.Name }}-rizz-mastodon-config
           secret:
             secretName: {{ .Release.Name }}-rizz-mastodon-config
