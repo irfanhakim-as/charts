@@ -149,13 +149,13 @@ rizz:
       # Example:
       # storage: "1Gi"
       storage: ""
-  # Rizz RSS configurations.
+  # Rizz feed configurations.
   # Example:
-  # rss:
+  # feed:
   #   # The URL of the RSS feed to be tracked by Rizz.
   #   # Example:
-  #   # feed: "https://www.reddit.com/r/programming/.rss"
-  #   - feed: ""
+  #   # endpoint: "https://www.reddit.com/r/programming/.rss"
+  #   - endpoint: ""
   #   # The publishing date format of the RSS feed entry.
   #   # Default: "%a, %d %b %Y %H:%M:%S %z"
   #   # Example:
@@ -170,7 +170,7 @@ rizz:
   #   # Example:
   #   # enabled: false
   #     enabled: ""
-  rss: []
+  feed: []
   # Rizz scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by Rizz as the task scheduler.
