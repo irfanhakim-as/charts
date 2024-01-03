@@ -75,19 +75,62 @@ waktusolat:
   # location: "wlp-0"
   location: ""
   # WaktuSolat Mastodon configurations.
-  mastodon:
-    # API endpoint or URL for the Mastodon instance of the WaktuSolat bot.
-    # Example:
-    # api: "https://botsin.space/"
-    api: ""
-    # The username or user account for the Mastodon instance of the WaktuSolat bot.
-    # Example:
-    # bot: "waktusolat"
-    bot: ""
-    # A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API.
-    # Example:
-    # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
-    token: ""
+  # Example:
+  # mastodon:
+  #   # API endpoint or URL for the Mastodon instance of the WaktuSolat bot.
+  #   # Example:
+  #   # api: "https://botsin.space/"
+  #   - api: ""
+  #   # The username or user account for the Mastodon instance of the WaktuSolat bot.
+  #   # Example:
+  #   # id: "waktusolat"
+  #     id: ""
+  #   # A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API.
+  #   # Example:
+  #   # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  #     token: ""
+  #   # Specifies whether the WaktuSolat bot should be marked as a bot.
+  #   # Default: true
+  #   # Example:
+  #   # bot: false
+  #     bot: ""
+  #   # Specifies whether the WaktuSolat bot should appear in the user directory.
+  #   # Default: true
+  #   # Example:
+  #   # discoverable: false
+  #     discoverable: ""
+  #   # Specifies whether the WaktuSolat bot should be active.
+  #   # Default: true
+  #   # Example:
+  #   # enabled: false
+  #     enabled: ""
+  #   # The display name of the WaktuSolat bot.
+  #   # Default: null
+  #   # Example:
+  #   # display_name: "WaktuSolat"
+  #     display_name: ""
+  #   # A list of up to four name-value pairs information to be displayed on the WaktuSolat bot's profile.
+  #   # Default: []
+  #   # Example:
+  #   # fields:
+  #   #   - name: "Website 1"
+  #   #     value: "https://domain1.example.org"
+  #   #   - name: "Website 2"
+  #   #     value: "https://domain2.example.org"
+  #     fields:
+  #       - name: ""
+  #         value: ""
+  #   # Specifies whether the WaktuSolat bot needs to manually approve follow requests.
+  #   # Default: false
+  #   # Example:
+  #   # locked: true
+  #     locked: ""
+  #   # The bio of the WaktuSolat bot.
+  #   # Default: null
+  #   # Example:
+  #   # note: "This is the bio of the WaktuSolat bot."
+  #     note: ""
+  mastodon: []
   # WaktuSolat storage persistence configurations.
   persistence:
     # Specifies whether WaktuSolat should persist its storage.
@@ -106,6 +149,23 @@ waktusolat:
       # Example:
       # storage: "1Gi"
       storage: ""
+  # WaktuSolat feed configurations.
+  # Example:
+  # feed:
+  #   # The URL of the prayer time API feed to be used by WaktuSolat.
+  #   # Example:
+  #   # endpoint: "https://mpt.i906.my/api/prayer/%s"
+  #   - endpoint: ""
+  #   # The unique identifier of the API feed entry, must be an ISO 3166 Alpha-2 country code in uppercase.
+  #   # Example:
+  #   # id: "MY"
+  #     id: ""
+  #   # Specifies whether the API feed entry should be active to be used.
+  #   # Default: true
+  #   # Example:
+  #   # enabled: false
+  #     enabled: ""
+  feed: []
   # WaktuSolat scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by WaktuSolat as the task scheduler.
