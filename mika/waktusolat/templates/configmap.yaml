@@ -1,5 +1,5 @@
 {{- $debug := .Values.waktusolat.debug | default "false" | toString | quote }}
-{{- $location := .Values.waktusolat.location | default "wlp-0" | toString | quote }}
+{{- $location := .Values.waktusolat.location | default "wlp-0" | join "," | toString | quote }}
 {{- $visibility := .Values.waktusolat.visibility | default "public" | toString | quote }}
 {{- $post_limit := .Values.waktusolat.post_limit | default "0" | toString | quote }}
 {{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}

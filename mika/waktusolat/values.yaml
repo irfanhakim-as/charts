@@ -69,11 +69,13 @@ waktusolat:
   # Example:
   # visibility: "unlisted"
   visibility: ""
-  # The default location code used by WaktuSolat and its services.
+  # The code of locations WaktuSolat should fetch and update prayer times for.
   # Default: "wlp-0"
   # Example:
-  # location: "wlp-0"
-  location: ""
+  # location:
+  #   - "swk-33"
+  #   - "wlp-1"
+  location: []
   # WaktuSolat Mastodon configurations.
   # Example:
   # mastodon:
