@@ -1,7 +1,5 @@
 {{- $debug := .Values.waktusolat.debug | default "false" | toString | quote }}
-{{- $location := .Values.waktusolat.location | default "wlp-0" | toString | quote }}
-{{- $api := .Values.waktusolat.mastodon.api | toString | quote }}
-{{- $bot := .Values.waktusolat.mastodon.bot | toString | quote }}
+{{- $location := .Values.waktusolat.location | default "wlp-0" | join "," | toString | quote }}
 {{- $visibility := .Values.waktusolat.visibility | default "public" | toString | quote }}
 {{- $post_limit := .Values.waktusolat.post_limit | default "0" | toString | quote }}
 {{- $scheduler_timezone := .Values.waktusolat.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
@@ -21,9 +19,7 @@ metadata:
     {{- include "waktusolat.labels" . | nindent 4 }}
 data:
   DEBUG: {{ $debug }}
-  LOCATION_CODE: {{ $location }}
-  API_BASE_URL: {{ $api }}
-  BOT_ID: {{ $bot }}
+  LOCATION_CODES: {{ $location }}
   DEFAULT_VISIBILITY: {{ $visibility }}
   POST_LIMIT: {{ $post_limit }}
   {{- if $celery }}
@@ -43,6 +39,18 @@ metadata:
 data:
   site-config.conf: |-
     {{- include "waktusolat.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+{{- if .Values.waktusolat.feed }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-waktusolat-feed-config
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+data:
+  feeds.json: |-
+    {{- include "waktusolat.feeds-json" . | toString | nindent 4 }}
+{{- end }}
 {{- if $apscheduler }}
 ---
 apiVersion: v1

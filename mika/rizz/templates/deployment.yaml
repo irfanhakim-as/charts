@@ -1,3 +1,4 @@
+{{- $release_name := .Release.Name | toString }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
@@ -54,6 +55,14 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
+            - name: {{ .Release.Name }}-rizz-feed-config
+              mountPath: /base/data/feeds.json
+              subPath: feeds.json
+              readOnly: true
+            - name: {{ .Release.Name }}-rizz-mastodon-config
+              mountPath: /base/data/accounts.json
+              subPath: accounts.json
+              readOnly: true
             {{- if $celery }}
             - name: {{ .Release.Name }}-rizz-default-celery-config
               mountPath: /etc/default/celeryd
@@ -74,10 +83,13 @@ spec:
               mountPath: /base/base/__init__.py
               subPath: init.py
             {{- end }}
-            - name: {{ .Release.Name }}-rizz-token-secret
-              mountPath: /base/base/mastodon.secret
-              subPath: mastodon.secret
+            {{- range .Values.rizz.mastodon }}
+            {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+            - name: {{ $release_name }}-rizz-token-secret
+              mountPath: {{ printf "/base/base/%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+              subPath: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
               readOnly: true
+            {{- end }}
             {{- if $persistence }}
             - name: {{ .Release.Name }}-rizz-logs
               mountPath: /var/log/apache2
@@ -98,6 +110,14 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-rizz-secret
           volumeMounts:
+            - name: {{ .Release.Name }}-rizz-feed-config
+              mountPath: /base/data/feeds.json
+              subPath: feeds.json
+              readOnly: true
+            - name: {{ .Release.Name }}-rizz-mastodon-config
+              mountPath: /base/data/accounts.json
+              subPath: accounts.json
+              readOnly: true
             - name: {{ .Release.Name }}-rizz-apscheduler-config
               mountPath: /entrypoint.sh
               subPath: entrypoint.sh
@@ -107,10 +127,13 @@ spec:
             - name: {{ .Release.Name }}-rizz-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
-            - name: {{ .Release.Name }}-rizz-token-secret
-              mountPath: /base/base/mastodon.secret
-              subPath: mastodon.secret
+            {{- range .Values.rizz.mastodon }}
+            {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+            - name: {{ $release_name }}-rizz-token-secret
+              mountPath: {{ printf "/base/base/%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+              subPath: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
               readOnly: true
+            {{- end }}
             {{- if $persistence }}
             - name: {{ .Release.Name }}-rizz-logs
               mountPath: /var/log/apache2
@@ -130,6 +153,12 @@ spec:
         - name: {{ .Release.Name }}-rizz-site-config
           configMap:
             name: {{ .Release.Name }}-rizz-site-config
+        - name: {{ .Release.Name }}-rizz-feed-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-feed-config
+        - name: {{ .Release.Name }}-rizz-mastodon-config
+          secret:
+            secretName: {{ .Release.Name }}-rizz-mastodon-config
         {{- if $apscheduler }}
         - name: {{ .Release.Name }}-rizz-apscheduler-config
           configMap:
@@ -174,9 +203,17 @@ spec:
               - key: tasks.py
                 path: tasks.py
         {{- end }}
+        {{- if .Values.rizz.mastodon }}
         - name: {{ .Release.Name }}-rizz-token-secret
           secret:
             secretName: {{ .Release.Name }}-rizz-token-secret
+            items:
+              {{- range .Values.rizz.mastodon }}
+              {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+              - key: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+                path: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+              {{- end }}
+        {{- end }}
         {{- if $persistence }}
         - name: {{ .Release.Name }}-rizz-logs
           persistentVolumeClaim:

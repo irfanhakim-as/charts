@@ -1,12 +1,8 @@
 {{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
-{{- $api := .Values.rizz.mastodon.api | toString | quote }}
-{{- $bot := .Values.rizz.mastodon.bot | toString | quote }}
 {{- $scheduler_timezone := .Values.rizz.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
-{{- $feed := .Values.rizz.rss.feed | toString | quote }}
-{{- $pubdate_format := .Values.rizz.rss.pubdate_format | default "%a, %d %b %Y %H:%M:%S %z" | toString | quote }}
 {{- $clean_data := .Values.rizz.scheduler.schedule.clean_data | default "0" | toString | quote }}
 {{- $post_scheduler := .Values.rizz.scheduler.schedule.post_scheduler | default "8-23/3" | toString | quote }}
 {{- $update_data := .Values.rizz.scheduler.schedule.update_data | default "7-22/3" | toString | quote }}
@@ -22,13 +18,9 @@ metadata:
     {{- include "rizz.labels" . | nindent 4 }}
 data:
   DEBUG: {{ $debug }}
-  API_BASE_URL: {{ $api }}
-  BOT_ID: {{ $bot }}
   DEFAULT_VISIBILITY: {{ $visibility }}
   ORGANIC_POSTS: {{ $organic }}
   POST_LIMIT: {{ $post_limit }}
-  RSS_FEED_URL: {{ $feed }}
-  RSS_PUBDATE_FORMAT: {{ $pubdate_format }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
@@ -46,6 +38,16 @@ metadata:
 data:
   site-config.conf: |-
     {{- include "rizz.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rizz-feed-config
+  labels:
+    {{- include "rizz.labels" . | nindent 4 }}
+data:
+  feeds.json: |-
+    {{- include "rizz.feeds-json" . | toString | nindent 4 }}
 {{- if $apscheduler }}
 ---
 apiVersion: v1
