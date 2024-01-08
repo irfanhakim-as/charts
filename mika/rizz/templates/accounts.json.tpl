@@ -6,9 +6,10 @@ Mastodon /base/lib/accounts.json template
     "accounts": [
         {{- $accounts := .Values.rizz.mastodon }}
         {{- range $index, $account := $accounts }}
+        {{- $normalised_api := $account.api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
         {
             "uid": {{ $account.id | toString | quote }},
-            "access_token": {{ printf "/base/base/%s.secret" $account.id | toString | quote }},
+            "access_token": {{ printf "/base/base/%s-%s.secret" $account.id $normalised_api | toString | replace " " "" | quote }},
             "api_base_url": {{ $account.api | toString | quote }},
             "is_bot": {{ $account.bot | default "true" | toString }},
             "is_discoverable": {{ $account.discoverable | default "true" | toString }},
