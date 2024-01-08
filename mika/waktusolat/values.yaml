@@ -81,7 +81,7 @@ waktusolat:
   # mastodon:
   #   # API endpoint or URL for the Mastodon instance of the WaktuSolat bot.
   #   # Example:
-  #   # api: "https://botsin.space/"
+  #   # api: "https://botsin.space"
   #   - api: ""
   #   # The username or user account for the Mastodon instance of the WaktuSolat bot.
   #   # Example:
