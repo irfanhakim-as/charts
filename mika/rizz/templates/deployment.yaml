@@ -85,9 +85,10 @@ spec:
             {{- end }}
             {{- range .Values.rizz.mastodon }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+            {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-rizz-token-secret
-              mountPath: {{ printf "/base/base/%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
-              subPath: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+              mountPath: {{ printf "/base/base/%s" $token_secret | toString }}
+              subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
             {{- if $persistence }}
@@ -129,9 +130,10 @@ spec:
               subPath: tasks.py
             {{- range .Values.rizz.mastodon }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+            {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-rizz-token-secret
-              mountPath: {{ printf "/base/base/%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
-              subPath: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+              mountPath: {{ printf "/base/base/%s" $token_secret | toString }}
+              subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
             {{- if $persistence }}
@@ -210,8 +212,9 @@ spec:
             items:
               {{- range .Values.rizz.mastodon }}
               {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
-              - key: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
-                path: {{ printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+              {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
+              - key: {{ $token_secret }}
+                path: {{ $token_secret }}
               {{- end }}
         {{- end }}
         {{- if $persistence }}
