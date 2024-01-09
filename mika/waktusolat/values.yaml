@@ -266,20 +266,24 @@ resources:
     # The minimum amount of resources required by Scheduler to run.
     requests:
       # The minimum amount of CPU resources required by Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "10m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "5m"
       cpu: "10m"
       # The minimum amount of memory required by Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "50Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "30Mi"
       memory: "100Mi"
     # The maximum amount of resources allowed for Scheduler.
     limits:
       # The maximum amount of CPU resources allowed for Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "20m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "15m"
       cpu: "20m"
       # The maximum amount of memory allowed for Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "50Mi"
       memory: "200Mi"
