@@ -101,25 +101,23 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.rizz.tag | string | `""` | The tag that specifies the version of the Rizz container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | replicaCount | string | `""` | The desired number of running replicas for Rizz. Default: `"1"`. |
-| resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
-| resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
-| resources.scheduler.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Scheduler. |
-| resources.scheduler.requests.memory | string | `"100Mi"` | The minimum amount of memory required by Scheduler. |
 | resources.rizz.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for Rizz. |
 | resources.rizz.limits.memory | string | `"120Mi"` | The maximum amount of memory allowed for Rizz. |
 | resources.rizz.requests.cpu | string | `"30m"` | The minimum amount of CPU resources required by Rizz. |
 | resources.rizz.requests.memory | string | `"60Mi"` | The minimum amount of memory required by Rizz. |
+| resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
+| resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
+| resources.scheduler.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Scheduler. |
+| resources.scheduler.requests.memory | string | `"100Mi"` | The minimum amount of memory required by Scheduler. |
 | rizz.debug | bool | `false` | Specifies whether Rizz should run in debug mode. Default: `false`. |
 | rizz.domain | string | `""` | The domain name of the Rizz service. Default: `"localhost"`. |
-| rizz.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the Rizz bot. |
-| rizz.mastodon.bot | string | `""` | The username or user account for the Mastodon instance of the Rizz bot. |
-| rizz.mastodon.token | string | `""` | A secure token required to authenticate the Rizz service with the Mastodon instance's API. |
+| rizz.feed | list | `[]` | Rizz feed configurations. |
+| rizz.mastodon | list | `[]` | Rizz Mastodon configurations. |
+| rizz.organic | bool | `true` | Specifies whether to enable posting in organic numbers. Default: `true`. |
 | rizz.persistence.enabled | bool | `false` | Specifies whether Rizz should persist its storage. |
 | rizz.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for Rizz logs. Default: `"20Mi"`. |
 | rizz.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Rizz storage. Default: `"longhorn"`. |
-| rizz.rss.feed | string | `""` | The URL of the RSS feed to be tracked by Rizz. |
-| rizz.rss.post_limit | string | `""` | The limit number of posts to be scheduled for posting by Rizz per run. Default: `"3"`. |
-| rizz.rss.pubdate_format | string | `""` | The publishing date format of the RSS feed entry. Default: `"%a, %d %b %Y %H:%M:%S %z"`. |
+| rizz.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"3"`. |
 | rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
 | rizz.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
 | rizz.scheduler.schedule.clean_data | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |

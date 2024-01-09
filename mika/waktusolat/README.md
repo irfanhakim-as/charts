@@ -111,14 +111,19 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.waktusolat.requests.memory | string | `"60Mi"` | The minimum amount of memory required by WaktuSolat. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
 | waktusolat.domain | string | `""` | The domain name of the WaktuSolat service. Default: `"localhost"`. |
-| waktusolat.location | string | `""` | The default location code used by WaktuSolat and its services. Default: `"wlp-0"`. |
-| waktusolat.mastodon.api | string | `""` | API endpoint or URL for the Mastodon instance of the WaktuSolat bot. |
-| waktusolat.mastodon.bot | string | `""` | The username or user account for the Mastodon instance of the WaktuSolat bot. |
-| waktusolat.mastodon.token | string | `""` | A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API. |
+| waktusolat.feed | list | `[]` | WaktuSolat feed configurations. |
+| waktusolat.location | list | `[]` | The code of locations WaktuSolat should fetch and update prayer times for. Default: `"wlp-0"`. |
+| waktusolat.mastodon | list | `[]` | WaktuSolat Mastodon configurations. |
 | waktusolat.persistence.enabled | bool | `false` | Specifies whether WaktuSolat should persist its storage. |
 | waktusolat.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for WaktuSolat logs. Default: `"20Mi"`. |
 | waktusolat.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage. Default: `"longhorn"`. |
+| waktusolat.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"0"` (Unlimited). |
 | waktusolat.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
+| waktusolat.scheduler.schedule.clean_db | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| waktusolat.scheduler.schedule.notify_solat_schedule | string | `""` | The hours at which the task scheduler schedules the daily prayer time schedule posts. Default: `"5"`. |
+| waktusolat.scheduler.schedule.notify_solat_times | string | `""` | The minute intervals at which the task scheduler schedules prayer time notifications. Default: `"1"`. |
+| waktusolat.scheduler.schedule.post_scheduler | string | `""` | The second intervals at which the task scheduler posts scheduled posts. Default: `"1"`. |
 | waktusolat.scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |
+| waktusolat.visibility | string | `""` | The default visibility of posts made by the WaktuSolat service. Default: `"public"`. |

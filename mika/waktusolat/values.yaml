@@ -55,29 +55,82 @@ waktusolat:
   # Example:
   # domain: "localhost"
   domain: ""
+  # The limit number of posts to be scheduled for posting per run.
+  # Default: "0" (Unlimited)
+  # Example:
+  # post_limit: "5"
+  post_limit: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
-  # The default location code used by WaktuSolat and its services.
+  # The default visibility of posts made by the WaktuSolat service.
+  # Default: "public"
+  # Example:
+  # visibility: "unlisted"
+  visibility: ""
+  # The code of locations WaktuSolat should fetch and update prayer times for.
   # Default: "wlp-0"
   # Example:
-  # location: "wlp-0"
-  location: ""
+  # location:
+  #   - "swk-33"
+  #   - "wlp-1"
+  location: []
   # WaktuSolat Mastodon configurations.
-  mastodon:
-    # API endpoint or URL for the Mastodon instance of the WaktuSolat bot.
-    # Example:
-    # api: "https://botsin.space/"
-    api: ""
-    # The username or user account for the Mastodon instance of the WaktuSolat bot.
-    # Example:
-    # bot: "waktusolat"
-    bot: ""
-    # A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API.
-    # Example:
-    # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
-    token: ""
+  # Example:
+  # mastodon:
+  #   # API endpoint or URL for the Mastodon instance of the WaktuSolat bot.
+  #   # Example:
+  #   # api: "https://botsin.space"
+  #   - api: ""
+  #   # The username or user account for the Mastodon instance of the WaktuSolat bot.
+  #   # Example:
+  #   # id: "waktusolat"
+  #     id: ""
+  #   # A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API.
+  #   # Example:
+  #   # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  #     token: ""
+  #   # Specifies whether the WaktuSolat bot should be marked as a bot.
+  #   # Default: true
+  #   # Example:
+  #   # bot: false
+  #     bot: ""
+  #   # Specifies whether the WaktuSolat bot should appear in the user directory.
+  #   # Default: true
+  #   # Example:
+  #   # discoverable: false
+  #     discoverable: ""
+  #   # Specifies whether the WaktuSolat bot should be active.
+  #   # Default: true
+  #   # Example:
+  #   # enabled: false
+  #     enabled: ""
+  #   # The display name of the WaktuSolat bot.
+  #   # Default: null
+  #   # Example:
+  #   # display_name: "WaktuSolat"
+  #     display_name: ""
+  #   # A list of up to four name-value pairs information to be displayed on the WaktuSolat bot's profile.
+  #   # Default: []
+  #   # Example:
+  #   # fields:
+  #   #   - name: "Website 1"
+  #   #     value: "https://domain1.example.org"
+  #   #   - name: "Website 2"
+  #   #     value: "https://domain2.example.org"
+  #     fields: []
+  #   # Specifies whether the WaktuSolat bot needs to manually approve follow requests.
+  #   # Default: false
+  #   # Example:
+  #   # locked: true
+  #     locked: ""
+  #   # The bio of the WaktuSolat bot.
+  #   # Default: null
+  #   # Example:
+  #   # note: "This is the bio of the WaktuSolat bot."
+  #     note: ""
+  mastodon: []
   # WaktuSolat storage persistence configurations.
   persistence:
     # Specifies whether WaktuSolat should persist its storage.
@@ -96,6 +149,23 @@ waktusolat:
       # Example:
       # storage: "1Gi"
       storage: ""
+  # WaktuSolat feed configurations.
+  # Example:
+  # feed:
+  #   # The URL of the prayer time API feed to be used by WaktuSolat.
+  #   # Example:
+  #   # endpoint: "https://mpt.i906.my/api/prayer/%s"
+  #   - endpoint: ""
+  #   # The unique identifier of the API feed entry, must be an ISO 3166 Alpha-2 country code in uppercase.
+  #   # Example:
+  #   # id: "MY"
+  #     id: ""
+  #   # Specifies whether the API feed entry should be active to be used.
+  #   # Default: true
+  #   # Example:
+  #   # enabled: false
+  #     enabled: ""
+  feed: []
   # WaktuSolat scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by WaktuSolat as the task scheduler.
@@ -106,6 +176,28 @@ waktusolat:
     # Example:
     # celery: true
     celery: false
+    # The schedule for the task scheduler used by WaktuSolat.
+    schedule:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # clean_db: "0,6,12,18"
+      clean_db: ""
+      # The hours at which the task scheduler schedules the daily prayer time schedule posts.
+      # Default: "5"
+      # Example:
+      # notify_solat_schedule: "*"
+      notify_solat_schedule: ""
+      # The minute intervals at which the task scheduler schedules prayer time notifications.
+      # Default: "1"
+      # Example:
+      # notify_solat_times: "2"
+      notify_solat_times: ""
+      # The second intervals at which the task scheduler posts scheduled posts.
+      # Default: "1"
+      # Example:
+      # post_scheduler: "10"
+      post_scheduler: ""
     # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
     # Default: "Asia/Kuala_Lumpur"
     # Example:
@@ -148,20 +240,24 @@ resources:
     # The minimum amount of resources required by WaktuSolat to run.
     requests:
       # The minimum amount of CPU resources required by WaktuSolat.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "20m"
       cpu: "30m"
       # The minimum amount of memory required by WaktuSolat.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "250Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "250Mi"
       memory: "60Mi"
     # The maximum amount of resources allowed for WaktuSolat.
     limits:
       # The maximum amount of CPU resources allowed for WaktuSolat.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "200m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "50m"
       cpu: "50m"
       # The maximum amount of memory allowed for WaktuSolat.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "400Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "450Mi"
       memory: "120Mi"
@@ -170,20 +266,24 @@ resources:
     # The minimum amount of resources required by Scheduler to run.
     requests:
       # The minimum amount of CPU resources required by Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "10m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "5m"
       cpu: "10m"
       # The minimum amount of memory required by Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "50Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "30Mi"
       memory: "100Mi"
     # The maximum amount of resources allowed for Scheduler.
     limits:
       # The maximum amount of CPU resources allowed for Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "20m" or more if using `celery` as the scheduler.
       # Example:
       # cpu: "15m"
       cpu: "20m"
       # The maximum amount of memory allowed for Scheduler.
+      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100Mi" or more if using `celery` as the scheduler.
       # Example:
       # memory: "50Mi"
       memory: "200Mi"
