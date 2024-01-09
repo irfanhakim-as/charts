@@ -86,7 +86,7 @@ spec:
               subPath: init.py
             {{- end }}
             {{- range .Values.waktusolat.mastodon }}
-            {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+            {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-waktusolat-token-secret
               mountPath: {{ printf "/base/base/%s" $token_secret | toString }}
@@ -127,7 +127,7 @@ spec:
               mountPath: /base/base/tasks.py
               subPath: tasks.py
             {{- range .Values.waktusolat.mastodon }}
-            {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+            {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-waktusolat-token-secret
               mountPath: {{ printf "/base/base/%s" $token_secret | toString }}
@@ -217,7 +217,7 @@ spec:
             secretName: {{ .Release.Name }}-waktusolat-token-secret
             items:
               {{- range .Values.waktusolat.mastodon }}
-              {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" }}
+              {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
               {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
               - key: {{ $token_secret }}
                 path: {{ $token_secret }}
