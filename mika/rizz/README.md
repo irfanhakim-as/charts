@@ -118,6 +118,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | rizz.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for Rizz logs. Default: `"20Mi"`. |
 | rizz.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Rizz storage. Default: `"longhorn"`. |
 | rizz.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"3"`. |
+| rizz.retry_post | bool | `true` | Specifies whether to retry posting if the post fails to be sent. Default: `true`. |
 | rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
 | rizz.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
 | rizz.scheduler.schedule.clean_data | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |

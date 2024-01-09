@@ -3,6 +3,7 @@
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
+{{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
 {{- $clean_data := .Values.rizz.scheduler.schedule.clean_data | default "0" | toString | quote }}
 {{- $post_scheduler := .Values.rizz.scheduler.schedule.post_scheduler | default "8-23/3" | toString | quote }}
 {{- $update_data := .Values.rizz.scheduler.schedule.update_data | default "7-22/3" | toString | quote }}
@@ -21,6 +22,7 @@ data:
   DEFAULT_VISIBILITY: {{ $visibility }}
   ORGANIC_POSTS: {{ $organic }}
   POST_LIMIT: {{ $post_limit }}
+  RETRY_POST: {{ $retry_post }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}
