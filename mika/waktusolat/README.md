@@ -121,10 +121,18 @@ helm uninstall $release_name --namespace $namespace --wait
 | waktusolat.retry_post | bool | `false` | Specifies whether to retry posting if the post fails to be sent. Default: `false`. |
 | waktusolat.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | waktusolat.scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
-| waktusolat.scheduler.schedule.clean_db | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
-| waktusolat.scheduler.schedule.notify_solat_schedule | string | `""` | The hours at which the task scheduler schedules the daily prayer time schedule posts. Default: `"5"`. |
-| waktusolat.scheduler.schedule.notify_solat_times | string | `""` | The minute intervals at which the task scheduler schedules prayer time notifications. Default: `"1"`. |
-| waktusolat.scheduler.schedule.post_scheduler | string | `""` | The second intervals at which the task scheduler posts scheduled posts. Default: `"1"`. |
+| waktusolat.scheduler.schedule.clean_db.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| waktusolat.scheduler.schedule.clean_db.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
+| waktusolat.scheduler.schedule.clean_db.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` for `apscheduler`. |
+| waktusolat.scheduler.schedule.notify_solat_schedule.hour | string | `""` | The hours at which the task scheduler schedules the daily prayer time schedule posts. Default: `"5"`. |
+| waktusolat.scheduler.schedule.notify_solat_schedule.minute | string | `""` | The minutes at which the task scheduler schedules the daily prayer time schedule posts. Default: `"0"`. |
+| waktusolat.scheduler.schedule.notify_solat_schedule.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time schedule posts. Default: `"0"` for `apscheduler`. |
+| waktusolat.scheduler.schedule.notify_solat_times.hour | string | `""` | The hours at which the task scheduler schedules prayer time notifications. Default: `"*"`. |
+| waktusolat.scheduler.schedule.notify_solat_times.minute | string | `""` | The minutes at which the task scheduler schedules prayer time notifications. Default: `"*/1"`. |
+| waktusolat.scheduler.schedule.notify_solat_times.second | string | `""` | The seconds at which the task scheduler schedules prayer time notifications. Default: `"0"` for `apscheduler`. |
+| waktusolat.scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"*"`. |
+| waktusolat.scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"*"`. |
+| waktusolat.scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"*/1"`. |
 | waktusolat.scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |
 | waktusolat.visibility | string | `""` | The default visibility of posts made by the WaktuSolat service. Default: `"public"`. |

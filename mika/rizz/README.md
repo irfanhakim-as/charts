@@ -121,9 +121,15 @@ helm uninstall $release_name --namespace $namespace --wait
 | rizz.retry_post | bool | `true` | Specifies whether to retry posting if the post fails to be sent. Default: `true`. |
 | rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
 | rizz.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
-| rizz.scheduler.schedule.clean_data | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
-| rizz.scheduler.schedule.post_scheduler | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"8-23/3"`. |
-| rizz.scheduler.schedule.update_data | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
+| rizz.scheduler.schedule.clean_data.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| rizz.scheduler.schedule.clean_data.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
+| rizz.scheduler.schedule.clean_data.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` for `apscheduler`. |
+| rizz.scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"8-23/3"`. |
+| rizz.scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"0"`. |
+| rizz.scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"0"` for `apscheduler`. |
+| rizz.scheduler.schedule.update_data.hour | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
+| rizz.scheduler.schedule.update_data.minute | string | `""` | The minutes at which the task scheduler updates the database. Default: `"0"`. |
+| rizz.scheduler.schedule.update_data.second | string | `""` | The seconds at which the task scheduler updates the database. Default: `"0"` for `apscheduler`. |
 | rizz.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Rizz to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
 | rizz.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Rizz service. |
 | rizz.visibility | string | `""` | The default visibility of posts made by the Rizz service. Default: `"public"`. |
