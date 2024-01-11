@@ -2,6 +2,20 @@
 Celery /base/base/celery.py template
 */}}
 {{- define "waktusolat.celery-py" -}}
+
+{{- $clean_db_hour := .Values.waktusolat.scheduler.schedule.clean_db.hour | default "0" | toString -}}
+{{- $clean_db_minute := .Values.waktusolat.scheduler.schedule.clean_db.minute | default "0" | toString -}}
+{{- $clean_db_second := .Values.waktusolat.scheduler.schedule.clean_db.second | toString -}}
+{{- $notify_solat_schedule_hour := .Values.waktusolat.scheduler.schedule.notify_solat_schedule.hour | default "5" | toString -}}
+{{- $notify_solat_schedule_minute := .Values.waktusolat.scheduler.schedule.notify_solat_schedule.minute | default "0" | toString -}}
+{{- $notify_solat_schedule_second := .Values.waktusolat.scheduler.schedule.notify_solat_schedule.second | toString -}}
+{{- $notify_solat_times_hour := .Values.waktusolat.scheduler.schedule.notify_solat_times.hour | default "*" | toString -}}
+{{- $notify_solat_times_minute := .Values.waktusolat.scheduler.schedule.notify_solat_times.minute | default "*/1" | toString -}}
+{{- $notify_solat_times_second := .Values.waktusolat.scheduler.schedule.notify_solat_times.second | toString -}}
+{{- $post_scheduler_hour := .Values.waktusolat.scheduler.schedule.post_scheduler.hour | default "*" | toString -}}
+{{- $post_scheduler_minute := .Values.waktusolat.scheduler.schedule.post_scheduler.minute | default "*" | toString -}}
+{{- $post_scheduler_second := .Values.waktusolat.scheduler.schedule.post_scheduler.second | default "*/1" | toString -}}
+
 from __future__ import absolute_import, unicode_literals
 import os
 import re
@@ -14,30 +28,42 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
 
-# make integer from object scheduler seconds string
-post_scheduler_seconds = int(re.sub(r"\D", "", POST_SCHEDULER_SECONDS))
-
-
 app.conf.beat_schedule = {
     # clean and update prayer times
     "clean_db": {
         "task": "base.tasks.clean_db_task",
-        "schedule": crontab(hour=CLEAN_DB_HOURS, minute="0"),
+        {{- if $clean_db_second }}
+        "schedule": timedelta(seconds=int(re.sub(r"\D", "", {{ $clean_db_second | quote }}))),
+        {{- else }}
+        "schedule": crontab(hour="{{ $clean_db_hour }}", minute="{{ $clean_db_minute }}"),
+        {{- end }}
     },
     # notify solat schedule
     "notify_solat_schedule": {
         "task": "base.tasks.notify_solat_schedule_task",
-        "schedule": crontab(hour=SOLAT_SCHED_HOURS, minute="0"),
+        {{- if $notify_solat_schedule_second }}
+        "schedule": timedelta(seconds=int(re.sub(r"\D", "", {{ $notify_solat_schedule_second | quote }}))),
+        {{- else }}
+        "schedule": crontab(hour="{{ $notify_solat_schedule_hour }}", minute="{{ $notify_solat_schedule_minute }}"),
+        {{- end }}
     },
     # check and notify solat time
     "notify_solat_times": {
         "task": "base.tasks.notify_solat_times_task",
-        "schedule": crontab(minute="*/" + SOLAT_NOTIF_MINUTES),
+        {{- if $notify_solat_times_second }}
+        "schedule": timedelta(seconds=int(re.sub(r"\D", "", {{ $notify_solat_times_second | quote }}))),
+        {{- else }}
+        "schedule": crontab(hour="{{ $notify_solat_times_hour }}", minute="{{ $notify_solat_times_minute }}"),
+        {{- end }}
     },
     # check for any posts that need to be posted
     "post_scheduler": {
         "task": "base.tasks.post_scheduler_task",
-        "schedule": timedelta(seconds=post_scheduler_seconds),
+        {{- if $post_scheduler_second }}
+        "schedule": timedelta(seconds=int(re.sub(r"\D", "", {{ $post_scheduler_second | quote }}))),
+        {{- else }}
+        "schedule": crontab(hour="{{ $post_scheduler_hour }}", minute="{{ $post_scheduler_minute }}"),
+        {{- end }}
     },
 }
 

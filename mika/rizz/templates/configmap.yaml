@@ -4,9 +4,6 @@
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
-{{- $clean_data := .Values.rizz.scheduler.schedule.clean_data | default "0" | toString | quote }}
-{{- $post_scheduler := .Values.rizz.scheduler.schedule.post_scheduler | default "8-23/3" | toString | quote }}
-{{- $update_data := .Values.rizz.scheduler.schedule.update_data | default "7-22/3" | toString | quote }}
 {{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
 {{- $domain := .Values.rizz.domain | default "localhost" | toString }}
 {{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
@@ -99,13 +96,13 @@ data:
     {{- include "rizz.apscheduler-apps-py" . | nindent 4 }}
   {{- else if $celery }}
   celery.py: |-
-    {{- include "rizz.celery-py" . | replace "CLEAN_DATA_HOURS" $clean_data | replace "UPDATE_DATA_HOURS" $update_data | replace "POST_SCHEDULER_HOURS" $post_scheduler | nindent 4 }}
+    {{- include "rizz.celery-py" . | nindent 4 }}
   init.py: |-
     {{- include "rizz.celery-init-py" . | nindent 4 }}
   {{- end }}
   tasks.py: |-
     {{- if $apscheduler }}
-      {{- include "rizz.apscheduler-tasks-py" . | replace "CLEAN_DATA_HOURS" $clean_data | replace "UPDATE_DATA_HOURS" $update_data | replace "POST_SCHEDULER_HOURS" $post_scheduler | nindent 4 }}
+      {{- include "rizz.apscheduler-tasks-py" . | nindent 4 }}
     {{- else if $celery }}
       {{- include "rizz.celery-tasks-py" . | nindent 4 }}
     {{- end }}
