@@ -1,0 +1,88 @@
+{{- $kutt_registry := .Values.image.kutt.registry | default "docker.io" | toString }}
+{{- $kutt_repository := .Values.image.kutt.repository | default "kutt/kutt" | toString }}
+{{- $kutt_tag := .Values.image.kutt.tag | default .Chart.AppVersion | toString }}
+{{- $kutt_pullPolicy := .Values.image.kutt.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
+{{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "6.0-alpine" | toString }}
+{{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $kutt_port := .Values.service.kutt.port | default "3000" | toString | int }}
+{{- $kutt_protocol := .Values.service.kutt.protocol | default "TCP" | toString }}
+{{- $external_redis := .Values.redis.external }}
+{{- $redis_password := .Values.redis.password | toString }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-kutt
+  labels:
+    {{- include "kutt.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "kutt.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "kutt.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: kutt
+          image: {{ printf "%s/%s:%s" $kutt_registry $kutt_repository $kutt_tag | quote }}
+          imagePullPolicy: {{ $kutt_pullPolicy }}
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              ./wait-for-it.sh $(DB_HOST):$(DB_PORT) -- npm start
+          ports:
+            - name: kutt
+              containerPort: {{ $kutt_port }}
+              protocol: {{ $kutt_protocol }}
+          resources:
+            {{- toYaml .Values.resources.kutt | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-kutt-config
+            - secretRef:
+                name: {{ .Release.Name }}-kutt-secret
+            - secretRef:
+                name: {{ .Release.Name }}-kutt-redis-secret
+        {{- if not $external_redis }}
+        - name: redis
+          image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
+          imagePullPolicy: {{ $redis_pullPolicy }}
+          {{- if $redis_password }}
+          command: ["redis-server"]
+          args:
+            - "--requirepass"
+            - "$(REDIS_PASSWORD)"
+          {{- end }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-kutt-redis-secret
+          volumeMounts:
+            - name: {{ .Release.Name }}-kutt-redis-data
+              mountPath: /data
+        {{- end }}
+      {{- if not $external_redis }}
+      volumes:
+        - name: {{ .Release.Name }}-kutt-redis-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-kutt-redis-data-pvc
+      {{- end }}

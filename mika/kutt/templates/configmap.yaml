@@ -1,0 +1,27 @@
+{{- $admins := .Values.kutt.admins | join "," | toString | quote }}
+{{- $domain := .Values.kutt.domain | toString }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $kutt_port := .Values.service.kutt.port | default "3000" | toString }}
+{{- $link_length := .Values.kutt.link_length | default "6" | toString | quote }}
+{{- $name := .Values.kutt.name | default "Kutt" | toString | quote }}
+{{- if not $ingress }}
+{{- $domain = $domain | default (printf "localhost:%d" $kutt_port) }}
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-kutt-config
+  labels:
+    {{- include "kutt.labels" . | nindent 4 }}
+data:
+  PORT: {{ $kutt_port | quote }}
+  SITE_NAME: {{ $name }}
+  DEFAULT_DOMAIN: {{ $domain | quote }}
+  LINK_LENGTH: {{ $link_length }}
+  DISALLOW_REGISTRATION: "false"
+  DISALLOW_ANONYMOUS_LINKS: "false"
+  USER_LIMIT_PER_DAY: "50"
+  NON_USER_COOLDOWN: "0"
+  DEFAULT_MAX_STATS_PER_LINK: "5000"
+  CUSTOM_DOMAIN_USE_HTTPS: "true"
+  ADMIN_EMAILS: {{ $admins }}

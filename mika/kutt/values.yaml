@@ -1,0 +1,238 @@
+# Default values for kutt.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Kutt.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Kutt.
+image:
+  # Kutt container image configurations.
+  kutt:
+    # The registry where the kutt container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the kutt container image used.
+    # Default: "kutt/kutt"
+    repository: ""
+    # The tag that specifies the version of the kutt container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the kutt container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Redis container image configurations.
+  redis:
+    # The registry where the redis container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the redis container image used.
+    # Default: "redis"
+    repository: ""
+    # The tag that specifies the version of the redis container image used.
+    # Default: "6.0-alpine"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the redis container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Kutt configurations.
+kutt:
+  # Email addresses of the administrators of the Kutt application so they can access admin actions.
+  # Example:
+  # admins:
+  #   - "admin@example.com"
+  #   - "su@example.com"
+  admins: []
+  # Registered domain name for Kutt.
+  # Default: "localhost:3000" if `ingress` is disabled
+  # Example:
+  # domain: "kutt.example.com"
+  domain: ""
+  # The length of the generated short links.
+  # Default: "6"
+  # Example:
+  # link_length: "8"
+  link_length: ""
+  # The name of the site where Kutt is hosted.
+  # Default: "Kutt"
+  # Example:
+  # name: "Kutt"
+  name: ""
+  # A 50-character secret key used for encrypting JSON Web Tokens (JWTs).
+  # Example:
+  # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  secret: ""
+  # Kutt mail configurations.
+  mail:
+    # The hostname or IP address of the SMTP server for sending emails.
+    # Default: "smtp.gmail.com"
+    # Example:
+    # host: ""
+    host: ""
+    # The port number on the SMTP server used for sending emails.
+    # Default: "587"
+    # Example:
+    # port: ""
+    port: ""
+    # The username for authenticating with the SMTP server.
+    # Example:
+    # user: "kutt@example.com"
+    user: ""
+    # The password for authenticating with the SMTP server.
+    # Example:
+    # password: "password"
+    password: ""
+    # The email address used as the "from" address for sent emails.
+    # Example:
+    # from_email: "no-reply@example.com"
+    from_email: ""
+    # The email address to be displayed as the contact email in the application.
+    # Example:
+    # contact_email: "contact@example.com"
+    contact_email: ""
+    # The email address that will receive submitted reports.
+    # Example:
+    # report_email: "report@example.com"
+    report_email: ""
+
+# Redis configurations.
+redis:
+  # Specifies whether Kutt should use an external Redis server.
+  # Example:
+  # external: true
+  external: false
+  # The hostname or IP address of the Redis server.
+  # Default: "localhost"
+  # Example:
+  # host: "redis.default.svc.cluster.local"
+  host: ""
+  # The password for authenticating with the Redis server.
+  # Example:
+  # password: "password"
+  password: ""
+
+# Data persistence configurations.
+data:
+  # The access mode that defines how the volume can be accessed by one or many nodes.
+  # Default: "ReadWriteOnce"
+  # Example:
+  # accessMode: "ReadWriteMany"
+  accessMode: ""
+  # The amount of persistent storage allocated for the Kutt instance.
+  # Default: "100Mi"
+  # Example:
+  # storage: "1Gi"
+  storage: ""
+  # The storage class name used for dynamically provisioning a persistent volume for the Kutt storage.
+  # Default: "longhorn"
+  # Example:
+  # storageClassName: "longhorn"
+  storageClassName: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Kutt should be hosted using an Ingress.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  clusterIssuer: ""
+
+# Service configurations.
+service:
+  # The type of service used for Kutt.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "ClusterIP"
+  type: ""
+  # Kutt service configurations.
+  kutt:
+    # The port number on which the Kutt service is listening.
+    # Default: "3000"
+    # Example:
+    # port: "3000"
+    port: ""
+    # The protocol used by the Kutt service.
+    # Default: "TCP"
+    # Example:
+    # protocol: "TCP"
+    protocol: ""
+
+# Database configurations.
+db:
+  # The type of the database used by Kutt.
+  # Default: "postgresql"
+  # Example:
+  # type: "postgresql"
+  type: ""
+  # The name of the database used by Kutt.
+  # Example:
+  # name: "kutt"
+  name: ""
+  # The username or user account for accessing the Kutt database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Kutt database's user.
+  # Example:
+  # password: "password"
+  password: ""
+  # The hostname or IP address of the Kutt database server.
+  # Example:
+  # host: "kutt.default.svc.cluster.local"
+  host: ""
+  # The port number on which the Kutt database server is listening.
+  # Default: "5432"
+  # Example:
+  # port: "5432"
+  port: ""
+
+# Resource requirements and limits for Kutt containers.
+resources:
+  # Kutt container resources.
+  kutt:
+    # The minimum amount of resources required by the kutt to run.
+    requests:
+      # The minimum amount of CPU resources required by the kutt.
+      # Example:
+      # cpu: "10m"
+      cpu: "100m"
+      # The minimum amount of memory required by the kutt.
+      # Example:
+      # memory: "10Mi"
+      memory: "150Mi"
+    # The maximum amount of resources allowed for the kutt.
+    limits:
+      # The maximum amount of CPU resources allowed for the kutt.
+      # Example:
+      # cpu: "250m"
+      cpu: "150m"
+      # The maximum amount of memory allowed for the kutt.
+      # Example:
+      # memory: "250Mi"
+      memory: "300Mi"
+  # Redis container resources.
+  redis:
+    # The minimum amount of resources required by the redis to run.
+    requests:
+      # The minimum amount of CPU resources required by the redis.
+      # Example:
+      # cpu: "10m"
+      cpu: "10m"
+      # The minimum amount of memory required by the redis.
+      # Example:
+      # memory: "10Mi"
+      memory: "20Mi"
+    # The maximum amount of resources allowed for the redis.
+    limits:
+      # The maximum amount of CPU resources allowed for the redis.
+      # Example:
+      # cpu: "250m"
+      cpu: "20m"
+      # The maximum amount of memory allowed for the redis.
+      # Example:
+      # memory: "250Mi"
+      memory: "50Mi"

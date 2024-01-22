@@ -1,0 +1,19 @@
+{{- $external_redis := .Values.redis.external }}
+{{- if not $external_redis }}
+{{- $access_mode := .Values.data.accessMode | default "ReadWriteOnce" | toString | quote }}
+{{- $storage := .Values.data.storage | default "100Mi" | toString | quote }}
+{{- $storage_class_name := .Values.data.storageClassName | default "longhorn" | toString | quote }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-kutt-redis-data-pvc
+  labels:
+    {{- include "kutt.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $access_mode }}
+  resources:
+    requests:
+      storage: {{ $storage }}
+  storageClassName: {{ $storage_class_name }}
+{{- end }}
