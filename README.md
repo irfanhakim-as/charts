@@ -15,6 +15,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [cloudflared](https://github.com/irfanhakim-as/charts/tree/master/mika/cloudflared) | Cloudflare Tunnel is a tunneling software that lets you quickly secure and encrypt application traffic to any type of infrastructure. | ✅ | ✅ |
 | [cloudflareddns](https://github.com/irfanhakim-as/charts/tree/master/mika/cloudflareddns) | Access your home network remotely via a custom domain name without a static IP! | ✅ | ✅ |
 | [grocy](https://github.com/irfanhakim-as/charts/tree/master/mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
+| [kutt](https://github.com/irfanhakim-as/charts/tree/master/mika/kutt) | Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics. | ✅ | ✅ |
 | [mango](https://github.com/irfanhakim-as/charts/tree/master/mika/mango) | Mango is an easy to use Mastodon bot framework built on top of Django. | ✅ | 🔒 |
 | [mariadb-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB instance. | ✅ | ✅ |
 | [postgres](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
