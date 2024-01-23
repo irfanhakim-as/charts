@@ -85,8 +85,9 @@ kutt:
     # password: "password"
     password: ""
     # The email address used as the "from" address for sent emails.
+    # Default: "$name <$user>"
     # Example:
-    # from_email: "no-reply@example.com"
+    # from_email: "Example User <no-reply@example.com>"
     from_email: ""
     # The email address to be displayed as the contact email in the application.
     # Example:
