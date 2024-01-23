@@ -1,0 +1,25 @@
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $kutt_port := .Values.service.kutt.port | default "3000" | toString | int }}
+{{- $kutt_protocol := .Values.service.kutt.protocol | default "TCP" | toString }}
+{{- $external_redis := .Values.redis.external }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-kutt-svc
+  labels:
+    {{- include "kutt.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ $kutt_port }}
+      targetPort: kutt
+      protocol: {{ $kutt_protocol }}
+      name: kutt
+    {{- if not $external_redis }}
+    - port: 6379
+      targetPort: redis
+      protocol: TCP
+      name: redis
+    {{- end }}
+  selector:
+    {{- include "kutt.selectorLabels" . | nindent 4 }}

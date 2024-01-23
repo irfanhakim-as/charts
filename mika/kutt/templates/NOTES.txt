@@ -1,0 +1,22 @@
+{{- $domain := .Values.kutt.domain | toString }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $kutt_port := .Values.service.kutt.port | default "3000" | toString }}
+{{- $useHttps := .Values.kutt.useHttps }}
+{{- if not $ingress }}
+{{- $domain = $domain | default (printf "localhost:%s" $kutt_port) | printf "http://%s" }}
+{{- else }}
+{{- if $useHttps }}
+{{- $domain = $domain | printf "https://%s" }}
+{{- else }}
+{{- $domain = $domain | printf "http://%s" }}
+{{- end }}
+{{- end }}
+Kutt is now installed and configured for {{ .Release.Name | toString }}.
+
+Visit the Kutt portal to get started:
+
+    - {{ $domain }}
+
+See the values.yaml file of this chart for more configuration options.
+
+Please refer to the official documentation for more information on how to use Kutt.
