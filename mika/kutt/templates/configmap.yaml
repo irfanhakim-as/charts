@@ -5,7 +5,7 @@
 {{- $link_length := .Values.kutt.link_length | default "6" | toString | quote }}
 {{- $name := .Values.kutt.name | default "Kutt" | toString | quote }}
 {{- if not $ingress }}
-{{- $domain = $domain | default (printf "localhost:%d" $kutt_port) }}
+{{- $domain = $domain | default (printf "localhost:%s" $kutt_port) }}
 {{- end }}
 apiVersion: v1
 kind: ConfigMap

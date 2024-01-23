@@ -46,7 +46,7 @@ kutt:
   #   - "su@example.com"
   admins: []
   # Registered domain name for Kutt.
-  # Default: "localhost:3000" if `ingress` is disabled
+  # Default: "localhost:$service.kutt.port" if `ingress` is disabled
   # Example:
   # domain: "kutt.example.com"
   domain: ""
