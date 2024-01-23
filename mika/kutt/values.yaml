@@ -127,6 +127,11 @@ kutt:
     # Example:
     # password: "password"
     password: ""
+    # Specifies whether Kutt should use a secure TLS connection when sending emails.
+    # Note: In most cases, set this to true if the SMTP port is 465 (SSL) and false if you are using port 587 (TLS) or 25 (SSL/TLS).
+    # Example
+    # secure: false
+    secure: true
     # The email address used as the "from" address for sent emails.
     # Default: "$name <$user>"
     # Example:
