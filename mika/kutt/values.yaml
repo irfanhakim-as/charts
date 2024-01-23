@@ -72,7 +72,7 @@ kutt:
     # host: ""
     host: ""
     # The port number on the SMTP server used for sending emails.
-    # Default: "587"
+    # Default: "465"
     # Example:
     # port: ""
     port: ""
