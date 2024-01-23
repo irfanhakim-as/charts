@@ -5,6 +5,18 @@
 - Kubernetes 1.19+
 - Helm 3.2.0+
 
+## Preflight checklist
+
+### Generate secret key for `kutt.secret`
+
+```sh
+python -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)]))'
+```
+
+### Provision a PostgreSQL database
+
+Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.create` set to `true`. This step can be skipped if you have an existing PostgreSQL database.
+
 ## How to add repo
 
 Add the repo to your local helm client.
