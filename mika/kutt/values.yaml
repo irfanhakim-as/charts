@@ -212,6 +212,15 @@ service:
 
 # Database configurations.
 db:
+  # The hostname or IP address of the Kutt database server.
+  # Example:
+  # host: "kutt.default.svc.cluster.local"
+  host: ""
+  # The port number on which the Kutt database server is listening.
+  # Default: "5432"
+  # Example:
+  # port: "5432"
+  port: ""
   # The name of the database used by Kutt.
   # Example:
   # name: "kutt"
@@ -224,15 +233,6 @@ db:
   # Example:
   # password: "password"
   password: ""
-  # The hostname or IP address of the Kutt database server.
-  # Example:
-  # host: "kutt.default.svc.cluster.local"
-  host: ""
-  # The port number on which the Kutt database server is listening.
-  # Default: "5432"
-  # Example:
-  # port: "5432"
-  port: ""
   # Specifies whether the Kutt database server should use SSL.
   # Example:
   # ssl: true
