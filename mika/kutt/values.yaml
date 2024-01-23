@@ -238,6 +238,10 @@ db:
   # Example:
   # port: "5432"
   port: ""
+  # Specifies whether the Kutt database server should use SSL.
+  # Example:
+  # ssl: true
+  ssl: false
 
 # Resource requirements and limits for Kutt containers.
 resources:
