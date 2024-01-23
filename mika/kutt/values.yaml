@@ -93,6 +93,20 @@ kutt:
     # Example:
     # nonUserCooldown: "1"
     nonUserCooldown: ""
+  # Kutt Google configurations.
+  google:
+    # The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro.
+    # Example:
+    # recaptchaSecretKey: "01eHZ5I71tcYAhDOG9IlJqDk6sOx4X8rNsOFBcXz"
+    recaptchaSecretKey: ""
+    # The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro.
+    # Example:
+    # recaptchaSiteKey: "01eHZ5I71tcYA4DYuVcw7mUqZAWujE7SUr9r7XAm"
+    recaptchaSiteKey: ""
+    # The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started.
+    # Example:
+    # safeBrowsingKey: "Z0VNqFK9NqYYwFP27v9-eC1St4HTz3uRTJRfii5"
+    safeBrowsingKey: ""
   # Kutt mail configurations.
   mail:
     # The hostname or IP address of the SMTP server for sending emails.
