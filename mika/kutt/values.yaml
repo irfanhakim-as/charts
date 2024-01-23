@@ -157,6 +157,11 @@ redis:
   # Example:
   # host: "redis.default.svc.cluster.local"
   host: ""
+  # The port number on which the EXTERNAL Redis server is listening.
+  # Default: "6379"
+  # Example:
+  # port: "9763"
+  port: ""
   # The password for authenticating with the Redis server.
   # Example:
   # password: "password"
