@@ -395,6 +395,31 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/grocy-0.1.0/grocy-0.1.0.tgz
     version: 0.1.0
+  kutt:
+  - apiVersion: v2
+    appVersion: v2.7.4
+    created: "2024-01-23T12:04:08.114996456Z"
+    description: Kutt is a modern URL shortener with support for custom domains. Shorten
+      URLs, manage your links and view the click rate statistics.
+    digest: dbb9a59180d18a8dc0c2bf9d9d92b74974e9b03c8e04ed5e95c5a7a3a81be0ae
+    home: https://github.com/thedevs-network/kutt
+    icon: https://github.com/thedevs-network/kutt/blob/develop/static/images/logo.svg
+    keywords:
+    - kutt
+    - url
+    - shortener
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: kutt
+    sources:
+    - https://github.com/thedevs-network/kutt
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.1.0/kutt-0.1.0.tgz
+    version: 0.1.0
   mango:
   - apiVersion: v2
     appVersion: 0.0.1-stable
@@ -1913,4 +1938,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-11T11:15:03.139494974Z"
+generated: "2024-01-23T12:04:08.115166074Z"
