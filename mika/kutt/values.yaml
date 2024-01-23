@@ -207,7 +207,7 @@ service:
     # The port number on which the Kutt service is listening.
     # Default: "3000"
     # Example:
-    # port: "3000"
+    # port: "3500"
     port: ""
     # The protocol used by the Kutt service.
     # Default: "TCP"
