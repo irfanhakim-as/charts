@@ -212,11 +212,6 @@ service:
 
 # Database configurations.
 db:
-  # The type of the database used by Kutt.
-  # Default: "postgresql"
-  # Example:
-  # type: "postgresql"
-  type: ""
   # The name of the database used by Kutt.
   # Example:
   # name: "kutt"
