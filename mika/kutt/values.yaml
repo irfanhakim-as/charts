@@ -45,7 +45,7 @@ kutt:
   #   - "admin@example.com"
   #   - "su@example.com"
   admins: []
-  # Registered domain name for Kutt.
+  # The domain name that is hosting the Kutt application.
   # Default: "localhost:$service.kutt.port" if `ingress` is disabled
   # Example:
   # domain: "kutt.example.com"
@@ -133,7 +133,7 @@ kutt:
     # secure: false
     secure: true
     # The email address used as the "from" address for sent emails.
-    # Default: "$name <$user>"
+    # Default: "$name <$mail.user>"
     # Example:
     # from_email: "Example User <no-reply@example.com>"
     from_email: ""
