@@ -1,15 +1,21 @@
 {{- $persistent_data := .Values.storage.data.enabled }}
+{{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
 {{- $smb := .Values.storage.smb.enabled }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
 {{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
+{{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
+{{- $jackett_tag := .Values.image.jackett.tag | default "0.21.1700" | toString }}
+{{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
 {{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
 {{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $jackettResources := .Values.resources.jackett }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $initScript := .Values.global.initScript | toString }}
 {{- $smbMountPath := .Values.storage.smb.mountPath | default "/mnt/smb" | toString | quote }}
@@ -51,6 +57,31 @@ spec:
               {{- $initScript | nindent 14 }}
       {{- end }}
       containers:
+        - name: jackett
+          image: {{ printf "%s/%s:%s" $jackett_registry $jackett_repository $jackett_tag | quote }}
+          imagePullPolicy: {{ $jackett_pullPolicy }}
+          ports:
+            - name: jackett
+              containerPort: 9117
+              protocol: TCP
+          resources:
+            {{- toYaml $jackettResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plexmaster-cm
+            - configMapRef:
+                name: {{ .Release.Name }}-jackett-cm
+          {{- if or $persistent_data $persistent_downloads }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-plexmaster-data
+              mountPath: /config
+            {{- end }}
+            {{- if $persistent_downloads }}
+            - name: {{ .Release.Name }}-plexmaster-downloads
+              mountPath: /downloads
+            {{- end }}
+          {{- end }}
         - name: plex
           image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
           imagePullPolicy: {{ $plex_pullPolicy }}
@@ -84,12 +115,17 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_media $smb }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-data-pvc
+        {{- end }}
+        {{- if $persistent_downloads }}
+        - name: {{ .Release.Name }}-plexmaster-downloads
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-downloads-pvc
         {{- end }}
         {{- if $persistent_media }}
         - name: {{ .Release.Name }}-plexmaster-media

@@ -9,6 +9,10 @@ metadata:
 spec:
   type: {{ $type }}
   ports:
+    - port: 9117
+      targetPort: jackett
+      protocol: TCP
+      name: jackett
     - port: 32400
       targetPort: plex
       protocol: TCP

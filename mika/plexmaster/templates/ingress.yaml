@@ -1,5 +1,6 @@
 {{- $ingress := .Values.ingress.enabled }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $jackettDomain := .Values.jackett.domain | toString | quote }}
 {{- $plexDomain := .Values.plex.domain | toString | quote }}
 {{- if $ingress }}
 ---
@@ -22,6 +23,16 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
+    - host: {{ $jackettDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-plexmaster-svc
+                port:
+                  name: jackett
+            path: /
+            pathType: Prefix
     - host: {{ $plexDomain }}
       http:
         paths:
@@ -34,6 +45,7 @@ spec:
             pathType: Prefix
   tls:
     - hosts:
+        - {{ $jackettDomain }}
         - {{ $plexDomain }}
       secretName: {{ .Release.Name }}-plexmaster-tls-cert
 {{- end }}
