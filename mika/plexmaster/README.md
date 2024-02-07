@@ -87,8 +87,8 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Settings > Server > Network:
 
-    - Enable Relay: `Disabled`
-    - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`
+    - Enable Relay: `Disabled`.
+    - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
 
 ---
 
