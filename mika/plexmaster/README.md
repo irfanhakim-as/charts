@@ -79,6 +79,16 @@ helm uninstall $release_name --namespace $namespace --wait
 
 ## Application Configuration
 
+### Jackett
+
+- Launch the Jackett web interface.
+
+- In the **Jackett Configuration** section:
+
+  - Admin password: Add a secure password and click the **Set Password** button.
+  - Blackhole directory: `/downloads`.
+  - Click the **Apply server settings** button.
+
 ### Plex
 
 - Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
