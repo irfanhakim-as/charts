@@ -1,5 +1,25 @@
 {{- $uid := .Values.global.uid | default "1000" | toString | quote }}
 {{- $gid := .Values.global.gid | default "1000" | toString | quote }}
+{{- $jackettAutoUpdate := .Values.jackett.autoUpdate | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-plexmaster-cm
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+data:
+  PUID: {{ $uid }}
+  PGID: {{ $gid }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-jackett-cm
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+data:
+  AUTO_UPDATE: {{ $jackettAutoUpdate }}
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -22,6 +22,20 @@ image:
     # The policy that determines when Kubernetes should pull the Init container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Jackett container image configurations.
+  jackett:
+    # The registry where the Jackett container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Jackett container image used.
+    # Default: "linuxserver/jackett"
+    repository: ""
+    # The tag that specifies the version of the Jackett container image used.
+    # Default: "0.21.1700"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Jackett container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # Plex container image configurations.
   plex:
     # The registry where the Plex container image is hosted.
@@ -61,6 +75,17 @@ global:
   # Example:
   # gid: ""
   gid: ""
+
+# Jackett configurations.
+jackett:
+  # Specifies whether to allow Jackett to automatically update itself inside the container.
+  # Example:
+  # autoUpdate: false
+  autoUpdate: true
+  # The ingress domain name that hosts the Jackett server.
+  # Example:
+  # domain: "jackett.example.com"
+  domain: ""
 
 # Plex configurations.
 plex:
@@ -105,6 +130,22 @@ storage:
     # storage: "1Gi"
     storage: ""
     # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Downloads storage configurations.
+  downloads:
+    # Specifies whether persistent storage should be provisioned for downloads storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The amount of persistent storage allocated for the downloads storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
@@ -180,6 +221,30 @@ storage:
 
 # Resource requirements and limits for plexmaster containers.
 resources:
+  # Jackett container resources.
+  # Example:
+  # jackett:
+  #   # The minimum amount of resources required by Jackett to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Jackett.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by Jackett.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Jackett.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Jackett.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for Jackett.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "600Mi"
+  jackett: {}
   # Plex container resources.
   # Example:
   # plex:
