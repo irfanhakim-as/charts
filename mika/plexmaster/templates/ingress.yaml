@@ -1,0 +1,39 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $plexDomain := .Values.plex.domain | toString | quote }}
+{{- if $ingress }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-plexmaster-ingress
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
+    cert-manager.io/private-key-algorithm: "ECDSA"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.org/client-max-body-size: "100m"
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ $plexDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-plexmaster-svc
+                port:
+                  name: plex
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - {{ $plexDomain }}
+      secretName: {{ .Release.Name }}-plexmaster-tls-cert
+{{- end }}

@@ -1,0 +1,206 @@
+# Default values for plexmaster.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for plexmaster.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for plexmaster.
+image:
+  # Init container image configurations.
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.34"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Plex container image configurations.
+  plex:
+    # The registry where the Plex container image is hosted.
+    # Default: "index.docker.io"
+    registry: ""
+    # The name of the repository that contains the Plex container image used.
+    # Default: "plexinc/pms-docker"
+    repository: ""
+    # The tag that specifies the version of the Plex container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Plex container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Global configurations.
+global:
+  # Custom init script to run before the plexmaster containers start.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+  # The user ID used to run the plexmaster containers.
+  # Default: "1000"
+  # Example:
+  # uid: ""
+  uid: ""
+  # The group ID used to run the plexmaster containers.
+  # Default: "1000"
+  # Example:
+  # gid: ""
+  gid: ""
+
+# Plex configurations.
+plex:
+  # The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim.
+  # Example:
+  # claim: "claim-bW419gvogwjNfYCowOGa"
+  claim: ""
+  # The ingress domain name that hosts the Plex server.
+  # Example:
+  # domain: "plex.example.com"
+  domain: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether plexmaster should be hosted using an Ingress.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  clusterIssuer: ""
+
+# Service configurations.
+service:
+  # The type of service used for plexmaster services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Media storage configurations.
+  media:
+    # Specifies whether persistent storage should be provisioned for media storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The amount of persistent storage allocated for the media storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the media storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # SMB storage configurations.
+  smb:
+    # Specifies whether persistent storage should be provisioned in the form of an SMB share.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The additional mount options used to mount the SMB share volume.
+    # Example:
+    # mountOptions:
+    #   - "_netdev"
+    #   - "nofail"
+    #   - "vers=3.0"
+    #   - "iocharset=utf8"
+    mountOptions: []
+    # The amount of persistent storage available on the SMB share volume.
+    # Default: "100Gi"
+    # Example:
+    # pvStorage: "10Gi"
+    pvStorage: ""
+    # The amount of persistent storage allocated for the SMB share storage.
+    # Default: "1Gi"
+    # Example:
+    # pvcStorage: "500Mi"
+    pvcStorage: ""
+    # The SMB share address and name to mount as a persistent volume.
+    # Example:
+    # share: "//192.168.0.123/mynas"
+    share: ""
+    # The name of the existing secret containing the credentials used to authenticate with the SMB share.
+    # Default: "smbcreds"
+    # Example:
+    # secretName: "smb-secret"
+    secretName: ""
+    # The namespace where the secret containing the credentials used to authenticate with the SMB share is located.
+    # Default: "default"
+    # Example:
+    # secretNamespace: "smb"
+    secretNamespace: ""
+    # The path where the SMB share volume should be mounted on the container.
+    # Default: "/mnt/smb"
+    # Example:
+    # mountPath: "/mnt/mynas"
+    mountPath: ""
+    # The sub-path within the SMB share volume to mount.
+    # Example:
+    # subPath: "Media"
+    subPath: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the SMB share storage.
+    # Default: "smb"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+
+# Resource requirements and limits for plexmaster containers.
+resources:
+  # Plex container resources.
+  # Example:
+  # plex:
+  #   # The minimum amount of resources required by Plex to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Plex.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by Plex.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Plex.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Plex.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for Plex.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "600Mi"
+  plex: {}

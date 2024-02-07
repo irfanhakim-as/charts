@@ -1,0 +1,17 @@
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-plexmaster-svc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: 32400
+      targetPort: plex
+      protocol: TCP
+      name: plex
+  selector:
+    {{- include "plexmaster.selectorLabels" . | nindent 4 }}

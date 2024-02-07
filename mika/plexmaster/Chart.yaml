@@ -1,0 +1,21 @@
+apiVersion: v2
+name: plexmaster
+description: PlexMaster is a collection of services that provides a complete media server solution.
+type: application
+version: 0.1.0
+appVersion: "1.32.8.7639-fb6452ebf"
+keywords:
+  - "plexmaster"
+  - "plex"
+  - "media"
+  - "server"
+  - "streaming"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/mika.png"
+sources:
+  - "https://github.com/plexinc/pms-docker"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

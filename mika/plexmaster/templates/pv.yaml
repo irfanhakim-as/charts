@@ -1,0 +1,48 @@
+{{- $smb := .Values.storage.smb.enabled }}
+{{- $mountOptions := .Values.storage.smb.mountOptions }}
+{{- $secretName := .Values.storage.smb.secretName | default "smbcreds" | toString | quote }}
+{{- $secretNamespace := .Values.storage.smb.secretNamespace | default "default" | toString | quote }}
+{{- $share := .Values.storage.smb.share | toString | quote }}
+{{- $storage := .Values.storage.smb.pvStorage | default "100Gi" | toString | quote }}
+{{- $storageClassName := .Values.storage.smb.storageClassName | default "smb" | toString | quote }}
+{{- $uid := .Values.global.uid | default "1000" | toString }}
+{{- $gid := .Values.global.gid | default "1000" | toString }}
+{{- if $smb }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-plexmaster-smb-pv
+  annotations:
+    pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  capacity:
+    storage: {{ $storage }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ $storageClassName }}
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+    - uid={{ $uid }}
+    - gid={{ $gid }}
+    - noperm
+    - mfsymlinks
+    - cache=strict
+    - noserverino  # required to prevent data corruption
+    {{- range $option := $mountOptions }}
+    - {{ $option }}
+    {{- end }}
+  csi:
+    driver: smb.csi.k8s.io
+    readOnly: false
+    volumeHandle: {{ .Release.Name }}-plexmaster-smb-pv
+    volumeAttributes:
+      source: {{ $share }}
+    nodeStageSecretRef:
+      name: {{ $secretName }}
+      namespace: {{ $secretNamespace }}
+{{- end }}

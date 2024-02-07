@@ -1,0 +1,58 @@
+{{- $persistent_data := .Values.storage.data.enabled }}
+{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $smb := .Values.storage.smb.enabled }}
+{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
+{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $mediaStorage := .Values.storage.media.storage | default "1Gi" | toString | quote }}
+{{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
+{{- $smbStorage := .Values.storage.smb.pvcStorage | default "1Gi" | toString | quote }}
+{{- $smbStorageClassName := .Values.storage.smb.storageClassName | default "smb" | toString | quote }}
+{{- if $persistent_data }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-data-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
+{{- if $persistent_media }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-media-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $mediaStorage }}
+  storageClassName: {{ $mediaStorageClassName }}
+{{- end }}
+{{- if $smb }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-smb-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $smbStorage }}
+  volumeName: {{ .Release.Name }}-plexmaster-smb-pv
+  storageClassName: {{ $smbStorageClassName }}
+{{- end }}

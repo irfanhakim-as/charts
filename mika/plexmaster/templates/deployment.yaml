@@ -1,0 +1,104 @@
+{{- $persistent_data := .Values.storage.data.enabled }}
+{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $smb := .Values.storage.smb.enabled }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
+{{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
+{{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
+{{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $plexResources := .Values.resources.plex }}
+{{- $initScript := .Values.global.initScript | toString }}
+{{- $smbMountPath := .Values.storage.smb.mountPath | default "/mnt/smb" | toString | quote }}
+{{- $smbSubPath := .Values.storage.smb.subPath | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-plexmaster
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "plexmaster.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "plexmaster.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+              {{- $initScript | nindent 14 }}
+      {{- end }}
+      containers:
+        - name: plex
+          image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
+          imagePullPolicy: {{ $plex_pullPolicy }}
+          ports:
+            - name: plex
+              containerPort: 32400
+              protocol: TCP
+          resources:
+            {{- toYaml $plexResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plex-cm
+            - secretRef:
+                name: {{ .Release.Name }}-plex-secret
+          {{- if or $persistent_data $persistent_media $smb }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-plexmaster-data
+              mountPath: /config
+            {{- end }}
+            {{- if $persistent_media }}
+            - name: {{ .Release.Name }}-plexmaster-media
+              mountPath: /data
+            {{- end }}
+            {{- if $smb }}
+            - name: {{ .Release.Name }}-plexmaster-smb
+              mountPath: {{ $smbMountPath }}
+              {{- if $smbSubPath }}
+              subPath: {{ $smbSubPath | quote }}
+              {{- end }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+      {{- if or $persistent_data $persistent_media $smb }}
+      volumes:
+        {{- if $persistent_data }}
+        - name: {{ .Release.Name }}-plexmaster-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-data-pvc
+        {{- end }}
+        {{- if $persistent_media }}
+        - name: {{ .Release.Name }}-plexmaster-media
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-media-pvc
+        {{- end }}
+        {{- if $smb }}
+        - name: {{ .Release.Name }}-plexmaster-smb
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-smb-pvc
+        {{- end }}
+      {{- end }}

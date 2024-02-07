@@ -1,0 +1,12 @@
+{{- $uid := .Values.global.uid | default "1000" | toString | quote }}
+{{- $gid := .Values.global.gid | default "1000" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-plex-cm
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+data:
+  PLEX_UID: {{ $uid }}
+  PLEX_GID: {{ $gid }}
