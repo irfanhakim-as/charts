@@ -135,7 +135,7 @@ spec:
               containerPort: 8080
               protocol: TCP
           resources:
-            {{- toYaml $jackettResources | nindent 12 }}
+            {{- toYaml $qbtResources | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
