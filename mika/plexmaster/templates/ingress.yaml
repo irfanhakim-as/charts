@@ -2,6 +2,7 @@
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $jackettDomain := .Values.jackett.domain | toString | quote }}
 {{- $plexDomain := .Values.plex.domain | toString | quote }}
+{{- $qbtDomain := .Values.qbt.domain | toString | quote }}
 {{- if $ingress }}
 ---
 apiVersion: networking.k8s.io/v1
@@ -43,9 +44,20 @@ spec:
                   name: plex
             path: /
             pathType: Prefix
+    - host: {{ $qbtDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-plexmaster-svc
+                port:
+                  name: qbt-web
+            path: /
+            pathType: Prefix
   tls:
     - hosts:
         - {{ $jackettDomain }}
         - {{ $plexDomain }}
+        - {{ $qbtDomain }}
       secretName: {{ .Release.Name }}-plexmaster-tls-cert
 {{- end }}

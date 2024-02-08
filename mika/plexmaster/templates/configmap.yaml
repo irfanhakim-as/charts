@@ -30,3 +30,12 @@ metadata:
 data:
   PLEX_UID: {{ $uid }}
   PLEX_GID: {{ $gid }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-qbittorrent-cm
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+data:
+  WEBUI_PORT: "8080"
