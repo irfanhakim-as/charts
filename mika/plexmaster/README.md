@@ -128,6 +128,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Click the **Save** button to apply the changes.
 
+### Sonarr
+
+- TODO.
+
 ---
 
 ## Configurations
