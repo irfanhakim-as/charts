@@ -175,26 +175,30 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.sonarr | object | `{}` | Sonarr container resources. |
 | service.type | string | `""` | The type of service used for plexmaster services. Default: `"ClusterIP"`. |
+| smb.enabled | bool | `false` | Specifies whether to enable persistent storage to be provisioned in the form of an SMB share. |
+| smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |
+| smb.pvStorage | string | `""` | The amount of persistent storage available on the SMB share volume. Default: `"100Gi"`. |
+| smb.pvcStorage | string | `""` | The amount of persistent storage allocated for the SMB share storage. Default: `"1Gi"`. |
+| smb.secretName | string | `""` | The name of the existing secret containing the credentials used to authenticate with the SMB share. Default: `"smbcreds"`. |
+| smb.secretNamespace | string | `""` | The namespace where the secret containing the credentials used to authenticate with the SMB share is located. Default: `"default"`. |
+| smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
+| smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
 | sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
-| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
-| storage.downloads.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for downloads storage. |
-| storage.downloads.storage | string | `""` | The amount of persistent storage allocated for the downloads storage. Default: `"1Gi"`. |
-| storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. Default: `"longhorn"`. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.smb | bool | `false` | Specifies whether to use an SMB share for the data storage. |
+| storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
+| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
+| storage.data.subPath | string | `""` | The sub-path within the data storage to mount for the container. |
+| storage.downloads.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for downloads storage. |
+| storage.downloads.mountPath | string | `""` | The path where the downloads storage should be mounted on the container. Default: `"/downloads"`. |
+| storage.downloads.smb | bool | `false` | Specifies whether to use an SMB share for the downloads storage. |
+| storage.downloads.storage | string | `""` | The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
+| storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
+| storage.downloads.subPath | string | `""` | The sub-path within the downloads storage to mount for the container. |
 | storage.media.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for media storage. |
-| storage.media.storage | string | `""` | The amount of persistent storage allocated for the media storage. Default: `"1Gi"`. |
-| storage.media.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the media storage. Default: `"longhorn"`. |
-| storage.smb.enabled | bool | `false` | Specifies whether persistent storage should be provisioned in the form of an SMB share. |
-| storage.smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |
-| storage.smb.mountPath.plex | string | `""` | The path where the SMB share volume should be mounted on the Plex container. Default: `"/mnt/smb"`. |
-| storage.smb.pvStorage | string | `""` | The amount of persistent storage available on the SMB share volume. Default: `"100Gi"`. |
-| storage.smb.pvcStorage | string | `""` | The amount of persistent storage allocated for the SMB share storage. Default: `"1Gi"`. |
-| storage.smb.secretName | string | `""` | The name of the existing secret containing the credentials used to authenticate with the SMB share. Default: `"smbcreds"`. |
-| storage.smb.secretNamespace | string | `""` | The namespace where the secret containing the credentials used to authenticate with the SMB share is located. Default: `"default"`. |
-| storage.smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
-| storage.smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
-| storage.smb.subPath.plex | string | `""` | The sub-path within the SMB share volume to mount for the Plex container. |
-| storage.smb.subPath.qbt | string | `""` | The sub-path within the SMB share volume to mount for the qBittorrent container. |
-| storage.smb.subPath.sonarr.downloads | string | `""` | The downloads sub-path within the SMB share volume to mount for the Sonarr container. |
-| storage.smb.subPath.sonarr.media | string | `""` | The media sub-path within the SMB share volume to mount for the Sonarr container. |
+| storage.media.mountPath | string | `""` | The path where the media storage should be mounted on the container. Default: `"/data"`. |
+| storage.media.smb | bool | `false` | Specifies whether to use an SMB share for the media storage. |
+| storage.media.storage | string | `""` | The amount of persistent storage allocated for the media storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
+| storage.media.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the media storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
+| storage.media.subPath | string | `""` | The sub-path within the media storage to mount for the container. |
