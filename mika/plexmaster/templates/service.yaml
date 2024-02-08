@@ -17,5 +17,17 @@ spec:
       targetPort: plex
       protocol: TCP
       name: plex
+    - port: 6881
+      targetPort: qbt
+      protocol: TCP
+      name: qbt
+    - port: 6881
+      targetPort: qbt-udp
+      protocol: UDP
+      name: qbt-udp
+    - port: 8080
+      targetPort: qbt-web
+      protocol: TCP
+      name: qbt-web
   selector:
     {{- include "plexmaster.selectorLabels" . | nindent 4 }}

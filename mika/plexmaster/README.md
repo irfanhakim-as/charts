@@ -99,8 +99,34 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Settings > Server > Network:
 
-    - Enable Relay: `Disabled`.
-    - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+  - Enable Relay: `Disabled`.
+  - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+
+### qBittorrent
+
+- Log into the qBittorrent web interface using the temporary password provided in the logs.
+
+- Click the **Options** button (gear cog icon).
+
+- In the newly opened **Options** window, navigate to the **Web UI** tab:
+
+  - Under the **Authentication** section, set a new **Username** and **Password** accordingly.
+
+- Navigate to the **Downloads** tab:
+
+  - Use Subcategories: `Enabled`.
+  - Default Save Path: `/downloads`.
+  - Keep incomplete torrents in: `/downloads/incomplete`.
+  - Run external program on torrent finished: `/usr/bin/unrar x -r -y "%D*.rar" "%D"`
+
+- Navigate to the **BitTorrent** tab:
+
+  - Torrent Queueing: `Enabled`.
+  - When ratio reaches: `1`.
+  - When total seeding time reaches: `1440 minutes`.
+  - then: `Remove torrent and its files`.
+
+- Click the **Save** button to apply the changes.
 
 ---
 
@@ -123,6 +149,10 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.plex.registry | string | `""` | The registry where the Plex container image is hosted. Default: `"index.docker.io"`. |
 | image.plex.repository | string | `""` | The name of the repository that contains the Plex container image used. Default: `"plexinc/pms-docker"`. |
 | image.plex.tag | string | `""` | The tag that specifies the version of the Plex container image used. Default: `Chart appVersion`. |
+| image.qbt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the qBittorrent container image. Default: `"IfNotPresent"`. |
+| image.qbt.registry | string | `""` | The registry where the qBittorrent container image is hosted. Default: `"lscr.io"`. |
+| image.qbt.repository | string | `""` | The name of the repository that contains the qBittorrent container image used. Default: `"linuxserver/qbittorrent"`. |
+| image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `4.6.3-r0-ls310`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.enabled | bool | `false` | Specifies whether plexmaster should be hosted using an Ingress. |
@@ -130,9 +160,11 @@ helm uninstall $release_name --namespace $namespace --wait
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
+| qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
+| resources.qbt | object | `{}` | qBittorrent container resources. |
 | service.type | string | `""` | The type of service used for plexmaster services. Default: `"ClusterIP"`. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
@@ -145,11 +177,12 @@ helm uninstall $release_name --namespace $namespace --wait
 | storage.media.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the media storage. Default: `"longhorn"`. |
 | storage.smb.enabled | bool | `false` | Specifies whether persistent storage should be provisioned in the form of an SMB share. |
 | storage.smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |
-| storage.smb.mountPath | string | `""` | The path where the SMB share volume should be mounted on the container. Default: `"/mnt/smb"`. |
+| storage.smb.mountPath.plex | string | `""` | The path where the SMB share volume should be mounted on the Plex container. Default: `"/mnt/smb"`. |
 | storage.smb.pvStorage | string | `""` | The amount of persistent storage available on the SMB share volume. Default: `"100Gi"`. |
 | storage.smb.pvcStorage | string | `""` | The amount of persistent storage allocated for the SMB share storage. Default: `"1Gi"`. |
 | storage.smb.secretName | string | `""` | The name of the existing secret containing the credentials used to authenticate with the SMB share. Default: `"smbcreds"`. |
 | storage.smb.secretNamespace | string | `""` | The namespace where the secret containing the credentials used to authenticate with the SMB share is located. Default: `"default"`. |
 | storage.smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
 | storage.smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
-| storage.smb.subPath | string | `""` | The sub-path within the SMB share volume to mount. |
+| storage.smb.subPath.plex | string | `""` | The sub-path within the SMB share volume to mount for the Plex container. |
+| storage.smb.subPath.qbt | string | `""` | The sub-path within the SMB share volume to mount for the qBittorrent container. |

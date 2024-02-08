@@ -14,12 +14,18 @@
 {{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
 {{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
+{{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
+{{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls310" | toString }}
+{{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $plexResources := .Values.resources.plex }}
+{{- $qbtResources := .Values.resources.qbt }}
 {{- $initScript := .Values.global.initScript | toString }}
-{{- $smbMountPath := .Values.storage.smb.mountPath | default "/mnt/smb" | toString | quote }}
-{{- $smbSubPath := .Values.storage.smb.subPath | toString }}
+{{- $plexSmbMountPath := .Values.storage.smb.mountPath.plex | default "/mnt/smb" | toString | quote }}
+{{- $plexSmbSubPath := .Values.storage.smb.subPath.plex | toString }}
+{{- $qbtSmbSubPath := .Values.storage.smb.subPath.qbt | toString }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -108,11 +114,49 @@ spec:
             {{- end }}
             {{- if $smb }}
             - name: {{ .Release.Name }}-plexmaster-smb
-              mountPath: {{ $smbMountPath }}
-              {{- if $smbSubPath }}
-              subPath: {{ $smbSubPath | quote }}
+              mountPath: {{ $plexSmbMountPath }}
+              {{- if $plexSmbSubPath }}
+              subPath: {{ $plexSmbSubPath | quote }}
               {{- end }}
               readOnly: false
+            {{- end }}
+          {{- end }}
+        - name: qbittorrent
+          image: {{ printf "%s/%s:%s" $qbt_registry $qbt_repository $qbt_tag | quote }}
+          imagePullPolicy: {{ $qbt_pullPolicy }}
+          ports:
+            - name: qbt
+              containerPort: 6881
+              protocol: TCP
+            - name: qbt-udp
+              containerPort: 6881
+              protocol: UDP
+            - name: qbt-web
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {{- toYaml $jackettResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plexmaster-cm
+            - configMapRef:
+                name: {{ .Release.Name }}-qbittorrent-cm
+          {{- if or $persistent_data $persistent_downloads $smb }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-plexmaster-data
+              mountPath: /config
+            {{- end }}
+            {{- if $smb }}
+            - name: {{ .Release.Name }}-plexmaster-smb
+              mountPath: /downloads
+              {{- if $qbtSmbSubPath }}
+              subPath: {{ $qbtSmbSubPath | quote }}
+              {{- end }}
+              readOnly: false
+            {{- else if $persistent_downloads }}
+            - name: {{ .Release.Name }}-plexmaster-downloads
+              mountPath: /downloads
             {{- end }}
           {{- end }}
       {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
