@@ -18,14 +18,21 @@
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
 {{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls310" | toString }}
 {{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
+{{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
+{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls224" | toString }}
+{{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
+{{- $sonarrResources := .Values.resources.sonarr }}
 {{- $initScript := .Values.global.initScript | toString }}
 {{- $plexSmbMountPath := .Values.storage.smb.mountPath.plex | default "/mnt/smb" | toString | quote }}
 {{- $plexSmbSubPath := .Values.storage.smb.subPath.plex | toString }}
 {{- $qbtSmbSubPath := .Values.storage.smb.subPath.qbt | toString }}
+{{- $sonarrDlSubPath := .Values.storage.smb.subPath.sonarr.downloads | toString }}
+{{- $sonarrMdSubPath := .Values.storage.smb.subPath.sonarr.media | toString }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -135,7 +142,7 @@ spec:
               containerPort: 8080
               protocol: TCP
           resources:
-            {{- toYaml $jackettResources | nindent 12 }}
+            {{- toYaml $qbtResources | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
@@ -157,6 +164,51 @@ spec:
             {{- else if $persistent_downloads }}
             - name: {{ .Release.Name }}-plexmaster-downloads
               mountPath: /downloads
+            {{- end }}
+          {{- end }}
+        - name: sonarr
+          image: {{ printf "%s/%s:%s" $sonarr_registry $sonarr_repository $sonarr_tag | quote }}
+          imagePullPolicy: {{ $sonarr_pullPolicy }}
+          ports:
+            - name: sonarr
+              containerPort: 8989
+              protocol: TCP
+          resources:
+            {{- toYaml $sonarrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plexmaster-cm
+          {{- if or $persistent_data $persistent_downloads $smb }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-plexmaster-data
+              mountPath: /config
+            {{- end }}
+            {{- if $persistent_downloads }}
+            {{- if $smb }}
+            - name: {{ .Release.Name }}-plexmaster-smb
+              mountPath: /downloads
+              {{- if $sonarrDlSubPath }}
+              subPath: {{ $sonarrDlSubPath | quote }}
+              {{- end }}
+              readOnly: false
+            {{- else }}
+            - name: {{ .Release.Name }}-plexmaster-downloads
+              mountPath: /downloads
+            {{- end }}
+            {{- end }}
+            {{- if $persistent_media }}
+            {{- if $smb }}
+            - name: {{ .Release.Name }}-plexmaster-smb
+              mountPath: /tv
+              {{- if $sonarrMdSubPath }}
+              subPath: {{ $sonarrMdSubPath | quote }}
+              {{- end }}
+              readOnly: false
+            {{- else }}
+            - name: {{ .Release.Name }}-plexmaster-media
+              mountPath: /tv
+            {{- end }}
             {{- end }}
           {{- end }}
       {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
