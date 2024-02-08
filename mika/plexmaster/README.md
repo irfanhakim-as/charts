@@ -102,6 +102,32 @@ helm uninstall $release_name --namespace $namespace --wait
   - Enable Relay: `Disabled`.
   - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
 
+### qBittorrent
+
+- Log into the qBittorrent web interface using the temporary password provided in the logs.
+
+- Click the **Options** button (gear cog icon).
+
+- In the newly opened **Options** window, navigate to the **Web UI** tab:
+
+  - Under the **Authentication** section, set a new **Username** and **Password** accordingly.
+
+- Navigate to the **Downloads** tab:
+
+  - Use Subcategories: `Enabled`.
+  - Default Save Path: `/downloads`.
+  - Keep incomplete torrents in: `/downloads/incomplete`.
+  - Run external program on torrent finished: `/usr/bin/unrar x -r -y "%D*.rar" "%D"`
+
+- Navigate to the **BitTorrent** tab:
+
+  - Torrent Queueing: `Enabled`.
+  - When ratio reaches: `1`.
+  - When total seeding time reaches: `1440 minutes`.
+  - then: `Remove torrent and its files`.
+
+- Click the **Save** button to apply the changes.
+
 ---
 
 ## Configurations
