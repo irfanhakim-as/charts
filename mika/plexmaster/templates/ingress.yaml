@@ -67,18 +67,6 @@ spec:
             path: /
             pathType: Prefix
     {{- end }}
-    {{- if $sonarrIngress }}
-    - host: {{ $sonarrDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-plexmaster-svc
-                port:
-                  name: sonarr
-            path: /
-            pathType: Prefix
-    {{- end }}
     {{- if $radarrIngress }}
     - host: {{ $radarrDomain }}
       http:
@@ -88,6 +76,18 @@ spec:
                 name: {{ .Release.Name }}-plexmaster-svc
                 port:
                   name: radarr
+            path: /
+            pathType: Prefix
+    {{- end }}
+    {{- if $sonarrIngress }}
+    - host: {{ $sonarrDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-plexmaster-svc
+                port:
+                  name: sonarr
             path: /
             pathType: Prefix
     {{- end }}
