@@ -153,6 +153,10 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.qbt.registry | string | `""` | The registry where the qBittorrent container image is hosted. Default: `"lscr.io"`. |
 | image.qbt.repository | string | `""` | The name of the repository that contains the qBittorrent container image used. Default: `"linuxserver/qbittorrent"`. |
 | image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `4.6.3-r0-ls310`. |
+| image.sonarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Sonarr container image. Default: `"IfNotPresent"`. |
+| image.sonarr.registry | string | `""` | The registry where the Sonarr container image is hosted. Default: `"lscr.io"`. |
+| image.sonarr.repository | string | `""` | The name of the repository that contains the Sonarr container image used. Default: `"linuxserver/sonarr"`. |
+| image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `4.0.1.929-ls224`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.enabled | bool | `false` | Specifies whether plexmaster should be hosted using an Ingress. |
@@ -165,7 +169,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
+| resources.sonarr | object | `{}` | Sonarr container resources. |
 | service.type | string | `""` | The type of service used for plexmaster services. Default: `"ClusterIP"`. |
+| sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
@@ -186,3 +192,5 @@ helm uninstall $release_name --namespace $namespace --wait
 | storage.smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
 | storage.smb.subPath.plex | string | `""` | The sub-path within the SMB share volume to mount for the Plex container. |
 | storage.smb.subPath.qbt | string | `""` | The sub-path within the SMB share volume to mount for the qBittorrent container. |
+| storage.smb.subPath.sonarr.downloads | string | `""` | The downloads sub-path within the SMB share volume to mount for the Sonarr container. |
+| storage.smb.subPath.sonarr.media | string | `""` | The media sub-path within the SMB share volume to mount for the Sonarr container. |

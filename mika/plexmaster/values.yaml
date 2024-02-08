@@ -64,6 +64,20 @@ image:
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Sonarr container image configurations.
+  sonarr:
+    # The registry where the Sonarr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Sonarr container image used.
+    # Default: "linuxserver/sonarr"
+    repository: ""
+    # The tag that specifies the version of the Sonarr container image used.
+    # Default: "4.0.1.929-ls224"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Sonarr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
 # Credentials used to securely authenticate and authorise the pulling of container images from private registries.
 # Example:
@@ -117,6 +131,13 @@ qbt:
   # The ingress domain name that hosts the qBittorrent server.
   # Example:
   # domain: "qbt.example.com"
+  domain: ""
+
+# Sonarr configurations.
+sonarr:
+  # The ingress domain name that hosts the Sonarr server.
+  # Example:
+  # domain: "sonarr.example.com"
   domain: ""
 
 # Ingress configurations.
@@ -242,6 +263,16 @@ storage:
       # Example:
       # qbt: "Torrents"
       qbt: ""
+      # The sub-path within the SMB share volume to mount for the Sonarr container.
+      sonarr:
+        # The downloads sub-path within the SMB share volume to mount for the Sonarr container.
+        # Example:
+        # downloads: "Torrents"
+        downloads: ""
+        # The media sub-path within the SMB share volume to mount for the Sonarr container.
+        # Example:
+        # media: "Media"
+        media: ""
     # The storage class name used for dynamically provisioning a persistent volume for the SMB share storage.
     # Default: "smb"
     # Example:
@@ -322,3 +353,27 @@ resources:
   #     # memory: "250Mi"
   #     memory: "600Mi"
   qbt: {}
+  # Sonarr container resources.
+  # Example:
+  # sonarr:
+  #   # The minimum amount of resources required by Sonarr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Sonarr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by Sonarr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Sonarr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Sonarr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for Sonarr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "600Mi"
+  sonarr: {}
