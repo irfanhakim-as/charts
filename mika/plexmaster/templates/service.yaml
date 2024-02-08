@@ -29,5 +29,9 @@ spec:
       targetPort: qbt-web
       protocol: TCP
       name: qbt-web
+    - port: 8989
+      targetPort: sonarr
+      protocol: TCP
+      name: sonarr
   selector:
     {{- include "plexmaster.selectorLabels" . | nindent 4 }}

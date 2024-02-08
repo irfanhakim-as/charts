@@ -3,6 +3,7 @@
 {{- $jackettDomain := .Values.jackett.domain | toString | quote }}
 {{- $plexDomain := .Values.plex.domain | toString | quote }}
 {{- $qbtDomain := .Values.qbt.domain | toString | quote }}
+{{- $sonarrDomain := .Values.sonarr.domain | toString | quote }}
 {{- if $ingress }}
 ---
 apiVersion: networking.k8s.io/v1
@@ -54,10 +55,21 @@ spec:
                   name: qbt-web
             path: /
             pathType: Prefix
+    - host: {{ $sonarrDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-plexmaster-svc
+                port:
+                  name: sonarr
+            path: /
+            pathType: Prefix
   tls:
     - hosts:
         - {{ $jackettDomain }}
         - {{ $plexDomain }}
         - {{ $qbtDomain }}
+        - {{ $sonarrDomain }}
       secretName: {{ .Release.Name }}-plexmaster-tls-cert
 {{- end }}
