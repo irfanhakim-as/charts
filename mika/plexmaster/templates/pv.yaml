@@ -1,13 +1,19 @@
-{{- $smb := .Values.storage.smb.enabled }}
-{{- $mountOptions := .Values.storage.smb.mountOptions }}
-{{- $secretName := .Values.storage.smb.secretName | default "smbcreds" | toString | quote }}
-{{- $secretNamespace := .Values.storage.smb.secretNamespace | default "default" | toString | quote }}
-{{- $share := .Values.storage.smb.share | toString | quote }}
-{{- $storage := .Values.storage.smb.pvStorage | default "100Gi" | toString | quote }}
-{{- $storageClassName := .Values.storage.smb.storageClassName | default "smb" | toString | quote }}
+{{- $persistent_data := .Values.storage.data.enabled }}
+{{- $persistent_downloads := .Values.storage.downloads.enabled }}
+{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $smb := .Values.smb.enabled }}
+{{- $dataSmb := .Values.storage.data.smb }}
+{{- $downloadsSmb := .Values.storage.downloads.smb }}
+{{- $mediaSmb := .Values.storage.media.smb }}
+{{- $mountOptions := .Values.smb.mountOptions }}
+{{- $secretName := .Values.smb.secretName | default "smbcreds" | toString | quote }}
+{{- $secretNamespace := .Values.smb.secretNamespace | default "default" | toString | quote }}
+{{- $share := .Values.smb.share | toString | quote }}
+{{- $storage := .Values.smb.pvStorage | default "100Gi" | toString | quote }}
+{{- $storageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
 {{- $uid := .Values.global.uid | default "1000" | toString }}
 {{- $gid := .Values.global.gid | default "1000" | toString }}
-{{- if $smb }}
+{{- if and $smb (or $persistent_data $persistent_downloads $persistent_media) (or $dataSmb $downloadsSmb $mediaSmb) }}
 ---
 apiVersion: v1
 kind: PersistentVolume
