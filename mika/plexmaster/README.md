@@ -145,7 +145,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
 | image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.34"`. |
-| image.jackett.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jackett container image. Default: "IfNotPresent". |
+| image.jackett.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jackett container image. Default: `"IfNotPresent"`. |
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |
 | image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"0.21.1700"`. |
@@ -163,38 +163,46 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `4.0.1.929-ls224`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.enabled | bool | `false` | Specifies whether plexmaster should be hosted using an Ingress. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting plexmaster services. |
 | jackett.autoUpdate | bool | `true` | Specifies whether to allow Jackett to automatically update itself inside the container. |
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
+| jackett.ingress | bool | `false` | Specifies whether Jackett should be hosted using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
+| plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
 | qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
+| qbt.ingress | bool | `false` | Specifies whether qBittorrent should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.sonarr | object | `{}` | Sonarr container resources. |
 | service.type | string | `""` | The type of service used for plexmaster services. Default: `"ClusterIP"`. |
+| smb.enabled | bool | `false` | Specifies whether to enable persistent storage to be provisioned in the form of an SMB share. |
+| smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |
+| smb.pvStorage | string | `""` | The amount of persistent storage available on the SMB share volume. Default: `"100Gi"`. |
+| smb.pvcStorage | string | `""` | The amount of persistent storage allocated for the SMB share storage. Default: `"1Gi"`. |
+| smb.secretName | string | `""` | The name of the existing secret containing the credentials used to authenticate with the SMB share. Default: `"smbcreds"`. |
+| smb.secretNamespace | string | `""` | The namespace where the secret containing the credentials used to authenticate with the SMB share is located. Default: `"default"`. |
+| smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
+| smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
 | sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
+| sonarr.ingress | bool | `false` | Specifies whether Sonarr should be hosted using an Ingress. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
-| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
-| storage.downloads.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for downloads storage. |
-| storage.downloads.storage | string | `""` | The amount of persistent storage allocated for the downloads storage. Default: `"1Gi"`. |
-| storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. Default: `"longhorn"`. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.smb | bool | `false` | Specifies whether to use an SMB share for the data storage. |
+| storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
+| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
+| storage.data.subPath | string | `""` | The sub-path within the data storage to mount for the container. |
+| storage.downloads.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for downloads storage. |
+| storage.downloads.mountPath | string | `""` | The path where the downloads storage should be mounted on the container. Default: `"/downloads"`. |
+| storage.downloads.smb | bool | `false` | Specifies whether to use an SMB share for the downloads storage. |
+| storage.downloads.storage | string | `""` | The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
+| storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
+| storage.downloads.subPath | string | `""` | The sub-path within the downloads storage to mount for the container. |
 | storage.media.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for media storage. |
-| storage.media.storage | string | `""` | The amount of persistent storage allocated for the media storage. Default: `"1Gi"`. |
-| storage.media.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the media storage. Default: `"longhorn"`. |
-| storage.smb.enabled | bool | `false` | Specifies whether persistent storage should be provisioned in the form of an SMB share. |
-| storage.smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |
-| storage.smb.mountPath.plex | string | `""` | The path where the SMB share volume should be mounted on the Plex container. Default: `"/mnt/smb"`. |
-| storage.smb.pvStorage | string | `""` | The amount of persistent storage available on the SMB share volume. Default: `"100Gi"`. |
-| storage.smb.pvcStorage | string | `""` | The amount of persistent storage allocated for the SMB share storage. Default: `"1Gi"`. |
-| storage.smb.secretName | string | `""` | The name of the existing secret containing the credentials used to authenticate with the SMB share. Default: `"smbcreds"`. |
-| storage.smb.secretNamespace | string | `""` | The namespace where the secret containing the credentials used to authenticate with the SMB share is located. Default: `"default"`. |
-| storage.smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
-| storage.smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
-| storage.smb.subPath.plex | string | `""` | The sub-path within the SMB share volume to mount for the Plex container. |
-| storage.smb.subPath.qbt | string | `""` | The sub-path within the SMB share volume to mount for the qBittorrent container. |
-| storage.smb.subPath.sonarr.downloads | string | `""` | The downloads sub-path within the SMB share volume to mount for the Sonarr container. |
-| storage.smb.subPath.sonarr.media | string | `""` | The media sub-path within the SMB share volume to mount for the Sonarr container. |
+| storage.media.mountPath | string | `""` | The path where the media storage should be mounted on the container. Default: `"/data"`. |
+| storage.media.smb | bool | `false` | Specifies whether to use an SMB share for the media storage. |
+| storage.media.storage | string | `""` | The amount of persistent storage allocated for the media storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
+| storage.media.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the media storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
+| storage.media.subPath | string | `""` | The sub-path within the media storage to mount for the container. |

@@ -1,16 +1,19 @@
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
-{{- $smb := .Values.storage.smb.enabled }}
+{{- $smb := .Values.smb.enabled }}
+{{- $dataSmb := .Values.storage.data.smb }}
+{{- $downloadsSmb := .Values.storage.downloads.smb }}
+{{- $mediaSmb := .Values.storage.media.smb }}
 {{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
 {{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
 {{- $downloadsStorage := .Values.storage.downloads.storage | default "1Gi" | toString | quote }}
 {{- $downloadsStorageClassName := .Values.storage.downloads.storageClassName | default "longhorn" | toString | quote }}
 {{- $mediaStorage := .Values.storage.media.storage | default "1Gi" | toString | quote }}
 {{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
-{{- $smbStorage := .Values.storage.smb.pvcStorage | default "1Gi" | toString | quote }}
-{{- $smbStorageClassName := .Values.storage.smb.storageClassName | default "smb" | toString | quote }}
-{{- if $persistent_data }}
+{{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
+{{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
+{{- if and $persistent_data (not (and $dataSmb $smb)) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -26,7 +29,7 @@ spec:
       storage: {{ $dataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 {{- end }}
-{{- if $persistent_downloads }}
+{{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -42,7 +45,7 @@ spec:
       storage: {{ $downloadsStorage }}
   storageClassName: {{ $downloadsStorageClassName }}
 {{- end }}
-{{- if $persistent_media }}
+{{- if and $persistent_media (not (and $mediaSmb $smb)) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -58,7 +61,7 @@ spec:
       storage: {{ $mediaStorage }}
   storageClassName: {{ $mediaStorageClassName }}
 {{- end }}
-{{- if $smb }}
+{{- if and $smb (or $persistent_data $persistent_downloads $persistent_media) (or $dataSmb $downloadsSmb $mediaSmb) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

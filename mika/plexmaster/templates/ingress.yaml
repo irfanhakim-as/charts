@@ -1,10 +1,14 @@
 {{- $ingress := .Values.ingress.enabled }}
+{{- $jackettIngress := .Values.jackett.ingress }}
+{{- $plexIngress := .Values.plex.ingress }}
+{{- $qbtIngress := .Values.qbt.ingress }}
+{{- $sonarrIngress := .Values.sonarr.ingress }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $jackettDomain := .Values.jackett.domain | toString | quote }}
 {{- $plexDomain := .Values.plex.domain | toString | quote }}
 {{- $qbtDomain := .Values.qbt.domain | toString | quote }}
 {{- $sonarrDomain := .Values.sonarr.domain | toString | quote }}
-{{- if $ingress }}
+{{- if and $ingress (or $jackettIngress $plexIngress $qbtIngress $sonarrIngress) }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -25,6 +29,7 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
+    {{- if $jackettIngress }}
     - host: {{ $jackettDomain }}
       http:
         paths:
@@ -35,6 +40,8 @@ spec:
                   name: jackett
             path: /
             pathType: Prefix
+    {{- end }}
+    {{- if $plexIngress }}
     - host: {{ $plexDomain }}
       http:
         paths:
@@ -45,6 +52,8 @@ spec:
                   name: plex
             path: /
             pathType: Prefix
+    {{- end }}
+    {{- if $qbtIngress }}
     - host: {{ $qbtDomain }}
       http:
         paths:
@@ -55,6 +64,8 @@ spec:
                   name: qbt-web
             path: /
             pathType: Prefix
+    {{- end }}
+    {{- if $sonarrIngress }}
     - host: {{ $sonarrDomain }}
       http:
         paths:
@@ -65,11 +76,20 @@ spec:
                   name: sonarr
             path: /
             pathType: Prefix
+    {{- end }}
   tls:
     - hosts:
+        {{- if $jackettIngress }}
         - {{ $jackettDomain }}
+        {{- end }}
+        {{- if $plexIngress }}
         - {{ $plexDomain }}
+        {{- end }}
+        {{- if $qbtIngress }}
         - {{ $qbtDomain }}
+        {{- end }}
+        {{- if $sonarrIngress }}
         - {{ $sonarrDomain }}
+        {{- end }}
       secretName: {{ .Release.Name }}-plexmaster-tls-cert
 {{- end }}

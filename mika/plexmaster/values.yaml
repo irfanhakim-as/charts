@@ -114,6 +114,10 @@ jackett:
   # Example:
   # domain: "jackett.example.com"
   domain: ""
+  # Specifies whether Jackett should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # Plex configurations.
 plex:
@@ -125,6 +129,10 @@ plex:
   # Example:
   # domain: "plex.example.com"
   domain: ""
+  # Specifies whether Plex should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # qBittorrent configurations.
 qbt:
@@ -132,6 +140,10 @@ qbt:
   # Example:
   # domain: "qbt.example.com"
   domain: ""
+  # Specifies whether qBittorrent should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # Sonarr configurations.
 sonarr:
@@ -139,10 +151,14 @@ sonarr:
   # Example:
   # domain: "sonarr.example.com"
   domain: ""
+  # Specifies whether Sonarr should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # Ingress configurations.
 ingress:
-  # Specifies whether plexmaster should be hosted using an Ingress.
+  # Specifies whether Ingress should be enabled for hosting plexmaster services.
   # Example:
   # enabled: true
   enabled: false
@@ -166,12 +182,25 @@ storage:
     # Example:
     # enabled: false
     enabled: true
-    # The amount of persistent storage allocated for the data storage.
+    # The path where the data storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The sub-path within the data storage to mount for the container.
+    # Example:
+    # subPath: "Config"
+    subPath: ""
+    # Specifies whether to use an SMB share for the data storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The amount of persistent storage allocated for the data storage. This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage. This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
@@ -180,14 +209,27 @@ storage:
   downloads:
     # Specifies whether persistent storage should be provisioned for downloads storage.
     # Example:
-    # enabled: false
-    enabled: true
-    # The amount of persistent storage allocated for the downloads storage.
+    # enabled: true
+    enabled: false
+    # The path where the downloads storage should be mounted on the container.
+    # Default: "/downloads"
+    # Example:
+    # mountPath: "/files"
+    mountPath: ""
+    # The sub-path within the downloads storage to mount for the container.
+    # Example:
+    # subPath: "Downloads"
+    subPath: ""
+    # Specifies whether to use an SMB share for the downloads storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
@@ -198,86 +240,73 @@ storage:
     # Example:
     # enabled: true
     enabled: false
-    # The amount of persistent storage allocated for the media storage.
+    # The path where the media storage should be mounted on the container.
+    # Default: "/data"
+    # Example:
+    # mountPath: "/media"
+    mountPath: ""
+    # The sub-path within the media storage to mount for the container.
+    # Example:
+    # subPath: "Media"
+    subPath: ""
+    # Specifies whether to use an SMB share for the media storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The amount of persistent storage allocated for the media storage. This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the media storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the media storage. This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
     storageClassName: ""
-  # SMB storage configurations.
-  smb:
-    # Specifies whether persistent storage should be provisioned in the form of an SMB share.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The additional mount options used to mount the SMB share volume.
-    # Example:
-    # mountOptions:
-    #   - "_netdev"
-    #   - "nofail"
-    #   - "vers=3.0"
-    #   - "iocharset=utf8"
-    mountOptions: []
-    # The amount of persistent storage available on the SMB share volume.
-    # Default: "100Gi"
-    # Example:
-    # pvStorage: "10Gi"
-    pvStorage: ""
-    # The amount of persistent storage allocated for the SMB share storage.
-    # Default: "1Gi"
-    # Example:
-    # pvcStorage: "500Mi"
-    pvcStorage: ""
-    # The SMB share address and name to mount as a persistent volume.
-    # Example:
-    # share: "//192.168.0.123/mynas"
-    share: ""
-    # The name of the existing secret containing the credentials used to authenticate with the SMB share.
-    # Default: "smbcreds"
-    # Example:
-    # secretName: "smb-secret"
-    secretName: ""
-    # The namespace where the secret containing the credentials used to authenticate with the SMB share is located.
-    # Default: "default"
-    # Example:
-    # secretNamespace: "smb"
-    secretNamespace: ""
-    # The path where the SMB share volume should be mounted on the container.
-    mountPath:
-      # The path where the SMB share volume should be mounted on the Plex container.
-      # Default: "/mnt/smb"
-      # Example:
-      # plex: "/mnt/mynas"
-      plex: ""
-    # The sub-path within the SMB share volume to mount for the container.
-    subPath:
-      # The sub-path within the SMB share volume to mount for the Plex container.
-      # Example:
-      # plex: "Media"
-      plex: ""
-      # The sub-path within the SMB share volume to mount for the qBittorrent container.
-      # Example:
-      # qbt: "Torrents"
-      qbt: ""
-      # The sub-path within the SMB share volume to mount for the Sonarr container.
-      sonarr:
-        # The downloads sub-path within the SMB share volume to mount for the Sonarr container.
-        # Example:
-        # downloads: "Torrents"
-        downloads: ""
-        # The media sub-path within the SMB share volume to mount for the Sonarr container.
-        # Example:
-        # media: "Media"
-        media: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the SMB share storage.
-    # Default: "smb"
-    # Example:
-    # storageClassName: "smb"
-    storageClassName: ""
+
+# SMB storage configurations.
+smb:
+  # Specifies whether to enable persistent storage to be provisioned in the form of an SMB share.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The additional mount options used to mount the SMB share volume.
+  # Example:
+  # mountOptions:
+  #   - "_netdev"
+  #   - "nofail"
+  #   - "vers=3.0"
+  #   - "iocharset=utf8"
+  mountOptions: []
+  # The amount of persistent storage available on the SMB share volume.
+  # Default: "100Gi"
+  # Example:
+  # pvStorage: "10Gi"
+  pvStorage: ""
+  # The amount of persistent storage allocated for the SMB share storage.
+  # Default: "1Gi"
+  # Example:
+  # pvcStorage: "500Mi"
+  pvcStorage: ""
+  # The name of the existing secret containing the credentials used to authenticate with the SMB share.
+  # Default: "smbcreds"
+  # Example:
+  # secretName: "smb-secret"
+  secretName: ""
+  # The namespace where the secret containing the credentials used to authenticate with the SMB share is located.
+  # Default: "default"
+  # Example:
+  # secretNamespace: "smb"
+  secretNamespace: ""
+  # The SMB share address and name to mount as a persistent volume.
+  # Example:
+  # share: "//192.168.0.123/mynas"
+  share: ""
+  # The storage class name used for dynamically provisioning a persistent volume for the SMB share storage.
+  # Default: "smb"
+  # Example:
+  # storageClassName: "smb"
+  storageClassName: ""
 
 # Resource requirements and limits for plexmaster containers.
 resources:
