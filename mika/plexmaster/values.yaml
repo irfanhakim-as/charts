@@ -50,6 +50,20 @@ image:
     # The policy that determines when Kubernetes should pull the Plex container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # qBittorrent container image configurations.
+  qbt:
+    # The registry where the qBittorrent container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the qBittorrent container image used.
+    # Default: "linuxserver/qbittorrent"
+    repository: ""
+    # The tag that specifies the version of the qBittorrent container image used.
+    # Default: "4.6.3-r0-ls310"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the qBittorrent container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
 # Credentials used to securely authenticate and authorise the pulling of container images from private registries.
 # Example:
@@ -96,6 +110,13 @@ plex:
   # The ingress domain name that hosts the Plex server.
   # Example:
   # domain: "plex.example.com"
+  domain: ""
+
+# qBittorrent configurations.
+qbt:
+  # The ingress domain name that hosts the qBittorrent server.
+  # Example:
+  # domain: "qbt.example.com"
   domain: ""
 
 # Ingress configurations.
@@ -205,14 +226,22 @@ storage:
     # secretNamespace: "smb"
     secretNamespace: ""
     # The path where the SMB share volume should be mounted on the container.
-    # Default: "/mnt/smb"
-    # Example:
-    # mountPath: "/mnt/mynas"
-    mountPath: ""
-    # The sub-path within the SMB share volume to mount.
-    # Example:
-    # subPath: "Media"
-    subPath: ""
+    mountPath:
+      # The path where the SMB share volume should be mounted on the Plex container.
+      # Default: "/mnt/smb"
+      # Example:
+      # plex: "/mnt/mynas"
+      plex: ""
+    # The sub-path within the SMB share volume to mount for the container.
+    subPath:
+      # The sub-path within the SMB share volume to mount for the Plex container.
+      # Example:
+      # plex: "Media"
+      plex: ""
+      # The sub-path within the SMB share volume to mount for the qBittorrent container.
+      # Example:
+      # qbt: "Torrents"
+      qbt: ""
     # The storage class name used for dynamically provisioning a persistent volume for the SMB share storage.
     # Default: "smb"
     # Example:
@@ -269,3 +298,27 @@ resources:
   #     # memory: "250Mi"
   #     memory: "600Mi"
   plex: {}
+  # qBittorrent container resources.
+  # Example:
+  # qbt:
+  #   # The minimum amount of resources required by qBittorrent to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by qBittorrent.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by qBittorrent.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for qBittorrent.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for qBittorrent.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for qBittorrent.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "600Mi"
+  qbt: {}
