@@ -163,12 +163,15 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `4.0.1.929-ls224`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.enabled | bool | `false` | Specifies whether plexmaster should be hosted using an Ingress. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting plexmaster services. |
 | jackett.autoUpdate | bool | `true` | Specifies whether to allow Jackett to automatically update itself inside the container. |
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
+| jackett.ingress | bool | `false` | Specifies whether Jackett should be hosted using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
+| plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
 | qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
+| qbt.ingress | bool | `false` | Specifies whether qBittorrent should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
@@ -184,6 +187,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
 | smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
 | sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
+| sonarr.ingress | bool | `false` | Specifies whether Sonarr should be hosted using an Ingress. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
 | storage.data.smb | bool | `false` | Specifies whether to use an SMB share for the data storage. |

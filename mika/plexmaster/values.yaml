@@ -114,6 +114,10 @@ jackett:
   # Example:
   # domain: "jackett.example.com"
   domain: ""
+  # Specifies whether Jackett should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # Plex configurations.
 plex:
@@ -125,6 +129,10 @@ plex:
   # Example:
   # domain: "plex.example.com"
   domain: ""
+  # Specifies whether Plex should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # qBittorrent configurations.
 qbt:
@@ -132,6 +140,10 @@ qbt:
   # Example:
   # domain: "qbt.example.com"
   domain: ""
+  # Specifies whether qBittorrent should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # Sonarr configurations.
 sonarr:
@@ -139,10 +151,14 @@ sonarr:
   # Example:
   # domain: "sonarr.example.com"
   domain: ""
+  # Specifies whether Sonarr should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
 
 # Ingress configurations.
 ingress:
-  # Specifies whether plexmaster should be hosted using an Ingress.
+  # Specifies whether Ingress should be enabled for hosting plexmaster services.
   # Example:
   # enabled: true
   enabled: false
