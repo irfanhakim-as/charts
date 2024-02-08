@@ -29,6 +29,10 @@ spec:
       targetPort: qbt-web
       protocol: TCP
       name: qbt-web
+    - port: 7878
+      targetPort: radarr
+      protocol: TCP
+      name: radarr
     - port: 8989
       targetPort: sonarr
       protocol: TCP
