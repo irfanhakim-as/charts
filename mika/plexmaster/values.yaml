@@ -64,6 +64,20 @@ image:
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Radarr container image configurations.
+  radarr:
+    # The registry where the Radarr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Radarr container image used.
+    # Default: "linuxserver/radarr"
+    repository: ""
+    # The tag that specifies the version of the Radarr container image used.
+    # Default: "5.2.6.8376-ls202"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Radarr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # Sonarr container image configurations.
   sonarr:
     # The registry where the Sonarr container image is hosted.
@@ -141,6 +155,17 @@ qbt:
   # domain: "qbt.example.com"
   domain: ""
   # Specifies whether qBittorrent should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+
+# Radarr configurations.
+radarr:
+  # The ingress domain name that hosts the Radarr server.
+  # Example:
+  # domain: "radarr.example.com"
+  domain: ""
+  # Specifies whether Radarr should be hosted using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -382,6 +407,30 @@ resources:
   #     # memory: "250Mi"
   #     memory: "600Mi"
   qbt: {}
+  # Radarr container resources.
+  # Example:
+  # radarr:
+  #   # The minimum amount of resources required by Radarr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Radarr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by Radarr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Radarr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Radarr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for Radarr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "600Mi"
+  radarr: {}
   # Sonarr container resources.
   # Example:
   # sonarr:
