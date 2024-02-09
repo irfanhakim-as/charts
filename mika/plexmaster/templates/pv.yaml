@@ -1,8 +1,6 @@
-{{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
 {{- $smb := .Values.smb.enabled }}
-{{- $dataSmb := .Values.storage.data.smb }}
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
 {{- $mountOptions := .Values.smb.mountOptions }}
@@ -13,7 +11,7 @@
 {{- $storageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
 {{- $uid := .Values.global.uid | default "1000" | toString }}
 {{- $gid := .Values.global.gid | default "1000" | toString }}
-{{- if and $smb (or $persistent_data $persistent_downloads $persistent_media) (or $dataSmb $downloadsSmb $mediaSmb) }}
+{{- if and $smb (or $persistent_downloads $persistent_media) (or $downloadsSmb $mediaSmb) }}
 ---
 apiVersion: v1
 kind: PersistentVolume
