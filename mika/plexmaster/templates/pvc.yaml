@@ -12,7 +12,7 @@
 {{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
 {{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
 {{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
-{{- if and $persistent_data (not (and $dataSmb $smb)) }}
+{{- if $persistent_data }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
