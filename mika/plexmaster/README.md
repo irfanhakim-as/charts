@@ -201,7 +201,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | sonarr.ingress | bool | `false` | Specifies whether Sonarr should be hosted using an Ingress. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
-| storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
+| storage.data.storage | string | `""` | The amount of persistent storage allocated for each data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The sub-path within the data storage to mount for the container. |
 | storage.downloads.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for downloads storage. |
