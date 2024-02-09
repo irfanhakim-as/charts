@@ -91,6 +91,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Select and add indexers to the Jackett server.
 
+### Overseerr
+
+- TODO.
+
 ### Plex
 
 - Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
