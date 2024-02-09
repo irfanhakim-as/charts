@@ -114,6 +114,28 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
+        - name: overseerr
+          image: {{ printf "%s/%s:%s" $overseerr_registry $overseerr_repository $overseerr_tag | quote }}
+          imagePullPolicy: {{ $overseerr_pullPolicy }}
+          ports:
+            - name: overseerr
+              containerPort: 5055
+              protocol: TCP
+          resources:
+            {{- toYaml $overseerrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plexmaster-cm
+          {{- if or $persistent_data $persistent_media }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-plexmaster-overseerr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
         - name: plex
           image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
           imagePullPolicy: {{ $plex_pullPolicy }}
@@ -260,6 +282,9 @@ spec:
         - name: {{ .Release.Name }}-plexmaster-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-jackett-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-overseerr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-overseerr-data-pvc
         - name: {{ .Release.Name }}-plexmaster-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-plex-data-pvc
