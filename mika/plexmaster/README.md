@@ -128,6 +128,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Click the **Save** button to apply the changes.
 
+### Radarr
+
+- TODO.
+
 ### Sonarr
 
 - TODO.
@@ -157,6 +161,10 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.qbt.registry | string | `""` | The registry where the qBittorrent container image is hosted. Default: `"lscr.io"`. |
 | image.qbt.repository | string | `""` | The name of the repository that contains the qBittorrent container image used. Default: `"linuxserver/qbittorrent"`. |
 | image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `4.6.3-r0-ls310`. |
+| image.radarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Radarr container image. Default: `"IfNotPresent"`. |
+| image.radarr.registry | string | `""` | The registry where the Radarr container image is hosted. Default: `"lscr.io"`. |
+| image.radarr.repository | string | `""` | The name of the repository that contains the Radarr container image used. Default: `"linuxserver/radarr"`. |
+| image.radarr.tag | string | `""` | The tag that specifies the version of the Radarr container image used. Default: `5.2.6.8376-ls202`. |
 | image.sonarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Sonarr container image. Default: `"IfNotPresent"`. |
 | image.sonarr.registry | string | `""` | The registry where the Sonarr container image is hosted. Default: `"lscr.io"`. |
 | image.sonarr.repository | string | `""` | The name of the repository that contains the Sonarr container image used. Default: `"linuxserver/sonarr"`. |
@@ -172,10 +180,13 @@ helm uninstall $release_name --namespace $namespace --wait
 | plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
 | qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
 | qbt.ingress | bool | `false` | Specifies whether qBittorrent should be hosted using an Ingress. |
+| radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
+| radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
+| resources.radarr | object | `{}` | Radarr container resources. |
 | resources.sonarr | object | `{}` | Sonarr container resources. |
 | service.type | string | `""` | The type of service used for plexmaster services. Default: `"ClusterIP"`. |
 | smb.enabled | bool | `false` | Specifies whether to enable persistent storage to be provisioned in the form of an SMB share. |
@@ -190,9 +201,8 @@ helm uninstall $release_name --namespace $namespace --wait
 | sonarr.ingress | bool | `false` | Specifies whether Sonarr should be hosted using an Ingress. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
-| storage.data.smb | bool | `false` | Specifies whether to use an SMB share for the data storage. |
-| storage.data.storage | string | `""` | The amount of persistent storage allocated for the data storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
-| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
+| storage.data.storage | string | `""` | The amount of persistent storage allocated for each data storage. Default: `"1Gi"`. |
+| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The sub-path within the data storage to mount for the container. |
 | storage.downloads.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for downloads storage. |
 | storage.downloads.mountPath | string | `""` | The path where the downloads storage should be mounted on the container. Default: `"/downloads"`. |

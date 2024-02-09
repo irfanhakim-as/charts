@@ -2,7 +2,6 @@
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
 {{- $smb := .Values.smb.enabled }}
-{{- $dataSmb := .Values.storage.data.smb }}
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
 {{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
@@ -13,17 +12,73 @@
 {{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
 {{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
 {{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
-{{- if and $persistent_data (not (and $dataSmb $smb)) }}
+{{- if $persistent_data }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-data-pvc
+  name: {{ .Release.Name }}-plexmaster-jackett-data-pvc
   labels:
     {{- include "plexmaster.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-plex-data-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-qbt-data-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-radarr-data-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-sonarr-data-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
   resources:
     requests:
       storage: {{ $dataStorage }}
@@ -61,7 +116,7 @@ spec:
       storage: {{ $mediaStorage }}
   storageClassName: {{ $mediaStorageClassName }}
 {{- end }}
-{{- if and $smb (or $persistent_data $persistent_downloads $persistent_media) (or $dataSmb $downloadsSmb $mediaSmb) }}
+{{- if and $smb (or $persistent_downloads $persistent_media) (or $downloadsSmb $mediaSmb) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

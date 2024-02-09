@@ -2,7 +2,6 @@
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
 {{- $smb := .Values.smb.enabled }}
-{{- $dataSmb := .Values.storage.data.smb }}
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
@@ -21,6 +20,10 @@
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
 {{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls310" | toString }}
 {{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $radarr_registry := .Values.image.radarr.registry | default "lscr.io" | toString }}
+{{- $radarr_repository := .Values.image.radarr.repository | default "linuxserver/radarr" | toString }}
+{{- $radarr_tag := .Values.image.radarr.tag | default "5.2.6.8376-ls202" | toString }}
+{{- $radarr_pullPolicy := .Values.image.radarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
 {{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
 {{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls224" | toString }}
@@ -29,6 +32,7 @@
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
+{{- $radarrResources := .Values.resources.radarr }}
 {{- $sonarrResources := .Values.resources.sonarr }}
 {{- $initScript := .Values.global.initScript | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
@@ -91,7 +95,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-jackett-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -122,7 +126,7 @@ spec:
           {{- if or $persistent_data $persistent_media }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-plex-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -159,7 +163,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-qbt-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -173,22 +177,22 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
-        - name: sonarr
-          image: {{ printf "%s/%s:%s" $sonarr_registry $sonarr_repository $sonarr_tag | quote }}
-          imagePullPolicy: {{ $sonarr_pullPolicy }}
+        - name: radarr
+          image: {{ printf "%s/%s:%s" $radarr_registry $radarr_repository $radarr_tag | quote }}
+          imagePullPolicy: {{ $radarr_pullPolicy }}
           ports:
-            - name: sonarr
-              containerPort: 8989
+            - name: radarr
+              containerPort: 7878
               protocol: TCP
           resources:
-            {{- toYaml $sonarrResources | nindent 12 }}
+            {{- toYaml $radarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
           {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-radarr-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -209,12 +213,60 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media (and $smb (or $dataSmb $downloadsSmb $mediaSmb)) }}
+        - name: sonarr
+          image: {{ printf "%s/%s:%s" $sonarr_registry $sonarr_repository $sonarr_tag | quote }}
+          imagePullPolicy: {{ $sonarr_pullPolicy }}
+          ports:
+            - name: sonarr
+              containerPort: 8989
+              protocol: TCP
+          resources:
+            {{- toYaml $sonarrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plexmaster-cm
+          {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-plexmaster-sonarr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_downloads }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+              mountPath: {{ $downloadsMountPath }}
+              {{- if $downloadsSubPath }}
+              subPath: {{ $downloadsSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_media }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+              {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media (and $smb (or $downloadsSmb $mediaSmb)) }}
       volumes:
-        {{- if and $persistent_data (not (and $dataSmb $smb)) }}
-        - name: {{ .Release.Name }}-plexmaster-data
+        {{- if $persistent_data }}
+        - name: {{ .Release.Name }}-plexmaster-jackett-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-data-pvc
+            claimName: {{ .Release.Name }}-plexmaster-jackett-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-plex-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-plex-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-qbt-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-qbt-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-radarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-radarr-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-sonarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-sonarr-data-pvc
         {{- end }}
         {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
         - name: {{ .Release.Name }}-plexmaster-downloads
@@ -226,7 +278,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-media-pvc
         {{- end }}
-        {{- if and $smb (or $persistent_data $persistent_downloads $persistent_media) (or $dataSmb $downloadsSmb $mediaSmb) }}
+        {{- if and $smb (or $persistent_downloads $persistent_media) (or $downloadsSmb $mediaSmb) }}
         - name: {{ .Release.Name }}-plexmaster-smb
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-smb-pvc
