@@ -2,7 +2,6 @@
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
 {{- $smb := .Values.smb.enabled }}
-{{- $dataSmb := .Values.storage.data.smb }}
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
@@ -96,7 +95,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -127,7 +126,7 @@ spec:
           {{- if or $persistent_data $persistent_media }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -164,7 +163,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -193,7 +192,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}radarr-data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-radarr-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -229,7 +228,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}sonarr-data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-sonarr-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -250,9 +249,9 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media (and $smb (or $dataSmb $downloadsSmb $mediaSmb)) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media (and $smb (or $downloadsSmb $mediaSmb)) }}
       volumes:
-        {{- if and $persistent_data (not (and $dataSmb $smb)) }}
+        {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-data-pvc
@@ -273,7 +272,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-media-pvc
         {{- end }}
-        {{- if and $smb (or $persistent_data $persistent_downloads $persistent_media) (or $dataSmb $downloadsSmb $mediaSmb) }}
+        {{- if and $smb (or $persistent_downloads $persistent_media) (or $downloadsSmb $mediaSmb) }}
         - name: {{ .Release.Name }}-plexmaster-smb
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-smb-pvc
