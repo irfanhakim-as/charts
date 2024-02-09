@@ -12,6 +12,10 @@
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
 {{- $jackett_tag := .Values.image.jackett.tag | default "0.21.1700" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
+{{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
+{{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.33.2-ls95" | toString }}
+{{- $overseerr_pullPolicy := .Values.image.overseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
 {{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
 {{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
@@ -30,6 +34,7 @@
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $jackettResources := .Values.resources.jackett }}
+{{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
 {{- $radarrResources := .Values.resources.radarr }}
@@ -109,6 +114,28 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
+        - name: overseerr
+          image: {{ printf "%s/%s:%s" $overseerr_registry $overseerr_repository $overseerr_tag | quote }}
+          imagePullPolicy: {{ $overseerr_pullPolicy }}
+          ports:
+            - name: overseerr
+              containerPort: 5055
+              protocol: TCP
+          resources:
+            {{- toYaml $overseerrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plexmaster-cm
+          {{- if or $persistent_data $persistent_media }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-plexmaster-overseerr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
         - name: plex
           image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
           imagePullPolicy: {{ $plex_pullPolicy }}
@@ -160,7 +187,7 @@ spec:
                 name: {{ .Release.Name }}-plexmaster-cm
             - configMapRef:
                 name: {{ .Release.Name }}-qbittorrent-cm
-          {{- if or $persistent_data $persistent_downloads $smb }}
+          {{- if or $persistent_data $persistent_downloads }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-qbt-data
@@ -189,7 +216,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
+          {{- if or $persistent_data $persistent_downloads $persistent_media }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-radarr-data
@@ -225,7 +252,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
+          {{- if or $persistent_data $persistent_downloads $persistent_media }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-sonarr-data
@@ -249,12 +276,15 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media (and $smb (or $downloadsSmb $mediaSmb)) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-jackett-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-overseerr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-overseerr-data-pvc
         - name: {{ .Release.Name }}-plexmaster-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-plex-data-pvc

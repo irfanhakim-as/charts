@@ -36,6 +36,20 @@ image:
     # The policy that determines when Kubernetes should pull the Jackett container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Overseerr container image configurations.
+  overseerr:
+    # The registry where the Overseerr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Overseerr container image used.
+    # Default: "linuxserver/overseerr"
+    repository: ""
+    # The tag that specifies the version of the Overseerr container image used.
+    # Default: "v1.33.2-ls95"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Overseerr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # Plex container image configurations.
   plex:
     # The registry where the Plex container image is hosted.
@@ -129,6 +143,17 @@ jackett:
   # domain: "jackett.example.com"
   domain: ""
   # Specifies whether Jackett should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+
+# Overseerr configurations.
+overseerr:
+  # The ingress domain name that hosts the Overseerr server.
+  # Example:
+  # domain: "overseerr.example.com"
+  domain: ""
+  # Specifies whether Overseerr should be hosted using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -343,18 +368,42 @@ resources:
   #     # The minimum amount of memory required by Jackett.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "300Mi"
+  #     memory: "200Mi"
   #   # The maximum amount of resources allowed for Jackett.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Jackett.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "200m"
   #     # The maximum amount of memory allowed for Jackett.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "600Mi"
+  #     memory: "300Mi"
   jackett: {}
+  # Overseerr container resources.
+  # Example:
+  # overseerr:
+  #   # The minimum amount of resources required by Overseerr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Overseerr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "200m"
+  #     # The minimum amount of memory required by Overseerr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "250Mi"
+  #   # The maximum amount of resources allowed for Overseerr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Overseerr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for Overseerr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  overseerr: {}
   # Plex container resources.
   # Example:
   # plex:
@@ -363,7 +412,7 @@ resources:
   #     # The minimum amount of CPU resources required by Plex.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "100m"
+  #     cpu: "500m"
   #     # The minimum amount of memory required by Plex.
   #     # Example:
   #     # memory: "10Mi"
@@ -373,7 +422,7 @@ resources:
   #     # The maximum amount of CPU resources allowed for Plex.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "1000m"
   #     # The maximum amount of memory allowed for Plex.
   #     # Example:
   #     # memory: "250Mi"
@@ -391,17 +440,17 @@ resources:
   #     # The minimum amount of memory required by qBittorrent.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "300Mi"
+  #     memory: "100Mi"
   #   # The maximum amount of resources allowed for qBittorrent.
   #   limits:
   #     # The maximum amount of CPU resources allowed for qBittorrent.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "200m"
   #     # The maximum amount of memory allowed for qBittorrent.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "600Mi"
+  #     memory: "200Mi"
   qbt: {}
   # Radarr container resources.
   # Example:
@@ -411,21 +460,21 @@ resources:
   #     # The minimum amount of CPU resources required by Radarr.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "100m"
+  #     cpu: "300m"
   #     # The minimum amount of memory required by Radarr.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "300Mi"
+  #     memory: "150Mi"
   #   # The maximum amount of resources allowed for Radarr.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Radarr.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "400m"
   #     # The maximum amount of memory allowed for Radarr.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "600Mi"
+  #     memory: "300Mi"
   radarr: {}
   # Sonarr container resources.
   # Example:
@@ -435,19 +484,19 @@ resources:
   #     # The minimum amount of CPU resources required by Sonarr.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "100m"
+  #     cpu: "300m"
   #     # The minimum amount of memory required by Sonarr.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "300Mi"
+  #     memory: "150Mi"
   #   # The maximum amount of resources allowed for Sonarr.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Sonarr.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "400m"
   #     # The maximum amount of memory allowed for Sonarr.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "600Mi"
+  #     memory: "300Mi"
   sonarr: {}

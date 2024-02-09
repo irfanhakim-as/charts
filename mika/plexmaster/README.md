@@ -91,6 +91,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Select and add indexers to the Jackett server.
 
+### Overseerr
+
+- TODO.
+
 ### Plex
 
 - Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
@@ -153,6 +157,10 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |
 | image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"0.21.1700"`. |
+| image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
+| image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
+| image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
+| image.overseerr.tag | string | `""` | The tag that specifies the version of the Overseerr container image used. Default: `"v1.33.2-ls95"`. |
 | image.plex.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Plex container image. Default: `"IfNotPresent"`. |
 | image.plex.registry | string | `""` | The registry where the Plex container image is hosted. Default: `"index.docker.io"`. |
 | image.plex.repository | string | `""` | The name of the repository that contains the Plex container image used. Default: `"plexinc/pms-docker"`. |
@@ -175,6 +183,8 @@ helm uninstall $release_name --namespace $namespace --wait
 | jackett.autoUpdate | bool | `true` | Specifies whether to allow Jackett to automatically update itself inside the container. |
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
 | jackett.ingress | bool | `false` | Specifies whether Jackett should be hosted using an Ingress. |
+| overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
+| overseerr.ingress | bool | `false` | Specifies whether Overseerr should be hosted using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
 | plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
@@ -184,6 +194,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
 | resources.jackett | object | `{}` | Jackett container resources. |
+| resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.radarr | object | `{}` | Radarr container resources. |
