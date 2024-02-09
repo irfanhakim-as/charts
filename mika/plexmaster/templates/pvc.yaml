@@ -22,7 +22,7 @@ metadata:
     {{- include "plexmaster.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: {{ $dataStorage }}
@@ -36,7 +36,7 @@ metadata:
     {{- include "plexmaster.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: {{ $dataStorage }}
@@ -50,7 +50,7 @@ metadata:
     {{- include "plexmaster.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: {{ $dataStorage }}
@@ -64,7 +64,7 @@ metadata:
     {{- include "plexmaster.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: {{ $dataStorage }}
@@ -78,7 +78,7 @@ metadata:
     {{- include "plexmaster.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: {{ $dataStorage }}
@@ -92,7 +92,7 @@ metadata:
     {{- include "plexmaster.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: {{ $dataStorage }}
