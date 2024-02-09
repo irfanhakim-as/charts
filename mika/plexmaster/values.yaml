@@ -216,16 +216,12 @@ storage:
     # Example:
     # subPath: "Config"
     subPath: ""
-    # Specifies whether to use an SMB share for the data storage.
-    # Example:
-    # smb: true
-    smb: false
-    # The amount of persistent storage allocated for the data storage. This setting is ignored if SMB is enabled for said storage.
+    # The amount of persistent storage allocated for the data storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the data storage. This setting is ignored if SMB is enabled for said storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
