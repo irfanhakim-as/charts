@@ -12,6 +12,10 @@
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
 {{- $jackett_tag := .Values.image.jackett.tag | default "0.21.1700" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
+{{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
+{{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.33.2-ls95" | toString }}
+{{- $overseerr_pullPolicy := .Values.image.overseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
 {{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
 {{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
@@ -30,6 +34,7 @@
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $jackettResources := .Values.resources.jackett }}
+{{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
 {{- $radarrResources := .Values.resources.radarr }}
