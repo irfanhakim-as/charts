@@ -95,7 +95,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-data
+            - name: {{ .Release.Name }}-plexmaster-jackett-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -126,7 +126,7 @@ spec:
           {{- if or $persistent_data $persistent_media }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-data
+            - name: {{ .Release.Name }}-plexmaster-plex-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -163,7 +163,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-data
+            - name: {{ .Release.Name }}-plexmaster-qbt-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -252,9 +252,15 @@ spec:
       {{- if or $persistent_data $persistent_downloads $persistent_media (and $smb (or $downloadsSmb $mediaSmb)) }}
       volumes:
         {{- if $persistent_data }}
-        - name: {{ .Release.Name }}-plexmaster-data
+        - name: {{ .Release.Name }}-plexmaster-jackett-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-data-pvc
+            claimName: {{ .Release.Name }}-plexmaster-jackett-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-plex-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-plex-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-qbt-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-qbt-data-pvc
         - name: {{ .Release.Name }}-plexmaster-radarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-radarr-data-pvc
