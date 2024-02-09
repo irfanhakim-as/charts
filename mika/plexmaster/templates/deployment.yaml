@@ -187,7 +187,7 @@ spec:
                 name: {{ .Release.Name }}-plexmaster-cm
             - configMapRef:
                 name: {{ .Release.Name }}-qbittorrent-cm
-          {{- if or $persistent_data $persistent_downloads $smb }}
+          {{- if or $persistent_data $persistent_downloads }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-qbt-data
@@ -216,7 +216,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
+          {{- if or $persistent_data $persistent_downloads $persistent_media }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-radarr-data
@@ -252,7 +252,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
+          {{- if or $persistent_data $persistent_downloads $persistent_media }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-sonarr-data
@@ -276,7 +276,7 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media (and $smb (or $downloadsSmb $mediaSmb)) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-jackett-data
