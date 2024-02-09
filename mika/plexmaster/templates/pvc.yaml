@@ -28,6 +28,34 @@ spec:
     requests:
       storage: {{ $dataStorage }}
   storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-radarr-data-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-plexmaster-sonarr-data-pvc
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
 {{- end }}
 {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
 ---

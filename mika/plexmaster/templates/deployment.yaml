@@ -193,7 +193,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}radarr-data{{- end }}
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -229,7 +229,7 @@ spec:
           {{- if or $persistent_data $persistent_downloads $persistent_media $smb }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}data{{- end }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $dataSmb $smb }}smb{{- else }}sonarr-data{{- end }}
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -256,6 +256,12 @@ spec:
         - name: {{ .Release.Name }}-plexmaster-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-radarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-radarr-data-pvc
+        - name: {{ .Release.Name }}-plexmaster-sonarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-sonarr-data-pvc
         {{- end }}
         {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
         - name: {{ .Release.Name }}-plexmaster-downloads
