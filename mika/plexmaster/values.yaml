@@ -36,6 +36,20 @@ image:
     # The policy that determines when Kubernetes should pull the Jackett container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Overseerr container image configurations.
+  overseerr:
+    # The registry where the Overseerr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Overseerr container image used.
+    # Default: "linuxserver/overseerr"
+    repository: ""
+    # The tag that specifies the version of the Overseerr container image used.
+    # Default: "v1.33.2-ls95"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Overseerr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # Plex container image configurations.
   plex:
     # The registry where the Plex container image is hosted.
@@ -129,6 +143,17 @@ jackett:
   # domain: "jackett.example.com"
   domain: ""
   # Specifies whether Jackett should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+
+# Overseerr configurations.
+overseerr:
+  # The ingress domain name that hosts the Overseerr server.
+  # Example:
+  # domain: "overseerr.example.com"
+  domain: ""
+  # Specifies whether Overseerr should be hosted using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -355,6 +380,30 @@ resources:
   #     # memory: "250Mi"
   #     memory: "600Mi"
   jackett: {}
+  # Overseerr container resources.
+  # Example:
+  # overseerr:
+  #   # The minimum amount of resources required by Overseerr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Overseerr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by Overseerr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Overseerr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Overseerr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for Overseerr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "600Mi"
+  overseerr: {}
   # Plex container resources.
   # Example:
   # plex:
