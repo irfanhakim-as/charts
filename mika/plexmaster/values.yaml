@@ -205,6 +205,18 @@ sonarr:
   # Example:
   # ingress: true
   ingress: false
+  # Optional custom configurations to be mounted as a file inside the Sonarr container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
 
 # Ingress configurations.
 ingress:
