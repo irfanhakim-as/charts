@@ -181,15 +181,20 @@ helm uninstall $release_name --namespace $namespace --wait
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting plexmaster services. |
 | jackett.autoUpdate | bool | `true` | Specifies whether to allow Jackett to automatically update itself inside the container. |
+| jackett.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jackett container. |
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
 | jackett.ingress | bool | `false` | Specifies whether Jackett should be hosted using an Ingress. |
+| overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
 | overseerr.ingress | bool | `false` | Specifies whether Overseerr should be hosted using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
+| plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
 | plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
+| qbt.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the qBittorrent container. |
 | qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
 | qbt.ingress | bool | `false` | Specifies whether qBittorrent should be hosted using an Ingress. |
+| radarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Radarr container. |
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
 | radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
@@ -208,6 +213,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | smb.secretNamespace | string | `""` | The namespace where the secret containing the credentials used to authenticate with the SMB share is located. Default: `"default"`. |
 | smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
 | smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
+| sonarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Sonarr container. |
 | sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
 | sonarr.ingress | bool | `false` | Specifies whether Sonarr should be hosted using an Ingress. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
