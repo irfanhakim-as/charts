@@ -5,6 +5,11 @@
 {{- $smb := .Values.smb.enabled }}
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
+{{- $jackettConfigs := .Values.jackett.customConfigs }}
+{{- $overseerrConfigs := .Values.overseerr.customConfigs }}
+{{- $plexConfigs := .Values.plex.customConfigs }}
+{{- $qbtConfigs := .Values.qbt.customConfigs }}
+{{- $radarrConfigs := .Values.radarr.customConfigs }}
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
@@ -99,7 +104,7 @@ spec:
                 name: {{ .Release.Name }}-plexmaster-cm
             - configMapRef:
                 name: {{ .Release.Name }}-jackett-cm
-          {{- if or $persistent_data $persistent_downloads }}
+          {{- if or $persistent_data $persistent_downloads $jackettConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-jackett-data
@@ -115,6 +120,12 @@ spec:
               subPath: {{ $downloadsSubPath | quote }}
               {{- end }}
             {{- end }}
+            {{- range $jackettConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jackett-{{ .subPath }}
+              readOnly: false
+            {{- end }}
           {{- end }}
         - name: overseerr
           image: {{ printf "%s/%s:%s" $overseerr_registry $overseerr_repository $overseerr_tag | quote }}
@@ -128,7 +139,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_media }}
+          {{- if or $persistent_data $persistent_media $overseerrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-overseerr-data
@@ -136,6 +147,12 @@ spec:
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
+            {{- end }}
+            {{- range $overseerrConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: overseerr-{{ .subPath }}
+              readOnly: false
             {{- end }}
           {{- end }}
         - name: plex
@@ -152,7 +169,7 @@ spec:
                 name: {{ .Release.Name }}-plex-cm
             - secretRef:
                 name: {{ .Release.Name }}-plex-secret
-          {{- if or $persistent_data $persistent_media }}
+          {{- if or $persistent_data $persistent_media $plexConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-plex-data
@@ -167,6 +184,12 @@ spec:
               {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
               {{- end }}
+            {{- end }}
+            {{- range $plexConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: plex-{{ .subPath }}
+              readOnly: false
             {{- end }}
           {{- end }}
         - name: qbittorrent
@@ -189,7 +212,7 @@ spec:
                 name: {{ .Release.Name }}-plexmaster-cm
             - configMapRef:
                 name: {{ .Release.Name }}-qbittorrent-cm
-          {{- if or $persistent_data $persistent_downloads }}
+          {{- if or $persistent_data $persistent_downloads $qbtConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-qbt-data
@@ -205,6 +228,12 @@ spec:
               subPath: {{ $downloadsSubPath | quote }}
               {{- end }}
             {{- end }}
+            {{- range $qbtConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: qbt-{{ .subPath }}
+              readOnly: false
+            {{- end }}
           {{- end }}
         - name: radarr
           image: {{ printf "%s/%s:%s" $radarr_registry $radarr_repository $radarr_tag | quote }}
@@ -218,7 +247,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media }}
+          {{- if or $persistent_data $persistent_downloads $persistent_media $radarrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-radarr-data
@@ -240,6 +269,12 @@ spec:
               {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
               {{- end }}
+            {{- end }}
+            {{- range $radarrConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: radarr-{{ .subPath }}
+              readOnly: false
             {{- end }}
           {{- end }}
         - name: sonarr
@@ -284,7 +319,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media (or $sonarrConfigs) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media (or $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-jackett-data
@@ -321,7 +356,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-smb-pvc
         {{- end }}
-        {{- if or $sonarrConfigs }}
+        {{- if or $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-custom-configs
           secret:
             secretName: {{ .Release.Name }}-custom-configs
