@@ -436,21 +436,21 @@ resources:
   #     # The minimum amount of CPU resources required by Jackett.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "100m"
+  #     cpu: "300m"
   #     # The minimum amount of memory required by Jackett.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "200Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for Jackett.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Jackett.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "200m"
+  #     cpu: "500m"
   #     # The maximum amount of memory allowed for Jackett.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "300Mi"
+  #     memory: "500Mi"
   jackett: {}
   # Overseerr container resources.
   # Example:
@@ -460,7 +460,7 @@ resources:
   #     # The minimum amount of CPU resources required by Overseerr.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "200m"
+  #     cpu: "400m"
   #     # The minimum amount of memory required by Overseerr.
   #     # Example:
   #     # memory: "10Mi"
@@ -470,7 +470,7 @@ resources:
   #     # The maximum amount of CPU resources allowed for Overseerr.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "600m"
   #     # The maximum amount of memory allowed for Overseerr.
   #     # Example:
   #     # memory: "250Mi"
@@ -536,17 +536,17 @@ resources:
   #     # The minimum amount of memory required by Radarr.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "150Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for Radarr.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Radarr.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "400m"
+  #     cpu: "500m"
   #     # The maximum amount of memory allowed for Radarr.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "300Mi"
+  #     memory: "500Mi"
   radarr: {}
   # Sonarr container resources.
   # Example:
@@ -560,15 +560,15 @@ resources:
   #     # The minimum amount of memory required by Sonarr.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "150Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for Sonarr.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Sonarr.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "400m"
+  #     cpu: "500m"
   #     # The maximum amount of memory allowed for Sonarr.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "300Mi"
+  #     memory: "500Mi"
   sonarr: {}
