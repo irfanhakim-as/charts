@@ -335,9 +335,11 @@ spec:
         - name: {{ .Release.Name }}-plexmaster-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-plex-data-pvc
+        {{- if $qbt }}
         - name: {{ .Release.Name }}-plexmaster-qbt-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-qbt-data-pvc
+        {{- end }}
         - name: {{ .Release.Name }}-plexmaster-radarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-radarr-data-pvc
