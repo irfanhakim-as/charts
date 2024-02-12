@@ -206,6 +206,9 @@ helm uninstall $release_name --namespace $namespace --wait
 
 ### qBittorrent
 
+> [!NOTE]  
+> Even if you are using an external qBittorrent server, follow these steps to ensure said server is properly configured.
+
 - Log into the qBittorrent web interface using the temporary password provided in the logs.
 
 - Click the **Options** button (gear cog icon).
