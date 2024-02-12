@@ -119,7 +119,7 @@ helm uninstall $release_name --namespace $namespace --wait
 - Navigate to the **Downloads** tab:
 
   - Use Subcategories: `Enabled`.
-  - Default Save Path: `/downloads`.
+  - Default Save Path: `/downloads/complete`.
   - Keep incomplete torrents in: `/downloads/incomplete`.
   - Run external program on torrent finished: `/usr/bin/unrar x -r -y "%D*.rar" "%D"`
 
@@ -128,7 +128,7 @@ helm uninstall $release_name --namespace $namespace --wait
   - Torrent Queueing: `Enabled`.
   - When ratio reaches: `1`.
   - When total seeding time reaches: `1440 minutes`.
-  - then: `Remove torrent and its files`.
+  - then: `Pause torrent`.
 
 - Click the **Save** button to apply the changes.
 
