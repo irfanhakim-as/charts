@@ -1,4 +1,5 @@
 {{- $releaseName := .Release.Name | toString }}
+{{- $qbt := .Values.qbt.enabled }}
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
@@ -193,6 +194,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- if $qbt }}
         - name: qbittorrent
           image: {{ printf "%s/%s:%s" $qbt_registry $qbt_repository $qbt_tag | quote }}
           imagePullPolicy: {{ $qbt_pullPolicy }}
@@ -236,6 +238,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
         - name: radarr
           image: {{ printf "%s/%s:%s" $radarr_registry $radarr_repository $radarr_tag | quote }}
           imagePullPolicy: {{ $radarr_pullPolicy }}
