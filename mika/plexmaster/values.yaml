@@ -215,6 +215,10 @@ qbt:
   # Example:
   # domain: "qbt.example.com"
   domain: ""
+  # Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # Specifies whether qBittorrent should be hosted using an Ingress.
   # Example:
   # ingress: true

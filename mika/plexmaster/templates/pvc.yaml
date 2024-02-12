@@ -1,3 +1,4 @@
+{{- $qbt := .Values.qbt.enabled }}
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
@@ -55,6 +56,7 @@ spec:
     requests:
       storage: {{ $dataStorage }}
   storageClassName: {{ $dataStorageClassName }}
+{{- if $qbt }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -69,6 +71,7 @@ spec:
     requests:
       storage: {{ $dataStorage }}
   storageClassName: {{ $dataStorageClassName }}
+{{- end }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

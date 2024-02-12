@@ -1,4 +1,5 @@
 {{- $releaseName := .Release.Name | toString }}
+{{- $qbt := .Values.qbt.enabled }}
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
@@ -193,6 +194,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- if $qbt }}
         - name: qbittorrent
           image: {{ printf "%s/%s:%s" $qbt_registry $qbt_repository $qbt_tag | quote }}
           imagePullPolicy: {{ $qbt_pullPolicy }}
@@ -236,6 +238,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
         - name: radarr
           image: {{ printf "%s/%s:%s" $radarr_registry $radarr_repository $radarr_tag | quote }}
           imagePullPolicy: {{ $radarr_pullPolicy }}
@@ -320,7 +323,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media (or $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media (or $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-jackett-data
@@ -332,9 +335,11 @@ spec:
         - name: {{ .Release.Name }}-plexmaster-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-plex-data-pvc
+        {{- if $qbt }}
         - name: {{ .Release.Name }}-plexmaster-qbt-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-qbt-data-pvc
+        {{- end }}
         - name: {{ .Release.Name }}-plexmaster-radarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-radarr-data-pvc
@@ -357,7 +362,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-smb-pvc
         {{- end }}
-        {{- if or $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
+        {{- if or $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-custom-configs
           secret:
             secretName: {{ .Release.Name }}-custom-configs

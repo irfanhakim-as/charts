@@ -1,3 +1,4 @@
+{{- $qbt := .Values.qbt.enabled }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
@@ -21,6 +22,7 @@ spec:
       targetPort: plex
       protocol: TCP
       name: plex
+    {{- if $qbt }}
     - port: 6881
       targetPort: qbt
       protocol: TCP
@@ -33,6 +35,7 @@ spec:
       targetPort: qbt-web
       protocol: TCP
       name: qbt-web
+    {{- end }}
     - port: 7878
       targetPort: radarr
       protocol: TCP
