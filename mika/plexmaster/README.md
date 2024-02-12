@@ -86,7 +86,7 @@ helm uninstall $release_name --namespace $namespace --wait
 - In the **Jackett Configuration** section:
 
   - Admin password: Add a secure password and click the **Set Password** button.
-  - Blackhole directory: `/downloads`.
+  - Blackhole directory: `/downloads/`.
   - Click the **Apply server settings** button.
 
 - Select and add indexers to the Jackett server.
