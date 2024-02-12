@@ -93,7 +93,72 @@ helm uninstall $release_name --namespace $namespace --wait
 
 ### Overseerr
 
-- TODO.
+> [!NOTE]  
+> The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
+
+- Launch the Overseerr web interface and login using your Plex account.
+
+- In the **Configure Plex** page:
+  - Configure **Plex Settings**:
+    - Server: `Manual configuration`.
+    - Hostname or IP Address: `localhost`.
+    - Port: `32400`.
+    - Use SSL: `Disabled`.
+    - Web App URL: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+    - Click the **Save Changes** button.
+  - Configure **Plex Libraries**:
+    - Click the **Sync Libraries** button.
+    - Toggle each library's (i.e. **Movies** and **TV Shows**) corresponding switch to enable them.
+  - Click the **Continue** button.
+
+- In the **Configure Services** page:
+
+  - **Radarr Settings**:
+    - Click the **Add Radarr Server** button.
+    - Default Server: `Enabled`.
+    - 4K Server: `Disabled`.
+    - Server Name: `Radarr`.
+    - Hostname or IP Address: `localhost`.
+    - Port: `7878`.
+    - Use SSL: `Disabled`.
+    - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+    - Click the **Test** button to verify the settings and for it to load some data from the Radarr server.
+    - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+    - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies`.
+    - Minimum Availability: `Announced`.
+    - Enable Scan: `Enabled`.
+    - Enable Automatic Search: `Enabled`.
+    - Click the **Add Server** button.
+
+  - **Sonarr Settings**:
+    - Click the **Add Sonarr Server** button.
+    - Default Server: `Enabled`.
+    - 4K Server: `Disabled`.
+    - Server Name: `Sonarr`.
+    - Hostname or IP Address: `localhost`.
+    - Port: `8989`.
+    - Use SSL: `Disabled`.
+    - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+    - Click the **Test** button to verify the settings and for it to load some data from the Sonarr server.
+    - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+    - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV`.
+    - Language Profile: `Deprecated`.
+    - Anime Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+    - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV`.
+    - Anime Language Profile: `Deprecated`.
+    - Season Folders: `Enabled`.
+    - Enable Scan: `Enabled`.
+    - Enable Automatic Search: `Enabled`.
+    - Click the **Add Server** button.
+
+  - Click the **Finish Setup** button.
+
+- To request a Movie or TV series to be added to your Plex server:
+
+  - In the **Discover** page of the Overseerr web interface, search for the Movie or TV series.
+  - From the **Search Results**, locate and click the Movie or TV series.
+  - In the selected media's details page, click the **Request** button.
+  - Click the **Request** button in the confirmation modal.
 
 ### Plex
 
