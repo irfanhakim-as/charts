@@ -132,13 +132,117 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Click the **Save** button to apply the changes.
 
-### Radarr
+### Radarr and Sonarr
 
-- TODO.
+> [!NOTE]  
+> The following steps require you to have set up and configured [Jackett](#jackett), [qBittorrent](#qbittorrent), and [Plex](#plex) before proceeding.
 
-### Sonarr
+- Launch the Sonarr web interface.
 
-- TODO.
+- In the **Authentication Required** form:
+
+  - Authentication Method: `Forms (Login Page)`.
+
+  - Authentication Required: `Enabled`.
+
+  - Username: Fill in the desired username.
+
+  - Password: Fill in a secure password.
+
+  - Password Confirmation: Repeat the password for confirmation.
+
+  - Click the **Save** button.
+
+- Click the **Settings** menu item on the left, and then click the **Indexers** link.
+
+- Under the **Indexers** section, click the **+** button to add a new indexer.
+
+- Under **Torrents**, click **Torznab**.
+
+- In the **Add Indexer - Torznab** form:
+
+  - Name: Pick an indexer you have added to Jackett and add its name to this field.
+
+  - URL: Pick an indexer you have added to Jackett and paste the URL acquired from the indexer's corresponding **Copy Torznab Feed** button here.
+
+    > [!TIP]  
+    > If your Jackett service runs on a domain i.e. through Ingress, you may replace the domain name (i.e. `https://jackett.example.com`) with localhost and Jackett's service port (i.e. `http://localhost:9117`).
+
+  - API Key: Copy the API key from Jackett and paste it in this field.
+
+  - Categories: Expand the dropdown and select all **Movie** (Radarr) or **TV** and **Anime** (Sonarr) related categories.
+
+  - Anime Categories (Sonarr): Expand the dropdown and select all **Anime** related categories.
+
+  - Anime Standard Format Search (Sonarr): `Enabled` if the indexer has Anime related categories selected.
+
+  - Leave the rest of the fields as default.
+
+  - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+
+  - Click the **Save** button.
+
+- Repeat the last step for each indexer you wish to add from Jackett.
+
+- Click the **Settings** menu item on the left, and then click the **Download Clients** link.
+
+- Under the **Download Clients** section, click the **+** button to add a new download client.
+
+- Under **Torrents**, click **qBittorrent**.
+
+- In the **Add Download Client - qBittorrent** form:
+
+  - Username: Fill in the username you set for qBittorrent.
+
+  - Password: Fill in the password you set for qBittorrent.
+
+  - Leave the rest of the fields as default.
+
+  - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+
+  - Click the **Save** button.
+
+- Click the **Settings** menu item on the left, and then click the **Connect** link.
+
+- Under the **Connections** section, click the **+** button to add a new connection.
+
+- Under **Add Connection**, click **Plex Media Server**.
+
+- In the **Add Connection - Plex Media Server** form:
+
+  - Host: `localhost`.
+
+  - Authenticate with Plex.tv: Click the corresponding button and log in with your Plex account.
+
+  - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+
+  - Click the **Save** button.
+
+- Click the **Settings** menu item on the left, and then click the **Media Management** link.
+
+- Click the **Add Root Folder** button to add a folder.
+
+- In the **File Browser** form, locate and select the folder where your Movie media (Radarr) or TV media (Sonarr) is stored (same as the one used for Plex i.e. `/data/Movies` or `/data/TV`), and click the **Ok** button.
+
+- Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
+
+- Click the **Save Changes** button.
+
+- Click the **Settings** menu item on the left, and then click the **Profiles** link.
+
+- Under the **Quality Profiles** section, delete any profiles you may not want i.e. `Any`, `HD - 720p/1080p`, `HD-720p`, `SD`, and `Ultra-HD` by opening said profile and clicking the **Delete** button.
+
+  > [!TIP]  
+  > You may also configure any existing profiles or add new ones to better suit your preferences, make sure to click the **Save** button after making any changes.
+
+- Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
+
+- In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to add to Plex, and select it from the search results.
+
+- In the show's details modal, leave the form as default or configure accordingly, and click the **Add Movie/{Show Name}** button.
+
+  > [!TIP]  
+  > If you'd like it to start searching and downloading, click the **Start search for missing movie/episodes** button in the form.
 
 ---
 
