@@ -89,7 +89,17 @@ helm uninstall $release_name --namespace $namespace --wait
   - Blackhole directory: `/downloads/`.
   - Click the **Apply server settings** button.
 
-- Select and add indexers to the Jackett server.
+- Add indexers to the Jackett server:
+
+  - From the dashboard, click the **Add Indexer** button.
+  - In the **Select an indexer to setup** popup, expand the **Type** dropdown and select **Public**.
+  - Expand the **Categories** dropdown and select the **TV** category.
+  - Select the checkbox corresponding to the desired indexers, and click the **Add Selected** button at the bottom of the list.
+  - Repeat these steps for the **Movies** category.
+
+- Test the indexers by clicking the **Test All** button on the dashboard.
+
+- Remove any indexer that consistently fails the test by clicking the **Delete** (trash can) button corresponding to the indexer.
 
 ### Overseerr
 
