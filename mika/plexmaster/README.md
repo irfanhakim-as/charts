@@ -395,6 +395,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
 | qbt.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the qBittorrent container. |
 | qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
+| qbt.enabled | bool | `true` | Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used. |
 | qbt.ingress | bool | `false` | Specifies whether qBittorrent should be hosted using an Ingress. |
 | radarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Radarr container. |
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
