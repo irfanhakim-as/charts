@@ -99,12 +99,35 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
 
-- Settings > Server > Remote Access: `Disable Remote Access`.
+- Launch the Plex web interface.
 
-- Settings > Server > Network:
+- Go through the initial server setup, and disable the **Allow me to access my media outside my home** option.
+
+- Head to **Settings > Server > Network** and configure the following:
 
   - Enable Relay: `Disabled`.
+
   - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+
+  - Click the **Save Changes** button.
+
+- Head to **Settings > Server > Libraries** and configure the following:
+
+  - Click the **Add Library** button.
+
+  - Select type:
+    - Library type: `Movies`.
+    - Name: `Movies`.
+    - Language: `English`.
+    - Click the **Next** button.
+
+  - Add folders:
+    - Click the **Browse for Media Folder** button.
+    - Navigate to the folder where your movie media is stored i.e. `/data/Movies`.
+    - Click the **Add** button.
+    - Click the **Add Library** button.
+
+  - Repeat the same steps for the **TV Shows** library.
 
 ### qBittorrent
 
