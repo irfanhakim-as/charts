@@ -1,3 +1,4 @@
+{{- $qbt := .Values.qbt.enabled }}
 {{- $uid := .Values.global.uid | default "1000" | toString | quote }}
 {{- $gid := .Values.global.gid | default "1000" | toString | quote }}
 {{- $jackettAutoUpdate := .Values.jackett.autoUpdate | toString | quote }}
@@ -30,6 +31,7 @@ metadata:
 data:
   PLEX_UID: {{ $uid }}
   PLEX_GID: {{ $gid }}
+{{- if $qbt }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -39,3 +41,4 @@ metadata:
     {{- include "plexmaster.labels" . | nindent 4 }}
 data:
   WEBUI_PORT: "8080"
+{{- end }}
