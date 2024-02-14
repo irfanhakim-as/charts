@@ -110,7 +110,7 @@ spec:
                 name: {{ .Release.Name }}-plexmaster-cm
             - configMapRef:
                 name: {{ .Release.Name }}-jackett-cm
-          {{- if or $persistent_data $persistent_downloads $jackettConfigs }}
+          {{- if or $persistent_data $persistent_downloads $persistent_global $jackettConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-jackett-data
@@ -119,11 +119,19 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_downloads }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
             - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-              {{- if $downloadsSubPath }}
+                {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $jackettConfigs }}
@@ -145,7 +153,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_media $overseerrConfigs }}
+          {{- if or $persistent_data $persistent_media $persistent_global $overseerrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-overseerr-data
@@ -175,7 +183,7 @@ spec:
                 name: {{ .Release.Name }}-plex-cm
             - secretRef:
                 name: {{ .Release.Name }}-plex-secret
-          {{- if or $persistent_data $persistent_media $plexConfigs }}
+          {{- if or $persistent_data $persistent_media $persistent_global $plexConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-plex-data
@@ -184,11 +192,19 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_media }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_media }}
             - name: {{ .Release.Name }}-plexmaster-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-              {{- if $mediaSubPath }}
+                {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $plexConfigs }}
@@ -219,7 +235,7 @@ spec:
                 name: {{ .Release.Name }}-plexmaster-cm
             - configMapRef:
                 name: {{ .Release.Name }}-qbittorrent-cm
-          {{- if or $persistent_data $persistent_downloads $qbtConfigs }}
+          {{- if or $persistent_data $persistent_downloads $persistent_global $qbtConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-qbt-data
@@ -228,11 +244,19 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_downloads }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
             - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-              {{- if $downloadsSubPath }}
+                {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $qbtConfigs }}
@@ -255,7 +279,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $radarrConfigs }}
+          {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $radarrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-radarr-data
@@ -264,18 +288,26 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_downloads }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
             - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-              {{- if $downloadsSubPath }}
+                {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
               {{- end }}
-            {{- end }}
-            {{- if $persistent_media }}
+              {{- if $persistent_media }}
             - name: {{ .Release.Name }}-plexmaster-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-              {{- if $mediaSubPath }}
+                {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $radarrConfigs }}
@@ -297,7 +329,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-plexmaster-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $sonarrConfigs }}
+          {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $sonarrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
             - name: {{ .Release.Name }}-plexmaster-sonarr-data
@@ -306,18 +338,26 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_downloads }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
             - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-              {{- if $downloadsSubPath }}
+                {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
               {{- end }}
-            {{- end }}
-            {{- if $persistent_media }}
+              {{- if $persistent_media }}
             - name: {{ .Release.Name }}-plexmaster-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-              {{- if $mediaSubPath }}
+                {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $sonarrConfigs }}
