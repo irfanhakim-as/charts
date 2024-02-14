@@ -33,62 +33,82 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [waktusolat](https://github.com/irfanhakim-as/charts/tree/master/mika/waktusolat) | Waktu Solat is a simple web application that posts local prayer times on Mastodon. | ✅ | 🔒 |
 | [yuzu-multiplayer](https://github.com/irfanhakim-as/charts/tree/master/mika/yuzu-multiplayer) | Quickly stand up new dedicated multiplayer lobbies that will be broadcasted on yuzu. | ✅ | ✅ |
 
-## How to add repo
+---
 
-Add the repo to your local helm client.
+## How to add the chart repo
 
-```sh
-helm repo add mika https://irfanhakim-as.github.io/charts
-```
+1. Add the repo to your local helm client.
 
-Update the repo to retrieve the latest versions of the packages.
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
 
-```sh
-helm repo update
-```
+2. Update the repo to retrieve the latest versions of the packages.
 
-## How to install a chart
+    ```sh
+    helm repo update
+    ```
 
-### Prepare chart values
+---
 
-Copy `values.yaml` from the chart you would like to install. Replace `$helm_chart` accordingly.
+## How to install or upgrade a chart release
 
-```sh
-cp mika/$helm_chart/values.yaml .
-```
+1. Get the values file of the chart you wish to install or an existing installation (release).
 
-Edit `values.yaml` with the appropriate values.
+    Get the latest chart values file for a new installation:
 
-```sh
-nano values.yaml
-```
+    ```sh
+    helm show values mika/${helmChart} > values.yaml
+    ```
 
-### Perform installation
+    Alternatively, get the values file of an existing release:
 
-Install the desired chart. Replace `$release_name`, `$helm_chart` and `$namespace` accordingly.
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
 
-```sh
-helm install $release_name mika/$helm_chart --namespace $namespace --create-namespace --values values.yaml --wait
-```
+    Replace `${helmChart}`, `${releaseName}`, and `${namespace}` accordingly.
 
-Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
+2. Edit your chart values file with the intended configurations:
 
-```sh
-helm ls --namespace $namespace | grep "$release_name"
-```
+    ```sh
+    nano values.yaml
+    ```
 
-## How to upgrade a chart
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
 
-After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name`, `$helm_chart` and `$namespace` accordingly.
+3. Install a new release for the desired chart or upgrade an existing release:
 
-```sh
-helm upgrade $release_name mika/$helm_chart --namespace $namespace --values values.yaml --wait
-```
+    ```sh
+    helm upgrade --install ${releaseName} mika/${helmChart} --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
 
-## How to uninstall a chart
+    Replace `${releaseName}`, `${helmChart}`, and `${namespace}` accordingly.
 
-Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
+4. Verify that your chart release has been installed:
 
-```sh
-helm uninstall $release_name --namespace $namespace --wait
-```
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
+
+---
+
+## How to uninstall a chart release
+
+1. Uninstall the desired release:
+
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
