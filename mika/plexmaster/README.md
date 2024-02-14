@@ -232,6 +232,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Navigate to the **Downloads** tab:
 
+  - Default Torrent Management Mode: `Automatic`.
+  - When Torrent Category changed: `Relocate torrent`.
+  - When Default Save Path changed: `Relocate affected torrents`.
+  - When Category Save Path changed: `Relocate affected torrents`.
   - Use Subcategories: `Enabled`.
   - Default Save Path: `/downloads/complete` or `/plexmaster/Downloads/complete`.
   - Keep incomplete torrents in: `/downloads/incomplete` or `/plexmaster/Downloads/incomplete`.
@@ -240,6 +244,10 @@ helm uninstall $release_name --namespace $namespace --wait
 - Navigate to the **BitTorrent** tab:
 
   - Torrent Queueing: `Enabled`.
+  - Maximum active downloads: `5`.
+  - Maximum active uploads: `5`.
+  - Maximum active torrents: `10`.
+  - Do not count slow torrents in these limits: `Enabled`.
   - When ratio reaches: `1`.
   - When total seeding time reaches: `1440 minutes`.
   - then: `Pause torrent`.
@@ -306,9 +314,15 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - In the **Add Download Client - qBittorrent** form:
 
+  - Host: The address of the qBittorrent server i.e. `localhost` (if `qbt.enabled: true`) or the address of the external qBittorrent server.
+
+  - Port: The port of the qBittorrent server i.e. `8080`.
+
   - Username: Fill in the username you set for qBittorrent.
 
   - Password: Fill in the password you set for qBittorrent.
+
+  - Remove Completed: `Enabled`.
 
   - Leave the rest of the fields as default.
 
