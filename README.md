@@ -4,6 +4,9 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 
 ## Prerequisites
 
+> [!NOTE]  
+> You may refer to [Orked](https://github.com/irfanhakim-as/orked) for help with setting up a Kubernetes cluster that meets all the following prerequisites.
+
 - Kubernetes 1.19+
 - Helm 3.2.0+
 - Longhorn 1.4.1+
