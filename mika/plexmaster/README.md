@@ -371,9 +371,18 @@ helm uninstall $release_name --namespace $namespace --wait
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Flaresolverr container. |
+| flaresolverr.enabled | bool | `false` | Specifies whether Flaresolverr should be deployed or excluded in case an external Flaresolverr server is used. |
+| flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
+| flaresolverr.logLevel | string | `""` | The verbosity level of the Flaresolverr logs. Default: `"info"`. |
+| flaresolverr.timezone | string | `""` | The timezone used in the Flaresolverr logs and web browser. Default: `"UTC"`. |
 | global.gid | string | `""` | The group ID used to run the plexmaster containers. Default: `"1000"`. |
 | global.initScript | string | `""` | Custom init script to run before the plexmaster containers start. |
 | global.uid | string | `""` | The user ID used to run the plexmaster containers. Default: `"1000"`. |
+| image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Flaresolverr container image. Default: `"IfNotPresent"`. |
+| image.flaresolverr.registry | string | `""` | The registry where the Flaresolverr container image is hosted. Default: `"ghcr.io"`. |
+| image.flaresolverr.repository | string | `""` | The name of the repository that contains the Flaresolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
+| image.flaresolverr.tag | string | `""` | The tag that specifies the version of the Flaresolverr container image used. Default: `"v3.3.13"`. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
@@ -424,6 +433,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
 | radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
+| resources.flaresolverr | object | `{}` | Flaresolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
