@@ -38,13 +38,13 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 
 ## How to add the chart repo
 
-1. Add the repo to your local helm client.
+1. Add the repo to your local helm client:
 
     ```sh
     helm repo add mika https://irfanhakim-as.github.io/charts
     ```
 
-2. Update the repo to retrieve the latest versions of the packages.
+2. Update the repo to retrieve the latest versions of the packages:
 
     ```sh
     helm repo update
