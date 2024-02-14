@@ -1,4 +1,4 @@
-# `plexmaster`
+# PlexMaster
 
 ## Prerequisites
 
@@ -12,74 +12,86 @@
 
 ---
 
-## How to add repo
+## How to add the chart repo
 
-Add the repo to your local helm client.
+1. Add the repo to your local helm client.
 
-```sh
-helm repo add mika https://irfanhakim-as.github.io/charts
-```
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
 
-Update the repo to retrieve the latest versions of the packages.
+2. Update the repo to retrieve the latest versions of the packages.
 
-```sh
-helm repo update
-```
-
----
-
-## How to install
-
-### Prepare chart values
-
-Copy `values.yaml` from the chart you would like to install.
-
-```sh
-cp mika/plexmaster/values.yaml .
-```
-
-Edit `values.yaml` with the appropriate values.  Please refer to the [Configurations](#configurations) section below, or the `values.yaml` file itself for details and sample values.
-
-```sh
-nano values.yaml
-```
-
-### Perform installation
-
-Install the desired chart. Replace `$release_name` and `$namespace` accordingly.
-
-```sh
-helm install $release_name mika/plexmaster --namespace $namespace --create-namespace --values values.yaml --wait
-```
-
-Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
-
-```sh
-helm ls --namespace $namespace | grep "$release_name"
-```
+    ```sh
+    helm repo update
+    ```
 
 ---
 
-## How to upgrade
-
-After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
-
-```sh
-helm upgrade $release_name mika/plexmaster --namespace $namespace --values values.yaml --wait
-```
+## How to install or upgrade a chart release
 
 > [!IMPORTANT]  
-> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the `values.yaml` file before upgrading. After the upgrade is complete, revert the value back to its original setting and upgrade the chart once again to complete the upgrade process.
+> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the `values.yaml` file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
+
+1. Get the values file of the PlexMaster chart or an existing installation (release).
+
+    Get the latest PlexMaster chart values file for a new installation:
+
+    ```sh
+    helm show values mika/plexmaster > values.yaml
+    ```
+
+    Alternatively, get the values file of an existing PlexMaster release:
+
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Edit your PlexMaster values file with the intended configurations:
+
+    ```sh
+    nano values.yaml
+    ```
+
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
+
+3. Install a new release for PlexMaster or upgrade an existing PlexMaster release:
+
+    ```sh
+    helm upgrade --install ${releaseName} mika/plexmaster --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+4. Verify that your PlexMaster release has been installed:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
 
 ---
 
-## How to uninstall
+## How to uninstall a chart release
 
-Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
+1. Uninstall the desired release:
 
-```sh
-helm uninstall $release_name --namespace $namespace --wait
-```
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
 
 ---
 
