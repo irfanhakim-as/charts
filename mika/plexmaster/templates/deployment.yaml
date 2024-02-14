@@ -367,7 +367,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media (or $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-jackett-data
@@ -391,17 +391,25 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-sonarr-data-pvc
         {{- end }}
-        {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
+        {{- if $persistent_global }}
+          {{- if not (and $globalSmb $smb) }}
+        - name: {{ .Release.Name }}-plexmaster-global
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-plexmaster-global-pvc
+          {{- end }}
+        {{- else }}
+          {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
         - name: {{ .Release.Name }}-plexmaster-downloads
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-downloads-pvc
-        {{- end }}
-        {{- if and $persistent_media (not (and $mediaSmb $smb)) }}
+          {{- end }}
+          {{- if and $persistent_media (not (and $mediaSmb $smb)) }}
         - name: {{ .Release.Name }}-plexmaster-media
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-media-pvc
+          {{- end }}
         {{- end }}
-        {{- if and $smb (or $persistent_downloads $persistent_media) (or $downloadsSmb $mediaSmb) }}
+        {{- if and $smb (or (and $persistent_downloads $downloadsSmb (not $persistent_global)) (and $persistent_media $mediaSmb (not $persistent_global)) (and $persistent_global $globalSmb)) }}
         - name: {{ .Release.Name }}-plexmaster-smb
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-smb-pvc
