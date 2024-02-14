@@ -464,6 +464,9 @@
 
 ## Chart Configurations
 
+> [!NOTE]  
+> Refer to the chart values file directly for more detailed configuration options including their descriptions and sample values.
+
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the FlareSolverr container. |
