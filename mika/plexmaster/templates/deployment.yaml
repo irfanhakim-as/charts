@@ -1,4 +1,5 @@
 {{- $releaseName := .Release.Name | toString }}
+{{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
@@ -8,12 +9,17 @@
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $globalSmb := .Values.storage.global.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
+{{- $fsConfigs := .Values.flaresolverr.customConfigs }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
 {{- $plexConfigs := .Values.plex.customConfigs }}
 {{- $qbtConfigs := .Values.qbt.customConfigs }}
 {{- $radarrConfigs := .Values.radarr.customConfigs }}
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
+{{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
+{{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
+{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.13" | toString }}
+{{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
 {{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
@@ -43,6 +49,7 @@
 {{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls224" | toString }}
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $flaresolverrResources := .Values.resources.flaresolverr }}
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
@@ -96,6 +103,29 @@ spec:
               {{- $initScript | nindent 14 }}
       {{- end }}
       containers:
+        {{- if $flaresolverr }}
+        - name: flaresolverr
+          image: {{ printf "%s/%s:%s" $flaresolverr_registry $flaresolverr_repository $flaresolverr_tag | quote }}
+          imagePullPolicy: {{ $flaresolverr_pullPolicy }}
+          ports:
+            - name: flaresolverr
+              containerPort: 8191
+              protocol: TCP
+          resources:
+            {{- toYaml $flaresolverrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flaresolverr-cm
+          {{- if $fsConfigs }}
+          volumeMounts:
+            {{- range $fsConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: flaresolverr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
         - name: jackett
           image: {{ printf "%s/%s:%s" $jackett_registry $jackett_repository $jackett_tag | quote }}
           imagePullPolicy: {{ $jackett_pullPolicy }}
@@ -367,7 +397,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-plexmaster-jackett-data
@@ -414,7 +444,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-plexmaster-smb-pvc
         {{- end }}
-        {{- if or $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
+        {{- if or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-custom-configs
           secret:
             secretName: {{ .Release.Name }}-custom-configs

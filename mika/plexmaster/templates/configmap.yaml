@@ -1,6 +1,10 @@
+{{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $uid := .Values.global.uid | default "1000" | toString | quote }}
 {{- $gid := .Values.global.gid | default "1000" | toString | quote }}
+{{- $fsLogHtml := .Values.flaresolverr.logHtml | default "false" | toString | quote }}
+{{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
+{{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
 {{- $jackettAutoUpdate := .Values.jackett.autoUpdate | toString | quote }}
 ---
 apiVersion: v1
@@ -12,6 +16,19 @@ metadata:
 data:
   PUID: {{ $uid }}
   PGID: {{ $gid }}
+{{- if $flaresolverr }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flaresolverr-cm
+  labels:
+    {{- include "plexmaster.labels" . | nindent 4 }}
+data:
+  LOG_HTML: {{ $fsLogHtml }}
+  LOG_LEVEL: {{ $fsLogLevel }}
+  TZ: {{ $fsTimezone }}
+{{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap

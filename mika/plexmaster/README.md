@@ -65,6 +65,9 @@ After making any necessary changes to the `values.yaml` file, upgrade the desire
 helm upgrade $release_name mika/plexmaster --namespace $namespace --values values.yaml --wait
 ```
 
+> [!IMPORTANT]  
+> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the `values.yaml` file before upgrading. After the upgrade is complete, revert the value back to its original setting and upgrade the chart once again to complete the upgrade process.
+
 ---
 
 ## How to uninstall
@@ -85,14 +88,21 @@ helm uninstall $release_name --namespace $namespace --wait
 > [!TIP]  
 > Disabling qBittorrent (`qbt.enabled: false`) and using an external qBittorrent server is recommended to avoid throttling issues with download speeds. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to set up an external qBittorrent server.
 
-### Jackett
+### [Jackett](https://github.com/Jackett/Jackett) (and [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr))
 
 - Launch the Jackett web interface.
 
 - In the **Jackett Configuration** section:
 
   - Admin password: Add a secure password and click the **Set Password** button.
+
   - Blackhole directory: `/downloads/` or `/plexmaster/Downloads/`.
+
+  - FlareSolverr API URL: `http://localhost:8191`.
+
+    > [!IMPORTANT]  
+    > The FlareSolverr API URL value assumes that you include the built-in FlareSolverr server (`flaresolverr.enabled: true`) in your installation. If you are using an external FlareSolverr server, replace the value with the actual address to the FlareSolverr server. If neither is the case, you may leave said field empty.
+
   - Click the **Apply server settings** button.
 
 - Add indexers to the Jackett server:
@@ -107,7 +117,7 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Remove any indexer that consistently fails the test by clicking the **Delete** (trash can) button corresponding to the indexer.
 
-### Overseerr
+### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
 > The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
@@ -176,7 +186,7 @@ helm uninstall $release_name --namespace $namespace --wait
   - In the selected media's details page, click the **Request** button.
   - Click the **Request** button in the confirmation modal.
 
-### Plex
+### [Plex](https://www.plex.tv)
 
 - Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
 
@@ -210,7 +220,7 @@ helm uninstall $release_name --namespace $namespace --wait
 
   - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
 
-### qBittorrent
+### [qBittorrent](https://www.qbittorrent.org)
 
 > [!NOTE]  
 > Even if you are using an external qBittorrent server, follow these steps to ensure said server is properly configured.
@@ -225,6 +235,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Navigate to the **Downloads** tab:
 
+  - Default Torrent Management Mode: `Automatic`.
+  - When Torrent Category changed: `Relocate torrent`.
+  - When Default Save Path changed: `Relocate affected torrents`.
+  - When Category Save Path changed: `Relocate affected torrents`.
   - Use Subcategories: `Enabled`.
   - Default Save Path: `/downloads/complete` or `/plexmaster/Downloads/complete`.
   - Keep incomplete torrents in: `/downloads/incomplete` or `/plexmaster/Downloads/incomplete`.
@@ -233,16 +247,20 @@ helm uninstall $release_name --namespace $namespace --wait
 - Navigate to the **BitTorrent** tab:
 
   - Torrent Queueing: `Enabled`.
+  - Maximum active downloads: `5`.
+  - Maximum active uploads: `5`.
+  - Maximum active torrents: `10`.
+  - Do not count slow torrents in these limits: `Enabled`.
   - When ratio reaches: `1`.
   - When total seeding time reaches: `1440 minutes`.
   - then: `Pause torrent`.
 
 - Click the **Save** button to apply the changes.
 
-### Radarr and Sonarr
+### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Jackett](#jackett), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
+> The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
 
 - Launch the Sonarr web interface.
 
@@ -299,9 +317,15 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - In the **Add Download Client - qBittorrent** form:
 
+  - Host: The address of the qBittorrent server i.e. `localhost` (if `qbt.enabled: true`) or the address of the external qBittorrent server.
+
+  - Port: The port of the qBittorrent server i.e. `8080`.
+
   - Username: Fill in the username you set for qBittorrent.
 
   - Password: Fill in the password you set for qBittorrent.
+
+  - Remove Completed: `Enabled`.
 
   - Leave the rest of the fields as default.
 
@@ -371,9 +395,18 @@ helm uninstall $release_name --namespace $namespace --wait
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the FlareSolverr container. |
+| flaresolverr.enabled | bool | `false` | Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used. |
+| flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
+| flaresolverr.logLevel | string | `""` | The verbosity level of the FlareSolverr logs. Default: `"info"`. |
+| flaresolverr.timezone | string | `""` | The timezone used in the FlareSolverr logs and web browser. Default: `"UTC"`. |
 | global.gid | string | `""` | The group ID used to run the plexmaster containers. Default: `"1000"`. |
 | global.initScript | string | `""` | Custom init script to run before the plexmaster containers start. |
 | global.uid | string | `""` | The user ID used to run the plexmaster containers. Default: `"1000"`. |
+| image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
+| image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
+| image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
+| image.flaresolverr.tag | string | `""` | The tag that specifies the version of the FlareSolverr container image used. Default: `"v3.3.13"`. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
@@ -424,6 +457,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
 | radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
+| resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
