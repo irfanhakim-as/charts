@@ -105,7 +105,7 @@ spec:
       storage: {{ $dataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 {{- end }}
-{{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
+{{- if and $persistent_downloads (not (and $downloadsSmb $smb)) (not $persistent_global) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
