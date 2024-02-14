@@ -136,6 +136,8 @@
 
 5. Remove any indexer that consistently fails the test by clicking the **Delete** (trash can) button corresponding to the indexer.
 
+---
+
 ### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
@@ -215,6 +217,8 @@
 
    - Click the **Request** button in the confirmation modal.
 
+---
+
 ### [Plex](https://www.plex.tv)
 
 1. Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
@@ -248,6 +252,8 @@
      - Click the **Add Library** button.
 
    - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
+
+---
 
 ### [qBittorrent](https://www.qbittorrent.org)
 
@@ -302,6 +308,8 @@
    - then: `Pause torrent`.
 
 6. Click the **Save** button to apply the changes.
+
+---
 
 ### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
 
