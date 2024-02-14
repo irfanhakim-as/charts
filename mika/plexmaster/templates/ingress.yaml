@@ -18,9 +18,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-plexmaster-ingress
+  name: {{ .Release.Name }}-flex-ingress
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
   annotations:
     cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
     cert-manager.io/private-key-algorithm: "ECDSA"
@@ -40,7 +40,7 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-plexmaster-svc
+                name: {{ .Release.Name }}-flex-svc
                 port:
                   name: jackett
             path: /
@@ -52,7 +52,7 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-plexmaster-svc
+                name: {{ .Release.Name }}-flex-svc
                 port:
                   name: overseerr
             path: /
@@ -64,7 +64,7 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-plexmaster-svc
+                name: {{ .Release.Name }}-flex-svc
                 port:
                   name: plex
             path: /
@@ -76,7 +76,7 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-plexmaster-svc
+                name: {{ .Release.Name }}-flex-svc
                 port:
                   name: qbt-web
             path: /
@@ -88,7 +88,7 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-plexmaster-svc
+                name: {{ .Release.Name }}-flex-svc
                 port:
                   name: radarr
             path: /
@@ -100,7 +100,7 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-plexmaster-svc
+                name: {{ .Release.Name }}-flex-svc
                 port:
                   name: sonarr
             path: /
@@ -126,5 +126,5 @@ spec:
         {{- if $sonarrIngress }}
         - {{ $sonarrDomain }}
         {{- end }}
-      secretName: {{ .Release.Name }}-plexmaster-tls-cert
+      secretName: {{ .Release.Name }}-flex-tls-cert
 {{- end }}

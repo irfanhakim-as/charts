@@ -10,9 +10,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-plexmaster-cm
+  name: {{ .Release.Name }}-flex-cm
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 data:
   PUID: {{ $uid }}
   PGID: {{ $gid }}
@@ -23,7 +23,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-flaresolverr-cm
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 data:
   LOG_HTML: {{ $fsLogHtml }}
   LOG_LEVEL: {{ $fsLogLevel }}
@@ -35,7 +35,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-jackett-cm
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 data:
   AUTO_UPDATE: {{ $jackettAutoUpdate }}
 ---
@@ -44,7 +44,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-plex-cm
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 data:
   PLEX_UID: {{ $uid }}
   PLEX_GID: {{ $gid }}
@@ -55,7 +55,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-qbittorrent-cm
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 data:
   WEBUI_PORT: "8080"
 {{- end }}

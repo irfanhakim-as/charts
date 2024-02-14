@@ -5,9 +5,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-plexmaster-svc
+  name: {{ .Release.Name }}-flex-svc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   type: {{ $type }}
   ports:
@@ -52,4 +52,4 @@ spec:
       protocol: TCP
       name: sonarr
   selector:
-    {{- include "plexmaster.selectorLabels" . | nindent 4 }}
+    {{- include "flex.selectorLabels" . | nindent 4 }}

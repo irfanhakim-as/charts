@@ -18,11 +18,11 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Release.Name }}-plexmaster-smb-pv
+  name: {{ .Release.Name }}-flex-smb-pv
   annotations:
     pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   capacity:
     storage: {{ $storage }}
@@ -45,7 +45,7 @@ spec:
   csi:
     driver: smb.csi.k8s.io
     readOnly: false
-    volumeHandle: {{ .Release.Name }}-plexmaster-smb-pv
+    volumeHandle: {{ .Release.Name }}-flex-smb-pv
     volumeAttributes:
       source: {{ $share }}
     nodeStageSecretRef:

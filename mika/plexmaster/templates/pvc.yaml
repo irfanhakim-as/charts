@@ -22,9 +22,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-jackett-data-pvc
+  name: {{ .Release.Name }}-flex-jackett-data-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -36,9 +36,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-overseerr-data-pvc
+  name: {{ .Release.Name }}-flex-overseerr-data-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -50,9 +50,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-plex-data-pvc
+  name: {{ .Release.Name }}-flex-plex-data-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -65,9 +65,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-qbt-data-pvc
+  name: {{ .Release.Name }}-flex-qbt-data-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -80,9 +80,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-radarr-data-pvc
+  name: {{ .Release.Name }}-flex-radarr-data-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -94,9 +94,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-sonarr-data-pvc
+  name: {{ .Release.Name }}-flex-sonarr-data-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteOnce
@@ -110,9 +110,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-downloads-pvc
+  name: {{ .Release.Name }}-flex-downloads-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteMany
@@ -126,9 +126,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-global-pvc
+  name: {{ .Release.Name }}-flex-global-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteMany
@@ -142,9 +142,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-media-pvc
+  name: {{ .Release.Name }}-flex-media-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteMany
@@ -158,15 +158,15 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-plexmaster-smb-pvc
+  name: {{ .Release.Name }}-flex-smb-pvc
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: {{ $smbStorage }}
-  volumeName: {{ .Release.Name }}-plexmaster-smb-pv
+  volumeName: {{ .Release.Name }}-flex-smb-pv
   storageClassName: {{ $smbStorageClassName }}
 {{- end }}

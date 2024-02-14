@@ -12,17 +12,17 @@
 {{- $qbtDomain := .Values.qbt.domain | toString }}
 {{- $radarrDomain := .Values.radarr.domain | toString }}
 {{- $sonarrDomain := .Values.sonarr.domain | toString }}
-PlexMaster is now installed and configured for {{ .Release.Name | toString }}.
+Flex is now installed and configured for {{ .Release.Name | toString }}.
 
-Follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/plexmaster#application-configuration to complete the initial setup of each deployed PlexMaster service.
+Follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/flex#application-configuration to complete the initial setup of each deployed Flex service.
 
 Visit the following services to get started:
 
-    - Jackett: {{ if and $ingress $jackettIngress }}https://{{ $jackettDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
-    - Overseerr: {{ if and $ingress $overseerrIngress }}https://{{ $overseerrDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
-    - Plex: {{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
-    - qBittorrent: {{ if $qbt }}{{- if and $ingress $qbtIngress }}https://{{ $qbtDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}{{- else }}Please visit the address of the external qBittorrent server{{- end }}
-    - Radarr: {{ if and $ingress $radarrIngress }}https://{{ $radarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
-    - Sonarr: {{ if and $ingress $sonarrIngress }}https://{{ $sonarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
+    - Jackett: {{ if and $ingress $jackettIngress }}https://{{ $jackettDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
+    - Overseerr: {{ if and $ingress $overseerrIngress }}https://{{ $overseerrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
+    - Plex: {{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
+    - qBittorrent: {{ if $qbt }}{{- if and $ingress $qbtIngress }}https://{{ $qbtDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external qBittorrent server{{- end }}
+    - Radarr: {{ if and $ingress $radarrIngress }}https://{{ $radarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
+    - Sonarr: {{ if and $ingress $sonarrIngress }}https://{{ $sonarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
 
-For more information on how to use and configure PlexMaster, please refer to the official documentation.
+For more information on how to use and configure Flex, please refer to the official documentation.

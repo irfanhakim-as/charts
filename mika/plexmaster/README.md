@@ -1,4 +1,4 @@
-# PlexMaster
+# Flex
 
 ## Prerequisites
 
@@ -33,15 +33,15 @@
 > [!IMPORTANT]  
 > To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the `values.yaml` file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
 
-1. Get the values file of the PlexMaster chart or an existing installation (release).
+1. Get the values file of the Flex chart or an existing installation (release).
 
-    Get the latest PlexMaster chart values file for a new installation:
+    Get the latest Flex chart values file for a new installation:
 
     ```sh
-    helm show values mika/plexmaster > values.yaml
+    helm show values mika/flex > values.yaml
     ```
 
-    Alternatively, get the values file of an existing PlexMaster release:
+    Alternatively, get the values file of an existing Flex release:
 
     ```sh
     helm get values ${releaseName} --namespace ${namespace} > values.yaml
@@ -49,7 +49,7 @@
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-2. Edit your PlexMaster values file with the intended configurations:
+2. Edit your Flex values file with the intended configurations:
 
     ```sh
     nano values.yaml
@@ -57,15 +57,15 @@
 
     Pay extra attention to the descriptions and sample values provided in the chart values file.
 
-3. Install a new release for PlexMaster or upgrade an existing PlexMaster release:
+3. Install a new release for Flex or upgrade an existing Flex release:
 
     ```sh
-    helm upgrade --install ${releaseName} mika/plexmaster --namespace ${namespace} --create-namespace --values values.yaml --wait
+    helm upgrade --install ${releaseName} mika/flex --namespace ${namespace} --create-namespace --values values.yaml --wait
     ```
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-4. Verify that your PlexMaster release has been installed:
+4. Verify that your Flex release has been installed:
 
     ```sh
     helm ls --namespace ${namespace} | grep "${releaseName}"
@@ -114,7 +114,7 @@
 
    - Admin password: Add a secure password and click the **Set Password** button.
 
-   - Blackhole directory: `/downloads/` or `/plexmaster/Downloads/`.
+   - Blackhole directory: `/downloads/` or `/flex/Downloads/`.
 
    - FlareSolverr API URL: `http://localhost:8191`.
 
@@ -180,7 +180,7 @@
      - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
      - Click the **Test** button to verify the settings and for it to load some data from the Radarr server.
      - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-     - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
+     - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/flex/Media/Movies`.
      - Minimum Availability: `Announced`.
      - Enable Scan: `Enabled`.
      - Enable Automatic Search: `Enabled`.
@@ -198,10 +198,10 @@
      - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
      - Click the **Test** button to verify the settings and for it to load some data from the Sonarr server.
      - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-     - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
+     - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
      - Language Profile: `Deprecated`.
      - Anime Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-     - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
+     - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
      - Anime Language Profile: `Deprecated`.
      - Season Folders: `Enabled`.
      - Enable Scan: `Enabled`.
@@ -250,11 +250,11 @@
    - Add folders:
 
      - Click the **Browse for Media Folder** button.
-     - Navigate to the folder where your movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
+     - Navigate to the folder where your movie media is stored i.e. `/data/Movies` or `/flex/Media/Movies`.
      - Click the **Add** button.
      - Click the **Add Library** button.
 
-   - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
+   - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
 
 ---
 
@@ -283,9 +283,9 @@
 
    - Use Subcategories: `Enabled`.
 
-   - Default Save Path: `/downloads/complete` or `/plexmaster/Downloads/complete`.
+   - Default Save Path: `/downloads/complete` or `/flex/Downloads/complete`.
 
-   - Keep incomplete torrents in: `/downloads/incomplete` or `/plexmaster/Downloads/incomplete`.
+   - Keep incomplete torrents in: `/downloads/incomplete` or `/flex/Downloads/incomplete`.
 
    - Run external program on torrent finished: `/usr/bin/unrar x -r -y "%D*.rar" "%D"`
 
@@ -404,7 +404,7 @@
 
        - Remote Path: Set the parent folder where your Movie media (Radarr) or TV media (Sonarr) is downloaded to on the qBittorrent server i.e. `/downloads/`.
 
-       - Local Path: Set the path to the same parent folder where it is mounted on the Radarr/Sonarr container i.e. `/plexmaster/Downloads/`.
+       - Local Path: Set the path to the same parent folder where it is mounted on the Radarr/Sonarr container i.e. `/flex/Downloads/`.
 
        - Click the **Save** button.
 
@@ -432,7 +432,7 @@
 
    - Click the **Add Root Folder** button to add a folder.
 
-   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/plexmaster/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/plexmaster/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
+   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
 
    - Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
 
@@ -484,9 +484,9 @@
 | flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
 | flaresolverr.logLevel | string | `""` | The verbosity level of the FlareSolverr logs. Default: `"info"`. |
 | flaresolverr.timezone | string | `""` | The timezone used in the FlareSolverr logs and web browser. Default: `"UTC"`. |
-| global.gid | string | `""` | The group ID used to run the plexmaster containers. Default: `"1000"`. |
-| global.initScript | string | `""` | Custom init script to run before the plexmaster containers start. |
-| global.uid | string | `""` | The user ID used to run the plexmaster containers. Default: `"1000"`. |
+| global.gid | string | `""` | The group ID used to run the Flex containers. Default: `"1000"`. |
+| global.initScript | string | `""` | Custom init script to run before the Flex containers start. |
+| global.uid | string | `""` | The user ID used to run the Flex containers. Default: `"1000"`. |
 | image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
@@ -521,7 +521,7 @@
 | image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `4.0.1.929-ls224`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting plexmaster services. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Flex services. |
 | jackett.autoUpdate | bool | `true` | Specifies whether to allow Jackett to automatically update itself inside the container. |
 | jackett.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jackett container. |
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
@@ -540,7 +540,7 @@
 | radarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Radarr container. |
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
 | radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
-| replicaCount | string | `""` | The desired number of running replicas for plexmaster. Default: `"1"`. |
+| replicaCount | string | `""` | The desired number of running replicas for Flex. Default: `"1"`. |
 | resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
@@ -548,7 +548,7 @@
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.radarr | object | `{}` | Radarr container resources. |
 | resources.sonarr | object | `{}` | Sonarr container resources. |
-| service.type | string | `""` | The type of service used for plexmaster services. Default: `"ClusterIP"`. |
+| service.type | string | `""` | The type of service used for Flex services. Default: `"ClusterIP"`. |
 | smb.enabled | bool | `false` | Specifies whether to enable persistent storage to be provisioned in the form of an SMB share. |
 | smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |
 | smb.pvStorage | string | `""` | The amount of persistent storage available on the SMB share volume. Default: `"100Gi"`. |
@@ -572,7 +572,7 @@
 | storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
 | storage.downloads.subPath | string | `""` | The sub-path within the downloads storage to mount for the container. |
 | storage.global.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage. |
-| storage.global.mountPath | string | `""` | The path where the global storage should be mounted on the container. Default: `"/plexmaster"`. |
+| storage.global.mountPath | string | `""` | The path where the global storage should be mounted on the container. Default: `"/flex"`. |
 | storage.global.smb | bool | `false` | Specifies whether to use an SMB share for the global storage. |
 | storage.global.storage | string | `""` | The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
 | storage.global.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the global storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |

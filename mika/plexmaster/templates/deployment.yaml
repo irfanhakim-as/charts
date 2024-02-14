@@ -59,7 +59,7 @@
 {{- $initScript := .Values.global.initScript | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
 {{- $downloadsMountPath := .Values.storage.downloads.mountPath | default "/downloads" | toString | quote }}
-{{- $globalMountPath := .Values.storage.global.mountPath | default "/plexmaster" | toString | quote }}
+{{- $globalMountPath := .Values.storage.global.mountPath | default "/flex" | toString | quote }}
 {{- $mediaMountPath := .Values.storage.media.mountPath | default "/data" | toString | quote }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
 {{- $downloadsSubPath := .Values.storage.downloads.subPath | toString }}
@@ -70,14 +70,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-plexmaster
+  name: {{ .Release.Name }}-flex
   labels:
-    {{- include "plexmaster.labels" . | nindent 4 }}
+    {{- include "flex.labels" . | nindent 4 }}
 spec:
   replicas: {{ int $replica_count }}
   selector:
     matchLabels:
-      {{- include "plexmaster.selectorLabels" . | nindent 6 }}
+      {{- include "flex.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -85,7 +85,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "plexmaster.selectorLabels" . | nindent 8 }}
+        {{- include "flex.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -137,27 +137,27 @@ spec:
             {{- toYaml $jackettResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-plexmaster-cm
+                name: {{ .Release.Name }}-flex-cm
             - configMapRef:
                 name: {{ .Release.Name }}-jackett-cm
           {{- if or $persistent_data $persistent_downloads $persistent_global $jackettConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-jackett-data
+            - name: {{ .Release.Name }}-flex-jackett-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
                 {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
                 {{- end }}
             {{- else }}
               {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
                 {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
@@ -182,11 +182,11 @@ spec:
             {{- toYaml $overseerrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-plexmaster-cm
+                name: {{ .Release.Name }}-flex-cm
           {{- if or $persistent_data $persistent_media $persistent_global $overseerrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-overseerr-data
+            - name: {{ .Release.Name }}-flex-overseerr-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -216,21 +216,21 @@ spec:
           {{- if or $persistent_data $persistent_media $persistent_global $plexConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-plex-data
+            - name: {{ .Release.Name }}-flex-plex-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
                 {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
                 {{- end }}
             {{- else }}
               {{- if $persistent_media }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
                 {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
@@ -262,27 +262,27 @@ spec:
             {{- toYaml $qbtResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-plexmaster-cm
+                name: {{ .Release.Name }}-flex-cm
             - configMapRef:
                 name: {{ .Release.Name }}-qbittorrent-cm
           {{- if or $persistent_data $persistent_downloads $persistent_global $qbtConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-qbt-data
+            - name: {{ .Release.Name }}-flex-qbt-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
                 {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
                 {{- end }}
             {{- else }}
               {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
                 {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
@@ -308,32 +308,32 @@ spec:
             {{- toYaml $radarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-plexmaster-cm
+                name: {{ .Release.Name }}-flex-cm
           {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $radarrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-radarr-data
+            - name: {{ .Release.Name }}-flex-radarr-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
                 {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
                 {{- end }}
             {{- else }}
               {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
                 {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
                 {{- end }}
               {{- end }}
               {{- if $persistent_media }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
                 {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
@@ -358,32 +358,32 @@ spec:
             {{- toYaml $sonarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-plexmaster-cm
+                name: {{ .Release.Name }}-flex-cm
           {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $sonarrConfigs }}
           volumeMounts:
             {{- if $persistent_data }}
-            - name: {{ .Release.Name }}-plexmaster-sonarr-data
+            - name: {{ .Release.Name }}-flex-sonarr-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
                 {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
                 {{- end }}
             {{- else }}
               {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
                 {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
                 {{- end }}
               {{- end }}
               {{- if $persistent_media }}
-            - name: {{ .Release.Name }}-plexmaster-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
                 {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
@@ -400,49 +400,49 @@ spec:
       {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
-        - name: {{ .Release.Name }}-plexmaster-jackett-data
+        - name: {{ .Release.Name }}-flex-jackett-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-jackett-data-pvc
-        - name: {{ .Release.Name }}-plexmaster-overseerr-data
+            claimName: {{ .Release.Name }}-flex-jackett-data-pvc
+        - name: {{ .Release.Name }}-flex-overseerr-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-overseerr-data-pvc
-        - name: {{ .Release.Name }}-plexmaster-plex-data
+            claimName: {{ .Release.Name }}-flex-overseerr-data-pvc
+        - name: {{ .Release.Name }}-flex-plex-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-plex-data-pvc
+            claimName: {{ .Release.Name }}-flex-plex-data-pvc
         {{- if $qbt }}
-        - name: {{ .Release.Name }}-plexmaster-qbt-data
+        - name: {{ .Release.Name }}-flex-qbt-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-qbt-data-pvc
+            claimName: {{ .Release.Name }}-flex-qbt-data-pvc
         {{- end }}
-        - name: {{ .Release.Name }}-plexmaster-radarr-data
+        - name: {{ .Release.Name }}-flex-radarr-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-radarr-data-pvc
-        - name: {{ .Release.Name }}-plexmaster-sonarr-data
+            claimName: {{ .Release.Name }}-flex-radarr-data-pvc
+        - name: {{ .Release.Name }}-flex-sonarr-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-sonarr-data-pvc
+            claimName: {{ .Release.Name }}-flex-sonarr-data-pvc
         {{- end }}
         {{- if $persistent_global }}
           {{- if not (and $globalSmb $smb) }}
-        - name: {{ .Release.Name }}-plexmaster-global
+        - name: {{ .Release.Name }}-flex-global
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-global-pvc
+            claimName: {{ .Release.Name }}-flex-global-pvc
           {{- end }}
         {{- else }}
           {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
-        - name: {{ .Release.Name }}-plexmaster-downloads
+        - name: {{ .Release.Name }}-flex-downloads
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-downloads-pvc
+            claimName: {{ .Release.Name }}-flex-downloads-pvc
           {{- end }}
           {{- if and $persistent_media (not (and $mediaSmb $smb)) }}
-        - name: {{ .Release.Name }}-plexmaster-media
+        - name: {{ .Release.Name }}-flex-media
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-media-pvc
+            claimName: {{ .Release.Name }}-flex-media-pvc
           {{- end }}
         {{- end }}
         {{- if and $smb (or (and $persistent_downloads $downloadsSmb (not $persistent_global)) (and $persistent_media $mediaSmb (not $persistent_global)) (and $persistent_global $globalSmb)) }}
-        - name: {{ .Release.Name }}-plexmaster-smb
+        - name: {{ .Release.Name }}-flex-smb
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-plexmaster-smb-pvc
+            claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
         {{- if or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-custom-configs
