@@ -356,6 +356,35 @@ storage:
     # Example:
     # storageClassName: "longhorn"
     storageClassName: ""
+  # Global storage configurations.
+  global:
+    # Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The path where the global storage should be mounted on the container.
+    # Default: "/plexmaster"
+    # Example:
+    # mountPath: "/global"
+    mountPath: ""
+    # The sub-path within the global storage to mount for the container.
+    # Example:
+    # subPath: "PlexMaster"
+    subPath: ""
+    # Specifies whether to use an SMB share for the global storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
   # Media storage configurations.
   media:
     # Specifies whether persistent storage should be provisioned for media storage.
