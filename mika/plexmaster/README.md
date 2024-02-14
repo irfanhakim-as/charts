@@ -85,7 +85,7 @@ helm uninstall $release_name --namespace $namespace --wait
 > [!TIP]  
 > Disabling qBittorrent (`qbt.enabled: false`) and using an external qBittorrent server is recommended to avoid throttling issues with download speeds. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to set up an external qBittorrent server.
 
-### Jackett
+### Jackett (and FlareSolverr)
 
 - Launch the Jackett web interface.
 
