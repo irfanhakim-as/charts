@@ -8,18 +8,18 @@ replicaCount: ""
 
 # Container images used for plexmaster.
 image:
-  # Flaresolverr container image configurations.
+  # FlareSolverr container image configurations.
   flaresolverr:
-    # The registry where the Flaresolverr container image is hosted.
+    # The registry where the FlareSolverr container image is hosted.
     # Default: "ghcr.io"
     registry: ""
-    # The name of the repository that contains the Flaresolverr container image used.
+    # The name of the repository that contains the FlareSolverr container image used.
     # Default: "flaresolverr/flaresolverr"
     repository: ""
-    # The tag that specifies the version of the Flaresolverr container image used.
+    # The tag that specifies the version of the FlareSolverr container image used.
     # Default: "v3.3.13"
     tag: ""
-    # The policy that determines when Kubernetes should pull the Flaresolverr container image.
+    # The policy that determines when Kubernetes should pull the FlareSolverr container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Init container image configurations.
@@ -146,9 +146,9 @@ global:
   # gid: ""
   gid: ""
 
-# Flaresolverr configurations.
+# FlareSolverr configurations.
 flaresolverr:
-  # Specifies whether Flaresolverr should be deployed or excluded in case an external Flaresolverr server is used.
+  # Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used.
   # Example:
   # enabled: true
   enabled: false
@@ -157,17 +157,17 @@ flaresolverr:
   # Example:
   # logHtml: "true"
   logHtml: ""
-  # The verbosity level of the Flaresolverr logs.
+  # The verbosity level of the FlareSolverr logs.
   # Default: "info"
   # Example:
   # logLevel: "debug"
   logLevel: ""
-  # The timezone used in the Flaresolverr logs and web browser.
+  # The timezone used in the FlareSolverr logs and web browser.
   # Default: "UTC"
   # Example:
   # timezone: "Asia/Kuala_Lumpur"
   timezone: ""
-  # Optional custom configurations to be mounted as a file inside the Flaresolverr container.
+  # Optional custom configurations to be mounted as a file inside the FlareSolverr container.
   # Example:
   # customConfigs:
   #   - mountPath: "/config"
@@ -509,26 +509,26 @@ smb:
 
 # Resource requirements and limits for plexmaster containers.
 resources:
-  # Flaresolverr container resources.
+  # FlareSolverr container resources.
   # Example:
   # flaresolverr:
-  #   # The minimum amount of resources required by Flaresolverr to run.
+  #   # The minimum amount of resources required by FlareSolverr to run.
   #   requests:
-  #     # The minimum amount of CPU resources required by Flaresolverr.
+  #     # The minimum amount of CPU resources required by FlareSolverr.
   #     # Example:
   #     # cpu: "10m"
   #     cpu: "300m"
-  #     # The minimum amount of memory required by Flaresolverr.
+  #     # The minimum amount of memory required by FlareSolverr.
   #     # Example:
   #     # memory: "10Mi"
   #     memory: "300Mi"
-  #   # The maximum amount of resources allowed for Flaresolverr.
+  #   # The maximum amount of resources allowed for FlareSolverr.
   #   limits:
-  #     # The maximum amount of CPU resources allowed for Flaresolverr.
+  #     # The maximum amount of CPU resources allowed for FlareSolverr.
   #     # Example:
   #     # cpu: "250m"
   #     cpu: "500m"
-  #     # The maximum amount of memory allowed for Flaresolverr.
+  #     # The maximum amount of memory allowed for FlareSolverr.
   #     # Example:
   #     # memory: "250Mi"
   #     memory: "500Mi"
