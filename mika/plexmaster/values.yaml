@@ -517,7 +517,7 @@ resources:
   #     # The minimum amount of CPU resources required by FlareSolverr.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "300m"
+  #     cpu: "200m"
   #     # The minimum amount of memory required by FlareSolverr.
   #     # Example:
   #     # memory: "10Mi"
@@ -527,7 +527,7 @@ resources:
   #     # The maximum amount of CPU resources allowed for FlareSolverr.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "500m"
+  #     cpu: "300m"
   #     # The maximum amount of memory allowed for FlareSolverr.
   #     # Example:
   #     # memory: "250Mi"
