@@ -1,3 +1,4 @@
+{{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
@@ -10,6 +11,12 @@ metadata:
 spec:
   type: {{ $type }}
   ports:
+    {{- if $flaresolverr }}
+    - port: 8191
+      targetPort: flaresolverr
+      protocol: TCP
+      name: flaresolverr
+    {{- end }}
     - port: 9117
       targetPort: jackett
       protocol: TCP
