@@ -85,7 +85,7 @@ helm uninstall $release_name --namespace $namespace --wait
 > [!TIP]  
 > Disabling qBittorrent (`qbt.enabled: false`) and using an external qBittorrent server is recommended to avoid throttling issues with download speeds. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to set up an external qBittorrent server.
 
-### Jackett (and FlareSolverr)
+### [Jackett](https://github.com/Jackett/Jackett) (and [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr))
 
 - Launch the Jackett web interface.
 
@@ -114,7 +114,7 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Remove any indexer that consistently fails the test by clicking the **Delete** (trash can) button corresponding to the indexer.
 
-### Overseerr
+### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
 > The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
@@ -183,7 +183,7 @@ helm uninstall $release_name --namespace $namespace --wait
   - In the selected media's details page, click the **Request** button.
   - Click the **Request** button in the confirmation modal.
 
-### Plex
+### [Plex](https://www.plex.tv)
 
 - Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
 
@@ -217,7 +217,7 @@ helm uninstall $release_name --namespace $namespace --wait
 
   - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
 
-### qBittorrent
+### [qBittorrent](https://www.qbittorrent.org)
 
 > [!NOTE]  
 > Even if you are using an external qBittorrent server, follow these steps to ensure said server is properly configured.
@@ -246,10 +246,10 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Click the **Save** button to apply the changes.
 
-### Radarr and Sonarr
+### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Jackett](#jackett), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
+> The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
 
 - Launch the Sonarr web interface.
 
