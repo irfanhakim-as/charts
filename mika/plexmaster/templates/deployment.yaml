@@ -2,9 +2,11 @@
 {{- $qbt := .Values.qbt.enabled }}
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
+{{- $persistent_global := .Values.storage.global.enabled }}
 {{- $persistent_media := .Values.storage.media.enabled }}
 {{- $smb := .Values.smb.enabled }}
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
+{{- $globalSmb := .Values.storage.global.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
@@ -50,9 +52,11 @@
 {{- $initScript := .Values.global.initScript | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
 {{- $downloadsMountPath := .Values.storage.downloads.mountPath | default "/downloads" | toString | quote }}
+{{- $globalMountPath := .Values.storage.global.mountPath | default "/plexmaster" | toString | quote }}
 {{- $mediaMountPath := .Values.storage.media.mountPath | default "/data" | toString | quote }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
 {{- $downloadsSubPath := .Values.storage.downloads.subPath | toString }}
+{{- $globalSubPath := .Values.storage.global.subPath | toString }}
 {{- $mediaSubPath := .Values.storage.media.subPath | toString }}
 {{- $gid := .Values.global.gid | default "1000" | int }}
 ---
