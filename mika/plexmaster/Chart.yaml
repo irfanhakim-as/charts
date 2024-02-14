@@ -19,6 +19,11 @@ home: "https://github.com/irfanhakim-as/charts"
 icon: "https://irfanhakim-as.github.io/charts/logos/mika.png"
 sources:
   - "https://github.com/plexinc/pms-docker"
+  - "https://github.com/linuxserver/docker-jackett"
+  - "https://github.com/linuxserver/docker-overseerr"
+  - "https://github.com/linuxserver/docker-qbittorrent"
+  - "https://github.com/linuxserver/docker-radarr"
+  - "https://github.com/linuxserver/docker-sonarr"
   - "https://github.com/irfanhakim-as/charts"
 maintainers:
   - name: "Irfan Hakim"
