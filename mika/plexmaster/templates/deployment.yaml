@@ -103,6 +103,29 @@ spec:
               {{- $initScript | nindent 14 }}
       {{- end }}
       containers:
+        {{- if $flaresolverr }}
+        - name: flaresolverr
+          image: {{ printf "%s/%s:%s" $flaresolverr_registry $flaresolverr_repository $flaresolverr_tag | quote }}
+          imagePullPolicy: {{ $flaresolverr_pullPolicy }}
+          ports:
+            - name: flaresolverr
+              containerPort: 8191
+              protocol: TCP
+          resources:
+            {{- toYaml $flaresolverrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flaresolverr-cm
+          {{- if $fsConfigs }}
+          volumeMounts:
+            {{- range $fsConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: flaresolverr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
         - name: jackett
           image: {{ printf "%s/%s:%s" $jackett_registry $jackett_repository $jackett_tag | quote }}
           imagePullPolicy: {{ $jackett_pullPolicy }}
