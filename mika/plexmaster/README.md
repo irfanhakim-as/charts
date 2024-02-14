@@ -303,6 +303,20 @@ helm uninstall $release_name --namespace $namespace --wait
 
   - Click the **Save** button.
 
+- If you're using an external qBittorrent server and require path mapping, locate the **Remote Path Mappings** section in the **Download Clients** page:
+
+  - Click the **+** button to add a new path mapping.
+
+  - In the **Add Remote Path Mapping** form:
+
+    - Host: Expand the dropdown and select the qBittorrent server.
+
+    - Remote Path: Set the parent folder where your Movie media (Radarr) or TV media (Sonarr) is downloaded to on the qBittorrent server i.e. `/downloads/`.
+
+    - Local Path: Set the path to the same parent folder where it is mounted on the Radarr/Sonarr container i.e. `/plexmaster/Downloads/`.
+
+    - Click the **Save** button.
+
 - Click the **Settings** menu item on the left, and then click the **Connect** link.
 
 - Under the **Connections** section, click the **+** button to add a new connection.
