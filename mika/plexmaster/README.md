@@ -93,304 +93,349 @@ helm uninstall $release_name --namespace $namespace --wait
 
 ### [Jackett](https://github.com/Jackett/Jackett) (and [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr))
 
-- Launch the Jackett web interface.
+1. Launch the Jackett web interface.
 
-- In the **Jackett Configuration** section:
+2. Configure the following in the **Jackett Configuration** section:
 
-  - Admin password: Add a secure password and click the **Set Password** button.
+   - Admin password: Add a secure password and click the **Set Password** button.
 
-  - Blackhole directory: `/downloads/` or `/plexmaster/Downloads/`.
+   - Blackhole directory: `/downloads/` or `/plexmaster/Downloads/`.
 
-  - FlareSolverr API URL: `http://localhost:8191`.
+   - FlareSolverr API URL: `http://localhost:8191`.
 
-    > [!IMPORTANT]  
-    > The FlareSolverr API URL value assumes that you include the built-in FlareSolverr server (`flaresolverr.enabled: true`) in your installation. If you are using an external FlareSolverr server, replace the value with the actual address to the FlareSolverr server. If neither is the case, you may leave said field empty.
+      > [!IMPORTANT]  
+      > The FlareSolverr API URL value assumes that you include the built-in FlareSolverr server (`flaresolverr.enabled: true`) in your installation. If you are using an external FlareSolverr server, replace the value with the actual address to the FlareSolverr server. If neither is the case, you may leave said field empty.
 
-  - Click the **Apply server settings** button.
+   - Click the **Apply server settings** button.
 
-- Add indexers to the Jackett server:
+3. Add indexers to the Jackett server:
 
-  - From the dashboard, click the **Add Indexer** button.
-  - In the **Select an indexer to setup** popup, expand the **Type** dropdown and select **Public**.
-  - Expand the **Categories** dropdown and select the **TV** category.
-  - Select the checkbox corresponding to the desired indexers, and click the **Add Selected** button at the bottom of the list.
-  - Repeat these steps for the **Movies** category.
+   - From the dashboard, click the **Add Indexer** button.
 
-- Test the indexers by clicking the **Test All** button on the dashboard.
+   - In the **Select an indexer to setup** popup, expand the **Type** dropdown and select **Public**.
 
-- Remove any indexer that consistently fails the test by clicking the **Delete** (trash can) button corresponding to the indexer.
+   - Expand the **Categories** dropdown and select the **TV** category.
+
+   - Select the checkbox corresponding to the desired indexers, and click the **Add Selected** button at the bottom of the list.
+
+   - Repeat these steps for the **Movies** category.
+
+4. Test the indexers by clicking the **Test All** button on the dashboard.
+
+5. Remove any indexer that consistently fails the test by clicking the **Delete** (trash can) button corresponding to the indexer.
 
 ### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
 > The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
 
-- Launch the Overseerr web interface and login using your Plex account.
+1. Launch the Overseerr web interface and login using your Plex account.
 
-- In the **Configure Plex** page:
-  - Configure **Plex Settings**:
-    - Server: `Manual configuration`.
-    - Hostname or IP Address: `localhost`.
-    - Port: `32400`.
-    - Use SSL: `Disabled`.
-    - Web App URL: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
-    - Click the **Save Changes** button.
-  - Configure **Plex Libraries**:
-    - Click the **Sync Libraries** button.
-    - Toggle each library's (i.e. **Movies** and **TV Shows**) corresponding switch to enable them.
-  - Click the **Continue** button.
+2. In the **Configure Plex** page:
 
-- In the **Configure Services** page:
+   - Configure **Plex Settings**:
 
-  - **Radarr Settings**:
-    - Click the **Add Radarr Server** button.
-    - Default Server: `Enabled`.
-    - 4K Server: `Disabled`.
-    - Server Name: `Radarr`.
-    - Hostname or IP Address: `localhost`.
-    - Port: `7878`.
-    - Use SSL: `Disabled`.
-    - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
-    - Click the **Test** button to verify the settings and for it to load some data from the Radarr server.
-    - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-    - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
-    - Minimum Availability: `Announced`.
-    - Enable Scan: `Enabled`.
-    - Enable Automatic Search: `Enabled`.
-    - Click the **Add Server** button.
+     - Server: `Manual configuration`.
+     - Hostname or IP Address: `localhost`.
+     - Port: `32400`.
+     - Use SSL: `Disabled`.
+     - Web App URL: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+     - Click the **Save Changes** button.
 
-  - **Sonarr Settings**:
-    - Click the **Add Sonarr Server** button.
-    - Default Server: `Enabled`.
-    - 4K Server: `Disabled`.
-    - Server Name: `Sonarr`.
-    - Hostname or IP Address: `localhost`.
-    - Port: `8989`.
-    - Use SSL: `Disabled`.
-    - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
-    - Click the **Test** button to verify the settings and for it to load some data from the Sonarr server.
-    - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-    - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
-    - Language Profile: `Deprecated`.
-    - Anime Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-    - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
-    - Anime Language Profile: `Deprecated`.
-    - Season Folders: `Enabled`.
-    - Enable Scan: `Enabled`.
-    - Enable Automatic Search: `Enabled`.
-    - Click the **Add Server** button.
+   - Configure **Plex Libraries**:
 
-  - Click the **Finish Setup** button.
+     - Click the **Sync Libraries** button.
+     - Toggle each library's (i.e. **Movies** and **TV Shows**) corresponding switch to enable them.
 
-- To request a Movie or TV series to be added to your Plex server:
+   - Click the **Continue** button.
 
-  - In the **Discover** page of the Overseerr web interface, search for the Movie or TV series.
-  - From the **Search Results**, locate and click the Movie or TV series.
-  - In the selected media's details page, click the **Request** button.
-  - Click the **Request** button in the confirmation modal.
+3. In the **Configure Services** page:
+
+   - **Radarr Settings**:
+
+     - Click the **Add Radarr Server** button.
+     - Default Server: `Enabled`.
+     - 4K Server: `Disabled`.
+     - Server Name: `Radarr`.
+     - Hostname or IP Address: `localhost`.
+     - Port: `7878`.
+     - Use SSL: `Disabled`.
+     - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+     - Click the **Test** button to verify the settings and for it to load some data from the Radarr server.
+     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
+     - Minimum Availability: `Announced`.
+     - Enable Scan: `Enabled`.
+     - Enable Automatic Search: `Enabled`.
+     - Click the **Add Server** button.
+
+   - **Sonarr Settings**:
+
+     - Click the **Add Sonarr Server** button.
+     - Default Server: `Enabled`.
+     - 4K Server: `Disabled`.
+     - Server Name: `Sonarr`.
+     - Hostname or IP Address: `localhost`.
+     - Port: `8989`.
+     - Use SSL: `Disabled`.
+     - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+     - Click the **Test** button to verify the settings and for it to load some data from the Sonarr server.
+     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
+     - Language Profile: `Deprecated`.
+     - Anime Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
+     - Anime Language Profile: `Deprecated`.
+     - Season Folders: `Enabled`.
+     - Enable Scan: `Enabled`.
+     - Enable Automatic Search: `Enabled`.
+     - Click the **Add Server** button.
+
+   - Click the **Finish Setup** button.
+
+4. To request a Movie or TV series to be added to your Plex server:
+
+   - In the **Discover** page of the Overseerr web interface, search for the Movie or TV series.
+
+   - From the **Search Results**, locate and click the Movie or TV series.
+
+   - In the selected media's details page, click the **Request** button.
+
+   - Click the **Request** button in the confirmation modal.
 
 ### [Plex](https://www.plex.tv)
 
-- Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
+1. Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
 
-- Launch the Plex web interface.
+2. Launch the Plex web interface.
 
-- Go through the initial server setup, and disable the **Allow me to access my media outside my home** option.
+3. Go through the initial server setup, and disable the **Allow me to access my media outside my home** option.
 
-- Head to **Settings > Server > Network** and configure the following:
+4. Head to **Settings > Server > Network** and configure the following:
 
-  - Enable Relay: `Disabled`.
+   - Enable Relay: `Disabled`.
+   - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+   - Click the **Save Changes** button.
 
-  - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+5. Head to **Settings > Server > Libraries** and configure the following:
 
-  - Click the **Save Changes** button.
+   - Click the **Add Library** button.
 
-- Head to **Settings > Server > Libraries** and configure the following:
+   - Select type:
 
-  - Click the **Add Library** button.
+     - Library type: `Movies`.
+     - Name: `Movies`.
+     - Language: `English`.
+     - Click the **Next** button.
 
-  - Select type:
-    - Library type: `Movies`.
-    - Name: `Movies`.
-    - Language: `English`.
-    - Click the **Next** button.
+   - Add folders:
 
-  - Add folders:
-    - Click the **Browse for Media Folder** button.
-    - Navigate to the folder where your movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
-    - Click the **Add** button.
-    - Click the **Add Library** button.
+     - Click the **Browse for Media Folder** button.
+     - Navigate to the folder where your movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
+     - Click the **Add** button.
+     - Click the **Add Library** button.
 
-  - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
+   - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
 
 ### [qBittorrent](https://www.qbittorrent.org)
 
 > [!NOTE]  
 > Even if you are using an external qBittorrent server, follow these steps to ensure said server is properly configured.
 
-- Log into the qBittorrent web interface using the temporary password provided in the logs.
+1. Log into the qBittorrent web interface using the temporary password provided in the logs.
 
-- Click the **Options** button (gear cog icon).
+2. Click the **Options** button (gear cog icon).
 
-- In the newly opened **Options** window, navigate to the **Web UI** tab:
+3. In the newly opened **Options** window, navigate to the **Web UI** tab:
 
-  - Under the **Authentication** section, set a new **Username** and **Password** accordingly.
+   - Under the **Authentication** section, set a new **Username** and **Password** accordingly.
 
-- Navigate to the **Downloads** tab:
+4. Navigate to the **Downloads** tab and configure the following:
 
-  - Default Torrent Management Mode: `Automatic`.
-  - When Torrent Category changed: `Relocate torrent`.
-  - When Default Save Path changed: `Relocate affected torrents`.
-  - When Category Save Path changed: `Relocate affected torrents`.
-  - Use Subcategories: `Enabled`.
-  - Default Save Path: `/downloads/complete` or `/plexmaster/Downloads/complete`.
-  - Keep incomplete torrents in: `/downloads/incomplete` or `/plexmaster/Downloads/incomplete`.
-  - Run external program on torrent finished: `/usr/bin/unrar x -r -y "%D*.rar" "%D"`
+   - Default Torrent Management Mode: `Automatic`.
 
-- Navigate to the **BitTorrent** tab:
+   - When Torrent Category changed: `Relocate torrent`.
 
-  - Torrent Queueing: `Enabled`.
-  - Maximum active downloads: `5`.
-  - Maximum active uploads: `5`.
-  - Maximum active torrents: `10`.
-  - Do not count slow torrents in these limits: `Enabled`.
-  - When ratio reaches: `1`.
-  - When total seeding time reaches: `1440 minutes`.
-  - then: `Pause torrent`.
+   - When Default Save Path changed: `Relocate affected torrents`.
 
-- Click the **Save** button to apply the changes.
+   - When Category Save Path changed: `Relocate affected torrents`.
+
+   - Use Subcategories: `Enabled`.
+
+   - Default Save Path: `/downloads/complete` or `/plexmaster/Downloads/complete`.
+
+   - Keep incomplete torrents in: `/downloads/incomplete` or `/plexmaster/Downloads/incomplete`.
+
+   - Run external program on torrent finished: `/usr/bin/unrar x -r -y "%D*.rar" "%D"`
+
+      > [!IMPORTANT]  
+      > If you are using an external qBittorrent server, ensure that `unrar` is installed on the server.
+
+5. Navigate to the **BitTorrent** tab and configure the following:
+
+   - Torrent Queueing: `Enabled`.
+
+   - Maximum active downloads: `5`.
+
+   - Maximum active uploads: `5`.
+
+   - Maximum active torrents: `10`.
+
+   - Do not count slow torrents in these limits: `Enabled`.
+
+   - When ratio reaches: `1`.
+
+   - When total seeding time reaches: `1440 minutes`.
+
+   - then: `Pause torrent`.
+
+6. Click the **Save** button to apply the changes.
 
 ### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
 
 > [!NOTE]  
 > The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
 
-- Launch the Sonarr web interface.
+1. Launch the Radarr/Sonarr web interface.
 
-- In the **Authentication Required** form:
+2. In the **Authentication Required** form:
 
-  - Authentication Method: `Forms (Login Page)`.
+   - Authentication Method: `Forms (Login Page)`.
 
-  - Authentication Required: `Enabled`.
+   - Authentication Required: `Enabled`.
 
-  - Username: Fill in the desired username.
+   - Username: Fill in the desired username.
 
-  - Password: Fill in a secure password.
+   - Password: Fill in a secure password.
 
-  - Password Confirmation: Repeat the password for confirmation.
+   - Password Confirmation: Repeat the password for confirmation.
 
-  - Click the **Save** button.
+   - Click the **Save** button.
 
-- Click the **Settings** menu item on the left, and then click the **Indexers** link.
+3. Add indexers to Radarr/Sonarr:
 
-- Under the **Indexers** section, click the **+** button to add a new indexer.
+   - Click the **Settings** menu item on the left, and then click the **Indexers** link.
 
-- Under **Torrents**, click **Torznab**.
+   - Under the **Indexers** section, click the **+** button to add a new indexer.
 
-- In the **Add Indexer - Torznab** form:
+   - Under **Torrents**, click **Torznab**.
 
-  - Name: Pick an indexer you have added to Jackett and add its name to this field.
+   - In the **Add Indexer - Torznab** form:
 
-  - URL: Pick an indexer you have added to Jackett and paste the URL acquired from the indexer's corresponding **Copy Torznab Feed** button here.
+     - Name: Pick an indexer you have added to Jackett and add its name to this field.
 
-    > [!TIP]  
-    > If your Jackett service runs on a domain i.e. through Ingress, you may replace the domain name (i.e. `https://jackett.example.com`) with localhost and Jackett's service port (i.e. `http://localhost:9117`).
+     - URL: Pick an indexer you have added to Jackett and paste the URL acquired from the indexer's corresponding **Copy Torznab Feed** button here.
 
-  - API Key: Copy the API key from Jackett and paste it in this field.
+        > [!TIP]  
+        > If your Jackett service runs on a domain i.e. through Ingress, you may replace the domain name (i.e. `https://jackett.example.com`) with localhost and Jackett's service port (i.e. `http://localhost:9117`).
 
-  - Categories: Expand the dropdown and select all **Movie** (Radarr) or **TV** and **Anime** (Sonarr) related categories.
+     - API Key: Copy the API key from Jackett and paste it in this field.
 
-  - Anime Categories (Sonarr): Expand the dropdown and select all **Anime** related categories.
+     - Categories: Expand the dropdown and select all **Movie** (Radarr) or **TV** and **Anime** (Sonarr) related categories.
 
-  - Anime Standard Format Search (Sonarr): `Enabled` if the indexer has Anime related categories selected.
+     - Anime Categories (Sonarr): Expand the dropdown and select all **Anime** related categories.
 
-  - Leave the rest of the fields as default.
+     - Anime Standard Format Search (Sonarr): `Enabled` if the indexer has Anime related categories selected.
 
-  - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+     - Leave the rest of the fields as default.
 
-  - Click the **Save** button.
+     - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
 
-- Repeat the last step for each indexer you wish to add from Jackett.
+     - Click the **Save** button.
 
-- Click the **Settings** menu item on the left, and then click the **Download Clients** link.
+     - Repeat the last step for each indexer you wish to add from Jackett.
 
-- Under the **Download Clients** section, click the **+** button to add a new download client.
+4. Add a download client to Radarr/Sonarr:
 
-- Under **Torrents**, click **qBittorrent**.
+   - Click the **Settings** menu item on the left, and then click the **Download Clients** link.
 
-- In the **Add Download Client - qBittorrent** form:
+   - Under the **Download Clients** section, click the **+** button to add a new download client.
 
-  - Host: The address of the qBittorrent server i.e. `localhost` (if `qbt.enabled: true`) or the address of the external qBittorrent server.
+   - Under **Torrents**, click **qBittorrent**.
 
-  - Port: The port of the qBittorrent server i.e. `8080`.
+   - In the **Add Download Client - qBittorrent** form:
 
-  - Username: Fill in the username you set for qBittorrent.
+     - Host: The address of the qBittorrent server i.e. `localhost` (if `qbt.enabled: true`) or the address of the external qBittorrent server.
 
-  - Password: Fill in the password you set for qBittorrent.
+     - Port: The port of the qBittorrent server i.e. `8080`.
 
-  - Remove Completed: `Enabled`.
+     - Username: Fill in the username you set for qBittorrent.
 
-  - Leave the rest of the fields as default.
+     - Password: Fill in the password you set for qBittorrent.
 
-  - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+     - Remove Completed: `Enabled`.
 
-  - Click the **Save** button.
+     - Leave the rest of the fields as default.
 
-- If you're using an external qBittorrent server and require path mapping, locate the **Remote Path Mappings** section in the **Download Clients** page:
+     - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
 
-  - Click the **+** button to add a new path mapping.
+     - Click the **Save** button.
 
-  - In the **Add Remote Path Mapping** form:
+   - If you're using an external qBittorrent server and require path mapping, locate the **Remote Path Mappings** section in the **Download Clients** page:
 
-    - Host: Expand the dropdown and select the qBittorrent server.
+     - Click the **+** button to add a new path mapping.
 
-    - Remote Path: Set the parent folder where your Movie media (Radarr) or TV media (Sonarr) is downloaded to on the qBittorrent server i.e. `/downloads/`.
+     - In the **Add Remote Path Mapping** form:
 
-    - Local Path: Set the path to the same parent folder where it is mounted on the Radarr/Sonarr container i.e. `/plexmaster/Downloads/`.
+       - Host: Expand the dropdown and select the qBittorrent server.
 
-    - Click the **Save** button.
+       - Remote Path: Set the parent folder where your Movie media (Radarr) or TV media (Sonarr) is downloaded to on the qBittorrent server i.e. `/downloads/`.
 
-- Click the **Settings** menu item on the left, and then click the **Connect** link.
+       - Local Path: Set the path to the same parent folder where it is mounted on the Radarr/Sonarr container i.e. `/plexmaster/Downloads/`.
 
-- Under the **Connections** section, click the **+** button to add a new connection.
+       - Click the **Save** button.
 
-- Under **Add Connection**, click **Plex Media Server**.
+5. Add a connection to Plex from Radarr/Sonarr:
 
-- In the **Add Connection - Plex Media Server** form:
+   - Click the **Settings** menu item on the left, and then click the **Connect** link.
 
-  - Host: `localhost`.
+   - Under the **Connections** section, click the **+** button to add a new connection.
 
-  - Authenticate with Plex.tv: Click the corresponding button and log in with your Plex account.
+   - Under **Add Connection**, click **Plex Media Server**.
 
-  - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+   - In the **Add Connection - Plex Media Server** form:
 
-  - Click the **Save** button.
+     - Host: `localhost`.
 
-- Click the **Settings** menu item on the left, and then click the **Media Management** link.
+     - Authenticate with Plex.tv: Click the corresponding button and log in with your Plex account.
 
-- Click the **Add Root Folder** button to add a folder.
+     - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
 
-- In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/plexmaster/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/plexmaster/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
+     - Click the **Save** button.
 
-- Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
+6. Configure the media management settings on Radarr/Sonarr:
 
-- Click the **Save Changes** button.
+   - Click the **Settings** menu item on the left, and then click the **Media Management** link.
 
-- Click the **Settings** menu item on the left, and then click the **Profiles** link.
+   - Click the **Add Root Folder** button to add a folder.
 
-- Under the **Quality Profiles** section, delete any profiles you may not want i.e. `Any`, `HD - 720p/1080p`, `HD-720p`, `SD`, and `Ultra-HD` by opening said profile and clicking the **Delete** button.
+   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/plexmaster/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/plexmaster/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
 
-  > [!TIP]  
-  > You may also configure any existing profiles or add new ones to better suit your preferences, make sure to click the **Save** button after making any changes.
+   - Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
 
-- Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
+   - Click the **Save Changes** button.
 
-- In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to add to Plex, and select it from the search results.
+7. Configure quality profiles on Radarr/Sonarr:
 
-- In the show's details modal, leave the form as default or configure accordingly, and click the **Add Movie/{Show Name}** button.
+   - Click the **Settings** menu item on the left, and then click the **Profiles** link.
 
-  > [!TIP]  
-  > If you'd like it to start searching and downloading, click the **Start search for missing movie/episodes** button in the form.
+   - Under the **Quality Profiles** section, delete any profiles you may not want i.e. `Any`, `HD - 720p/1080p`, `HD-720p`, `SD`, and `Ultra-HD` by opening said profile and clicking the **Delete** button.
+
+      > [!TIP]  
+      > You may also configure any existing profiles or add new ones to better suit your preferences, make sure to click the **Save** button after making any changes.
+
+8. Add a Movie (Radarr) or TV series (Sonarr) for download (using qBittorrent) and streaming (using Plex):
+
+   - Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
+
+   - In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to download and add to Plex, and select it from the search results.
+
+   - In the show's details modal, leave the form as default or configure accordingly, and click the **Add Movie/{Show Name}** button.
+
+      > [!TIP]  
+      > If you'd like it to start searching and downloading, click the **Start search for missing movie/episodes** button in the form.
+
+   - Alternatively, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to use [Overseerr](#overseerr) to request them.
 
 ---
 
