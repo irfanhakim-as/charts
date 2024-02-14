@@ -92,7 +92,14 @@ helm uninstall $release_name --namespace $namespace --wait
 - In the **Jackett Configuration** section:
 
   - Admin password: Add a secure password and click the **Set Password** button.
+
   - Blackhole directory: `/downloads/` or `/plexmaster/Downloads/`.
+
+  - FlareSolverr API URL: `http://localhost:8191`.
+
+    > [!IMPORTANT]  
+    > The FlareSolverr API URL value assumes that you include the built-in FlareSolverr server (`flaresolverr.enabled: true`) in your installation. If you are using an external Flaresolverr server, replace the value with the actual address to the Flaresolverr server. If neither is the case, you may leave said field empty.
+
   - Click the **Apply server settings** button.
 
 - Add indexers to the Jackett server:
