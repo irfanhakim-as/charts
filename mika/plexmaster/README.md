@@ -86,7 +86,7 @@ helm uninstall $release_name --namespace $namespace --wait
 - In the **Jackett Configuration** section:
 
   - Admin password: Add a secure password and click the **Set Password** button.
-  - Blackhole directory: `/downloads/`.
+  - Blackhole directory: `/downloads/` or `/plexmaster/Downloads/`.
   - Click the **Apply server settings** button.
 
 - Add indexers to the Jackett server:
@@ -134,7 +134,7 @@ helm uninstall $release_name --namespace $namespace --wait
     - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
     - Click the **Test** button to verify the settings and for it to load some data from the Radarr server.
     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-    - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies`.
+    - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
     - Minimum Availability: `Announced`.
     - Enable Scan: `Enabled`.
     - Enable Automatic Search: `Enabled`.
@@ -151,10 +151,10 @@ helm uninstall $release_name --namespace $namespace --wait
     - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
     - Click the **Test** button to verify the settings and for it to load some data from the Sonarr server.
     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-    - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV`.
+    - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
     - Language Profile: `Deprecated`.
     - Anime Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
-    - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV`.
+    - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
     - Anime Language Profile: `Deprecated`.
     - Season Folders: `Enabled`.
     - Enable Scan: `Enabled`.
@@ -198,11 +198,11 @@ helm uninstall $release_name --namespace $namespace --wait
 
   - Add folders:
     - Click the **Browse for Media Folder** button.
-    - Navigate to the folder where your movie media is stored i.e. `/data/Movies`.
+    - Navigate to the folder where your movie media is stored i.e. `/data/Movies` or `/plexmaster/Media/Movies`.
     - Click the **Add** button.
     - Click the **Add Library** button.
 
-  - Repeat the same steps for the **TV Shows** library.
+  - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/plexmaster/Media/TV`.
 
 ### qBittorrent
 
@@ -220,8 +220,8 @@ helm uninstall $release_name --namespace $namespace --wait
 - Navigate to the **Downloads** tab:
 
   - Use Subcategories: `Enabled`.
-  - Default Save Path: `/downloads/complete`.
-  - Keep incomplete torrents in: `/downloads/incomplete`.
+  - Default Save Path: `/downloads/complete` or `/plexmaster/Downloads/complete`.
+  - Keep incomplete torrents in: `/downloads/incomplete` or `/plexmaster/Downloads/incomplete`.
   - Run external program on torrent finished: `/usr/bin/unrar x -r -y "%D*.rar" "%D"`
 
 - Navigate to the **BitTorrent** tab:
@@ -323,7 +323,7 @@ helm uninstall $release_name --namespace $namespace --wait
 
 - Click the **Add Root Folder** button to add a folder.
 
-- In the **File Browser** form, locate and select the folder where your Movie media (Radarr) or TV media (Sonarr) is stored (same as the one used for Plex i.e. `/data/Movies` or `/data/TV`), and click the **Ok** button.
+- In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/plexmaster/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/plexmaster/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
 
 - Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
 
