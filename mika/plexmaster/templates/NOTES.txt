@@ -1,10 +1,28 @@
+{{- $qbt := .Values.qbt.enabled }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $jackettIngress := .Values.jackett.ingress }}
+{{- $overseerrIngress := .Values.overseerr.ingress }}
+{{- $plexIngress := .Values.plex.ingress }}
+{{- $qbtIngress := .Values.qbt.ingress }}
+{{- $radarrIngress := .Values.radarr.ingress }}
+{{- $sonarrIngress := .Values.sonarr.ingress }}
+{{- $jackettDomain := .Values.jackett.domain | toString }}
+{{- $overseerrDomain := .Values.overseerr.domain | toString }}
 {{- $plexDomain := .Values.plex.domain | toString }}
+{{- $qbtDomain := .Values.qbt.domain | toString }}
+{{- $radarrDomain := .Values.radarr.domain | toString }}
+{{- $sonarrDomain := .Values.sonarr.domain | toString }}
 PlexMaster is now installed and configured for {{ .Release.Name | toString }}.
 
-Visit the Plex server to get started:
+Follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/plexmaster#application-configuration to complete the initial setup of each deployed PlexMaster service.
 
-    - https://{{ $plexDomain }}
+Visit the following services to get started:
 
-See the values.yaml file of this chart for more configuration options.
+    - Jackett: {{ if and $ingress $jackettIngress }}https://{{ $jackettDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
+    - Overseerr: {{ if and $ingress $overseerrIngress }}https://{{ $overseerrDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
+    - Plex: {{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
+    - qBittorrent: {{ if $qbt }}{{- if and $ingress $qbtIngress }}https://{{ $qbtDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}{{- else }}Please visit the address of the external qBittorrent server{{- end }}
+    - Radarr: {{ if and $ingress $radarrIngress }}https://{{ $radarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
+    - Sonarr: {{ if and $ingress $sonarrIngress }}https://{{ $sonarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-plexmaster-svc for the right address{{- end }}
 
-Please refer to the official documentation for more information on how to use PlexMaster.
+For more information on how to use and configure PlexMaster, please refer to the official documentation.
