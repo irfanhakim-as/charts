@@ -65,6 +65,9 @@ After making any necessary changes to the `values.yaml` file, upgrade the desire
 helm upgrade $release_name mika/plexmaster --namespace $namespace --values values.yaml --wait
 ```
 
+> [!IMPORTANT]  
+> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the `values.yaml` file before upgrading. After the upgrade is complete, revert the value back to its original setting and upgrade the chart once again to complete the upgrade process.
+
 ---
 
 ## How to uninstall
