@@ -10,6 +10,11 @@ keywords:
   - "media"
   - "server"
   - "streaming"
+  - "jackett"
+  - "overseerr"
+  - "qbittorrent"
+  - "radarr"
+  - "sonarr"
 home: "https://github.com/irfanhakim-as/charts"
 icon: "https://irfanhakim-as.github.io/charts/logos/mika.png"
 sources:
