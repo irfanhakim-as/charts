@@ -98,7 +98,7 @@
 
 ---
 
-## Application Configuration
+## Application Configurations
 
 > [!TIP]  
 > Using a global storage (`storage.global.enabled: true`) with SMB enabled (`storage.global.smb: true`) is highly recommended to ensure that all features such as hard links in Radarr and Sonarr work as intended.
@@ -462,7 +462,7 @@
 
 ---
 
-## Configurations
+## Chart Configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
