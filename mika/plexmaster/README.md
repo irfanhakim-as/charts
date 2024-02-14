@@ -79,6 +79,12 @@ helm uninstall $release_name --namespace $namespace --wait
 
 ## Application Configuration
 
+> [!TIP]  
+> Using a global storage (`storage.global.enabled: true`) with SMB enabled (`storage.global.smb: true`) is highly recommended to ensure that all features such as hard links in Sonarr work as intended.
+
+> [!TIP]  
+> Disabling qBittorrent (`qbt.enabled: false`) and using an external qBittorrent server is recommended to avoid throttling issues with download speeds. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to set up an external qBittorrent server.
+
 ### Jackett
 
 - Launch the Jackett web interface.
