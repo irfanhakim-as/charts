@@ -447,7 +447,17 @@
       > [!TIP]  
       > You may also configure any existing profiles or add new ones to better suit your preferences, make sure to click the **Save** button after making any changes.
 
-8. Add a Movie (Radarr) or TV series (Sonarr) for download (using qBittorrent) and streaming (using Plex):
+8. Create a backup of the Radarr/Sonarr configuration:
+
+   - Click the **System** menu item on the left, and then click the **Backup** link.
+
+   - In the **Backup** page, click the **Backup Now** button.
+
+   - Wait for the backup to be created, then click the name (link) of the newly created backup file to download it.
+
+   - Store the backup file in a safe location.
+
+9. Add a Movie (Radarr) or TV series (Sonarr) for download (using qBittorrent) and streaming (using Plex):
 
    - Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
 
