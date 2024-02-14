@@ -98,6 +98,9 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 
 ## How to uninstall a chart release
 
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
 1. Uninstall the desired release:
 
     ```sh

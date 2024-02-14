@@ -77,6 +77,9 @@
 
 ## How to uninstall a chart release
 
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
 1. Uninstall the desired release:
 
     ```sh
