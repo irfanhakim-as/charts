@@ -236,7 +236,7 @@ helm uninstall $release_name --namespace $namespace --wait
 ### Radarr and Sonarr
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Jackett](#jackett), [qBittorrent](#qbittorrent), and [Plex](#plex) before proceeding.
+> The following steps require you to have set up and configured [Jackett](#jackett), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
 
 - Launch the Sonarr web interface.
 
