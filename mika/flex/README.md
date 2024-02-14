@@ -1,5 +1,7 @@
 # Flex
 
+Flex is a collection of curated services that aims to provide a complete home media server solution.
+
 ## Prerequisites
 
 > [!NOTE]  
