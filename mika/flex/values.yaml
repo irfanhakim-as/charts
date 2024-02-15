@@ -150,8 +150,8 @@ global:
 flaresolverr:
   # Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used.
   # Example:
-  # enabled: true
-  enabled: false
+  # enabled: false
+  enabled: true
   # Specifies whether to log all HTML that passes through the proxy.
   # Default: "false"
   # Example:

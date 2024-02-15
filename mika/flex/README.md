@@ -482,7 +482,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the FlareSolverr container. |
-| flaresolverr.enabled | bool | `false` | Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used. |
+| flaresolverr.enabled | bool | `true` | Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used. |
 | flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
 | flaresolverr.logLevel | string | `""` | The verbosity level of the FlareSolverr logs. Default: `"info"`. |
 | flaresolverr.timezone | string | `""` | The timezone used in the FlareSolverr logs and web browser. Default: `"UTC"`. |
