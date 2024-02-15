@@ -2,14 +2,14 @@ apiVersion: v2
 name: kutt
 description: Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "v2.7.4"
 keywords:
   - "kutt"
   - "url"
   - "shortener"
 home: "https://github.com/thedevs-network/kutt"
-icon: "https://github.com/thedevs-network/kutt/blob/develop/static/images/logo.svg"
+icon: "https://raw.githubusercontent.com/thedevs-network/kutt/develop/static/images/icons/icon-512x512.png"
 sources:
   - "https://github.com/thedevs-network/kutt"
   - "https://github.com/irfanhakim-as/charts"
