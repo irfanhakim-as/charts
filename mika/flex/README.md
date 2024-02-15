@@ -14,6 +14,99 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
+## Recommended Configurations
+
+> [!NOTE]  
+> The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
+
+1. Disable qBittorrent and use an external qBittorrent server.
+
+   - Set up an external qBittorrent server. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to do so.
+
+   - Exclude qBittorrent from the Flex installation by setting `qbt.enabled: false` in the `values.yaml` file.
+
+      > [!IMPORTANT]  
+      > Using an external qBittorrent server will require you to use SMB for either the global storage (**Preferred**) or alternatively, the downloads storage. Otherwise, you will encounter issues with Flex services such as Radarr and Sonarr not being able to access the downloaded media from the external qBittorrent server.
+
+   - Using an external qBittorrent server helps avoid potential throttling issues with download/upload speeds.
+
+2. Use the global storage instead of the downloads and media storage combo.
+
+   - Enable the global storage by setting `storage.global.enabled: true` in the `values.yaml` file.
+
+      > [!NOTE]  
+      > Using the global storage will automatically override the downloads and media storage settings and their roles.
+
+   - Using the global storage is highly recommended to ensure that features such as hard linking (in Radarr and Sonarr) work as intended. Otherwise, downloaded media from the downloads storage will be copied over to the media storage, consuming more storage space and time.
+
+3. Use SMB with the global storage.
+
+   - Going this route will require you to set up an external SMB share on your network or use an existing one. This SMB storage will be used as the primary storage for your media files.
+
+   - Prepare a directory layout such as this on the root of your SMB share for your media files and downloads:
+
+      ```sh
+      Flex
+      ├── Downloads
+      │  ├── complete
+      │  └── incomplete
+      └── Media
+         ├── Movies
+         └── TV
+      ```
+
+      > [!IMPORTANT]  
+      > Using SMB with a Flex storage means that the SMB share must be available and accessible on your network at all times for the Flex services to function properly.
+
+   - Enable SMB for the Flex installation by setting `smb.enabled: true` in the `values.yaml` file.
+
+   - Enable SMB for the global storage by setting `storage.global.smb: true` in the `values.yaml` file.
+
+   - Configure the `smb` settings in the `values.yaml` file accordingly.
+
+   - Update the `storage.global.subPath` setting in the `values.yaml` file to point to the root of your _Flex_ directory on the SMB share.
+
+      > [!TIP]  
+      > From the sample directory layout above, the `storage.global.subPath` value should be set to `"Flex"`.
+
+   - Using SMB (for the global storage) is highly recommended (and in some cases, required) for several benefits:
+
+     - Access and interact with your media files easily from any devices on your network.
+
+     - Manage your storage space more effectively i.e. expanding and using the SMB share for other purposes, rather than allocating that storage space solely for the Flex installation.
+
+     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. qBittorrent.
+
+4. Use Ingress for hosting Flex services.
+
+   - Enable Ingress for the Flex installation by setting `ingress.enabled: true` in the `values.yaml` file.
+
+   - Enable Ingress and specify the registered domain name for each Flex service by setting their corresponding `ingress` and `domain` settings in the `values.yaml` file:
+
+      > [!IMPORTANT]  
+      > Replace the sample domain names with your actual domain names that have been registered to your DNS provider and pointed to your Kubernetes cluster.
+
+     - Jackett: `jackett.ingress: true` and `jackett.domain: "jackett.example.com"`.
+
+     - Overseerr: `overseerr.ingress: true` and `overseerr.domain: "overseerr.example.com"`.
+
+     - Plex: `plex.ingress: true` and `plex.domain: "plex.example.com"`.
+
+     - qBittorrent: `qbt.ingress: true` and `qbt.domain: "qbt.example.com"`.
+
+         > [!TIP]  
+         > If you are using an external qBittorrent server as recommended, you may exclude qBittorrent from these configurations.
+
+     - Radarr: `radarr.ingress: true` and `radarr.domain: "radarr.example.com"`.
+
+     - Sonarr: `sonarr.ingress: true` and `sonarr.domain: "sonarr.example.com"`.
+
+   - Configure the `ingress.clusterIssuer` setting in the `values.yaml` file according to the name of the cluster issuer you have set up for your Ingress on your Kubernetes cluster. It currently defaults to `"letsencrypt-dns-prod"`.
+
+   - This is recommended for easier access to the Flex services from any devices from outside your network.
+
+---
+
 ## How to add the chart repo
 
 1. Add the repo to your local helm client:
@@ -101,12 +194,6 @@ Flex is a collection of curated services that aims to provide a complete home me
 ---
 
 ## Application Configurations
-
-> [!TIP]  
-> Using a global storage (`storage.global.enabled: true`) with SMB enabled (`storage.global.smb: true`) is highly recommended to ensure that all features such as hard links in Radarr and Sonarr work as intended.
-
-> [!TIP]  
-> Disabling qBittorrent (`qbt.enabled: false`) and using an external qBittorrent server is recommended to avoid throttling issues with download/upload speeds. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to set up an external qBittorrent server.
 
 ### [Jackett](https://github.com/Jackett/Jackett) (and [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr))
 
