@@ -365,7 +365,7 @@ storage:
     # Example:
     # subPath: "Config"
     subPath: ""
-    # The amount of persistent storage allocated for each data storage.
+    # The default amount of persistent storage allocated for each data storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
