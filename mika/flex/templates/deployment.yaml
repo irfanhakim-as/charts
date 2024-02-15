@@ -1,0 +1,454 @@
+{{- $releaseName := .Release.Name | toString }}
+{{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $qbt := .Values.qbt.enabled }}
+{{- $persistent_data := .Values.storage.data.enabled }}
+{{- $persistent_downloads := .Values.storage.downloads.enabled }}
+{{- $persistent_global := .Values.storage.global.enabled }}
+{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $smb := .Values.smb.enabled }}
+{{- $downloadsSmb := .Values.storage.downloads.smb }}
+{{- $globalSmb := .Values.storage.global.smb }}
+{{- $mediaSmb := .Values.storage.media.smb }}
+{{- $fsConfigs := .Values.flaresolverr.customConfigs }}
+{{- $jackettConfigs := .Values.jackett.customConfigs }}
+{{- $overseerrConfigs := .Values.overseerr.customConfigs }}
+{{- $plexConfigs := .Values.plex.customConfigs }}
+{{- $qbtConfigs := .Values.qbt.customConfigs }}
+{{- $radarrConfigs := .Values.radarr.customConfigs }}
+{{- $sonarrConfigs := .Values.sonarr.customConfigs }}
+{{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
+{{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
+{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.13" | toString }}
+{{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
+{{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
+{{- $jackett_tag := .Values.image.jackett.tag | default "0.21.1700" | toString }}
+{{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
+{{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
+{{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.33.2-ls95" | toString }}
+{{- $overseerr_pullPolicy := .Values.image.overseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
+{{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
+{{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
+{{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
+{{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
+{{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls310" | toString }}
+{{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $radarr_registry := .Values.image.radarr.registry | default "lscr.io" | toString }}
+{{- $radarr_repository := .Values.image.radarr.repository | default "linuxserver/radarr" | toString }}
+{{- $radarr_tag := .Values.image.radarr.tag | default "5.2.6.8376-ls202" | toString }}
+{{- $radarr_pullPolicy := .Values.image.radarr.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
+{{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
+{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls224" | toString }}
+{{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $flaresolverrResources := .Values.resources.flaresolverr }}
+{{- $jackettResources := .Values.resources.jackett }}
+{{- $overseerrResources := .Values.resources.overseerr }}
+{{- $plexResources := .Values.resources.plex }}
+{{- $qbtResources := .Values.resources.qbt }}
+{{- $radarrResources := .Values.resources.radarr }}
+{{- $sonarrResources := .Values.resources.sonarr }}
+{{- $initScript := .Values.global.initScript | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
+{{- $downloadsMountPath := .Values.storage.downloads.mountPath | default "/downloads" | toString | quote }}
+{{- $globalMountPath := .Values.storage.global.mountPath | default "/flex" | toString | quote }}
+{{- $mediaMountPath := .Values.storage.media.mountPath | default "/data" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $downloadsSubPath := .Values.storage.downloads.subPath | toString }}
+{{- $globalSubPath := .Values.storage.global.subPath | toString }}
+{{- $mediaSubPath := .Values.storage.media.subPath | toString }}
+{{- $gid := .Values.global.gid | default "1000" | int }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-flex
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "flex.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "flex.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+              {{- $initScript | nindent 14 }}
+      {{- end }}
+      containers:
+        {{- if $flaresolverr }}
+        - name: flaresolverr
+          image: {{ printf "%s/%s:%s" $flaresolverr_registry $flaresolverr_repository $flaresolverr_tag | quote }}
+          imagePullPolicy: {{ $flaresolverr_pullPolicy }}
+          ports:
+            - name: flaresolverr
+              containerPort: 8191
+              protocol: TCP
+          resources:
+            {{- toYaml $flaresolverrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flaresolverr-cm
+          {{- if $fsConfigs }}
+          volumeMounts:
+            {{- range $fsConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: flaresolverr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        - name: jackett
+          image: {{ printf "%s/%s:%s" $jackett_registry $jackett_repository $jackett_tag | quote }}
+          imagePullPolicy: {{ $jackett_pullPolicy }}
+          ports:
+            - name: jackett
+              containerPort: 9117
+              protocol: TCP
+          resources:
+            {{- toYaml $jackettResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-cm
+            - configMapRef:
+                name: {{ .Release.Name }}-jackett-cm
+          {{- if or $persistent_data $persistent_downloads $persistent_global $jackettConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-jackett-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+              mountPath: {{ $downloadsMountPath }}
+                {{- if $downloadsSubPath }}
+              subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- range $jackettConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jackett-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        - name: overseerr
+          image: {{ printf "%s/%s:%s" $overseerr_registry $overseerr_repository $overseerr_tag | quote }}
+          imagePullPolicy: {{ $overseerr_pullPolicy }}
+          ports:
+            - name: overseerr
+              containerPort: 5055
+              protocol: TCP
+          resources:
+            {{- toYaml $overseerrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-cm
+          {{- if or $persistent_data $persistent_media $persistent_global $overseerrConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-overseerr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- range $overseerrConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: overseerr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        - name: plex
+          image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
+          imagePullPolicy: {{ $plex_pullPolicy }}
+          ports:
+            - name: plex
+              containerPort: 32400
+              protocol: TCP
+          resources:
+            {{- toYaml $plexResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-plex-cm
+            - secretRef:
+                name: {{ .Release.Name }}-plex-secret
+          {{- if or $persistent_data $persistent_media $persistent_global $plexConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-plex-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_media }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+                {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- range $plexConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: plex-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- if $qbt }}
+        - name: qbittorrent
+          image: {{ printf "%s/%s:%s" $qbt_registry $qbt_repository $qbt_tag | quote }}
+          imagePullPolicy: {{ $qbt_pullPolicy }}
+          ports:
+            - name: qbt
+              containerPort: 6881
+              protocol: TCP
+            - name: qbt-udp
+              containerPort: 6881
+              protocol: UDP
+            - name: qbt-web
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {{- toYaml $qbtResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-cm
+            - configMapRef:
+                name: {{ .Release.Name }}-qbittorrent-cm
+          {{- if or $persistent_data $persistent_downloads $persistent_global $qbtConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-qbt-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+              mountPath: {{ $downloadsMountPath }}
+                {{- if $downloadsSubPath }}
+              subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- range $qbtConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: qbt-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        - name: radarr
+          image: {{ printf "%s/%s:%s" $radarr_registry $radarr_repository $radarr_tag | quote }}
+          imagePullPolicy: {{ $radarr_pullPolicy }}
+          ports:
+            - name: radarr
+              containerPort: 7878
+              protocol: TCP
+          resources:
+            {{- toYaml $radarrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-cm
+          {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $radarrConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-radarr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+              mountPath: {{ $downloadsMountPath }}
+                {{- if $downloadsSubPath }}
+              subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
+              {{- end }}
+              {{- if $persistent_media }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+                {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- range $radarrConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: radarr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        - name: sonarr
+          image: {{ printf "%s/%s:%s" $sonarr_registry $sonarr_repository $sonarr_tag | quote }}
+          imagePullPolicy: {{ $sonarr_pullPolicy }}
+          ports:
+            - name: sonarr
+              containerPort: 8989
+              protocol: TCP
+          resources:
+            {{- toYaml $sonarrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-cm
+          {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $sonarrConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-sonarr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_downloads }}
+            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+              mountPath: {{ $downloadsMountPath }}
+                {{- if $downloadsSubPath }}
+              subPath: {{ $downloadsSubPath | quote }}
+                {{- end }}
+              {{- end }}
+              {{- if $persistent_media }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+                {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- range $sonarrConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: sonarr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
+      volumes:
+        {{- if $persistent_data }}
+        - name: {{ .Release.Name }}-flex-jackett-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-jackett-data-pvc
+        - name: {{ .Release.Name }}-flex-overseerr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-overseerr-data-pvc
+        - name: {{ .Release.Name }}-flex-plex-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-plex-data-pvc
+        {{- if $qbt }}
+        - name: {{ .Release.Name }}-flex-qbt-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-qbt-data-pvc
+        {{- end }}
+        - name: {{ .Release.Name }}-flex-radarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-radarr-data-pvc
+        - name: {{ .Release.Name }}-flex-sonarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-sonarr-data-pvc
+        {{- end }}
+        {{- if $persistent_global }}
+          {{- if not (and $globalSmb $smb) }}
+        - name: {{ .Release.Name }}-flex-global
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-global-pvc
+          {{- end }}
+        {{- else }}
+          {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
+        - name: {{ .Release.Name }}-flex-downloads
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-downloads-pvc
+          {{- end }}
+          {{- if and $persistent_media (not (and $mediaSmb $smb)) }}
+        - name: {{ .Release.Name }}-flex-media
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-media-pvc
+          {{- end }}
+        {{- end }}
+        {{- if and $smb (or (and $persistent_downloads $downloadsSmb (not $persistent_global)) (and $persistent_media $mediaSmb (not $persistent_global)) (and $persistent_global $globalSmb)) }}
+        - name: {{ .Release.Name }}-flex-smb
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-smb-pvc
+        {{- end }}
+        {{- if or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
+        - name: {{ .Release.Name }}-custom-configs
+          secret:
+            secretName: {{ .Release.Name }}-custom-configs
+        {{- end }}
+      {{- end }}
+      securityContext:
+        fsGroup: {{ $gid }}

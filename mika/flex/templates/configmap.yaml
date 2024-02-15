@@ -1,0 +1,61 @@
+{{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $qbt := .Values.qbt.enabled }}
+{{- $uid := .Values.global.uid | default "1000" | toString | quote }}
+{{- $gid := .Values.global.gid | default "1000" | toString | quote }}
+{{- $fsLogHtml := .Values.flaresolverr.logHtml | default "false" | toString | quote }}
+{{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
+{{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
+{{- $jackettAutoUpdate := .Values.jackett.autoUpdate | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flex-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  PUID: {{ $uid }}
+  PGID: {{ $gid }}
+{{- if $flaresolverr }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flaresolverr-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  LOG_HTML: {{ $fsLogHtml }}
+  LOG_LEVEL: {{ $fsLogLevel }}
+  TZ: {{ $fsTimezone }}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-jackett-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  AUTO_UPDATE: {{ $jackettAutoUpdate }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-plex-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  PLEX_UID: {{ $uid }}
+  PLEX_GID: {{ $gid }}
+{{- if $qbt }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-qbittorrent-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  WEBUI_PORT: "8080"
+{{- end }}

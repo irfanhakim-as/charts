@@ -1,0 +1,172 @@
+{{- $qbt := .Values.qbt.enabled }}
+{{- $persistent_data := .Values.storage.data.enabled }}
+{{- $persistent_downloads := .Values.storage.downloads.enabled }}
+{{- $persistent_global := .Values.storage.global.enabled }}
+{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $smb := .Values.smb.enabled }}
+{{- $downloadsSmb := .Values.storage.downloads.smb }}
+{{- $globalSmb := .Values.storage.global.smb }}
+{{- $mediaSmb := .Values.storage.media.smb }}
+{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
+{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $downloadsStorage := .Values.storage.downloads.storage | default "1Gi" | toString | quote }}
+{{- $downloadsStorageClassName := .Values.storage.downloads.storageClassName | default "longhorn" | toString | quote }}
+{{- $globalStorage := .Values.storage.global.storage | default "1Gi" | toString | quote }}
+{{- $globalStorageClassName := .Values.storage.global.storageClassName | default "longhorn" | toString | quote }}
+{{- $mediaStorage := .Values.storage.media.storage | default "1Gi" | toString | quote }}
+{{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
+{{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
+{{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
+{{- if $persistent_data }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-jackett-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-overseerr-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-plex-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- if $qbt }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-qbt-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-radarr-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-sonarr-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
+{{- if and $persistent_downloads (not (and $downloadsSmb $smb)) (not $persistent_global) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-downloads-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $downloadsStorage }}
+  storageClassName: {{ $downloadsStorageClassName }}
+{{- end }}
+{{- if and $persistent_global (not (and $globalSmb $smb)) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-global-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $globalStorage }}
+  storageClassName: {{ $globalStorageClassName }}
+{{- end }}
+{{- if and $persistent_media (not (and $mediaSmb $smb)) (not $persistent_global) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-media-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $mediaStorage }}
+  storageClassName: {{ $mediaStorageClassName }}
+{{- end }}
+{{- if and $smb (or (and $persistent_downloads $downloadsSmb (not $persistent_global)) (and $persistent_media $mediaSmb (not $persistent_global)) (and $persistent_global $globalSmb)) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-smb-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $smbStorage }}
+  volumeName: {{ .Release.Name }}-flex-smb-pv
+  storageClassName: {{ $smbStorageClassName }}
+{{- end }}

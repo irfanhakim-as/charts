@@ -1,0 +1,33 @@
+apiVersion: v2
+name: flex
+description: Flex is a collection of curated services that aims to provide a complete home media server solution.
+type: application
+version: 0.1.0
+appVersion: "1.32.8.7639-fb6452ebf"
+keywords:
+  - "flex"
+  - "plex"
+  - "media"
+  - "server"
+  - "streaming"
+  - "flaresolverr"
+  - "jackett"
+  - "overseerr"
+  - "qbittorrent"
+  - "radarr"
+  - "sonarr"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/flex.png"
+sources:
+  - "https://github.com/plexinc/pms-docker"
+  - "https://github.com/FlareSolverr/FlareSolverr"
+  - "https://github.com/linuxserver/docker-jackett"
+  - "https://github.com/linuxserver/docker-overseerr"
+  - "https://github.com/linuxserver/docker-qbittorrent"
+  - "https://github.com/linuxserver/docker-radarr"
+  - "https://github.com/linuxserver/docker-sonarr"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

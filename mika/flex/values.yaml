@@ -1,0 +1,679 @@
+# Default values for flex.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Flex.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Flex.
+image:
+  # FlareSolverr container image configurations.
+  flaresolverr:
+    # The registry where the FlareSolverr container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the FlareSolverr container image used.
+    # Default: "flaresolverr/flaresolverr"
+    repository: ""
+    # The tag that specifies the version of the FlareSolverr container image used.
+    # Default: "v3.3.13"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the FlareSolverr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.34"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Jackett container image configurations.
+  jackett:
+    # The registry where the Jackett container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Jackett container image used.
+    # Default: "linuxserver/jackett"
+    repository: ""
+    # The tag that specifies the version of the Jackett container image used.
+    # Default: "0.21.1700"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Jackett container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Overseerr container image configurations.
+  overseerr:
+    # The registry where the Overseerr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Overseerr container image used.
+    # Default: "linuxserver/overseerr"
+    repository: ""
+    # The tag that specifies the version of the Overseerr container image used.
+    # Default: "v1.33.2-ls95"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Overseerr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Plex container image configurations.
+  plex:
+    # The registry where the Plex container image is hosted.
+    # Default: "index.docker.io"
+    registry: ""
+    # The name of the repository that contains the Plex container image used.
+    # Default: "plexinc/pms-docker"
+    repository: ""
+    # The tag that specifies the version of the Plex container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Plex container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # qBittorrent container image configurations.
+  qbt:
+    # The registry where the qBittorrent container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the qBittorrent container image used.
+    # Default: "linuxserver/qbittorrent"
+    repository: ""
+    # The tag that specifies the version of the qBittorrent container image used.
+    # Default: "4.6.3-r0-ls310"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the qBittorrent container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Radarr container image configurations.
+  radarr:
+    # The registry where the Radarr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Radarr container image used.
+    # Default: "linuxserver/radarr"
+    repository: ""
+    # The tag that specifies the version of the Radarr container image used.
+    # Default: "5.2.6.8376-ls202"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Radarr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Sonarr container image configurations.
+  sonarr:
+    # The registry where the Sonarr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Sonarr container image used.
+    # Default: "linuxserver/sonarr"
+    repository: ""
+    # The tag that specifies the version of the Sonarr container image used.
+    # Default: "4.0.1.929-ls224"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Sonarr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Global configurations.
+global:
+  # Custom init script to run before the Flex containers start.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+  # The user ID used to run the Flex containers.
+  # Default: "1000"
+  # Example:
+  # uid: ""
+  uid: ""
+  # The group ID used to run the Flex containers.
+  # Default: "1000"
+  # Example:
+  # gid: ""
+  gid: ""
+
+# FlareSolverr configurations.
+flaresolverr:
+  # Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
+  # Specifies whether to log all HTML that passes through the proxy.
+  # Default: "false"
+  # Example:
+  # logHtml: "true"
+  logHtml: ""
+  # The verbosity level of the FlareSolverr logs.
+  # Default: "info"
+  # Example:
+  # logLevel: "debug"
+  logLevel: ""
+  # The timezone used in the FlareSolverr logs and web browser.
+  # Default: "UTC"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
+  # Optional custom configurations to be mounted as a file inside the FlareSolverr container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# Jackett configurations.
+jackett:
+  # Specifies whether to allow Jackett to automatically update itself inside the container.
+  # Example:
+  # autoUpdate: false
+  autoUpdate: true
+  # The ingress domain name that hosts the Jackett server.
+  # Example:
+  # domain: "jackett.example.com"
+  domain: ""
+  # Specifies whether Jackett should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Jackett container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# Overseerr configurations.
+overseerr:
+  # The ingress domain name that hosts the Overseerr server.
+  # Example:
+  # domain: "overseerr.example.com"
+  domain: ""
+  # Specifies whether Overseerr should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Overseerr container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# Plex configurations.
+plex:
+  # The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim.
+  # Example:
+  # claim: "claim-bW419gvogwjNfYCowOGa"
+  claim: ""
+  # The ingress domain name that hosts the Plex server.
+  # Example:
+  # domain: "plex.example.com"
+  domain: ""
+  # Specifies whether Plex should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Plex container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# qBittorrent configurations.
+qbt:
+  # The ingress domain name that hosts the qBittorrent server.
+  # Example:
+  # domain: "qbt.example.com"
+  domain: ""
+  # Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used.
+  # Example:
+  # enabled: false
+  enabled: true
+  # Specifies whether qBittorrent should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the qBittorrent container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# Radarr configurations.
+radarr:
+  # The ingress domain name that hosts the Radarr server.
+  # Example:
+  # domain: "radarr.example.com"
+  domain: ""
+  # Specifies whether Radarr should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Radarr container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# Sonarr configurations.
+sonarr:
+  # The ingress domain name that hosts the Sonarr server.
+  # Example:
+  # domain: "sonarr.example.com"
+  domain: ""
+  # Specifies whether Sonarr should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Sonarr container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Flex services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  clusterIssuer: ""
+
+# Service configurations.
+service:
+  # The type of service used for Flex services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The path where the data storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Config"
+    subPath: ""
+    # The amount of persistent storage allocated for each data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Downloads storage configurations.
+  downloads:
+    # Specifies whether persistent storage should be provisioned for downloads storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The path where the downloads storage should be mounted on the container.
+    # Default: "/downloads"
+    # Example:
+    # mountPath: "/files"
+    mountPath: ""
+    # The subpath within the downloads storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Flex/Downloads"
+    subPath: ""
+    # Specifies whether to use an SMB share for the downloads storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Global storage configurations.
+  global:
+    # Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The path where the global storage should be mounted on the container.
+    # Default: "/flex"
+    # Example:
+    # mountPath: "/global"
+    mountPath: ""
+    # The subpath within the global storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Flex"
+    subPath: ""
+    # Specifies whether to use an SMB share for the global storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Media storage configurations.
+  media:
+    # Specifies whether persistent storage should be provisioned for media storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The path where the media storage should be mounted on the container.
+    # Default: "/data"
+    # Example:
+    # mountPath: "/media"
+    mountPath: ""
+    # The subpath within the media storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Flex/Media"
+    subPath: ""
+    # Specifies whether to use an SMB share for the media storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The amount of persistent storage allocated for the media storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "1Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the media storage. This setting is ignored if SMB is enabled for said storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+
+# SMB storage configurations.
+smb:
+  # Specifies whether to enable persistent storage to be provisioned in the form of an SMB share.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The additional mount options used to mount the SMB share volume.
+  # Example:
+  # mountOptions:
+  #   - "_netdev"
+  #   - "nofail"
+  #   - "vers=3.0"
+  #   - "iocharset=utf8"
+  mountOptions: []
+  # The amount of persistent storage available on the SMB share volume.
+  # Default: "100Gi"
+  # Example:
+  # pvStorage: "10Gi"
+  pvStorage: ""
+  # The amount of persistent storage allocated for the SMB share storage.
+  # Default: "1Gi"
+  # Example:
+  # pvcStorage: "500Mi"
+  pvcStorage: ""
+  # The name of the existing secret containing the credentials used to authenticate with the SMB share.
+  # Default: "smbcreds"
+  # Example:
+  # secretName: "smb-secret"
+  secretName: ""
+  # The namespace where the secret containing the credentials used to authenticate with the SMB share is located.
+  # Default: "default"
+  # Example:
+  # secretNamespace: "smb"
+  secretNamespace: ""
+  # The SMB share address and name to mount as a persistent volume.
+  # Example:
+  # share: "//192.168.0.123/mynas"
+  share: ""
+  # The storage class name used for dynamically provisioning a persistent volume for the SMB share storage.
+  # Default: "smb"
+  # Example:
+  # storageClassName: "smb"
+  storageClassName: ""
+
+# Resource requirements and limits for Flex containers.
+resources:
+  # FlareSolverr container resources.
+  # Example:
+  # flaresolverr:
+  #   # The minimum amount of resources required by FlareSolverr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by FlareSolverr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "200m"
+  #     # The minimum amount of memory required by FlareSolverr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for FlareSolverr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for FlareSolverr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "300m"
+  #     # The maximum amount of memory allowed for FlareSolverr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "500Mi"
+  flaresolverr: {}
+  # Jackett container resources.
+  # Example:
+  # jackett:
+  #   # The minimum amount of resources required by Jackett to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Jackett.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "300m"
+  #     # The minimum amount of memory required by Jackett.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Jackett.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Jackett.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for Jackett.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "500Mi"
+  jackett: {}
+  # Overseerr container resources.
+  # Example:
+  # overseerr:
+  #   # The minimum amount of resources required by Overseerr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Overseerr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "400m"
+  #     # The minimum amount of memory required by Overseerr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "250Mi"
+  #   # The maximum amount of resources allowed for Overseerr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Overseerr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "600m"
+  #     # The maximum amount of memory allowed for Overseerr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  overseerr: {}
+  # Plex container resources.
+  # Example:
+  # plex:
+  #   # The minimum amount of resources required by Plex to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Plex.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "500m"
+  #     # The minimum amount of memory required by Plex.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Plex.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Plex.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "1000m"
+  #     # The maximum amount of memory allowed for Plex.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "600Mi"
+  plex: {}
+  # qBittorrent container resources.
+  # Example:
+  # qbt:
+  #   # The minimum amount of resources required by qBittorrent to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by qBittorrent.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by qBittorrent.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for qBittorrent.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for qBittorrent.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "200m"
+  #     # The maximum amount of memory allowed for qBittorrent.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "200Mi"
+  qbt: {}
+  # Radarr container resources.
+  # Example:
+  # radarr:
+  #   # The minimum amount of resources required by Radarr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Radarr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "300m"
+  #     # The minimum amount of memory required by Radarr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Radarr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Radarr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for Radarr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "500Mi"
+  radarr: {}
+  # Sonarr container resources.
+  # Example:
+  # sonarr:
+  #   # The minimum amount of resources required by Sonarr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Sonarr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "300m"
+  #     # The minimum amount of memory required by Sonarr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Sonarr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Sonarr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for Sonarr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "500Mi"
+  sonarr: {}

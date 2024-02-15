@@ -1,0 +1,55 @@
+{{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $qbt := .Values.qbt.enabled }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-flex-svc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    {{- if $flaresolverr }}
+    - port: 8191
+      targetPort: flaresolverr
+      protocol: TCP
+      name: flaresolverr
+    {{- end }}
+    - port: 9117
+      targetPort: jackett
+      protocol: TCP
+      name: jackett
+    - port: 5055
+      targetPort: overseerr
+      protocol: TCP
+      name: overseerr
+    - port: 32400
+      targetPort: plex
+      protocol: TCP
+      name: plex
+    {{- if $qbt }}
+    - port: 6881
+      targetPort: qbt
+      protocol: TCP
+      name: qbt
+    - port: 6881
+      targetPort: qbt-udp
+      protocol: UDP
+      name: qbt-udp
+    - port: 8080
+      targetPort: qbt-web
+      protocol: TCP
+      name: qbt-web
+    {{- end }}
+    - port: 7878
+      targetPort: radarr
+      protocol: TCP
+      name: radarr
+    - port: 8989
+      targetPort: sonarr
+      protocol: TCP
+      name: sonarr
+  selector:
+    {{- include "flex.selectorLabels" . | nindent 4 }}
