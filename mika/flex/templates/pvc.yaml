@@ -7,7 +7,7 @@
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $globalSmb := .Values.storage.global.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
-{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
+{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString }}
 {{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
 {{- $downloadsStorage := .Values.storage.downloads.storage | default "1Gi" | toString | quote }}
 {{- $downloadsStorageClassName := .Values.storage.downloads.storageClassName | default "longhorn" | toString | quote }}
@@ -17,6 +17,12 @@
 {{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
 {{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
 {{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
+{{- $jackettDataStorage := .Values.jackett.dataStorage | default $dataStorage | toString | quote }}
+{{- $overseerrDataStorage := .Values.overseerr.dataStorage | default $dataStorage | toString | quote }}
+{{- $plexDataStorage := .Values.plex.dataStorage | default $dataStorage | toString | quote }}
+{{- $qbtDataStorage := .Values.qbt.dataStorage | default $dataStorage | toString | quote }}
+{{- $radarrDataStorage := .Values.radarr.dataStorage | default $dataStorage | toString | quote }}
+{{- $sonarrDataStorage := .Values.sonarr.dataStorage | default $dataStorage | toString | quote }}
 {{- if $persistent_data }}
 ---
 apiVersion: v1
@@ -30,7 +36,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ $dataStorage }}
+      storage: {{ $jackettDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 ---
 apiVersion: v1
@@ -44,7 +50,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ $dataStorage }}
+      storage: {{ $overseerrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 ---
 apiVersion: v1
@@ -58,7 +64,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ $dataStorage }}
+      storage: {{ $plexDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 {{- if $qbt }}
 ---
@@ -73,7 +79,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ $dataStorage }}
+      storage: {{ $qbtDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 {{- end }}
 ---
@@ -88,7 +94,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ $dataStorage }}
+      storage: {{ $radarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 ---
 apiVersion: v1
@@ -102,7 +108,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ $dataStorage }}
+      storage: {{ $sonarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 {{- end }}
 {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) (not $persistent_global) }}
