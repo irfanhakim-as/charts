@@ -388,7 +388,7 @@ storage:
     mountPath: ""
     # The subpath within the downloads storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Downloads"
+    # subPath: "Flex/Downloads"
     subPath: ""
     # Specifies whether to use an SMB share for the downloads storage.
     # Example:
@@ -446,7 +446,7 @@ storage:
     mountPath: ""
     # The subpath within the media storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Media"
+    # subPath: "Flex/Media"
     subPath: ""
     # Specifies whether to use an SMB share for the media storage.
     # Example:
