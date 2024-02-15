@@ -573,7 +573,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | storage.downloads.storage | string | `""` | The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
 | storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
 | storage.downloads.subPath | string | `""` | The sub-path within the downloads storage to mount for the container. |
-| storage.global.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage. |
+| storage.global.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage. |
 | storage.global.mountPath | string | `""` | The path where the global storage should be mounted on the container. Default: `"/flex"`. |
 | storage.global.smb | bool | `false` | Specifies whether to use an SMB share for the global storage. |
 | storage.global.storage | string | `""` | The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |

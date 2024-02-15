@@ -408,8 +408,8 @@ storage:
   global:
     # Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage.
     # Example:
-    # enabled: true
-    enabled: false
+    # enabled: false
+    enabled: true
     # The path where the global storage should be mounted on the container.
     # Default: "/flex"
     # Example:
