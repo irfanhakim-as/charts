@@ -566,22 +566,22 @@ Flex is a collection of curated services that aims to provide a complete home me
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
 | storage.data.storage | string | `""` | The amount of persistent storage allocated for each data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
-| storage.data.subPath | string | `""` | The sub-path within the data storage to mount for the container. |
+| storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
 | storage.downloads.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for downloads storage. |
 | storage.downloads.mountPath | string | `""` | The path where the downloads storage should be mounted on the container. Default: `"/downloads"`. |
 | storage.downloads.smb | bool | `false` | Specifies whether to use an SMB share for the downloads storage. |
 | storage.downloads.storage | string | `""` | The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
 | storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
-| storage.downloads.subPath | string | `""` | The sub-path within the downloads storage to mount for the container. |
+| storage.downloads.subPath | string | `""` | The subpath within the downloads storage to mount to the container. Leave empty if not required. |
 | storage.global.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage. |
 | storage.global.mountPath | string | `""` | The path where the global storage should be mounted on the container. Default: `"/flex"`. |
 | storage.global.smb | bool | `false` | Specifies whether to use an SMB share for the global storage. |
 | storage.global.storage | string | `""` | The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
 | storage.global.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the global storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
-| storage.global.subPath | string | `""` | The sub-path within the global storage to mount for the container. |
+| storage.global.subPath | string | `""` | The subpath within the global storage to mount to the container. Leave empty if not required. |
 | storage.media.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for media storage. |
 | storage.media.mountPath | string | `""` | The path where the media storage should be mounted on the container. Default: `"/data"`. |
 | storage.media.smb | bool | `false` | Specifies whether to use an SMB share for the media storage. |
 | storage.media.storage | string | `""` | The amount of persistent storage allocated for the media storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
 | storage.media.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the media storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
-| storage.media.subPath | string | `""` | The sub-path within the media storage to mount for the container. |
+| storage.media.subPath | string | `""` | The subpath within the media storage to mount to the container. Leave empty if not required. |

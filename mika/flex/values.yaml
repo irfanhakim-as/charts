@@ -361,7 +361,7 @@ storage:
     # Example:
     # mountPath: "/data"
     mountPath: ""
-    # The sub-path within the data storage to mount for the container.
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
     # Example:
     # subPath: "Config"
     subPath: ""
@@ -386,7 +386,7 @@ storage:
     # Example:
     # mountPath: "/files"
     mountPath: ""
-    # The sub-path within the downloads storage to mount for the container.
+    # The subpath within the downloads storage to mount to the container. Leave empty if not required.
     # Example:
     # subPath: "Downloads"
     subPath: ""
@@ -415,7 +415,7 @@ storage:
     # Example:
     # mountPath: "/global"
     mountPath: ""
-    # The sub-path within the global storage to mount for the container.
+    # The subpath within the global storage to mount to the container. Leave empty if not required.
     # Example:
     # subPath: "Flex"
     subPath: ""
@@ -444,7 +444,7 @@ storage:
     # Example:
     # mountPath: "/media"
     mountPath: ""
-    # The sub-path within the media storage to mount for the container.
+    # The subpath within the media storage to mount to the container. Leave empty if not required.
     # Example:
     # subPath: "Media"
     subPath: ""
