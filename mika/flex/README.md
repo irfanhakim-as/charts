@@ -613,20 +613,25 @@ Flex is a collection of curated services that aims to provide a complete home me
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Flex services. |
 | jackett.autoUpdate | bool | `true` | Specifies whether to allow Jackett to automatically update itself inside the container. |
 | jackett.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jackett container. |
+| jackett.dataStorage | string | `""` | The amount of persistent storage allocated for the Jackett data storage. |
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
 | jackett.ingress | bool | `false` | Specifies whether Jackett should be hosted using an Ingress. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. |
+| overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
 | overseerr.ingress | bool | `false` | Specifies whether Overseerr should be hosted using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. |
+| plex.dataStorage | string | `""` | The amount of persistent storage allocated for the Plex data storage. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
 | plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
 | qbt.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the qBittorrent container. |
+| qbt.dataStorage | string | `""` | The amount of persistent storage allocated for the qBittorrent data storage. |
 | qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
 | qbt.enabled | bool | `true` | Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used. |
 | qbt.ingress | bool | `false` | Specifies whether qBittorrent should be hosted using an Ingress. |
 | radarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Radarr container. |
+| radarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Radarr data storage. |
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
 | radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for Flex. Default: `"1"`. |
@@ -647,11 +652,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | smb.share | string | `""` | The SMB share address and name to mount as a persistent volume. |
 | smb.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the SMB share storage. Default: `"smb"`. |
 | sonarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Sonarr container. |
+| sonarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Sonarr data storage. |
 | sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
 | sonarr.ingress | bool | `false` | Specifies whether Sonarr should be hosted using an Ingress. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
-| storage.data.storage | string | `""` | The amount of persistent storage allocated for each data storage. Default: `"1Gi"`. |
+| storage.data.storage | string | `""` | The default amount of persistent storage allocated for each data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
 | storage.downloads.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for downloads storage. |

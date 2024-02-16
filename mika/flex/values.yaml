@@ -186,6 +186,10 @@ jackett:
   # Example:
   # autoUpdate: false
   autoUpdate: true
+  # The amount of persistent storage allocated for the Jackett data storage.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
   # The ingress domain name that hosts the Jackett server.
   # Example:
   # domain: "jackett.example.com"
@@ -209,6 +213,10 @@ jackett:
 
 # Overseerr configurations.
 overseerr:
+  # The amount of persistent storage allocated for the Overseerr data storage.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
   # The ingress domain name that hosts the Overseerr server.
   # Example:
   # domain: "overseerr.example.com"
@@ -236,6 +244,10 @@ plex:
   # Example:
   # claim: "claim-bW419gvogwjNfYCowOGa"
   claim: ""
+  # The amount of persistent storage allocated for the Plex data storage.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
   # The ingress domain name that hosts the Plex server.
   # Example:
   # domain: "plex.example.com"
@@ -259,6 +271,10 @@ plex:
 
 # qBittorrent configurations.
 qbt:
+  # The amount of persistent storage allocated for the qBittorrent data storage.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
   # The ingress domain name that hosts the qBittorrent server.
   # Example:
   # domain: "qbt.example.com"
@@ -286,6 +302,10 @@ qbt:
 
 # Radarr configurations.
 radarr:
+  # The amount of persistent storage allocated for the Radarr data storage.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
   # The ingress domain name that hosts the Radarr server.
   # Example:
   # domain: "radarr.example.com"
@@ -309,6 +329,10 @@ radarr:
 
 # Sonarr configurations.
 sonarr:
+  # The amount of persistent storage allocated for the Sonarr data storage.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
   # The ingress domain name that hosts the Sonarr server.
   # Example:
   # domain: "sonarr.example.com"
@@ -365,7 +389,7 @@ storage:
     # Example:
     # subPath: "Config"
     subPath: ""
-    # The amount of persistent storage allocated for each data storage.
+    # The default amount of persistent storage allocated for each data storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
