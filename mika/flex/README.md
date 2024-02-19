@@ -75,7 +75,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Manage your storage space more effectively i.e. expanding and using the SMB share for other purposes, rather than allocating that storage space solely for the Flex installation.
 
-     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. qBittorrent.
+     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Plex or qBittorrent.
 
 4. Use Ingress for hosting Flex services.
 
@@ -540,6 +540,12 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Authenticate with Plex.tv: Click the corresponding button and log in with your Plex account.
 
      - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+
+     - If you're using an external Plex server and require path mapping:
+
+       - Map Paths From: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on Flex i.e. `/flex/Media`.
+
+       - Map Paths To: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on the external Plex server i.e. `/data`.
 
      - Click the **Save** button.
 
