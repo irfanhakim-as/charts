@@ -1,5 +1,6 @@
 {{- $releaseName := .Release.Name | toString }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
