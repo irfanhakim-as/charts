@@ -108,7 +108,7 @@ image:
     # Default: "linuxserver/radarr"
     repository: ""
     # The tag that specifies the version of the Radarr container image used.
-    # Default: "5.2.6.8376-ls202"
+    # Default: "5.3.6.8612-ls204"
     tag: ""
     # The policy that determines when Kubernetes should pull the Radarr container image.
     # Default: "IfNotPresent"
