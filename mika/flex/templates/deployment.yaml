@@ -409,9 +409,11 @@ spec:
         - name: {{ .Release.Name }}-flex-overseerr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-overseerr-data-pvc
+        {{- if $plex }}
         - name: {{ .Release.Name }}-flex-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-plex-data-pvc
+        {{- end }}
         {{- if $qbt }}
         - name: {{ .Release.Name }}-flex-qbt-data
           persistentVolumeClaim:
