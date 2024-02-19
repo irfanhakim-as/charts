@@ -3,7 +3,7 @@ name: flex
 description: Flex is a collection of curated services that aims to provide a complete home media server solution.
 type: application
 version: 0.1.2
-appVersion: "1.32.8.7639-fb6452ebf"
+appVersion: "1.40.0.7998-c29d4c0c8"
 keywords:
   - "flex"
   - "plex"
