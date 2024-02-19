@@ -330,7 +330,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!IMPORTANT]  
 > Some of the following steps can be skipped or modified if you are using an external Plex server.
 
-1. Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
+1. Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes. Use this token for the `plex.claim` setting in your installation.
 
    > [!NOTE]  
    > Skip this step if you are using an external Plex server.
