@@ -1,3 +1,4 @@
+{{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $jackettIngress := .Values.jackett.ingress }}
@@ -58,7 +59,7 @@ spec:
             path: /
             pathType: Prefix
     {{- end }}
-    {{- if $plexIngress }}
+    {{- if and $plex $plexIngress }}
     - host: {{ $plexDomain }}
       http:
         paths:
@@ -114,7 +115,7 @@ spec:
         {{- if $overseerrIngress }}
         - {{ $overseerrDomain }}
         {{- end }}
-        {{- if $plexIngress }}
+        {{- if and $plex $plexIngress }}
         - {{ $plexDomain }}
         {{- end }}
         {{- if and $qbt $qbtIngress }}
