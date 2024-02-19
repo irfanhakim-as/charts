@@ -93,7 +93,7 @@ image:
     # Default: "linuxserver/qbittorrent"
     repository: ""
     # The tag that specifies the version of the qBittorrent container image used.
-    # Default: "4.6.3-r0-ls310"
+    # Default: "4.6.3-r0-ls314"
     tag: ""
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"

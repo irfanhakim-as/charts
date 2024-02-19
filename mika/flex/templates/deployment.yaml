@@ -39,7 +39,7 @@
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
-{{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls310" | toString }}
+{{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls314" | toString }}
 {{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $radarr_registry := .Values.image.radarr.registry | default "lscr.io" | toString }}
 {{- $radarr_repository := .Values.image.radarr.repository | default "linuxserver/radarr" | toString }}
