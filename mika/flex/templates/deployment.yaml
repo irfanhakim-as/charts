@@ -27,7 +27,7 @@
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
-{{- $jackett_tag := .Values.image.jackett.tag | default "0.21.1700" | toString }}
+{{- $jackett_tag := .Values.image.jackett.tag | default "v0.21.1792-ls311" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
 {{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}

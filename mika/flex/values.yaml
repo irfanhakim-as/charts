@@ -48,7 +48,7 @@ image:
     # Default: "linuxserver/jackett"
     repository: ""
     # The tag that specifies the version of the Jackett container image used.
-    # Default: "0.21.1700"
+    # Default: "v0.21.1792-ls311"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jackett container image.
     # Default: "IfNotPresent"
