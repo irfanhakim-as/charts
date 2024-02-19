@@ -47,7 +47,7 @@
 {{- $radarr_pullPolicy := .Values.image.radarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
 {{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
-{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls224" | toString }}
+{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls226" | toString }}
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $flaresolverrResources := .Values.resources.flaresolverr }}
