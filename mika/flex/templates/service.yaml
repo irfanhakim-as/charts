@@ -1,4 +1,5 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
@@ -25,10 +26,12 @@ spec:
       targetPort: overseerr
       protocol: TCP
       name: overseerr
+    {{- if $plex }}
     - port: 32400
       targetPort: plex
       protocol: TCP
       name: plex
+    {{- end }}
     {{- if $qbt }}
     - port: 6881
       targetPort: qbt
