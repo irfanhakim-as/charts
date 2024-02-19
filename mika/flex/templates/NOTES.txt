@@ -1,3 +1,4 @@
+{{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $jackettIngress := .Values.jackett.ingress }}
@@ -20,7 +21,7 @@ Visit the following services to get started:
 
     - Jackett: {{ if and $ingress $jackettIngress }}https://{{ $jackettDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
     - Overseerr: {{ if and $ingress $overseerrIngress }}https://{{ $overseerrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
-    - Plex: {{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
+    - Plex: {{ if $plex }}{{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external Plex server{{- end }}
     - qBittorrent: {{ if $qbt }}{{- if and $ingress $qbtIngress }}https://{{ $qbtDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external qBittorrent server{{- end }}
     - Radarr: {{ if and $ingress $radarrIngress }}https://{{ $radarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
     - Sonarr: {{ if and $ingress $sonarrIngress }}https://{{ $sonarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
