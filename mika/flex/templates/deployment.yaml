@@ -23,7 +23,7 @@
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
