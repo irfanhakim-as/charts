@@ -200,6 +200,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- if $plex }}
         - name: plex
           image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
           imagePullPolicy: {{ $plex_pullPolicy }}
@@ -245,6 +246,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
         {{- if $qbt }}
         - name: qbittorrent
           image: {{ printf "%s/%s:%s" $qbt_registry $qbt_repository $qbt_tag | quote }}
