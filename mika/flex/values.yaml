@@ -18,7 +18,7 @@ image:
     # Default: "flaresolverr/flaresolverr"
     repository: ""
     # The tag that specifies the version of the FlareSolverr container image used.
-    # Default: "v3.3.13"
+    # Default: "v3.3.14-hotfix2"
     tag: ""
     # The policy that determines when Kubernetes should pull the FlareSolverr container image.
     # Default: "IfNotPresent"
