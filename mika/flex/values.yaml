@@ -252,6 +252,10 @@ plex:
   # Example:
   # domain: "plex.example.com"
   domain: ""
+  # Specifies whether Plex should be deployed or excluded in case an external Plex server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # Specifies whether Plex should be hosted using an Ingress.
   # Example:
   # ingress: true

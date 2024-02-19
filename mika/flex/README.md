@@ -624,6 +624,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. |
 | plex.dataStorage | string | `""` | The amount of persistent storage allocated for the Plex data storage. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
+| plex.enabled | bool | `true` | Specifies whether Plex should be deployed or excluded in case an external Plex server is used. |
 | plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
 | qbt.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the qBittorrent container. |
 | qbt.dataStorage | string | `""` | The amount of persistent storage allocated for the qBittorrent data storage. |
