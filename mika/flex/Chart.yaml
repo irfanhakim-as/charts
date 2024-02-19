@@ -2,7 +2,7 @@ apiVersion: v2
 name: flex
 description: Flex is a collection of curated services that aims to provide a complete home media server solution.
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "1.32.8.7639-fb6452ebf"
 keywords:
   - "flex"
