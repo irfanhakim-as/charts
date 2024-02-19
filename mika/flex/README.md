@@ -92,6 +92,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Plex: `plex.ingress: true` and `plex.domain: "plex.example.com"`.
 
+         > [!TIP]  
+         > If you are using an external Plex server, you may exclude Plex from these configurations.
+
      - qBittorrent: `qbt.ingress: true` and `qbt.domain: "qbt.example.com"`.
 
          > [!TIP]  
@@ -242,10 +245,21 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Configure **Plex Settings**:
 
      - Server: `Manual configuration`.
+
      - Hostname or IP Address: `localhost`.
+
+         > [!NOTE]  
+         > If you are using an external Plex server, replace the value with the actual address to the Plex server.
+
      - Port: `32400`.
+
      - Use SSL: `Disabled`.
+
      - Web App URL: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+
+         > [!NOTE]  
+         > You may skip this setting if you are using an external Plex server.
+
      - Click the **Save Changes** button.
 
    - Configure **Plex Libraries**:
@@ -313,7 +327,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ### [Plex](https://www.plex.tv)
 
+> [!IMPORTANT]  
+> Some of the following steps can be skipped or modified if you are using an external Plex server.
+
 1. Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
+
+   > [!NOTE]  
+   > Skip this step if you are using an external Plex server.
 
 2. Launch the Plex web interface.
 
@@ -322,7 +342,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 4. Head to **Settings > Server > Network** and configure the following:
 
    - Enable Relay: `Disabled`.
+
    - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+
+      > [!NOTE]  
+      > You may skip this setting if you are using an external Plex server.
+
    - Click the **Save Changes** button.
 
 5. Head to **Settings > Server > Libraries** and configure the following:
@@ -508,6 +533,9 @@ Flex is a collection of curated services that aims to provide a complete home me
    - In the **Add Connection - Plex Media Server** form:
 
      - Host: `localhost`.
+
+         > [!NOTE]  
+         > If you are using an external Plex server, replace the value with the actual address to the Plex server.
 
      - Authenticate with Plex.tv: Click the corresponding button and log in with your Plex account.
 
