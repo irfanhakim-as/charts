@@ -374,6 +374,44 @@ entries:
     version: 0.1.0
   flex:
   - apiVersion: v2
+    appVersion: 1.40.0.7998-c29d4c0c8
+    created: "2024-02-19T19:58:57.067530994Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 42075ffded9a4eb28c417d22f4fdfd953c7994bf7c79e923ad6bb29747f5b1ff
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - flaresolverr
+    - jackett
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.2/flex-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.32.8.7639-fb6452ebf
     created: "2024-02-16T09:32:04.680817077Z"
     description: Flex is a collection of curated services that aims to provide a complete
@@ -2039,4 +2077,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-16T09:32:04.681060048Z"
+generated: "2024-02-19T19:58:57.067771232Z"
