@@ -9,6 +9,7 @@ replicaCount: ""
 # Container images used for Flex.
 image:
   # FlareSolverr container image configurations.
+  # Source: https://github.com/FlareSolverr/FlareSolverr/pkgs/container/flaresolverr
   flaresolverr:
     # The registry where the FlareSolverr container image is hosted.
     # Default: "ghcr.io"
@@ -17,12 +18,13 @@ image:
     # Default: "flaresolverr/flaresolverr"
     repository: ""
     # The tag that specifies the version of the FlareSolverr container image used.
-    # Default: "v3.3.13"
+    # Default: "v3.3.14-hotfix2"
     tag: ""
     # The policy that determines when Kubernetes should pull the FlareSolverr container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
   init:
     # The registry where the Init container image is hosted.
     # Default: "docker.io"
@@ -31,12 +33,13 @@ image:
     # Default: "busybox"
     repository: ""
     # The tag that specifies the version of the Init container image used.
-    # Default: "1.34"
+    # Default: "1.36.1"
     tag: ""
     # The policy that determines when Kubernetes should pull the Init container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Jackett container image configurations.
+  # Source: https://github.com/linuxserver/docker-jackett/pkgs/container/jackett
   jackett:
     # The registry where the Jackett container image is hosted.
     # Default: "lscr.io"
@@ -45,12 +48,13 @@ image:
     # Default: "linuxserver/jackett"
     repository: ""
     # The tag that specifies the version of the Jackett container image used.
-    # Default: "0.21.1700"
+    # Default: "v0.21.1792-ls311"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jackett container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Overseerr container image configurations.
+  # Source: https://github.com/linuxserver/docker-overseerr/pkgs/container/overseerr
   overseerr:
     # The registry where the Overseerr container image is hosted.
     # Default: "lscr.io"
@@ -65,6 +69,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Plex container image configurations.
+  # Source: https://hub.docker.com/r/plexinc/pms-docker
   plex:
     # The registry where the Plex container image is hosted.
     # Default: "index.docker.io"
@@ -79,6 +84,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # qBittorrent container image configurations.
+  # Source: https://github.com/linuxserver/docker-qbittorrent/pkgs/container/qbittorrent
   qbt:
     # The registry where the qBittorrent container image is hosted.
     # Default: "lscr.io"
@@ -87,12 +93,13 @@ image:
     # Default: "linuxserver/qbittorrent"
     repository: ""
     # The tag that specifies the version of the qBittorrent container image used.
-    # Default: "4.6.3-r0-ls310"
+    # Default: "4.6.3-r0-ls314"
     tag: ""
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Radarr container image configurations.
+  # Source: https://github.com/linuxserver/docker-radarr/pkgs/container/radarr
   radarr:
     # The registry where the Radarr container image is hosted.
     # Default: "lscr.io"
@@ -101,12 +108,13 @@ image:
     # Default: "linuxserver/radarr"
     repository: ""
     # The tag that specifies the version of the Radarr container image used.
-    # Default: "5.2.6.8376-ls202"
+    # Default: "5.3.6.8612-ls204"
     tag: ""
     # The policy that determines when Kubernetes should pull the Radarr container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Sonarr container image configurations.
+  # Source: https://github.com/linuxserver/docker-sonarr/pkgs/container/sonarr
   sonarr:
     # The registry where the Sonarr container image is hosted.
     # Default: "lscr.io"
@@ -115,7 +123,7 @@ image:
     # Default: "linuxserver/sonarr"
     repository: ""
     # The tag that specifies the version of the Sonarr container image used.
-    # Default: "4.0.1.929-ls224"
+    # Default: "4.0.1.929-ls226"
     tag: ""
     # The policy that determines when Kubernetes should pull the Sonarr container image.
     # Default: "IfNotPresent"
@@ -252,6 +260,10 @@ plex:
   # Example:
   # domain: "plex.example.com"
   domain: ""
+  # Specifies whether Plex should be deployed or excluded in case an external Plex server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # Specifies whether Plex should be hosted using an Ingress.
   # Example:
   # ingress: true

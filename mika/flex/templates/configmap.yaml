@@ -1,4 +1,5 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $uid := .Values.global.uid | default "1000" | toString | quote }}
 {{- $gid := .Values.global.gid | default "1000" | toString | quote }}
@@ -38,6 +39,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 data:
   AUTO_UPDATE: {{ $jackettAutoUpdate }}
+{{- if $plex }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -48,6 +50,7 @@ metadata:
 data:
   PLEX_UID: {{ $uid }}
   PLEX_GID: {{ $gid }}
+{{- end }}
 {{- if $qbt }}
 ---
 apiVersion: v1

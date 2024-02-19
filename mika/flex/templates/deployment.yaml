@@ -1,5 +1,6 @@
 {{- $releaseName := .Release.Name | toString }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $persistent_data := .Values.storage.data.enabled }}
 {{- $persistent_downloads := .Values.storage.downloads.enabled }}
@@ -18,15 +19,15 @@
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
-{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.13" | toString }}
+{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.14-hotfix2" | toString }}
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.34" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
-{{- $jackett_tag := .Values.image.jackett.tag | default "0.21.1700" | toString }}
+{{- $jackett_tag := .Values.image.jackett.tag | default "v0.21.1792-ls311" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
 {{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
@@ -38,15 +39,15 @@
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
-{{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls310" | toString }}
+{{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls314" | toString }}
 {{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $radarr_registry := .Values.image.radarr.registry | default "lscr.io" | toString }}
 {{- $radarr_repository := .Values.image.radarr.repository | default "linuxserver/radarr" | toString }}
-{{- $radarr_tag := .Values.image.radarr.tag | default "5.2.6.8376-ls202" | toString }}
+{{- $radarr_tag := .Values.image.radarr.tag | default "5.3.6.8612-ls204" | toString }}
 {{- $radarr_pullPolicy := .Values.image.radarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
 {{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
-{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls224" | toString }}
+{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls226" | toString }}
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $flaresolverrResources := .Values.resources.flaresolverr }}
@@ -199,6 +200,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- if $plex }}
         - name: plex
           image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
           imagePullPolicy: {{ $plex_pullPolicy }}
@@ -244,6 +246,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
         {{- if $qbt }}
         - name: qbittorrent
           image: {{ printf "%s/%s:%s" $qbt_registry $qbt_repository $qbt_tag | quote }}
@@ -397,7 +400,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
         - name: {{ .Release.Name }}-flex-jackett-data
@@ -406,9 +409,11 @@ spec:
         - name: {{ .Release.Name }}-flex-overseerr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-overseerr-data-pvc
+        {{- if $plex }}
         - name: {{ .Release.Name }}-flex-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-plex-data-pvc
+        {{- end }}
         {{- if $qbt }}
         - name: {{ .Release.Name }}-flex-qbt-data
           persistentVolumeClaim:
@@ -444,7 +449,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs $plexConfigs (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
+        {{- if or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-custom-configs
           secret:
             secretName: {{ .Release.Name }}-custom-configs

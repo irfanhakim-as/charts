@@ -75,7 +75,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Manage your storage space more effectively i.e. expanding and using the SMB share for other purposes, rather than allocating that storage space solely for the Flex installation.
 
-     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. qBittorrent.
+     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Plex or qBittorrent.
 
 4. Use Ingress for hosting Flex services.
 
@@ -91,6 +91,9 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Overseerr: `overseerr.ingress: true` and `overseerr.domain: "overseerr.example.com"`.
 
      - Plex: `plex.ingress: true` and `plex.domain: "plex.example.com"`.
+
+         > [!TIP]  
+         > If you are using an external Plex server, you may exclude Plex from these configurations.
 
      - qBittorrent: `qbt.ingress: true` and `qbt.domain: "qbt.example.com"`.
 
@@ -242,10 +245,21 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Configure **Plex Settings**:
 
      - Server: `Manual configuration`.
+
      - Hostname or IP Address: `localhost`.
+
+         > [!NOTE]  
+         > If you are using an external Plex server, replace the value with the actual address to the Plex server.
+
      - Port: `32400`.
+
      - Use SSL: `Disabled`.
+
      - Web App URL: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+
+         > [!NOTE]  
+         > You may skip this setting if you are using an external Plex server.
+
      - Click the **Save Changes** button.
 
    - Configure **Plex Libraries**:
@@ -313,7 +327,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ### [Plex](https://www.plex.tv)
 
-1. Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes.
+> [!IMPORTANT]  
+> Some of the following steps can be skipped or modified if you are using an external Plex server.
+
+1. Log in and acquire the secret Claim Token from [Plex](https://www.plex.tv/claim). This token is required to authenticate the server with your Plex account, and is only valid for 4 minutes. Use this token for the `plex.claim` setting in your installation.
+
+   > [!NOTE]  
+   > Skip this step if you are using an external Plex server.
 
 2. Launch the Plex web interface.
 
@@ -322,7 +342,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 4. Head to **Settings > Server > Network** and configure the following:
 
    - Enable Relay: `Disabled`.
+
    - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
+
+      > [!NOTE]  
+      > You may skip this setting if you are using an external Plex server.
+
    - Click the **Save Changes** button.
 
 5. Head to **Settings > Server > Libraries** and configure the following:
@@ -509,9 +534,18 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Host: `localhost`.
 
+         > [!NOTE]  
+         > If you are using an external Plex server, replace the value with the actual address to the Plex server.
+
      - Authenticate with Plex.tv: Click the corresponding button and log in with your Plex account.
 
      - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+
+     - If you're using an external Plex server and require path mapping:
+
+       - Map Paths From: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on Flex i.e. `/flex/Media`.
+
+       - Map Paths To: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on the external Plex server i.e. `/data`.
 
      - Click the **Save** button.
 
@@ -624,6 +658,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. |
 | plex.dataStorage | string | `""` | The amount of persistent storage allocated for the Plex data storage. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
+| plex.enabled | bool | `true` | Specifies whether Plex should be deployed or excluded in case an external Plex server is used. |
 | plex.ingress | bool | `false` | Specifies whether Plex should be hosted using an Ingress. |
 | qbt.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the qBittorrent container. |
 | qbt.dataStorage | string | `""` | The amount of persistent storage allocated for the qBittorrent data storage. |
