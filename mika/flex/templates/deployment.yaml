@@ -19,7 +19,7 @@
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
-{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.13" | toString }}
+{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.14-hotfix2" | toString }}
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
