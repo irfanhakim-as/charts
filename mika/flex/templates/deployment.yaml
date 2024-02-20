@@ -111,6 +111,51 @@ spec:
               {{- $initScript | nindent 14 }}
       {{- end }}
       containers:
+        {{- if $bazarr }}
+        - name: bazarr
+          image: {{ printf "%s/%s:%s" $bazarr_registry $bazarr_repository $bazarr_tag | quote }}
+          imagePullPolicy: {{ $bazarr_pullPolicy }}
+          ports:
+            - name: bazarr
+              containerPort: 6767
+              protocol: TCP
+          resources:
+            {{- toYaml $bazarrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-cm
+          {{- if or $persistent_data $persistent_media $persistent_global $bazarrConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-bazarr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_media }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+                {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- range $bazarrConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: bazarr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
         {{- if $flaresolverr }}
         - name: flaresolverr
           image: {{ printf "%s/%s:%s" $flaresolverr_registry $flaresolverr_repository $flaresolverr_tag | quote }}
