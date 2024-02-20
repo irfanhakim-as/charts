@@ -1,6 +1,8 @@
+{{- $bazarr := .Values.bazarr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $bazarrIngress := .Values.bazarr.ingress }}
 {{- $jackettIngress := .Values.jackett.ingress }}
 {{- $overseerrIngress := .Values.overseerr.ingress }}
 {{- $plexIngress := .Values.plex.ingress }}
@@ -8,13 +10,14 @@
 {{- $radarrIngress := .Values.radarr.ingress }}
 {{- $sonarrIngress := .Values.sonarr.ingress }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $bazarrDomain := .Values.bazarr.domain | toString | quote }}
 {{- $jackettDomain := .Values.jackett.domain | toString | quote }}
 {{- $overseerrDomain := .Values.overseerr.domain | toString | quote }}
 {{- $plexDomain := .Values.plex.domain | toString | quote }}
 {{- $qbtDomain := .Values.qbt.domain | toString | quote }}
 {{- $radarrDomain := .Values.radarr.domain | toString | quote }}
 {{- $sonarrDomain := .Values.sonarr.domain | toString | quote }}
-{{- if and $ingress (or $jackettIngress $overseerrIngress $plexIngress (and $qbt $qbtIngress) $radarrIngress $sonarrIngress) }}
+{{- if and $ingress (or (and $bazarr $bazarrIngress) $jackettIngress $overseerrIngress $plexIngress (and $qbt $qbtIngress) $radarrIngress $sonarrIngress) }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -35,6 +38,18 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
+    {{- if and $bazarr $bazarrIngress }}
+    - host: {{ $bazarrDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-flex-svc
+                port:
+                  name: bazarr
+            path: /
+            pathType: Prefix
+    {{- end }}
     {{- if $jackettIngress }}
     - host: {{ $jackettDomain }}
       http:
@@ -109,6 +124,9 @@ spec:
     {{- end }}
   tls:
     - hosts:
+        {{- if and $bazarr $bazarrIngress }}
+        - {{ $bazarrDomain }}
+        {{- end }}
         {{- if $jackettIngress }}
         - {{ $jackettDomain }}
         {{- end }}
