@@ -1,3 +1,4 @@
+{{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -12,6 +13,12 @@ metadata:
 spec:
   type: {{ $type }}
   ports:
+    {{- if $bazarr }}
+    - port: 6767
+      targetPort: bazarr
+      protocol: TCP
+      name: bazarr
+    {{- end }}
     {{- if $flaresolverr }}
     - port: 8191
       targetPort: flaresolverr
