@@ -455,6 +455,11 @@ spec:
       {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
+        {{- if $bazarr }}
+        - name: {{ .Release.Name }}-flex-bazarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-bazarr-data-pvc
+        {{- end }}
         - name: {{ .Release.Name }}-flex-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jackett-data-pvc
