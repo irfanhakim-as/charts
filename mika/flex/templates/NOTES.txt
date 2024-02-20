@@ -1,12 +1,15 @@
+{{- $bazarr := .Values.bazarr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $bazarrIngress := .Values.bazarr.ingress }}
 {{- $jackettIngress := .Values.jackett.ingress }}
 {{- $overseerrIngress := .Values.overseerr.ingress }}
 {{- $plexIngress := .Values.plex.ingress }}
 {{- $qbtIngress := .Values.qbt.ingress }}
 {{- $radarrIngress := .Values.radarr.ingress }}
 {{- $sonarrIngress := .Values.sonarr.ingress }}
+{{- $bazarrDomain := .Values.bazarr.domain | toString }}
 {{- $jackettDomain := .Values.jackett.domain | toString }}
 {{- $overseerrDomain := .Values.overseerr.domain | toString }}
 {{- $plexDomain := .Values.plex.domain | toString }}
@@ -19,6 +22,7 @@ Follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/m
 
 Visit the following services to get started:
 
+    - Bazarr: {{ if $bazarr }}{{ if and $ingress $bazarrIngress }}https://{{ $bazarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external Bazarr server{{- end }}
     - Jackett: {{ if and $ingress $jackettIngress }}https://{{ $jackettDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
     - Overseerr: {{ if and $ingress $overseerrIngress }}https://{{ $overseerrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
     - Plex: {{ if $plex }}{{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external Plex server{{- end }}
