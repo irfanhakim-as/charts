@@ -737,6 +737,11 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| bazarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Bazarr container. |
+| bazarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Bazarr data storage. |
+| bazarr.domain | string | `""` | The ingress domain name that hosts the Bazarr server. |
+| bazarr.enabled | bool | `true` | Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used. |
+| bazarr.ingress | bool | `false` | Specifies whether Bazarr should be hosted using an Ingress. |
 | flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the FlareSolverr container. |
 | flaresolverr.enabled | bool | `true` | Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used. |
 | flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
@@ -745,6 +750,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | global.gid | string | `""` | The group ID used to run the Flex containers. Default: `"1000"`. |
 | global.initScript | string | `""` | Custom init script to run before the Flex containers start. |
 | global.uid | string | `""` | The user ID used to run the Flex containers. Default: `"1000"`. |
+| image.bazarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Bazarr container image. Default: `"IfNotPresent"`. |
+| image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
+| image.bazarr.repository | string | `""` | The name of the repository that contains the Bazarr container image used. Default: `"linuxserver/bazarr"`. |
+| image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.4.2-ls239"`. |
 | image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
@@ -805,6 +814,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
 | radarr.ingress | bool | `false` | Specifies whether Radarr should be hosted using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for Flex. Default: `"1"`. |
+| resources.bazarr | object | `{}` | Bazarr container resources. |
 | resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
