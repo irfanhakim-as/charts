@@ -375,6 +375,46 @@ entries:
   flex:
   - apiVersion: v2
     appVersion: 1.40.0.7998-c29d4c0c8
+    created: "2024-02-21T07:22:25.579115807Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 25aed225887b1d325e5e4f77c541aa4d33eb3b5fb6e71e401c5129379ff4d8fc
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - flaresolverr
+    - jackett
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.3/flex-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.40.0.7998-c29d4c0c8
     created: "2024-02-19T19:58:57.067530994Z"
     description: Flex is a collection of curated services that aims to provide a complete
       home media server solution.
@@ -2077,4 +2117,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-02-19T19:58:57.067771232Z"
+generated: "2024-02-21T07:22:25.579346998Z"
