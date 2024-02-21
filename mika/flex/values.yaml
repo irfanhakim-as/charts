@@ -8,6 +8,21 @@ replicaCount: ""
 
 # Container images used for Flex.
 image:
+  # Bazarr container image configurations.
+  # Source: https://github.com/linuxserver/docker-bazarr/pkgs/container/bazarr
+  bazarr:
+    # The registry where the Bazarr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Bazarr container image used.
+    # Default: "linuxserver/bazarr"
+    repository: ""
+    # The tag that specifies the version of the Bazarr container image used.
+    # Default: "v1.4.2-ls239"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Bazarr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # FlareSolverr container image configurations.
   # Source: https://github.com/FlareSolverr/FlareSolverr/pkgs/container/flaresolverr
   flaresolverr:
@@ -153,6 +168,37 @@ global:
   # Example:
   # gid: ""
   gid: ""
+
+# Bazarr configurations.
+bazarr:
+  # The amount of persistent storage allocated for the Bazarr data storage.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
+  # The ingress domain name that hosts the Bazarr server.
+  # Example:
+  # domain: "bazarr.example.com"
+  domain: ""
+  # Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
+  # Specifies whether Bazarr should be hosted using an Ingress.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Bazarr container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
 
 # FlareSolverr configurations.
 flaresolverr:
@@ -545,6 +591,30 @@ smb:
 
 # Resource requirements and limits for Flex containers.
 resources:
+  # Bazarr container resources.
+  # Example:
+  # bazarr:
+  #   # The minimum amount of resources required by Bazarr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Bazarr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "500m"
+  #     # The minimum amount of memory required by Bazarr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Bazarr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Bazarr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "1000m"
+  #     # The maximum amount of memory allowed for Bazarr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  bazarr: {}
   # FlareSolverr container resources.
   # Example:
   # flaresolverr:

@@ -1,4 +1,5 @@
 {{- $releaseName := .Release.Name | toString }}
+{{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -10,6 +11,7 @@
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $globalSmb := .Values.storage.global.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
+{{- $bazarrConfigs := .Values.bazarr.customConfigs }}
 {{- $fsConfigs := .Values.flaresolverr.customConfigs }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
@@ -17,6 +19,10 @@
 {{- $qbtConfigs := .Values.qbt.customConfigs }}
 {{- $radarrConfigs := .Values.radarr.customConfigs }}
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
+{{- $bazarr_registry := .Values.image.bazarr.registry | default "lscr.io" | toString }}
+{{- $bazarr_repository := .Values.image.bazarr.repository | default "linuxserver/bazarr" | toString }}
+{{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.4.2-ls239" | toString }}
+{{- $bazarr_pullPolicy := .Values.image.bazarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
 {{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.14-hotfix2" | toString }}
@@ -50,6 +56,7 @@
 {{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls226" | toString }}
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $bazarrResources := .Values.resources.bazarr }}
 {{- $flaresolverrResources := .Values.resources.flaresolverr }}
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $overseerrResources := .Values.resources.overseerr }}
@@ -104,6 +111,51 @@ spec:
               {{- $initScript | nindent 14 }}
       {{- end }}
       containers:
+        {{- if $bazarr }}
+        - name: bazarr
+          image: {{ printf "%s/%s:%s" $bazarr_registry $bazarr_repository $bazarr_tag | quote }}
+          imagePullPolicy: {{ $bazarr_pullPolicy }}
+          ports:
+            - name: bazarr
+              containerPort: 6767
+              protocol: TCP
+          resources:
+            {{- toYaml $bazarrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-cm
+          {{- if or $persistent_data $persistent_media $persistent_global $bazarrConfigs }}
+          volumeMounts:
+            {{- if $persistent_data }}
+            - name: {{ .Release.Name }}-flex-bazarr-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $persistent_global }}
+            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+                {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+                {{- end }}
+            {{- else }}
+              {{- if $persistent_media }}
+            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+                {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- range $bazarrConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: bazarr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
         {{- if $flaresolverr }}
         - name: flaresolverr
           image: {{ printf "%s/%s:%s" $flaresolverr_registry $flaresolverr_repository $flaresolverr_tag | quote }}
@@ -400,9 +452,14 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
+      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $bazarr $bazarrConfigs) (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $persistent_data }}
+        {{- if $bazarr }}
+        - name: {{ .Release.Name }}-flex-bazarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-bazarr-data-pvc
+        {{- end }}
         - name: {{ .Release.Name }}-flex-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jackett-data-pvc
@@ -449,7 +506,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
+        {{- if or (and $bazarr $bazarrConfigs) (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-custom-configs
           secret:
             secretName: {{ .Release.Name }}-custom-configs
