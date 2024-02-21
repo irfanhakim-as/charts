@@ -198,6 +198,135 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ## Application Configurations
 
+### [Bazarr](https://www.bazarr.media)
+
+> [!NOTE]  
+> The following steps require you to have set up and configured [Radarr and Sonarr](#radarr-and-sonarr) before proceeding.
+
+1. Launch the Bazarr web interface.
+
+2. In the **General** page under the **Settings** section, configure the following:
+
+   - Authentication: `Form`.
+
+   - Username: Fill in the desired username.
+
+   - Password: Fill in a secure password.
+
+   - Leave the rest of the settings as default.
+
+   - Click the **Save** button.
+
+3. Configure Radarr/Sonarr:
+
+   - Click the **Radarr** or **Sonarr** menu item under the **Settings** section.
+
+   - Use Radarr/Sonarr: Toggle the **Enabled** switch to enable Radarr/Sonarr.
+
+   - API Key: Get the API key from the Radarr/Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+
+   - Click the **Test** button to verify the settings.
+
+   - Click the **Save** button.
+
+   - If you are using an external server for Bazarr and have different paths to your media with Radarr/Sonarr, configure the Path Mapping settings:
+
+     - Under the **Path Mappings** section, click the **Add** button.
+     - Under **Radarr**/**Sonarr**, add the path to the folder where your Movie (Radarr) or TV (Sonarr) media is stored on Radarr/Sonarr i.e. `/flex/Media/Movie` or `/flex/Media/TV`.
+     - Under **Bazarr**, add the path to the folder where your Movie (Radarr) or TV (Sonarr) media is stored on Bazarr i.e. `/movie` or `/tv`.
+     - Click the **Save** button.
+
+4. Configure the subtitle languages:
+
+   - Click the **Languages** menu item under the **Settings** section.
+
+   - Languages Filter: Type and select the desired language(s) for your subtitles i.e. `English`.
+
+   - Languages Profiles: Click the **Add New Profile** button to add a new profile.
+
+   - In the **Edit Languages Profile** form:
+
+     - Name: Fill in the desired name for the profile i.e. `Master`.
+     - Click the **Add Language** button to add the desired language(s) we've added earlier to the profile.
+     - Configure the **Subtitles Type** and **Exclude If Matching Audio** settings for each language(s) accordingly.
+     - (Optional) Cutoff: Set one of the language(s) you have set as the cutoff language (don't download more subtitles when one of this language is already found) i.e. `English`.
+     - Click the **Save** button.
+
+   - Under the **Default Settings** section:
+
+     - Toggle the **Series** switch.
+     - Expand the Series **Profile** dropdown and select the profile you've just created i.e. `Master`.
+     - Toggle the **Movies** switch.
+     - Expand the Movies **Profile** dropdown and select the profile you've just created i.e. `Master`.
+
+   - Click the **Save** button.
+
+5. Configure the subtitle providers:
+
+   - Click the **Providers** menu item under the **Settings** section.
+
+   - Under the **Providers** section, click the **+** button to add a new provider.
+
+   - In the **Provider** form:
+
+     - Select the desired provider from the dropdown and fill in the required fields accordingly (if any).
+
+         > [!TIP]  
+         > Recommended providers include `OpenSubtitles.org`, `Subscenter`, `Supersubtitles`, `TVSubtitles`, `Wizdom`, and `YIFY Subtitles`.
+
+     - Click the **Save** button.
+
+   - Click the **Save** button.
+
+6. Configure the subtitles:
+
+   - Click the **Subtitles** menu item under the **Settings** section.
+
+   - Under the **Basic Options** section, configure the following:
+
+     - Hearing-impaired subtitles extension: `.sdh`.
+
+   - Under the **Subzero Modifications** section, configure the following:
+
+     - Common Fixes: Toggle the corresponding switch to enable it.
+
+   - Under the **Synchronizarion / Alignement** section, configure the following:
+
+     - Automatic Subtitles Synchronization: Toggle the corresponding switch to enable it.
+
+   - Leave the rest of the settings as default.
+
+   - Click the **Save** button.
+
+7. Configure the scheduler settings:
+
+   - Click the **Scheduler** menu item under the **Settings** section.
+
+   - Under the **Disk Indexing** section, configure the following:
+
+     - Update All Episode Subtitles from Disk: `Daily`.
+     - Time of The Day (Episode): `4:00`
+     - Use cached embedded subtitles parser results (Episode): Toggle the corresponding switch to enable it.
+     - Update All Movie Subtitles from Disk: `Daily`.
+     - Time of The Day (Movie): `5:00`
+     - Use cached embedded subtitles parser results (Movie): Toggle the corresponding switch to enable it.
+
+   - Leave the rest of the settings as default.
+
+   - Click the **Save** button.
+
+8. Create a backup of the Bazarr configuration:
+
+   - Click the **System** menu item on the left, and then click the **Backups** link.
+
+   - Click the **Backup Now** button.
+
+   - Wait for the backup to be created, then click the name (link) of the newly created backup file to download it.
+
+   - Store the backup file in a safe location.
+
+---
+
 ### [Jackett](https://github.com/Jackett/Jackett) (and [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr))
 
 1. Launch the Jackett web interface.
