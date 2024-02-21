@@ -553,6 +553,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Click the **Settings** menu item on the left, and then click the **Media Management** link.
 
+   - Under the **Importing** section:
+
+     - Import Extra Files: Toggle the corresponding checkbox to enable it.
+
+     - Import Extra Files: Add a comma-separated list of file extensions you wish to include in the import i.e. `srt`.
+
    - Click the **Add Root Folder** button to add a folder.
 
    - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
