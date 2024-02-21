@@ -599,7 +599,7 @@ resources:
   #     # The minimum amount of CPU resources required by Bazarr.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "300m"
+  #     cpu: "500m"
   #     # The minimum amount of memory required by Bazarr.
   #     # Example:
   #     # memory: "10Mi"
@@ -609,11 +609,11 @@ resources:
   #     # The maximum amount of CPU resources allowed for Bazarr.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "500m"
+  #     cpu: "1000m"
   #     # The maximum amount of memory allowed for Bazarr.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "500Mi"
+  #     memory: "400Mi"
   bazarr: {}
   # FlareSolverr container resources.
   # Example:
