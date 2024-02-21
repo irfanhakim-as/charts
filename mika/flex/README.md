@@ -272,7 +272,7 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Select the desired provider from the dropdown and fill in the required fields accordingly (if any).
 
          > [!TIP]  
-         > Recommended providers include `OpenSubtitles.org`, `Subscenter`, `Supersubtitles`, `TVSubtitles`, `Wizdom`, and `YIFY Subtitles`.
+         > Recommended providers include `OpenSubtitles.com`, `Subscenter`, `Supersubtitles`, `TVSubtitles`, `Wizdom`, and `YIFY Subtitles`.
 
      - Click the **Save** button.
 
