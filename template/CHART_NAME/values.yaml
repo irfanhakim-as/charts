@@ -84,6 +84,14 @@ ingress:
   # Default: "letsencrypt-dns-prod"
   clusterIssuer: ""
 
+# Service configurations.
+service:
+  # The type of service used for CHART_NAME services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
 # Resource requirements and limits for CHART_NAME container.
 resources:
   # CHART_NAME container resources.
