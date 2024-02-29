@@ -108,7 +108,7 @@ storage:
     # storageClassName: "longhorn"
     storageClassName: ""
 
-# Resource requirements and limits for ChartName container.
+# Resource requirements and limits for ChartName containers.
 resources:
   # ChartName container resources.
   # Example:
