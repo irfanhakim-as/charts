@@ -61,18 +61,6 @@ CHART_NAME:
   # Example:
   # foo: "foo"
   foo: ""
-  # CHART_NAME data configurations.
-  data:
-    # The amount of persistent storage allocated for the CHART_NAME instance.
-    # Default: "1Gi"
-    # Example:
-    # storage: "1Gi"
-    storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the CHART_NAME storage.
-    # Default: "longhorn"
-    # Example:
-    # storageClassName: "longhorn"
-    storageClassName: ""
 
 # Ingress configurations.
 ingress:
@@ -91,6 +79,34 @@ service:
   # Example:
   # type: "NodePort"
   type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The path where the data storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Config"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
 
 # Resource requirements and limits for CHART_NAME container.
 resources:

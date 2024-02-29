@@ -1,3 +1,4 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
 {{- $CHART_NAME_registry := .Values.image.CHART_NAME.registry | default "docker.io" | toString }}
 {{- $CHART_NAME_repository := .Values.image.CHART_NAME.repository | default "CHART_NAME" | toString }}
 {{- $CHART_NAME_tag := .Values.image.CHART_NAME.tag | default .Chart.AppVersion | toString }}
@@ -7,6 +8,8 @@
 {{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,11 +42,18 @@ spec:
           args:
             - -c
             - >-
-                mkdir -p /opt/CHART_NAME/data &&
-                chmod -R 777 /opt/CHART_NAME
+                mkdir -p /config/data &&
+                chmod -R 777 /config
+          {{- if or $dataPersistence }}
           volumeMounts:
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-CHART_NAME-data
-              mountPath: /opt/CHART_NAME
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
       containers:
         - name: CHART_NAME
           image: {{ printf "%s/%s:%s" $CHART_NAME_registry $CHART_NAME_repository $CHART_NAME_tag | quote }}
@@ -59,10 +69,21 @@ spec:
                 name: {{ .Release.Name }}-CHART_NAME-cm
             - secretRef:
                 name: {{ .Release.Name }}-CHART_NAME-secret
+          {{- if or $dataPersistence }}
           volumeMounts:
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-CHART_NAME-data
-              mountPath: /opt/CHART_NAME
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence }}
       volumes:
+        {{- if $dataPersistence }}
         - name: {{ .Release.Name }}-CHART_NAME-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-CHART_NAME-data-pvc
+        {{- end }}
+      {{- end }}

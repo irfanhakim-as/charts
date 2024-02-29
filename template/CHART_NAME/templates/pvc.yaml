@@ -1,5 +1,8 @@
-{{- $storage := .Values.CHART_NAME.data.storage | default "1Gi" | toString | quote }}
-{{- $storage_class_name := .Values.CHART_NAME.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
+{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- if $dataPersistence }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -11,5 +14,6 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ $storage }}
-  storageClassName: {{ $storage_class_name }}
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
