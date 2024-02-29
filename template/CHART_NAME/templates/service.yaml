@@ -10,6 +10,6 @@ spec:
     - port: 80
       targetPort: CHART_NAME
       protocol: TCP
-      name: {{ .Release.Name }}-CHART_NAME
+      name: CHART_NAME
   selector:
     {{- include "CHART_NAME.selectorLabels" . | nindent 4 }}
