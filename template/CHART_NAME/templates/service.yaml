@@ -1,3 +1,4 @@
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -5,7 +6,7 @@ metadata:
   labels:
     {{- include "CHART_NAME.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ $type }}
   ports:
     - port: 80
       targetPort: CHART_NAME
