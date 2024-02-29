@@ -50,6 +50,10 @@ CHART_NAME:
   # Example:
   # bar: "bar"
   bar: ""
+  # The ingress domain name that hosts the CHART_NAME server.
+  # Example:
+  # domain: "chart_name.example.com"
+  domain: ""
   # The value of the CHART_NAME foo.
   # Default: "foo"
   # Example:
@@ -67,6 +71,16 @@ CHART_NAME:
     # Example:
     # storageClassName: "longhorn"
     storageClassName: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting CHART_NAME services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  clusterIssuer: ""
 
 # Resource requirements and limits for CHART_NAME container.
 resources:
