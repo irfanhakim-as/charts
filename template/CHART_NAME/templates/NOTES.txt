@@ -1,9 +1,11 @@
+{{- $foo := .Values.CHART_NAME.foo | toString }}
+{{- $bar := .Values.CHART_NAME.bar | toString }}
 CHART_NAME is now installed and configured for {{ .Release.Name | toString }}.
 
 Shown below are some of the values that were configured for this release:
 
-    Foo: {{ .Values.CHART_NAME.foo | toString }}
-    Bar: {{ .Values.CHART_NAME.bar | toString }}
+    Foo: {{ $foo }}
+    Bar: {{ $bar }}
 
 See the values.yaml file of this chart for more configuration options.
 
