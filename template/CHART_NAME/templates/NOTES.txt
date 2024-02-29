@@ -7,6 +7,4 @@ Shown below are some of the values that were configured for this release:
     Foo: {{ $foo }}
     Bar: {{ $bar }}
 
-See the values.yaml file of this chart for more configuration options.
-
-Please refer to the official documentation for more information on how to use CHART_NAME.
+For more information on how to use and configure CHART_NAME, please refer to the official documentation.
