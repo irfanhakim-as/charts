@@ -1,26 +1,26 @@
-# Default values for CHART_NAME.
+# Default values for chartName.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# The desired number of running replicas for CHART_NAME.
+# The desired number of running replicas for ChartName.
 # Default: "1"
 replicaCount: ""
 
-# Container images used for CHART_NAME.
+# Container images used for ChartName.
 image:
-  # CHART_NAME container image configurations.
-  # Source: https://github.com/irfanhakim-as/CHART_NAME/pkgs/container/CHART_NAME
-  CHART_NAME:
-    # The registry where the CHART_NAME container image is hosted.
+  # ChartName container image configurations.
+  # Source: https://github.com/irfanhakim-as/chartName/pkgs/container/chartName
+  chartName:
+    # The registry where the ChartName container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the CHART_NAME container image used.
-    # Default: "CHART_NAME"
+    # The name of the repository that contains the ChartName container image used.
+    # Default: "chartName"
     repository: ""
-    # The tag that specifies the version of the CHART_NAME container image used.
+    # The tag that specifies the version of the ChartName container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the CHART_NAME container image.
+    # The policy that determines when Kubernetes should pull the ChartName container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Init container image configurations.
@@ -45,18 +45,18 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
-# CHART_NAME configurations.
-CHART_NAME:
-  # The secret value of the CHART_NAME bar.
+# ChartName configurations.
+chartName:
+  # The secret value of the ChartName bar.
   # Default: "bar"
   # Example:
   # bar: "bar"
   bar: ""
-  # The ingress domain name that hosts the CHART_NAME server.
+  # The ingress domain name that hosts the ChartName server.
   # Example:
   # domain: "chart_name.example.com"
   domain: ""
-  # The value of the CHART_NAME foo.
+  # The value of the ChartName foo.
   # Default: "foo"
   # Example:
   # foo: "foo"
@@ -64,7 +64,7 @@ CHART_NAME:
 
 # Ingress configurations.
 ingress:
-  # Specifies whether Ingress should be enabled for hosting CHART_NAME services.
+  # Specifies whether Ingress should be enabled for hosting ChartName services.
   # Example:
   # enabled: true
   enabled: false
@@ -74,7 +74,7 @@ ingress:
 
 # Service configurations.
 service:
-  # The type of service used for CHART_NAME services.
+  # The type of service used for ChartName services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
@@ -108,29 +108,29 @@ storage:
     # storageClassName: "longhorn"
     storageClassName: ""
 
-# Resource requirements and limits for CHART_NAME container.
+# Resource requirements and limits for ChartName container.
 resources:
-  # CHART_NAME container resources.
+  # ChartName container resources.
   # Example:
-  # CHART_NAME:
-  #   # The minimum amount of resources required by CHART_NAME to run.
+  # chartName:
+  #   # The minimum amount of resources required by ChartName to run.
   #   requests:
-  #     # The minimum amount of CPU resources required by CHART_NAME.
+  #     # The minimum amount of CPU resources required by ChartName.
   #     # Example:
   #     # cpu: "10m"
   #     cpu: "10m"
-  #     # The minimum amount of memory required by CHART_NAME.
+  #     # The minimum amount of memory required by ChartName.
   #     # Example:
   #     # memory: "10Mi"
   #     memory: "10Mi"
-  #   # The maximum amount of resources allowed for CHART_NAME.
+  #   # The maximum amount of resources allowed for ChartName.
   #   limits:
-  #     # The maximum amount of CPU resources allowed for CHART_NAME.
+  #     # The maximum amount of CPU resources allowed for ChartName.
   #     # Example:
   #     # cpu: "250m"
   #     cpu: "250m"
-  #     # The maximum amount of memory allowed for CHART_NAME.
+  #     # The maximum amount of memory allowed for ChartName.
   #     # Example:
   #     # memory: "250Mi"
   #     memory: "250Mi"
-  CHART_NAME: {}
+  chartName: {}
