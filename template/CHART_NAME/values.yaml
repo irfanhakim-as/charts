@@ -45,16 +45,16 @@ imagePullSecrets: []
 
 # CHART_NAME configurations.
 CHART_NAME:
-  # The value of the CHART_NAME foo.
-  # Default: "foo"
-  # Example:
-  # foo: "foo"
-  foo: ""
   # The secret value of the CHART_NAME bar.
   # Default: "bar"
   # Example:
   # bar: "bar"
   bar: ""
+  # The value of the CHART_NAME foo.
+  # Default: "foo"
+  # Example:
+  # foo: "foo"
+  foo: ""
   # CHART_NAME data configurations.
   data:
     # The amount of persistent storage allocated for the CHART_NAME instance.
