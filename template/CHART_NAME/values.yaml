@@ -86,23 +86,27 @@ ingress:
 
 # Resource requirements and limits for CHART_NAME container.
 resources:
-  # The minimum amount of resources required by CHART_NAME to run.
-  requests:
-    # The minimum amount of CPU resources required by CHART_NAME.
-    # Example:
-    # cpu: "10m"
-    cpu: "10m"
-    # The minimum amount of memory required by CHART_NAME.
-    # Example:
-    # memory: "10Mi"
-    memory: "10Mi"
-  # The maximum amount of resources allowed for CHART_NAME.
-  limits:
-    # The maximum amount of CPU resources allowed for CHART_NAME.
-    # Example:
-    # cpu: "250m"
-    cpu: "250m"
-    # The maximum amount of memory allowed for CHART_NAME.
-    # Example:
-    # memory: "250Mi"
-    memory: "250Mi"
+  # CHART_NAME container resources.
+  # Example:
+  # CHART_NAME:
+  #   # The minimum amount of resources required by CHART_NAME to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by CHART_NAME.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by CHART_NAME.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for CHART_NAME.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for CHART_NAME.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for CHART_NAME.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  CHART_NAME: {}
