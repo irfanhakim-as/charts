@@ -1,8 +1,8 @@
 {{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $CHART_NAME_registry := .Values.image.CHART_NAME.registry | default "docker.io" | toString }}
-{{- $CHART_NAME_repository := .Values.image.CHART_NAME.repository | default "CHART_NAME" | toString }}
-{{- $CHART_NAME_tag := .Values.image.CHART_NAME.tag | default .Chart.AppVersion | toString }}
-{{- $CHART_NAME_pullPolicy := .Values.image.CHART_NAME.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $chartName_registry := .Values.image.chartName.registry | default "docker.io" | toString }}
+{{- $chartName_repository := .Values.image.chartName.repository | default "chartName" | toString }}
+{{- $chartName_tag := .Values.image.chartName.tag | default .Chart.AppVersion | toString }}
+{{- $chartName_pullPolicy := .Values.image.chartName.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
 {{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
@@ -13,14 +13,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-CHART_NAME
+  name: {{ .Release.Name }}-chartName
   labels:
-    {{- include "CHART_NAME.labels" . | nindent 4 }}
+    {{- include "chartName.labels" . | nindent 4 }}
 spec:
   replicas: {{ int $replica_count }}
   selector:
     matchLabels:
-      {{- include "CHART_NAME.selectorLabels" . | nindent 6 }}
+      {{- include "chartName.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -28,7 +28,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "CHART_NAME.selectorLabels" . | nindent 8 }}
+        {{- include "chartName.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -47,7 +47,7 @@ spec:
           {{- if or $dataPersistence }}
           volumeMounts:
             {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-CHART_NAME-data
+            - name: {{ .Release.Name }}-chartName-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -55,24 +55,24 @@ spec:
             {{- end }}
           {{- end }}
       containers:
-        - name: CHART_NAME
-          image: {{ printf "%s/%s:%s" $CHART_NAME_registry $CHART_NAME_repository $CHART_NAME_tag | quote }}
-          imagePullPolicy: {{ $CHART_NAME_pullPolicy }}
+        - name: chartName
+          image: {{ printf "%s/%s:%s" $chartName_registry $chartName_repository $chartName_tag | quote }}
+          imagePullPolicy: {{ $chartName_pullPolicy }}
           ports:
-            - name: CHART_NAME
+            - name: chartName
               containerPort: 80
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources.CHART_NAME | nindent 12 }}
+            {{- toYaml .Values.resources.chartName | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-CHART_NAME-cm
+                name: {{ .Release.Name }}-chartName-cm
             - secretRef:
-                name: {{ .Release.Name }}-CHART_NAME-secret
+                name: {{ .Release.Name }}-chartName-secret
           {{- if or $dataPersistence }}
           volumeMounts:
             {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-CHART_NAME-data
+            - name: {{ .Release.Name }}-chartName-data
               mountPath: {{ $dataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
@@ -82,8 +82,8 @@ spec:
       {{- if or $dataPersistence }}
       volumes:
         {{- if $dataPersistence }}
-        - name: {{ .Release.Name }}-CHART_NAME-data
+        - name: {{ .Release.Name }}-chartName-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-CHART_NAME-data-pvc
+            claimName: {{ .Release.Name }}-chartName-data-pvc
         {{- end }}
       {{- end }}

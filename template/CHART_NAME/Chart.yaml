@@ -1,13 +1,13 @@
 apiVersion: v2
-name: CHART_NAME
-description: A Helm chart for deploying CHART_NAME.
+name: chartName
+description: A Helm chart for deploying ChartName.
 type: application
 version: 0.1.0
 appVersion: "0.0.1-r1"
 keywords:
-  - "CHART_NAME"
+  - "chartName"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/CHART_NAME.png"
+icon: "https://irfanhakim-as.github.io/charts/logos/chartName.png"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:

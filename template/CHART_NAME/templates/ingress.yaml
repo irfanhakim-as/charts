@@ -1,14 +1,14 @@
 {{- $ingress := .Values.ingress.enabled }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
-{{- $domain := .Values.CHART_NAME.domain | toString }}
+{{- $domain := .Values.chartName.domain | toString }}
 {{- if and $ingress $domain }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-CHART_NAME-ingress
+  name: {{ .Release.Name }}-chartName-ingress
   labels:
-    {{- include "CHART_NAME.labels" . | nindent 4 }}
+    {{- include "chartName.labels" . | nindent 4 }}
   annotations:
     cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
     cert-manager.io/private-key-algorithm: "ECDSA"
@@ -27,13 +27,13 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-CHART_NAME-svc
+                name: {{ .Release.Name }}-chartName-svc
                 port:
-                  name: CHART_NAME
+                  name: chartName
             path: /
             pathType: Prefix
   tls:
     - hosts:
         - {{ $domain | quote }}
-      secretName: {{ .Release.Name }}-CHART_NAME-tls-cert
+      secretName: {{ .Release.Name }}-chartName-tls-cert
 {{- end }}
