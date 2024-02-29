@@ -9,6 +9,7 @@ replicaCount: ""
 # Container images used for CHART_NAME.
 image:
   # CHART_NAME container image configurations.
+  # Source: https://github.com/irfanhakim-as/CHART_NAME/pkgs/container/CHART_NAME
   CHART_NAME:
     # The registry where the CHART_NAME container image is hosted.
     # Default: "docker.io"
@@ -23,6 +24,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
   init:
     # The registry where the Init container image is hosted.
     # Default: "docker.io"
