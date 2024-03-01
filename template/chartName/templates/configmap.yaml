@@ -1,4 +1,5 @@
 {{- $foo := .Values.chartName.foo | default "foo" | toString | quote }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
