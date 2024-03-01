@@ -10,6 +10,7 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
