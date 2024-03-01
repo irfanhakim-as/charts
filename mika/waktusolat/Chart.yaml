@@ -2,8 +2,8 @@ apiVersion: v2
 name: waktusolat
 description: Waktu Solat is a simple web application that posts local prayer times on Mastodon.
 type: application
-version: 0.3.2
-appVersion: "0.2.1-stable-r1"
+version: 0.3.3
+appVersion: "0.2.1-stable-r2"
 keywords:
   - "waktu solat"
   - "prayer time"
