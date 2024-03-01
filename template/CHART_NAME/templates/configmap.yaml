@@ -1,9 +1,0 @@
-{{- $foo := .Values.CHART_NAME.foo | default "foo" | toString | quote }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-CHART_NAME-cm
-  labels:
-    {{- include "CHART_NAME.labels" . | nindent 4 }}
-data:
-  FOO: {{ $foo }}

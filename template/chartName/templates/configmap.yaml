@@ -1,0 +1,10 @@
+{{- $foo := .Values.chartName.foo | default "foo" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-chartName-cm
+  labels:
+    {{- include "chartName.labels" . | nindent 4 }}
+data:
+  FOO: {{ $foo }}

@@ -1,0 +1,90 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $chartName_registry := .Values.image.chartName.registry | default "docker.io" | toString }}
+{{- $chartName_repository := .Values.image.chartName.repository | default "chartName" | toString }}
+{{- $chartName_tag := .Values.image.chartName.tag | default .Chart.AppVersion | toString }}
+{{- $chartName_pullPolicy := .Values.image.chartName.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-chartName
+  labels:
+    {{- include "chartName.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "chartName.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "chartName.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+                mkdir -p /config/data &&
+                chmod -R 777 /config
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-chartName-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      containers:
+        - name: chartName
+          image: {{ printf "%s/%s:%s" $chartName_registry $chartName_repository $chartName_tag | quote }}
+          imagePullPolicy: {{ $chartName_pullPolicy }}
+          ports:
+            - name: chartName
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.chartName | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-chartName-cm
+            - secretRef:
+                name: {{ .Release.Name }}-chartName-secret
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-chartName-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence }}
+      volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-chartName-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-chartName-data-pvc
+        {{- end }}
+      {{- end }}

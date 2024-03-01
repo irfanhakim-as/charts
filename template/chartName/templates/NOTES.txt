@@ -1,0 +1,10 @@
+{{- $foo := .Values.chartName.foo | toString }}
+{{- $bar := .Values.chartName.bar | toString }}
+ChartName is now installed and configured for {{ .Release.Name | toString }}.
+
+Shown below are some of the values that were configured for this release:
+
+    Foo: {{ $foo }}
+    Bar: {{ $bar }}
+
+For more information on how to use and configure ChartName, please refer to the official documentation.

@@ -1,0 +1,17 @@
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-chartName-svc
+  labels:
+    {{- include "chartName.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: 80
+      targetPort: chartName
+      protocol: TCP
+      name: chartName
+  selector:
+    {{- include "chartName.selectorLabels" . | nindent 4 }}

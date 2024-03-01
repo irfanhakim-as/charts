@@ -1,0 +1,136 @@
+# Default values for chartName.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for ChartName.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for ChartName.
+image:
+  # ChartName container image configurations.
+  # Source: https://github.com/irfanhakim-as/chartName/pkgs/container/chartName
+  chartName:
+    # The registry where the ChartName container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the ChartName container image used.
+    # Default: "chartName"
+    repository: ""
+    # The tag that specifies the version of the ChartName container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the ChartName container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# ChartName configurations.
+chartName:
+  # The secret value of the ChartName bar.
+  # Default: "bar"
+  # Example:
+  # bar: "bar"
+  bar: ""
+  # The ingress domain name that hosts the ChartName server.
+  # Example:
+  # domain: "chart_name.example.com"
+  domain: ""
+  # The value of the ChartName foo.
+  # Default: "foo"
+  # Example:
+  # foo: "foo"
+  foo: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting ChartName services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  clusterIssuer: ""
+
+# Service configurations.
+service:
+  # The type of service used for ChartName services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The path where the data storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Config"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+
+# Resource requirements and limits for ChartName containers.
+resources:
+  # ChartName container resources.
+  # Example:
+  # chartName:
+  #   # The minimum amount of resources required by ChartName to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by ChartName.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by ChartName.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for ChartName.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for ChartName.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for ChartName.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  chartName: {}
