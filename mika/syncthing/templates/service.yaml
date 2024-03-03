@@ -1,0 +1,29 @@
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-syncthing-svc
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: 8384
+      targetPort: synct-web
+      protocol: TCP
+      name: synct-web
+    - port: 22000
+      targetPort: synct-tcp
+      protocol: TCP
+      name: synct-tcp
+    - port: 22000
+      targetPort: synct-udp
+      protocol: UDP
+      name: synct-udp
+    - port: 21027
+      targetPort: synct-disco
+      protocol: UDP
+      name: synct-disco
+  selector:
+    {{- include "syncthing.selectorLabels" . | nindent 4 }}
