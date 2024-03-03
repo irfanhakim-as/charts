@@ -1,0 +1,12 @@
+{{- $gid := .Values.syncthing.gid | default "1000" | toString | quote }}
+{{- $uid := .Values.syncthing.uid | default "1000" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-syncthing-cm
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+data:
+  PGID: {{ $gid }}
+  PUID: {{ $uid }}

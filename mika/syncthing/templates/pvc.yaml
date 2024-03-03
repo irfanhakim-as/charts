@@ -1,0 +1,59 @@
+{{- $smb := .Values.smb.enabled }}
+{{- $dataSmb := .Values.storage.data.smb }}
+{{- $configPersistence := .Values.storage.config.enabled }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $configStorage := .Values.storage.config.storage | default "1Gi" | toString | quote }}
+{{- $configStorageClassName := .Values.storage.config.storageClassName | default "longhorn" | toString | quote }}
+{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
+{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
+{{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
+{{- if $configPersistence }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-syncthing-config-pvc
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $configStorage }}
+  storageClassName: {{ $configStorageClassName }}
+{{- end }}
+{{- if and $dataPersistence (not (and $smb $dataSmb)) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-syncthing-data-pvc
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
+{{- if and $smb (or (and $dataPersistence $dataSmb)) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-syncthing-smb-pvc
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ $smbStorage }}
+  volumeName: {{ .Release.Name }}-syncthing-smb-pv
+  storageClassName: {{ $smbStorageClassName }}
+{{- end }}

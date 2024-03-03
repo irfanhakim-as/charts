@@ -1,0 +1,111 @@
+{{- $releaseName := .Release.Name | toString }}
+{{- $smb := .Values.smb.enabled }}
+{{- $dataSmb := .Values.storage.data.smb }}
+{{- $configPersistence := .Values.storage.config.enabled }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $syncthing_registry := .Values.image.syncthing.registry | default "lscr.io" | toString }}
+{{- $syncthing_repository := .Values.image.syncthing.repository | default "linuxserver/syncthing" | toString }}
+{{- $syncthing_tag := .Values.image.syncthing.tag | default .Chart.AppVersion | toString }}
+{{- $syncthing_pullPolicy := .Values.image.syncthing.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $configMountPath := .Values.storage.config.mountPath | default "/config" | toString | quote }}
+{{- $configSubPath := .Values.storage.config.subPath | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/data" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $syncthingConfigs := .Values.syncthing.customConfigs }}
+{{- $gid := .Values.syncthing.gid | default "1000" | int }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-syncthing
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "syncthing.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "syncthing.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: syncthing
+          image: {{ printf "%s/%s:%s" $syncthing_registry $syncthing_repository $syncthing_tag | quote }}
+          imagePullPolicy: {{ $syncthing_pullPolicy }}
+          ports:
+            - name: synct-web
+              containerPort: 8384
+              protocol: TCP
+            - name: synct-tcp
+              containerPort: 22000
+              protocol: TCP
+            - name: synct-udp
+              containerPort: 22000
+              protocol: UDP
+            - name: synct-disco
+              containerPort: 21027
+              protocol: UDP
+          resources:
+            {{- toYaml .Values.resources.syncthing | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-syncthing-cm
+          {{- if or $configPersistence $dataPersistence $syncthingConfigs }}
+          volumeMounts:
+            {{- if $configPersistence }}
+            - name: {{ .Release.Name }}-syncthing-config
+              mountPath: {{ $configMountPath }}
+              {{- if $configSubPath }}
+              subPath: {{ $configSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-syncthing-{{- if and $smb $dataSmb }}smb{{- else }}data{{- end }}
+              mountPath: {{ $dataMountPath }}
+                {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+                {{- end }}
+            {{- end }}
+            {{- range $syncthingConfigs }}
+            - name: {{ $releaseName }}-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: syncthing-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+      {{- if or $configPersistence $dataPersistence $syncthingConfigs }}
+      volumes:
+        {{- if $configPersistence }}
+        - name: {{ .Release.Name }}-syncthing-config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-syncthing-config-pvc
+        {{- end }}
+        {{- if and $dataPersistence (not (and $smb $dataSmb)) }}
+        - name: {{ .Release.Name }}-syncthing-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-syncthing-data-pvc
+        {{- end }}
+        {{- if and $smb (or (and $dataPersistence $dataSmb)) }}
+        - name: {{ .Release.Name }}-syncthing-smb
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-syncthing-smb-pvc
+        {{- end }}
+        {{- if or $syncthingConfigs }}
+        - name: {{ .Release.Name }}-syncthing-custom-configs
+          secret:
+            secretName: {{ .Release.Name }}-syncthing-custom-configs
+        {{- end }}
+      {{- end }}
+      securityContext:
+        fsGroup: {{ $gid }}

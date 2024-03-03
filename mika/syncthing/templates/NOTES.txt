@@ -1,0 +1,10 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $syncthingIngress := .Values.syncthing.ingress }}
+{{- $syncthingDomain := .Values.syncthing.domain | toString }}
+Syncthing is now installed and configured for {{ .Release.Name | toString }}.
+
+Visit the following service to get started:
+
+    Syncthing: {{ if and $ingress $syncthingIngress }}https://{{ $syncthingDomain }}{{- else }}Please refer to {{ .Release.Name }}-syncthing-svc for the right address{{- end }}
+
+For more information on how to use and configure Syncthing, please refer to the official documentation.
