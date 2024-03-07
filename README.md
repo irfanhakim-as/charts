@@ -18,21 +18,22 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 
 | Chart Name | Description | Support | Access |
 | ---------- | ----------- | ------- | ------ |
-| [clog](https://github.com/irfanhakim-as/charts/tree/master/mika/clog) | Creative blog, Career blog, Coin blog, you name it. | ✅ | 🔒 |
-| [cloudflared](https://github.com/irfanhakim-as/charts/tree/master/mika/cloudflared) | Cloudflare Tunnel is a tunneling software that lets you quickly secure and encrypt application traffic to any type of infrastructure. | ✅ | ✅ |
-| [cloudflareddns](https://github.com/irfanhakim-as/charts/tree/master/mika/cloudflareddns) | Access your home network remotely via a custom domain name without a static IP! | ✅ | ✅ |
-| [flex](https://github.com/irfanhakim-as/charts/tree/master/mika/flex) | Flex is a collection of curated services that aims to provide a complete home media server solution. | ✅ | ✅ |
-| [grocy](https://github.com/irfanhakim-as/charts/tree/master/mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
-| [kutt](https://github.com/irfanhakim-as/charts/tree/master/mika/kutt) | Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics. | ✅ | ✅ |
-| [mango](https://github.com/irfanhakim-as/charts/tree/master/mika/mango) | Mango is an easy to use Mastodon bot framework built on top of Django. | ✅ | 🔒 |
-| [mariadb-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB instance. | ✅ | ✅ |
-| [postgres](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
-| [postgres-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-agent) | Easily create or delete a database and user pair in a remote PostgreSQL instance. | ✅ | ✅ |
-| [rizz](https://github.com/irfanhakim-as/charts/tree/master/mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon. | ✅ | 🔒 |
-| [telego](https://github.com/irfanhakim-as/charts/tree/master/mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
-| [vpbot](https://github.com/irfanhakim-as/charts/tree/master/mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
-| [waktusolat](https://github.com/irfanhakim-as/charts/tree/master/mika/waktusolat) | Waktu Solat is a simple web application that posts local prayer times on Mastodon. | ✅ | 🔒 |
-| [yuzu-multiplayer](https://github.com/irfanhakim-as/charts/tree/master/mika/yuzu-multiplayer) | Quickly stand up new dedicated multiplayer lobbies that will be broadcasted on yuzu. | ✅ | ✅ |
+| [clog](mika/clog) | Creative blog, Career blog, Coin blog, you name it. | ✅ | 🔒 |
+| [cloudflared](mika/cloudflared) | Cloudflare Tunnel is a tunneling software that lets you quickly secure and encrypt application traffic to any type of infrastructure. | ✅ | ✅ |
+| [cloudflareddns](mika/cloudflareddns) | Access your home network remotely via a custom domain name without a static IP! | ✅ | ✅ |
+| [flex](mika/flex) | Flex is a collection of curated services that aims to provide a complete home media server solution. | ✅ | ✅ |
+| [grocy](mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
+| [kutt](mika/kutt) | Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics. | ✅ | ✅ |
+| [mango](mika/mango) | Mango is an easy to use Mastodon bot framework built on top of Django. | ✅ | 🔒 |
+| [mariadb-agent](mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB instance. | ✅ | ✅ |
+| [postgres](mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
+| [postgres-agent](mika/postgres-agent) | Easily create or delete a database and user pair in a remote PostgreSQL instance. | ✅ | ✅ |
+| [rizz](mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon. | ✅ | 🔒 |
+| [syncthing](mika/syncthing) | Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers. | ✅ | ✅ |
+| [telego](mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
+| [vpbot](mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
+| [waktusolat](mika/waktusolat) | Waktu Solat is a simple web application that posts local prayer times on Mastodon. | ✅ | 🔒 |
+| [yuzu-multiplayer](mika/yuzu-multiplayer) | Quickly stand up new dedicated multiplayer lobbies that will be broadcasted on yuzu. | ✅ | ✅ |
 
 ---
 

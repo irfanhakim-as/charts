@@ -1,0 +1,206 @@
+# Default values for syncthing.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Syncthing.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Syncthing.
+image:
+  # Syncthing container image configurations.
+  # Source: https://github.com/linuxserver/docker-syncthing/pkgs/container/syncthing
+  syncthing:
+    # The registry where the Syncthing container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Syncthing container image used.
+    # Default: "linuxserver/syncthing"
+    repository: ""
+    # The tag that specifies the version of the Syncthing container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Syncthing container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Syncthing configurations.
+syncthing:
+  # The ingress domain name that hosts the Syncthing server.
+  # Example:
+  # domain: "chart_name.example.com"
+  domain: ""
+  # The group ID used to run the Syncthing containers.
+  # Default: "1000"
+  # Example:
+  # gid: ""
+  gid: ""
+  # The user ID used to run the Syncthing containers.
+  # Default: "1000"
+  # Example:
+  # uid: ""
+  uid: ""
+  # Optional custom configurations to be mounted as a file inside the Syncthing container.
+  # Example:
+  # customConfigs:
+  #   - mountPath: "/config"
+  #     subPath: "config.xml"
+  #     config: >-
+  #       <Config>
+  #         <BindAddress>*</BindAddress>
+  #         <Port>8989</Port>
+  #         <SslPort>9898</SslPort>
+  #       </Config>
+  customConfigs: []
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Syncthing services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  clusterIssuer: ""
+
+# Service configurations.
+service:
+  # The type of service used for Syncthing services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Config storage configurations.
+  config:
+    # Specifies whether persistent storage should be provisioned for config storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The path where the config storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/settings"
+    mountPath: ""
+    # The subpath within the config storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Config"
+    subPath: ""
+    # The default amount of persistent storage allocated for the config storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the config storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # Specifies whether to use an SMB share for the data storage.
+    # Example:
+    # smb: true
+    smb: false
+    # The path where the data storage should be mounted on the container.
+    # Default: "/data"
+    # Example:
+    # mountPath: "/files"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+
+# SMB storage configurations.
+smb:
+  # Specifies whether to enable persistent storage to be provisioned in the form of an SMB share.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The additional mount options used to mount the SMB share volume.
+  # Example:
+  # mountOptions:
+  #   - "_netdev"
+  #   - "nofail"
+  #   - "vers=3.0"
+  #   - "iocharset=utf8"
+  mountOptions: []
+  # The amount of persistent storage available on the SMB share volume.
+  # Default: "100Gi"
+  # Example:
+  # pvStorage: "10Gi"
+  pvStorage: ""
+  # The amount of persistent storage allocated for the SMB share storage.
+  # Default: "1Gi"
+  # Example:
+  # pvcStorage: "500Mi"
+  pvcStorage: ""
+  # The name of the existing secret containing the credentials used to authenticate with the SMB share.
+  # Default: "smbcreds"
+  # Example:
+  # secretName: "smb-secret"
+  secretName: ""
+  # The namespace where the secret containing the credentials used to authenticate with the SMB share is located.
+  # Default: "default"
+  # Example:
+  # secretNamespace: "smb"
+  secretNamespace: ""
+  # The SMB share address and name to mount as a persistent volume.
+  # Example:
+  # share: "//192.168.0.123/mynas"
+  share: ""
+  # The storage class name used for dynamically provisioning a persistent volume for the SMB share storage.
+  # Default: "smb"
+  # Example:
+  # storageClassName: "smb"
+  storageClassName: ""
+
+# Resource requirements and limits for Syncthing containers.
+resources:
+  # Syncthing container resources.
+  # Example:
+  # syncthing:
+  #   # The minimum amount of resources required by Syncthing to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Syncthing.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Syncthing.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for Syncthing.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Syncthing.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for Syncthing.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "200Mi"
+  syncthing: {}

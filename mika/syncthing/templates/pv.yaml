@@ -1,0 +1,50 @@
+{{- $smb := .Values.smb.enabled }}
+{{- $dataSmb := .Values.storage.data.smb }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $mountOptions := .Values.smb.mountOptions }}
+{{- $secretName := .Values.smb.secretName | default "smbcreds" | toString | quote }}
+{{- $secretNamespace := .Values.smb.secretNamespace | default "default" | toString | quote }}
+{{- $share := .Values.smb.share | toString | quote }}
+{{- $storage := .Values.smb.pvStorage | default "100Gi" | toString | quote }}
+{{- $storageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
+{{- $uid := .Values.syncthing.uid | default "1000" | toString }}
+{{- $gid := .Values.syncthing.gid | default "1000" | toString }}
+{{- if and $smb (or (and $dataPersistence $dataSmb)) }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-syncthing-smb-pv
+  annotations:
+    pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+spec:
+  capacity:
+    storage: {{ $storage }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ $storageClassName }}
+  mountOptions:
+    - dir_mode=0777
+    - file_mode=0777
+    - uid={{ $uid }}
+    - gid={{ $gid }}
+    - noperm
+    - mfsymlinks
+    - cache=strict
+    - noserverino  # required to prevent data corruption
+    {{- range $option := $mountOptions }}
+    - {{ $option }}
+    {{- end }}
+  csi:
+    driver: smb.csi.k8s.io
+    readOnly: false
+    volumeHandle: {{ .Release.Name }}-syncthing-smb-pv
+    volumeAttributes:
+      source: {{ $share }}
+    nodeStageSecretRef:
+      name: {{ $secretName }}
+      namespace: {{ $secretNamespace }}
+{{- end }}
