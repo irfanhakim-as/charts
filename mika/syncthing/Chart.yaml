@@ -9,6 +9,8 @@ keywords:
 home: "https://github.com/irfanhakim-as/charts"
 icon: "https://irfanhakim-as.github.io/charts/logos/syncthing.png"
 sources:
+  - "https://github.com/syncthing/syncthing"
+  - "https://github.com/linuxserver/docker-syncthing"
   - "https://github.com/irfanhakim-as/charts"
 maintainers:
   - name: "Irfan Hakim"
