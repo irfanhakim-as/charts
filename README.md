@@ -29,6 +29,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [postgres](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
 | [postgres-agent](https://github.com/irfanhakim-as/charts/tree/master/mika/postgres-agent) | Easily create or delete a database and user pair in a remote PostgreSQL instance. | ✅ | ✅ |
 | [rizz](https://github.com/irfanhakim-as/charts/tree/master/mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon. | ✅ | 🔒 |
+| [syncthing](https://github.com/irfanhakim-as/charts/tree/master/mika/syncthing) | Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers. | ✅ | ✅ |
 | [telego](https://github.com/irfanhakim-as/charts/tree/master/mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
 | [vpbot](https://github.com/irfanhakim-as/charts/tree/master/mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
 | [waktusolat](https://github.com/irfanhakim-as/charts/tree/master/mika/waktusolat) | Waktu Solat is a simple web application that posts local prayer times on Mastodon. | ✅ | 🔒 |
