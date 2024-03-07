@@ -32,6 +32,15 @@ Syncthing is a continuous file synchronization program. It synchronizes files be
 
 ---
 
+## Application configurations
+
+> [!NOTE]  
+> The following configurations are expected or recommended to be set up from within the application after completing the installation.
+
+1. TODO.
+
+---
+
 ## How to add the chart repo
 
 1. Add the repo to your local helm client:
