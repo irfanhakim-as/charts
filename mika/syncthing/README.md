@@ -1,4 +1,4 @@
-# Syncthing
+# [Syncthing](https://github.com/syncthing/syncthing)
 
 Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers.
 
