@@ -192,7 +192,7 @@ resources:
   #     # The minimum amount of memory required by Syncthing.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "10Mi"
+  #     memory: "100Mi"
   #   # The maximum amount of resources allowed for Syncthing.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Syncthing.
@@ -202,5 +202,5 @@ resources:
   #     # The maximum amount of memory allowed for Syncthing.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "250Mi"
+  #     memory: "200Mi"
   syncthing: {}
