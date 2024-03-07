@@ -1294,6 +1294,30 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.2/rizz-0.0.2.tgz
     version: 0.0.2
+  syncthing:
+  - apiVersion: v2
+    appVersion: v1.27.3-ls131
+    created: "2024-03-07T16:56:22.389539427Z"
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers.
+    digest: b8a33d3eb3b17f198efbfdf401fa4306bbf01fd6a886e809ed7f65c94024d965
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/syncthing.png
+    keywords:
+    - syncthing
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://github.com/linuxserver/docker-syncthing
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/syncthing-0.1.0/syncthing-0.1.0.tgz
+    version: 0.1.0
   telego:
   - apiVersion: v2
     appVersion: 0.2.0-stable-r1
@@ -2141,4 +2165,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-01T11:14:33.298707019Z"
+generated: "2024-03-07T16:56:22.389734901Z"
