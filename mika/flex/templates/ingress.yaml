@@ -10,6 +10,7 @@
 {{- $radarrIngress := .Values.radarr.ingress }}
 {{- $sonarrIngress := .Values.sonarr.ingress }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $customAnnotations := .Values.ingress.customAnnotations }}
 {{- $bazarrDomain := .Values.bazarr.domain | toString | quote }}
 {{- $jackettDomain := .Values.jackett.domain | toString | quote }}
 {{- $overseerrDomain := .Values.overseerr.domain | toString | quote }}
@@ -35,6 +36,9 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/session-cookie-name: "route"
     nginx.org/client-max-body-size: "100m"
+    {{- range $customAnnotations }}
+    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+    {{- end }}
 spec:
   ingressClassName: "nginx"
   rules:
