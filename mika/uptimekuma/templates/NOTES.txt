@@ -1,0 +1,9 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.uptimekuma.domain | toString }}
+Uptime Kuma is now installed and configured for {{ .Release.Name | toString }}.
+
+Visit the following service to get started:
+
+    Uptime Kuma: {{ if $ingress }}https://{{ $domain }}{{- else }}Please refer to {{ .Release.Name }}-uptimekuma-svc for the right address{{- end }}
+
+For more information on how to use and configure Uptime Kuma, please refer to the official documentation.

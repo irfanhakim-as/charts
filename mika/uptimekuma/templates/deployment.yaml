@@ -1,0 +1,87 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $uptimekuma_registry := .Values.image.uptimekuma.registry | default "docker.io" | toString }}
+{{- $uptimekuma_repository := .Values.image.uptimekuma.repository | default "louislam/uptime-kuma" | toString }}
+{{- $uptimekuma_tag := .Values.image.uptimekuma.tag | default .Chart.AppVersion | toString }}
+{{- $uptimekuma_pullPolicy := .Values.image.uptimekuma.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/app/data" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $initScript := .Values.uptimekuma.initScript | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-uptimekuma
+  labels:
+    {{- include "uptimekuma.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "uptimekuma.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "uptimekuma.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+              {{- $initScript | nindent 14 }}
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-uptimekuma-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- end }}
+      containers:
+        - name: uptimekuma
+          image: {{ printf "%s/%s:%s" $uptimekuma_registry $uptimekuma_repository $uptimekuma_tag | quote }}
+          imagePullPolicy: {{ $uptimekuma_pullPolicy }}
+          ports:
+            - name: uptimekuma
+              containerPort: 3001
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.uptimekuma | nindent 12 }}
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-uptimekuma-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence }}
+      volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-uptimekuma-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-uptimekuma-data-pvc
+        {{- end }}
+      {{- end }}

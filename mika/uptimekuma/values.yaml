@@ -1,26 +1,26 @@
-# Default values for chartName.
+# Default values for uptimekuma.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# The desired number of running replicas for ChartName.
+# The desired number of running replicas for Uptime Kuma.
 # Default: "1"
 replicaCount: ""
 
-# Container images used for ChartName.
+# Container images used for Uptime Kuma.
 image:
-  # ChartName container image configurations.
-  # Source: https://github.com/irfanhakim-as/chartName/pkgs/container/chartName
-  chartName:
-    # The registry where the ChartName container image is hosted.
+  # Uptime Kuma container image configurations.
+  # Source: https://hub.docker.com/r/louislam/uptime-kuma
+  uptimekuma:
+    # The registry where the Uptime Kuma container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the ChartName container image used.
-    # Default: "chartName"
+    # The name of the repository that contains the Uptime Kuma container image used.
+    # Default: "louislam/uptime-kuma"
     repository: ""
-    # The tag that specifies the version of the ChartName container image used.
+    # The tag that specifies the version of the Uptime Kuma container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the ChartName container image.
+    # The policy that determines when Kubernetes should pull the Uptime Kuma container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Init container image configurations.
@@ -45,26 +45,22 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
-# ChartName configurations.
-chartName:
-  # The secret value of the ChartName bar.
-  # Default: "bar"
+# Uptime Kuma configurations.
+uptimekuma:
+  # The ingress domain name that hosts the Uptime Kuma server.
   # Example:
-  # bar: "bar"
-  bar: ""
-  # The ingress domain name that hosts the ChartName server.
-  # Example:
-  # domain: "chartName.example.com"
+  # domain: "uptimekuma.example.com"
   domain: ""
-  # The value of the ChartName foo.
-  # Default: "foo"
+  # Custom init script to run before the Uptime Kuma container starts.
   # Example:
-  # foo: "foo"
-  foo: ""
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
 
 # Ingress configurations.
 ingress:
-  # Specifies whether Ingress should be enabled for hosting ChartName services.
+  # Specifies whether Ingress should be enabled for hosting Uptime Kuma services.
   # Example:
   # enabled: true
   enabled: false
@@ -74,7 +70,12 @@ ingress:
 
 # Service configurations.
 service:
-  # The type of service used for ChartName services.
+  # The port on which the Uptime Kuma server should listen.
+  # Default: "3001"
+  # Example:
+  # port: "3516"
+  port: ""
+  # The type of service used for Uptime Kuma services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
@@ -89,7 +90,7 @@ storage:
     # enabled: false
     enabled: true
     # The path where the data storage should be mounted on the container.
-    # Default: "/config"
+    # Default: "/app/data"
     # Example:
     # mountPath: "/data"
     mountPath: ""
@@ -108,29 +109,29 @@ storage:
     # storageClassName: "longhorn"
     storageClassName: ""
 
-# Resource requirements and limits for ChartName containers.
+# Resource requirements and limits for Uptime Kuma containers.
 resources:
-  # ChartName container resources.
+  # Uptime Kuma container resources.
   # Example:
-  # chartName:
-  #   # The minimum amount of resources required by ChartName to run.
+  # uptimekuma:
+  #   # The minimum amount of resources required by Uptime Kuma to run.
   #   requests:
-  #     # The minimum amount of CPU resources required by ChartName.
+  #     # The minimum amount of CPU resources required by Uptime Kuma.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "10m"
-  #     # The minimum amount of memory required by ChartName.
+  #     cpu: "50m"
+  #     # The minimum amount of memory required by Uptime Kuma.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "10Mi"
-  #   # The maximum amount of resources allowed for ChartName.
+  #     memory: "150Mi"
+  #   # The maximum amount of resources allowed for Uptime Kuma.
   #   limits:
-  #     # The maximum amount of CPU resources allowed for ChartName.
+  #     # The maximum amount of CPU resources allowed for Uptime Kuma.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "250m"
-  #     # The maximum amount of memory allowed for ChartName.
+  #     cpu: "150m"
+  #     # The maximum amount of memory allowed for Uptime Kuma.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "250Mi"
-  chartName: {}
+  #     memory: "300Mi"
+  uptimekuma: {}
