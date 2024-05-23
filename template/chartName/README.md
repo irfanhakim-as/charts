@@ -19,7 +19,7 @@ A Helm chart for deploying ChartName.
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
 
-1. TODO.
+**This section does not apply to this chart.**
 
 ---
 
@@ -28,7 +28,7 @@ A Helm chart for deploying ChartName.
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-1. TODO.
+**This section does not apply to this chart.**
 
 ---
 
@@ -37,7 +37,7 @@ A Helm chart for deploying ChartName.
 > [!NOTE]  
 > The following configurations are expected or recommended to be set up from within the application after completing the installation.
 
-1. TODO.
+**This section does not apply to this chart.**
 
 ---
 
