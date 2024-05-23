@@ -34,7 +34,7 @@ imagePullSecrets: []
 syncthing:
   # The ingress domain name that hosts the Syncthing server.
   # Example:
-  # domain: "chart_name.example.com"
+  # domain: "syncthing.example.com"
   domain: ""
   # The group ID used to run the Syncthing containers.
   # Default: "1000"
