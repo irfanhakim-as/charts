@@ -1,0 +1,10 @@
+{{- $foo := .Values.uptimekuma.foo | toString }}
+{{- $bar := .Values.uptimekuma.bar | toString }}
+Uptime Kuma is now installed and configured for {{ .Release.Name | toString }}.
+
+Shown below are some of the values that were configured for this release:
+
+    Foo: {{ $foo }}
+    Bar: {{ $bar }}
+
+For more information on how to use and configure Uptime Kuma, please refer to the official documentation.

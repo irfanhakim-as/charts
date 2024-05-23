@@ -1,0 +1,18 @@
+{{- $port := .Values.service.port | default "3001" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-uptimekuma-svc
+  labels:
+    {{- include "uptimekuma.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ int $port }}
+      targetPort: uptimekuma
+      protocol: TCP
+      name: uptimekuma
+  selector:
+    {{- include "uptimekuma.selectorLabels" . | nindent 4 }}
