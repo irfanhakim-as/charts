@@ -1337,6 +1337,29 @@ entries:
   syncthing:
   - apiVersion: v2
     appVersion: v1.27.3-ls131
+    created: "2024-05-23T08:35:24.652202663Z"
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers.
+    digest: 45799652879f34019d13c6e451459094b70022e6e3ee4b1ba11f85460eecd479
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/syncthing.png
+    keywords:
+    - syncthing
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://github.com/linuxserver/docker-syncthing
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/syncthing-0.1.1/syncthing-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v1.27.3-ls131
     created: "2024-03-07T16:56:22.389539427Z"
     description: Syncthing is a continuous file synchronization program. It synchronizes
       files between two or more computers.
@@ -1651,6 +1674,30 @@ entries:
     type: application
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.0/telego-0.1.0.tgz
+    version: 0.1.0
+  uptimekuma:
+  - apiVersion: v2
+    appVersion: 1.23.13-alpine
+    created: "2024-05-23T08:35:24.806303075Z"
+    description: Uptime Kuma is an easy-to-use self-hosted monitoring tool.
+    digest: 18af1157140623ee9e345c2c12d3feb0ae43bfa3980b4f74d8ba5808e7e27f51
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/uptimekuma.png
+    keywords:
+    - uptime
+    - kuma
+    - monitoring
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: uptimekuma
+    sources:
+    - https://github.com/louislam/uptime-kuma
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/uptimekuma-0.1.0/uptimekuma-0.1.0.tgz
     version: 0.1.0
   vpbot:
   - apiVersion: v2
@@ -2229,4 +2276,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-11T17:32:25.301223147Z"
+generated: "2024-05-23T08:35:24.806501648Z"
