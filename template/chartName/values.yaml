@@ -54,7 +54,7 @@ chartName:
   bar: ""
   # The ingress domain name that hosts the ChartName server.
   # Example:
-  # domain: "chart_name.example.com"
+  # domain: "chartName.example.com"
   domain: ""
   # The value of the ChartName foo.
   # Default: "foo"
