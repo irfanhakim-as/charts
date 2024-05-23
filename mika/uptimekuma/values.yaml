@@ -1,0 +1,137 @@
+# Default values for uptimekuma.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Uptime Kuma.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Uptime Kuma.
+image:
+  # Uptime Kuma container image configurations.
+  # Source: https://hub.docker.com/r/louislam/uptime-kuma
+  uptimekuma:
+    # The registry where the Uptime Kuma container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Uptime Kuma container image used.
+    # Default: "louislam/uptime-kuma"
+    repository: ""
+    # The tag that specifies the version of the Uptime Kuma container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Uptime Kuma container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Uptime Kuma configurations.
+uptimekuma:
+  # The ingress domain name that hosts the Uptime Kuma server.
+  # Example:
+  # domain: "uptimekuma.example.com"
+  domain: ""
+  # Custom init script to run before the Uptime Kuma container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Uptime Kuma services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  clusterIssuer: ""
+
+# Service configurations.
+service:
+  # The port on which the Uptime Kuma server should listen.
+  # Default: "3001"
+  # Example:
+  # port: "3516"
+  port: ""
+  # The type of service used for Uptime Kuma services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The path where the data storage should be mounted on the container.
+    # Default: "/app/data"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Config"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+
+# Resource requirements and limits for Uptime Kuma containers.
+resources:
+  # Uptime Kuma container resources.
+  # Example:
+  # uptimekuma:
+  #   # The minimum amount of resources required by Uptime Kuma to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Uptime Kuma.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "50m"
+  #     # The minimum amount of memory required by Uptime Kuma.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "150Mi"
+  #   # The maximum amount of resources allowed for Uptime Kuma.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Uptime Kuma.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "150m"
+  #     # The maximum amount of memory allowed for Uptime Kuma.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "300Mi"
+  uptimekuma: {}
