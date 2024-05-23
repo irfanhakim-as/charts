@@ -95,7 +95,7 @@ storage:
     mountPath: ""
     # The subpath within the data storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Config"
+    # subPath: "Data"
     subPath: ""
     # The default amount of persistent storage allocated for the data storage.
     # Default: "1Gi"
