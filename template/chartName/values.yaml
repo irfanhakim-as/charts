@@ -61,6 +61,12 @@ chartName:
   # Example:
   # foo: "foo"
   foo: ""
+  # Custom init script to run before the ChartName container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
 
 # Ingress configurations.
 ingress:
