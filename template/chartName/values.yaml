@@ -86,8 +86,8 @@ storage:
   data:
     # Specifies whether persistent storage should be provisioned for data storage.
     # Example:
-    # enabled: false
-    enabled: true
+    # enabled: true
+    enabled: false
     # The path where the data storage should be mounted on the container.
     # Default: "/config"
     # Example:
