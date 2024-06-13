@@ -82,6 +82,11 @@ ingress:
 
 # Service configurations.
 service:
+  # The port on which the ChartName server should listen.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
   # The type of service used for ChartName services.
   # Default: "ClusterIP"
   # Example:
