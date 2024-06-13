@@ -10,6 +10,7 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $initScript := .Values.chartName.initScript | toString }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,6 +36,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if $initScript }}
       initContainers:
         - name: init
           image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
@@ -43,8 +45,7 @@ spec:
           args:
             - -c
             - >-
-                mkdir -p /config/data &&
-                chmod -R 777 /config
+              {{- $initScript | nindent 14 }}
           {{- if or $dataPersistence }}
           volumeMounts:
             {{- if $dataPersistence }}
@@ -55,6 +56,7 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
+      {{- end }}
       containers:
         - name: chartName
           image: {{ printf "%s/%s:%s" $chartName_registry $chartName_repository $chartName_tag | quote }}
