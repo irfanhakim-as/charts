@@ -1,5 +1,5 @@
 {{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $chartName_registry := .Values.image.chartName.registry | default "docker.io" | toString }}
+{{- $chartName_registry := .Values.image.chartName.registry | default "ghcr.io" | toString }}
 {{- $chartName_repository := .Values.image.chartName.repository | default "chartName" | toString }}
 {{- $chartName_tag := .Values.image.chartName.tag | default .Chart.AppVersion | toString }}
 {{- $chartName_pullPolicy := .Values.image.chartName.pullPolicy | default "IfNotPresent" | toString | quote }}

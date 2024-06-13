@@ -12,7 +12,7 @@ image:
   # Source: https://github.com/irfanhakim-as/chartName/pkgs/container/chartName
   chartName:
     # The registry where the ChartName container image is hosted.
-    # Default: "docker.io"
+    # Default: "ghcr.io"
     registry: ""
     # The name of the repository that contains the ChartName container image used.
     # Default: "chartName"

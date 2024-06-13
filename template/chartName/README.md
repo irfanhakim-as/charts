@@ -133,7 +133,7 @@ A Helm chart for deploying ChartName.
 | chartName.foo | string | `""` | The value of the ChartName foo. Default: `"foo"`. |
 | chartName.initScript | string | `""` | Custom init script to run before the ChartName container starts. |
 | image.chartName.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ChartName container image. Default: `"IfNotPresent"`. |
-| image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"docker.io"`. |
+| image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"ghcr.io"`. |
 | image.chartName.repository | string | `""` | The name of the repository that contains the ChartName container image used. Default: `"chartName"`. |
 | image.chartName.tag | string | `""` | The tag that specifies the version of the ChartName container image used. Default: `Chart appVersion`. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
