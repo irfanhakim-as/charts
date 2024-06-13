@@ -1,10 +1,9 @@
-{{- $foo := .Values.chartName.foo | toString }}
-{{- $bar := .Values.chartName.bar | toString }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.chartName.domain | toString }}
 ChartName is now installed and configured for {{ .Release.Name | toString }}.
 
-Shown below are some of the values that were configured for this release:
+Visit the following service to get started:
 
-    Foo: {{ $foo }}
-    Bar: {{ $bar }}
+    ChartName: {{ if $ingress }}https://{{ $domain }}{{- else }}Please refer to {{ .Release.Name }}-chartName-svc for the right address{{- end }}
 
 For more information on how to use and configure ChartName, please refer to the official documentation.
