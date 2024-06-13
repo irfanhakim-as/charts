@@ -70,6 +70,8 @@ ingress:
   enabled: false
   # The name of the cluster issuer for Ingress.
   # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
 
 # Service configurations.
