@@ -4,6 +4,6 @@ ChartName is now installed and configured for {{ .Release.Name | toString }}.
 
 Visit the following service to get started:
 
-    ChartName: {{ if $ingress }}https://{{ $domain }}{{- else }}Please refer to {{ .Release.Name }}-chartName-svc for the right address{{- end }}
+    ChartName: {{ if $ingress }}https://{{ $domain }}{{- else }}Please refer to the {{ .Release.Name }}-chartName-svc service for the right address{{- end }}
 
 For more information on how to use and configure ChartName, please refer to the official documentation.
