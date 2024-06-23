@@ -12,7 +12,7 @@ image:
   # Source: https://github.com/irfanhakim-as/chartName/pkgs/container/chartName
   chartName:
     # The registry where the ChartName container image is hosted.
-    # Default: "docker.io"
+    # Default: "ghcr.io"
     registry: ""
     # The name of the repository that contains the ChartName container image used.
     # Default: "chartName"
@@ -61,6 +61,12 @@ chartName:
   # Example:
   # foo: "foo"
   foo: ""
+  # Custom init script to run before the ChartName container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
 
 # Ingress configurations.
 ingress:
@@ -70,10 +76,17 @@ ingress:
   enabled: false
   # The name of the cluster issuer for Ingress.
   # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
 
 # Service configurations.
 service:
+  # The port on which the ChartName server should listen.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
   # The type of service used for ChartName services.
   # Default: "ClusterIP"
   # Example:
@@ -86,8 +99,8 @@ storage:
   data:
     # Specifies whether persistent storage should be provisioned for data storage.
     # Example:
-    # enabled: false
-    enabled: true
+    # enabled: true
+    enabled: false
     # The path where the data storage should be mounted on the container.
     # Default: "/config"
     # Example:

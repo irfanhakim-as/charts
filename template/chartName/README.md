@@ -131,8 +131,9 @@ A Helm chart for deploying ChartName.
 | chartName.bar | string | `""` | The secret value of the ChartName bar. Default: `"bar"`. |
 | chartName.domain | string | `""` | The ingress domain name that hosts the ChartName server. |
 | chartName.foo | string | `""` | The value of the ChartName foo. Default: `"foo"`. |
+| chartName.initScript | string | `""` | Custom init script to run before the ChartName container starts. |
 | image.chartName.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ChartName container image. Default: `"IfNotPresent"`. |
-| image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"docker.io"`. |
+| image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"ghcr.io"`. |
 | image.chartName.repository | string | `""` | The name of the repository that contains the ChartName container image used. Default: `"chartName"`. |
 | image.chartName.tag | string | `""` | The tag that specifies the version of the ChartName container image used. Default: `Chart appVersion`. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
@@ -144,8 +145,9 @@ A Helm chart for deploying ChartName.
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting ChartName services. |
 | replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
 | resources.chartName | object | `{}` | ChartName container resources. |
+| service.port | string | `""` | The port on which the ChartName server should listen. Default: `"80"`. |
 | service.type | string | `""` | The type of service used for ChartName services. Default: `"ClusterIP"`. |
-| storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
+| storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
