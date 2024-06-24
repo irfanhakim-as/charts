@@ -101,6 +101,11 @@ storage:
     # Example:
     # enabled: true
     enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
     # The path where the data storage should be mounted on the container.
     # Default: "/config"
     # Example:

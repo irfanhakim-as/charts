@@ -147,6 +147,7 @@ A Helm chart for deploying ChartName.
 | resources.chartName | object | `{}` | ChartName container resources. |
 | service.port | string | `""` | The port on which the ChartName server should listen. Default: `"80"`. |
 | service.type | string | `""` | The type of service used for ChartName services. Default: `"ClusterIP"`. |
+| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
