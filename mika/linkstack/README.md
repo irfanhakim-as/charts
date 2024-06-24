@@ -1,4 +1,4 @@
-# LinkStack
+# [LinkStack](https://github.com/LinkStackOrg/LinkStack)
 
 LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface.
 
