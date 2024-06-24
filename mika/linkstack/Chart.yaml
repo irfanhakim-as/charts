@@ -1,0 +1,19 @@
+apiVersion: v2
+name: linkstack
+description: LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface.
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - "linkstack"
+  - "linktree"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/linkstack.svg"
+sources:
+  - "https://github.com/LinkStackOrg/LinkStack"
+  - "https://github.com/LinkStackOrg/linkstack-docker"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
