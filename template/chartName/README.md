@@ -143,6 +143,7 @@ A Helm chart for deploying ChartName.
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting ChartName services. |
+| ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
 | resources.chartName | object | `{}` | ChartName container resources. |
 | service.port | string | `""` | The port on which the ChartName server should listen. Default: `"80"`. |

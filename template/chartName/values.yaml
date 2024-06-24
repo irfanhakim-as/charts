@@ -79,6 +79,10 @@ ingress:
   # Example:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
 
 # Service configurations.
 service:
