@@ -1,4 +1,5 @@
 {{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteMany" | toString | quote }}
 {{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
 {{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
 {{- if $dataPersistence }}
@@ -11,7 +12,7 @@ metadata:
     {{- include "chartName.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $dataStorage }}
