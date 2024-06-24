@@ -1,0 +1,108 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $linkstack_registry := .Values.image.linkstack.registry | default "docker.io" | toString }}
+{{- $linkstack_repository := .Values.image.linkstack.repository | default "linkstackorg/linkstack" | toString }}
+{{- $linkstack_tag := .Values.image.linkstack.tag | default .Chart.AppVersion | toString }}
+{{- $linkstack_pullPolicy := .Values.image.linkstack.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "linkstackorg/linkstack" | toString }}
+{{- $init_tag := .Values.image.init.tag | default .Chart.AppVersion | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/htdocs" | toString }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $initScript := .Values.linkstack.initScript | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-linkstack
+  labels:
+    {{- include "linkstack.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "linkstack.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "linkstack.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if or $dataPersistence $initScript }}
+      {{- $initDataMountPath := printf "/mnt/%s" ($dataMountPath | trimPrefix "/") | toString }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+            {{- if $initScript }}
+              {{- $initScript | nindent 14 }}
+            {{- else }}
+              if [ -z "$(ls -A {{ $initDataMountPath }} | grep -v 'lost+found')" ]; then
+                echo "Initialising {{ $initDataMountPath }}"
+                cp -Ra /htdocs/. {{ $initDataMountPath }}
+                chown -R apache: {{ $initDataMountPath }}
+                find {{ $initDataMountPath }} -type d -exec chmod 755 {} \;
+                find {{ $initDataMountPath }} -type f -exec chmod 644 {} \;
+              else
+                echo "Skipping initialisation as {{ $initDataMountPath }} is not empty"
+              fi
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-linkstack-cm
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-linkstack-data
+              mountPath: {{ $initDataMountPath | quote }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- end }}
+      containers:
+        - name: linkstack
+          image: {{ printf "%s/%s:%s" $linkstack_registry $linkstack_repository $linkstack_tag | quote }}
+          imagePullPolicy: {{ $linkstack_pullPolicy }}
+          ports:
+            - name: linkstack-http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.linkstack | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-linkstack-cm
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-linkstack-data
+              mountPath: {{ $dataMountPath | quote }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence }}
+      volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-linkstack-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-linkstack-data-pvc
+        {{- end }}
+      {{- end }}
+      securityContext:
+        fsGroup: 101

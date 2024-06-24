@@ -1,0 +1,9 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.linkstack.domain | toString }}
+LinkStack is now installed and configured for {{ .Release.Name | toString }}.
+
+Visit the following service to get started:
+
+    LinkStack: {{ if $ingress }}https://{{ $domain }}{{- else }}Please refer to the {{ .Release.Name }}-linkstack-svc service for the right address{{- end }}
+
+For more information on how to use and configure LinkStack, please refer to the official documentation.
