@@ -81,6 +81,9 @@ spec:
             - name: linkstack-http
               containerPort: 80
               protocol: TCP
+            - name: linkstack-https
+              containerPort: 443
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources.linkstack | nindent 12 }}
           envFrom:

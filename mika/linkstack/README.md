@@ -149,6 +149,7 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 | replicaCount | string | `""` | The desired number of running replicas for LinkStack. Default: `"1"`. |
 | resources.linkstack | object | `{}` | LinkStack container resources. |
 | service.http | string | `""` | The http port on which the LinkStack server should listen. Default: `"80"`. |
+| service.https | string | `""` | The https port on which the LinkStack server should listen. Default: `"443"`. |
 | service.type | string | `""` | The type of service used for LinkStack services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |

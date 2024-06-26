@@ -107,6 +107,11 @@ service:
   # Example:
   # http: "8080"
   http: ""
+  # The https port on which the LinkStack server should listen.
+  # Default: "443"
+  # Example:
+  # https: "4343"
+  https: ""
   # The type of service used for LinkStack services.
   # Default: "ClusterIP"
   # Example:

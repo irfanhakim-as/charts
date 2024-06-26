@@ -1,4 +1,5 @@
 {{- $http := .Values.service.http | default "80" | toString }}
+{{- $https := .Values.service.https | default "443" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
@@ -14,5 +15,9 @@ spec:
       targetPort: linkstack-http
       protocol: TCP
       name: linkstack-http
+    - port: {{ int $https }}
+      targetPort: linkstack-https
+      protocol: TCP
+      name: linkstack-https
   selector:
     {{- include "linkstack.selectorLabels" . | nindent 4 }}
