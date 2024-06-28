@@ -2,8 +2,8 @@ apiVersion: v2
 name: postgres-agent
 description: Easily create or delete a database and user pair in a remote PostgreSQL instance.
 type: application
-version: 0.2.2
-appVersion: "13.3"
+version: 0.3.0
+appVersion: "16.3.0-debian-12-r12"
 keywords:
   - "postgresql"
   - "agent"
