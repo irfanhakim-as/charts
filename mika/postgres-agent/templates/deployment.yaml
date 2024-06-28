@@ -3,7 +3,7 @@
 {{- $repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
 {{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $create_mode := .Values.postgres.mode.create }}
+{{- $databases := .Values.postgres.databases }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -36,52 +36,21 @@ spec:
           args:
             - -c
             - >-
-              psql -v ON_ERROR_STOP=1 -h $(DB_HOST) -U $(ROOT_USER) -d postgres <<-EOSQL
-                SELECT 'CREATE DATABASE "$(DB_NAME)"' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
-                SELECT 'CREATE USER "$(DB_USER)" WITH PASSWORD ''$(DB_PASS)''' WHERE NOT EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
-                GRANT ALL PRIVILEGES ON DATABASE "$(DB_NAME)" TO "$(DB_USER)"\gexec
-              EOSQL
-          {{- else }}
-          command: ["/bin/bash"]
-          args:
-            - -c
-            - >-
-              psql -v ON_ERROR_STOP=1 -h $(DB_HOST) -U $(ROOT_USER) -d postgres <<-EOSQL
-                SELECT 'DROP DATABASE "$(DB_NAME)"' WHERE EXISTS (SELECT FROM pg_database WHERE datname = '$(DB_NAME)')\gexec
-                SELECT 'DROP USER "$(DB_USER)"' WHERE EXISTS (SELECT FROM pg_user WHERE usename = '$(DB_USER)')\gexec
-              EOSQL
-          {{- end }}
-          env:
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-agent-secret
-                  key: DB_HOST
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-agent-secret
-                  key: DB_NAME
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-agent-secret
-                  key: DB_USER
-            {{- if $create_mode }}
-            - name: DB_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-agent-secret
-                  key: DB_PASS
-            {{- end }}
-            - name: ROOT_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-agent-secret
-                  key: ROOT_USER
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-agent-secret
-                  key: ROOT_PASS
+              psql -h $(DB_HOST) -U $(ROOT_USER) -c "
+                {{- range $databases }}
+                {{- if .create }}
+                CREATE DATABASE {{ .name }} OWNER {{ .user }};
+                CREATE USER {{ .user }} WITH ENCRYPTED PASSWORD '{{ .password }}';
+                GRANT ALL PRIVILEGES ON DATABASE {{ .name }} TO {{ .user }};
+                {{- else if .drop }}
+                DROP DATABASE IF EXISTS {{ .name }};
+                DROP USER IF EXISTS {{ .user }};
+                {{- end }}
+                {{- if and .custom .custom_command }}
+                {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
+                {{- end }}
+                "
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-postgres-agent-secret
       restartPolicy: Never
