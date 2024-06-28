@@ -1,6 +1,6 @@
 {{- $host := .Values.postgres.host | default "postgres" | toString }}
 {{- $registry := .Values.image.postgres.registry | default "docker.io" | toString }}
-{{- $repository := .Values.image.postgres.repository | default "postgres" | toString }}
+{{- $repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
 {{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $create_mode := .Values.postgres.mode.create }}
