@@ -1,89 +1,139 @@
-# [`postgres-agent`](https://github.com/postgres/postgres)
+# Postgres-Agent
+
+Easily create or delete a database and user pair in a remote PostgreSQL instance.
 
 ## Prerequisites
 
+> [!NOTE]  
+> You may refer to [Orked](https://github.com/irfanhakim-as/orked) for help with setting up a Kubernetes cluster that meets all the following prerequisites.
+
 - Kubernetes 1.19+
 - Helm 3.2.0+
+- Longhorn 1.4.1+
 
-## Preflight checklist
+---
 
-## How to add repo
+## External dependencies
 
-Add the repo to your local helm client.
+> [!IMPORTANT]  
+> The following items are required to be set up prior to installing this chart.
 
-```sh
-helm repo add mika https://irfanhakim-as.github.io/charts
-```
+**This section does not apply to this chart.**
 
-Update the repo to retrieve the latest versions of the packages.
+---
 
-```sh
-helm repo update
-```
+## Recommended configurations
 
-## How to install
+> [!NOTE]  
+> The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-### Prepare PostgreSQL host
+**This section does not apply to this chart.**
 
-Install [`mika/postgres`](../postgres/). This step can be skipped if you have an existing PostgreSQL server.
+---
 
-### Prepare chart values
+## Application configurations
 
-Copy `values.yaml` from the chart you would like to install. Refer to the [Configurations](#configurations) section for more information.
+> [!NOTE]  
+> The following configurations are expected or recommended to be set up from within the application after completing the installation.
 
-```sh
-cp mika/postgres-agent/values.yaml .
-```
+**This section does not apply to this chart.**
 
-Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
+---
 
-```sh
-nano values.yaml
-```
+## How to add the chart repo
 
-### Perform installation
+1. Add the repo to your local helm client:
 
-Install the desired chart. Replace `$release_name` and `$namespace` accordingly.
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
 
-```sh
-helm install $release_name mika/postgres-agent --namespace $namespace --create-namespace --values values.yaml --wait
-```
+2. Update the repo to retrieve the latest versions of the packages:
 
-Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
+    ```sh
+    helm repo update
+    ```
 
-```sh
-helm ls --namespace $namespace | grep "$release_name"
-```
+---
 
-## How to upgrade
+## How to install or upgrade a chart release
 
-After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+1. Get the values file of the Postgres-Agent chart or an existing installation (release).
 
-```sh
-helm upgrade $release_name mika/postgres-agent --namespace $namespace --values values.yaml --wait
-```
+    Get the latest Postgres-Agent chart values file for a new installation:
 
-## How to uninstall
+    ```sh
+    helm show values mika/postgres-agent > values.yaml
+    ```
 
-Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
+    Alternatively, get the values file of an existing Postgres-Agent release:
 
-```sh
-helm uninstall $release_name --namespace $namespace --wait
-```
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
 
-## Configurations
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Edit your Postgres-Agent values file with the intended configurations:
+
+    ```sh
+    nano values.yaml
+    ```
+
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
+
+3. Install a new release for Postgres-Agent or upgrade an existing Postgres-Agent release:
+
+    ```sh
+    helm upgrade --install ${releaseName} mika/postgres-agent --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+4. Verify that your Postgres-Agent release has been installed:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
+
+---
+
+## How to uninstall a chart release
+
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
+1. Uninstall the desired release:
+
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
+
+---
+
+## Chart configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | image.postgres.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the PostgreSQL container image. Default: `"IfNotPresent"`. |
 | image.postgres.registry | string | `""` | The registry where the PostgreSQL container image is hosted. Default: `"docker.io"`. |
-| image.postgres.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"postgres"`. |
+| image.postgres.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"bitnami/postgresql"`. |
 | image.postgres.tag | string | `""` | The tag that specifies the version of the PostgreSQL container image used. Default: `Chart appVersion`. |
+| imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
+| postgres.databases | list | `[]` | Database configurations array. Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`. |
 | postgres.host | string | `""` | The hostname or IP address of the PostgreSQL database server. |
-| postgres.mode.create | bool | `true` | Specifies whether to create a database and user in a remote PostgreSQL instance. |
-| postgres.mode.drop | bool | `false` | Specifies whether to delete a database and user in a remote PostgreSQL instance. |
-| postgres.name | string | `""` | The name of the intended PostgreSQL database. |
-| postgres.password | string | `""` | The password associated with the intended PostgreSQL database user. |
 | postgres.root.password | string | `""` | The password associated with the PostgreSQL database server root user. |
-| postgres.root.user | string | `""` | The username or user account for accessing the PostgreSQL database server as root. Default: `"root"`. |
-| postgres.user | string | `""` | The username or user account for accessing the intended PostgreSQL database. |
+| postgres.root.user | string | `""` | The username or user account for accessing the PostgreSQL database server as root. Default: `"postgres"`. |
+| resources.postgres | object | `{}` | PostgreSQL container resources. |
