@@ -63,9 +63,9 @@ postgres:
   # PostgreSQL database server root user configurations.
   root:
     # The username or user account for accessing the PostgreSQL database server as root.
-    # Default: "root"
+    # Default: "postgres"
     # Example:
-    # user: "postgres"
+    # user: "root"
     user: ""
     # The password associated with the PostgreSQL database server root user.
     # Example:
