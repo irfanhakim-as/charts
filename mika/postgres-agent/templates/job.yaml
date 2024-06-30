@@ -37,23 +37,23 @@ spec:
           args:
             - -c
             - >-
-              psql -h $(DB_HOST) -U $(ROOT_USER) -d {{ $rootDB }} <<EOF
+              psql -h $(DB_HOST) -U $(ROOT_USER) -d {{ $rootDB | quote }} <<EOF
             {{- range $databases }}
             {{- if .create }}
-                CREATE USER {{ .user }} WITH ENCRYPTED PASSWORD '{{ .password }}';
-                CREATE DATABASE {{ .name }};
-                GRANT ALL ON DATABASE {{ .name }} TO {{ .user }};
-                ALTER DATABASE {{ .name }} OWNER TO {{ .user }};
-                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ .user }};
+                CREATE USER {{ .user | quote }} WITH ENCRYPTED PASSWORD '{{ .password }}';
+                CREATE DATABASE {{ .name | quote }};
+                GRANT ALL ON DATABASE {{ .name | quote }} TO {{ .user | quote }};
+                ALTER DATABASE {{ .name | quote }} OWNER TO {{ .user | quote }};
+                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ .user | quote }};
             {{- else if .drop }}
-                DROP DATABASE IF EXISTS {{ .name }};
-                REVOKE ALL ON SCHEMA PUBLIC FROM {{ .user }};
-                DROP USER IF EXISTS {{ .user }};
+                DROP DATABASE IF EXISTS {{ .name | quote }};
+                REVOKE ALL ON SCHEMA PUBLIC FROM {{ .user | quote }};
+                DROP USER IF EXISTS {{ .user | quote }};
             {{- end }}
             {{- if and .custom .custom_command }}
-                \connect {{ .name }};
+                \connect {{ .name | quote }};
                 {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
-                \connect {{ $rootDB }};
+                \connect {{ $rootDB | quote }};
             {{- end }}
             {{- end }}
               EOF
