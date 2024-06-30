@@ -893,6 +893,29 @@ entries:
   postgres-agent:
   - apiVersion: v2
     appVersion: 16.3.0-debian-12-r12
+    created: "2024-06-30T09:24:54.469001939Z"
+    description: Easily create or delete a database and user pair in a remote PostgreSQL
+      instance.
+    digest: 1ac0c3d07a6816b173d82553a1cb5cc5ab98c71df1749cb50be364d4692b0f72
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.3.1/postgres-agent-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 16.3.0-debian-12-r12
     created: "2024-06-30T08:36:31.77380487Z"
     description: Easily create or delete a database and user pair in a remote PostgreSQL
       instance.
@@ -2299,4 +2322,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-30T08:36:31.774253683Z"
+generated: "2024-06-30T09:24:54.469292821Z"
