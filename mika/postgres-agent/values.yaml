@@ -44,7 +44,7 @@ postgres:
   #     password: "postgresuserpassword"
   #     create: true
   #     drop: false
-  #     custom: false
+  #     custom: true
   #     custom_command: >-
   #       CREATE TABLE IF NOT EXISTS public.StorageRecords (
   #         context VARCHAR(255) NOT NULL,
