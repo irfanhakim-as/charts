@@ -3,6 +3,7 @@
 {{- $repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
 {{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString }}
 {{- $databases := .Values.postgres.databases }}
 apiVersion: batch/v1
 kind: Job
@@ -36,7 +37,7 @@ spec:
           args:
             - -c
             - >-
-              psql -h $(DB_HOST) -U $(ROOT_USER) <<EOF
+              psql -h $(DB_HOST) -U $(ROOT_USER) -d {{ $rootDB }} <<EOF
             {{- range $databases }}
             {{- if .create }}
                 CREATE USER {{ .user }} WITH ENCRYPTED PASSWORD '{{ .password }}';
