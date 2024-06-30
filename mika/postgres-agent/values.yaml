@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Container images used for PostgreSQL.
+# Container images used for Postgres-Agent.
 image:
   # PostgreSQL container image configurations.
   # Source: https://hub.docker.com/r/bitnami/postgresql
@@ -26,7 +26,7 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
-# PostgreSQL configurations.
+# Postgres-Agent configurations.
 postgres:
   # Database configurations array.
   # Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`.
@@ -72,7 +72,7 @@ postgres:
     # password: "password"
     password: ""
 
-# Resource requirements and limits for PostgreSQL containers.
+# Resource requirements and limits for Postgres-Agent containers.
 resources:
   # PostgreSQL container resources.
   # Example:
