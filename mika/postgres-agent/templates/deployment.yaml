@@ -51,7 +51,9 @@ spec:
                 DROP USER IF EXISTS {{ .user }};
             {{- end }}
             {{- if and .custom .custom_command }}
+                \connect {{ .name }};
                 {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
+                \connect {{ $rootDB }};
             {{- end }}
             {{- end }}
               EOF
