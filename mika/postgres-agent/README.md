@@ -134,6 +134,7 @@ Easily create or delete a database and user pair in a remote PostgreSQL instance
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | postgres.databases | list | `[]` | Database configurations array. Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`. |
 | postgres.host | string | `""` | The hostname or IP address of the PostgreSQL database server. |
+| postgres.root.database | string | `""` | The name of the database of the PostgreSQL database server root user. Default: `$user`. |
 | postgres.root.password | string | `""` | The password associated with the PostgreSQL database server root user. |
 | postgres.root.user | string | `""` | The username or user account for accessing the PostgreSQL database server as root. Default: `"postgres"`. |
 | resources.postgres | object | `{}` | PostgreSQL container resources. |

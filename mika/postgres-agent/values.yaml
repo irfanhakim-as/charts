@@ -70,6 +70,11 @@ postgres:
     # Example:
     # password: "password"
     password: ""
+    # The name of the database of the PostgreSQL database server root user.
+    # Default: $user
+    # Example:
+    # database: "postgres"
+    database: ""
 
 # Resource requirements and limits for Postgres-Agent containers.
 resources:
