@@ -36,20 +36,24 @@ spec:
           args:
             - -c
             - >-
-              psql -h $(DB_HOST) -U $(ROOT_USER) -c "
-                {{- range $databases }}
-                {{- if .create }}
-                CREATE DATABASE {{ .name }} OWNER {{ .user }};
+              psql -h $(DB_HOST) -U $(ROOT_USER) <<EOF
+            {{- range $databases }}
+            {{- if .create }}
                 CREATE USER {{ .user }} WITH ENCRYPTED PASSWORD '{{ .password }}';
-                GRANT ALL PRIVILEGES ON DATABASE {{ .name }} TO {{ .user }};
-                {{- else if .drop }}
+                CREATE DATABASE {{ .name }};
+                GRANT ALL ON DATABASE {{ .name }} TO {{ .user }};
+                ALTER DATABASE {{ .name }} OWNER TO {{ .user }};
+                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ .user }};
+            {{- else if .drop }}
                 DROP DATABASE IF EXISTS {{ .name }};
+                REVOKE ALL ON SCHEMA PUBLIC FROM {{ .user }};
                 DROP USER IF EXISTS {{ .user }};
-                {{- end }}
-                {{- if and .custom .custom_command }}
+            {{- end }}
+            {{- if and .custom .custom_command }}
                 {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
-                {{- end }}
-                "
+            {{- end }}
+            {{- end }}
+              EOF
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-postgres-agent-secret
