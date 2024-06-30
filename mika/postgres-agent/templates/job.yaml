@@ -1,0 +1,63 @@
+{{- $host := .Values.postgres.host | default "postgres" | toString }}
+{{- $registry := .Values.image.postgres.registry | default "docker.io" | toString }}
+{{- $repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
+{{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
+{{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString }}
+{{- $databases := .Values.postgres.databases }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-%s-%s" (index (splitList "." $host) 0) .Release.Name "postgres-agent" }}
+  labels:
+    {{- include "postgres-agent.labels" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 120
+  backoffLimit: 0
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "postgres-agent.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: postgres-agent
+          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
+          imagePullPolicy: {{ $pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources.postgres | nindent 12 }}
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              psql -h $(DB_HOST) -U $(ROOT_USER) -d {{ $rootDB }} <<EOF
+            {{- range $databases }}
+            {{- if .create }}
+                CREATE USER {{ .user }} WITH ENCRYPTED PASSWORD '{{ .password }}';
+                CREATE DATABASE {{ .name }};
+                GRANT ALL ON DATABASE {{ .name }} TO {{ .user }};
+                ALTER DATABASE {{ .name }} OWNER TO {{ .user }};
+                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ .user }};
+            {{- else if .drop }}
+                DROP DATABASE IF EXISTS {{ .name }};
+                REVOKE ALL ON SCHEMA PUBLIC FROM {{ .user }};
+                DROP USER IF EXISTS {{ .user }};
+            {{- end }}
+            {{- if and .custom .custom_command }}
+                \connect {{ .name }};
+                {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
+                \connect {{ $rootDB }};
+            {{- end }}
+            {{- end }}
+              EOF
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-postgres-agent-secret
+      restartPolicy: Never

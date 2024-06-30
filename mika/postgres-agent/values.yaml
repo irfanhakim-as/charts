@@ -2,15 +2,16 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Container image used for PostgreSQL.
+# Container images used for Postgres-Agent.
 image:
   # PostgreSQL container image configurations.
+  # Source: https://hub.docker.com/r/bitnami/postgresql
   postgres:
     # The registry where the PostgreSQL container image is hosted.
     # Default: "docker.io"
     registry: ""
     # The name of the repository that contains the PostgreSQL container image used.
-    # Default: "postgres"
+    # Default: "bitnami/postgresql"
     repository: ""
     # The tag that specifies the version of the PostgreSQL container image used.
     # Default: Chart appVersion
@@ -19,38 +20,49 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
 
-# PostgreSQL configurations.
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Postgres-Agent configurations.
 postgres:
-  # Defines the mode of operation for the PostgreSQL agent chart.
-  mode:
-    # Specifies whether to create a database and user in a remote PostgreSQL instance.
-    # Example:
-    # create: false
-    create: true
-    # Specifies whether to delete a database and user in a remote PostgreSQL instance.
-    # Example:
-    # drop: true
-    drop: false
+  # Database configurations array.
+  # Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`.
+  # .name: The name of the intended PostgreSQL database.
+  # .user: The username or user account for accessing the intended PostgreSQL database.
+  # .password: The password associated with the intended PostgreSQL database user.
+  # .create: Specifies whether to create the database and user in the remote PostgreSQL instance.
+  # .drop: Specifies whether to delete the database and user in the remote PostgreSQL instance.
+  # .custom: Specifies whether to run a custom command against the remote PostgreSQL instance.
+  # .custom_command: Specify a custom command to run against the remote PostgreSQL instance.
+  # Example:
+  # databases:
+  #   - name: "postgres"
+  #     user: "postgresuser"
+  #     password: "postgresuserpassword"
+  #     create: true
+  #     drop: false
+  #     custom: true
+  #     custom_command: >-
+  #       CREATE TABLE IF NOT EXISTS public.StorageRecords (
+  #         context VARCHAR(255) NOT NULL,
+  #         expires BIGINT DEFAULT NULL,
+  #         id SERIAL NOT NULL,
+  #         value TEXT NOT NULL,
+  #         version BIGINT NOT NULL,
+  #         PRIMARY KEY (context, id)
+  #       );
+  databases: []
   # The hostname or IP address of the PostgreSQL database server.
   # Example:
   # host: "postgres.default.svc.cluster.local"
   host: ""
-  # The name of the intended PostgreSQL database.
-  # Example:
-  # name: "postgres"
-  name: ""
-  # The username or user account for accessing the intended PostgreSQL database.
-  # Example:
-  # user: "postgres"
-  user: ""
-  # The password associated with the intended PostgreSQL database user.
-  # Example:
-  # password: "password"
-  password: ""
   # PostgreSQL database server root user configurations.
   root:
     # The username or user account for accessing the PostgreSQL database server as root.
-    # Default: "root"
+    # Default: "postgres"
     # Example:
     # user: "root"
     user: ""
@@ -58,3 +70,35 @@ postgres:
     # Example:
     # password: "password"
     password: ""
+    # The name of the database of the PostgreSQL database server root user.
+    # Default: $user
+    # Example:
+    # database: "postgres"
+    database: ""
+
+# Resource requirements and limits for Postgres-Agent containers.
+resources:
+  # PostgreSQL container resources.
+  # Example:
+  # postgres:
+  #   # The minimum amount of resources required by PostgreSQL to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by PostgreSQL.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by PostgreSQL.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for PostgreSQL.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for PostgreSQL.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for PostgreSQL.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  postgres: {}
