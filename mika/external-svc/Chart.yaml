@@ -1,0 +1,16 @@
+apiVersion: v2
+name: external-svc
+description: A Helm chart for deploying External Service.
+type: application
+version: 0.1.0
+appVersion: "0.0.1-r1"
+keywords:
+  - "external-svc"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/external-svc.png"
+sources:
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

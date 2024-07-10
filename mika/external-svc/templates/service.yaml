@@ -1,0 +1,18 @@
+{{- $port := .Values.service.port | default "80" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-external-svc-svc
+  labels:
+    {{- include "external-svc.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ int $port }}
+      targetPort: external-svc
+      protocol: TCP
+      name: external-svc
+  selector:
+    {{- include "external-svc.selectorLabels" . | nindent 4 }}

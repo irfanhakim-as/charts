@@ -1,0 +1,59 @@
+# Default values for external-svc.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for External Service.
+# Default: "1"
+replicaCount: ""
+
+# External Service configurations.
+externalSvc:
+  # The secret value of the External Service bar.
+  # Default: "bar"
+  # Example:
+  # bar: "bar"
+  bar: ""
+  # The ingress domain name that hosts the External Service server.
+  # Example:
+  # domain: "external-svc.example.com"
+  domain: ""
+  # The value of the External Service foo.
+  # Default: "foo"
+  # Example:
+  # foo: "foo"
+  foo: ""
+  # Custom init script to run before the External Service container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting External Service services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+
+# Service configurations.
+service:
+  # The port on which the External Service server should listen.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used for External Service services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
