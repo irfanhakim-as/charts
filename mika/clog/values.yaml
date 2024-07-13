@@ -97,7 +97,7 @@ db:
   # The type of the database used by Clog.
   # Default: "postgresql"
   # Example:
-  # type: "postgresql"
+  # type: "mysql"
   type: ""
   # The hostname or IP address of the Clog database server.
   # Example:
