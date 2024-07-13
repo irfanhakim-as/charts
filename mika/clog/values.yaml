@@ -45,6 +45,7 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
+# Clog configurations.
 clog:
   # The name of the Clog service.
   # Default: "Clog"
