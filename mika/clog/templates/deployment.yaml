@@ -60,11 +60,11 @@ spec:
               mountPath: /static
             - name: {{ .Release.Name }}-clog-media
               mountPath: /clog/media
-            - name: {{ .Release.Name }}-clog-logs
+            - name: {{ .Release.Name }}-clog-log
               mountPath: /var/log/apache2
-            - name: {{ .Release.Name }}-clog-core-migrations
+            - name: {{ .Release.Name }}-clog-core-migration
               mountPath: /clog/core/migrations
-            - name: {{ .Release.Name }}-clog-money-migrations
+            - name: {{ .Release.Name }}-clog-money-migration
               mountPath: /clog/money/migrations
             {{- end }}
         {{- if $ngrok }}
@@ -102,13 +102,13 @@ spec:
         - name: {{ .Release.Name }}-clog-media
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-media-pvc
-        - name: {{ .Release.Name }}-clog-logs
+        - name: {{ .Release.Name }}-clog-log
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-clog-logs-pvc
-        - name: {{ .Release.Name }}-clog-core-migrations
+            claimName: {{ .Release.Name }}-clog-log-pvc
+        - name: {{ .Release.Name }}-clog-core-migration
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-clog-core-migrations-pvc
-        - name: {{ .Release.Name }}-clog-money-migrations
+            claimName: {{ .Release.Name }}-clog-core-migration-pvc
+        - name: {{ .Release.Name }}-clog-money-migration
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-clog-money-migrations-pvc
+            claimName: {{ .Release.Name }}-clog-money-migration-pvc
         {{- end }}
