@@ -3,6 +3,7 @@
 {{- $ngrok := .Values.clog.ngrok.enabled }}
 {{- $debug := .Values.clog.debug | default "false" | toString | quote }}
 {{- $domain = .Values.clog.domain | default "localhost" | toString }}
+{{- $serverAdmin = .Values.clog.serverAdmin | default "admin@example.com" | toString }}
 {{- $name := .Values.clog.name | default "Clog" | toString | quote }}
 ---
 apiVersion: v1
@@ -27,4 +28,4 @@ metadata:
     {{- include "clog.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    {{- include "clog.site-config-conf" . | toString | replace "DOMAIN" $domain | nindent 4 }}
+    {{- include "clog.site-config-conf" . | toString | replace "DOMAIN" $domain | replace "SERVER_ADMIN" $serverAdmin | nindent 4 }}

@@ -5,7 +5,7 @@ Apache site-config.conf template
 <VirtualHost *:80>
     ServerName DOMAIN:443
     UseCanonicalName On
-    ServerAdmin support@mikahomelab.com
+    ServerAdmin SERVER_ADMIN
     DocumentRoot /clog
     WSGIScriptAlias / /clog/clog/wsgi.py
     WSGIDaemonProcess DOMAIN python-path=/clog
