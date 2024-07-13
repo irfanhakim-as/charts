@@ -18,9 +18,9 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 data:
-  SITE_NAME: {{ $name }}
   DEBUG: {{ $debug }}
   NGROK: {{ $ngrok | toString | quote }}
+  SITE_NAME: {{ $name }}
   {{- if or $cloudflared $ingress }}
   DOMAIN: {{ $domain | quote }}
   {{- end }}
