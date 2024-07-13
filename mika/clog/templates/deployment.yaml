@@ -146,3 +146,5 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-static-pvc
         {{- end }}
+      securityContext:
+        fsGroup: 33
