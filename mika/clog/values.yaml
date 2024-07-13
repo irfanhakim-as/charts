@@ -106,7 +106,7 @@ db:
   # The port number on which the Clog database server is listening.
   # Default: "5432"
   # Example:
-  # port: "5432"
+  # port: "3306"
   port: ""
   # The name of the database used by Clog.
   # Example:
