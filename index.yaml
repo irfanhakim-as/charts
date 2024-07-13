@@ -639,6 +639,31 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.1.0/kutt-0.1.0.tgz
     version: 0.1.0
+  linkstack:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-07-13T11:57:27.508910559Z"
+    description: LinkStack is a highly customizable link sharing platform with an
+      intuitive, easy to use user interface.
+    digest: 1d54b381e461fe8eb6a98cd901af507199ce04a1c9a7559d1a715de2015942b9
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/linkstack.svg
+    keywords:
+    - linkstack
+    - linktree
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: linkstack
+    sources:
+    - https://github.com/LinkStackOrg/LinkStack
+    - https://github.com/LinkStackOrg/linkstack-docker
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/linkstack-0.1.0/linkstack-0.1.0.tgz
+    version: 0.1.0
   mango:
   - apiVersion: v2
     appVersion: 0.0.1-stable
@@ -2322,4 +2347,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-30T09:24:54.469292821Z"
+generated: "2024-07-13T11:57:27.509109832Z"
