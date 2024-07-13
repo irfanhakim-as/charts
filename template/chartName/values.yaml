@@ -107,12 +107,12 @@ service:
   # Example:
   # nodePort: "32000"
   nodePort: ""
-  # The port on which the ChartName server should listen.
+  # The port on which the ChartName server should listen for connections.
   # Default: "80"
   # Example:
   # port: "8080"
   port: ""
-  # The type of service used for ChartName services.
+  # The type of service used to expose ChartName services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
