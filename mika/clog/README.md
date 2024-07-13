@@ -1,7 +1,7 @@
 # [Clog](https://github.com/irfanhakim-as/clog)
 
 > [!WARNING]  
-> This chart requires access to a private image registry. Please request access from the owner of the image repository.
+> This chart requires access to a private image registry, please request access from the owner of the repository.
 
 Creative blog, Career blog, Coin blog, you name it.
 
