@@ -172,7 +172,7 @@ storage:
     # subPath: "Data"
     subPath: ""
     # The default amount of persistent storage allocated for the log storage.
-    # Default: "1Gi"
+    # Default: "50Mi"
     # Example:
     # storage: "10Gi"
     storage: ""
@@ -202,7 +202,7 @@ storage:
     # subPath: "Data"
     subPath: ""
     # The default amount of persistent storage allocated for the media storage.
-    # Default: "1Gi"
+    # Default: "100Mi"
     # Example:
     # storage: "10Gi"
     storage: ""
@@ -232,7 +232,7 @@ storage:
     # subPath: "Data"
     subPath: ""
     # The default amount of persistent storage allocated for the migration storage.
-    # Default: "1Gi"
+    # Default: "20Mi"
     # Example:
     # storage: "10Gi"
     storage: ""
@@ -262,7 +262,7 @@ storage:
     # subPath: "Data"
     subPath: ""
     # The default amount of persistent storage allocated for the static storage.
-    # Default: "1Gi"
+    # Default: "50Mi"
     # Example:
     # storage: "10Gi"
     storage: ""
