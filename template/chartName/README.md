@@ -147,6 +147,7 @@ A Helm chart for deploying ChartName.
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
 | resources.chartName | object | `{}` | ChartName container resources. |
+| service.nodePort | string | `""` | The optional node port to expose when the service type is NodePort. |
 | service.port | string | `""` | The port on which the ChartName server should listen. Default: `"80"`. |
 | service.type | string | `""` | The type of service used for ChartName services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |

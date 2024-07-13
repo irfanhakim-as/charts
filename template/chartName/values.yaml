@@ -103,6 +103,10 @@ ingress:
 
 # Service configurations.
 service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
   # The port on which the ChartName server should listen.
   # Default: "80"
   # Example:
