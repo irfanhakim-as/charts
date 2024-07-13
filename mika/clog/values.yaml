@@ -47,6 +47,11 @@ imagePullSecrets: []
 
 # Clog configurations.
 clog:
+  # Specifies whether Clog should run in debug mode.
+  # Default: false
+  # Example:
+  # debug: true
+  debug: ""
   # The ingress domain name that hosts the Clog server.
   # Example:
   # domain: "clog.example.com"
@@ -56,11 +61,6 @@ clog:
   # Example:
   # name: "Clog"
   name: ""
-  # Specifies whether Clog should run in debug mode.
-  # Default: false
-  # Example:
-  # debug: true
-  debug: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the Clog service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
@@ -99,6 +99,15 @@ db:
   # Example:
   # type: "postgresql"
   type: ""
+  # The hostname or IP address of the Clog database server.
+  # Example:
+  # host: "clog.default.svc.cluster.local"
+  host: ""
+  # The port number on which the Clog database server is listening.
+  # Default: "5432"
+  # Example:
+  # port: "5432"
+  port: ""
   # The name of the database used by Clog.
   # Example:
   # name: "clog"
@@ -111,15 +120,6 @@ db:
   # Example:
   # password: "password"
   password: ""
-  # The hostname or IP address of the Clog database server.
-  # Example:
-  # host: "clog.default.svc.cluster.local"
-  host: ""
-  # The port number on which the Clog database server is listening.
-  # Default: "5432"
-  # Example:
-  # port: "5432"
-  port: ""
 
 # Ingress configurations.
 ingress:
