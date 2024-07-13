@@ -4,6 +4,7 @@
 {{- $debug := .Values.clog.debug | default "false" | toString | quote }}
 {{- $domain = .Values.clog.domain | default "localhost" | toString }}
 {{- $name := .Values.clog.name | default "Clog" | toString | quote }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
