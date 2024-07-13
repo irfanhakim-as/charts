@@ -1,7 +1,11 @@
 {{- $ingress := .Values.ingress.enabled }}
-{{- if $ingress }}
-{{- $cluster_issuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
-{{- $domain := .Values.clog.domain | default "localhost" | toString }}
+{{- $www := .Values.ingress.www }}
+{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $customAnnotations := .Values.ingress.customAnnotations }}
+{{- $domain := .Values.clog.domain | toString }}
+{{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
+{{- if and $ingress $domain }}
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -9,7 +13,7 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ $cluster_issuer }}
+    cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
     cert-manager.io/private-key-algorithm: "ECDSA"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/affinity-mode: "persistent"
@@ -18,21 +22,39 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/session-cookie-name: "route"
     nginx.org/client-max-body-size: "100m"
+    {{- range $customAnnotations }}
+    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+    {{- end }}
 spec:
   ingressClassName: "nginx"
   rules:
-  - host: {{ $domain | quote }}
-    http:
-      paths:
-      - backend:
-          service:
-            name: {{ .Release.Name }}-clog-svc
-            port:
-              number: 80
-        path: /
-        pathType: Prefix
+    - host: {{ $domain | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-clog-svc
+                port:
+                  name: clog
+            path: /
+            pathType: Prefix
+  {{- if $www }}
+    - host: {{ $wwwDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-clog-svc
+                port:
+                  name: clog
+            path: /
+            pathType: Prefix
+  {{- end }}
   tls:
-  - hosts:
-    - {{ $domain | quote }}
-    secretName: {{ .Release.Name }}-clog-tls-cert
+    - hosts:
+        - {{ $domain | quote }}
+      {{- if $www }}
+        - {{ $wwwDomain }}
+      {{- end }}
+      secretName: {{ .Release.Name }}-clog-tls-cert
 {{- end }}
