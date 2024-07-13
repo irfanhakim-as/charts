@@ -131,7 +131,7 @@ service:
     # The https port on which the LinkStack server should listen.
     # Default: "443"
     # Example:
-    # port: "4343"
+    # port: "8443"
     port: ""
   # The type of service used for LinkStack services.
   # Default: "ClusterIP"
