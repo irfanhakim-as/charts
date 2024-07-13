@@ -47,6 +47,10 @@ imagePullSecrets: []
 
 # Clog configurations.
 clog:
+  # The ingress domain name that hosts the Clog server.
+  # Example:
+  # domain: "clog.example.com"
+  domain: ""
   # The name of the Clog service.
   # Default: "Clog"
   # Example:
@@ -111,20 +115,6 @@ clog:
     # Example:
     # domain: "clog.example.com"
     domain: ""
-  # Clog Ingress configurations.
-  ingress:
-    # Specifies whether Clog should be hosted using an Ingress.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The name of the cluster issuer for Ingress.
-    # Default: "letsencrypt-dns-prod"
-    clusterIssuer: ""
-    # Registered domain name for Clog.
-    # Default: "localhost"
-    # Example:
-    # domain: "clog.example.com"
-    domain: ""
   # Clog Ngrok configurations.
   ngrok:
     # Specifies whether Clog should run using an Ngrok tunnel.
@@ -164,6 +154,39 @@ db:
   # Example:
   # port: "5432"
   port: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Clog services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # - prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #     # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #     # value: "120"
+  #     value: ""
+  customAnnotations: []
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
 
 # Resource requirements and limits for Clog containers.
 resources:

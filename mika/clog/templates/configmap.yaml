@@ -1,13 +1,13 @@
 {{- $name := .Values.clog.name | default "Clog" | toString | quote }}
 {{- $debug := .Values.clog.debug | default "false" | toString | quote }}
 {{- $cloudflared := .Values.clog.cloudflared.enabled }}
-{{- $ingress := .Values.clog.ingress.enabled }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $ngrok := .Values.clog.ngrok.enabled }}
 {{- $domain := "" -}}
 {{- if $cloudflared }}
 {{- $domain = .Values.clog.cloudflared.domain | default "localhost" | toString }}
 {{- else if $ingress }}
-{{- $domain = .Values.clog.ingress.domain | default "localhost" | toString }}
+{{- $domain = .Values.clog.domain | default "localhost" | toString }}
 {{- else }}
 {{- $domain = "localhost" }}
 {{- end }}

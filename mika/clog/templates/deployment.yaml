@@ -8,7 +8,7 @@
 {{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
 {{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $cloudflared := .Values.clog.cloudflared.enabled }}
-{{- $ingress := .Values.clog.ingress.enabled }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $ngrok := .Values.clog.ngrok.enabled }}
 {{- $persistence := .Values.clog.persistence.enabled }}
 apiVersion: apps/v1

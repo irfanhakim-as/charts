@@ -1,7 +1,7 @@
-{{- $ingress := .Values.clog.ingress.enabled }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- if $ingress }}
-{{- $cluster_issuer := .Values.clog.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
-{{- $domain := .Values.clog.ingress.domain | default "localhost" | toString }}
+{{- $cluster_issuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $domain := .Values.clog.domain | default "localhost" | toString }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
