@@ -76,11 +76,6 @@ clog:
     # Example:
     # enabled: true
     enabled: false
-    # Registered domain name on Cloudflare used for Clog.
-    # Default: "localhost"
-    # Example:
-    # domain: "clog.example.com"
-    domain: ""
   # Clog Ngrok configurations.
   ngrok:
     # Specifies whether Clog should run using an Ngrok tunnel.
