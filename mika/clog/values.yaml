@@ -53,6 +53,7 @@ clog:
   # debug: true
   debug: ""
   # The ingress domain name that hosts the Clog server.
+  # Default: "localhost"
   # Example:
   # domain: "clog.example.com"
   domain: ""
