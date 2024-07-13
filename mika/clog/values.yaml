@@ -169,7 +169,7 @@ storage:
     mountPath: ""
     # The subpath within the log storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Data"
+    # subPath: "Log"
     subPath: ""
     # The default amount of persistent storage allocated for the log storage.
     # Default: "50Mi"
@@ -199,7 +199,7 @@ storage:
     mountPath: ""
     # The subpath within the media storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Data"
+    # subPath: "Media"
     subPath: ""
     # The default amount of persistent storage allocated for the media storage.
     # Default: "100Mi"
@@ -229,7 +229,7 @@ storage:
     mountPath: ""
     # The subpath within the migration storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Data"
+    # subPath: "Migration"
     subPath: ""
     # The default amount of persistent storage allocated for the migration storage.
     # Default: "20Mi"
@@ -259,7 +259,7 @@ storage:
     mountPath: ""
     # The subpath within the static storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Data"
+    # subPath: "Static"
     subPath: ""
     # The default amount of persistent storage allocated for the static storage.
     # Default: "50Mi"
