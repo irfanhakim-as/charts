@@ -168,24 +168,26 @@ db:
 # Resource requirements and limits for Clog containers.
 resources:
   # Clog container resources.
-  clog:
-    # The minimum amount of resources required by Clog to run.
-    requests:
-      # The minimum amount of CPU resources required by Clog.
-      # Example:
-      # cpu: "20m"
-      cpu: "10m"
-      # The minimum amount of memory required by Clog.
-      # Example:
-      # memory: "250Mi"
-      memory: "100Mi"
-    # The maximum amount of resources allowed for Clog.
-    limits:
-      # The maximum amount of CPU resources allowed for Clog.
-      # Example:
-      # cpu: "50m"
-      cpu: "50m"
-      # The maximum amount of memory allowed for Clog.
-      # Example:
-      # memory: "450Mi"
-      memory: "200Mi"
+  # Example:
+  # clog:
+  #   # The minimum amount of resources required by Clog to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Clog.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Clog.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for Clog.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Clog.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "50m"
+  #     # The maximum amount of memory allowed for Clog.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "200Mi"
+  clog: {}
