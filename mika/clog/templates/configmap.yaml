@@ -33,4 +33,4 @@ metadata:
     {{- include "clog.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    {{- include "clog.site-config-conf" . | replace "DOMAIN" $domain | nindent 4 }}
+    {{- include "clog.site-config-conf" . | toString | replace "DOMAIN" $domain | nindent 4 }}
