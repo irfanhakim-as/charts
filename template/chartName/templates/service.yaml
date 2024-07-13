@@ -1,3 +1,4 @@
+{{- $nodePort := .Values.service.nodePort | toString }}
 {{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
@@ -12,6 +13,9 @@ spec:
   ports:
     - port: {{ int $port }}
       targetPort: chartName
+      {{- if and (eq $type "NodePort") $nodePort }}
+      nodePort: {{ int $nodePort }}
+      {{- end }}
       protocol: TCP
       name: chartName
   selector:
