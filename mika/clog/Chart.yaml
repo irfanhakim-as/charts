@@ -7,6 +7,8 @@ appVersion: "0.0.2-stable-r1"
 keywords:
   - "clog"
   - "blog"
+  - "money"
+  - "todo"
 home: "https://github.com/irfanhakim-as/clog"
 icon: "https://irfanhakim-as.github.io/charts/logos/clog.png"
 sources:
