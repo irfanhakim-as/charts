@@ -149,7 +149,9 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 | linkstack.uploadMaxFilesize | string | `""` | The maximum allowed file size for uploaded files. Default: `"8M"`. |
 | replicaCount | string | `""` | The desired number of running replicas for LinkStack. Default: `"1"`. |
 | resources.linkstack | object | `{}` | LinkStack container resources. |
+| service.http.nodePort | string | `""` | The optional node port to expose for http when the service type is NodePort. |
 | service.http.port | string | `""` | The http port on which the LinkStack server should listen. Default: `"80"`. |
+| service.https.nodePort | string | `""` | The optional node port to expose for https when the service type is NodePort. |
 | service.https.port | string | `""` | The https port on which the LinkStack server should listen. Default: `"443"`. |
 | service.type | string | `""` | The type of service used for LinkStack services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |

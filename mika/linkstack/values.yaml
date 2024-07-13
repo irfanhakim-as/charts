@@ -121,6 +121,10 @@ ingress:
 service:
   # HTTP service port configurations.
   http:
+    # The optional node port to expose for http when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
     # The http port on which the LinkStack server should listen.
     # Default: "80"
     # Example:
@@ -128,6 +132,10 @@ service:
     port: ""
   # HTTPS service port configurations.
   https:
+    # The optional node port to expose for https when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
     # The https port on which the LinkStack server should listen.
     # Default: "443"
     # Example:
