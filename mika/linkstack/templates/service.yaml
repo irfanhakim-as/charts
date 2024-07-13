@@ -1,5 +1,5 @@
-{{- $http := .Values.service.http | default "80" | toString }}
-{{- $https := .Values.service.https | default "443" | toString }}
+{{- $http := .Values.service.http.port | default "80" | toString }}
+{{- $https := .Values.service.https.port | default "443" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1

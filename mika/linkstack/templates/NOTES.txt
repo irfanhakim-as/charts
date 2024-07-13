@@ -1,6 +1,6 @@
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.linkstack.domain | toString }}
-{{- $http := .Values.service.http | default "80" | toString }}
+{{- $http := .Values.service.http.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-linkstack-svc" .Release.Name | toString }}
 {{- $serviceAddress := "" }}
