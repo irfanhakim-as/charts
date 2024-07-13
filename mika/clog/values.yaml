@@ -65,45 +65,6 @@ clog:
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: "" 
-  # Clog storage persistence configurations.
-  persistence:
-    # Specifies whether Clog should persist its storage.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The storage class name used for dynamically provisioning a persistent volume for the Clog storage.
-    # Default: "longhorn"
-    # Example:
-    # storageClassName: "longhorn"
-    storageClassName: ""
-    # Clog static files persistence configurations.
-    static:
-      # The amount of persistent storage allocated for Clog static files.
-      # Default: "50Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Clog media files persistence configurations.
-    media:
-      # The amount of persistent storage allocated for Clog media files.
-      # Default: "100Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Clog logs persistence configurations.
-    logs:
-      # The amount of persistent storage allocated for Clog logs.
-      # Default: "50Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Clog migration files persistence configurations.
-    migrations:
-      # The amount of persistent storage allocated for Clog migration files.
-      # Default: "20Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
   # Clog Cloudflare configurations.
   cloudflared:
     # Specifies whether Clog should run using a Cloudflare tunnel.
@@ -187,6 +148,129 @@ ingress:
   # Example:
   # www: true
   www: false
+
+# Storage configurations.
+storage:
+  # Log storage configurations.
+  log:
+    # Specifies whether persistent storage should be provisioned for log storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the log storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the log storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/log"
+    mountPath: ""
+    # The subpath within the log storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the log storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the log storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Media storage configurations.
+  media:
+    # Specifies whether persistent storage should be provisioned for media storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the media storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the media storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/media"
+    mountPath: ""
+    # The subpath within the media storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the media storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the media storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Migration storage configurations.
+  migration:
+    # Specifies whether persistent storage should be provisioned for migration storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the migration storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the migration storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/migration"
+    mountPath: ""
+    # The subpath within the migration storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the migration storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the migration storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+  # Static storage configurations.
+  static:
+    # Specifies whether persistent storage should be provisioned for static storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the static storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the static storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/static"
+    mountPath: ""
+    # The subpath within the static storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the static storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the static storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
 
 # Resource requirements and limits for Clog containers.
 resources:
