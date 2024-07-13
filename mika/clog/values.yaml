@@ -163,7 +163,7 @@ storage:
     # accessMode: "ReadWriteOnce"
     accessMode: ""
     # The path where the log storage should be mounted on the container.
-    # Default: "/config"
+    # Default: "/var/log/apache2"
     # Example:
     # mountPath: "/log"
     mountPath: ""
@@ -193,7 +193,7 @@ storage:
     # accessMode: "ReadWriteOnce"
     accessMode: ""
     # The path where the media storage should be mounted on the container.
-    # Default: "/config"
+    # Default: "/clog/media"
     # Example:
     # mountPath: "/media"
     mountPath: ""
@@ -223,7 +223,7 @@ storage:
     # accessMode: "ReadWriteOnce"
     accessMode: ""
     # The path where the migration storage should be mounted on the container.
-    # Default: "/config"
+    # Default: "/clog/%s/migrations"
     # Example:
     # mountPath: "/migration"
     mountPath: ""
@@ -253,7 +253,7 @@ storage:
     # accessMode: "ReadWriteOnce"
     accessMode: ""
     # The path where the static storage should be mounted on the container.
-    # Default: "/config"
+    # Default: "/static"
     # Example:
     # mountPath: "/static"
     mountPath: ""
