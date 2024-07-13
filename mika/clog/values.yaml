@@ -65,6 +65,11 @@ clog:
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
+  # The Apache server administrator email address.
+  # Default: "admin@example.com"
+  # Example:
+  # serverAdmin: "foo@example.com"
+  serverAdmin: ""
   # Clog Cloudflare configurations.
   cloudflared:
     # Specifies whether Clog should run using a Cloudflare tunnel.
