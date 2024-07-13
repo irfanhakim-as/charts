@@ -57,40 +57,40 @@ clog:
   # Example:
   # domain: "clog.example.com"
   domain: ""
-  # The name of the Clog service.
+  # The full name of the Clog web application.
   # Default: "Clog"
   # Example:
-  # name: "Clog"
+  # name: "My Blog"
   name: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the Clog service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
-  # The Apache server administrator email address.
+  # The email address displayed by Apache for server administration contact.
   # Default: "admin@example.com"
   # Example:
   # serverAdmin: "foo@example.com"
   serverAdmin: ""
-  # Clog Cloudflare configurations.
+  # Cloudflare Tunnel configurations.
   cloudflared:
-    # Specifies whether Clog should run using a Cloudflare tunnel.
+    # Specifies whether Cloudflare Tunnel should be enabled for hosting Clog services.
     # Example:
     # enabled: true
     enabled: false
-  # Clog Ngrok configurations.
+  # Ngrok configurations.
   ngrok:
-    # Specifies whether Clog should run using an Ngrok tunnel.
+    # Specifies whether Ngrok should be enabled for hosting Clog services.
     # Example:
     # enabled: true
     enabled: false
-    # Ngrok authentication token.
+    # The authentication token used to authenticate with Ngrok.
     # Example:
     # token: "s7Ed4IO23nw1HWRJwumSgcyB7BtcXr4ZYLtziJCDDLIVDv7uq"
     token: ""
 
 # Database configurations.
 db:
-  # The type of the database used by Clog.
+  # The database engine or backend being used by Clog.
   # Default: "postgresql"
   # Example:
   # type: "mysql"
@@ -99,12 +99,12 @@ db:
   # Example:
   # host: "clog.default.svc.cluster.local"
   host: ""
-  # The port number on which the Clog database server is listening.
+  # The port number the Clog database server is listening for connections.
   # Default: "5432"
   # Example:
   # port: "3306"
   port: ""
-  # The name of the database used by Clog.
+  # The name of the database being used by Clog.
   # Example:
   # name: "clog"
   name: ""
@@ -112,7 +112,7 @@ db:
   # Example:
   # user: "root"
   user: ""
-  # The password associated with the Clog database's user.
+  # The password associated with the Clog database user.
   # Example:
   # password: "password"
   password: ""
@@ -156,12 +156,12 @@ service:
   # Example:
   # nodePort: "32000"
   nodePort: ""
-  # The port on which the Clog server should listen.
+  # The port on which the Clog server should listen for connections.
   # Default: "80"
   # Example:
   # port: "8080"
   port: ""
-  # The type of service used for Clog services.
+  # The type of service used to expose Clog services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
@@ -197,7 +197,7 @@ storage:
     # The storage class name used for dynamically provisioning a persistent volume for the log storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
   # Media storage configurations.
   media:
@@ -227,7 +227,7 @@ storage:
     # The storage class name used for dynamically provisioning a persistent volume for the media storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
   # Migration storage configurations.
   migration:
@@ -257,7 +257,7 @@ storage:
     # The storage class name used for dynamically provisioning a persistent volume for the migration storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
   # Static storage configurations.
   static:
@@ -287,7 +287,7 @@ storage:
     # The storage class name used for dynamically provisioning a persistent volume for the static storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
 
 # Resource requirements and limits for Clog containers.
