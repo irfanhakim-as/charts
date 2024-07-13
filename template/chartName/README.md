@@ -14,7 +14,7 @@ A Helm chart for deploying ChartName.
 
 ---
 
-## External dependencies
+## Preflight checklist
 
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
