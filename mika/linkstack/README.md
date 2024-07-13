@@ -137,6 +137,7 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 | image.linkstack.tag | string | `""` | The tag that specifies the version of the LinkStack container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting LinkStack services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | linkstack.domain | string | `""` | The ingress domain name that hosts the LinkStack server. Default: `"localhost"`. |
