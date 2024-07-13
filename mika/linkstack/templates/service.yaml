@@ -1,5 +1,7 @@
 {{- $http := .Values.service.http.port | default "80" | toString }}
+{{- $httpNodePort := .Values.service.http.nodePort | toString }}
 {{- $https := .Values.service.https.port | default "443" | toString }}
+{{- $httpsNodePort := .Values.service.https.nodePort | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
@@ -13,10 +15,16 @@ spec:
   ports:
     - port: {{ int $http }}
       targetPort: linkstack-http
+      {{- if and (eq $type "NodePort") $httpNodePort }}
+      nodePort: {{ int $httpNodePort }}
+      {{- end }}
       protocol: TCP
       name: linkstack-http
     - port: {{ int $https }}
       targetPort: linkstack-https
+      {{- if and (eq $type "NodePort") $httpsNodePort }}
+      nodePort: {{ int $httpsNodePort }}
+      {{- end }}
       protocol: TCP
       name: linkstack-https
   selector:
