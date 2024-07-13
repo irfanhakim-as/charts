@@ -154,6 +154,23 @@ ingress:
   # www: true
   www: false
 
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Clog server should listen.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used for Clog services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
 # Storage configurations.
 storage:
   # Log storage configurations.
