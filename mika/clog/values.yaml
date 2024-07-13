@@ -9,6 +9,7 @@ replicaCount: ""
 # Container images used for Clog.
 image:
   # Clog container image configurations.
+  # Source: https://github.com/irfanhakim-as/clog/pkgs/container/clog
   clog:
     # The registry where the Clog container image is hosted.
     # Default: "ghcr.io"
@@ -23,6 +24,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Ngrok container image configurations.
+  # Source: https://hub.docker.com/r/wernight/ngrok
   ngrok:
     # The registry where the Ngrok container image is hosted.
     # Default: "docker.io"
