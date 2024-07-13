@@ -148,7 +148,7 @@ storage:
     # The storage class name used for dynamically provisioning a persistent volume for the data storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
 
 # Resource requirements and limits for ChartName containers.
