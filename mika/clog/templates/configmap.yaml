@@ -2,9 +2,9 @@
 {{- $ingress := .Values.ingress.enabled }}
 {{- $ngrok := .Values.clog.ngrok.enabled }}
 {{- $debug := .Values.clog.debug | default "false" | toString | quote }}
-{{- $domain = .Values.clog.domain | default "localhost" | toString }}
+{{- $domain := .Values.clog.domain | default "localhost" | toString }}
 {{- $name := .Values.clog.name | default "Clog" | toString | quote }}
-{{- $serverAdmin = .Values.clog.serverAdmin | default "admin@example.com" | toString }}
+{{- $serverAdmin := .Values.clog.serverAdmin | default "admin@example.com" | toString }}
 ---
 apiVersion: v1
 kind: ConfigMap
