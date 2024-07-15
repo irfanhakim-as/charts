@@ -35,7 +35,7 @@ cloudflareddns:
   # The path to the Cloudflare DDNS configuration directory.
   # Default: "/etc/cloudflare-ddns"
   # Example:
-  # configPath: "/etc/cloudflare-ddns"
+  # configPath: "/var/lib/cloudflare-ddns"
   configPath: ""
   # Specify whether to add an A record for each subdomain.
   # Default: "true"
