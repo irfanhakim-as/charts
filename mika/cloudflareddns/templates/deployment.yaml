@@ -1,7 +1,7 @@
-{{- $registry := .Values.image.cloudflareddns.registry | default "docker.io" | toString }}
-{{- $repository := .Values.image.cloudflareddns.repository | default "timothyjmiller/cloudflare-ddns" | toString }}
-{{- $tag := .Values.image.cloudflareddns.tag | default .Chart.AppVersion | toString }}
-{{- $pullPolicy := .Values.image.cloudflareddns.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $cloudflareddns_registry := .Values.image.cloudflareddns.registry | default "docker.io" | toString }}
+{{- $cloudflareddns_repository := .Values.image.cloudflareddns.repository | default "timothyjmiller/cloudflare-ddns" | toString }}
+{{- $cloudflareddns_tag := .Values.image.cloudflareddns.tag | default .Chart.AppVersion | toString }}
+{{- $cloudflareddns_pullPolicy := .Values.image.cloudflareddns.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $configPath := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString }}
 ---
@@ -31,8 +31,8 @@ spec:
       {{- end }}
       containers:
         - name: cloudflareddns
-          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
-          imagePullPolicy: {{ $pullPolicy }}
+          image: {{ printf "%s/%s:%s" $cloudflareddns_registry $cloudflareddns_repository $cloudflareddns_tag | quote }}
+          imagePullPolicy: {{ $cloudflareddns_pullPolicy }}
           resources:
             {{- toYaml .Values.resources.cloudflareddns | nindent 12 }}
           envFrom:
