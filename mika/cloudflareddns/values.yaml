@@ -51,11 +51,11 @@ cloudflareddns:
   # Example:
   # subdomains:
   #   - hostname: ""
-  #     proxied: true
+  #     proxied: "true"
   #   - hostname: "foo"
-  #     proxied: false
+  #     proxied: "false"
   #   - hostname: "bar"
-  #     proxied: false
+  #     proxied: "false"
   subdomains: []
   # The Cloudflare API token used to authenticate with the Cloudflare API.
   # Example:
