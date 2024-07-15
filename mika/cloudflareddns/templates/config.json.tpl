@@ -13,7 +13,7 @@ Cloudflare-DDNS config.json template
         {{- $subdomains := .Values.cloudflareddns.subdomains }}
         {{- range $index, $subdomain := $subdomains }}
         {
-          "name": "{{ $subdomain.hostname }}",
+          "name": {{ $subdomain.hostname | quote }},
           "proxied": {{ $subdomain.proxied | default "false" | toString }}
         }{{ if ne $index (sub (len $subdomains) 1) }},{{ end }}
         {{- end }}
