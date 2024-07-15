@@ -50,12 +50,15 @@ cloudflareddns:
   # The list of subdomains to be updated, each with their own hostname and proxied setting.
   # Example:
   # subdomains:
+  #   # The subdomain of the domain to be updated.
+  #   # Example:
+  #   # hostname: "foo"
   #   - hostname: ""
-  #     proxied: "true"
-  #   - hostname: "foo"
-  #     proxied: "false"
-  #   - hostname: "bar"
-  #     proxied: "false"
+  #   # Specifies whether the subdomain should be proxied.
+  #   # Default: "false"
+  #   # Example:
+  #   # proxied: "true"
+  #     proxied: ""
   subdomains: []
   # The Cloudflare API token used to authenticate with the Cloudflare API.
   # Example:
