@@ -46,6 +46,3 @@ spec:
         - name: {{ .Release.Name }}-cloudflareddns-config
           secret:
             secretName: {{ .Release.Name }}-cloudflareddns-config
-            items:
-              - key: config.json
-                path: config.json
