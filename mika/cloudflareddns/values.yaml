@@ -38,14 +38,14 @@ cloudflareddns:
   # configPath: "/var/lib/cloudflare-ddns"
   configPath: ""
   # Specify whether to add an A record for each subdomain.
-  # Default: "true"
+  # Default: true
   # Example:
-  # ipv4: "false"
+  # ipv4: false
   ipv4: ""
   # Specify whether to add an AAAA record for each subdomain.
-  # Default: "false"
+  # Default: false
   # Example
-  # ipv6: "true"
+  # ipv6: true
   ipv6: ""
   # The list of subdomains to be updated, each with their own hostname and proxied setting.
   # Example:
