@@ -10,7 +10,7 @@ keywords:
   - "ddns"
   - "cloudflare-ddns"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/cloudflare.png"
+icon: "https://irfanhakim-as.github.io/charts/logos/cloudflare.svg"
 sources:
   - "https://github.com/timothymiller/cloudflare-ddns"
 maintainers:
