@@ -48,9 +48,9 @@ imagePullSecrets: []
 # Clog configurations.
 clog:
   # Specifies whether Clog should run in debug mode.
-  # Default: false
+  # Default: "false"
   # Example:
-  # debug: true
+  # debug: "true"
   debug: ""
   # The ingress domain name that hosts the Clog server.
   # Default: "localhost"
