@@ -14,7 +14,7 @@ Cloudflare-DDNS config.json template
         {{- range $index, $subdomain := $subdomains }}
         {
           "name": "{{ $subdomain.hostname }}",
-          "proxied": {{ $subdomain.proxied }}
+          "proxied": {{ $subdomain.proxied | default "false" | toString }}
         }{{ if ne $index (sub (len $subdomains) 1) }},{{ end }}
         {{- end }}
       ]
