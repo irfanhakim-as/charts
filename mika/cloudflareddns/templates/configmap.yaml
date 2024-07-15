@@ -1,4 +1,5 @@
-{{- $config_path := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString | quote }}
+{{- $configPath := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString | quote }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,4 +7,4 @@ metadata:
   labels:
     {{- include "cloudflareddns.labels" . | nindent 4 }}
 data:
-  CONFIG_PATH: {{ $config_path }}
+  CONFIG_PATH: {{ $configPath }}
