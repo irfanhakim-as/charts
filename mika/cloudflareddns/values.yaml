@@ -2,24 +2,25 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# The desired number of running replicas for cloudflareddns.
+# The desired number of running replicas for Cloudflare DDNS.
 # Default: "1"
 replicaCount: ""
 
-# Container images used for cloudflareddns.
+# Container images used for Cloudflare DDNS.
 image:
-  # cloudflareddns container image configurations.
+  # Cloudflare DDNS container image configurations.
+  # Source: https://hub.docker.com/r/timothyjmiller/cloudflare-ddns
   cloudflareddns:
-    # The registry where the cloudflareddns container image is hosted.
+    # The registry where the Cloudflare DDNS container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the cloudflareddns container image used.
+    # The name of the repository that contains the Cloudflare DDNS container image used.
     # Default: "timothyjmiller/cloudflare-ddns"
     repository: ""
-    # The tag that specifies the version of the cloudflareddns container image used.
+    # The tag that specifies the version of the Cloudflare DDNS container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the cloudflareddns container image.
+    # The policy that determines when Kubernetes should pull the Cloudflare DDNS container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
 
@@ -29,9 +30,9 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
-# cloudflareddns configurations.
+# Cloudflare DDNS configurations.
 cloudflareddns:
-  # The path to the cloudflareddns configuration directory.
+  # The path to the Cloudflare DDNS configuration directory.
   # Default: "/etc/cloudflare-ddns"
   # Example:
   # configPath: "/etc/cloudflare-ddns"
@@ -65,7 +66,7 @@ cloudflareddns:
   # zoneID: "71fovu74p100z856k795umzl32h3240p"
   zoneID: ""
 
-# Resource requirements and limits for cloudflareddns container.
+# Resource requirements and limits for Cloudflare DDNS containers.
 resources:
   # The minimum amount of resources required by cloudflareddns to run.
   requests:
