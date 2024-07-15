@@ -33,7 +33,7 @@ spec:
           image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
           imagePullPolicy: {{ $pullPolicy }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.cloudflareddns | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-cloudflareddns-cm

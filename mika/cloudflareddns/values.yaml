@@ -72,23 +72,27 @@ cloudflareddns:
 
 # Resource requirements and limits for Cloudflare DDNS containers.
 resources:
-  # The minimum amount of resources required by cloudflareddns to run.
-  requests:
-    # The minimum amount of CPU resources required by cloudflareddns.
-    # Example:
-    # cpu: "10m"
-    cpu: "10m"
-    # The minimum amount of memory required by cloudflareddns.
-    # Example:
-    # memory: "10Mi"
-    memory: "10Mi"
-  # The maximum amount of resources allowed for cloudflareddns.
-  limits:
-    # The maximum amount of CPU resources allowed for cloudflareddns.
-    # Example:
-    # cpu: "250m"
-    cpu: "50m"
-    # The maximum amount of memory allowed for cloudflareddns.
-    # Example:
-    # memory: "250Mi"
-    memory: "32Mi"
+  # Cloudflare DDNS container resources.
+  # Example:
+  # cloudflareddns:
+  #   # The minimum amount of resources required by Cloudflare DDNS to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Cloudflare DDNS.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Cloudflare DDNS.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for Cloudflare DDNS.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Cloudflare DDNS.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "50m"
+  #     # The maximum amount of memory allowed for Cloudflare DDNS.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "32Mi"
+  cloudflareddns: {}
