@@ -3,7 +3,8 @@
 {{- $tag := .Values.image.cloudflareddns.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.cloudflareddns.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $config_path := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString }}
+{{- $configPath := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,8 +40,8 @@ spec:
                 name: {{ .Release.Name }}-cloudflareddns-cm
           volumeMounts:
             - name: {{ .Release.Name }}-cloudflareddns-config
-              mountPath: {{ $config_path }}/config.json
-              subPath: config.json
+              mountPath: {{ printf "%s/%s" $configPath "config.json" | quote }}
+              subPath: "config.json"
               readOnly: true
       volumes:
         - name: {{ .Release.Name }}-cloudflareddns-config
