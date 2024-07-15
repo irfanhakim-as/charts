@@ -72,7 +72,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | cloudflareddns.configPath | string | `""` | The path to the cloudflareddns configuration directory. Default: `"/etc/cloudflare-ddns"`. |
 | cloudflareddns.ipv4 | string | `""` | Specify whether to add an A record for each subdomain. Default: `"true"`. |
 | cloudflareddns.ipv6 | string | `""` | Specify whether to add an AAAA record for each subdomain. Default: `"false"`. |
-| cloudflareddns.subdomains | list | `[]` | The list of subdomains to be updated, each with their own hostname and proxied setting. |
+| cloudflareddns.subdomains | list | `[]` | The list of subdomains to be updated for a specified domain (zone). Items: `.hostname`, `.proxied`. |
 | cloudflareddns.token | string | `""` | The Cloudflare API token used to authenticate with the Cloudflare API. |
 | cloudflareddns.zoneID | string | `""` | The ID of the zone that will get the records. |
 | image.cloudflareddns.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the cloudflareddns container image. Default: `"IfNotPresent"`. |
