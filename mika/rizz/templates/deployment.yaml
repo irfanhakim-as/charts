@@ -1,6 +1,6 @@
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
-{{- $persistence := .Values.rizz.persistence.enabled }}
+{{- $logPersistence := .Values.storage.log.enabled }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
 {{- $rizz_tag := .Values.image.rizz.tag | default .Chart.AppVersion | toString }}
@@ -11,6 +11,8 @@
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $release_name := .Release.Name | toString }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
+{{- $logSubPath := .Values.storage.log.subPath | toString }}
 {{- $accounts := .Values.rizz.mastodon }}
 apiVersion: apps/v1
 kind: Deployment
@@ -92,9 +94,12 @@ spec:
               subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
-            {{- if $persistence }}
+            {{- if $logPersistence }}
             - name: {{ .Release.Name }}-rizz-log
-              mountPath: /var/log/apache2
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
             {{- end }}
         {{- if $apscheduler }}
         - name: apscheduler
@@ -137,9 +142,12 @@ spec:
               subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
-            {{- if $persistence }}
+            {{- if $logPersistence }}
             - name: {{ .Release.Name }}-rizz-log
-              mountPath: /var/log/apache2
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
             {{- end }}
         {{- else if $celery }}
         - name: redis
@@ -218,7 +226,7 @@ spec:
                 path: {{ $token_secret }}
               {{- end }}
         {{- end }}
-        {{- if $persistence }}
+        {{- if $logPersistence }}
         - name: {{ .Release.Name }}-rizz-log
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-rizz-log-pvc
