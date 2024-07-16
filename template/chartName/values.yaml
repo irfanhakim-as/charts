@@ -80,6 +80,7 @@ ingress:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
   # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
   # Example:
   # customAnnotations:
   #   # The prefix of the annotation.
