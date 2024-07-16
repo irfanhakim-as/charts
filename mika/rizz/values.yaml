@@ -203,7 +203,7 @@ rizz:
         # minute: "30"
         minute: ""
         # The seconds at which the task scheduler cleans up the database.
-        # Default: "0" for `apscheduler`
+        # Default: "0" (`apscheduler`)
         # Example:
         # second: "30"
         second: ""
@@ -220,7 +220,7 @@ rizz:
         # minute: "*/30"
         minute: ""
         # The seconds at which the task scheduler posts scheduled posts.
-        # Default: "0" for `apscheduler`
+        # Default: "0" (`apscheduler`)
         # Example:
         # second: "30"
         second: ""
