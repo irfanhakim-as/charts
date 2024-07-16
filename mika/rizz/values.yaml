@@ -136,7 +136,7 @@ rizz:
   #   # note: "This is the bio of the Rizz bot."
   #     note: ""
   mastodon: []
-  # Rizz feed configurations.
+  # RSS feed configurations.
   # Example:
   # feed:
   #   # The URL of the RSS feed to be tracked by Rizz.
