@@ -86,6 +86,29 @@ rizz:
   # Example:
   # visibility: "unlisted"
   visibility: ""
+  # RSS feed configurations.
+  # Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`
+  # Example:
+  # feed:
+  #   # The URL of the RSS feed to be tracked by Rizz.
+  #   # Example:
+  #   # endpoint: "https://www.reddit.com/r/programming/.rss"
+  #   - endpoint: ""
+  #   # The publishing date format of the RSS feed entry.
+  #   # Default: "%a, %d %b %Y %H:%M:%S %z"
+  #   # Example:
+  #   # pubdate_format: "%a, %d %b %Y %H:%M:%S %Z"
+  #     pubdate_format: ""
+  #   # The unique identifier of the RSS feed entry.
+  #   # Example:
+  #   # id: "MyFeed"
+  #     id: ""
+  #   # Specifies whether the RSS feed entry should be actively processed.
+  #   # Default: "true"
+  #   # Example:
+  #   # enabled: "false"
+  #     enabled: ""
+  feed: []
   # Mastodon configurations.
   # Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
   # Example:
@@ -141,29 +164,6 @@ rizz:
   #   # note: "This is the bio of the Rizz bot."
   #     note: ""
   mastodon: []
-  # RSS feed configurations.
-  # Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`
-  # Example:
-  # feed:
-  #   # The URL of the RSS feed to be tracked by Rizz.
-  #   # Example:
-  #   # endpoint: "https://www.reddit.com/r/programming/.rss"
-  #   - endpoint: ""
-  #   # The publishing date format of the RSS feed entry.
-  #   # Default: "%a, %d %b %Y %H:%M:%S %z"
-  #   # Example:
-  #   # pubdate_format: "%a, %d %b %Y %H:%M:%S %Z"
-  #     pubdate_format: ""
-  #   # The unique identifier of the RSS feed entry.
-  #   # Example:
-  #   # id: "MyFeed"
-  #     id: ""
-  #   # Specifies whether the RSS feed entry should be actively processed.
-  #   # Default: "true"
-  #   # Example:
-  #   # enabled: "false"
-  #     enabled: ""
-  feed: []
 
 # Scheduler configurations.
 scheduler:
