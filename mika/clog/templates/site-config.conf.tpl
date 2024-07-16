@@ -27,7 +27,7 @@ Apache site-config.conf template
         Require all granted
     </Directory>
 
-    ErrorLog /var/log/apache2/apache.error.log
-    CustomLog /var/log/apache2/apache.access.log combined
+    ErrorLog LOG_MOUNT_PATH/apache.error.log
+    CustomLog LOG_MOUNT_PATH/apache.access.log combined
 </VirtualHost>
 {{- end }}
