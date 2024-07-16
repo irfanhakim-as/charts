@@ -60,6 +60,38 @@ A unique, secure secret key is required for each Rizz installation.
     secret: "<generated-secret>"
     ```
 
+### Application access token
+
+A secure application access token is required for each configured Mastodon account.
+
+1. Login to your Mastodon (bot) account. If you do not currently have one, you will need to register one first on any available Mastodon instance.
+
+2. Click the **Preferences** menu item.
+
+3. In the **Preferences** page, navigate to the **Development** section.
+
+4. From the **Your applications** list, click the **New application** button.
+5. In the **New application** form, fill in the following required details:
+
+    - Application name: Add in a unique, descriptive name for your application i.e. `Rizz`
+
+    - Scopes:
+
+      - `read`
+      - `write`
+
+6. Click the **Save changes** button.
+
+7. After being redirected back to the **Your applications** page, click the link on the name of the application you just created.
+
+8. In the specific **Application** page, copy the value of the confidential **Your access token** field.
+
+9. Set the access token as the value of the `rizz.mastodon` account's `token` setting in your installation's values file:
+
+    ```yaml
+    token: "<access-token>"
+    ```
+
 ---
 
 ## Recommended configurations
