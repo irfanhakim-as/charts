@@ -136,24 +136,6 @@ rizz:
   #   # note: "This is the bio of the Rizz bot."
   #     note: ""
   mastodon: []
-  # Rizz storage persistence configurations.
-  persistence:
-    # Specifies whether Rizz should persist its storage.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The storage class name used for dynamically provisioning a persistent volume for the Rizz storage.
-    # Default: "longhorn"
-    # Example:
-    # storageClassName: "longhorn"
-    storageClassName: ""
-    # Rizz logs persistence configurations.
-    logs:
-      # The amount of persistent storage allocated for Rizz logs.
-      # Default: "20Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
   # Rizz feed configurations.
   # Example:
   # feed:
@@ -275,6 +257,39 @@ db:
   # Example:
   # password: "password"
   password: ""
+
+# Storage configurations.
+storage:
+  # Log storage configurations.
+  log:
+    # Specifies whether persistent storage should be provisioned for log storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the log storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the log storage should be mounted on the container.
+    # Default: "/var/log/apache2"
+    # Example:
+    # mountPath: "/log"
+    mountPath: ""
+    # The subpath within the log storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Log"
+    subPath: ""
+    # The default amount of persistent storage allocated for the log storage.
+    # Default: "50Mi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the log storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
 
 # Resource requirements and limits for Rizz containers.
 resources:
