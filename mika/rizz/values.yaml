@@ -48,30 +48,30 @@ imagePullSecrets: []
 # Rizz configurations.
 rizz:
   # Specifies whether Rizz should run in debug mode.
-  # Default: false
+  # Default: "false"
   # Example:
-  # debug: true
-  debug: false
+  # debug: "true"
+  debug: ""
   # The domain name of the Rizz service.
   # Default: "localhost"
   # Example:
   # domain: "localhost"
   domain: ""
   # Specifies whether to enable posting in organic numbers.
-  # Default: true
+  # Default: "true"
   # Example:
-  # organic: false
-  organic: true
+  # organic: "false"
+  organic: ""
   # The limit number of posts to be scheduled for posting per run.
   # Default: "3"
   # Example:
   # post_limit: "5"
   post_limit: ""
   # Specifies whether to retry posting if the post fails to be sent.
-  # Default: true
+  # Default: "true"
   # Example:
-  # retry_post: false
-  retry_post: true
+  # retry_post: "false"
+  retry_post: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the Rizz service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
@@ -97,22 +97,22 @@ rizz:
   #   # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   #     token: ""
   #   # Specifies whether the Rizz bot should be marked as a bot.
-  #   # Default: true
+  #   # Default: "true"
   #   # Example:
-  #   # bot: false
+  #   # bot: "false"
   #     bot: ""
   #   # Specifies whether the Rizz bot should appear in the user directory.
-  #   # Default: true
+  #   # Default: "true"
   #   # Example:
-  #   # discoverable: false
+  #   # discoverable: "false"
   #     discoverable: ""
   #   # Specifies whether the Rizz bot should be active.
-  #   # Default: true
+  #   # Default: "true"
   #   # Example:
-  #   # enabled: false
+  #   # enabled: "false"
   #     enabled: ""
   #   # The display name of the Rizz bot.
-  #   # Default: null
+  #   # Default: "null"
   #   # Example:
   #   # display_name: "Rizz"
   #     display_name: ""
@@ -126,12 +126,12 @@ rizz:
   #   #     value: "https://domain2.example.org"
   #     fields: []
   #   # Specifies whether the Rizz bot needs to manually approve follow requests.
-  #   # Default: false
+  #   # Default: "false"
   #   # Example:
-  #   # locked: true
+  #   # locked: "true"
   #     locked: ""
   #   # The bio of the Rizz bot.
-  #   # Default: null
+  #   # Default: "null"
   #   # Example:
   #   # note: "This is the bio of the Rizz bot."
   #     note: ""
