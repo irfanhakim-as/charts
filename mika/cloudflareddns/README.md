@@ -1,87 +1,141 @@
-# [`cloudflareddns`](https://github.com/timothymiller/cloudflare-ddns)
+# [Cloudflare DDNS](https://github.com/timothymiller/cloudflare-ddns)
+
+Access your home network remotely via a custom domain name without a static IP!
 
 ## Prerequisites
+
+> [!NOTE]  
+> You may refer to [Orked](https://github.com/irfanhakim-as/orked) for help with setting up a Kubernetes cluster that meets all the following prerequisites.
 
 - Kubernetes 1.19+
 - Helm 3.2.0+
 
-## How to add repo
+---
 
-Add the repo to your local helm client.
+## Preflight checklist
 
-```sh
-helm repo add mika https://irfanhakim-as.github.io/charts
-```
+> [!IMPORTANT]  
+> The following items are required to be set up prior to installing this chart.
 
-Update the repo to retrieve the latest versions of the packages.
+**This section does not apply to this chart.**
 
-```sh
-helm repo update
-```
+---
 
-## How to install
+## Recommended configurations
 
-### Prepare chart values
+> [!NOTE]  
+> The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-Copy `values.yaml` from the chart you would like to install.
+**This section does not apply to this chart.**
 
-```sh
-cp mika/cloudflareddns/values.yaml .
-```
+---
 
-Edit `values.yaml` with the appropriate values.  Please refer to the [Configurations](#configurations) section below, or the `values.yaml` file itself for details and sample values.
+## Application configurations
 
-```sh
-nano values.yaml
-```
+> [!NOTE]  
+> The following configurations are expected or recommended to be set up from within the application after completing the installation.
 
-### Perform installation
+**This section does not apply to this chart.**
 
-Install the desired chart. Replace `$release_name` and `$namespace` accordingly.
+---
 
-```sh
-helm install $release_name mika/cloudflareddns --namespace $namespace --create-namespace --values values.yaml --wait
-```
+## How to add the chart repo
 
-Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
+1. Add the repo to your local helm client:
 
-```sh
-helm ls --namespace $namespace | grep "$release_name"
-```
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
 
-## How to upgrade
+2. Update the repo to retrieve the latest versions of the packages:
 
-After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+    ```sh
+    helm repo update
+    ```
 
-```sh
-helm upgrade $release_name mika/cloudflareddns --namespace $namespace --values values.yaml --wait
-```
+---
 
-## How to uninstall
+## How to install or upgrade a chart release
 
-Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
+1. Get the values file of the Cloudflare DDNS chart or an existing installation (release).
 
-```sh
-helm uninstall $release_name --namespace $namespace --wait
-```
+    Get the latest Cloudflare DDNS chart values file for a new installation:
 
-## Configurations
+    ```sh
+    helm show values mika/cloudflareddns > values.yaml
+    ```
+
+    Alternatively, get the values file of an existing Cloudflare DDNS release:
+
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Edit your Cloudflare DDNS values file with the intended configurations:
+
+    ```sh
+    nano values.yaml
+    ```
+
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
+
+3. Install a new release for Cloudflare DDNS or upgrade an existing Cloudflare DDNS release:
+
+    ```sh
+    helm upgrade --install ${releaseName} mika/cloudflareddns --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+4. Verify that your Cloudflare DDNS release has been installed:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
+
+---
+
+## How to uninstall a chart release
+
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
+1. Uninstall the desired release:
+
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
+
+---
+
+## Chart configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| cloudflareddns.configPath | string | `""` | The path to the cloudflareddns configuration directory. Default: `"/etc/cloudflare-ddns"`. |
+| cloudflareddns.configPath | string | `""` | The path to the Cloudflare DDNS configuration directory. Default: `"/etc/cloudflare-ddns"`. |
 | cloudflareddns.ipv4 | string | `""` | Specify whether to add an A record for each subdomain. Default: `"true"`. |
 | cloudflareddns.ipv6 | string | `""` | Specify whether to add an AAAA record for each subdomain. Default: `"false"`. |
 | cloudflareddns.subdomains | list | `[]` | The list of subdomains to be updated for a specified domain (zone). Items: `.hostname`, `.proxied`. |
 | cloudflareddns.token | string | `""` | The Cloudflare API token used to authenticate with the Cloudflare API. |
 | cloudflareddns.zoneID | string | `""` | The ID of the zone that will get the records. |
-| image.cloudflareddns.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the cloudflareddns container image. Default: `"IfNotPresent"`. |
-| image.cloudflareddns.registry | string | `""` | The registry where the cloudflareddns container image is hosted. Default: `"docker.io"`. |
-| image.cloudflareddns.repository | string | `""` | The name of the repository that contains the cloudflareddns container image used. Default: `"timothyjmiller/cloudflare-ddns"`. |
-| image.cloudflareddns.tag | string | `""` | The tag that specifies the version of the cloudflareddns container image used. Default: `Chart appVersion`. |
+| image.cloudflareddns.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Cloudflare DDNS container image. Default: `"IfNotPresent"`. |
+| image.cloudflareddns.registry | string | `""` | The registry where the Cloudflare DDNS container image is hosted. Default: `"docker.io"`. |
+| image.cloudflareddns.repository | string | `""` | The name of the repository that contains the Cloudflare DDNS container image used. Default: `"timothyjmiller/cloudflare-ddns"`. |
+| image.cloudflareddns.tag | string | `""` | The tag that specifies the version of the Cloudflare DDNS container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
-| replicaCount | string | `""` | The desired number of running replicas for cloudflareddns. Default: `"1"`. |
-| resources.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for cloudflareddns. |
-| resources.limits.memory | string | `"32Mi"` | The maximum amount of memory allowed for cloudflareddns. |
-| resources.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by cloudflareddns. |
-| resources.requests.memory | string | `"10Mi"` | The minimum amount of memory required by cloudflareddns. |
+| replicaCount | string | `""` | The desired number of running replicas for Cloudflare DDNS. Default: `"1"`. |
+| resources.cloudflareddns | object | `{}` | Resource requirements and limits for Cloudflare DDNS containers. |
