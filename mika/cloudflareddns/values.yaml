@@ -47,6 +47,11 @@ cloudflareddns:
   # Example:
   # ipv6: "true"
   ipv6: ""
+  # Specify whether to purge stale DNS records not defined in the configuration.
+  # Default: "false"
+  # Example:
+  # purge: "true"
+  purge: ""
   # The list of subdomains to be updated for a specified domain (zone).
   # Items: `.hostname`, `.proxied`
   # Example:
@@ -65,6 +70,11 @@ cloudflareddns:
   # Example:
   # token: "Na9E7VEY58COhA03l1ytm1r70u7jBsf8bNqh5AlZ"
   token: ""
+  # The Time-To-Live (TTL) duration defining how long DNS records are cached in seconds.
+  # Default: "300"
+  # Example:
+  # ttl: "86400"
+  ttl: ""
   # The ID of the zone that will get the records.
   # Example:
   # zoneID: "71fovu74p100z856k795umzl32h3240p"
