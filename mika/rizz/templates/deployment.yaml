@@ -92,7 +92,7 @@ spec:
               readOnly: true
             {{- end }}
             {{- if $persistence }}
-            - name: {{ .Release.Name }}-rizz-logs
+            - name: {{ .Release.Name }}-rizz-log
               mountPath: /var/log/apache2
             {{- end }}
         {{- if $apscheduler }}
@@ -137,7 +137,7 @@ spec:
               readOnly: true
             {{- end }}
             {{- if $persistence }}
-            - name: {{ .Release.Name }}-rizz-logs
+            - name: {{ .Release.Name }}-rizz-log
               mountPath: /var/log/apache2
             {{- end }}
         {{- else if $celery }}
@@ -218,9 +218,9 @@ spec:
               {{- end }}
         {{- end }}
         {{- if $persistence }}
-        - name: {{ .Release.Name }}-rizz-logs
+        - name: {{ .Release.Name }}-rizz-log
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-rizz-logs-pvc
+            claimName: {{ .Release.Name }}-rizz-log-pvc
         {{- end }}
       securityContext:
         fsGroup: 33
