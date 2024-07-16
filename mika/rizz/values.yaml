@@ -52,10 +52,10 @@ rizz:
   # Example:
   # debug: "true"
   debug: ""
-  # The domain name of the Rizz service.
+  # The ingress domain name that hosts the Rizz server.
   # Default: "localhost"
   # Example:
-  # domain: "localhost"
+  # domain: "rizz.example.com"
   domain: ""
   # Specifies whether to enable posting in organic numbers.
   # Default: "true"
