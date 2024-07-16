@@ -303,22 +303,22 @@ ingress:
 service:
   # Rizz service port configurations.
   rizz:
-    # The optional node port to expose for http when the service type is NodePort.
+    # The optional node port to expose for Rizz when the service type is NodePort.
     # Example:
     # nodePort: "30000"
     nodePort: ""
-    # The port on which the Rizz server should listen for connections.
+    # The Rizz port on which the Rizz server should listen for connections.
     # Default: "80"
     # Example:
     # port: "8080"
     port: ""
   # Redis service port configurations.
   redis:
-    # The optional node port to expose for https when the service type is NodePort.
+    # The optional node port to expose for Redis when the service type is NodePort.
     # Example:
     # nodePort: "32000"
     nodePort: ""
-    # The port on which the Redis server should listen for connections.
+    # The Redis port on which the Rizz server should listen for connections.
     # Default: "6379"
     # Example:
     # port: "8443"
