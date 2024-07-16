@@ -1,95 +1,177 @@
-# [`rizz`](https://github.com/irfanhakim-as/rizz) 🔒
+# [Rizz](https://github.com/irfanhakim-as/rizz)
+
+> [!WARNING]  
+> This chart requires access to a private image registry, please request access from the owner of the repository.
+
+Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon.
 
 ## Prerequisites
 
+> [!NOTE]  
+> You may refer to [Orked](https://github.com/irfanhakim-as/orked) for help with setting up a Kubernetes cluster that meets all the following prerequisites.
+
 - Kubernetes 1.19+
 - Helm 3.2.0+
+- Longhorn 1.4.1+
+
+---
 
 ## Preflight checklist
 
-### Create image pull secret
+> [!IMPORTANT]  
+> The following items are required to be set up prior to installing this chart.
 
-Replace `$github-username`, `$github-pass`, `$github-email` and `$namespace` accordingly.
+### Image pull secret
 
-```sh
-kubectl create secret docker-registry ghcr-token-secret --docker-server=https://ghcr.io --docker-username="$github-username" --docker-password="$github-pass" --docker-email="$github-email" -n $namespace
-```
+An image pull secret is required to access the private image registry that hosts the required image.
 
-### Generate secret key for `rizz.secret`
+1. If you have the necessary credentials, create a named image pull secret (i.e. `ghcr-token-secret`) in the `default` namespace:
 
-```sh
-python -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)]))'
-```
+    ```sh
+    kubectl create secret docker-registry ghcr-token-secret --docker-server=<container-registry> --docker-username=<registry-username> --docker-password=<registry-token> --docker-email=<registry-email> -n default
+    ```
 
-## How to add repo
+2. Copy the image pull secret from the `default` namespace to the destination namespace:
 
-Add the repo to your local helm client.
+    ```sh
+    kubectl get secret ghcr-token-secret -n default -o yaml | sed "s/namespace: .*/namespace: <destination-namespace>/" | kubectl apply -f -
+    ```
 
-```sh
-helm repo add mika https://irfanhakim-as.github.io/charts
-```
+3. Add the name of the image pull secret to the `imagePullSecrets` array in your installation's values file:
 
-Update the repo to retrieve the latest versions of the packages.
+    ```yaml
+    imagePullSecrets:
+      - name: "ghcr-token-secret"
+    ```
 
-```sh
-helm repo update
-```
+### Generate secret key
 
-## How to install
+A unique, secure secret key is required for each Rizz installation.
 
-### Prepare chart values
+1. Generate a secret key using the following command:
 
-Copy `values.yaml` from the chart you would like to install.
+    ```sh
+    python -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)]))'
+    ```
 
-```sh
-cp mika/rizz/values.yaml .
-```
+2. Set the generated secret key as the value of the `rizz.secret` setting in your installation's values file:
 
-Edit `values.yaml` with the appropriate values. Refer to the [Configurations](#Configurations) section for available options.
+    ```yaml
+    secret: "<generated-secret>"
+    ```
 
-```sh
-nano values.yaml
-```
+---
 
-### Perform installation
+## Recommended configurations
 
-Install the desired chart. Replace `$release_name` and `$namespace` accordingly.
+> [!NOTE]  
+> The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-```sh
-helm install $release_name mika/rizz --namespace $namespace --create-namespace --values values.yaml --wait
-```
+**This section does not apply to this chart.**
 
-Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
+---
 
-```sh
-helm ls --namespace $namespace | grep "$release_name"
-```
+## Application configurations
 
-## How to upgrade
+> [!NOTE]  
+> The following configurations are expected or recommended to be set up from within the application after completing the installation.
 
-After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+**This section does not apply to this chart.**
 
-```sh
-helm upgrade $release_name mika/rizz --namespace $namespace --values values.yaml --wait
-```
+---
 
-## How to uninstall
+## How to add the chart repo
 
-Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
+1. Add the repo to your local helm client:
 
-```sh
-helm uninstall $release_name --namespace $namespace --wait
-```
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
 
-## Configurations
+2. Update the repo to retrieve the latest versions of the packages:
+
+    ```sh
+    helm repo update
+    ```
+
+---
+
+## How to install or upgrade a chart release
+
+1. Get the values file of the Rizz chart or an existing installation (release).
+
+    Get the latest Rizz chart values file for a new installation:
+
+    ```sh
+    helm show values mika/rizz > values.yaml
+    ```
+
+    Alternatively, get the values file of an existing Rizz release:
+
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Edit your Rizz values file with the intended configurations:
+
+    ```sh
+    nano values.yaml
+    ```
+
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
+
+3. Install a new release for Rizz or upgrade an existing Rizz release:
+
+    ```sh
+    helm upgrade --install ${releaseName} mika/rizz --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+4. Verify that your Rizz release has been installed:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
+
+---
+
+## How to uninstall a chart release
+
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
+1. Uninstall the desired release:
+
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
+
+---
+
+## Chart configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | db.host | string | `""` | The hostname or IP address of the Rizz database server. |
-| db.name | string | `""` | The name of the database used by Rizz. |
-| db.password | string | `""` | The password associated with the Rizz database's user. |
-| db.port | string | `""` | The port number on which the Rizz database server is listening. Default: `"5432"`. |
-| db.type | string | `""` | The type of the database used by Rizz. Default: `"postgresql"`. |
+| db.name | string | `""` | The name of the database being used by Rizz. |
+| db.password | string | `""` | The password associated with the Rizz database user. |
+| db.port | string | `""` | The port number the Rizz database server is listening for connections. Default: `"5432"`. |
+| db.type | string | `""` | The database engine or backend being used by Rizz. Default: `"postgresql"`. |
 | db.user | string | `""` | The username or user account for accessing the Rizz database. |
 | image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"IfNotPresent"`. |
 | image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |
@@ -100,36 +182,43 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.rizz.repository | string | `""` | The name of the repository that contains the Rizz container image used. Default: `"irfanhakim-as/rizz"`. |
 | image.rizz.tag | string | `""` | The tag that specifies the version of the Rizz container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
+| ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Rizz services. |
+| ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for Rizz. Default: `"1"`. |
-| resources.rizz.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for Rizz. |
-| resources.rizz.limits.memory | string | `"120Mi"` | The maximum amount of memory allowed for Rizz. |
-| resources.rizz.requests.cpu | string | `"30m"` | The minimum amount of CPU resources required by Rizz. |
-| resources.rizz.requests.memory | string | `"60Mi"` | The minimum amount of memory required by Rizz. |
-| resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
-| resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
-| resources.scheduler.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Scheduler. |
-| resources.scheduler.requests.memory | string | `"100Mi"` | The minimum amount of memory required by Scheduler. |
-| rizz.debug | bool | `false` | Specifies whether Rizz should run in debug mode. Default: `false`. |
-| rizz.domain | string | `""` | The domain name of the Rizz service. Default: `"localhost"`. |
-| rizz.feed | list | `[]` | Rizz feed configurations. |
-| rizz.mastodon | list | `[]` | Rizz Mastodon configurations. |
-| rizz.organic | bool | `true` | Specifies whether to enable posting in organic numbers. Default: `true`. |
-| rizz.persistence.enabled | bool | `false` | Specifies whether Rizz should persist its storage. |
-| rizz.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for Rizz logs. Default: `"20Mi"`. |
-| rizz.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Rizz storage. Default: `"longhorn"`. |
+| resources.rizz | object | `{}` | Rizz container resources. |
+| resources.scheduler | object | `{}` | Scheduler container resources. |
+| rizz.debug | string | `""` | Specifies whether Rizz should run in debug mode. Default: `"false"`. |
+| rizz.domain | string | `""` | The ingress domain name that hosts the Rizz server. Default: `"localhost"`. |
+| rizz.feed | list | `[]` | RSS feed configurations. Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`. |
+| rizz.mastodon | list | `[]` | Mastodon configurations. Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
+| rizz.organic | string | `""` | Specifies whether to enable posting in organic numbers. Default: `"true"`. |
 | rizz.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"3"`. |
-| rizz.retry_post | bool | `true` | Specifies whether to retry posting if the post fails to be sent. Default: `true`. |
-| rizz.scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
-| rizz.scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
-| rizz.scheduler.schedule.clean_data.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
-| rizz.scheduler.schedule.clean_data.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
-| rizz.scheduler.schedule.clean_data.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` for `apscheduler`. |
-| rizz.scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"8-23/3"`. |
-| rizz.scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"0"`. |
-| rizz.scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"0"` for `apscheduler`. |
-| rizz.scheduler.schedule.update_data.hour | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
-| rizz.scheduler.schedule.update_data.minute | string | `""` | The minutes at which the task scheduler updates the database. Default: `"0"`. |
-| rizz.scheduler.schedule.update_data.second | string | `""` | The seconds at which the task scheduler updates the database. Default: `"0"` for `apscheduler`. |
-| rizz.scheduler.timezone | string | `""` | The timezone for the task scheduler used by Rizz to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
+| rizz.retry_post | string | `""` | Specifies whether to retry posting if the post fails to be sent. Default: `"true"`. |
 | rizz.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the Rizz service. |
+| rizz.serverAdmin | string | `""` | The email address displayed by Apache for server administration contact. Default: `"admin@example.com"`. |
 | rizz.visibility | string | `""` | The default visibility of posts made by the Rizz service. Default: `"public"`. |
+| scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by Rizz as the task scheduler. |
+| scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
+| scheduler.schedule.clean_data.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
+| scheduler.schedule.clean_data.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
+| scheduler.schedule.clean_data.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"8-23/3"`. |
+| scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"0"`. |
+| scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.update_data.hour | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
+| scheduler.schedule.update_data.minute | string | `""` | The minutes at which the task scheduler updates the database. Default: `"0"`. |
+| scheduler.schedule.update_data.second | string | `""` | The seconds at which the task scheduler updates the database. Default: `"0"` (`apscheduler`). |
+| scheduler.timezone | string | `""` | The timezone for the task scheduler used by Rizz to schedule time-dependent operations. Default: `"Asia/Kuala_Lumpur"`. |
+| service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
+| service.redis.port | string | `""` | The Redis port on which the Rizz server should listen for connections. Default: `"6379"`. |
+| service.rizz.nodePort | string | `""` | The optional node port to expose for Rizz when the service type is NodePort. |
+| service.rizz.port | string | `""` | The Rizz port on which the Rizz server should listen for connections. Default: `"80"`. |
+| service.type | string | `""` | The type of service used to expose Rizz services. Default: `"ClusterIP"`. |
+| storage.log.accessMode | string | `""` | The access mode defining how the log storage can be mounted. Default: `"ReadWriteMany"`. |
+| storage.log.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for log storage. |
+| storage.log.mountPath | string | `""` | The path where the log storage should be mounted on the container. Default: `"/var/log/apache2"`. |
+| storage.log.storage | string | `""` | The default amount of persistent storage allocated for the log storage. Default: `"50Mi"`. |
+| storage.log.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the log storage. Default: `"longhorn"`. |
+| storage.log.subPath | string | `""` | The subpath within the log storage to mount to the container. Leave empty if not required. |
