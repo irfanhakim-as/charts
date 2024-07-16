@@ -81,7 +81,8 @@ rizz:
   # Example:
   # visibility: "unlisted"
   visibility: ""
-  # Rizz Mastodon configurations.
+  # Mastodon configurations.
+  # Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
   # Example:
   # mastodon:
   #   # API endpoint or URL for the Mastodon instance of the Rizz bot.
