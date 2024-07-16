@@ -85,15 +85,15 @@ ingress:
   #   # The prefix of the annotation.
   #   # Default: "nginx.ingress.kubernetes.io"
   #   # Example:
-  #   # - prefix: "nginx.org"
+  #   # prefix: "nginx.org"
   #   - prefix: ""
   #   # The name of the annotation.
   #   # Example:
-  #     # name: "proxy-connect-timeout"
+  #   # name: "proxy-connect-timeout"
   #     name: ""
   #   # The value of the annotation.
   #   # Example:
-  #     # value: "120"
+  #   # value: "120"
   #     value: ""
   customAnnotations: []
   # Specifies whether the WWW subdomain should be enabled.
