@@ -44,7 +44,7 @@ cloudflareddns:
   ipv4: ""
   # Specify whether to add an AAAA record for each subdomain.
   # Default: "false"
-  # Example
+  # Example:
   # ipv6: "true"
   ipv6: ""
   # The list of subdomains to be updated for a specified domain (zone).
