@@ -22,7 +22,7 @@ Cloudflare-DDNS config.json template
   ],
   "a": ENABLE_IPV4,
   "aaaa": ENABLE_IPV6,
-  "purgeUnknownRecords": false,
-  "ttl": 300
+  "purgeUnknownRecords": ENABLE_PURGE,
+  "ttl": TTL_SECONDS
 }
 {{- end }}
