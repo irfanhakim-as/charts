@@ -244,7 +244,7 @@ rizz:
     # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
     # Default: "Asia/Kuala_Lumpur"
     # Example:
-    # timezone: "Asia/Kuala_Lumpur"
+    # timezone: "Etc/UTC"
     timezone: ""
 
 # Database configurations.
