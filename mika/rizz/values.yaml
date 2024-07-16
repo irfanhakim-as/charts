@@ -301,6 +301,11 @@ ingress:
 
 # Service configurations.
 service:
+  # The type of service used to expose Rizz services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
   # Rizz service port configurations.
   rizz:
     # The optional node port to expose for Rizz when the service type is NodePort.
@@ -323,11 +328,6 @@ service:
     # Example:
     # port: "8443"
     port: ""
-  # The type of service used to expose Rizz services.
-  # Default: "ClusterIP"
-  # Example:
-  # type: "NodePort"
-  type: ""
 
 # Storage configurations.
 storage:
