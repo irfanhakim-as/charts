@@ -8,6 +8,7 @@
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
 {{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
 {{- $domain := .Values.rizz.domain | default "localhost" | toString }}
+{{- $serverAdmin := .Values.rizz.serverAdmin | default "admin@example.com" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString }}
 ---
 apiVersion: v1
@@ -38,7 +39,7 @@ metadata:
     {{- include "rizz.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    {{- include "rizz.site-config-conf" . | toString | replace "DOMAIN" $domain | replace "LOG_MOUNT_PATH" $logMountPath | nindent 4 }}
+    {{- include "rizz.site-config-conf" . | toString | replace "DOMAIN" $domain | replace "SERVER_ADMIN" $serverAdmin | replace "LOG_MOUNT_PATH" $logMountPath | nindent 4 }}
 ---
 apiVersion: v1
 kind: ConfigMap
