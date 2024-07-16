@@ -176,7 +176,7 @@ rizz:
   #   # enabled: false
   #     enabled: ""
   feed: []
-  # Rizz scheduler configurations.
+  # Scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by Rizz as the task scheduler.
     # Example:
