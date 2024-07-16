@@ -1,3 +1,5 @@
+{{- $apscheduler := .Values.scheduler.apscheduler }}
+{{- $celery := .Values.scheduler.celery }}
 {{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
 {{- $scheduler_timezone := .Values.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
@@ -6,8 +8,6 @@
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
 {{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
 {{- $domain := .Values.rizz.domain | default "localhost" | toString }}
-{{- $apscheduler := .Values.scheduler.apscheduler }}
-{{- $celery := .Values.scheduler.celery }}
 ---
 apiVersion: v1
 kind: ConfigMap
