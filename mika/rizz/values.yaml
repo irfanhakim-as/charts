@@ -153,9 +153,9 @@ rizz:
   #   # id: "MyFeed"
   #     id: ""
   #   # Specifies whether the RSS feed entry should be actively processed.
-  #   # Default: true
+  #   # Default: "true"
   #   # Example:
-  #   # enabled: false
+  #   # enabled: "false"
   #     enabled: ""
   feed: []
   # Scheduler configurations.
