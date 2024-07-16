@@ -237,7 +237,7 @@ rizz:
         # minute: "15"
         minute: ""
         # The seconds at which the task scheduler updates the database.
-        # Default: "0" for `apscheduler`
+        # Default: "0" (`apscheduler`)
         # Example:
         # second: "30"
         second: ""
