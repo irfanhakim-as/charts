@@ -248,12 +248,21 @@ rizz:
 
 # Database configurations.
 db:
-  # The type of the database used by Rizz.
+  # The database engine or backend being used by Rizz.
   # Default: "postgresql"
   # Example:
-  # type: "postgresql"
+  # type: "mysql"
   type: ""
-  # The name of the database used by Rizz.
+  # The hostname or IP address of the Rizz database server.
+  # Example:
+  # host: "rizz.default.svc.cluster.local"
+  host: ""
+  # The port number the Rizz database server is listening for connections.
+  # Default: "5432"
+  # Example:
+  # port: "3306"
+  port: ""
+  # The name of the database being used by Rizz.
   # Example:
   # name: "rizz"
   name: ""
@@ -261,19 +270,10 @@ db:
   # Example:
   # user: "root"
   user: ""
-  # The password associated with the Rizz database's user.
+  # The password associated with the Rizz database user.
   # Example:
   # password: "password"
   password: ""
-  # The hostname or IP address of the Rizz database server.
-  # Example:
-  # host: "rizz.default.svc.cluster.local"
-  host: ""
-  # The port number on which the Rizz database server is listening.
-  # Default: "5432"
-  # Example:
-  # port: "5432"
-  port: ""
 
 # Resource requirements and limits for Rizz containers.
 resources:
