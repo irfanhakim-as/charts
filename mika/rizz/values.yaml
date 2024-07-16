@@ -9,6 +9,7 @@ replicaCount: ""
 # Container images used for Rizz.
 image:
   # Rizz container image configurations.
+  # Source: https://github.com/irfanhakim-as/rizz/pkgs/container/rizz
   rizz:
     # The registry where the Rizz container image is hosted.
     # Default: "ghcr.io"
@@ -23,6 +24,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Redis container image configurations.
+  # Source: https://hub.docker.com/_/redis
   redis:
     # The registry where the Redis container image is hosted.
     # Default: "docker.io"
