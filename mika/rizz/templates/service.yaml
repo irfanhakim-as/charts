@@ -1,4 +1,10 @@
 {{- $celery := .Values.scheduler.celery }}
+{{- $rizzPort := .Values.service.rizz.port | default "80" | toString }}
+{{- $rizzNodePort := .Values.service.rizz.nodePort | toString }}
+{{- $redisPort := .Values.service.redis.port | default "6379" | toString }}
+{{- $redisNodePort := .Values.service.redis.nodePort | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,17 +12,23 @@ metadata:
   labels:
     {{- include "rizz.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ $type }}
   ports:
-    - port: 80
+    - port: {{ int $rizzPort }}
       targetPort: rizz
+      {{- if and (eq $type "NodePort") $rizzNodePort }}
+      nodePort: {{ int $rizzNodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-rizz
+      name: rizz
     {{- if $celery }}
-    - port: 6379
+    - port: {{ int $redisPort }}
       targetPort: redis
+      {{- if and (eq $type "NodePort") $redisNodePort }}
+      nodePort: {{ int $redisNodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-redis
+      name: redis
     {{- end }}
   selector:
     {{- include "rizz.selectorLabels" . | nindent 4 }}
