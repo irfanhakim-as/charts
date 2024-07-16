@@ -8,6 +8,7 @@
 {{- $domain := .Values.rizz.domain | default "localhost" | toString }}
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
