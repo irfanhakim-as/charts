@@ -5,6 +5,7 @@
 {{- $domain := .Values.clog.domain | default "localhost" | toString }}
 {{- $name := .Values.clog.name | default "Clog" | toString | quote }}
 {{- $serverAdmin := .Values.clog.serverAdmin | default "admin@example.com" | toString }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -28,4 +29,4 @@ metadata:
     {{- include "clog.labels" . | nindent 4 }}
 data:
   site-config.conf: |-
-    {{- include "clog.site-config-conf" . | toString | replace "DOMAIN" $domain | replace "SERVER_ADMIN" $serverAdmin | nindent 4 }}
+    {{- include "clog.site-config-conf" . | toString | replace "DOMAIN" $domain | replace "SERVER_ADMIN" $serverAdmin | replace "LOG_MOUNT_PATH" $logMountPath | nindent 4 }}
