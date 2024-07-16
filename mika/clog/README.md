@@ -168,7 +168,7 @@ A unique, secure secret key is required for each Clog installation.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | clog.cloudflared.enabled | bool | `false` | Specifies whether Cloudflare Tunnel should be enabled for hosting Clog services. |
-| clog.debug | string | `""` | Specifies whether Clog should run in debug mode. Default: `false`. |
+| clog.debug | string | `""` | Specifies whether Clog should run in debug mode. Default: `"false"`. |
 | clog.domain | string | `""` | The ingress domain name that hosts the Clog server. Default: `"localhost"`. |
 | clog.name | string | `""` | The full name of the Clog web application. Default: `"Clog"`. |
 | clog.ngrok.enabled | bool | `false` | Specifies whether Ngrok should be enabled for hosting Clog services. |

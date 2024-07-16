@@ -13,8 +13,8 @@ Cloudflare-DDNS config.json template
         {{- $subdomains := .Values.cloudflareddns.subdomains }}
         {{- range $index, $subdomain := $subdomains }}
         {
-          "name": "{{ $subdomain.hostname }}",
-          "proxied": {{ $subdomain.proxied }}
+          "name": {{ $subdomain.hostname | quote }},
+          "proxied": {{ $subdomain.proxied | default "false" | toString }}
         }{{ if ne $index (sub (len $subdomains) 1) }},{{ end }}
         {{- end }}
       ]
@@ -22,7 +22,7 @@ Cloudflare-DDNS config.json template
   ],
   "a": ENABLE_IPV4,
   "aaaa": ENABLE_IPV6,
-  "purgeUnknownRecords": false,
-  "ttl": 300
+  "purgeUnknownRecords": ENABLE_PURGE,
+  "ttl": TTL_SECONDS
 }
 {{- end }}

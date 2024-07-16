@@ -2,24 +2,25 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# The desired number of running replicas for cloudflareddns.
+# The desired number of running replicas for Cloudflare DDNS.
 # Default: "1"
 replicaCount: ""
 
-# Container images used for cloudflareddns.
+# Container images used for Cloudflare DDNS.
 image:
-  # cloudflareddns container image configurations.
+  # Cloudflare DDNS container image configurations.
+  # Source: https://hub.docker.com/r/timothyjmiller/cloudflare-ddns
   cloudflareddns:
-    # The registry where the cloudflareddns container image is hosted.
+    # The registry where the Cloudflare DDNS container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the cloudflareddns container image used.
+    # The name of the repository that contains the Cloudflare DDNS container image used.
     # Default: "timothyjmiller/cloudflare-ddns"
     repository: ""
-    # The tag that specifies the version of the cloudflareddns container image used.
+    # The tag that specifies the version of the Cloudflare DDNS container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the cloudflareddns container image.
+    # The policy that determines when Kubernetes should pull the Cloudflare DDNS container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
 
@@ -29,12 +30,12 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
-# cloudflareddns configurations.
+# Cloudflare DDNS configurations.
 cloudflareddns:
-  # The path to the cloudflareddns configuration directory.
+  # The path to the Cloudflare DDNS configuration directory.
   # Default: "/etc/cloudflare-ddns"
   # Example:
-  # configPath: "/etc/cloudflare-ddns"
+  # configPath: "/var/lib/cloudflare-ddns"
   configPath: ""
   # Specify whether to add an A record for each subdomain.
   # Default: "true"
@@ -43,47 +44,65 @@ cloudflareddns:
   ipv4: ""
   # Specify whether to add an AAAA record for each subdomain.
   # Default: "false"
-  # Example
+  # Example:
   # ipv6: "true"
   ipv6: ""
-  # The list of subdomains to be updated, each with their own hostname and proxied setting.
+  # Specify whether to purge stale DNS records not defined in the configuration.
+  # Default: "false"
+  # Example:
+  # purge: "true"
+  purge: ""
+  # The list of subdomains to be updated for a specified domain (zone).
+  # Items: `.hostname`, `.proxied`
   # Example:
   # subdomains:
+  #   # The subdomain of the domain to be updated.
+  #   # Example:
+  #   # hostname: "foo"
   #   - hostname: ""
-  #     proxied: true
-  #   - hostname: "foo"
-  #     proxied: false
-  #   - hostname: "bar"
-  #     proxied: false
+  #   # Specifies whether the subdomain should be proxied.
+  #   # Default: "false"
+  #   # Example:
+  #   # proxied: "true"
+  #     proxied: ""
   subdomains: []
   # The Cloudflare API token used to authenticate with the Cloudflare API.
   # Example:
   # token: "Na9E7VEY58COhA03l1ytm1r70u7jBsf8bNqh5AlZ"
   token: ""
+  # The Time-To-Live (TTL) duration defining how long DNS records are cached in seconds.
+  # Default: "300"
+  # Example:
+  # ttl: "86400"
+  ttl: ""
   # The ID of the zone that will get the records.
   # Example:
   # zoneID: "71fovu74p100z856k795umzl32h3240p"
   zoneID: ""
 
-# Resource requirements and limits for cloudflareddns container.
+# Resource requirements and limits for Cloudflare DDNS containers.
 resources:
-  # The minimum amount of resources required by cloudflareddns to run.
-  requests:
-    # The minimum amount of CPU resources required by cloudflareddns.
-    # Example:
-    # cpu: "10m"
-    cpu: "10m"
-    # The minimum amount of memory required by cloudflareddns.
-    # Example:
-    # memory: "10Mi"
-    memory: "10Mi"
-  # The maximum amount of resources allowed for cloudflareddns.
-  limits:
-    # The maximum amount of CPU resources allowed for cloudflareddns.
-    # Example:
-    # cpu: "250m"
-    cpu: "50m"
-    # The maximum amount of memory allowed for cloudflareddns.
-    # Example:
-    # memory: "250Mi"
-    memory: "32Mi"
+  # Cloudflare DDNS container resources.
+  # Example:
+  # cloudflareddns:
+  #   # The minimum amount of resources required by Cloudflare DDNS to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Cloudflare DDNS.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Cloudflare DDNS.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for Cloudflare DDNS.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Cloudflare DDNS.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "50m"
+  #     # The maximum amount of memory allowed for Cloudflare DDNS.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "32Mi"
+  cloudflareddns: {}
