@@ -11,7 +11,7 @@
 {{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
 {{- $celery := .Values.rizz.scheduler.celery }}
 {{- $persistence := .Values.rizz.persistence.enabled }}
-{{- $mastodon := .Values.rizz.mastodon }}
+{{- $accounts := .Values.rizz.mastodon }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -84,7 +84,7 @@ spec:
               mountPath: /base/base/__init__.py
               subPath: init.py
             {{- end }}
-            {{- range $mastodon }}
+            {{- range $accounts }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-rizz-token-secret
@@ -129,7 +129,7 @@ spec:
             - name: {{ .Release.Name }}-rizz-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
-            {{- range $mastodon }}
+            {{- range $accounts }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-rizz-token-secret
@@ -206,12 +206,12 @@ spec:
               - key: tasks.py
                 path: tasks.py
         {{- end }}
-        {{- if and (kindIs "array" $mastodon) (gt (len $mastodon) 0) }}
+        {{- if and (kindIs "array" $accounts) (gt (len $accounts) 0) }}
         - name: {{ .Release.Name }}-rizz-token-secret
           secret:
             secretName: {{ .Release.Name }}-rizz-token-secret
             items:
-              {{- range $mastodon }}
+              {{- range $accounts }}
               {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
               {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
               - key: {{ $token_secret }}
