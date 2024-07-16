@@ -159,76 +159,77 @@ rizz:
   #   # enabled: "false"
   #     enabled: ""
   feed: []
-  # Scheduler configurations.
-  scheduler:
-    # Specifies whether APScheduler should be used by Rizz as the task scheduler.
-    # Example:
-    # apscheduler: false
-    apscheduler: true
-    # Specifies whether Celery should be used by Rizz as the task scheduler.
-    # Example:
-    # celery: true
-    celery: false
-    # The schedule for the task scheduler used by Rizz.
-    # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
-    # The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
-    schedule:
-      # The schedule for cleaning up the database.
-      clean_data:
-        # The hours at which the task scheduler cleans up the database.
-        # Default: "0"
-        # Example:
-        # hour: "1"
-        hour: ""
-        # The minutes at which the task scheduler cleans up the database.
-        # Default: "0"
-        # Example:
-        # minute: "30"
-        minute: ""
-        # The seconds at which the task scheduler cleans up the database.
-        # Default: "0" (`apscheduler`)
-        # Example:
-        # second: "30"
-        second: ""
-      # The schedule for posting scheduled posts.
-      post_scheduler:
-        # The hours at which the task scheduler posts scheduled posts.
-        # Default: "8-23/3"
-        # Example:
-        # hour: "*"
-        hour: ""
-        # The minutes at which the task scheduler posts scheduled posts.
-        # Default: "0"
-        # Example:
-        # minute: "*/30"
-        minute: ""
-        # The seconds at which the task scheduler posts scheduled posts.
-        # Default: "0" (`apscheduler`)
-        # Example:
-        # second: "30"
-        second: ""
-      # The schedule for updating up the database.
-      update_data:
-        # The hours at which the task scheduler updates the database.
-        # Default: "7-22/3"
-        # Example:
-        # hour: "*/2"
-        hour: ""
-        # The minutes at which the task scheduler updates the database.
-        # Default: "0"
-        # Example:
-        # minute: "15"
-        minute: ""
-        # The seconds at which the task scheduler updates the database.
-        # Default: "0" (`apscheduler`)
-        # Example:
-        # second: "30"
-        second: ""
-    # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
-    # Default: "Asia/Kuala_Lumpur"
-    # Example:
-    # timezone: "Etc/UTC"
-    timezone: ""
+
+# Scheduler configurations.
+scheduler:
+  # Specifies whether APScheduler should be used by Rizz as the task scheduler.
+  # Example:
+  # apscheduler: false
+  apscheduler: true
+  # Specifies whether Celery should be used by Rizz as the task scheduler.
+  # Example:
+  # celery: true
+  celery: false
+  # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
+  # Default: "Asia/Kuala_Lumpur"
+  # Example:
+  # timezone: "Etc/UTC"
+  timezone: ""
+  # The schedule for the task scheduler used by Rizz.
+  # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
+  # The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
+  schedule:
+    # The schedule for cleaning up the database.
+    clean_data:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # hour: "1"
+      hour: ""
+      # The minutes at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # minute: "30"
+      minute: ""
+      # The seconds at which the task scheduler cleans up the database.
+      # Default: "0" (`apscheduler`)
+      # Example:
+      # second: "30"
+      second: ""
+    # The schedule for posting scheduled posts.
+    post_scheduler:
+      # The hours at which the task scheduler posts scheduled posts.
+      # Default: "8-23/3"
+      # Example:
+      # hour: "*"
+      hour: ""
+      # The minutes at which the task scheduler posts scheduled posts.
+      # Default: "0"
+      # Example:
+      # minute: "*/30"
+      minute: ""
+      # The seconds at which the task scheduler posts scheduled posts.
+      # Default: "0" (`apscheduler`)
+      # Example:
+      # second: "30"
+      second: ""
+    # The schedule for updating up the database.
+    update_data:
+      # The hours at which the task scheduler updates the database.
+      # Default: "7-22/3"
+      # Example:
+      # hour: "*/2"
+      hour: ""
+      # The minutes at which the task scheduler updates the database.
+      # Default: "0"
+      # Example:
+      # minute: "15"
+      minute: ""
+      # The seconds at which the task scheduler updates the database.
+      # Default: "0" (`apscheduler`)
+      # Example:
+      # second: "30"
+      second: ""
 
 # Database configurations.
 db:
