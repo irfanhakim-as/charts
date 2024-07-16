@@ -1,5 +1,6 @@
-{{- $release_name := .Release.Name | toString }}
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $apscheduler := .Values.scheduler.apscheduler }}
+{{- $celery := .Values.scheduler.celery }}
+{{- $persistence := .Values.rizz.persistence.enabled }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
 {{- $rizz_tag := .Values.image.rizz.tag | default .Chart.AppVersion | toString }}
@@ -8,9 +9,8 @@
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
 {{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $apscheduler := .Values.scheduler.apscheduler }}
-{{- $celery := .Values.scheduler.celery }}
-{{- $persistence := .Values.rizz.persistence.enabled }}
+{{- $release_name := .Release.Name | toString }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $accounts := .Values.rizz.mastodon }}
 apiVersion: apps/v1
 kind: Deployment
