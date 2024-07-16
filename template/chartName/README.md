@@ -142,7 +142,7 @@ A Helm chart for deploying ChartName.
 | image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting ChartName services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
