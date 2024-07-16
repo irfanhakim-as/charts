@@ -137,6 +137,7 @@ rizz:
   #     note: ""
   mastodon: []
   # RSS feed configurations.
+  # Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`
   # Example:
   # feed:
   #   # The URL of the RSS feed to be tracked by Rizz.
