@@ -121,7 +121,7 @@ rizz:
   #   # Example:
   #   # id: "rizz"
   #     id: ""
-  #   # A secure token required to authenticate the Rizz service with the Mastodon instance's API.
+  #   # A secure access token required to authenticate the Rizz service with the Mastodon instance's API.
   #   # Example:
   #   # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   #     token: ""
