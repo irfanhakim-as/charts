@@ -3,15 +3,15 @@ APScheduler /base/base/tasks.py template
 */}}
 {{- define "rizz.apscheduler-tasks-py" -}}
 
-{{- $clean_data_hour := .Values.rizz.scheduler.schedule.clean_data.hour | default "0" | toString -}}
-{{- $clean_data_minute := .Values.rizz.scheduler.schedule.clean_data.minute | default "0" | toString -}}
-{{- $clean_data_second := .Values.rizz.scheduler.schedule.clean_data.second | default "0" | toString -}}
-{{- $post_scheduler_hour := .Values.rizz.scheduler.schedule.post_scheduler.hour | default "8-23/3" | toString -}}
-{{- $post_scheduler_minute := .Values.rizz.scheduler.schedule.post_scheduler.minute | default "0" | toString -}}
-{{- $post_scheduler_second := .Values.rizz.scheduler.schedule.post_scheduler.second | default "0" | toString -}}
-{{- $update_data_hour := .Values.rizz.scheduler.schedule.update_data.hour | default "7-22/3" | toString -}}
-{{- $update_data_minute := .Values.rizz.scheduler.schedule.update_data.minute | default "0" | toString -}}
-{{- $update_data_second := .Values.rizz.scheduler.schedule.update_data.second | default "0" | toString -}}
+{{- $clean_data_hour := .Values.scheduler.schedule.clean_data.hour | default "0" | toString -}}
+{{- $clean_data_minute := .Values.scheduler.schedule.clean_data.minute | default "0" | toString -}}
+{{- $clean_data_second := .Values.scheduler.schedule.clean_data.second | default "0" | toString -}}
+{{- $post_scheduler_hour := .Values.scheduler.schedule.post_scheduler.hour | default "8-23/3" | toString -}}
+{{- $post_scheduler_minute := .Values.scheduler.schedule.post_scheduler.minute | default "0" | toString -}}
+{{- $post_scheduler_second := .Values.scheduler.schedule.post_scheduler.second | default "0" | toString -}}
+{{- $update_data_hour := .Values.scheduler.schedule.update_data.hour | default "7-22/3" | toString -}}
+{{- $update_data_minute := .Values.scheduler.schedule.update_data.minute | default "0" | toString -}}
+{{- $update_data_second := .Values.scheduler.schedule.update_data.second | default "0" | toString -}}
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from django.conf import settings

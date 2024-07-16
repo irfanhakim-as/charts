@@ -1,13 +1,13 @@
 {{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
-{{- $scheduler_timezone := .Values.rizz.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
+{{- $scheduler_timezone := .Values.scheduler.timezone | default "Asia/Kuala_Lumpur" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
 {{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
 {{- $domain := .Values.rizz.domain | default "localhost" | toString }}
-{{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
-{{- $celery := .Values.rizz.scheduler.celery }}
+{{- $apscheduler := .Values.scheduler.apscheduler }}
+{{- $celery := .Values.scheduler.celery }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

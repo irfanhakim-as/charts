@@ -8,8 +8,8 @@
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
 {{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
-{{- $celery := .Values.rizz.scheduler.celery }}
+{{- $apscheduler := .Values.scheduler.apscheduler }}
+{{- $celery := .Values.scheduler.celery }}
 {{- $persistence := .Values.rizz.persistence.enabled }}
 {{- $accounts := .Values.rizz.mastodon }}
 apiVersion: apps/v1

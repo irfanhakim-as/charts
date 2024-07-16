@@ -1,4 +1,4 @@
-{{- $celery := .Values.rizz.scheduler.celery }}
+{{- $celery := .Values.scheduler.celery }}
 apiVersion: v1
 kind: Service
 metadata:
