@@ -60,7 +60,7 @@ The following are a list of account(s) you have supplied to be managed:
         {{- $url := printf "%s/%s" ($api | trimSuffix "/") $id | toString }}
         {{- $entry := printf "%s. %s (%s)" ($index | add1 | toString) $id $url | toString }}
 
-        {{- if $enabled }}
+        {{- if eq $enabled "true" }}
 
     {{ $entry }}
 
@@ -86,7 +86,7 @@ The following are a list of RSS feed(s) you have supplied to be monitored:
             {{- $endpoint := $feed.endpoint | toString | trimSuffix "/" }}
             {{- $entry := printf "%s. %s (%s)" ($index | add1 | toString) $uid $endpoint | toString }}
 
-            {{- if $enabled }}
+            {{- if eq $enabled "true" }}
 
     {{ $entry }}
 
