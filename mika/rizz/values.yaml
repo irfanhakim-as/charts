@@ -176,9 +176,9 @@ scheduler:
   # celery: true
   celery: false
   # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
-  # Default: "Asia/Kuala_Lumpur"
+  # Default: "Etc/UTC"
   # Example:
-  # timezone: "Etc/UTC"
+  # timezone: "Asia/Kuala_Lumpur"
   timezone: ""
   # The schedule for the task scheduler used by Rizz.
   # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
