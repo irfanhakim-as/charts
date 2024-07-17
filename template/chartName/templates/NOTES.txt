@@ -31,9 +31,9 @@ Please run the following command(s) to obtain the right address to the service:
 
 {{- end }}
 
-{{- if $serviceAddress }}
+Visit the following service(s) at the provided address:
 
-Visit the following service at the provided address:
+{{- if $serviceAddress }}
 
     - ChartName: {{ $serviceAddress }}
 
