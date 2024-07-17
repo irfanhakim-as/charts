@@ -9,6 +9,7 @@ replicaCount: ""
 # Container images used for Rizz.
 image:
   # Rizz container image configurations.
+  # Source: https://github.com/irfanhakim-as/rizz/pkgs/container/rizz
   rizz:
     # The registry where the Rizz container image is hosted.
     # Default: "ghcr.io"
@@ -23,6 +24,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Redis container image configurations.
+  # Source: https://hub.docker.com/_/redis
   redis:
     # The registry where the Redis container image is hosted.
     # Default: "docker.io"
@@ -46,113 +48,46 @@ imagePullSecrets: []
 # Rizz configurations.
 rizz:
   # Specifies whether Rizz should run in debug mode.
-  # Default: false
+  # Default: "false"
   # Example:
-  # debug: true
-  debug: false
-  # The domain name of the Rizz service.
+  # debug: "true"
+  debug: ""
+  # The ingress domain name that hosts the Rizz server.
   # Default: "localhost"
   # Example:
-  # domain: "localhost"
+  # domain: "rizz.example.com"
   domain: ""
   # Specifies whether to enable posting in organic numbers.
-  # Default: true
+  # Default: "true"
   # Example:
-  # organic: false
-  organic: true
+  # organic: "false"
+  organic: ""
   # The limit number of posts to be scheduled for posting per run.
   # Default: "3"
   # Example:
   # post_limit: "5"
   post_limit: ""
   # Specifies whether to retry posting if the post fails to be sent.
-  # Default: true
+  # Default: "true"
   # Example:
-  # retry_post: false
-  retry_post: true
+  # retry_post: "false"
+  retry_post: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the Rizz service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
+  # The email address displayed by Apache for server administration contact.
+  # Default: "admin@example.com"
+  # Example:
+  # serverAdmin: "foo@example.com"
+  serverAdmin: ""
   # The default visibility of posts made by the Rizz service.
   # Default: "public"
   # Example:
   # visibility: "unlisted"
   visibility: ""
-  # Rizz Mastodon configurations.
-  # Example:
-  # mastodon:
-  #   # API endpoint or URL for the Mastodon instance of the Rizz bot.
-  #   # Example:
-  #   # api: "https://botsin.space"
-  #   - api: ""
-  #   # The username or user account for the Mastodon instance of the Rizz bot.
-  #   # Example:
-  #   # id: "rizz"
-  #     id: ""
-  #   # A secure token required to authenticate the Rizz service with the Mastodon instance's API.
-  #   # Example:
-  #   # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
-  #     token: ""
-  #   # Specifies whether the Rizz bot should be marked as a bot.
-  #   # Default: true
-  #   # Example:
-  #   # bot: false
-  #     bot: ""
-  #   # Specifies whether the Rizz bot should appear in the user directory.
-  #   # Default: true
-  #   # Example:
-  #   # discoverable: false
-  #     discoverable: ""
-  #   # Specifies whether the Rizz bot should be active.
-  #   # Default: true
-  #   # Example:
-  #   # enabled: false
-  #     enabled: ""
-  #   # The display name of the Rizz bot.
-  #   # Default: null
-  #   # Example:
-  #   # display_name: "Rizz"
-  #     display_name: ""
-  #   # A list of up to four name-value pairs information to be displayed on the Rizz bot's profile.
-  #   # Default: []
-  #   # Example:
-  #   # fields:
-  #   #   - name: "Website 1"
-  #   #     value: "https://domain1.example.org"
-  #   #   - name: "Website 2"
-  #   #     value: "https://domain2.example.org"
-  #     fields: []
-  #   # Specifies whether the Rizz bot needs to manually approve follow requests.
-  #   # Default: false
-  #   # Example:
-  #   # locked: true
-  #     locked: ""
-  #   # The bio of the Rizz bot.
-  #   # Default: null
-  #   # Example:
-  #   # note: "This is the bio of the Rizz bot."
-  #     note: ""
-  mastodon: []
-  # Rizz storage persistence configurations.
-  persistence:
-    # Specifies whether Rizz should persist its storage.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The storage class name used for dynamically provisioning a persistent volume for the Rizz storage.
-    # Default: "longhorn"
-    # Example:
-    # storageClassName: "longhorn"
-    storageClassName: ""
-    # Rizz logs persistence configurations.
-    logs:
-      # The amount of persistent storage allocated for Rizz logs.
-      # Default: "20Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-  # Rizz feed configurations.
+  # RSS feed configurations.
+  # Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`
   # Example:
   # feed:
   #   # The URL of the RSS feed to be tracked by Rizz.
@@ -169,89 +104,155 @@ rizz:
   #   # id: "MyFeed"
   #     id: ""
   #   # Specifies whether the RSS feed entry should be actively processed.
-  #   # Default: true
+  #   # Default: "true"
   #   # Example:
-  #   # enabled: false
+  #   # enabled: "false"
   #     enabled: ""
   feed: []
-  # Rizz scheduler configurations.
-  scheduler:
-    # Specifies whether APScheduler should be used by Rizz as the task scheduler.
-    # Example:
-    # apscheduler: false
-    apscheduler: true
-    # Specifies whether Celery should be used by Rizz as the task scheduler.
-    # Example:
-    # celery: true
-    celery: false
-    # The schedule for the task scheduler used by Rizz.
-    # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously. The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
-    schedule:
-      # The schedule for cleaning up the database.
-      clean_data:
-        # The hours at which the task scheduler cleans up the database.
-        # Default: "0"
-        # Example:
-        # hour: "1"
-        hour: ""
-        # The minutes at which the task scheduler cleans up the database.
-        # Default: "0"
-        # Example:
-        # minute: "30"
-        minute: ""
-        # The seconds at which the task scheduler cleans up the database.
-        # Default: "0" for `apscheduler`
-        # Example:
-        # second: "30"
-        second: ""
-      # The schedule for posting scheduled posts.
-      post_scheduler:
-        # The hours at which the task scheduler posts scheduled posts.
-        # Default: "8-23/3"
-        # Example:
-        # hour: "*"
-        hour: ""
-        # The minutes at which the task scheduler posts scheduled posts.
-        # Default: "0"
-        # Example:
-        # minute: "*/30"
-        minute: ""
-        # The seconds at which the task scheduler posts scheduled posts.
-        # Default: "0" for `apscheduler`
-        # Example:
-        # second: "30"
-        second: ""
-      # The schedule for updating up the database.
-      update_data:
-        # The hours at which the task scheduler updates the database.
-        # Default: "7-22/3"
-        # Example:
-        # hour: "*/2"
-        hour: ""
-        # The minutes at which the task scheduler updates the database.
-        # Default: "0"
-        # Example:
-        # minute: "15"
-        minute: ""
-        # The seconds at which the task scheduler updates the database.
-        # Default: "0" for `apscheduler`
-        # Example:
-        # second: "30"
-        second: ""
-    # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
-    # Default: "Asia/Kuala_Lumpur"
-    # Example:
-    # timezone: "Asia/Kuala_Lumpur"
-    timezone: ""
+  # Mastodon configurations.
+  # Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
+  # Example:
+  # mastodon:
+  #   # API endpoint or URL for the Mastodon instance of the Rizz bot.
+  #   # Example:
+  #   # api: "https://botsin.space"
+  #   - api: ""
+  #   # The username or user account for the Mastodon instance of the Rizz bot.
+  #   # Example:
+  #   # id: "rizz"
+  #     id: ""
+  #   # The application access token required to authenticate the Rizz service with the Mastodon instance's API.
+  #   # Example:
+  #   # token: "rinoSZiIvRHLw6PL1QCSia+8liGDau0MZ336JAnL0IQ"
+  #     token: ""
+  #   # Specifies whether the Rizz bot should be marked as a bot.
+  #   # Default: "true"
+  #   # Example:
+  #   # bot: "false"
+  #     bot: ""
+  #   # Specifies whether the Rizz bot should appear in the user directory.
+  #   # Default: "true"
+  #   # Example:
+  #   # discoverable: "false"
+  #     discoverable: ""
+  #   # Specifies whether the Rizz bot should be active.
+  #   # Default: "true"
+  #   # Example:
+  #   # enabled: "false"
+  #     enabled: ""
+  #   # The display name of the Rizz bot.
+  #   # Default: "null"
+  #   # Example:
+  #   # display_name: "Rizz"
+  #     display_name: ""
+  #   # A list of up to four name-value pairs information to be displayed on the Rizz bot's profile.
+  #   # Example:
+  #   # fields:
+  #   #   - name: "Website 1"
+  #   #     value: "https://domain1.example.org"
+  #   #   - name: "Website 2"
+  #   #     value: "https://domain2.example.org"
+  #     fields: []
+  #   # Specifies whether the Rizz bot needs to manually approve follow requests.
+  #   # Default: "false"
+  #   # Example:
+  #   # locked: "true"
+  #     locked: ""
+  #   # The bio of the Rizz bot.
+  #   # Default: "null"
+  #   # Example:
+  #   # note: "This is the bio of the Rizz bot."
+  #     note: ""
+  mastodon: []
+
+# Scheduler configurations.
+scheduler:
+  # Specifies whether APScheduler should be used by Rizz as the task scheduler.
+  # Example:
+  # apscheduler: false
+  apscheduler: true
+  # Specifies whether Celery should be used by Rizz as the task scheduler.
+  # Example:
+  # celery: true
+  celery: false
+  # The timezone for the task scheduler used by Rizz to schedule time-dependent operations.
+  # Default: "Etc/UTC"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
+  # The schedule for the task scheduler used by Rizz.
+  # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
+  # The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
+  schedule:
+    # The schedule for cleaning up the database.
+    clean_data:
+      # The hours at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # hour: "1"
+      hour: ""
+      # The minutes at which the task scheduler cleans up the database.
+      # Default: "0"
+      # Example:
+      # minute: "30"
+      minute: ""
+      # The seconds at which the task scheduler cleans up the database.
+      # Default: "0" (`apscheduler`)
+      # Example:
+      # second: "30"
+      second: ""
+    # The schedule for posting scheduled posts.
+    post_scheduler:
+      # The hours at which the task scheduler posts scheduled posts.
+      # Default: "8-23/3"
+      # Example:
+      # hour: "*"
+      hour: ""
+      # The minutes at which the task scheduler posts scheduled posts.
+      # Default: "0"
+      # Example:
+      # minute: "*/30"
+      minute: ""
+      # The seconds at which the task scheduler posts scheduled posts.
+      # Default: "0" (`apscheduler`)
+      # Example:
+      # second: "30"
+      second: ""
+    # The schedule for updating up the database.
+    update_data:
+      # The hours at which the task scheduler updates the database.
+      # Default: "7-22/3"
+      # Example:
+      # hour: "*/2"
+      hour: ""
+      # The minutes at which the task scheduler updates the database.
+      # Default: "0"
+      # Example:
+      # minute: "15"
+      minute: ""
+      # The seconds at which the task scheduler updates the database.
+      # Default: "0" (`apscheduler`)
+      # Example:
+      # second: "30"
+      second: ""
 
 # Database configurations.
 db:
-  # The type of the database used by Rizz.
+  # The database engine or backend being used by Rizz.
   # Default: "postgresql"
   # Example:
-  # type: "postgresql"
+  # type: "mysql"
   type: ""
-  # The name of the database used by Rizz.
+  # The hostname or IP address of the Rizz database server.
+  # Example:
+  # host: "rizz.default.svc.cluster.local"
+  host: ""
+  # The port number the Rizz database server is listening for connections.
+  # Default: "5432"
+  # Example:
+  # port: "3306"
+  port: ""
+  # The name of the database being used by Rizz.
   # Example:
   # name: "rizz"
   name: ""
@@ -259,71 +260,155 @@ db:
   # Example:
   # user: "root"
   user: ""
-  # The password associated with the Rizz database's user.
+  # The password associated with the Rizz database user.
   # Example:
   # password: "password"
   password: ""
-  # The hostname or IP address of the Rizz database server.
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Rizz services.
   # Example:
-  # host: "rizz.default.svc.cluster.local"
-  host: ""
-  # The port number on which the Rizz database server is listening.
-  # Default: "5432"
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
   # Example:
-  # port: "5432"
-  port: ""
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+
+# Service configurations.
+service:
+  # The type of service used to expose Rizz services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+  # Rizz service port configurations.
+  rizz:
+    # The optional node port to expose for Rizz when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Rizz port on which the Rizz server should listen for connections.
+    # Default: "80"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Redis service port configurations.
+  redis:
+    # The optional node port to expose for Redis when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
+    # The Redis port on which the Rizz server should listen for connections.
+    # Default: "6379"
+    # Example:
+    # port: "8443"
+    port: ""
+
+# Storage configurations.
+storage:
+  # Log storage configurations.
+  log:
+    # Specifies whether persistent storage should be provisioned for log storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the log storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the log storage should be mounted on the container.
+    # Default: "/var/log/apache2"
+    # Example:
+    # mountPath: "/log"
+    mountPath: ""
+    # The subpath within the log storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Log"
+    subPath: ""
+    # The default amount of persistent storage allocated for the log storage.
+    # Default: "50Mi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the log storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
 
 # Resource requirements and limits for Rizz containers.
 resources:
   # Rizz container resources.
-  rizz:
-    # The minimum amount of resources required by Rizz to run.
-    requests:
-      # The minimum amount of CPU resources required by Rizz.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "20m"
-      cpu: "30m"
-      # The minimum amount of memory required by Rizz.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "250Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "250Mi"
-      memory: "60Mi"
-    # The maximum amount of resources allowed for Rizz.
-    limits:
-      # The maximum amount of CPU resources allowed for Rizz.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "200m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "50m"
-      cpu: "50m"
-      # The maximum amount of memory allowed for Rizz.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "400Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "450Mi"
-      memory: "120Mi"
+  # Example:
+  # rizz:
+  #   # The minimum amount of resources required by Rizz to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Rizz.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "30m"
+  #     # The minimum amount of memory required by Rizz.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "60Mi"
+  #   # The maximum amount of resources allowed for Rizz.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Rizz.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "50m"
+  #     # The maximum amount of memory allowed for Rizz.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "120Mi"
+  rizz: {}
   # Scheduler container resources.
-  scheduler:
-    # The minimum amount of resources required by Scheduler to run.
-    requests:
-      # The minimum amount of CPU resources required by Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "10m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "5m"
-      cpu: "10m"
-      # The minimum amount of memory required by Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "50Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "30Mi"
-      memory: "100Mi"
-    # The maximum amount of resources allowed for Scheduler.
-    limits:
-      # The maximum amount of CPU resources allowed for Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "20m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "15m"
-      cpu: "20m"
-      # The maximum amount of memory allowed for Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "50Mi"
-      memory: "200Mi"
+  # Example:
+  # scheduler:
+  #   # The minimum amount of resources required by Scheduler to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Scheduler.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Scheduler.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for Scheduler.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Scheduler.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "20m"
+  #     # The maximum amount of memory allowed for Scheduler.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "200Mi"
+  scheduler: {}

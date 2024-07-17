@@ -1,5 +1,105 @@
-rizz is now installed and configured for {{ .Release.Name | toString }}.
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.rizz.domain | toString }}
+{{- $rizzPort := .Values.service.rizz.port | default "80" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
+{{- $accounts := .Values.rizz.mastodon }}
+{{- $feeds := .Values.rizz.feed }}
+{{- $serviceAddress := "" }}
+Rizz has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-See the values.yaml file of this chart for more configuration options.
+{{- if $ingress }}
+    {{- $serviceAddress = printf "https://%s" $domain | toString }}
+{{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
 
-Please refer to the official documentation for more information on how to use rizz.
+Please run the following command(s) to obtain the right address to the service:
+
+    ```sh
+    {{- if eq $type "ClusterIP" }}
+        {{- $forwardPort := "8080" | toString }}
+        {{- $serviceAddress = printf "http://127.0.0.1:%s" $forwardPort | toString }}
+    export POD_NAME=$(kubectl get pod --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "rizz.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} ${POD_NAME} -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+    kubectl port-forward --namespace {{ .Release.Namespace }} ${POD_NAME} {{ $forwardPort }}:${CONTAINER_PORT}
+    {{- else if eq $type "LoadBalancer" }}
+        {{- $serviceAddress = printf "$(echo http://${SERVICE_IP}:%s)" $rizzPort | toString }}
+    export SERVICE_IP=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} --template "{{"{{- range (index .status.loadBalancer.ingress 0) }}{{ . }}{{- end }}"}}")
+    {{- else if eq $type "NodePort" }}
+        {{- $serviceAddress = "$(echo http://${NODE_IP}:${NODE_PORT})" | toString }}
+    export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+    export NODE_PORT=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} -o jsonpath="{.spec.ports[0].nodePort}")
+    {{- end }}
+    ```
+
+{{- end }}
+
+Visit the following service(s) at the provided address:
+
+{{- if $serviceAddress }}
+
+    - Rizz: {{ $serviceAddress }}
+
+{{- else }}
+
+    ⚠️ This chart may have no accessible services available
+
+{{- end }}
+
+The following are a list of account(s) you have supplied to be managed:
+
+{{- if not $accounts }}
+
+    ⚠️ No Mastodon accounts were supplied for Rizz to manage
+
+{{- else }}
+
+    {{- range $index, $account := $accounts }}
+        {{- $enabled := $account.enabled | default "true" | toString }}
+        {{- $api := $account.api | toString }}
+        {{- $id := $account.id | toString }}
+        {{- $url := printf "%s/%s" ($api | trimSuffix "/") $id | toString }}
+        {{- $entry := printf "%s. %s (%s)" ($index | add1 | toString) $id $url | toString }}
+
+        {{- if eq $enabled "true" }}
+
+    {{ $entry }}
+
+        {{- else }}
+
+    {{ printf "%s [%s]" $entry "disabled" }}
+
+        {{- end }}
+
+    {{- end }}
+
+The following are a list of RSS feed(s) you have supplied to be monitored:
+
+    {{- if not $feeds }}
+
+    ⚠️ No RSS feeds were supplied for Rizz to monitor
+
+    {{- else }}
+
+        {{- range $index, $feed := $feeds }}
+            {{- $enabled := $feed.enabled | default "true" | toString }}
+            {{- $uid := $feed.id | toString }}
+            {{- $endpoint := $feed.endpoint | toString | trimSuffix "/" }}
+            {{- $entry := printf "%s. %s (%s)" ($index | add1 | toString) $uid $endpoint | toString }}
+
+            {{- if eq $enabled "true" }}
+
+    {{ $entry }}
+
+            {{- else }}
+
+    {{ printf "%s [%s]" $entry "disabled" }}
+
+            {{- end }}
+
+        {{- end }}
+
+    {{- end }}
+
+{{- end }}
+
+For more information on how to use and configure Rizz, please refer to the official documentation.

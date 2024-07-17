@@ -1,5 +1,6 @@
-{{- $release_name := .Release.Name | toString }}
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $apscheduler := .Values.scheduler.apscheduler }}
+{{- $celery := .Values.scheduler.celery }}
+{{- $logPersistence := .Values.storage.log.enabled }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
 {{- $rizz_tag := .Values.image.rizz.tag | default .Chart.AppVersion | toString }}
@@ -8,9 +9,11 @@
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
 {{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $apscheduler := .Values.rizz.scheduler.apscheduler }}
-{{- $celery := .Values.rizz.scheduler.celery }}
-{{- $persistence := .Values.rizz.persistence.enabled }}
+{{- $release_name := .Release.Name | toString }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
+{{- $logSubPath := .Values.storage.log.subPath | toString }}
+{{- $accounts := .Values.rizz.mastodon }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -83,7 +86,7 @@ spec:
               mountPath: /base/base/__init__.py
               subPath: init.py
             {{- end }}
-            {{- range .Values.rizz.mastodon }}
+            {{- range $accounts }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-rizz-token-secret
@@ -91,9 +94,12 @@ spec:
               subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
-            {{- if $persistence }}
-            - name: {{ .Release.Name }}-rizz-logs
-              mountPath: /var/log/apache2
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-rizz-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
             {{- end }}
         {{- if $apscheduler }}
         - name: apscheduler
@@ -128,7 +134,7 @@ spec:
             - name: {{ .Release.Name }}-rizz-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
-            {{- range .Values.rizz.mastodon }}
+            {{- range $accounts }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-rizz-token-secret
@@ -136,9 +142,12 @@ spec:
               subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
-            {{- if $persistence }}
-            - name: {{ .Release.Name }}-rizz-logs
-              mountPath: /var/log/apache2
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-rizz-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
             {{- end }}
         {{- else if $celery }}
         - name: redis
@@ -205,22 +214,22 @@ spec:
               - key: tasks.py
                 path: tasks.py
         {{- end }}
-        {{- if .Values.rizz.mastodon }}
+        {{- if $accounts }}
         - name: {{ .Release.Name }}-rizz-token-secret
           secret:
             secretName: {{ .Release.Name }}-rizz-token-secret
             items:
-              {{- range .Values.rizz.mastodon }}
+              {{- range $accounts }}
               {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
               {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
               - key: {{ $token_secret }}
                 path: {{ $token_secret }}
               {{- end }}
         {{- end }}
-        {{- if $persistence }}
-        - name: {{ .Release.Name }}-rizz-logs
+        {{- if $logPersistence }}
+        - name: {{ .Release.Name }}-rizz-log
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-rizz-logs-pvc
+            claimName: {{ .Release.Name }}-rizz-log-pvc
         {{- end }}
       securityContext:
         fsGroup: 33
