@@ -17,17 +17,18 @@ The following are a list of subdomain(s) you have supplied to be updated:
         {{- $ip := "" }}
         {{- $hostname := $subdomain.hostname | toString }}
         {{- $proxied := $subdomain.proxied | default "false" | toString }}
-    {{- if eq $hostname "" }}
-        {{- $fqdn = "domain" | toString }}
-    {{- else }}
-        {{- $fqdn = printf "%s.domain" $hostname | toString }}
-    {{- end }}
-    {{- if eq $proxied "true" }}
-        {{- $cloudflareIP = "true" | toString }}
-        {{- $ip = "Cloudflare IP" | toString }}
-    {{- else }}
-        {{- $ip = printf "IPv4=%s/IPv6=%s" $ipv4 $ipv6 | toString }}
-    {{- end }}
+
+        {{- if eq $hostname "" }}
+            {{- $fqdn = "domain" | toString }}
+        {{- else }}
+            {{- $fqdn = printf "%s.domain" $hostname | toString }}
+        {{- end }}
+        {{- if eq $proxied "true" }}
+            {{- $cloudflareIP = "true" | toString }}
+            {{- $ip = "Cloudflare IP" | toString }}
+        {{- else }}
+            {{- $ip = printf "IPv4=%s/IPv6=%s" $ipv4 $ipv6 | toString }}
+        {{- end }}
 
     {{ printf "%s. %s (%s)" ($index | add1 | toString) $fqdn $ip }}
 
