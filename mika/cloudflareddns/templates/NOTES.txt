@@ -4,7 +4,7 @@
 {{- $subdomains := .Values.cloudflareddns.subdomains }}
 Cloudflare DDNS has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-{{- if and (kindIs "array" $subdomains) (eq (len $subdomains) 0) }}
+{{- if not $subdomains }}
 
     ⚠️ No subdomains were supplied for Cloudflare DDNS to monitor and update
 
