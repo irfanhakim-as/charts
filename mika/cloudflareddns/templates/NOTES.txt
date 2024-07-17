@@ -4,53 +4,53 @@
 {{- $subdomains := .Values.cloudflareddns.subdomains }}
 Cloudflare DDNS has been installed and configured for {{ .Release.Name | toString }} 🎉
 
+The following are a list of subdomain(s) you have supplied to be updated:
+
 {{- if not $subdomains }}
 
     ⚠️ No subdomains were supplied for Cloudflare DDNS to monitor and update
 
 {{- else }}
 
-The following are a list of subdomain(s) you have supplied to be updated:
-
-{{- range $index, $subdomain := $subdomains }}
-    {{- $fqdn := "" }}
-    {{- $ip := "" }}
-    {{- $hostname := $subdomain.hostname | toString }}
-    {{- $proxied := $subdomain.proxied | default "false" | toString }}
-{{- if eq $hostname "" }}
-    {{- $fqdn = "domain" | toString }}
-{{- else }}
-    {{- $fqdn = printf "%s.domain" $hostname | toString }}
-{{- end }}
-{{- if eq $proxied "true" }}
-    {{- $cloudflareIP = "true" | toString }}
-    {{- $ip = "Cloudflare IP" | toString }}
-{{- else }}
-    {{- $ip = printf "IPv4=%s/IPv6=%s" $ipv4 $ipv6 | toString }}
-{{- end }}
+    {{- range $index, $subdomain := $subdomains }}
+        {{- $fqdn := "" }}
+        {{- $ip := "" }}
+        {{- $hostname := $subdomain.hostname | toString }}
+        {{- $proxied := $subdomain.proxied | default "false" | toString }}
+    {{- if eq $hostname "" }}
+        {{- $fqdn = "domain" | toString }}
+    {{- else }}
+        {{- $fqdn = printf "%s.domain" $hostname | toString }}
+    {{- end }}
+    {{- if eq $proxied "true" }}
+        {{- $cloudflareIP = "true" | toString }}
+        {{- $ip = "Cloudflare IP" | toString }}
+    {{- else }}
+        {{- $ip = printf "IPv4=%s/IPv6=%s" $ipv4 $ipv6 | toString }}
+    {{- end }}
 
     {{ printf "%s. %s (%s)" ($index | add1 | toString) $fqdn $ip }}
 
-{{- end }}
+    {{- end }}
 
 Expected endpoint(s):
 
-{{- if or (eq $ipv4 "true") (eq $ipv6 "true") (eq $cloudflareIP "true") }}
-{{- if eq $ipv4 "true" }}
+    {{- if or (eq $ipv4 "true") (eq $ipv6 "true") (eq $cloudflareIP "true") }}
+        {{- if eq $ipv4 "true" }}
 
     - IPv4: $(dig -4 +short myip.opendns.com @resolver1.opendns.com)
 
-{{- end }}
-{{- if eq $ipv6 "true" }}
+        {{- end }}
+        {{- if eq $ipv6 "true" }}
 
     - IPv6: $(dig AAAA +short myip.opendns.com @resolver1.ipv6-sandbox.opendns.com)
 
-{{- end }}
-{{- if eq $cloudflareIP "true" }}
+        {{- end }}
+        {{- if eq $cloudflareIP "true" }}
 
     - Cloudflare IP: Please refer to https://www.cloudflare.com/ips for the full list of IPs
 
-{{- end }}
+        {{- end }}
 
 Please run the following command to check if each subdomain is being routed to the right endpoint:
 
@@ -58,11 +58,11 @@ Please run the following command to check if each subdomain is being routed to t
     nslookup <subdomain>.<domain>
     ```
 
-{{- else }}
+    {{- else }}
 
     ⚠️ Subdomains supplied were not configured to be updated according to any endpoint
 
-{{- end }}
+    {{- end }}
 {{- end }}
 
 For more information on how to use and configure Cloudflare DDNS, please refer to the official documentation.
