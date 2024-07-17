@@ -214,7 +214,7 @@ spec:
               - key: tasks.py
                 path: tasks.py
         {{- end }}
-        {{- if and (kindIs "array" $accounts) (gt (len $accounts) 0) }}
+        {{- if $accounts }}
         - name: {{ .Release.Name }}-rizz-token-secret
           secret:
             secretName: {{ .Release.Name }}-rizz-token-secret
