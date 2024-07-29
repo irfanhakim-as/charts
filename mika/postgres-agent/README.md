@@ -132,7 +132,7 @@ Easily create or delete a database and user pair in a remote PostgreSQL instance
 | image.postgres.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"bitnami/postgresql"`. |
 | image.postgres.tag | string | `""` | The tag that specifies the version of the PostgreSQL container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
-| postgres.databases | list | `[]` | Database configurations array. Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`. |
+| postgres.databases | list | `[]` | Database configurations array. Items: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`. |
 | postgres.host | string | `""` | The hostname or IP address of the PostgreSQL database server. |
 | postgres.root.database | string | `""` | The name of the database of the PostgreSQL database server root user. Default: `$user`. |
 | postgres.root.password | string | `""` | The password associated with the PostgreSQL database server root user. |

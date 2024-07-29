@@ -29,7 +29,7 @@ imagePullSecrets: []
 # Postgres-Agent configurations.
 postgres:
   # Database configurations array.
-  # Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`.
+  # Items: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`
   # .name: The name of the intended PostgreSQL database.
   # .user: The username or user account for accessing the intended PostgreSQL database.
   # .password: The password associated with the intended PostgreSQL database user.
