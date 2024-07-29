@@ -13,7 +13,7 @@ Easily create or delete a database and user pair in a remote PostgreSQL instance
 
 ---
 
-## External dependencies
+## Preflight checklist
 
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
