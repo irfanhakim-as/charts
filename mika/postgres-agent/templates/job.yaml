@@ -46,7 +46,8 @@ spec:
                 GRANT ALL ON DATABASE {{ .name | quote }} TO {{ .user | quote }};
                 ALTER DATABASE {{ .name | quote }} OWNER TO {{ .user | quote }};
                 GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ .user | quote }};
-            {{- else if .drop }}
+            {{- end }}
+            {{- if .drop }}
                 DROP DATABASE IF EXISTS {{ .name | quote }};
                 REVOKE ALL ON SCHEMA PUBLIC FROM {{ .user | quote }};
                 DROP USER IF EXISTS {{ .user | quote }};
