@@ -9,7 +9,7 @@ keywords:
   - "agent"
   - "job"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/postgres.png"
+icon: "https://irfanhakim-as.github.io/charts/logos/postgres.svg"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:
