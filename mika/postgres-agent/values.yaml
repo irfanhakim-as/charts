@@ -28,6 +28,26 @@ imagePullSecrets: []
 
 # Postgres-Agent configurations.
 postgres:
+  # The hostname or IP address of the PostgreSQL database server.
+  # Example:
+  # host: "postgres.default.svc.cluster.local"
+  host: ""
+  # PostgreSQL database server root user configurations.
+  root:
+    # The name of the database being used by the PostgreSQL database server root user.
+    # Default: $user
+    # Example:
+    # database: "postgres"
+    database: ""
+    # The username or user account for accessing the PostgreSQL database server as root.
+    # Default: "postgres"
+    # Example:
+    # user: "root"
+    user: ""
+    # The password associated with the PostgreSQL database server root user.
+    # Example:
+    # password: "password"
+    password: ""
   # Database configurations array.
   # Items: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`
   # Example:
@@ -69,26 +89,6 @@ postgres:
   #   #   );
   #     custom_command: ""
   databases: []
-  # The hostname or IP address of the PostgreSQL database server.
-  # Example:
-  # host: "postgres.default.svc.cluster.local"
-  host: ""
-  # PostgreSQL database server root user configurations.
-  root:
-    # The name of the database being used by the PostgreSQL database server root user.
-    # Default: $user
-    # Example:
-    # database: "postgres"
-    database: ""
-    # The username or user account for accessing the PostgreSQL database server as root.
-    # Default: "postgres"
-    # Example:
-    # user: "root"
-    user: ""
-    # The password associated with the PostgreSQL database server root user.
-    # Example:
-    # password: "password"
-    password: ""
 
 # Resource requirements and limits for Postgres-Agent containers.
 resources:
