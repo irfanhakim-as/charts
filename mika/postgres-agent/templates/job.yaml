@@ -5,6 +5,7 @@
 {{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString }}
 {{- $databases := .Values.postgres.databases }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
