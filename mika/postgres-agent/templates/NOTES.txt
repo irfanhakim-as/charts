@@ -1,6 +1,7 @@
 {{- $index := 0 | int }}
 {{- $databases := .Values.postgres.databases }}
 {{- $postgresHost := .Values.postgres.host | toString }}
+{{- $postgresPort := .Values.postgres.port | default "5432" | toString }}
 Postgres-Agent has been installed and configured for {{ .Release.Name | toString }} 🎉
 
 The following are a list of database(s) you have supplied to be updated:
@@ -36,7 +37,7 @@ The following are a list of database(s) you have supplied to be updated:
 Please run the following command for each database and check if they have been updated accordingly:
 
     ```sh
-    psql -h {{ $postgresHost }} -U <user> -d <db>
+    psql -h {{ $postgresHost }} -p {{ $postgresPort }} -U <user> -d <db>
     ```
 
 {{- end }}
