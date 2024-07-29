@@ -4,7 +4,7 @@
 {{- $postgres_pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $databases := .Values.postgres.databases }}
 {{- $postgresHost := .Values.postgres.host | default "postgres" | toString }}
-{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString }}
+{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString | quote }}
 ---
 apiVersion: batch/v1
 kind: Job
