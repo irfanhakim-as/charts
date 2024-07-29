@@ -38,25 +38,32 @@ spec:
           args:
             - -c
             - >-
-              psql -h $(DB_HOST) -U $(ROOT_USER) -d {{ $rootDB | quote }} <<EOF
+              psql -h $(DB_HOST) -U $(ROOT_USER) -d {{ $rootDB }} <<EOF
             {{- range $databases }}
-            {{- if .create }}
-                CREATE USER {{ .user | quote }} WITH ENCRYPTED PASSWORD '{{ .password }}';
-                CREATE DATABASE {{ .name | quote }};
-                GRANT ALL ON DATABASE {{ .name | quote }} TO {{ .user | quote }};
-                ALTER DATABASE {{ .name | quote }} OWNER TO {{ .user | quote }};
-                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ .user | quote }};
-            {{- end }}
-            {{- if .drop }}
-                DROP DATABASE IF EXISTS {{ .name | quote }};
-                REVOKE ALL ON SCHEMA PUBLIC FROM {{ .user | quote }};
-                DROP USER IF EXISTS {{ .user | quote }};
-            {{- end }}
-            {{- if and .custom .custom_command }}
-                \connect {{ .name | quote }};
-                {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
-                \connect {{ $rootDB | quote }};
-            {{- end }}
+              {{- $create := .create }}
+              {{- $drop := .drop }}
+              {{- $custom := .custom }}
+              {{- $command := .custom_command }}
+              {{- $db := .name | toString }}
+              {{- $user := .user | toString }}
+              {{- $password := .password | toString }}
+              {{- if $create }}
+                CREATE USER {{ $user | quote }} WITH ENCRYPTED PASSWORD '{{ $password }}';
+                CREATE DATABASE {{ $db | quote }};
+                GRANT ALL ON DATABASE {{ $db | quote }} TO {{ $user | quote }};
+                ALTER DATABASE {{ $db | quote }} OWNER TO {{ $user | quote }};
+                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ $user | quote }};
+              {{- end }}
+              {{- if $drop }}
+                DROP DATABASE IF EXISTS {{ $db | quote }};
+                REVOKE ALL ON SCHEMA PUBLIC FROM {{ $user | quote }};
+                DROP USER IF EXISTS {{ $user | quote }};
+              {{- end }}
+              {{- if and $custom $command }}
+                \connect {{ $db | quote }};
+                {{- $command | toString | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
+                \connect {{ $rootDB }};
+              {{- end }}
             {{- end }}
               EOF
           envFrom:
