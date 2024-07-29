@@ -84,7 +84,7 @@ postgres:
     # Example:
     # password: "password"
     password: ""
-    # The name of the database of the PostgreSQL database server root user.
+    # The name of the database being used by the PostgreSQL database server root user.
     # Default: $user
     # Example:
     # database: "postgres"
