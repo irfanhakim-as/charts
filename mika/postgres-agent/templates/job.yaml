@@ -1,15 +1,15 @@
-{{- $host := .Values.postgres.host | default "postgres" | toString }}
-{{- $registry := .Values.image.postgres.registry | default "docker.io" | toString }}
-{{- $repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
-{{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
-{{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString }}
+{{- $postgres_registry := .Values.image.postgres.registry | default "docker.io" | toString }}
+{{- $postgres_repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
+{{- $postgres_tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
+{{- $postgres_pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $databases := .Values.postgres.databases }}
+{{- $postgresHost := .Values.postgres.host | default "postgres" | toString }}
+{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "%s-%s-%s" (index (splitList "." $host) 0) .Release.Name "postgres-agent" }}
+  name: {{ printf "%s-%s-%s" (index (splitList "." $postgresHost) 0) .Release.Name "postgres-agent" }}
   labels:
     {{- include "postgres-agent.labels" . | nindent 4 }}
 spec:
@@ -30,8 +30,8 @@ spec:
       {{- end }}
       containers:
         - name: postgres-agent
-          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
-          imagePullPolicy: {{ $pullPolicy }}
+          image: {{ printf "%s/%s:%s" $postgres_registry $postgres_repository $postgres_tag | quote }}
+          imagePullPolicy: {{ $postgres_pullPolicy }}
           resources:
             {{- toYaml .Values.resources.postgres | nindent 12 }}
           command: ["/bin/bash"]
