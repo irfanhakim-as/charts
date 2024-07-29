@@ -32,6 +32,11 @@ postgres:
   # Example:
   # host: "postgres.default.svc.cluster.local"
   host: ""
+  # The port number the PostgreSQL database server is listening for connections.
+  # Default: "5432"
+  # Example:
+  # port: "3306"
+  port: ""
   # PostgreSQL database server root user configurations.
   root:
     # The name of the database being used by the PostgreSQL database server root user.
