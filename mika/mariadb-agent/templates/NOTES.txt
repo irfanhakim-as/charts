@@ -37,7 +37,7 @@ The following are a list of database(s) you have supplied to be updated:
 Please run the following command for each database and check if they have been updated accordingly:
 
     ```sh
-    mysql -h {{ $mariadbHost }} -P {{ $mariadbPort }} -u <user> -D <db>
+    mysql -h {{ $mariadbHost }} -P {{ $mariadbPort }} -u <user> -p -D <db>
     ```
 
 {{- end }}
