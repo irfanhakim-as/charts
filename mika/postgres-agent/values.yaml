@@ -39,17 +39,17 @@ postgres:
   port: ""
   # PostgreSQL database server root user configurations.
   root:
-    # The name of the database being used by the PostgreSQL database server root user.
+    # The name of the default database of the root PostgreSQL database user.
     # Default: $user
     # Example:
     # database: "postgres"
     database: ""
-    # The username or user account for accessing the PostgreSQL database server as root.
+    # The root username or user account of the PostgreSQL database server.
     # Default: "postgres"
     # Example:
     # user: "root"
     user: ""
-    # The password associated with the PostgreSQL database server root user.
+    # The password associated with the root PostgreSQL database user.
     # Example:
     # password: "password"
     password: ""

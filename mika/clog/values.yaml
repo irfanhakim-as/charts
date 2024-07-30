@@ -128,6 +128,10 @@ ingress:
   # Example:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
   # Additional configuration annotations to be added to the Ingress resource.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
@@ -146,10 +150,6 @@ ingress:
   #   # value: "120"
   #     value: ""
   customAnnotations: []
-  # Specifies whether the WWW subdomain should be enabled.
-  # Example:
-  # www: true
-  www: false
 
 # Service configurations.
 service:
