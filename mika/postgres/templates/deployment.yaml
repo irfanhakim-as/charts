@@ -42,24 +42,10 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.postgres | nindent 12 }}
-          env:
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-secret
-                  key: DB_NAME
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-secret
-                  key: DB_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-secret
-                  key: DB_PASS
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-postgres-secret
+          {{- if or $dataPersistence }}
           volumeMounts:
             - name: {{ .Release.Name }}-postgres-data
               mountPath: /var/lib/postgresql/data
