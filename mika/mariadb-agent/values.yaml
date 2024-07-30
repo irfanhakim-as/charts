@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Container image used for MariaDB.
+# Container images used for MariaDB-Agent.
 image:
   # MariaDB container image configurations.
   mariadb:
@@ -19,7 +19,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
 
-# MariaDB configurations.
+# MariaDB-Agent configurations.
 mariadb:
   # Database configurations array.
   # Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`.
