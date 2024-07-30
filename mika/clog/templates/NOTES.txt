@@ -1,9 +1,9 @@
+{{- $serviceAddress := "" }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.clog.domain | toString }}
 {{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-clog-svc" .Release.Name | toString }}
-{{- $serviceAddress := "" }}
 Clog has been installed and configured for {{ .Release.Name | toString }} 🎉
 
 {{- if $ingress }}
