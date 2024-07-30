@@ -32,14 +32,40 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if or $dataPersistence $initScript }}
+      {{- $initDataMountPath := printf "/mnt/%s" ($dataMountPath | trimPrefix "/") | toString }}
       initContainers:
-        - name: copy-data
-          image: {{ printf "%s/%s:%s" $backend_registry $backend_repository $backend_tag | quote }}
-          imagePullPolicy: {{ $backend_pullPolicy }}
-          command: ["sh", "-c", "cp -rf /var/www/data/. /scratch/data"]
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+            {{- if $initScript }}
+              {{- $initScript | nindent 14 }}
+            {{- else }}
+              if [ -z "$(ls -A {{ $initDataMountPath }} | grep -v 'lost+found')" ]; then
+                echo "Initialising {{ $initDataMountPath }}"
+                cp -Ra /var/www/data/. {{ $initDataMountPath }}
+                chown -R www-data: {{ $initDataMountPath }}
+                find {{ $initDataMountPath }} -type d -exec chmod 755 {} \;
+                find {{ $initDataMountPath }} -type f -exec chmod 644 {} \;
+              else
+                echo "Skipping initialisation as {{ $initDataMountPath }} is not empty"
+              fi
+            {{- end }}
+          {{- if or $dataPersistence }}
           volumeMounts:
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-grocy-data
-              mountPath: /scratch/data
+              mountPath: {{ $initDataMountPath | quote }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- end }}
       containers:
         - name: backend
           image: {{ printf "%s/%s:%s" $backend_registry $backend_repository $backend_tag | quote }}
