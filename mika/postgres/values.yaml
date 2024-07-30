@@ -47,6 +47,23 @@ postgres:
   # password: "password"
   password: ""
 
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the PostgreSQL server should listen for connections.
+  # Default: "5432"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used to expose PostgreSQL services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
 # Storage configurations.
 storage:
   # Data storage configurations.
