@@ -79,6 +79,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.mariadb.registry | string | `""` | The registry where the MariaDB container image is hosted. Default: `"docker.io"`. |
 | image.mariadb.repository | string | `""` | The name of the repository that contains the MariaDB container image used. Default: `"bitnami/mariadb"`. |
 | image.mariadb.tag | string | `""` | The tag that specifies the version of the MariaDB container image used. Default: `Chart appVersion`. |
+| imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | mariadb.databases | list | `[]` | Database configurations array. Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`. |
 | mariadb.host | string | `""` | The hostname or IP address of the MariaDB database server. |
 | mariadb.root.password | string | `""` | The password associated with the MariaDB database server root user. |
