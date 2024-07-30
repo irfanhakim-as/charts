@@ -56,8 +56,13 @@ spec:
           volumeMounts:
             - name: {{ .Release.Name }}-tmp-volume
               mountPath: /tmp
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-grocy-data
-              mountPath: /var/www/data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
         - name: frontend
           image: {{ printf "%s/%s:%s" $frontend_registry $frontend_repository $frontend_tag | quote }}
           imagePullPolicy: {{ $frontend_pullPolicy }}
@@ -82,8 +87,10 @@ spec:
         - name: {{ .Release.Name }}-grocy-nginx-config
           configMap:
             name: {{ .Release.Name }}-grocy-nginx-config
+        {{- if $dataPersistence }}
         - name: {{ .Release.Name }}-grocy-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-grocy-data-pvc
+        {{- end }}
       securityContext:
         fsGroup: 82
