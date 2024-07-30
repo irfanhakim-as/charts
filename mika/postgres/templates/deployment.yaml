@@ -62,3 +62,5 @@ spec:
             claimName: {{ .Release.Name }}-postgres-data-pvc
         {{- end }}
       {{- end }}
+      securityContext:
+        fsGroup: 999
