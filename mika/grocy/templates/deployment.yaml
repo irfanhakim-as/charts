@@ -7,6 +7,7 @@
 {{- $frontend_tag := .Values.image.frontend.tag | default .Chart.AppVersion | toString }}
 {{- $frontend_pullPolicy := .Values.image.frontend.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

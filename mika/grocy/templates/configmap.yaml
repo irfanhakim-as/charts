@@ -7,6 +7,7 @@
 {{- $file_limit := .Values.grocy.php.file_limit | default "200" | toString | quote }}
 {{- $post_limit := .Values.grocy.php.post_limit | default "100M" | toString | quote }}
 {{- $memory_limit := .Values.grocy.php.memory_limit | default "512M" | toString | quote }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
