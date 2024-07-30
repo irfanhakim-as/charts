@@ -90,6 +90,36 @@ grocy:
     # memory_limit: "256M"
     memory_limit: ""
 
+# Service configurations.
+service:
+  # Backend service port configurations.
+  backend:
+    # The optional node port to expose for backend when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The backend port on which the Grocy server should listen.
+    # Default: "9000"
+    # Example:
+    # port: "9090"
+    port: ""
+  # Frontend service port configurations.
+  frontend:
+    # The optional node port to expose for frontend when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
+    # The frontend port on which the Grocy server should listen.
+    # Default: "8080"
+    # Example:
+    # port: "80"
+    port: ""
+  # The type of service used for Grocy services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
 # Storage configurations.
 storage:
   # Data storage configurations.
