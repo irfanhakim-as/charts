@@ -47,9 +47,9 @@ spec:
               {{- $user := .user | toString }}
               {{- $password := .password | toString }}
               {{- if $create }}
-                CREATE DATABASE IF NOT EXISTS {{ $db }};
                 CREATE USER IF NOT EXISTS {{ $user | quote }}@"%";
                 SET PASSWORD FOR {{ $user | quote }}@"%" = PASSWORD({{ $password | quote }});
+                CREATE DATABASE IF NOT EXISTS {{ $db }};
                 GRANT ALL PRIVILEGES ON {{ $db }}.* TO {{ $user | quote }}@"%";
               {{- end }}
               {{- if $drop }}
