@@ -81,6 +81,12 @@ grocy:
   # Example:
   # energy: "kJ"
   energy: ""
+  # Custom init script to run before the Grocy container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
   # The mode to deploy grocy in which determines whether to enable user authentication.
   # Default: "production"
   # Example:

@@ -131,6 +131,7 @@ Grocy is a web-based self-hosted groceries & household management solution for y
 | grocy.currency | string | `""` | The currency used to format all monetary values in Grocy. Default: `"MYR"`. |
 | grocy.domain | string | `""` | The ingress domain name that hosts the Grocy server. |
 | grocy.energy | string | `""` | The preferred unit for displaying energy values in Grocy. Default: `"kcal"`. |
+| grocy.initScript | string | `""` | Custom init script to run before the Grocy container starts. |
 | grocy.mode | string | `""` | The mode to deploy grocy in which determines whether to enable user authentication. Default: `"production"`. |
 | grocy.php.file_limit | string | `""` | Sets the maximum number of files that can be uploaded simultaneously through PHP. Default: `"200"`. |
 | grocy.php.memory_limit | string | `""` | Determines the maximum amount of memory that PHP can allocate for executing scripts. Default: `"512M"`. |
