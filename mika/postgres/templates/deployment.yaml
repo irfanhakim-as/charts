@@ -1,8 +1,12 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $postgres_registry := .Values.image.postgres.registry | default "docker.io" | toString }}
+{{- $postgres_repository := .Values.image.postgres.repository | default "postgres" | toString }}
+{{- $postgres_tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
+{{- $postgres_pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $registry := .Values.image.registry | default "docker.io" | toString }}
-{{- $repository := .Values.image.repository | default "postgres" | toString }}
-{{- $tag := .Values.image.tag | default .Chart.AppVersion | toString }}
-{{- $pullPolicy := .Values.image.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/var/lib/postgresql/data" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,38 +27,40 @@ spec:
       labels:
         {{- include "postgres.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: postgres
-          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
-          imagePullPolicy: {{ $pullPolicy }}
+          image: {{ printf "%s/%s:%s" $postgres_registry $postgres_repository $postgres_tag | quote }}
+          imagePullPolicy: {{ $postgres_pullPolicy }}
           ports:
             - name: postgres
               containerPort: 5432
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-          env:
-            - name: POSTGRES_DB
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-secret
-                  key: DB_NAME
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-secret
-                  key: DB_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgres-secret
-                  key: DB_PASS
-            - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+            {{- toYaml .Values.resources.postgres | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-postgres-secret
+          {{- if or $dataPersistence }}
           volumeMounts:
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-postgres-data
-              mountPath: /var/lib/postgresql/data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence }}
       volumes:
+        {{- if $dataPersistence }}
         - name: {{ .Release.Name }}-postgres-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-postgres-data-pvc
+        {{- end }}
+      {{- end }}
+      securityContext:
+        fsGroup: 999
