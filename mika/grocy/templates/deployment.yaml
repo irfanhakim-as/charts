@@ -14,7 +14,7 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/var/www/data" | toString | quote }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
-{{- $initScript := .Values.chartName.initScript | toString }}
+{{- $initScript := .Values.grocy.initScript | toString }}
 ---
 apiVersion: apps/v1
 kind: Deployment
