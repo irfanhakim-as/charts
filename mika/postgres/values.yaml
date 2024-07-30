@@ -6,7 +6,7 @@
 # Default: "1"
 replicaCount: ""
 
-# Container image used for PostgreSQL.
+# Container images used for PostgreSQL.
 image:
   # The registry where the PostgreSQL container image is hosted.
   # Default: "docker.io"
