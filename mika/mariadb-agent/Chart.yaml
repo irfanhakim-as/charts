@@ -10,7 +10,7 @@ keywords:
   - "agent"
   - "job"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/mariadb.png"
+icon: "https://irfanhakim-as.github.io/charts/logos/mariadb.svg"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:
