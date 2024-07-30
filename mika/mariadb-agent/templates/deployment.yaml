@@ -4,6 +4,7 @@
 {{- $tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $databases := .Values.mariadb.databases }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
