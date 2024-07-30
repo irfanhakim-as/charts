@@ -28,6 +28,21 @@ imagePullSecrets: []
 
 # MariaDB-Agent configurations.
 mariadb:
+  # The hostname or IP address of the MariaDB database server.
+  # Example:
+  # host: "mariadb.default.svc.cluster.local"
+  host: ""
+  # MariaDB database server root user configurations.
+  root:
+    # The username or user account for accessing the MariaDB database server as root.
+    # Default: "root"
+    # Example:
+    # user: "root"
+    user: ""
+    # The password associated with the MariaDB database server root user.
+    # Example:
+    # password: "password"
+    password: ""
   # Database configurations array.
   # Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`.
   # .name: The name of the intended MariaDB database.
@@ -56,18 +71,3 @@ mariadb:
   #         UNIQUE KEY `key` (`key`)
   #       );
   databases: []
-  # The hostname or IP address of the MariaDB database server.
-  # Example:
-  # host: "mariadb.default.svc.cluster.local"
-  host: ""
-  # MariaDB database server root user configurations.
-  root:
-    # The username or user account for accessing the MariaDB database server as root.
-    # Default: "root"
-    # Example:
-    # user: "root"
-    user: ""
-    # The password associated with the MariaDB database server root user.
-    # Example:
-    # password: "password"
-    password: ""
