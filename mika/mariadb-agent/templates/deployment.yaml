@@ -22,6 +22,10 @@ spec:
       labels:
         {{- include "mariadb-agent.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: mariadb-agent
           image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}

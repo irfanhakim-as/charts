@@ -20,6 +20,12 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
 
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
 # MariaDB-Agent configurations.
 mariadb:
   # Database configurations array.
