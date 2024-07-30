@@ -3,6 +3,7 @@
 {{- $repository := .Values.image.repository | default "postgres" | toString }}
 {{- $tag := .Values.image.tag | default .Chart.AppVersion | toString }}
 {{- $pullPolicy := .Values.image.pullPolicy | default "IfNotPresent" | toString | quote }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
