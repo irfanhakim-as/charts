@@ -92,6 +92,11 @@ grocy:
 
 # Service configurations.
 service:
+  # The type of service used for Grocy services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
   # Backend service port configurations.
   backend:
     # The optional node port to expose for backend when the service type is NodePort.
@@ -114,11 +119,6 @@ service:
     # Example:
     # port: "80"
     port: ""
-  # The type of service used for Grocy services.
-  # Default: "ClusterIP"
-  # Example:
-  # type: "NodePort"
-  type: ""
 
 # Storage configurations.
 storage:
