@@ -57,7 +57,7 @@ spec:
                 DROP USER IF EXISTS "{{ $user }}"@"%";
               {{- end }}
               {{- if and $custom $command }}
-                {{- .custom_command | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
+                {{- $command | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
               {{- end }}
             {{- end }}
                 FLUSH PRIVILEGES;
