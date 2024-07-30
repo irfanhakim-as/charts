@@ -1,5 +1,45 @@
-mariadb-agent job has been deployed for {{ .Release.Name | toString }}.
+{{- $index := 0 | int }}
+{{- $databases := .Values.mariadb.databases }}
+{{- $mariadbHost := .Values.mariadb.host | toString }}
+{{- $mariadbPort := .Values.mariadb.port | default "3306" | toString }}
+MariaDB-Agent has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-See the values.yaml file of this chart for more configuration options.
+The following are a list of database(s) you have supplied to be updated:
 
-Please refer to the official documentation for more information on how to use mariadb-agent.
+{{- range $database := $databases }}
+    {{- $custom_command := "false" }}
+    {{- $create := $database.create }}
+    {{- $drop := $database.drop }}
+    {{- $custom := $database.custom }}
+    {{- $command := $database.custom_command }}
+    {{- $db := $database.name | toString }}
+    {{- $user := $database.user | toString }}
+    {{- $password := $database.password | toString }}
+
+    {{- if and $custom $command }}
+        {{- $custom_command = "true" | toString }}
+    {{- end }}
+
+    {{- if or $create $drop (eq $custom_command "true") }}
+        {{- $index = add $index 1 }}
+
+    {{ printf "%s. db=%s | user=%s | password=%s | create=%s | drop=%s | custom=%s" ($index | toString) $db $user $password ($create | toString) ($drop | toString) $custom_command }}
+
+    {{- end }}
+{{- end }}
+
+{{- if eq ($index | toString) "0" }}
+
+    ⚠️ No databases were supplied for MariaDB-Agent to update
+
+{{- else }}
+
+Please run the following command for each database and check if they have been updated accordingly:
+
+    ```sh
+    mysql -h {{ $mariadbHost }} -P {{ $mariadbPort }} -u <user> -D <db>
+    ```
+
+{{- end }}
+
+For more information on how to use and configure MariaDB-Agent, please refer to the official documentation.
