@@ -1,5 +1,9 @@
-{{- $storage := .Values.postgres.data.storage | default "1Gi" | toString | quote }}
-{{- $storage_class_name := .Values.postgres.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
+{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- if $dataPersistence }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -8,8 +12,9 @@ metadata:
     {{- include "postgres.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $dataAccessMode }}
   resources:
     requests:
-      storage: {{ $storage }}
-  storageClassName: {{ $storage_class_name }}
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
