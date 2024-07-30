@@ -45,31 +45,45 @@ mariadb:
     password: ""
   # Database configurations array.
   # Items: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`
-  # .name: The name of the intended MariaDB database.
-  # .user: The username or user account for accessing the intended MariaDB database.
-  # .password: The password associated with the intended MariaDB database user.
-  # .create: Specifies whether to create the database and user in the remote MariaDB instance.
-  # .drop: Specifies whether to delete the database and user in the remote MariaDB instance.
-  # .custom: Specifies whether to run a custom command against the remote MariaDB instance.
-  # .custom_command: Specify a custom command to run against the remote MariaDB instance.
   # Example:
   # databases:
-  #   - name: "mariadb"
-  #     user: "mariadbuser"
-  #     password: "mariadbuserpassword"
-  #     create: true
+  #   # The name of the intended MariaDB database.
+  #   # Example:
+  #   # name: "mariadb"
+  #   - name: ""
+  #   # The username or user account for accessing the intended MariaDB database.
+  #   # Example:
+  #   # user: "mariadbuser"
+  #     user: ""
+  #   # The password associated with the intended MariaDB database user.
+  #   # Example:
+  #   # password: "mariadbuserpassword"
+  #     password: ""
+  #   # Specifies whether to create the database and user in the remote MariaDB instance.
+  #   # Example:
+  #   # create: true
+  #     create: false
+  #   # Specifies whether to delete the database and user in the remote MariaDB instance.
+  #   # Example:
+  #   # drop: true
   #     drop: false
+  #   # Specifies whether to run a custom command against the remote MariaDB instance.
+  #   # Example:
+  #   # custom: true
   #     custom: false
-  #     custom_command: >-
-  #       CREATE TABLE IF NOT EXISTS `$.name`.`StorageRecords` (
-  #         `id` int(11) NOT NULL AUTO_INCREMENT,
-  #         `key` varchar(255) NOT NULL,
-  #         `value` text NOT NULL,
-  #         `created_at` datetime NOT NULL,
-  #         `updated_at` datetime NOT NULL,
-  #         PRIMARY KEY (`id`),
-  #         UNIQUE KEY `key` (`key`)
-  #       );
+  #   # Specify a custom command to run against the remote MariaDB instance.
+  #   # Example:
+  #   # custom_command: >-
+  #   #   CREATE TABLE IF NOT EXISTS `$.name`.`StorageRecords` (
+  #   #     `id` int(11) NOT NULL AUTO_INCREMENT,
+  #   #     `key` varchar(255) NOT NULL,
+  #   #     `value` text NOT NULL,
+  #   #     `created_at` datetime NOT NULL,
+  #   #     `updated_at` datetime NOT NULL,
+  #   #     PRIMARY KEY (`id`),
+  #   #     UNIQUE KEY `key` (`key`)
+  #   #   );
+  #     custom_command: ""
   databases: []
 
 # Resource requirements and limits for MariaDB-Agent containers.
