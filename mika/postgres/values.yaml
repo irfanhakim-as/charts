@@ -8,18 +8,21 @@ replicaCount: ""
 
 # Container images used for PostgreSQL.
 image:
-  # The registry where the PostgreSQL container image is hosted.
-  # Default: "docker.io"
-  registry: ""
-  # The name of the repository that contains the PostgreSQL container image used.
-  # Default: "postgres"
-  repository: ""
-  # The tag that specifies the version of the PostgreSQL container image used.
-  # Default: Chart appVersion
-  tag: ""
-  # The policy that determines when Kubernetes should pull the PostgreSQL container image.
-  # Default: "IfNotPresent"
-  pullPolicy: ""
+  # PostgreSQL container image configurations.
+  # Source: https://hub.docker.com/_/postgres
+  postgres:
+    # The registry where the PostgreSQL container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the PostgreSQL container image used.
+    # Default: "postgres"
+    repository: ""
+    # The tag that specifies the version of the PostgreSQL container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the PostgreSQL container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
 
 # PostgreSQL configurations.
 postgres:
