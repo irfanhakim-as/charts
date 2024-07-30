@@ -32,6 +32,10 @@ imagePullSecrets: []
 
 # PostgreSQL configurations.
 postgres:
+  # The ingress domain name that hosts the PostgreSQL server.
+  # Example:
+  # domain: "postgres.example.com"
+  domain: ""
   # The name of the default database of the root PostgreSQL database user.
   # Default: "default"
   # Example:
