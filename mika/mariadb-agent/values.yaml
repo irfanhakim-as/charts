@@ -71,3 +71,30 @@ mariadb:
   #         UNIQUE KEY `key` (`key`)
   #       );
   databases: []
+
+# Resource requirements and limits for MariaDB-Agent containers.
+resources:
+  # MariaDB container resources.
+  # Example:
+  # mariadb:
+  #   # The minimum amount of resources required by MariaDB to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by MariaDB.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by MariaDB.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for MariaDB.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for MariaDB.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for MariaDB.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  mariadb: {}

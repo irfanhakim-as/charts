@@ -84,3 +84,4 @@ helm uninstall $release_name --namespace $namespace --wait
 | mariadb.host | string | `""` | The hostname or IP address of the MariaDB database server. |
 | mariadb.root.password | string | `""` | The password associated with the MariaDB database server root user. |
 | mariadb.root.user | string | `""` | The username or user account for accessing the MariaDB database server as root. Default: `"root"`. |
+| resources.mariadb | object | `{}` | MariaDB container resources. |
