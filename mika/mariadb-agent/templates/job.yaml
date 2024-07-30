@@ -1,0 +1,68 @@
+{{- $mariadb_registry := .Values.image.mariadb.registry | default "docker.io" | toString }}
+{{- $mariadb_repository := .Values.image.mariadb.repository | default "bitnami/mariadb" | toString }}
+{{- $mariadb_tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
+{{- $mariadb_pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $databases := .Values.mariadb.databases }}
+{{- $mariadbHost := .Values.mariadb.host | default "mariadb" | toString }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ printf "%s-%s-%s" (index (splitList "." $mariadbHost) 0) .Release.Name "mariadb-agent" }}
+  labels:
+    {{- include "mariadb-agent.labels" . | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 120
+  backoffLimit: 0
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mariadb-agent.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: mariadb-agent
+          image: {{ printf "%s/%s:%s" $mariadb_registry $mariadb_repository $mariadb_tag | quote }}
+          imagePullPolicy: {{ $mariadb_pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources.mariadb | nindent 12 }}
+          command: ["/bin/bash"]
+          args:
+            - -c
+            - >-
+              mariadb -h $(DB_HOST) -P $(DB_PORT) -u $(ROOT_USER) -e '
+            {{- range $databases }}
+              {{- $create := .create }}
+              {{- $drop := .drop }}
+              {{- $custom := .custom }}
+              {{- $command := .custom_command }}
+              {{- $db := .name | toString }}
+              {{- $user := .user | toString }}
+              {{- $password := .password | toString }}
+              {{- if $create }}
+                CREATE USER IF NOT EXISTS {{ $user | quote }}@"%";
+                SET PASSWORD FOR {{ $user | quote }}@"%" = PASSWORD({{ $password | quote }});
+                CREATE DATABASE IF NOT EXISTS {{ $db }};
+                GRANT ALL PRIVILEGES ON {{ $db }}.* TO {{ $user | quote }}@"%";
+              {{- end }}
+              {{- if $drop }}
+                DROP DATABASE IF EXISTS {{ $db }};
+                DROP USER IF EXISTS {{ $user | quote }}@"%";
+              {{- end }}
+              {{- if and $custom $command }}
+                {{- $command | toString | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
+              {{- end }}
+            {{- end }}
+                FLUSH PRIVILEGES;
+              '
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-mariadb-agent-secret
+      restartPolicy: Never
