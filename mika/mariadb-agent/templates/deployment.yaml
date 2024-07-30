@@ -31,7 +31,7 @@ spec:
           image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
           imagePullPolicy: {{ $pullPolicy }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.mariadb | nindent 12 }}
           command: ["/bin/bash"]
           args:
             - -c
