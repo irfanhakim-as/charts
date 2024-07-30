@@ -2,7 +2,7 @@ apiVersion: v2
 name: grocy
 description: Grocy is a web-based self-hosted groceries & household management solution for your home.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "v3.3.2"
 keywords:
   - "grocy"
