@@ -5,6 +5,7 @@
 # Container images used for MariaDB-Agent.
 image:
   # MariaDB container image configurations.
+  # Source: https://hub.docker.com/r/bitnami/mariadb
   mariadb:
     # The registry where the MariaDB container image is hosted.
     # Default: "docker.io"
