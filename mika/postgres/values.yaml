@@ -35,12 +35,12 @@ postgres:
   # The name of the default PostgreSQL database.
   # Default: "default"
   # Example:
-  # name: "default"
+  # name: "postgres"
   name: ""
   # The username for accessing the PostgreSQL instance.
   # Default: "root"
   # Example:
-  # user: "root"
+  # user: "postgres"
   user: ""
   # The password for accessing the PostgreSQL instance.
   # Example:
