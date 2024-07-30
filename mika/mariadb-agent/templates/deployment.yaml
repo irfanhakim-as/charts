@@ -39,18 +39,25 @@ spec:
             - >-
               mysql -h $(DB_HOST) -P $(DB_PORT) -u $(ROOT_USER) -e '
             {{- range $databases }}
-              {{- if .create }}
-                CREATE DATABASE IF NOT EXISTS {{ .name }};
-                CREATE USER IF NOT EXISTS "{{ .user }}"@"%";
-                SET PASSWORD FOR "{{ .user }}"@"%" = PASSWORD("{{ .password }}");
-                GRANT ALL PRIVILEGES ON {{ .name }}.* TO "{{ .user }}"@"%";
+              {{- $create := .create }}
+              {{- $drop := .drop }}
+              {{- $custom := .custom }}
+              {{- $command := .custom_command }}
+              {{- $db := .name | toString }}
+              {{- $user := .user | toString }}
+              {{- $password := .password | toString }}
+              {{- if $create }}
+                CREATE DATABASE IF NOT EXISTS {{ $db }};
+                CREATE USER IF NOT EXISTS "{{ $user }}"@"%";
+                SET PASSWORD FOR "{{ $user }}"@"%" = PASSWORD("{{ $password }}");
+                GRANT ALL PRIVILEGES ON {{ $db }}.* TO "{{ $user }}"@"%";
               {{- end }}
-              {{- if .drop }}
-                DROP DATABASE IF EXISTS {{ .name }};
-                DROP USER IF EXISTS "{{ .user }}"@"%";
+              {{- if $drop }}
+                DROP DATABASE IF EXISTS {{ $db }};
+                DROP USER IF EXISTS "{{ $user }}"@"%";
               {{- end }}
-              {{- if and .custom .custom_command }}
-                {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
+              {{- if and $custom $command }}
+                {{- .custom_command | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
               {{- end }}
             {{- end }}
                 FLUSH PRIVILEGES;
