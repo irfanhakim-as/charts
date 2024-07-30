@@ -9,31 +9,33 @@ replicaCount: ""
 # Container images used for Grocy.
 image:
   # Backend container image configurations.
+  # Source: https://hub.docker.com/r/grocy/backend
   backend:
-    # The registry where the backend container image is hosted.
+    # The registry where the Backend container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the backend container image used.
+    # The name of the repository that contains the Backend container image used.
     # Default: "grocy/backend"
     repository: ""
-    # The tag that specifies the version of the backend container image used.
+    # The tag that specifies the version of the Backend container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the backend container image.
+    # The policy that determines when Kubernetes should pull the Backend container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Frontend container image configurations.
+  # Source: https://hub.docker.com/r/grocy/frontend
   frontend:
-    # The registry where the frontend container image is hosted.
+    # The registry where the Frontend container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the frontend container image used.
+    # The name of the repository that contains the Frontend container image used.
     # Default: "grocy/frontend"
     repository: ""
-    # The tag that specifies the version of the frontend container image used.
+    # The tag that specifies the version of the Frontend container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the frontend container image.
+    # The policy that determines when Kubernetes should pull the Frontend container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
 
