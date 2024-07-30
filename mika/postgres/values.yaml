@@ -24,6 +24,12 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
 
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
 # PostgreSQL configurations.
 postgres:
   # The name of the default PostgreSQL database.
