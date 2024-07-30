@@ -39,12 +39,12 @@ mariadb:
   port: ""
   # MariaDB database server root user configurations.
   root:
-    # The username or user account for accessing the MariaDB database server as root.
+    # The root username or user account of the MariaDB database server.
     # Default: "root"
     # Example:
     # user: "mariadb"
     user: ""
-    # The password associated with the MariaDB database server root user.
+    # The password associated with the root MariaDB database user.
     # Example:
     # password: "password"
     password: ""

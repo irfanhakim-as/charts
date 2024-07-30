@@ -135,6 +135,6 @@ Easily create or delete multiple pairs of databases and users in a remote MariaD
 | mariadb.databases | list | `[]` | Database configurations array. Items: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`. |
 | mariadb.host | string | `""` | The hostname or IP address of the MariaDB database server. |
 | mariadb.port | string | `""` | The port number the MariaDB database server is listening for connections. Default: `"3306"`. |
-| mariadb.root.password | string | `""` | The password associated with the MariaDB database server root user. |
-| mariadb.root.user | string | `""` | The username or user account for accessing the MariaDB database server as root. Default: `"root"`. |
+| mariadb.root.password | string | `""` | The password associated with the root MariaDB database user. |
+| mariadb.root.user | string | `""` | The root username or user account of the MariaDB database server. Default: `"root"`. |
 | resources.mariadb | object | `{}` | MariaDB container resources. |
