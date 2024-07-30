@@ -44,7 +44,7 @@ mariadb:
     # password: "password"
     password: ""
   # Database configurations array.
-  # Elements: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`.
+  # Items: `.name`, `.user`, `.password`, `.create`, `.drop`, `.custom`, `.custom_command`
   # .name: The name of the intended MariaDB database.
   # .user: The username or user account for accessing the intended MariaDB database.
   # .password: The password associated with the intended MariaDB database user.
