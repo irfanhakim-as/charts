@@ -90,6 +90,40 @@ grocy:
     # memory_limit: "256M"
     memory_limit: ""
 
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Grocy services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
 # Service configurations.
 service:
   # The type of service used for Grocy services.
