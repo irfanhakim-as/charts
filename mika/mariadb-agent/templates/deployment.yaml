@@ -37,20 +37,20 @@ spec:
             - -c
             - >-
               mysql -h $(DB_HOST) -u $(ROOT_USER) -e '
-                {{- range $databases }}
-                {{- if .create }}
+            {{- range $databases }}
+              {{- if .create }}
                 CREATE DATABASE IF NOT EXISTS {{ .name }};
                 CREATE USER IF NOT EXISTS "{{ .user }}"@"%";
                 SET PASSWORD FOR "{{ .user }}"@"%" = PASSWORD("{{ .password }}");
                 GRANT ALL PRIVILEGES ON {{ .name }}.* TO "{{ .user }}"@"%";
-                {{- else if .drop }}
+              {{- else if .drop }}
                 DROP DATABASE IF EXISTS {{ .name }};
                 DROP USER IF EXISTS "{{ .user }}"@"%";
-                {{- end }}
-                {{- if and .custom .custom_command }}
+              {{- end }}
+              {{- if and .custom .custom_command }}
                 {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
-                {{- end }}
-                {{- end }}
+              {{- end }}
+            {{- end }}
                 FLUSH PRIVILEGES;
               '
           envFrom:
