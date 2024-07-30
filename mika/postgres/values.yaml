@@ -32,17 +32,17 @@ imagePullSecrets: []
 
 # PostgreSQL configurations.
 postgres:
-  # The name of the default PostgreSQL database.
+  # The name of the default database of the root PostgreSQL database user.
   # Default: "default"
   # Example:
   # name: "postgres"
   name: ""
-  # The username for accessing the PostgreSQL instance.
+  # The root username or user account of the PostgreSQL database server.
   # Default: "root"
   # Example:
   # user: "postgres"
   user: ""
-  # The password for accessing the PostgreSQL instance.
+  # The password associated with the root PostgreSQL database user.
   # Example:
   # pass: "password"
   pass: ""
