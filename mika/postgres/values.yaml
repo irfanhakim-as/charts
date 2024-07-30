@@ -44,8 +44,8 @@ postgres:
   user: ""
   # The password associated with the root PostgreSQL database user.
   # Example:
-  # pass: "password"
-  pass: ""
+  # password: "password"
+  password: ""
   # PostgreSQL data configurations.
   data:
     # The amount of persistent storage allocated for the PostgreSQL instance.
