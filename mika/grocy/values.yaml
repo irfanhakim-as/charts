@@ -194,46 +194,50 @@ storage:
 # Resource requirements and limits for Grocy containers.
 resources:
   # Backend container resources.
-  backend:
-    # The minimum amount of resources required by the backend to run.
-    requests:
-      # The minimum amount of CPU resources required by the backend.
-      # Example:
-      # cpu: "10m"
-      cpu: "50m"
-      # The minimum amount of memory required by the backend.
-      # Example:
-      # memory: "10Mi"
-      memory: "50Mi"
-    # The maximum amount of resources allowed for the backend.
-    limits:
-      # The maximum amount of CPU resources allowed for the backend.
-      # Example:
-      # cpu: "250m"
-      cpu: "100m"
-      # The maximum amount of memory allowed for the backend.
-      # Example:
-      # memory: "250Mi"
-      memory: "100Mi"
+  # Example:
+  # backend:
+  #   # The minimum amount of resources required by Backend to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Backend.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "50m"
+  #     # The minimum amount of memory required by Backend.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "50Mi"
+  #   # The maximum amount of resources allowed for Backend.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Backend.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "100m"
+  #     # The maximum amount of memory allowed for Backend.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "100Mi"
+  backend: {}
   # Frontend container resources.
-  frontend:
-    # The minimum amount of resources required by the frontend to run.
-    requests:
-      # The minimum amount of CPU resources required by the frontend.
-      # Example:
-      # cpu: "10m"
-      cpu: "10m"
-      # The minimum amount of memory required by the frontend.
-      # Example:
-      # memory: "10Mi"
-      memory: "10Mi"
-    # The maximum amount of resources allowed for the frontend.
-    limits:
-      # The maximum amount of CPU resources allowed for the frontend.
-      # Example:
-      # cpu: "250m"
-      cpu: "100m"
-      # The maximum amount of memory allowed for the frontend.
-      # Example:
-      # memory: "250Mi"
-      memory: "50Mi"
+  # Example:
+  # frontend:
+  #   # The minimum amount of resources required by Frontend to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Frontend.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Frontend.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for Frontend.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Frontend.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "100m"
+  #     # The maximum amount of memory allowed for Frontend.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "50Mi"
+  frontend: {}
