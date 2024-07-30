@@ -1,14 +1,14 @@
-{{- $host := .Values.mariadb.host | default "mariadb" | toString }}
-{{- $registry := .Values.image.mariadb.registry | default "docker.io" | toString }}
-{{- $repository := .Values.image.mariadb.repository | default "bitnami/mariadb" | toString }}
-{{- $tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
-{{- $pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $mariadb_registry := .Values.image.mariadb.registry | default "docker.io" | toString }}
+{{- $mariadb_repository := .Values.image.mariadb.repository | default "bitnami/mariadb" | toString }}
+{{- $mariadb_tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
+{{- $mariadb_pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $databases := .Values.mariadb.databases }}
+{{- $mariadbHost := .Values.mariadb.host | default "mariadb" | toString }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "%s-%s-%s" (index (splitList "." $host) 0) .Release.Name "mariadb-agent" }}
+  name: {{ printf "%s-%s-%s" (index (splitList "." $mariadbHost) 0) .Release.Name "mariadb-agent" }}
   labels:
     {{- include "mariadb-agent.labels" . | nindent 4 }}
 spec:
@@ -29,8 +29,8 @@ spec:
       {{- end }}
       containers:
         - name: mariadb-agent
-          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
-          imagePullPolicy: {{ $pullPolicy }}
+          image: {{ printf "%s/%s:%s" $mariadb_registry $mariadb_repository $mariadb_tag | quote }}
+          imagePullPolicy: {{ $mariadb_pullPolicy }}
           resources:
             {{- toYaml .Values.resources.mariadb | nindent 12 }}
           command: ["/bin/bash"]
