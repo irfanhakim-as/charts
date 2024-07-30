@@ -1,4 +1,4 @@
-# Postgres-Agent
+# [Postgres-Agent](https://github.com/postgres/postgres)
 
 Easily create or delete a database and user pair in a remote PostgreSQL instance.
 
