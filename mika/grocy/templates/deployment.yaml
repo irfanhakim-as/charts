@@ -12,7 +12,7 @@
 {{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/var/www/data" | toString | quote }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/var/www/data" | toString }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
 {{- $initScript := .Values.grocy.initScript | toString }}
 ---
@@ -92,7 +92,7 @@ spec:
               mountPath: /tmp
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-grocy-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $dataMountPath | quote }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
