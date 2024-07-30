@@ -1,3 +1,7 @@
+{{- $postgres_registry := .Values.image.postgres.registry | default "docker.io" | toString }}
+{{- $postgres_repository := .Values.image.postgres.repository | default "postgres" | toString }}
+{{- $postgres_tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
+{{- $postgres_pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $registry := .Values.image.registry | default "docker.io" | toString }}
 {{- $repository := .Values.image.repository | default "postgres" | toString }}
@@ -26,8 +30,8 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
-          imagePullPolicy: {{ $pullPolicy }}
+          image: {{ printf "%s/%s:%s" $postgres_registry $postgres_repository $postgres_tag | quote }}
+          imagePullPolicy: {{ $postgres_pullPolicy }}
           ports:
             - name: postgres
               containerPort: 5432
