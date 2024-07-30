@@ -47,6 +47,10 @@ imagePullSecrets: []
 
 # Grocy configurations.
 grocy:
+  # The ingress domain name that hosts the Grocy server.
+  # Example:
+  # domain: "grocy.example.com"
+  domain: ""
   # The mode to deploy grocy in which determines whether to enable user authentication.
   # Default: "production"
   # Example:
