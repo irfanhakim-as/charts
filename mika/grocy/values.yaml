@@ -47,15 +47,6 @@ imagePullSecrets: []
 
 # Grocy configurations.
 grocy:
-  # The ingress domain name that hosts the Grocy server.
-  # Example:
-  # domain: "grocy.example.com"
-  domain: ""
-  # The mode to deploy grocy in which determines whether to enable user authentication.
-  # Default: "production"
-  # Example:
-  # mode: "demo"
-  mode: ""
   # The localisation of the Grocy application.
   # Default: "en_GB"
   # Example:
@@ -66,33 +57,42 @@ grocy:
   # Example:
   # currency: "USD"
   currency: ""
+  # The ingress domain name that hosts the Grocy server.
+  # Example:
+  # domain: "grocy.example.com"
+  domain: ""
   # The preferred unit for displaying energy values in Grocy.
   # Default: "kcal"
   # Example:
   # energy: "kJ"
   energy: ""
+  # The mode to deploy grocy in which determines whether to enable user authentication.
+  # Default: "production"
+  # Example:
+  # mode: "demo"
+  mode: ""
   # Grocy PHP configurations.
   php:
-    # Specifies the maximum size of an individual file that can be uploaded through PHP.
-    # Default: "50M"
-    # Example:
-    # upload_limit: "100M"
-    upload_limit: ""
     # Sets the maximum number of files that can be uploaded simultaneously through PHP.
     # Default: "200"
     # Example:
     # file_limit: "100"
     file_limit: ""
-    # Defines the maximum size of the entire HTTP POST request that PHP can handle.
-    # Default: "100M"
-    # Example:
-    # post_limit: "200M"
-    post_limit: ""
     # Determines the maximum amount of memory that PHP can allocate for executing scripts.
     # Default: "512M"
     # Example:
     # memory_limit: "256M"
     memory_limit: ""
+    # Defines the maximum size of the entire HTTP POST request that PHP can handle.
+    # Default: "100M"
+    # Example:
+    # post_limit: "200M"
+    post_limit: ""
+    # Specifies the maximum size of an individual file that can be uploaded through PHP.
+    # Default: "50M"
+    # Example:
+    # upload_limit: "100M"
+    upload_limit: ""
 
 # Ingress configurations.
 ingress:
