@@ -6,6 +6,9 @@ version: 0.1.0
 appVersion: "v3.3.2"
 keywords:
   - "grocy"
+  - "erp"
+  - "groceries"
+  - "household"
 home: "https://github.com/grocy/grocy"
 icon: "https://raw.githubusercontent.com/grocy/grocy/master/public/img/logo.svg"
 sources:
