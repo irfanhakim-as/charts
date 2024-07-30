@@ -34,4 +34,4 @@ metadata:
     {{- include "grocy.labels" . | nindent 4 }}
 data:
   common.conf: |
-    {{- include "grocy.common-conf" . | nindent 4 }}
+    {{- include "grocy.common-conf" . | toString | nindent 4 }}
