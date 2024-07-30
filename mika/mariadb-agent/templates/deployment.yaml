@@ -48,13 +48,13 @@ spec:
               {{- $password := .password | toString }}
               {{- if $create }}
                 CREATE DATABASE IF NOT EXISTS {{ $db }};
-                CREATE USER IF NOT EXISTS "{{ $user }}"@"%";
-                SET PASSWORD FOR "{{ $user }}"@"%" = PASSWORD("{{ $password }}");
-                GRANT ALL PRIVILEGES ON {{ $db }}.* TO "{{ $user }}"@"%";
+                CREATE USER IF NOT EXISTS {{ $user | quote }}@"%";
+                SET PASSWORD FOR {{ $user | quote }}@"%" = PASSWORD({{ $password | quote }});
+                GRANT ALL PRIVILEGES ON {{ $db }}.* TO {{ $user | quote }}@"%";
               {{- end }}
               {{- if $drop }}
                 DROP DATABASE IF EXISTS {{ $db }};
-                DROP USER IF EXISTS "{{ $user }}"@"%";
+                DROP USER IF EXISTS {{ $user | quote }}@"%";
               {{- end }}
               {{- if and $custom $command }}
                 {{- $command | toString | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
