@@ -39,6 +39,12 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
 
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
 # Grocy configurations.
 grocy:
   # The mode to deploy grocy in which determines whether to enable user authentication.
