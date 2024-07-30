@@ -89,17 +89,38 @@ grocy:
     # Example:
     # memory_limit: "256M"
     memory_limit: ""
-  # Grocy data configurations.
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
   data:
-    # The amount of persistent storage allocated for the Grocy instance.
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/var/www/data"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
     # Default: "500Mi"
     # Example:
-    # storage: "1Gi"
+    # storage: "10Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the Grocy storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
 
 # Resource requirements and limits for Grocy containers.
