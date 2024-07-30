@@ -3,10 +3,10 @@
 {{- $culture := .Values.grocy.culture | default "en_GB" | toString | quote }}
 {{- $currency := .Values.grocy.currency | default "MYR" | toString | quote }}
 {{- $energy := .Values.grocy.energy | default "kcal" | toString | quote }}
-{{- $upload_limit := .Values.grocy.php.upload_limit | default "50M" | toString | quote }}
-{{- $file_limit := .Values.grocy.php.file_limit | default "200" | toString | quote }}
-{{- $post_limit := .Values.grocy.php.post_limit | default "100M" | toString | quote }}
-{{- $memory_limit := .Values.grocy.php.memory_limit | default "512M" | toString | quote }}
+{{- $uploadLimit := .Values.grocy.php.upload_limit | default "50M" | toString | quote }}
+{{- $fileLimit := .Values.grocy.php.file_limit | default "200" | toString | quote }}
+{{- $postLimit := .Values.grocy.php.post_limit | default "100M" | toString | quote }}
+{{- $memoryLimit := .Values.grocy.php.memory_limit | default "512M" | toString | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -21,10 +21,10 @@ data:
   GROCY_CULTURE: {{ $culture }}
   GROCY_CURRENCY: {{ $currency }}
   GROCY_ENERGY_UNIT: {{ $energy }}
-  MAX_UPLOAD: {{ $upload_limit }}
-  PHP_MAX_FILE_UPLOAD: {{ $file_limit }}
-  PHP_MAX_POST: {{ $post_limit }}
-  PHP_MEMORY_LIMIT: {{ $memory_limit }}
+  MAX_UPLOAD: {{ $uploadLimit }}
+  PHP_MAX_FILE_UPLOAD: {{ $fileLimit }}
+  PHP_MAX_POST: {{ $postLimit }}
+  PHP_MEMORY_LIMIT: {{ $memoryLimit }}
 ---
 apiVersion: v1
 kind: ConfigMap
