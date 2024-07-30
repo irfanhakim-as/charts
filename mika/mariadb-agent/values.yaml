@@ -32,6 +32,11 @@ mariadb:
   # Example:
   # host: "mariadb.default.svc.cluster.local"
   host: ""
+  # The port number the MariaDB database server is listening for connections.
+  # Default: "3306"
+  # Example:
+  # port: "5432"
+  port: ""
   # MariaDB database server root user configurations.
   root:
     # The username or user account for accessing the MariaDB database server as root.
