@@ -37,7 +37,7 @@ mariadb:
     # The username or user account for accessing the MariaDB database server as root.
     # Default: "root"
     # Example:
-    # user: "root"
+    # user: "mariadb"
     user: ""
     # The password associated with the MariaDB database server root user.
     # Example:
