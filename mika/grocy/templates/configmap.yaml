@@ -1,4 +1,5 @@
 {{- $frontend_tag := .Values.image.frontend.tag | default .Chart.AppVersion | toString }}
+{{- $platform := .Values.grocy.platform | default "linux/amd64" | toString | quote }}
 {{- $mode := .Values.grocy.mode | default "production" | toString | quote }}
 {{- $culture := .Values.grocy.culture | default "en_GB" | toString | quote }}
 {{- $currency := .Values.grocy.currency | default "MYR" | toString | quote }}
@@ -16,7 +17,7 @@ metadata:
     {{- include "grocy.labels" . | nindent 4 }}
 data:
   GROCY_VERSION: {{ $frontend_tag }}
-  PLATFORM: "linux/amd64"
+  PLATFORM: {{ $platform }}
   GROCY_MODE: {{ $mode }}
   GROCY_CULTURE: {{ $culture }}
   GROCY_CURRENCY: {{ $currency }}
