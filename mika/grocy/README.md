@@ -137,6 +137,7 @@ Grocy is a web-based self-hosted groceries & household management solution for y
 | grocy.php.memory_limit | string | `""` | Determines the maximum amount of memory that PHP can allocate for executing scripts. Default: `"512M"`. |
 | grocy.php.post_limit | string | `""` | Defines the maximum size of the entire HTTP POST request that PHP can handle. Default: `"100M"`. |
 | grocy.php.upload_limit | string | `""` | Specifies the maximum size of an individual file that can be uploaded through PHP. Default: `"50M"`. |
+| grocy.platform | string | `""` | The target operating system and architecture for the Grocy container. Default: `"linux/amd64"`. |
 | image.backend.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Backend container image. Default: `"IfNotPresent"`. |
 | image.backend.registry | string | `""` | The registry where the Backend container image is hosted. Default: `"docker.io"`. |
 | image.backend.repository | string | `""` | The name of the repository that contains the Backend container image used. Default: `"grocy/backend"`. |

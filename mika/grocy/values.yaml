@@ -92,6 +92,11 @@ grocy:
   # Example:
   # mode: "demo"
   mode: ""
+  # The target operating system and architecture for the Grocy container.
+  # Default: "linux/amd64"
+  # Example:
+  # platform: "linux/arm64"
+  platform: ""
   # Grocy PHP configurations.
   php:
     # Sets the maximum number of files that can be uploaded simultaneously through PHP.
