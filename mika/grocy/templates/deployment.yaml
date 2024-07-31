@@ -88,8 +88,6 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-grocy-cm
           volumeMounts:
-            - name: {{ .Release.Name }}-tmp-volume
-              mountPath: /tmp
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-grocy-data
               mountPath: {{ $dataMountPath | quote }}
@@ -110,14 +108,10 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-grocy-cm
           volumeMounts:
-            - name: {{ .Release.Name }}-tmp-volume
-              mountPath: /tmp
             - name: {{ .Release.Name }}-grocy-nginx-config
               mountPath: /etc/nginx/common.conf
               subPath: common.conf
       volumes:
-        - name: {{ .Release.Name }}-tmp-volume
-          emptyDir: {}
         - name: {{ .Release.Name }}-grocy-nginx-config
           configMap:
             name: {{ .Release.Name }}-grocy-nginx-config
