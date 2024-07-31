@@ -17,7 +17,7 @@ Please run the following command(s) to obtain the right address to the service:
         {{- $forwardPort := "8080" | toString }}
         {{- $serviceAddress = printf "http://127.0.0.1:%s" $forwardPort | toString }}
     export POD_NAME=$(kubectl get pod --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "grocy.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-    export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} ${POD_NAME} -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+    export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} ${POD_NAME} -o jsonpath="{.spec.containers[1].ports[0].containerPort}")
     kubectl port-forward --namespace {{ .Release.Namespace }} ${POD_NAME} {{ $forwardPort }}:${CONTAINER_PORT}
     {{- else if eq $type "LoadBalancer" }}
         {{- $serviceAddress = printf "$(echo http://${SERVICE_IP}:%s)" $frontend | toString }}
