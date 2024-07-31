@@ -56,7 +56,7 @@ spec:
               if [ -z "$(ls -A {{ $initDataMountPath }} | grep -v 'lost+found')" ]; then
                 echo "Initialising {{ $initDataMountPath }}"
                 cp -Ra /var/www/data/. {{ $initDataMountPath }}
-                chown -R www-data: {{ $initDataMountPath }}
+                chown -R 82:82 {{ $initDataMountPath }}
                 find {{ $initDataMountPath }} -type d -exec chmod 755 {} \;
                 find {{ $initDataMountPath }} -type f -exec chmod 644 {} \;
               else
