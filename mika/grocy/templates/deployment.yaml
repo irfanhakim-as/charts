@@ -122,5 +122,3 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-grocy-data-pvc
         {{- end }}
-      securityContext:
-        fsGroup: 82
