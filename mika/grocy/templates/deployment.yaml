@@ -8,8 +8,8 @@
 {{- $frontend_tag := .Values.image.frontend.tag | default .Chart.AppVersion | toString }}
 {{- $frontend_pullPolicy := .Values.image.frontend.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
-{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "grocy/backend" | toString }}
+{{- $init_tag := .Values.image.init.tag | default .Chart.AppVersion | toString }}
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/var/www/data" | toString }}

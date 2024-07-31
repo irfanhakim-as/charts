@@ -39,16 +39,16 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Init container image configurations.
-  # Source: https://hub.docker.com/_/busybox
+  # Source: https://hub.docker.com/r/grocy/backend
   init:
     # The registry where the Init container image is hosted.
     # Default: "docker.io"
     registry: ""
     # The name of the repository that contains the Init container image used.
-    # Default: "busybox"
+    # Default: "grocy/backend"
     repository: ""
     # The tag that specifies the version of the Init container image used.
-    # Default: "1.36.1"
+    # Default: Chart appVersion
     tag: ""
     # The policy that determines when Kubernetes should pull the Init container image.
     # Default: "IfNotPresent"
