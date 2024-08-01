@@ -11,31 +11,31 @@ image:
   # Kutt container image configurations.
   # Source: https://hub.docker.com/r/kutt/kutt
   kutt:
-    # The registry where the kutt container image is hosted.
+    # The registry where the Kutt container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the kutt container image used.
+    # The name of the repository that contains the Kutt container image used.
     # Default: "kutt/kutt"
     repository: ""
-    # The tag that specifies the version of the kutt container image used.
+    # The tag that specifies the version of the Kutt container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the kutt container image.
+    # The policy that determines when Kubernetes should pull the Kutt container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Redis container image configurations.
   # Source: https://hub.docker.com/_/redis
   redis:
-    # The registry where the redis container image is hosted.
+    # The registry where the Redis container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the redis container image used.
+    # The name of the repository that contains the Redis container image used.
     # Default: "redis"
     repository: ""
-    # The tag that specifies the version of the redis container image used.
+    # The tag that specifies the version of the Redis container image used.
     # Default: "6.0-alpine"
     tag: ""
-    # The policy that determines when Kubernetes should pull the redis container image.
+    # The policy that determines when Kubernetes should pull the Redis container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
 

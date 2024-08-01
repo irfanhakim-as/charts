@@ -87,14 +87,14 @@ helm uninstall $release_name --namespace $namespace --wait
 | db.port | string | `""` | The port number on which the Kutt database server is listening. Default: `"5432"`. |
 | db.ssl | bool | `false` | Specifies whether the Kutt database server should use SSL. |
 | db.user | string | `""` | The username or user account for accessing the Kutt database. |
-| image.kutt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the kutt container image. Default: `"IfNotPresent"`. |
-| image.kutt.registry | string | `""` | The registry where the kutt container image is hosted. Default: `"docker.io"`. |
-| image.kutt.repository | string | `""` | The name of the repository that contains the kutt container image used. Default: `"kutt/kutt"`. |
-| image.kutt.tag | string | `""` | The tag that specifies the version of the kutt container image used. Default: `Chart appVersion`. |
-| image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the redis container image. Default: `"IfNotPresent"`. |
-| image.redis.registry | string | `""` | The registry where the redis container image is hosted. Default: `"docker.io"`. |
-| image.redis.repository | string | `""` | The name of the repository that contains the redis container image used. Default: `"redis"`. |
-| image.redis.tag | string | `""` | The tag that specifies the version of the redis container image used. Default: `"6.0-alpine"`. |
+| image.kutt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Kutt container image. Default: `"IfNotPresent"`. |
+| image.kutt.registry | string | `""` | The registry where the Kutt container image is hosted. Default: `"docker.io"`. |
+| image.kutt.repository | string | `""` | The name of the repository that contains the Kutt container image used. Default: `"kutt/kutt"`. |
+| image.kutt.tag | string | `""` | The tag that specifies the version of the Kutt container image used. Default: `Chart appVersion`. |
+| image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"IfNotPresent"`. |
+| image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |
+| image.redis.repository | string | `""` | The name of the repository that contains the Redis container image used. Default: `"redis"`. |
+| image.redis.tag | string | `""` | The tag that specifies the version of the Redis container image used. Default: `"6.0-alpine"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.enabled | bool | `false` | Specifies whether Kutt should be hosted using an Ingress.. |
