@@ -98,8 +98,8 @@ helm uninstall $release_name --namespace $namespace --wait
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Kutt services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | kutt.administration.dailyUserLimit | string | `""` | The maximum number of links that can be created by a user in a day. Default: `"50"`. |
-| kutt.administration.disableAnonLinks | bool | `false` | Specifies whether Kutt should disallow creating links without an account. |
-| kutt.administration.disableRegistration | bool | `false` | Specifies whether Kutt should disallow user registrations. |
+| kutt.administration.disableAnonLinks | string | `""` | Specifies whether Kutt should disallow creating links without an account. Default: `"false"`. |
+| kutt.administration.disableRegistration | string | `""` | Specifies whether Kutt should disallow user registrations. Default: `"false"`. |
 | kutt.administration.maxStatsPerLink | string | `""` | The maximum number of visits for a link to have detailed statistics. Default: `"5000"`. |
 | kutt.administration.nonUserCooldown | string | `""` | The number of minutes an anonymous user must wait before creating another link. Default: `"0"`. |
 | kutt.admins | list | `[]` | Email addresses of the administrators of the Kutt application so they can access admin actions. |

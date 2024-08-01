@@ -83,13 +83,15 @@ kutt:
     # dailyUserLimit: "15"
     dailyUserLimit: ""
     # Specifies whether Kutt should disallow creating links without an account.
+    # Default: "false"
     # Example:
-    # disableAnonLinks: true
-    disableAnonLinks: false
+    # disableAnonLinks: "true"
+    disableAnonLinks: ""
     # Specifies whether Kutt should disallow user registrations.
+    # Default: "false"
     # Example:
-    # disableRegistration: true
-    disableRegistration: false
+    # disableRegistration: "true"
+    disableRegistration: ""
     # The maximum number of visits for a link to have detailed statistics.
     # Default: "5000"
     # Example:
