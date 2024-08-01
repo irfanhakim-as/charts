@@ -127,14 +127,8 @@ helm uninstall $release_name --namespace $namespace --wait
 | redis.password | string | `""` | The password for authenticating with the Redis server. |
 | redis.port | string | `""` | The port number on which the EXTERNAL Redis server is listening. Default: `"6379"`. |
 | replicaCount | string | `""` | The desired number of running replicas for Kutt. Default: `"1"`. |
-| resources.kutt.limits.cpu | string | `"150m"` | The maximum amount of CPU resources allowed for the kutt. |
-| resources.kutt.limits.memory | string | `"400Mi"` | The maximum amount of memory allowed for the kutt. |
-| resources.kutt.requests.cpu | string | `"100m"` | The minimum amount of CPU resources required by the kutt. |
-| resources.kutt.requests.memory | string | `"200Mi"` | The minimum amount of memory required by the kutt. |
-| resources.redis.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for the redis. |
-| resources.redis.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for the redis. |
-| resources.redis.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by the redis. |
-| resources.redis.requests.memory | string | `"20Mi"` | The minimum amount of memory required by the redis. |
+| resources.kutt | object | `{}` | Kutt container resources. |
+| resources.redis | object | `{}` | Redis container resources. |
 | service.kutt.nodePort | string | `""` | The optional node port to expose for Kutt when the service type is NodePort. |
 | service.kutt.port | string | `""` | The Kutt port on which the Kutt server should listen for connections. Default: `"3000"`. |
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |

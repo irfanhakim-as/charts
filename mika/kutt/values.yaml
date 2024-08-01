@@ -303,46 +303,50 @@ storage:
 # Resource requirements and limits for Kutt containers.
 resources:
   # Kutt container resources.
-  kutt:
-    # The minimum amount of resources required by the kutt to run.
-    requests:
-      # The minimum amount of CPU resources required by the kutt.
-      # Example:
-      # cpu: "10m"
-      cpu: "100m"
-      # The minimum amount of memory required by the kutt.
-      # Example:
-      # memory: "10Mi"
-      memory: "200Mi"
-    # The maximum amount of resources allowed for the kutt.
-    limits:
-      # The maximum amount of CPU resources allowed for the kutt.
-      # Example:
-      # cpu: "250m"
-      cpu: "150m"
-      # The maximum amount of memory allowed for the kutt.
-      # Example:
-      # memory: "250Mi"
-      memory: "400Mi"
+  # Example:
+  # kutt:
+  #   # The minimum amount of resources required by Kutt to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Kutt.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by Kutt.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "200Mi"
+  #   # The maximum amount of resources allowed for Kutt.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Kutt.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "150m"
+  #     # The maximum amount of memory allowed for Kutt.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  kutt: {}
   # Redis container resources.
-  redis:
-    # The minimum amount of resources required by the redis to run.
-    requests:
-      # The minimum amount of CPU resources required by the redis.
-      # Example:
-      # cpu: "10m"
-      cpu: "10m"
-      # The minimum amount of memory required by the redis.
-      # Example:
-      # memory: "10Mi"
-      memory: "20Mi"
-    # The maximum amount of resources allowed for the redis.
-    limits:
-      # The maximum amount of CPU resources allowed for the redis.
-      # Example:
-      # cpu: "250m"
-      cpu: "20m"
-      # The maximum amount of memory allowed for the redis.
-      # Example:
-      # memory: "250Mi"
-      memory: "50Mi"
+  # Example:
+  # redis:
+  #   # The minimum amount of resources required by Redis to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Redis.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Redis.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "20Mi"
+  #   # The maximum amount of resources allowed for Redis.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Redis.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "20m"
+  #     # The maximum amount of memory allowed for Redis.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "50Mi"
+  redis: {}
