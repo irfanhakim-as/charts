@@ -9,6 +9,7 @@ replicaCount: ""
 # Container images used for Kutt.
 image:
   # Kutt container image configurations.
+  # Source: https://hub.docker.com/r/kutt/kutt
   kutt:
     # The registry where the kutt container image is hosted.
     # Default: "docker.io"
@@ -23,6 +24,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Redis container image configurations.
+  # Source: https://hub.docker.com/_/redis
   redis:
     # The registry where the redis container image is hosted.
     # Default: "docker.io"
