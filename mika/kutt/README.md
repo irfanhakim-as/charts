@@ -107,7 +107,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | kutt.link_length | string | `""` | The length of the generated short links. Default: `"6"`. |
 | kutt.name | string | `""` | The name of the site where Kutt is hosted. Default: `"Kutt"`. |
 | kutt.secret | string | `""` | A 50-character secret key used for encrypting JSON Web Tokens (JWTs). |
-| kutt.useHttps | bool | `true` | Specifies whether Kutt should use HTTPS for custom domains. |
+| kutt.useHttps | string | `""` | Specifies whether Kutt should use HTTPS for custom domains. Default: `"true"`. |
 | mail.contact_email | string | `""` | The email address to be displayed as the contact email in the application. |
 | mail.from_email | string | `""` | The email address used as the "from" address for sent emails. Default: `"$name <$mail.smtp.user>"`. |
 | mail.report_email | string | `""` | The email address that will receive submitted reports. |

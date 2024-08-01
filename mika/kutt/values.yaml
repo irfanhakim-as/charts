@@ -72,9 +72,10 @@ kutt:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
   # Specifies whether Kutt should use HTTPS for custom domains.
+  # Default: "true"
   # Example:
   # useHttps: false
-  useHttps: true
+  useHttps: ""
   # Kutt administration configurations.
   administration:
     # The maximum number of links that can be created by a user in a day.
