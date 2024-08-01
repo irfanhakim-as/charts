@@ -65,7 +65,7 @@ kutt:
   # The name of the site where Kutt is hosted.
   # Default: "Kutt"
   # Example:
-  # name: "Kutt"
+  # name: "URL Shortener"
   name: ""
   # A 50-character secret key used for encrypting JSON Web Tokens (JWTs).
   # Example:
