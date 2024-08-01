@@ -174,6 +174,40 @@ redis:
   # password: "password"
   password: ""
 
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Kutt services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
 # Storage configurations.
 storage:
   # Data storage configurations.
@@ -206,16 +240,6 @@ storage:
     # Example:
     # storageClassName: "smb"
     storageClassName: ""
-
-# Ingress configurations.
-ingress:
-  # Specifies whether Kutt should be hosted using an Ingress.
-  # Example:
-  # enabled: true
-  enabled: false
-  # The name of the cluster issuer for Ingress.
-  # Default: "letsencrypt-dns-prod"
-  clusterIssuer: ""
 
 # Service configurations.
 service:
