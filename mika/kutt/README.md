@@ -135,9 +135,11 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.redis.limits.memory | string | `"50Mi"` | The maximum amount of memory allowed for the redis. |
 | resources.redis.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by the redis. |
 | resources.redis.requests.memory | string | `"20Mi"` | The minimum amount of memory required by the redis. |
-| service.kutt.port | string | `""` | The port number on which the Kutt service is listening. Default: `"3000"`. |
-| service.kutt.protocol | string | `""` | The protocol used by the Kutt service. Default: `"TCP"`. |
-| service.type | string | `""` | The type of service used for Kutt. Default: `"ClusterIP"`. |
+| service.kutt.nodePort | string | `""` | The optional node port to expose for Kutt when the service type is NodePort. |
+| service.kutt.port | string | `""` | The Kutt port on which the Kutt server should listen for connections. Default: `"3000"`. |
+| service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
+| service.redis.port | string | `""` | The Redis port on which the Kutt server should listen for connections. Default: `"6379"`. |
+| service.type | string | `""` | The type of service used to expose Kutt services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/data"`. |

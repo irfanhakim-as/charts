@@ -208,6 +208,36 @@ ingress:
   #     value: ""
   customAnnotations: []
 
+# Service configurations.
+service:
+  # The type of service used to expose Kutt services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+  # Kutt service port configurations.
+  kutt:
+    # The optional node port to expose for Kutt when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Kutt port on which the Kutt server should listen for connections.
+    # Default: "3000"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Redis service port configurations.
+  redis:
+    # The optional node port to expose for Redis when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
+    # The Redis port on which the Kutt server should listen for connections.
+    # Default: "6379"
+    # Example:
+    # port: "8443"
+    port: ""
+
 # Storage configurations.
 storage:
   # Data storage configurations.
@@ -240,26 +270,6 @@ storage:
     # Example:
     # storageClassName: "smb"
     storageClassName: ""
-
-# Service configurations.
-service:
-  # The type of service used for Kutt.
-  # Default: "ClusterIP"
-  # Example:
-  # type: "ClusterIP"
-  type: ""
-  # Kutt service configurations.
-  kutt:
-    # The port number on which the Kutt service is listening.
-    # Default: "3000"
-    # Example:
-    # port: "3500"
-    port: ""
-    # The protocol used by the Kutt service.
-    # Default: "TCP"
-    # Example:
-    # protocol: "TCP"
-    protocol: ""
 
 # Database configurations.
 db:
