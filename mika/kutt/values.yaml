@@ -53,8 +53,7 @@ kutt:
   #   - "admin@example.com"
   #   - "su@example.com"
   admins: []
-  # The domain name that is hosting the Kutt application.
-  # Default: "localhost:$service.kutt.port" if `ingress` is disabled
+  # The ingress domain name that hosts the Kutt server.
   # Example:
   # domain: "kutt.example.com"
   domain: ""

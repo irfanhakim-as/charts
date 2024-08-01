@@ -104,7 +104,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | kutt.administration.maxStatsPerLink | string | `""` | The maximum number of visits for a link to have detailed statistics. Default: `"5000"`. |
 | kutt.administration.nonUserCooldown | string | `""` | The number of minutes an anonymous user must wait before creating another link. Default: `"0"`. |
 | kutt.admins | list | `[]` | Email addresses of the administrators of the Kutt application so they can access admin actions. |
-| kutt.domain | string | `""` | The domain name that is hosting the Kutt application. Default: `"localhost:$service.kutt.port"` if `ingress` is disabled. |
+| kutt.domain | string | `""` | The ingress domain name that hosts the Kutt server. |
 | kutt.google.recaptchaSecretKey | string | `""` | The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | kutt.google.recaptchaSiteKey | string | `""` | The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | kutt.google.safeBrowsingKey | string | `""` | The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started. |
