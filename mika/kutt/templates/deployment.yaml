@@ -9,6 +9,7 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $external_redis := .Values.redis.external }}
 {{- $redis_password := .Values.redis.password | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
