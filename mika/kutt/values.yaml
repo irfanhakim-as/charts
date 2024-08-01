@@ -104,23 +104,22 @@ kutt:
     # nonUserCooldown: "1"
     nonUserCooldown: ""
 
-# Redis configurations.
+# External Redis configurations.
 redis:
   # Specifies whether Kutt should use an external Redis server.
   # Example:
   # external: true
   external: false
-  # The hostname or IP address of the Redis server.
-  # Default: "localhost"
+  # The hostname or IP address of the external Redis server.
   # Example:
   # host: "redis.default.svc.cluster.local"
   host: ""
-  # The port number on which the EXTERNAL Redis server is listening.
+  # The port number on which the external Redis server is listening for connections.
   # Default: "6379"
   # Example:
   # port: "9763"
   port: ""
-  # The password for authenticating with the Redis server.
+  # The password for authenticating with the external Redis server.
   # Example:
   # password: "password"
   password: ""

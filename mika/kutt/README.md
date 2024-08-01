@@ -123,9 +123,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | postgres.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
 | postgres.user | string | `""` | The username or user account for accessing the Kutt database. |
 | redis.external | bool | `false` | Specifies whether Kutt should use an external Redis server. |
-| redis.host | string | `""` | The hostname or IP address of the Redis server. Default: `"localhost"`. |
-| redis.password | string | `""` | The password for authenticating with the Redis server. |
-| redis.port | string | `""` | The port number on which the EXTERNAL Redis server is listening. Default: `"6379"`. |
+| redis.host | string | `""` | The hostname or IP address of the external Redis server. |
+| redis.password | string | `""` | The password for authenticating with the external Redis server. |
+| redis.port | string | `""` | The port number on which the external Redis server is listening for connections. Default: `"6379"`. |
 | replicaCount | string | `""` | The desired number of running replicas for Kutt. Default: `"1"`. |
 | resources.kutt | object | `{}` | Kutt container resources. |
 | resources.redis | object | `{}` | Redis container resources. |
