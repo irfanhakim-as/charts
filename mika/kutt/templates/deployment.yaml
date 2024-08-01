@@ -7,8 +7,6 @@
 {{- $redis_tag := .Values.image.redis.tag | default "6.0-alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $kutt_port := .Values.service.kutt.port | default "3000" | toString | int }}
-{{- $kutt_protocol := .Values.service.kutt.protocol | default "TCP" | toString }}
 {{- $external_redis := .Values.redis.external }}
 {{- $redis_password := .Values.redis.password | toString }}
 apiVersion: apps/v1
@@ -46,8 +44,8 @@ spec:
               ./wait-for-it.sh $(DB_HOST):$(DB_PORT) -- npm start
           ports:
             - name: kutt
-              containerPort: {{ $kutt_port }}
-              protocol: {{ $kutt_protocol }}
+              containerPort: 3000
+              protocol: TCP
           resources:
             {{- toYaml .Values.resources.kutt | nindent 12 }}
           envFrom:
