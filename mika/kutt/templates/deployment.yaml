@@ -1,3 +1,4 @@
+{{- $externalRedis := .Values.redis.external }}
 {{- $kutt_registry := .Values.image.kutt.registry | default "docker.io" | toString }}
 {{- $kutt_repository := .Values.image.kutt.repository | default "kutt/kutt" | toString }}
 {{- $kutt_tag := .Values.image.kutt.tag | default .Chart.AppVersion | toString }}
@@ -7,8 +8,7 @@
 {{- $redis_tag := .Values.image.redis.tag | default "6.0-alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $external_redis := .Values.redis.external }}
-{{- $redis_password := .Values.redis.password | toString }}
+{{- $redisPassword := .Values.redis.password | toString }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -56,11 +56,11 @@ spec:
                 name: {{ .Release.Name }}-kutt-secret
             - secretRef:
                 name: {{ .Release.Name }}-kutt-redis-secret
-        {{- if not $external_redis }}
+        {{- if not $externalRedis }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
-          {{- if $redis_password }}
+          {{- if $redisPassword }}
           command: ["redis-server"]
           args:
             - "--requirepass"
