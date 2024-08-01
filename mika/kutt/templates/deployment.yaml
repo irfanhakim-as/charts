@@ -11,7 +11,6 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/data" | toString | quote }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
-{{- $redisPassword := .Values.redis.password | toString }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -63,12 +62,10 @@ spec:
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
-          {{- if $redisPassword }}
-          command: ["redis-server"]
-          args:
-            - "--requirepass"
-            - "$(REDIS_PASSWORD)"
-          {{- end }}
+          # command: ["redis-server"]
+          # args:
+          #   - "--requirepass"
+          #   - "$(REDIS_PASSWORD)"
           ports:
             - name: redis
               containerPort: 6379
