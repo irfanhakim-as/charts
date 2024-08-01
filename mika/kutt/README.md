@@ -95,6 +95,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.redis.registry | string | `""` | The registry where the redis container image is hosted. Default: `"docker.io"`. |
 | image.redis.repository | string | `""` | The name of the repository that contains the redis container image used. Default: `"redis"`. |
 | image.redis.tag | string | `""` | The tag that specifies the version of the redis container image used. Default: `"6.0-alpine"`. |
+| imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.enabled | bool | `false` | Specifies whether Kutt should be hosted using an Ingress.. |
 | kutt.administration.dailyUserLimit | string | `""` | The maximum number of links that can be created by a user in a day. Default: `"50"`. |
