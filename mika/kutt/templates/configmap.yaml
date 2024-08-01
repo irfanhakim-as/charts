@@ -1,18 +1,14 @@
-{{- $ingress := .Values.ingress.enabled }}
 {{- $admins := .Values.kutt.admins | join "," | toString | quote }}
 {{- $dailyUserLimit := .Values.kutt.administration.dailyUserLimit | default "50" | toString | quote }}
 {{- $disableAnonLinks := .Values.kutt.administration.disableAnonLinks | default "false" | toString | quote }}
 {{- $disableRegistration := .Values.kutt.administration.disableRegistration | default "false" | toString | quote }}
-{{- $domain := .Values.kutt.domain | toString }}
-{{- $kuttPort := .Values.service.kutt.port | default "3000" | toString }}
+{{- $domain := .Values.kutt.domain | default (printf "%s-kutt-svc:kutt" .Release.Name) | toString | quote }}
+{{- $kuttPort := .Values.service.kutt.port | default "3000" | toString | quote }}
 {{- $linkLength := .Values.kutt.link_length | default "6" | toString | quote }}
 {{- $maxStatsPerLink := .Values.kutt.administration.maxStatsPerLink | default "5000" | toString | quote }}
 {{- $name := .Values.kutt.name | default "Kutt" | toString | quote }}
 {{- $nonUserCooldown := .Values.kutt.administration.nonUserCooldown | default "0" | toString | quote }}
 {{- $useHttps := .Values.kutt.useHttps | default "true" | toString | quote }}
-{{- if not $ingress }}
-{{- $domain = $domain | default (printf "localhost:%s" $kuttPort) }}
-{{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -21,9 +17,9 @@ metadata:
   labels:
     {{- include "kutt.labels" . | nindent 4 }}
 data:
-  PORT: {{ $kuttPort | quote }}
+  PORT: {{ $kuttPort }}
   SITE_NAME: {{ $name }}
-  DEFAULT_DOMAIN: {{ $domain | quote }}
+  DEFAULT_DOMAIN: {{ $domain }}
   LINK_LENGTH: {{ $linkLength }}
   DISALLOW_REGISTRATION: {{ $disableRegistration }}
   DISALLOW_ANONYMOUS_LINKS: {{ $disableAnonLinks }}
