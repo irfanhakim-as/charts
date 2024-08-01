@@ -1,83 +1,143 @@
-# [`kutt`](https://github.com/thedevs-network/kutt)
+# [Kutt](https://github.com/thedevs-network/kutt)
+
+Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics.
 
 ## Prerequisites
 
+> [!NOTE]  
+> You may refer to [Orked](https://github.com/irfanhakim-as/orked) for help with setting up a Kubernetes cluster that meets all the following prerequisites.
+
 - Kubernetes 1.19+
 - Helm 3.2.0+
+- Longhorn 1.4.1+
+
+---
 
 ## Preflight checklist
 
-### Generate secret key for `kutt.secret`
+> [!IMPORTANT]  
+> The following items are required to be set up prior to installing this chart.
 
-```sh
-python -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)]))'
-```
+### Generate secret key
 
-### Provision a PostgreSQL database
+A unique, secure secret key is required for each Kutt installation.
 
-Deploy [`mika/postgres-agent`](../postgres-agent/) with `postgres.mode.create` set to `true`. This step can be skipped if you have an existing PostgreSQL database.
+1. Generate a secret key using the following command:
 
-## How to add repo
+    ```sh
+    python -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)]))'
+    ```
 
-Add the repo to your local helm client.
+2. Set the generated secret key as the value of the `kutt.secret` setting in your installation's values file:
 
-```sh
-helm repo add mika https://irfanhakim-as.github.io/charts
-```
+    ```yaml
+    secret: "<generated-secret>"
+    ```
 
-Update the repo to retrieve the latest versions of the packages.
+---
 
-```sh
-helm repo update
-```
+## Recommended configurations
 
-## How to install
+> [!NOTE]  
+> The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-### Prepare chart values
+**This section does not apply to this chart.**
 
-Copy `values.yaml` from the chart you would like to install.
+---
 
-```sh
-cp mika/kutt/values.yaml .
-```
+## Application configurations
 
-Edit `values.yaml` with the appropriate values.  Please refer to the [Configurations](#configurations) section below, or the `values.yaml` file itself for details and sample values.
+> [!NOTE]  
+> The following configurations are expected or recommended to be set up from within the application after completing the installation.
 
-```sh
-nano values.yaml
-```
+**This section does not apply to this chart.**
 
-### Perform installation
+---
 
-Install the desired chart. Replace `$release_name` and `$namespace` accordingly.
+## How to add the chart repo
 
-```sh
-helm install $release_name mika/kutt --namespace $namespace --create-namespace --values values.yaml --wait
-```
+1. Add the repo to your local helm client:
 
-Verify that your chart has been installed. Replace `$namespace` and `$release_name` accordingly.
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
 
-```sh
-helm ls --namespace $namespace | grep "$release_name"
-```
+2. Update the repo to retrieve the latest versions of the packages:
 
-## How to upgrade
+    ```sh
+    helm repo update
+    ```
 
-After making any necessary changes to the `values.yaml` file, upgrade the desired chart. Replace `$release_name` and `$namespace` accordingly.
+---
 
-```sh
-helm upgrade $release_name mika/kutt --namespace $namespace --values values.yaml --wait
-```
+## How to install or upgrade a chart release
 
-## How to uninstall
+1. Get the values file of the Kutt chart or an existing installation (release).
 
-Uninstall the desired chart. Replace `$release_name` and `$namespace` accordingly.
+    Get the latest Kutt chart values file for a new installation:
 
-```sh
-helm uninstall $release_name --namespace $namespace --wait
-```
+    ```sh
+    helm show values mika/kutt > values.yaml
+    ```
 
-## Configurations
+    Alternatively, get the values file of an existing Kutt release:
+
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Edit your Kutt values file with the intended configurations:
+
+    ```sh
+    nano values.yaml
+    ```
+
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
+
+3. Install a new release for Kutt or upgrade an existing Kutt release:
+
+    ```sh
+    helm upgrade --install ${releaseName} mika/kutt --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+4. Verify that your Kutt release has been installed:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
+
+---
+
+## How to uninstall a chart release
+
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
+1. Uninstall the desired release:
+
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
+
+---
+
+## Chart configurations
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
