@@ -105,17 +105,17 @@ helm uninstall $release_name --namespace $namespace --wait
 | kutt.google.recaptchaSiteKey | string | `""` | The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | kutt.google.safeBrowsingKey | string | `""` | The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started. |
 | kutt.link_length | string | `""` | The length of the generated short links. Default: `"6"`. |
-| kutt.mail.contact_email | string | `""` | The email address to be displayed as the contact email in the application. |
-| kutt.mail.from_email | string | `""` | The email address used as the "from" address for sent emails. Default: `"$name <$mail.user>"`. |
-| kutt.mail.host | string | `""` | The hostname or IP address of the SMTP server for sending emails. Default: `"smtp.gmail.com"`. |
-| kutt.mail.password | string | `""` | The password for authenticating with the SMTP server. |
-| kutt.mail.port | string | `""` | The port number on the SMTP server used for sending emails. Default: `"465"`. |
-| kutt.mail.report_email | string | `""` | The email address that will receive submitted reports. |
-| kutt.mail.secure | bool | `true` | Specifies whether Kutt should use a secure TLS connection when sending emails. |
-| kutt.mail.user | string | `""` | The username for authenticating with the SMTP server. |
 | kutt.name | string | `""` | The name of the site where Kutt is hosted. Default: `"Kutt"`. |
 | kutt.secret | string | `""` | A 50-character secret key used for encrypting JSON Web Tokens (JWTs). |
 | kutt.useHttps | bool | `true` | Specifies whether Kutt should use HTTPS for custom domains. |
+| mail.contact_email | string | `""` | The email address to be displayed as the contact email in the application. |
+| mail.from_email | string | `""` | The email address used as the "from" address for sent emails. Default: `"$name <$mail.smtp.user>"`. |
+| mail.report_email | string | `""` | The email address that will receive submitted reports. |
+| mail.secure | string | `""` | Specifies whether Kutt should use a secure TLS connection when sending emails. Default: `"true"`. |
+| mail.smtp.host | string | `""` | The hostname or IP address of the SMTP server for sending emails. Default: `"smtp.gmail.com"`. |
+| mail.smtp.password | string | `""` | The password for authenticating with the SMTP server. |
+| mail.smtp.port | string | `""` | The port number on the SMTP server used for sending emails. Default: `"465"`. |
+| mail.smtp.user | string | `""` | The username for authenticating with the SMTP server. |
 | postgres.host | string | `""` | The hostname or IP address of the Kutt database server. |
 | postgres.name | string | `""` | The name of the database being used by Kutt. |
 | postgres.password | string | `""` | The password associated with the Kutt database user. |

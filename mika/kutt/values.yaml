@@ -114,44 +114,6 @@ kutt:
     # Example:
     # safeBrowsingKey: "Z0VNqFK9NqYYwFP27v9-eC1St4HTz3uRTJRfii5"
     safeBrowsingKey: ""
-  # Kutt mail configurations.
-  mail:
-    # The hostname or IP address of the SMTP server for sending emails.
-    # Default: "smtp.gmail.com"
-    # Example:
-    # host: ""
-    host: ""
-    # The port number on the SMTP server used for sending emails.
-    # Default: "465"
-    # Example:
-    # port: ""
-    port: ""
-    # The username for authenticating with the SMTP server.
-    # Example:
-    # user: "kutt@example.com"
-    user: ""
-    # The password for authenticating with the SMTP server.
-    # Example:
-    # password: "password"
-    password: ""
-    # Specifies whether Kutt should use a secure TLS connection when sending emails.
-    # Note: In most cases, set this to true if the SMTP port is 465 (SSL) and false if you are using port 587 (TLS) or 25 (SSL/TLS).
-    # Example
-    # secure: false
-    secure: true
-    # The email address used as the "from" address for sent emails.
-    # Default: "$name <$mail.user>"
-    # Example:
-    # from_email: "Example User <no-reply@example.com>"
-    from_email: ""
-    # The email address to be displayed as the contact email in the application.
-    # Example:
-    # contact_email: "contact@example.com"
-    contact_email: ""
-    # The email address that will receive submitted reports.
-    # Example:
-    # report_email: "report@example.com"
-    report_email: ""
 
 # Redis configurations.
 redis:
@@ -173,6 +135,48 @@ redis:
   # Example:
   # password: "password"
   password: ""
+
+# Mail configurations.
+mail:
+  # The email address to be displayed as the contact email in the application.
+  # Example:
+  # contact_email: "contact@example.com"
+  contact_email: ""
+  # The email address used as the "from" address for sent emails.
+  # Default: "$name <$mail.user>"
+  # Example:
+  # from_email: "Example User <no-reply@example.com>"
+  from_email: ""
+  # The email address that will receive submitted reports.
+  # Example:
+  # report_email: "report@example.com"
+  report_email: ""
+  # Specifies whether Kutt should use a secure TLS connection when sending emails.
+  # Note: In most cases, set this to true if the SMTP port is 465 (SSL) and false if you are using port 587 (TLS) or 25 (SSL/TLS).
+  # Default: "true"
+  # Example
+  # secure: "false"
+  secure: ""
+  # SMTP server configurations.
+  smtp:
+    # The hostname or IP address of the SMTP server for sending emails.
+    # Default: "smtp.gmail.com"
+    # Example:
+    # host: "smtp.mail.yahoo.com"
+    host: ""
+    # The port number on the SMTP server used for sending emails.
+    # Default: "465"
+    # Example:
+    # port: "587"
+    port: ""
+    # The username for authenticating with the SMTP server.
+    # Example:
+    # user: "kutt@example.com"
+    user: ""
+    # The password for authenticating with the SMTP server.
+    # Example:
+    # password: "password"
+    password: ""
 
 # PostgreSQL configurations.
 postgres:
