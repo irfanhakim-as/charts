@@ -1,5 +1,5 @@
 {{- $externalRedis := .Values.redis.external }}
-{{- $kuttPort := .Values.service.kutt.port | default "80" | toString }}
+{{- $kuttPort := .Values.service.kutt.port | default "3000" | toString }}
 {{- $kuttNodePort := .Values.service.kutt.nodePort | toString }}
 {{- $redisPort := .Values.service.redis.port | default "6379" | toString }}
 {{- $redisNodePort := .Values.service.redis.nodePort | toString }}
