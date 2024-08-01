@@ -81,12 +81,6 @@ helm uninstall $release_name --namespace $namespace --wait
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| db.host | string | `""` | The hostname or IP address of the Kutt database server. |
-| db.name | string | `""` | The name of the database used by Kutt. |
-| db.password | string | `""` | The password associated with the Kutt database's user. |
-| db.port | string | `""` | The port number on which the Kutt database server is listening. Default: `"5432"`. |
-| db.ssl | bool | `false` | Specifies whether the Kutt database server should use SSL. |
-| db.user | string | `""` | The username or user account for accessing the Kutt database. |
 | image.kutt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Kutt container image. Default: `"IfNotPresent"`. |
 | image.kutt.registry | string | `""` | The registry where the Kutt container image is hosted. Default: `"docker.io"`. |
 | image.kutt.repository | string | `""` | The name of the repository that contains the Kutt container image used. Default: `"kutt/kutt"`. |
@@ -122,6 +116,12 @@ helm uninstall $release_name --namespace $namespace --wait
 | kutt.name | string | `""` | The name of the site where Kutt is hosted. Default: `"Kutt"`. |
 | kutt.secret | string | `""` | A 50-character secret key used for encrypting JSON Web Tokens (JWTs). |
 | kutt.useHttps | bool | `true` | Specifies whether Kutt should use HTTPS for custom domains. |
+| postgres.host | string | `""` | The hostname or IP address of the Kutt database server. |
+| postgres.name | string | `""` | The name of the database being used by Kutt. |
+| postgres.password | string | `""` | The password associated with the Kutt database user. |
+| postgres.port | string | `""` | The port number the Kutt database server is listening for connections. Default: `"5432"`. |
+| postgres.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
+| postgres.user | string | `""` | The username or user account for accessing the Kutt database. |
 | redis.external | bool | `false` | Specifies whether Kutt should use an external Redis server. |
 | redis.host | string | `""` | The hostname or IP address of the Redis server. Default: `"localhost"`. |
 | redis.password | string | `""` | The password for authenticating with the Redis server. |
