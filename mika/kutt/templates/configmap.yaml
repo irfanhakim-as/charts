@@ -9,7 +9,7 @@
 {{- $maxStatsPerLink := .Values.kutt.administration.maxStatsPerLink | default "5000" | toString | quote }}
 {{- $name := .Values.kutt.name | default "Kutt" | toString | quote }}
 {{- $nonUserCooldown := .Values.kutt.administration.nonUserCooldown | default "0" | toString | quote }}
-{{- $useHttps := .Values.kutt.useHttps | toString | quote }}
+{{- $useHttps := .Values.kutt.useHttps | default "true" | toString | quote }}
 {{- if not $ingress }}
 {{- $domain = $domain | default (printf "localhost:%s" $kutt_port) }}
 {{- end }}
