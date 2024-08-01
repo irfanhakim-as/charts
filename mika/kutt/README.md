@@ -81,9 +81,6 @@ helm uninstall $release_name --namespace $namespace --wait
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| data.accessMode | string | `""` | The access mode that defines how the volume can be accessed by one or many nodes. Default: `"ReadWriteOnce"`. |
-| data.storage | string | `""` | The amount of persistent storage allocated for the Kutt instance. Default: `"100Mi"`. |
-| data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the Kutt storage. Default: "longhorn". |
 | db.host | string | `""` | The hostname or IP address of the Kutt database server. |
 | db.name | string | `""` | The name of the database used by Kutt. |
 | db.password | string | `""` | The password associated with the Kutt database's user. |
@@ -138,3 +135,9 @@ helm uninstall $release_name --namespace $namespace --wait
 | service.kutt.port | string | `""` | The port number on which the Kutt service is listening. Default: `"3000"`. |
 | service.kutt.protocol | string | `""` | The protocol used by the Kutt service. Default: `"TCP"`. |
 | service.type | string | `""` | The type of service used for Kutt. Default: `"ClusterIP"`. |
+| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
+| storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/data"`. |
+| storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"100Mi"`. |
+| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
+| storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
