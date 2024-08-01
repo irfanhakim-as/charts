@@ -1,7 +1,7 @@
 {{- $admins := .Values.kutt.admins | join "," | toString | quote }}
 {{- $dailyUserLimit := .Values.kutt.administration.dailyUserLimit | default "50" | toString | quote }}
-{{- $disableAnonLinks := .Values.kutt.administration.disableAnonLinks | toString | quote }}
-{{- $disableRegistration := .Values.kutt.administration.disableRegistration | toString | quote }}
+{{- $disableAnonLinks := .Values.kutt.administration.disableAnonLinks | default "false" | toString | quote }}
+{{- $disableRegistration := .Values.kutt.administration.disableRegistration | default "false" | toString | quote }}
 {{- $domain := .Values.kutt.domain | toString }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $kutt_port := .Values.service.kutt.port | default "3000" | toString }}
