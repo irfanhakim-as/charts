@@ -280,8 +280,8 @@ storage:
   data:
     # Specifies whether persistent storage should be provisioned for data storage.
     # Example:
-    # enabled: true
-    enabled: false
+    # enabled: false
+    enabled: true
     # The access mode defining how the data storage can be mounted.
     # Default: "ReadWriteOnce"
     # Example:

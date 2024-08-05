@@ -195,7 +195,7 @@ A unique, secure secret key is required for each Kutt installation.
 | service.redis.port | string | `""` | The Redis port on which the Kutt server should listen for connections. Default: `"6379"`. |
 | service.type | string | `""` | The type of service used to expose Kutt services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
-| storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
+| storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/data"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"100Mi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
