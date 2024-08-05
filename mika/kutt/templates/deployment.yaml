@@ -88,7 +88,7 @@ spec:
         {{- end }}
       {{- if and (not $externalRedis) $dataPersistence }}
       volumes:
-        - name: {{ .Release.Name }}-redis-data
+        - name: {{ .Release.Name }}-kutt-redis-data
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-redis-data-pvc
+            claimName: {{ .Release.Name }}-kutt-redis-data-pvc
       {{- end }}
