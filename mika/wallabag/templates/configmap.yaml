@@ -6,6 +6,7 @@
 {{- else }}
 {{- $domainName = printf "http://%s" $domain | toString | quote }}
 {{- end }}
+{{- $name := .Values.wallabag.name | default "Wallabag" | toString | quote }}
 {{- $foo := .Values.wallabag.foo | default "foo" | toString | quote }}
 ---
 apiVersion: v1
@@ -17,3 +18,4 @@ metadata:
 data:
   DOMAIN_NAME: {{ $domainName }}
   FOO: {{ $foo }}
+  SERVER_NAME: {{ $name }}
