@@ -62,7 +62,7 @@ wallabag:
   # Example:
   # name: "Pocket Alternative"
   name: ""
-  # A 50-character secret key used for encryption purposes.
+  # A 50-character secret key used for secure session management and cryptographic operations within the Wallabag service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
