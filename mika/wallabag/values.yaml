@@ -85,6 +85,35 @@ wallabag:
   #   echo "This is a custom init script."
   initScript: ""
 
+# Database configurations.
+db:
+  # The database engine or backend being used by Wallabag.
+  # Default: "mysql"
+  # Example:
+  # type: "pgsql"
+  type: ""
+  # The hostname or IP address of the Wallabag database server.
+  # Example:
+  # host: "wallabag.default.svc.cluster.local"
+  host: ""
+  # The port number the Wallabag database server is listening for connections.
+  # Default: "3306"
+  # Example:
+  # port: "5432"
+  port: ""
+  # The name of the database being used by Wallabag.
+  # Example:
+  # name: "wallabag"
+  name: ""
+  # The username or user account for accessing the Wallabag database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Wallabag database user.
+  # Example:
+  # password: "password"
+  password: ""
+
 # Ingress configurations.
 ingress:
   # Specifies whether Ingress should be enabled for hosting Wallabag services.
