@@ -47,21 +47,11 @@ imagePullSecrets: []
 
 # Wallabag configurations.
 wallabag:
-  # The secret value of the Wallabag bar.
-  # Default: "bar"
-  # Example:
-  # bar: "bar"
-  bar: ""
   # The ingress domain name that hosts the Wallabag server.
   # Default: "localhost"
   # Example:
   # domain: "wallabag.example.com"
   domain: ""
-  # The value of the Wallabag foo.
-  # Default: "foo"
-  # Example:
-  # foo: "foo"
-  foo: ""
   # The locale.
   # Default: "en"
   # Example:
