@@ -67,12 +67,6 @@ wallabag:
   # Example:
   # name: "Pocket Alternative"
   name: ""
-  # Custom init script to run before the Wallabag container starts.
-  # Example:
-  # initScript: >-
-  #   echo "Hello, World!"
-  #   echo "This is a custom init script."
-  initScript: ""
   # Wallabag administration configurations.
   administration:
     # Specifies whether Wallabag should allow user registrations.
@@ -85,6 +79,12 @@ wallabag:
     # Example:
     # verification: "true"
     verification: ""
+  # Custom init script to run before the Wallabag container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
 
 # Ingress configurations.
 ingress:
