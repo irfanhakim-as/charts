@@ -1,20 +1,20 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteMany" | toString | quote }}
-{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
-{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
-{{- if $dataPersistence }}
+{{- $imagePersistence := .Values.storage.image.enabled }}
+{{- $imageAccessMode := .Values.storage.image.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $imageStorage := .Values.storage.image.storage | default "1Gi" | toString | quote }}
+{{- $imageStorageClassName := .Values.storage.image.storageClassName | default "longhorn" | toString | quote }}
+{{- if $imagePersistence }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-wallabag-data-pvc
+  name: {{ .Release.Name }}-wallabag-image-pvc
   labels:
     {{- include "wallabag.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - {{ $dataAccessMode }}
+    - {{ $imageAccessMode }}
   resources:
     requests:
-      storage: {{ $dataStorage }}
-  storageClassName: {{ $dataStorageClassName }}
+      storage: {{ $imageStorage }}
+  storageClassName: {{ $imageStorageClassName }}
 {{- end }}

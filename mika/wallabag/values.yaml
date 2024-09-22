@@ -138,32 +138,32 @@ service:
 
 # Storage configurations.
 storage:
-  # Data storage configurations.
-  data:
-    # Specifies whether persistent storage should be provisioned for data storage.
+  # Image storage configurations.
+  image:
+    # Specifies whether persistent storage should be provisioned for image storage.
     # Example:
     # enabled: true
     enabled: false
-    # The access mode defining how the data storage can be mounted.
+    # The access mode defining how the image storage can be mounted.
     # Default: "ReadWriteMany"
     # Example:
     # accessMode: "ReadWriteOnce"
     accessMode: ""
-    # The path where the data storage should be mounted on the container.
-    # Default: "/config"
+    # The path where the image storage should be mounted on the container.
+    # Default: "/var/www/wallabag/web/assets/images"
     # Example:
-    # mountPath: "/data"
+    # mountPath: "/image"
     mountPath: ""
-    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # The subpath within the image storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Data"
+    # subPath: "Image"
     subPath: ""
-    # The default amount of persistent storage allocated for the data storage.
+    # The default amount of persistent storage allocated for the image storage.
     # Default: "1Gi"
     # Example:
     # storage: "10Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the image storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
