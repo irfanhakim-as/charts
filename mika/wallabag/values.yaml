@@ -1,0 +1,180 @@
+# Default values for wallabag.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Wallabag.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Wallabag.
+image:
+  # Wallabag container image configurations.
+  # Source: https://github.com/irfanhakim-as/wallabag/pkgs/container/wallabag
+  wallabag:
+    # The registry where the Wallabag container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Wallabag container image used.
+    # Default: "wallabag"
+    repository: ""
+    # The tag that specifies the version of the Wallabag container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Wallabag container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Wallabag configurations.
+wallabag:
+  # The secret value of the Wallabag bar.
+  # Default: "bar"
+  # Example:
+  # bar: "bar"
+  bar: ""
+  # The ingress domain name that hosts the Wallabag server.
+  # Example:
+  # domain: "wallabag.example.com"
+  domain: ""
+  # The value of the Wallabag foo.
+  # Default: "foo"
+  # Example:
+  # foo: "foo"
+  foo: ""
+  # Custom init script to run before the Wallabag container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Wallabag services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Wallabag server should listen.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used for Wallabag services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/config"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+
+# Resource requirements and limits for Wallabag containers.
+resources:
+  # Wallabag container resources.
+  # Example:
+  # wallabag:
+  #   # The minimum amount of resources required by Wallabag to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Wallabag.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Wallabag.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for Wallabag.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Wallabag.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for Wallabag.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  wallabag: {}

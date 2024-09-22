@@ -1,0 +1,10 @@
+{{- $foo := .Values.wallabag.foo | default "foo" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-wallabag-cm
+  labels:
+    {{- include "wallabag.labels" . | nindent 4 }}
+data:
+  FOO: {{ $foo }}

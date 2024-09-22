@@ -1,0 +1,92 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $wallabag_registry := .Values.image.wallabag.registry | default "ghcr.io" | toString }}
+{{- $wallabag_repository := .Values.image.wallabag.repository | default "wallabag" | toString }}
+{{- $wallabag_tag := .Values.image.wallabag.tag | default .Chart.AppVersion | toString }}
+{{- $wallabag_pullPolicy := .Values.image.wallabag.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $initScript := .Values.wallabag.initScript | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-wallabag
+  labels:
+    {{- include "wallabag.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "wallabag.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "wallabag.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+              {{- $initScript | nindent 14 }}
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-wallabag-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- end }}
+      containers:
+        - name: wallabag
+          image: {{ printf "%s/%s:%s" $wallabag_registry $wallabag_repository $wallabag_tag | quote }}
+          imagePullPolicy: {{ $wallabag_pullPolicy }}
+          ports:
+            - name: wallabag
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.wallabag | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-wallabag-cm
+            - secretRef:
+                name: {{ .Release.Name }}-wallabag-secret
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-wallabag-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence }}
+      volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-wallabag-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-wallabag-data-pvc
+        {{- end }}
+      {{- end }}
