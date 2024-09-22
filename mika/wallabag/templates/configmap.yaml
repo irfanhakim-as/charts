@@ -1,3 +1,11 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.wallabag.domain | toString | default "localhost" }}
+{{- $domainName := "" }}
+{{- if and $ingress (ne $domain "localhost") }}
+{{- $domainName = printf "https://%s" $domain | toString | quote }}
+{{- else }}
+{{- $domainName = printf "http://%s" $domain | toString | quote }}
+{{- end }}
 {{- $foo := .Values.wallabag.foo | default "foo" | toString | quote }}
 ---
 apiVersion: v1
@@ -7,4 +15,5 @@ metadata:
   labels:
     {{- include "wallabag.labels" . | nindent 4 }}
 data:
+  DOMAIN_NAME: {{ $domainName }}
   FOO: {{ $foo }}
