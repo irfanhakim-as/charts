@@ -6,6 +6,7 @@
 {{- else }}
 {{- $domainName = printf "http://%s" $domain | toString | quote }}
 {{- end }}
+{{- $locale := .Values.wallabag.locale | default "en" | toString | quote }}
 {{- $name := .Values.wallabag.name | default "Wallabag" | toString | quote }}
 {{- $registration := .Values.wallabag.administration.registration | default "false" | toString | quote }}
 {{- $verification := .Values.wallabag.administration.verification | default "false" | toString | quote }}
@@ -22,4 +23,5 @@ data:
   FOO: {{ $foo }}
   FOSUSER_REGISTRATION: {{ $registration }}
   FOSUSER_CONFIRMATION: {{ $verification }}
+  LOCALE: {{ $locale }}
   SERVER_NAME: {{ $name }}

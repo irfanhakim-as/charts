@@ -62,6 +62,11 @@ wallabag:
   # Example:
   # foo: "foo"
   foo: ""
+  # The locale.
+  # Default: "en"
+  # Example:
+  # locale: "ms"
+  locale: ""
   # The name of the Wallabag instance.
   # Default: "Wallabag"
   # Example:
