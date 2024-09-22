@@ -73,6 +73,18 @@ wallabag:
   #   echo "Hello, World!"
   #   echo "This is a custom init script."
   initScript: ""
+  # Wallabag administration configurations.
+  administration:
+    # Specifies whether Wallabag should allow user registrations.
+    # Default: "false"
+    # Example:
+    # registration: "true"
+    registration: ""
+    # Specifies whether Wallabag should require registration verification.
+    # Default: "false"
+    # Example:
+    # verification: "true"
+    verification: ""
 
 # Ingress configurations.
 ingress:

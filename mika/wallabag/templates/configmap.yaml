@@ -7,6 +7,8 @@
 {{- $domainName = printf "http://%s" $domain | toString | quote }}
 {{- end }}
 {{- $name := .Values.wallabag.name | default "Wallabag" | toString | quote }}
+{{- $registration := .Values.wallabag.administration.registration | default "false" | toString | quote }}
+{{- $verification := .Values.wallabag.administration.verification | default "false" | toString | quote }}
 {{- $foo := .Values.wallabag.foo | default "foo" | toString | quote }}
 ---
 apiVersion: v1
@@ -18,4 +20,6 @@ metadata:
 data:
   DOMAIN_NAME: {{ $domainName }}
   FOO: {{ $foo }}
+  FOSUSER_REGISTRATION: {{ $registration }}
+  FOSUSER_CONFIRMATION: {{ $verification }}
   SERVER_NAME: {{ $name }}
