@@ -1,6 +1,6 @@
 {{- $dataPersistence := .Values.storage.data.enabled }}
 {{- $wallabag_registry := .Values.image.wallabag.registry | default "ghcr.io" | toString }}
-{{- $wallabag_repository := .Values.image.wallabag.repository | default "wallabag" | toString }}
+{{- $wallabag_repository := .Values.image.wallabag.repository | default "wallabag/docker" | toString }}
 {{- $wallabag_tag := .Values.image.wallabag.tag | default .Chart.AppVersion | toString }}
 {{- $wallabag_pullPolicy := .Values.image.wallabag.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}

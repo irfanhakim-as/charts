@@ -9,13 +9,13 @@ replicaCount: ""
 # Container images used for Wallabag.
 image:
   # Wallabag container image configurations.
-  # Source: https://github.com/irfanhakim-as/wallabag/pkgs/container/wallabag
+  # Source: https://github.com/wallabag/docker/pkgs/container/docker
   wallabag:
     # The registry where the Wallabag container image is hosted.
     # Default: "ghcr.io"
     registry: ""
     # The name of the repository that contains the Wallabag container image used.
-    # Default: "wallabag"
+    # Default: "wallabag/docker"
     repository: ""
     # The tag that specifies the version of the Wallabag container image used.
     # Default: Chart appVersion
