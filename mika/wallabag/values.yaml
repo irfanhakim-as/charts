@@ -53,6 +53,7 @@ wallabag:
   # bar: "bar"
   bar: ""
   # The ingress domain name that hosts the Wallabag server.
+  # Default: "localhost"
   # Example:
   # domain: "wallabag.example.com"
   domain: ""
