@@ -3,7 +3,7 @@ name: wallabag
 description: A Helm chart for deploying Wallabag.
 type: application
 version: 0.1.0
-appVersion: "0.0.1-r1"
+appVersion: "2.6.9"
 keywords:
   - "wallabag"
 home: "https://github.com/irfanhakim-as/charts"
