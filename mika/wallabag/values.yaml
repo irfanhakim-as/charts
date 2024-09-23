@@ -194,7 +194,7 @@ service:
     # nodePort: "30000"
     nodePort: ""
     # The Wallabag port on which the Wallabag server should listen for connections.
-    # Default: "3000"
+    # Default: "80"
     # Example:
     # port: "8080"
     port: ""

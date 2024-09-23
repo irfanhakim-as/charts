@@ -1,4 +1,4 @@
-{{- $wallabagPort := .Values.service.wallabag.port | default "3000" | toString }}
+{{- $wallabagPort := .Values.service.wallabag.port | default "80" | toString }}
 {{- $wallabagNodePort := .Values.service.wallabag.nodePort | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
