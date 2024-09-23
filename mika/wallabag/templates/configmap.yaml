@@ -1,6 +1,6 @@
+{{- $domainName := "" }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.wallabag.domain | toString | default "localhost" }}
-{{- $domainName := "" }}
 {{- if and $ingress (ne $domain "localhost") }}
 {{- $domainName = printf "https://%s" $domain | toString | quote }}
 {{- else }}
