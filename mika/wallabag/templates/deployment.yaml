@@ -1,8 +1,13 @@
+{{- $externalRedis := .Values.redis.external }}
 {{- $imagePersistence := .Values.storage.image.enabled }}
 {{- $wallabag_registry := .Values.image.wallabag.registry | default "ghcr.io" | toString }}
 {{- $wallabag_repository := .Values.image.wallabag.repository | default "wallabag/docker" | toString }}
 {{- $wallabag_tag := .Values.image.wallabag.tag | default .Chart.AppVersion | toString }}
 {{- $wallabag_pullPolicy := .Values.image.wallabag.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
+{{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "6.0-alpine" | toString }}
+{{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
 {{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
 {{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
@@ -84,6 +89,24 @@ spec:
               {{- end }}
             {{- end }}
           {{- end }}
+        {{- if not $externalRedis }}
+        - name: redis
+          image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
+          imagePullPolicy: {{ $redis_pullPolicy }}
+          # command: ["redis-server"]
+          # args:
+          #   - "--requirepass"
+          #   - "$(REDIS_PASSWORD)"
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.redis | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-wallabag-redis-secret
+        {{- end }}
       {{- if or $imagePersistence }}
       volumes:
         {{- if $imagePersistence }}
