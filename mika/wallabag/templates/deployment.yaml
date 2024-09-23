@@ -72,6 +72,8 @@ spec:
                 name: {{ .Release.Name }}-wallabag-cm
             - secretRef:
                 name: {{ .Release.Name }}-wallabag-secret
+            - secretRef:
+                name: {{ .Release.Name }}-wallabag-redis-secret
           {{- if or $imagePersistence }}
           volumeMounts:
             {{- if $imagePersistence }}
