@@ -81,6 +81,10 @@ wallabag:
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
+  # The Data Source Name (DSN) for Sentry.
+  # Example:
+  # sentryDsn: "https://public@sentry.example.com/1"
+  sentryDsn: ""
   # Wallabag administration configurations.
   administration:
     # Specifies whether Wallabag should allow user registrations.
