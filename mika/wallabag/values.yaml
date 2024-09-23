@@ -182,20 +182,22 @@ ingress:
 
 # Service configurations.
 service:
-  # The optional node port to expose when the service type is NodePort.
-  # Example:
-  # nodePort: "32000"
-  nodePort: ""
-  # The port on which the Wallabag server should listen.
-  # Default: "80"
-  # Example:
-  # port: "8080"
-  port: ""
-  # The type of service used for Wallabag services.
+  # The type of service used to expose Wallabag services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
   type: ""
+  # Wallabag service port configurations.
+  wallabag:
+    # The optional node port to expose for Wallabag when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Wallabag port on which the Wallabag server should listen for connections.
+    # Default: "3000"
+    # Example:
+    # port: "8080"
+    port: ""
 
 # Storage configurations.
 storage:

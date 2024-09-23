@@ -1,5 +1,5 @@
-{{- $nodePort := .Values.service.nodePort | toString }}
-{{- $port := .Values.service.port | default "80" | toString }}
+{{- $wallabagPort := .Values.service.wallabag.port | default "3000" | toString }}
+{{- $wallabagNodePort := .Values.service.wallabag.nodePort | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
@@ -11,10 +11,10 @@ metadata:
 spec:
   type: {{ $type }}
   ports:
-    - port: {{ int $port }}
+    - port: {{ int $wallabagPort }}
       targetPort: wallabag
-      {{- if and (eq $type "NodePort") $nodePort }}
-      nodePort: {{ int $nodePort }}
+      {{- if and (eq $type "NodePort") $wallabagNodePort }}
+      nodePort: {{ int $wallabagNodePort }}
       {{- end }}
       protocol: TCP
       name: wallabag
