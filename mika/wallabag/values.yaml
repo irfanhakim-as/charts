@@ -23,6 +23,21 @@ image:
     # The policy that determines when Kubernetes should pull the Wallabag container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Redis container image configurations.
+  # Source: https://hub.docker.com/_/redis
+  redis:
+    # The registry where the Redis container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Redis container image used.
+    # Default: "redis"
+    repository: ""
+    # The tag that specifies the version of the Redis container image used.
+    # Default: "6.0-alpine"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Redis container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # Init container image configurations.
   # Source: https://hub.docker.com/_/busybox
   init:
@@ -84,6 +99,26 @@ wallabag:
   #   echo "Hello, World!"
   #   echo "This is a custom init script."
   initScript: ""
+
+# External Redis configurations.
+redis:
+  # Specifies whether Wallabag should use an external Redis server.
+  # Example:
+  # external: true
+  external: false
+  # The hostname or IP address of the external Redis server.
+  # Example:
+  # host: "redis.default.svc.cluster.local"
+  host: ""
+  # The port number on which the external Redis server is listening for connections.
+  # Default: "6379"
+  # Example:
+  # port: "9763"
+  port: ""
+  # The password for authenticating with the external Redis server.
+  # Example:
+  # password: "password"
+  password: ""
 
 # Database configurations.
 db:
@@ -198,6 +233,17 @@ service:
     # Example:
     # port: "8080"
     port: ""
+  # Redis service port configurations.
+  redis:
+    # The optional node port to expose for Redis when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
+    # The Redis port on which the Wallabag server should listen for connections.
+    # Default: "6379"
+    # Example:
+    # port: "8443"
+    port: ""
 
 # Storage configurations.
 storage:
@@ -258,3 +304,27 @@ resources:
   #     # memory: "250Mi"
   #     memory: "250Mi"
   wallabag: {}
+  # Redis container resources.
+  # Example:
+  # redis:
+  #   # The minimum amount of resources required by Redis to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Redis.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Redis.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "20Mi"
+  #   # The maximum amount of resources allowed for Redis.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Redis.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "20m"
+  #     # The maximum amount of memory allowed for Redis.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "50Mi"
+  redis: {}
