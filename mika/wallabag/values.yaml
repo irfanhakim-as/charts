@@ -151,15 +151,15 @@ db:
 
 # Mail configurations.
 mail:
-  # The email address of the two-factor authentication code sender.
-  # Example:
-  # 2fa_email: "wallabag@example.com"
-  2fa_email: ""
   # The email address used as the "from" address for sent emails.
   # Default: "$name <$mail.user>"
   # Example:
   # from_email: "Example User <no-reply@example.com>"
   from_email: ""
+  # The email address of the two-factor authentication code sender.
+  # Example:
+  # tfa_email: "wallabag@example.com"
+  tfa_email: ""
   # SMTP server configurations.
   smtp:
     # The hostname or IP address of the SMTP server for sending emails.
