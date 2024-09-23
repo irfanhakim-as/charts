@@ -1,5 +1,8 @@
+{{- $externalRedis := .Values.redis.external }}
 {{- $wallabagPort := .Values.service.wallabag.port | default "80" | toString }}
 {{- $wallabagNodePort := .Values.service.wallabag.nodePort | toString }}
+{{- $redisPort := .Values.service.redis.port | default "6379" | toString }}
+{{- $redisNodePort := .Values.service.redis.nodePort | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
@@ -18,5 +21,14 @@ spec:
       {{- end }}
       protocol: TCP
       name: wallabag
+    {{- if not $externalRedis }}
+    - port: {{ int $redisPort }}
+      targetPort: redis
+      {{- if and (eq $type "NodePort") $redisNodePort }}
+      nodePort: {{ int $redisNodePort }}
+      {{- end }}
+      protocol: TCP
+      name: redis
+    {{- end }}
   selector:
     {{- include "wallabag.selectorLabels" . | nindent 4 }}
