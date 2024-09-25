@@ -18,8 +18,8 @@ metadata:
   labels:
     {{- include "wallabag.labels" . | nindent 4 }}
 data:
-  DOMAIN_NAME: {{ $domainName }}
-  FOSUSER_REGISTRATION: {{ $registration }}
-  FOSUSER_CONFIRMATION: {{ $verification }}
-  LOCALE: {{ $locale }}
-  SERVER_NAME: {{ $name }}
+  SYMFONY__ENV__DOMAIN_NAME: {{ $domainName }}
+  SYMFONY__ENV__FOSUSER_REGISTRATION: {{ $registration }}
+  SYMFONY__ENV__FOSUSER_CONFIRMATION: {{ $verification }}
+  SYMFONY__ENV__LOCALE: {{ $locale }}
+  SYMFONY__ENV__SERVER_NAME: {{ $name }}
