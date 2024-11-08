@@ -4,7 +4,7 @@ Mastodon /base/lib/accounts.json template
 {{- define "rizz.accounts-json" -}}
 {
     "accounts": [
-        {{- $accounts := .Values.rizz.mastodon }}
+        {{- $accounts := .Values.rizz.account }}
         {{- range $index, $account := $accounts }}
         {{- $normalised_api := $account.api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
         {{- $token_secret := printf "%s-%s.secret" $account.id $normalised_api | toString | replace " " "" }}

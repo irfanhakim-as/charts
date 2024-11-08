@@ -13,7 +13,7 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
-{{- $accounts := .Values.rizz.mastodon }}
+{{- $accounts := .Values.rizz.account }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,7 +62,7 @@ spec:
               mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
-            - name: {{ .Release.Name }}-rizz-mastodon-config
+            - name: {{ .Release.Name }}-rizz-account-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
@@ -121,7 +121,7 @@ spec:
               mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
-            - name: {{ .Release.Name }}-rizz-mastodon-config
+            - name: {{ .Release.Name }}-rizz-account-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
@@ -167,9 +167,9 @@ spec:
         - name: {{ .Release.Name }}-rizz-feed-config
           configMap:
             name: {{ .Release.Name }}-rizz-feed-config
-        - name: {{ .Release.Name }}-rizz-mastodon-config
+        - name: {{ .Release.Name }}-rizz-account-config
           secret:
-            secretName: {{ .Release.Name }}-rizz-mastodon-config
+            secretName: {{ .Release.Name }}-rizz-account-config
         {{- if $apscheduler }}
         - name: {{ .Release.Name }}-rizz-apscheduler-config
           configMap:
