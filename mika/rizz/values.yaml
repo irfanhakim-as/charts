@@ -109,19 +109,19 @@ rizz:
   #   # enabled: "false"
   #     enabled: ""
   feed: []
-  # Mastodon configurations.
+  # Account configurations.
   # Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
   # Example:
-  # mastodon:
-  #   # API endpoint or URL for the Mastodon instance of the Rizz bot.
+  # account:
+  #   # API endpoint or URL for the server instance of the Rizz bot.
   #   # Example:
   #   # api: "https://botsin.space"
   #   - api: ""
-  #   # The username or user account for the Mastodon instance of the Rizz bot.
+  #   # The username or user account for the server instance of the Rizz bot.
   #   # Example:
   #   # id: "rizz"
   #     id: ""
-  #   # The application access token required to authenticate the Rizz service with the Mastodon instance's API.
+  #   # The application access token required to authenticate the Rizz service with the server instance's API.
   #   # Example:
   #   # token: "rinoSZiIvRHLw6PL1QCSia+8liGDau0MZ336JAnL0IQ"
   #     token: ""
@@ -163,7 +163,7 @@ rizz:
   #   # Example:
   #   # note: "This is the bio of the Rizz bot."
   #     note: ""
-  mastodon: []
+  account: []
 
 # Scheduler configurations.
 scheduler:
