@@ -1,5 +1,5 @@
 {{/*
-Mastodon /base/lib/accounts.json template
+Rizz /base/lib/accounts.json template
 */}}
 {{- define "rizz.accounts-json" -}}
 {
