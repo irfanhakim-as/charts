@@ -71,6 +71,7 @@ A secure application access token is required for each configured Mastodon accou
 3. In the **Preferences** page, navigate to the **Development** section.
 
 4. From the **Your applications** list, click the **New application** button.
+
 5. In the **New application** form, fill in the following required details:
 
     - Application name: Add in a unique, descriptive name for your application i.e. `Rizz`
