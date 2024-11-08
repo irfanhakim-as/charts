@@ -49,7 +49,7 @@ The following are a list of account(s) you have supplied to be managed:
 
 {{- if not $accounts }}
 
-    ⚠️ No Mastodon accounts were supplied for Rizz to manage
+    ⚠️ No accounts were supplied for Rizz to manage
 
 {{- else }}
 
