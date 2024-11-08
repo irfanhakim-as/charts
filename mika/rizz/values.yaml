@@ -103,11 +103,13 @@ rizz:
   #   # token: "rinoSZiIvRHLw6PL1QCSia+8liGDau0MZ336JAnL0IQ"
   #     token: ""
   #   # Specifies whether the Rizz bot should be marked as a bot.
+  #   # Note: Bluesky does not currently support this field.
   #   # Default: "true"
   #   # Example:
   #   # bot: "false"
   #     bot: ""
   #   # Specifies whether the Rizz bot should appear in the user directory.
+  #   # Note: Bluesky does not currently support this field.
   #   # Default: "true"
   #   # Example:
   #   # discoverable: "false"
@@ -118,11 +120,13 @@ rizz:
   #   # enabled: "false"
   #     enabled: ""
   #   # The display name of the Rizz bot.
+  #   # Note: Bluesky does not currently support this field.
   #   # Default: "null"
   #   # Example:
   #   # display_name: "Rizz"
   #     display_name: ""
   #   # A list of up to four name-value pairs information to be displayed on the Rizz bot's profile.
+  #   # Note: Bluesky does not currently support this field.
   #   # Example:
   #   # fields:
   #   #   - name: "Website 1"
@@ -131,11 +135,13 @@ rizz:
   #   #     value: "https://domain2.example.org"
   #     fields: []
   #   # Specifies whether the Rizz bot needs to manually approve follow requests.
+  #   # Note: Bluesky does not currently support this field.
   #   # Default: "false"
   #   # Example:
   #   # locked: "true"
   #     locked: ""
   #   # The bio of the Rizz bot.
+  #   # Note: Bluesky does not currently support this field.
   #   # Default: "null"
   #   # Example:
   #   # note: "This is the bio of the Rizz bot."
