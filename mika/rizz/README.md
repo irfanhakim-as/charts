@@ -3,7 +3,7 @@
 > [!WARNING]  
 > This chart requires access to a private image registry, please request access from the owner of the repository.
 
-Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon.
+Rizz is a simple web application that tracks and posts content from RSS Feeds to federated social network.
 
 ## Prerequisites
 
