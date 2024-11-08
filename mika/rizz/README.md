@@ -62,7 +62,19 @@ A unique, secure secret key is required for each Rizz installation.
 
 ### Application access token
 
-A secure application access token is required for each configured Mastodon account.
+A secure application access token is required for each configured account.
+
+1. Follow the subsections below on how to generate an access token for each account.
+
+2. Set the access token as the value of the `rizz.account` account's `token` setting in your installation's values file:
+
+    ```yaml
+    token: "<access-token>"
+    ```
+
+    Replace `<access-token>` with the account's generated access token.
+
+#### Mastodon
 
 1. Login to your Mastodon (bot) account. If you do not currently have one, you will need to register one first on any available Mastodon instance.
 
@@ -87,11 +99,19 @@ A secure application access token is required for each configured Mastodon accou
 
 8. In the specific **Application** page, copy the value of the confidential **Your access token** field.
 
-9. Set the access token as the value of the `rizz.mastodon` account's `token` setting in your installation's values file:
+#### Bluesky
 
-    ```yaml
-    token: "<access-token>"
-    ```
+1. Login to your Bluesky (bot) account. If you do not currently have one, you will need to register one first on any available Bluesky instance.
+
+2. Click the **Settings** menu item.
+
+3. In the **Settings** page, navigate to the **App Passwords** section.
+
+4. In the **App Passwords** page, click the **Add App Password** button.
+
+5. In the prompted form, add in a unique, descriptive name for the App Password (i.e. `Rizz`) and click the **Create App Password** button to submit the form.
+
+6. Copy the value of the confidential App Password that has been generated and click the **Done** button.
 
 ---
 
