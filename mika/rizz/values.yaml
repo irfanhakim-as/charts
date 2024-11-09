@@ -87,7 +87,7 @@ rizz:
   # visibility: "unlisted"
   visibility: ""
   # Account configurations.
-  # Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
+  # Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
   # Example:
   # account:
   #   # API endpoint or URL for the server instance of the Rizz bot.
@@ -98,6 +98,11 @@ rizz:
   #   # Example:
   #   # id: "rizz"
   #     id: ""
+  #   # The underlying host service of the server instance.
+  #   # Default: "mastodon"
+  #   # Example:
+  #   # host: "bluesky"
+  #     host: ""
   #   # The application access token required to authenticate the Rizz service with the server instance's API.
   #   # Example:
   #   # token: "rinoSZiIvRHLw6PL1QCSia+8liGDau0MZ336JAnL0IQ"

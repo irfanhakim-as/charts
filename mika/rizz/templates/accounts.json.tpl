@@ -29,6 +29,7 @@ Rizz /base/lib/accounts.json template
                 ]{{ if ne $i (sub (len $fields) 1) }},{{ end }}
                 {{- end }}
             ],
+            "host": {{ $account.host | default "mastodon" | toString | quote }},
             "is_locked": {{ $account.locked | default "false" | toString }},
             {{- if $account.note }}
             "note": {{ $account.note | toString | quote }}

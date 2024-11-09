@@ -242,7 +242,7 @@ A secure application access token is required for each configured account.
 | replicaCount | string | `""` | The desired number of running replicas for Rizz. Default: `"1"`. |
 | resources.rizz | object | `{}` | Rizz container resources. |
 | resources.scheduler | object | `{}` | Scheduler container resources. |
-| rizz.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
+| rizz.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
 | rizz.debug | string | `""` | Specifies whether Rizz should run in debug mode. Default: `"false"`. |
 | rizz.domain | string | `""` | The ingress domain name that hosts the Rizz server. Default: `"localhost"`. |
 | rizz.feed | list | `[]` | RSS feed configurations. Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`. |
