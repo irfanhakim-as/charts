@@ -201,6 +201,11 @@ scheduler:
   # Example:
   # celery: true
   celery: false
+  # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
+  # Default: "Asia/Kuala_Lumpur"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
   # The schedule for the task scheduler used by WaktuSolat.
   # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
   # The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
@@ -273,11 +278,6 @@ scheduler:
       # Example:
       # second: "30"
       second: ""
-  # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
-  # Default: "Asia/Kuala_Lumpur"
-  # Example:
-  # timezone: "Asia/Kuala_Lumpur"
-  timezone: ""
 
 # Database configurations.
 db:
