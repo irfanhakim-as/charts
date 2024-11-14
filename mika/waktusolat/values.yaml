@@ -191,7 +191,7 @@ waktusolat:
       # storage: "1Gi"
       storage: ""
 
-# WaktuSolat scheduler configurations.
+# Scheduler configurations.
 scheduler:
   # Specifies whether APScheduler should be used by WaktuSolat as the task scheduler.
   # Example:
