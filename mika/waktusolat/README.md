@@ -100,6 +100,10 @@ helm uninstall $release_name --namespace $namespace --wait
 | image.waktusolat.repository | string | `""` | The name of the repository that contains the WaktuSolat container image used. Default: `"irfanhakim-as/waktusolat"`. |
 | image.waktusolat.tag | string | `""` | The tag that specifies the version of the WaktuSolat container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
+| ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting WaktuSolat services. |
+| ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
 | resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
 | resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
