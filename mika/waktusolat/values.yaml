@@ -214,10 +214,10 @@ scheduler:
       # The minutes at which the task scheduler cleans up the database.
       # Default: "0"
       # Example:
-      # minute: "15"
+      # minute: "30"
       minute: ""
       # The seconds at which the task scheduler cleans up the database.
-      # Default: "0" for `apscheduler`
+      # Default: "0" (`apscheduler`)
       # Example:
       # second: "30"
       second: ""
@@ -234,7 +234,7 @@ scheduler:
       # minute: "15"
       minute: ""
       # The seconds at which the task scheduler schedules the daily prayer time schedule posts.
-      # Default: "0" for `apscheduler`
+      # Default: "0" (`apscheduler`)
       # Example:
       # second: "30"
       second: ""
@@ -251,7 +251,7 @@ scheduler:
       # minute: "*"
       minute: ""
       # The seconds at which the task scheduler schedules prayer time notifications.
-      # Default: "0" for `apscheduler`
+      # Default: "0" (`apscheduler`)
       # Example:
       # second: "30"
       second: ""
@@ -265,12 +265,12 @@ scheduler:
       # The minutes at which the task scheduler posts scheduled posts.
       # Default: "*"
       # Example:
-      # minute: "0"
+      # minute: "*/30"
       minute: ""
       # The seconds at which the task scheduler posts scheduled posts.
       # Default: "*/1"
       # Example:
-      # second: "5"
+      # second: "30"
       second: ""
   # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
   # Default: "Asia/Kuala_Lumpur"
