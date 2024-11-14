@@ -173,20 +173,21 @@ waktusolat:
       # storage: "1Gi"
       storage: ""
   # WaktuSolat feed configurations.
+  # Items: `.endpoint`, `.id`, `.enabled`
   # Example:
   # feed:
-  #   # The URL of the prayer time API feed to be used by WaktuSolat.
+  #   # The URL of the prayer time API feed to be tracked by WaktuSolat.
   #   # Example:
   #   # endpoint: "https://mpt.i906.my/api/prayer/%s"
   #   - endpoint: ""
-  #   # The unique identifier of the API feed entry, must be an ISO 3166 Alpha-2 country code in uppercase.
+  #   # The unique identifier of the API feed entry - must be an ISO 3166 Alpha-2 country code in uppercase.
   #   # Example:
   #   # id: "MY"
   #     id: ""
-  #   # Specifies whether the API feed entry should be active to be used.
-  #   # Default: true
+  #   # Specifies whether the prayer time API feed entry should be actively processed.
+  #   # Default: "true"
   #   # Example:
-  #   # enabled: false
+  #   # enabled: "false"
   #     enabled: ""
   feed: []
   # WaktuSolat scheduler configurations.
