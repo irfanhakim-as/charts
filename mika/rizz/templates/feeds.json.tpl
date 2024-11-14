@@ -1,5 +1,5 @@
 {{/*
-Mastodon /base/lib/feeds.json template
+Rizz /base/lib/feeds.json template
 */}}
 {{- define "rizz.feeds-json" -}}
 {

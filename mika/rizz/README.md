@@ -3,7 +3,7 @@
 > [!WARNING]  
 > This chart requires access to a private image registry, please request access from the owner of the repository.
 
-Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon.
+Rizz is a simple web application that tracks and posts content from RSS Feeds to federated social network.
 
 ## Prerequisites
 
@@ -62,7 +62,19 @@ A unique, secure secret key is required for each Rizz installation.
 
 ### Application access token
 
-A secure application access token is required for each configured Mastodon account.
+A secure application access token is required for each configured account.
+
+1. Follow the subsections below on how to generate an access token for each account.
+
+2. Set the access token as the value of the `rizz.account` account's `token` setting in your installation's values file:
+
+    ```yaml
+    token: "<access-token>"
+    ```
+
+    Replace `<access-token>` with the account's generated access token.
+
+#### Mastodon
 
 1. Login to your Mastodon (bot) account. If you do not currently have one, you will need to register one first on any available Mastodon instance.
 
@@ -71,6 +83,7 @@ A secure application access token is required for each configured Mastodon accou
 3. In the **Preferences** page, navigate to the **Development** section.
 
 4. From the **Your applications** list, click the **New application** button.
+
 5. In the **New application** form, fill in the following required details:
 
     - Application name: Add in a unique, descriptive name for your application i.e. `Rizz`
@@ -86,11 +99,19 @@ A secure application access token is required for each configured Mastodon accou
 
 8. In the specific **Application** page, copy the value of the confidential **Your access token** field.
 
-9. Set the access token as the value of the `rizz.mastodon` account's `token` setting in your installation's values file:
+#### Bluesky
 
-    ```yaml
-    token: "<access-token>"
-    ```
+1. Login to your Bluesky (bot) account. If you do not currently have one, you will need to register one first on any available Bluesky instance.
+
+2. Click the **Settings** menu item.
+
+3. In the **Settings** page, navigate to the **App Passwords** section.
+
+4. In the **App Passwords** page, click the **Add App Password** button.
+
+5. In the prompted form, add in a unique, descriptive name for the App Password (i.e. `Rizz`) and click the **Create App Password** button to submit the form.
+
+6. Copy the value of the confidential App Password that has been generated and click the **Done** button.
 
 ---
 
@@ -221,10 +242,10 @@ A secure application access token is required for each configured Mastodon accou
 | replicaCount | string | `""` | The desired number of running replicas for Rizz. Default: `"1"`. |
 | resources.rizz | object | `{}` | Rizz container resources. |
 | resources.scheduler | object | `{}` | Scheduler container resources. |
+| rizz.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
 | rizz.debug | string | `""` | Specifies whether Rizz should run in debug mode. Default: `"false"`. |
 | rizz.domain | string | `""` | The ingress domain name that hosts the Rizz server. Default: `"localhost"`. |
 | rizz.feed | list | `[]` | RSS feed configurations. Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`. |
-| rizz.mastodon | list | `[]` | Mastodon configurations. Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
 | rizz.organic | string | `""` | Specifies whether to enable posting in organic numbers. Default: `"true"`. |
 | rizz.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"3"`. |
 | rizz.retry_post | string | `""` | Specifies whether to retry posting if the post fails to be sent. Default: `"true"`. |

@@ -86,6 +86,72 @@ rizz:
   # Example:
   # visibility: "unlisted"
   visibility: ""
+  # Account configurations.
+  # Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
+  # Example:
+  # account:
+  #   # API endpoint or URL for the server instance of the Rizz bot.
+  #   # Example:
+  #   # api: "https://botsin.space"
+  #   - api: ""
+  #   # The username or user account for the server instance of the Rizz bot.
+  #   # Example:
+  #   # id: "rizz"
+  #     id: ""
+  #   # The underlying host service of the server instance.
+  #   # Default: "mastodon"
+  #   # Example:
+  #   # host: "bluesky"
+  #     host: ""
+  #   # The application access token required to authenticate the Rizz service with the server instance's API.
+  #   # Example:
+  #   # token: "rinoSZiIvRHLw6PL1QCSia+8liGDau0MZ336JAnL0IQ"
+  #     token: ""
+  #   # Specifies whether the Rizz bot should be marked as a bot.
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "true"
+  #   # Example:
+  #   # bot: "false"
+  #     bot: ""
+  #   # Specifies whether the Rizz bot should appear in the user directory.
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "true"
+  #   # Example:
+  #   # discoverable: "false"
+  #     discoverable: ""
+  #   # Specifies whether the Rizz bot should be active.
+  #   # Default: "true"
+  #   # Example:
+  #   # enabled: "false"
+  #     enabled: ""
+  #   # The display name of the Rizz bot.
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "null"
+  #   # Example:
+  #   # display_name: "Rizz"
+  #     display_name: ""
+  #   # A list of up to four name-value pairs information to be displayed on the Rizz bot's profile.
+  #   # Note: Bluesky does not currently support this field.
+  #   # Example:
+  #   # fields:
+  #   #   - name: "Website 1"
+  #   #     value: "https://domain1.example.org"
+  #   #   - name: "Website 2"
+  #   #     value: "https://domain2.example.org"
+  #     fields: []
+  #   # Specifies whether the Rizz bot needs to manually approve follow requests.
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "false"
+  #   # Example:
+  #   # locked: "true"
+  #     locked: ""
+  #   # The bio of the Rizz bot.
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "null"
+  #   # Example:
+  #   # note: "This is the bio of the Rizz bot."
+  #     note: ""
+  account: []
   # RSS feed configurations.
   # Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`
   # Example:
@@ -109,61 +175,6 @@ rizz:
   #   # enabled: "false"
   #     enabled: ""
   feed: []
-  # Mastodon configurations.
-  # Items: `.api`, `.id`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
-  # Example:
-  # mastodon:
-  #   # API endpoint or URL for the Mastodon instance of the Rizz bot.
-  #   # Example:
-  #   # api: "https://botsin.space"
-  #   - api: ""
-  #   # The username or user account for the Mastodon instance of the Rizz bot.
-  #   # Example:
-  #   # id: "rizz"
-  #     id: ""
-  #   # The application access token required to authenticate the Rizz service with the Mastodon instance's API.
-  #   # Example:
-  #   # token: "rinoSZiIvRHLw6PL1QCSia+8liGDau0MZ336JAnL0IQ"
-  #     token: ""
-  #   # Specifies whether the Rizz bot should be marked as a bot.
-  #   # Default: "true"
-  #   # Example:
-  #   # bot: "false"
-  #     bot: ""
-  #   # Specifies whether the Rizz bot should appear in the user directory.
-  #   # Default: "true"
-  #   # Example:
-  #   # discoverable: "false"
-  #     discoverable: ""
-  #   # Specifies whether the Rizz bot should be active.
-  #   # Default: "true"
-  #   # Example:
-  #   # enabled: "false"
-  #     enabled: ""
-  #   # The display name of the Rizz bot.
-  #   # Default: "null"
-  #   # Example:
-  #   # display_name: "Rizz"
-  #     display_name: ""
-  #   # A list of up to four name-value pairs information to be displayed on the Rizz bot's profile.
-  #   # Example:
-  #   # fields:
-  #   #   - name: "Website 1"
-  #   #     value: "https://domain1.example.org"
-  #   #   - name: "Website 2"
-  #   #     value: "https://domain2.example.org"
-  #     fields: []
-  #   # Specifies whether the Rizz bot needs to manually approve follow requests.
-  #   # Default: "false"
-  #   # Example:
-  #   # locked: "true"
-  #     locked: ""
-  #   # The bio of the Rizz bot.
-  #   # Default: "null"
-  #   # Example:
-  #   # note: "This is the bio of the Rizz bot."
-  #     note: ""
-  mastodon: []
 
 # Scheduler configurations.
 scheduler:
@@ -372,21 +383,21 @@ resources:
   #     # The minimum amount of CPU resources required by Rizz.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "30m"
+  #     cpu: "200m"
   #     # The minimum amount of memory required by Rizz.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "60Mi"
+  #     memory: "100Mi"
   #   # The maximum amount of resources allowed for Rizz.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Rizz.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "50m"
+  #     cpu: "300m"
   #     # The maximum amount of memory allowed for Rizz.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "120Mi"
+  #     memory: "250Mi"
   rizz: {}
   # Scheduler container resources.
   # Example:
@@ -396,19 +407,19 @@ resources:
   #     # The minimum amount of CPU resources required by Scheduler.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "10m"
+  #     cpu: "200m"
   #     # The minimum amount of memory required by Scheduler.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "100Mi"
+  #     memory: "250Mi"
   #   # The maximum amount of resources allowed for Scheduler.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Scheduler.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "20m"
+  #     cpu: "300m"
   #     # The maximum amount of memory allowed for Scheduler.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "200Mi"
+  #     memory: "350Mi"
   scheduler: {}
