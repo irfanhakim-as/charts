@@ -114,12 +114,12 @@ helm uninstall $release_name --namespace $namespace --wait
 | scheduler.schedule.clean_db.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
 | scheduler.schedule.clean_db.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
 | scheduler.schedule.clean_db.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` for `apscheduler`. |
-| scheduler.schedule.notify_solat_schedule.hour | string | `""` | The hours at which the task scheduler schedules the daily prayer time schedule posts. Default: `"5"`. |
-| scheduler.schedule.notify_solat_schedule.minute | string | `""` | The minutes at which the task scheduler schedules the daily prayer time schedule posts. Default: `"0"`. |
-| scheduler.schedule.notify_solat_schedule.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time schedule posts. Default: `"0"` for `apscheduler`. |
-| scheduler.schedule.notify_solat_times.hour | string | `""` | The hours at which the task scheduler schedules prayer time notifications. Default: `"*"`. |
-| scheduler.schedule.notify_solat_times.minute | string | `""` | The minutes at which the task scheduler schedules prayer time notifications. Default: `"*/1"`. |
-| scheduler.schedule.notify_solat_times.second | string | `""` | The seconds at which the task scheduler schedules prayer time notifications. Default: `"0"` for `apscheduler`. |
+| scheduler.schedule.notify_solat_schedule.hour | string | `""` | The hours at which the task scheduler schedules the daily prayer time post. Default: `"5"`. |
+| scheduler.schedule.notify_solat_schedule.minute | string | `""` | The minutes at which the task scheduler schedules the daily prayer time post. Default: `"0"`. |
+| scheduler.schedule.notify_solat_schedule.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time post. Default: `"0"` for `apscheduler`. |
+| scheduler.schedule.notify_solat_times.hour | string | `""` | The hours at which the task scheduler schedules the daily prayer time notifications. Default: `"*"`. |
+| scheduler.schedule.notify_solat_times.minute | string | `""` | The minutes at which the task scheduler schedules the daily prayer time notifications. Default: `"*/1"`. |
+| scheduler.schedule.notify_solat_times.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time notifications. Default: `"0"` for `apscheduler`. |
 | scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"*"`. |
 | scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"*"`. |
 | scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"*/1"`. |

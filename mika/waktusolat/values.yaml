@@ -227,36 +227,36 @@ scheduler:
       # Example:
       # second: "30"
       second: ""
-    # The schedule for scheduling the daily prayer time schedule posts.
+    # The schedule for the daily prayer time post.
     notify_solat_schedule:
-      # The hours at which the task scheduler schedules the daily prayer time schedule posts.
+      # The hours at which the task scheduler schedules the daily prayer time post.
       # Default: "5"
       # Example:
       # hour: "4"
       hour: ""
-      # The minutes at which the task scheduler schedules the daily prayer time schedule posts.
+      # The minutes at which the task scheduler schedules the daily prayer time post.
       # Default: "0"
       # Example:
       # minute: "15"
       minute: ""
-      # The seconds at which the task scheduler schedules the daily prayer time schedule posts.
+      # The seconds at which the task scheduler schedules the daily prayer time post.
       # Default: "0" (`apscheduler`)
       # Example:
       # second: "30"
       second: ""
-    # The schedule for scheduling prayer time notifications.
+    # The schedule for the daily prayer time notifications.
     notify_solat_times:
-      # The hours at which the task scheduler schedules prayer time notifications.
+      # The hours at which the task scheduler schedules the daily prayer time notifications.
       # Default: "*"
       # Example:
       # hour: "6,13,16,19,20"
       hour: ""
-      # The minutes at which the task scheduler schedules prayer time notifications.
+      # The minutes at which the task scheduler schedules the daily prayer time notifications.
       # Default: "*/1"
       # Example:
       # minute: "*"
       minute: ""
-      # The seconds at which the task scheduler schedules prayer time notifications.
+      # The seconds at which the task scheduler schedules the daily prayer time notifications.
       # Default: "0" (`apscheduler`)
       # Example:
       # second: "30"
