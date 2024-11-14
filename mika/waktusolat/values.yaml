@@ -88,43 +88,52 @@ waktusolat:
   #   - "swk-33"
   #   - "wlp-1"
   location: []
-  # WaktuSolat Mastodon configurations.
+  # Account configurations.
+  # Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
   # Example:
-  # mastodon:
-  #   # API endpoint or URL for the Mastodon instance of the WaktuSolat bot.
+  # account:
+  #   # API endpoint or URL for the server instance of the WaktuSolat bot.
   #   # Example:
   #   # api: "https://botsin.space"
   #   - api: ""
-  #   # The username or user account for the Mastodon instance of the WaktuSolat bot.
+  #   # The username or user account for the server instance of the WaktuSolat bot.
   #   # Example:
   #   # id: "waktusolat"
   #     id: ""
-  #   # A secure token required to authenticate the WaktuSolat service with the Mastodon instance's API.
+  #   # The underlying host service of the server instance.
+  #   # Default: "mastodon"
   #   # Example:
-  #   # token: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
+  #   # host: "bluesky"
+  #     host: ""
+  #   # The application access token required to authenticate the WaktuSolat service with the server instance's API.
+  #   # Example:
+  #   # token: "rinoSZiIvRHLw6PL1QCSia+8liGDau0MZ336JAnL0IQ"
   #     token: ""
   #   # Specifies whether the WaktuSolat bot should be marked as a bot.
-  #   # Default: true
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "true"
   #   # Example:
-  #   # bot: false
+  #   # bot: "false"
   #     bot: ""
   #   # Specifies whether the WaktuSolat bot should appear in the user directory.
-  #   # Default: true
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "true"
   #   # Example:
-  #   # discoverable: false
+  #   # discoverable: "false"
   #     discoverable: ""
   #   # Specifies whether the WaktuSolat bot should be active.
-  #   # Default: true
+  #   # Default: "true"
   #   # Example:
-  #   # enabled: false
+  #   # enabled: "false"
   #     enabled: ""
   #   # The display name of the WaktuSolat bot.
-  #   # Default: null
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "null"
   #   # Example:
   #   # display_name: "WaktuSolat"
   #     display_name: ""
   #   # A list of up to four name-value pairs information to be displayed on the WaktuSolat bot's profile.
-  #   # Default: []
+  #   # Note: Bluesky does not currently support this field.
   #   # Example:
   #   # fields:
   #   #   - name: "Website 1"
@@ -133,16 +142,18 @@ waktusolat:
   #   #     value: "https://domain2.example.org"
   #     fields: []
   #   # Specifies whether the WaktuSolat bot needs to manually approve follow requests.
-  #   # Default: false
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "false"
   #   # Example:
-  #   # locked: true
+  #   # locked: "true"
   #     locked: ""
   #   # The bio of the WaktuSolat bot.
-  #   # Default: null
+  #   # Note: Bluesky does not currently support this field.
+  #   # Default: "null"
   #   # Example:
   #   # note: "This is the bio of the WaktuSolat bot."
   #     note: ""
-  mastodon: []
+  account: []
   # WaktuSolat storage persistence configurations.
   persistence:
     # Specifies whether WaktuSolat should persist its storage.
