@@ -202,7 +202,8 @@ scheduler:
   # celery: true
   celery: false
   # The schedule for the task scheduler used by WaktuSolat.
-  # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously. The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
+  # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
+  # The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
   schedule:
     # The schedule for cleaning up the database.
     clean_db:
