@@ -50,10 +50,10 @@ waktusolat:
   # Example:
   # debug: true
   debug: false
-  # The domain name of the WaktuSolat service.
+  # The ingress domain name that hosts the WaktuSolat server.
   # Default: "localhost"
   # Example:
-  # domain: "localhost"
+  # domain: "waktusolat.example.com"
   domain: ""
   # The limit number of posts to be scheduled for posting per run.
   # Default: "0" (Unlimited)

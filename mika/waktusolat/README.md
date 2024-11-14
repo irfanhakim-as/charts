@@ -110,7 +110,7 @@ helm uninstall $release_name --namespace $namespace --wait
 | resources.waktusolat.requests.cpu | string | `"30m"` | The minimum amount of CPU resources required by WaktuSolat. |
 | resources.waktusolat.requests.memory | string | `"60Mi"` | The minimum amount of memory required by WaktuSolat. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
-| waktusolat.domain | string | `""` | The domain name of the WaktuSolat service. Default: `"localhost"`. |
+| waktusolat.domain | string | `""` | The ingress domain name that hosts the WaktuSolat server. Default: `"localhost"`. |
 | waktusolat.feed | list | `[]` | WaktuSolat feed configurations. |
 | waktusolat.location | list | `[]` | The code of locations WaktuSolat should fetch and update prayer times for. Default: `"wlp-0"`. |
 | waktusolat.mastodon | list | `[]` | WaktuSolat Mastodon configurations. |
