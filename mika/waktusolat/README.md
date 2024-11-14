@@ -86,10 +86,10 @@ helm uninstall $release_name --namespace $namespace --wait
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | db.host | string | `""` | The hostname or IP address of the WaktuSolat database server. |
-| db.name | string | `""` | The name of the database used by WaktuSolat. |
-| db.password | string | `""` | The password associated with the WaktuSolat database's user. |
-| db.port | string | `""` | The port number on which the WaktuSolat database server is listening. Default: `"5432"`. |
-| db.type | string | `""` | The type of the database used by WaktuSolat. Default: `"postgresql"`. |
+| db.name | string | `""` | The name of the database being used by WaktuSolat. |
+| db.password | string | `""` | The password associated with the WaktuSolat database user. |
+| db.port | string | `""` | The port number the WaktuSolat database server is listening for connections. Default: `"5432"`. |
+| db.type | string | `""` | The database engine or backend being used by WaktuSolat. Default: `"postgresql"`. |
 | db.user | string | `""` | The username or user account for accessing the WaktuSolat database. |
 | image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"alpine"`. |
 | image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |

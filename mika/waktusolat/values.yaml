@@ -281,12 +281,21 @@ scheduler:
 
 # Database configurations.
 db:
-  # The type of the database used by WaktuSolat.
+  # The database engine or backend being used by WaktuSolat.
   # Default: "postgresql"
   # Example:
-  # type: "postgresql"
+  # type: "mysql"
   type: ""
-  # The name of the database used by WaktuSolat.
+  # The hostname or IP address of the WaktuSolat database server.
+  # Example:
+  # host: "waktusolat.default.svc.cluster.local"
+  host: ""
+  # The port number the WaktuSolat database server is listening for connections.
+  # Default: "5432"
+  # Example:
+  # port: "3306"
+  port: ""
+  # The name of the database being used by WaktuSolat.
   # Example:
   # name: "waktusolat"
   name: ""
@@ -294,19 +303,10 @@ db:
   # Example:
   # user: "root"
   user: ""
-  # The password associated with the WaktuSolat database's user.
+  # The password associated with the WaktuSolat database user.
   # Example:
   # password: "password"
   password: ""
-  # The hostname or IP address of the WaktuSolat database server.
-  # Example:
-  # host: "waktusolat.default.svc.cluster.local"
-  host: ""
-  # The port number on which the WaktuSolat database server is listening.
-  # Default: "5432"
-  # Example:
-  # port: "5432"
-  port: ""
 
 # Resource requirements and limits for WaktuSolat containers.
 resources:
