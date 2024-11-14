@@ -202,7 +202,7 @@ scheduler:
   # celery: true
   celery: false
   # The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations.
-  # Default: "Asia/Kuala_Lumpur"
+  # Default: "Etc/UTC"
   # Example:
   # timezone: "Asia/Kuala_Lumpur"
   timezone: ""
