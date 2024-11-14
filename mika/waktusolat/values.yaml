@@ -154,24 +154,6 @@ waktusolat:
   #   # note: "This is the bio of the WaktuSolat bot."
   #     note: ""
   account: []
-  # WaktuSolat storage persistence configurations.
-  persistence:
-    # Specifies whether WaktuSolat should persist its storage.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage.
-    # Default: "longhorn"
-    # Example:
-    # storageClassName: "longhorn"
-    storageClassName: ""
-    # WaktuSolat logs persistence configurations.
-    logs:
-      # The amount of persistent storage allocated for WaktuSolat logs.
-      # Default: "20Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
   # WaktuSolat feed configurations.
   # Items: `.endpoint`, `.id`, `.enabled`
   # Example:
@@ -190,6 +172,24 @@ waktusolat:
   #   # enabled: "false"
   #     enabled: ""
   feed: []
+  # WaktuSolat storage persistence configurations.
+  persistence:
+    # Specifies whether WaktuSolat should persist its storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "longhorn"
+    storageClassName: ""
+    # WaktuSolat logs persistence configurations.
+    logs:
+      # The amount of persistent storage allocated for WaktuSolat logs.
+      # Default: "20Mi"
+      # Example:
+      # storage: "1Gi"
+      storage: ""
   # WaktuSolat scheduler configurations.
   scheduler:
     # Specifies whether APScheduler should be used by WaktuSolat as the task scheduler.
