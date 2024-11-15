@@ -342,6 +342,36 @@ ingress:
   #     value: ""
   customAnnotations: []
 
+# Service configurations.
+service:
+  # The type of service used to expose WaktuSolat services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+  # WaktuSolat service port configurations.
+  waktusolat:
+    # The optional node port to expose for WaktuSolat when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The WaktuSolat port on which the WaktuSolat server should listen for connections.
+    # Default: "80"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Redis service port configurations.
+  redis:
+    # The optional node port to expose for Redis when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
+    # The Redis port on which the WaktuSolat server should listen for connections.
+    # Default: "6379"
+    # Example:
+    # port: "8443"
+    port: ""
+
 # Resource requirements and limits for WaktuSolat containers.
 resources:
   # WaktuSolat container resources.

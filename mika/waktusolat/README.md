@@ -128,6 +128,11 @@ helm uninstall $release_name --namespace $namespace --wait
 | scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"*"`. |
 | scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"*/1"`. |
 | scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Etc/UTC"`. |
+| service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
+| service.redis.port | string | `""` | The Redis port on which the WaktuSolat server should listen for connections. Default: `"6379"`. |
+| service.type | string | `""` | The type of service used to expose WaktuSolat services. Default: `"ClusterIP"`. |
+| service.waktusolat.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
+| service.waktusolat.port | string | `""` | The Redis port on which the WaktuSolat server should listen for connections. Default: `"6379"`. |
 | waktusolat.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
 | waktusolat.domain | string | `""` | The ingress domain name that hosts the WaktuSolat server. Default: `"localhost"`. |
