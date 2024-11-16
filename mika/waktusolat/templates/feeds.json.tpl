@@ -9,7 +9,7 @@ Mastodon /base/lib/feeds.json template
         {
             "uid": {{ $feed.id | toString | quote }},
             "endpoint": {{ $feed.endpoint | toString | quote }},
-            "is_enabled": {{ $feed.enabled | default "true" | toString }},
+            "is_enabled": {{ $feed.enabled | default "true" | toString }}
         }{{ if ne $index (sub (len $feeds) 1) }},{{ end }}
         {{- end }}
     ]
