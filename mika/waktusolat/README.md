@@ -127,14 +127,17 @@ helm uninstall $release_name --namespace $namespace --wait
 | service.type | string | `""` | The type of service used to expose WaktuSolat services. Default: `"ClusterIP"`. |
 | service.waktusolat.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
 | service.waktusolat.port | string | `""` | The Redis port on which the WaktuSolat server should listen for connections. Default: `"6379"`. |
+| storage.log.accessMode | string | `""` | The access mode defining how the log storage can be mounted. Default: `"ReadWriteMany"`. |
+| storage.log.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for log storage. |
+| storage.log.mountPath | string | `""` | The path where the log storage should be mounted on the container. Default: `"/var/log/apache2"`. |
+| storage.log.storage | string | `""` | The default amount of persistent storage allocated for the log storage. Default: `"20Mi"`. |
+| storage.log.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the log storage. Default: `"longhorn"`. |
+| storage.log.subPath | string | `""` | The subpath within the log storage to mount to the container. Leave empty if not required. |
 | waktusolat.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
 | waktusolat.domain | string | `""` | The ingress domain name that hosts the WaktuSolat server. Default: `"localhost"`. |
 | waktusolat.feed | list | `[]` | WaktuSolat feed configurations. Items: `.endpoint`, `.id`, `.enabled`. |
 | waktusolat.location | list | `[]` | The code of locations WaktuSolat should fetch and update prayer times for. Default: `"wlp-0"`. |
-| waktusolat.persistence.enabled | bool | `false` | Specifies whether WaktuSolat should persist its storage. |
-| waktusolat.persistence.logs.storage | string | `""` | The amount of persistent storage allocated for WaktuSolat logs. Default: `"20Mi"`. |
-| waktusolat.persistence.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the WaktuSolat storage. Default: `"longhorn"`. |
 | waktusolat.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"0"` (Unlimited). |
 | waktusolat.retry_post | string | `""` | Specifies whether to retry posting if the post fails to be sent. Default: `"false"`. |
 | waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |
