@@ -105,14 +105,8 @@ helm uninstall $release_name --namespace $namespace --wait
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting WaktuSolat services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
-| resources.scheduler.limits.cpu | string | `"20m"` | The maximum amount of CPU resources allowed for Scheduler. |
-| resources.scheduler.limits.memory | string | `"200Mi"` | The maximum amount of memory allowed for Scheduler. |
-| resources.scheduler.requests.cpu | string | `"10m"` | The minimum amount of CPU resources required by Scheduler. |
-| resources.scheduler.requests.memory | string | `"100Mi"` | The minimum amount of memory required by Scheduler. |
-| resources.waktusolat.limits.cpu | string | `"50m"` | The maximum amount of CPU resources allowed for WaktuSolat. |
-| resources.waktusolat.limits.memory | string | `"120Mi"` | The maximum amount of memory allowed for WaktuSolat. |
-| resources.waktusolat.requests.cpu | string | `"30m"` | The minimum amount of CPU resources required by WaktuSolat. |
-| resources.waktusolat.requests.memory | string | `"60Mi"` | The minimum amount of memory required by WaktuSolat. |
+| resources.scheduler | object | `{}` | WaktuSolat container resources. |
+| resources.waktusolat | object | `{}` | Scheduler container resources. |
 | scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
 | scheduler.schedule.clean_db.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |

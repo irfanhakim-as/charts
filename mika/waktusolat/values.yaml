@@ -375,54 +375,58 @@ service:
 # Resource requirements and limits for WaktuSolat containers.
 resources:
   # WaktuSolat container resources.
-  waktusolat:
-    # The minimum amount of resources required by WaktuSolat to run.
-    requests:
-      # The minimum amount of CPU resources required by WaktuSolat.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "20m"
-      cpu: "30m"
-      # The minimum amount of memory required by WaktuSolat.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "250Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "250Mi"
-      memory: "60Mi"
-    # The maximum amount of resources allowed for WaktuSolat.
-    limits:
-      # The maximum amount of CPU resources allowed for WaktuSolat.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "200m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "50m"
-      cpu: "50m"
-      # The maximum amount of memory allowed for WaktuSolat.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "400Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "450Mi"
-      memory: "120Mi"
+  # Example:
+  # waktusolat:
+  #   # The minimum amount of resources required by WaktuSolat to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by WaktuSolat.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100m" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # cpu: "20m"
+  #     cpu: "30m"
+  #     # The minimum amount of memory required by WaktuSolat.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "250Mi" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "60Mi"
+  #   # The maximum amount of resources allowed for WaktuSolat.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for WaktuSolat.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "200m" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # cpu: "50m"
+  #     cpu: "50m"
+  #     # The maximum amount of memory allowed for WaktuSolat.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "400Mi" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # memory: "450Mi"
+  #     memory: "120Mi"
+  waktusolat: {}
   # Scheduler container resources.
-  scheduler:
-    # The minimum amount of resources required by Scheduler to run.
-    requests:
-      # The minimum amount of CPU resources required by Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "10m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "5m"
-      cpu: "10m"
-      # The minimum amount of memory required by Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "50Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "30Mi"
-      memory: "100Mi"
-    # The maximum amount of resources allowed for Scheduler.
-    limits:
-      # The maximum amount of CPU resources allowed for Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "20m" or more if using `celery` as the scheduler.
-      # Example:
-      # cpu: "15m"
-      cpu: "20m"
-      # The maximum amount of memory allowed for Scheduler.
-      # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100Mi" or more if using `celery` as the scheduler.
-      # Example:
-      # memory: "50Mi"
-      memory: "200Mi"
+  # Example:
+  # scheduler:
+  #   # The minimum amount of resources required by Scheduler to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Scheduler.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "10m" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # cpu: "5m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Scheduler.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "50Mi" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # memory: "30Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for Scheduler.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Scheduler.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "20m" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # cpu: "15m"
+  #     cpu: "20m"
+  #     # The maximum amount of memory allowed for Scheduler.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100Mi" or more if using `celery` as the scheduler.
+  #     # Example:
+  #     # memory: "50Mi"
+  #     memory: "200Mi"
+  scheduler: {}
