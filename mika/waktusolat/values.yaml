@@ -377,7 +377,7 @@ storage:
     # subPath: "Log"
     subPath: ""
     # The default amount of persistent storage allocated for the log storage.
-    # Default: "20Mi"
+    # Default: "50Mi"
     # Example:
     # storage: "10Gi"
     storage: ""

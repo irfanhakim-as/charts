@@ -1,6 +1,6 @@
 {{- $logPersistence := .Values.storage.log.enabled }}
 {{- $logAccessMode := .Values.storage.log.accessMode | default "ReadWriteMany" | toString | quote }}
-{{- $logStorage := .Values.storage.log.storage | default "20Mi" | toString | quote }}
+{{- $logStorage := .Values.storage.log.storage | default "50Mi" | toString | quote }}
 {{- $logStorageClassName := .Values.storage.log.storageClassName | default "longhorn" | toString | quote }}
 {{- if $logPersistence }}
 ---
