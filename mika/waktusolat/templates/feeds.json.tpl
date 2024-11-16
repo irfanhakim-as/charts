@@ -1,5 +1,5 @@
 {{/*
-Mastodon /base/lib/feeds.json template
+WaktuSolat /base/lib/feeds.json template
 */}}
 {{- define "waktusolat.feeds-json" -}}
 {
