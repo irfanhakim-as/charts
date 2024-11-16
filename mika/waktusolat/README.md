@@ -240,8 +240,8 @@ A secure application access token is required for each configured account.
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting WaktuSolat services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
-| resources.scheduler | object | `{}` | WaktuSolat container resources. |
-| resources.waktusolat | object | `{}` | Scheduler container resources. |
+| resources.scheduler | object | `{}` | Scheduler container resources. |
+| resources.waktusolat | object | `{}` | WaktuSolat container resources. |
 | scheduler.apscheduler | bool | `true` | Specifies whether APScheduler should be used by WaktuSolat as the task scheduler. |
 | scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
 | scheduler.schedule.clean_db.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
@@ -260,8 +260,8 @@ A secure application access token is required for each configured account.
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
 | service.redis.port | string | `""` | The Redis port on which the WaktuSolat server should listen for connections. Default: `"6379"`. |
 | service.type | string | `""` | The type of service used to expose WaktuSolat services. Default: `"ClusterIP"`. |
-| service.waktusolat.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
-| service.waktusolat.port | string | `""` | The Redis port on which the WaktuSolat server should listen for connections. Default: `"6379"`. |
+| service.waktusolat.nodePort | string | `""` | The optional node port to expose for WaktuSolat when the service type is NodePort. |
+| service.waktusolat.port | string | `""` | The WaktuSolat port on which the WaktuSolat server should listen for connections. Default: `"80"`. |
 | storage.log.accessMode | string | `""` | The access mode defining how the log storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.log.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for log storage. |
 | storage.log.mountPath | string | `""` | The path where the log storage should be mounted on the container. Default: `"/var/log/apache2"`. |
