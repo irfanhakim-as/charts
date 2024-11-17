@@ -14,7 +14,7 @@ Celery /base/base/celery.py template
 {{- $notify_solat_times_second := .Values.scheduler.schedule.notify_solat_times.second | toString -}}
 {{- $post_scheduler_hour := .Values.scheduler.schedule.post_scheduler.hour | default "*" | toString -}}
 {{- $post_scheduler_minute := .Values.scheduler.schedule.post_scheduler.minute | default "*" | toString -}}
-{{- $post_scheduler_second := .Values.scheduler.schedule.post_scheduler.second | default "*/1" | toString -}}
+{{- $post_scheduler_second := .Values.scheduler.schedule.post_scheduler.second | toString -}}
 
 from __future__ import absolute_import, unicode_literals
 import os
