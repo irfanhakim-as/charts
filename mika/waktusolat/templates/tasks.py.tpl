@@ -14,7 +14,7 @@ APScheduler /base/base/tasks.py template
 {{- $notify_solat_times_second := .Values.scheduler.schedule.notify_solat_times.second | default "0" | toString -}}
 {{- $post_scheduler_hour := .Values.scheduler.schedule.post_scheduler.hour | default "*" | toString -}}
 {{- $post_scheduler_minute := .Values.scheduler.schedule.post_scheduler.minute | default "*" | toString -}}
-{{- $post_scheduler_second := .Values.scheduler.schedule.post_scheduler.second | default "*/1" | toString -}}
+{{- $post_scheduler_second := .Values.scheduler.schedule.post_scheduler.second | default "0" | toString -}}
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from django.conf import settings
