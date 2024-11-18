@@ -27,8 +27,8 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     # clean data
-    "clean_data" : {
-        "task" : "base.tasks.clean_data_task",
+    "clean_data": {
+        "task": "base.tasks.clean_data_task",
         {{- if $clean_data_second }}
         "schedule": timedelta(seconds=int(re.sub(r"\D", "", {{ $clean_data_second | quote }}))),
         {{- else }}
@@ -36,8 +36,8 @@ app.conf.beat_schedule = {
         {{- end }}
     },
     # check for any posts that need to be posted
-    "post_scheduler" : {
-        "task" : "base.tasks.post_scheduler_task",
+    "post_scheduler": {
+        "task": "base.tasks.post_scheduler_task",
         {{- if $post_scheduler_second }}
         "schedule": timedelta(seconds=int(re.sub(r"\D", "", {{ $post_scheduler_second | quote }}))),
         {{- else }}
@@ -45,8 +45,8 @@ app.conf.beat_schedule = {
         {{- end }}
     },
     # update data
-    "update_data" : {
-        "task" : "base.tasks.update_data_task",
+    "update_data": {
+        "task": "base.tasks.update_data_task",
         {{- if $update_data_second }}
         "schedule": timedelta(seconds=int(re.sub(r"\D", "", {{ $update_data_second | quote }}))),
         {{- else }}
