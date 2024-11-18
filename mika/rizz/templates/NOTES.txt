@@ -1,11 +1,11 @@
 {{- $serviceAddress := "" }}
+{{- $accounts := .Values.rizz.account }}
+{{- $feeds := .Values.rizz.feed }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.rizz.domain | toString }}
 {{- $rizzPort := .Values.service.rizz.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
-{{- $accounts := .Values.rizz.account }}
-{{- $feeds := .Values.rizz.feed }}
 Rizz has been installed and configured for {{ .Release.Name | toString }} 🎉
 
 {{- if $ingress }}
