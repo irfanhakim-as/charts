@@ -131,7 +131,7 @@ rizz:
   #   # display_name: "Rizz"
   #     display_name: ""
   #   # A list of up to four name-value pairs information to be displayed on the Rizz bot's profile.
-  #   # Note: Bluesky does not currently support this field.
+  #   # Note: Bluesky does not officially support this field.
   #   # Example:
   #   # fields:
   #   #   - name: "Website 1"
