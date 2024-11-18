@@ -153,18 +153,13 @@ rizz:
   #     note: ""
   account: []
   # RSS feed configurations.
-  # Items: `.endpoint`, `.pubdate_format`, `.id`, `.enabled`
+  # Items: `.endpoint`, `.id`, `.enabled`
   # Example:
   # feed:
   #   # The URL of the RSS feed to be tracked by Rizz.
   #   # Example:
   #   # endpoint: "https://www.reddit.com/r/programming/.rss"
   #   - endpoint: ""
-  #   # The publishing date format of the RSS feed entry.
-  #   # Default: "%a, %d %b %Y %H:%M:%S %z"
-  #   # Example:
-  #   # pubdate_format: "%a, %d %b %Y %H:%M:%S %Z"
-  #     pubdate_format: ""
   #   # The unique identifier of the RSS feed entry.
   #   # Example:
   #   # id: "MyFeed"
