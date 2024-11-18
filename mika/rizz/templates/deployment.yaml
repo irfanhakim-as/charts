@@ -1,3 +1,4 @@
+{{- $accounts := .Values.rizz.account }}
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
 {{- $logPersistence := .Values.storage.log.enabled }}
@@ -13,7 +14,6 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
-{{- $accounts := .Values.rizz.account }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
