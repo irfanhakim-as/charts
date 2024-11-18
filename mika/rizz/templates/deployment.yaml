@@ -1,3 +1,4 @@
+{{- $accounts := .Values.rizz.account }}
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
 {{- $logPersistence := .Values.storage.log.enabled }}
@@ -13,7 +14,6 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
-{{- $accounts := .Values.rizz.account }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -58,13 +58,13 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            - name: {{ .Release.Name }}-rizz-feed-config
-              mountPath: /base/data/feeds.json
-              subPath: feeds.json
-              readOnly: true
             - name: {{ .Release.Name }}-rizz-account-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
+              readOnly: true
+            - name: {{ .Release.Name }}-rizz-feed-config
+              mountPath: /base/data/feeds.json
+              subPath: feeds.json
               readOnly: true
             {{- if $celery }}
             - name: {{ .Release.Name }}-rizz-default-celery-config
@@ -117,13 +117,13 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-rizz-secret
           volumeMounts:
-            - name: {{ .Release.Name }}-rizz-feed-config
-              mountPath: /base/data/feeds.json
-              subPath: feeds.json
-              readOnly: true
             - name: {{ .Release.Name }}-rizz-account-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
+              readOnly: true
+            - name: {{ .Release.Name }}-rizz-feed-config
+              mountPath: /base/data/feeds.json
+              subPath: feeds.json
               readOnly: true
             - name: {{ .Release.Name }}-rizz-apscheduler-config
               mountPath: /entrypoint.sh
@@ -164,12 +164,12 @@ spec:
         - name: {{ .Release.Name }}-rizz-site-config
           configMap:
             name: {{ .Release.Name }}-rizz-site-config
-        - name: {{ .Release.Name }}-rizz-feed-config
-          configMap:
-            name: {{ .Release.Name }}-rizz-feed-config
         - name: {{ .Release.Name }}-rizz-account-config
           secret:
             secretName: {{ .Release.Name }}-rizz-account-config
+        - name: {{ .Release.Name }}-rizz-feed-config
+          configMap:
+            name: {{ .Release.Name }}-rizz-feed-config
         {{- if $apscheduler }}
         - name: {{ .Release.Name }}-rizz-apscheduler-config
           configMap:

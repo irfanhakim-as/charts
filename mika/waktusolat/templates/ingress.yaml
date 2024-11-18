@@ -1,0 +1,60 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $www := .Values.ingress.www }}
+{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $customAnnotations := .Values.ingress.customAnnotations }}
+{{- $domain := .Values.waktusolat.domain | toString }}
+{{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
+{{- if and $ingress $domain }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-waktusolat-ingress
+  labels:
+    {{- include "waktusolat.labels" . | nindent 4 }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
+    cert-manager.io/private-key-algorithm: "ECDSA"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.org/client-max-body-size: "100m"
+    {{- range $customAnnotations }}
+    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+    {{- end }}
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ $domain | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-waktusolat-svc
+                port:
+                  name: waktusolat
+            path: /
+            pathType: Prefix
+  {{- if $www }}
+    - host: {{ $wwwDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-waktusolat-svc
+                port:
+                  name: waktusolat
+            path: /
+            pathType: Prefix
+  {{- end }}
+  tls:
+    - hosts:
+        - {{ $domain | quote }}
+      {{- if $www }}
+        - {{ $wwwDomain }}
+      {{- end }}
+      secretName: {{ .Release.Name }}-waktusolat-tls-cert
+{{- end }}
