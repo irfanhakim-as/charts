@@ -52,6 +52,19 @@ cloudflareddns:
   # Example:
   # purge: "true"
   purge: ""
+  # The Cloudflare API token used to authenticate with the Cloudflare API.
+  # Example:
+  # token: "Na9E7VEY58COhA03l1ytm1r70u7jBsf8bNqh5AlZ"
+  token: ""
+  # The Time-To-Live (TTL) duration defining how long DNS records are cached in seconds.
+  # Default: "300"
+  # Example:
+  # ttl: "86400"
+  ttl: ""
+  # The ID of the zone that will get the records.
+  # Example:
+  # zoneID: "71fovu74p100z856k795umzl32h3240p"
+  zoneID: ""
   # The list of subdomains to be updated for a specified domain (zone).
   # Items: `.hostname`, `.proxied`
   # Example:
@@ -66,19 +79,6 @@ cloudflareddns:
   #   # proxied: "true"
   #     proxied: ""
   subdomains: []
-  # The Cloudflare API token used to authenticate with the Cloudflare API.
-  # Example:
-  # token: "Na9E7VEY58COhA03l1ytm1r70u7jBsf8bNqh5AlZ"
-  token: ""
-  # The Time-To-Live (TTL) duration defining how long DNS records are cached in seconds.
-  # Default: "300"
-  # Example:
-  # ttl: "86400"
-  ttl: ""
-  # The ID of the zone that will get the records.
-  # Example:
-  # zoneID: "71fovu74p100z856k795umzl32h3240p"
-  zoneID: ""
 
 # Resource requirements and limits for Cloudflare DDNS containers.
 resources:
