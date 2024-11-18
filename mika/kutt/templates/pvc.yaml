@@ -1,5 +1,5 @@
-{{- $externalRedis := .Values.redis.external }}
 {{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $externalRedis := .Values.redis.external }}
 {{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteOnce" | toString | quote }}
 {{- $dataStorage := .Values.storage.data.storage | default "100Mi" | toString | quote }}
 {{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
