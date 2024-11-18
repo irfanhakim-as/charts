@@ -1,4 +1,10 @@
-{{- $celery := .Values.waktusolat.scheduler.celery }}
+{{- $celery := .Values.scheduler.celery }}
+{{- $waktusolatPort := .Values.service.waktusolat.port | default "80" | toString }}
+{{- $waktusolatNodePort := .Values.service.waktusolat.nodePort | toString }}
+{{- $redisPort := .Values.service.redis.port | default "6379" | toString }}
+{{- $redisNodePort := .Values.service.redis.nodePort | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,17 +12,23 @@ metadata:
   labels:
     {{- include "waktusolat.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ $type }}
   ports:
-    - port: 80
+    - port: {{ int $waktusolatPort }}
       targetPort: waktusolat
+      {{- if and (eq $type "NodePort") $waktusolatNodePort }}
+      nodePort: {{ int $waktusolatNodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-waktusolat
+      name: waktusolat
     {{- if $celery }}
-    - port: 6379
+    - port: {{ int $redisPort }}
       targetPort: redis
+      {{- if and (eq $type "NodePort") $redisNodePort }}
+      nodePort: {{ int $redisNodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-redis
+      name: redis
     {{- end }}
   selector:
     {{- include "waktusolat.selectorLabels" . | nindent 4 }}
