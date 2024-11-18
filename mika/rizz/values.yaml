@@ -224,7 +224,7 @@ scheduler:
       # Example:
       # second: "30"
       second: ""
-    # The schedule for updating up the database.
+    # The schedule for updating the database.
     update_data:
       # The hours at which the task scheduler updates the database.
       # Default: "7-22/3"
