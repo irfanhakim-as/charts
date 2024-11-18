@@ -1,9 +1,9 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
 {{- $externalRedis := .Values.redis.external }}
-{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteOnce" | toString | quote }}
-{{- $dataStorage := .Values.storage.data.storage | default "100Mi" | toString | quote }}
-{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
-{{- if and $dataPersistence (not $externalRedis) }}
+{{- $redisPersistence := .Values.storage.redis.enabled }}
+{{- $redisAccessMode := .Values.storage.redis.accessMode | default "ReadWriteOnce" | toString | quote }}
+{{- $redisStorage := .Values.storage.redis.storage | default "100Mi" | toString | quote }}
+{{- $redisStorageClassName := .Values.storage.redis.storageClassName | default "longhorn" | toString | quote }}
+{{- if and (not $externalRedis) $redisPersistence }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -13,9 +13,9 @@ metadata:
     {{- include "kutt.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - {{ $dataAccessMode }}
+    - {{ $redisAccessMode }}
   resources:
     requests:
-      storage: {{ $dataStorage }}
-  storageClassName: {{ $dataStorageClassName }}
+      storage: {{ $redisStorage }}
+  storageClassName: {{ $redisStorageClassName }}
 {{- end }}

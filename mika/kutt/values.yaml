@@ -276,32 +276,32 @@ service:
 
 # Storage configurations.
 storage:
-  # Data storage configurations.
-  data:
-    # Specifies whether persistent storage should be provisioned for data storage.
+  # Redis storage configurations.
+  redis:
+    # Specifies whether persistent storage should be provisioned for Redis storage.
     # Example:
     # enabled: false
     enabled: true
-    # The access mode defining how the data storage can be mounted.
+    # The access mode defining how the Redis storage can be mounted.
     # Default: "ReadWriteOnce"
     # Example:
     # accessMode: "ReadWriteMany"
     accessMode: ""
-    # The path where the data storage should be mounted on the container.
+    # The path where the Redis storage should be mounted on the container.
     # Default: "/data"
     # Example:
     # mountPath: "/config"
     mountPath: ""
-    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # The subpath within the Redis storage to mount to the container. Leave empty if not required.
     # Example:
-    # subPath: "Data"
+    # subPath: "Redis"
     subPath: ""
-    # The default amount of persistent storage allocated for the data storage.
+    # The default amount of persistent storage allocated for the Redis storage.
     # Default: "100Mi"
     # Example:
     # storage: "10Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the Redis storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "smb"

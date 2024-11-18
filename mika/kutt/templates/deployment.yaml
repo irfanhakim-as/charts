@@ -1,5 +1,5 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
 {{- $externalRedis := .Values.redis.external }}
+{{- $redisPersistence := .Values.storage.redis.enabled }}
 {{- $kutt_registry := .Values.image.kutt.registry | default "docker.io" | toString }}
 {{- $kutt_repository := .Values.image.kutt.repository | default "kutt/kutt" | toString }}
 {{- $kutt_tag := .Values.image.kutt.tag | default .Chart.AppVersion | toString }}
@@ -9,8 +9,8 @@
 {{- $redis_tag := .Values.image.redis.tag | default "6.0-alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/data" | toString | quote }}
-{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $redisMountPath := .Values.storage.redis.mountPath | default "/data" | toString | quote }}
+{{- $redisSubPath := .Values.storage.redis.subPath | toString }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -75,18 +75,18 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-kutt-redis-secret
-          {{- if or $dataPersistence }}
+          {{- if or $redisPersistence }}
           volumeMounts:
-            {{- if $dataPersistence }}
+            {{- if $redisPersistence }}
             - name: {{ .Release.Name }}-kutt-redis-data
-              mountPath: {{ $dataMountPath }}
-              {{- if $dataSubPath }}
-              subPath: {{ $dataSubPath | quote }}
+              mountPath: {{ $redisMountPath }}
+              {{- if $redisSubPath }}
+              subPath: {{ $redisSubPath | quote }}
               {{- end }}
             {{- end }}
           {{- end }}
         {{- end }}
-      {{- if and $dataPersistence (not $externalRedis) }}
+      {{- if and (not $externalRedis) $redisPersistence }}
       volumes:
         - name: {{ .Release.Name }}-kutt-redis-data
           persistentVolumeClaim:
