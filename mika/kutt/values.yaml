@@ -104,26 +104,6 @@ kutt:
     # nonUserCooldown: "1"
     nonUserCooldown: ""
 
-# External Redis configurations.
-redis:
-  # Specifies whether Kutt should use an external Redis server.
-  # Example:
-  # external: true
-  external: false
-  # The hostname or IP address of the external Redis server.
-  # Example:
-  # host: "redis.default.svc.cluster.local"
-  host: ""
-  # The port number on which the external Redis server is listening for connections.
-  # Default: "6379"
-  # Example:
-  # port: "9763"
-  port: ""
-  # The password for authenticating with the external Redis server.
-  # Example:
-  # password: "password"
-  password: ""
-
 # Google configurations.
 google:
   # The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro.
@@ -180,6 +160,26 @@ mail:
     # Example:
     # password: "password"
     password: ""
+
+# External Redis configurations.
+redis:
+  # Specifies whether Kutt should use an external Redis server.
+  # Example:
+  # external: true
+  external: false
+  # The hostname or IP address of the external Redis server.
+  # Example:
+  # host: "redis.default.svc.cluster.local"
+  host: ""
+  # The port number on which the external Redis server is listening for connections.
+  # Default: "6379"
+  # Example:
+  # port: "9763"
+  port: ""
+  # The password for authenticating with the external Redis server.
+  # Example:
+  # password: "password"
+  password: ""
 
 # PostgreSQL configurations.
 postgres:
