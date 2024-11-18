@@ -9,8 +9,7 @@ Rizz /base/lib/feeds.json template
         {
             "uid": {{ $feed.id | toString | quote }},
             "endpoint": {{ $feed.endpoint | toString | quote }},
-            "is_enabled": {{ $feed.enabled | default "true" | toString }},
-            "date_format": {{ $feed.pubdate_format | default "%a, %d %b %Y %H:%M:%S %z" | toString | quote }}
+            "is_enabled": {{ $feed.enabled | default "true" | toString }}
         }{{ if ne $index (sub (len $feeds) 1) }},{{ end }}
         {{- end }}
     ]
