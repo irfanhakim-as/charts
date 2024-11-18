@@ -47,12 +47,6 @@ imagePullSecrets: []
 
 # Kutt configurations.
 kutt:
-  # Email addresses of the administrators of the Kutt application so they can access admin actions.
-  # Example:
-  # admins:
-  #   - "admin@example.com"
-  #   - "su@example.com"
-  admins: []
   # The ingress domain name that hosts the Kutt server.
   # Example:
   # domain: "kutt.example.com"
@@ -78,6 +72,12 @@ kutt:
   useHttps: ""
   # Kutt administration configurations.
   administration:
+    # Email addresses of the administrators of the Kutt application so they can access admin actions.
+    # Example:
+    # admins:
+    #   - "admin@example.com"
+    #   - "su@example.com"
+    admins: []
     # The maximum number of links that can be created by a user in a day.
     # Default: "50"
     # Example:

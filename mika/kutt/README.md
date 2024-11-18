@@ -157,12 +157,12 @@ A unique, secure secret key is required for each Kutt installation.
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Kutt services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
+| kutt.administration.admins | list | `[]` | Email addresses of the administrators of the Kutt application so they can access admin actions. |
 | kutt.administration.dailyUserLimit | string | `""` | The maximum number of links that can be created by a user in a day. Default: `"50"`. |
 | kutt.administration.disableAnonLinks | string | `""` | Specifies whether Kutt should disallow creating links without an account. Default: `"false"`. |
 | kutt.administration.disableRegistration | string | `""` | Specifies whether Kutt should disallow user registrations. Default: `"false"`. |
 | kutt.administration.maxStatsPerLink | string | `""` | The maximum number of visits for a link to have detailed statistics. Default: `"5000"`. |
 | kutt.administration.nonUserCooldown | string | `""` | The number of minutes an anonymous user must wait before creating another link. Default: `"0"`. |
-| kutt.admins | list | `[]` | Email addresses of the administrators of the Kutt application so they can access admin actions. |
 | kutt.domain | string | `""` | The ingress domain name that hosts the Kutt server. |
 | kutt.link_length | string | `""` | The length of the generated short links. Default: `"6"`. |
 | kutt.name | string | `""` | The name of the site where Kutt is hosted. Default: `"Kutt"`. |
