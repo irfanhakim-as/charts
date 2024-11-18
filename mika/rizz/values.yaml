@@ -397,7 +397,7 @@ resources:
   #     # The maximum amount of memory allowed for Rizz.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "250Mi"
+  #     memory: "350Mi"
   rizz: {}
   # Scheduler container resources.
   # Example:
