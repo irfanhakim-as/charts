@@ -46,15 +46,15 @@ spec:
               {{- $db := .name | toString }}
               {{- $user := .user | toString }}
               {{- $password := .password | toString }}
+              {{- if $drop }}
+                DROP DATABASE IF EXISTS {{ $db }};
+                DROP USER IF EXISTS {{ $user | quote }}@"%";
+              {{- end }}
               {{- if $create }}
                 CREATE USER IF NOT EXISTS {{ $user | quote }}@"%";
                 SET PASSWORD FOR {{ $user | quote }}@"%" = PASSWORD({{ $password | quote }});
                 CREATE DATABASE IF NOT EXISTS {{ $db }};
                 GRANT ALL PRIVILEGES ON {{ $db }}.* TO {{ $user | quote }}@"%";
-              {{- end }}
-              {{- if $drop }}
-                DROP DATABASE IF EXISTS {{ $db }};
-                DROP USER IF EXISTS {{ $user | quote }}@"%";
               {{- end }}
               {{- if and $custom $command }}
                 {{- $command | toString | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
