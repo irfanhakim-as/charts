@@ -3,7 +3,7 @@ name: rizz
 description: Rizz is a simple web application that tracks and posts content from RSS Feeds to federated social network.
 type: application
 version: 0.2.0
-appVersion: "0.2.0-stable-r1"
+appVersion: "0.2.0-stable-r2"
 keywords:
   - "rss"
   - "monitor"
