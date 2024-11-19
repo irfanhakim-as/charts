@@ -68,7 +68,7 @@ kutt:
   # Specifies whether Kutt should use HTTPS for custom domains.
   # Default: "true"
   # Example:
-  # useHttps: false
+  # useHttps: "false"
   useHttps: ""
   # Kutt administration configurations.
   administration:
