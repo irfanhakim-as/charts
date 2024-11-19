@@ -48,6 +48,7 @@ imagePullSecrets: []
 # Kutt configurations.
 kutt:
   # The ingress domain name that hosts the Kutt server.
+  # Default: "%s-kutt-svc:kutt .Release.Name"
   # Example:
   # domain: "kutt.example.com"
   domain: ""

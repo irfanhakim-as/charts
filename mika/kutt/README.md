@@ -163,7 +163,7 @@ A unique, secure secret key is required for each Kutt installation.
 | kutt.administration.disableRegistration | string | `""` | Specifies whether Kutt should disallow user registrations. Default: `"false"`. |
 | kutt.administration.maxStatsPerLink | string | `""` | The maximum number of visits for a link to have detailed statistics. Default: `"5000"`. |
 | kutt.administration.nonUserCooldown | string | `""` | The number of minutes an anonymous user must wait before creating another link. Default: `"0"`. |
-| kutt.domain | string | `""` | The ingress domain name that hosts the Kutt server. |
+| kutt.domain | string | `""` | The ingress domain name that hosts the Kutt server. Default: `"%s-kutt-svc:kutt .Release.Name"`. |
 | kutt.link_length | string | `""` | The length of the generated short links. Default: `"6"`. |
 | kutt.name | string | `""` | The name of the site where Kutt is hosted. Default: `"Kutt"`. |
 | kutt.secret | string | `""` | A 50-character secret key used for encrypting JSON Web Tokens (JWTs). |
