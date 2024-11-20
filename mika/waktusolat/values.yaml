@@ -256,7 +256,7 @@ scheduler:
       # minute: "*/30"
       minute: ""
       # The seconds at which the task scheduler posts scheduled posts.
-      # Default: "0" (`apscheduler`)
+      # Default: "*/1" (`apscheduler`)
       # Example:
       # second: "30"
       second: ""
