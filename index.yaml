@@ -3,6 +3,30 @@ entries:
   clog:
   - apiVersion: v2
     appVersion: 0.0.2-stable-r1
+    created: "2024-11-21T08:34:04.867880636Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: f1cc1b25dd11cbd264fe7ecb386af460c4cdf728f6d71bd3b23bc5f83290b976
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    - blog
+    - money
+    - todo
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.3.0/clog-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 0.0.2-stable-r1
     created: "2023-12-04T18:39:18.20154457Z"
     description: Creative blog, Career blog, Coin blog, you name it.
     digest: cfa671fd2e79ea4772decf78aed03d8ad85c6ecfc776add970bd32288fb36ed5
@@ -350,6 +374,30 @@ entries:
   cloudflareddns:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-11-21T08:34:04.969991616Z"
+    description: Access your home network remotely via a custom domain name without
+      a static IP!
+    digest: 6c895156a46d48005e07ce15b51f6eaf635351e7542571dc78129aad0e5ea4e1
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.svg
+    keywords:
+    - cloudflareddns
+    - cloudflare
+    - ddns
+    - cloudflare-ddns
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflareddns
+    sources:
+    - https://github.com/timothymiller/cloudflare-ddns
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflareddns-0.1.1/cloudflareddns-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
     created: "2023-11-30T18:33:05.540652205Z"
     description: Access your home network remotely via a custom domain name without
       a static IP!
@@ -570,6 +618,31 @@ entries:
   grocy:
   - apiVersion: v2
     appVersion: v3.3.2
+    created: "2024-11-21T08:34:05.083787961Z"
+    description: Grocy is a web-based self-hosted groceries & household management
+      solution for your home.
+    digest: f42132968b30222c5015883f0954ac6bb8619a08c726c96692fd3664a49d48a9
+    home: https://github.com/grocy/grocy
+    icon: https://irfanhakim-as.github.io/charts/logos/grocy.svg
+    keywords:
+    - grocy
+    - erp
+    - groceries
+    - household
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: grocy
+    sources:
+    - https://github.com/grocy/grocy
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/grocy-0.1.1/grocy-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v3.3.2
     created: "2023-07-20T09:25:12.154565563Z"
     description: Grocy is a web-based self-hosted groceries & household management
       solution for your home.
@@ -591,6 +664,30 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/grocy-0.1.0/grocy-0.1.0.tgz
     version: 0.1.0
   kutt:
+  - apiVersion: v2
+    appVersion: v2.7.4
+    created: "2024-11-21T08:34:05.193182103Z"
+    description: Kutt is a modern URL shortener with support for custom domains. Shorten
+      URLs, manage your links and view the click rate statistics.
+    digest: a35e18478ef344043bd7254b2125afb3e2d9895ccf73efcd230caa7825a7c174
+    home: https://github.com/thedevs-network/kutt
+    icon: https://irfanhakim-as.github.io/charts/logos/kutt.svg
+    keywords:
+    - kutt
+    - url
+    - shortener
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: kutt
+    sources:
+    - https://github.com/thedevs-network/kutt
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.1.2/kutt-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: v2.7.4
     created: "2024-02-15T04:32:55.540606824Z"
@@ -737,6 +834,30 @@ entries:
   mariadb-agent:
   - apiVersion: v2
     appVersion: 11.1.3-debian-11-r0
+    created: "2024-11-21T08:34:05.276244682Z"
+    description: Easily create or delete multiple pairs of databases and users in
+      a remote MariaDB instance.
+    digest: 22ee64d83b65e3d0ee50d41028851cc1b2f381616f13baa207d7c1a41102ed14
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mariadb.svg
+    keywords:
+    - mariadb
+    - mysql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mariadb-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.2/mariadb-agent-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 11.1.3-debian-11-r0
     created: "2023-12-05T02:37:24.502678433Z"
     description: Easily create or delete multiple pairs of databases and users in
       a remote MariaDB instance.
@@ -784,6 +905,30 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.0/mariadb-agent-0.1.0.tgz
     version: 0.1.0
   postgres:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2024-11-21T08:34:05.370711536Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 8169c9e4c4ce61080838084e7db91f2d44abec3105be6fcfc28bb710518b0762
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.svg
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - SQL
+    - Relational
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.2.2/postgres-0.2.2.tgz
+    version: 0.2.2
   - apiVersion: v2
     appVersion: "13.3"
     created: "2023-07-20T09:32:53.964190196Z"
@@ -916,6 +1061,29 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
   postgres-agent:
+  - apiVersion: v2
+    appVersion: 16.3.0-debian-12-r12
+    created: "2024-11-21T08:34:05.514971392Z"
+    description: Easily create or delete a database and user pair in a remote PostgreSQL
+      instance.
+    digest: 3d22be0787f57b69da9d008d043364b7a5a8ce49f850da1877563d641e2c48c1
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.svg
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.3.2/postgres-agent-0.3.2.tgz
+    version: 0.3.2
   - apiVersion: v2
     appVersion: 16.3.0-debian-12-r12
     created: "2024-06-30T09:24:54.469001939Z"
@@ -1213,6 +1381,31 @@ entries:
     - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.0/postgres-dropdb-0.1.0.tgz
     version: 0.1.0
   rizz:
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r2
+    created: "2024-11-21T08:34:05.629403301Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: c8904209a61cab2255b9e69c59e748eeaa2e771d1d35c72c0a4bcd04e98d2c56
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.2.0/rizz-0.2.0.tgz
+    version: 0.2.0
   - apiVersion: v2
     appVersion: 0.1.1-stable-r1
     created: "2024-01-11T11:15:03.023705894Z"
@@ -2082,6 +2275,31 @@ entries:
     version: 0.1.1
   waktusolat:
   - apiVersion: v2
+    appVersion: 0.3.0-stable-r2
+    created: "2024-11-21T08:34:05.733626035Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: 7ef53a6841ee5ed84ab55c989800ab9ce2c751f5d5b47193640276fc1abe155e
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.0/waktusolat-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 0.2.2-stable-r1
     created: "2024-03-11T17:32:25.301019466Z"
     description: Waktu Solat is a simple web application that posts local prayer times
@@ -2347,4 +2565,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-07-13T11:57:27.509109832Z"
+generated: "2024-11-21T08:34:05.733901139Z"
