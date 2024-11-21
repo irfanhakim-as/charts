@@ -1,3 +1,7 @@
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- $port := .Values.service.port | default "5432" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -5,11 +9,14 @@ metadata:
   labels:
     {{- include "postgres.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ $type }}
   ports:
-    - port: 5432
+    - port: {{ int $port }}
       targetPort: postgres
+      {{- if and (eq $type "NodePort") $nodePort }}
+      nodePort: {{ int $nodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-postgres
+      name: postgres
   selector:
     {{- include "postgres.selectorLabels" . | nindent 4 }}

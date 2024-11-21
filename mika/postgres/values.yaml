@@ -6,69 +6,158 @@
 # Default: "1"
 replicaCount: ""
 
-# Container image used for PostgreSQL.
+# Container images used for PostgreSQL.
 image:
-  # The registry where the PostgreSQL container image is hosted.
-  # Default: "docker.io"
-  registry: ""
-  # The name of the repository that contains the PostgreSQL container image used.
-  # Default: "postgres"
-  repository: ""
-  # The tag that specifies the version of the PostgreSQL container image used.
-  # Default: Chart appVersion
-  tag: ""
-  # The policy that determines when Kubernetes should pull the PostgreSQL container image.
-  # Default: "IfNotPresent"
-  pullPolicy: ""
+  # PostgreSQL container image configurations.
+  # Source: https://hub.docker.com/_/postgres
+  postgres:
+    # The registry where the PostgreSQL container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the PostgreSQL container image used.
+    # Default: "postgres"
+    repository: ""
+    # The tag that specifies the version of the PostgreSQL container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the PostgreSQL container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
 
 # PostgreSQL configurations.
 postgres:
-  # The name of the default PostgreSQL database.
+  # The ingress domain name that hosts the PostgreSQL server.
+  # Example:
+  # domain: "postgres.example.com"
+  domain: ""
+  # The name of the default database of the root PostgreSQL database user.
   # Default: "default"
   # Example:
-  # name: "default"
+  # name: "postgres"
   name: ""
-  # The username for accessing the PostgreSQL instance.
+  # The root username or user account of the PostgreSQL database server.
   # Default: "root"
   # Example:
-  # user: "root"
+  # user: "postgres"
   user: ""
-  # The password for accessing the PostgreSQL instance.
+  # The password associated with the root PostgreSQL database user.
   # Example:
-  # pass: "password"
-  pass: ""
-  # PostgreSQL data configurations.
+  # password: "password"
+  password: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting PostgreSQL services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the PostgreSQL server should listen for connections.
+  # Default: "5432"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used to expose PostgreSQL services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
   data:
-    # The amount of persistent storage allocated for the PostgreSQL instance.
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/var/lib/postgresql/data"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
     # Default: "1Gi"
     # Example:
-    # storage: "1Gi"
+    # storage: "10Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the PostgreSQL storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
 
-# Resource requirements and limits for PostgreSQL.
+# Resource requirements and limits for PostgreSQL containers.
 resources:
-  # The minimum amount of resources required by PostgreSQL to run.
-  requests:
-    # The minimum amount of CPU resources required by PostgreSQL.
-    # Example:
-    # cpu: "10m"
-    cpu: "10m"
-    # The minimum amount of memory required by PostgreSQL.
-    # Example:
-    # memory: "10Mi"
-    memory: "100Mi"
-  # The maximum amount of resources allowed for PostgreSQL.
-  limits:
-    # The maximum amount of CPU resources allowed for PostgreSQL.
-    # Example:
-    # cpu: "250m"
-    cpu: "250m"
-    # The maximum amount of memory allowed for PostgreSQL.
-    # Example:
-    # memory: "250Mi"
-    memory: "250Mi"
+  # PostgreSQL container resources.
+  # Example:
+  # postgres:
+  #   # The minimum amount of resources required by PostgreSQL to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by PostgreSQL.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by PostgreSQL.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for PostgreSQL.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for PostgreSQL.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for PostgreSQL.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  postgres: {}

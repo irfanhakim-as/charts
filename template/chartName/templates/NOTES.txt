@@ -1,9 +1,9 @@
+{{- $serviceAddress := "" }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.chartName.domain | toString }}
 {{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-chartName-svc" .Release.Name | toString }}
-{{- $serviceAddress := "" }}
 ChartName has been installed and configured for {{ .Release.Name | toString }} 🎉
 
 {{- if $ingress }}

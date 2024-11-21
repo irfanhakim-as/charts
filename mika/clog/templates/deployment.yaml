@@ -1,4 +1,8 @@
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $ngrok := .Values.clog.ngrok.enabled }}
+{{- $logPersistence := .Values.storage.log.enabled }}
+{{- $mediaPersistence := .Values.storage.media.enabled }}
+{{- $migrationPersistence := .Values.storage.migration.enabled }}
+{{- $staticPersistence := .Values.storage.static.enabled }}
 {{- $clog_registry := .Values.image.clog.registry | default "ghcr.io" | toString }}
 {{- $clog_repository := .Values.image.clog.repository | default "irfanhakim-as/clog" | toString }}
 {{- $clog_tag := .Values.image.clog.tag | default .Chart.AppVersion | toString }}
@@ -7,10 +11,16 @@
 {{- $ngrok_repository := .Values.image.ngrok.repository | default "wernight/ngrok" | toString }}
 {{- $ngrok_tag := .Values.image.ngrok.tag | default "latest" | toString }}
 {{- $ngrok_pullPolicy := .Values.image.ngrok.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $cloudflared := .Values.clog.cloudflared.enabled }}
-{{- $ingress := .Values.clog.ingress.enabled }}
-{{- $ngrok := .Values.clog.ngrok.enabled }}
-{{- $persistence := .Values.clog.persistence.enabled }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
+{{- $logSubPath := .Values.storage.log.subPath | toString }}
+{{- $mediaMountPath := .Values.storage.media.mountPath | default "/clog/media" | toString | quote }}
+{{- $mediaSubPath := .Values.storage.media.subPath | toString }}
+{{- $migrationMountPath := .Values.storage.migration.mountPath | default "/clog/%s/migrations" | toString | quote }}
+{{- $migrationSubPath := .Values.storage.migration.subPath | toString }}
+{{- $staticMountPath := .Values.storage.static.mountPath | default "/static" | toString | quote }}
+{{- $staticSubPath := .Values.storage.static.subPath | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,17 +65,38 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            {{- if $persistence }}
-            - name: {{ .Release.Name }}-clog-static
-              mountPath: /static
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-clog-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
             - name: {{ .Release.Name }}-clog-media
-              mountPath: /clog/media
-            - name: {{ .Release.Name }}-clog-logs
-              mountPath: /var/log/apache2
-            - name: {{ .Release.Name }}-clog-core-migrations
-              mountPath: /clog/core/migrations
-            - name: {{ .Release.Name }}-clog-money-migrations
-              mountPath: /clog/money/migrations
+              mountPath: {{ $mediaMountPath }}
+              {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $migrationPersistence }}
+            - name: {{ .Release.Name }}-clog-core-migration
+              mountPath: {{ printf $migrationMountPath "core" }}
+              {{- if $migrationSubPath }}
+              subPath: {{ $migrationSubPath | quote }}
+              {{- end }}
+            - name: {{ .Release.Name }}-clog-money-migration
+              mountPath: {{ printf $migrationMountPath "money" }}
+              {{- if $migrationSubPath }}
+              subPath: {{ $migrationSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $staticPersistence }}
+            - name: {{ .Release.Name }}-clog-static
+              mountPath: {{ $staticMountPath }}
+              {{- if $staticSubPath }}
+              subPath: {{ $staticSubPath | quote }}
+              {{- end }}
             {{- end }}
         {{- if $ngrok }}
         - name: ngrok
@@ -92,23 +123,28 @@ spec:
         - name: {{ .Release.Name }}-clog-site-config
           configMap:
             name: {{ .Release.Name }}-clog-site-config
-            items:
-              - key: site-config.conf
-                path: site-config.conf
-        {{- if $persistence }}
-        - name: {{ .Release.Name }}-clog-static
+        {{- if $logPersistence }}
+        - name: {{ .Release.Name }}-clog-log
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-clog-static-pvc
+            claimName: {{ .Release.Name }}-clog-log-pvc
+        {{- end }}
+        {{- if $mediaPersistence }}
         - name: {{ .Release.Name }}-clog-media
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-clog-media-pvc
-        - name: {{ .Release.Name }}-clog-logs
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-clog-logs-pvc
-        - name: {{ .Release.Name }}-clog-core-migrations
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-clog-core-migrations-pvc
-        - name: {{ .Release.Name }}-clog-money-migrations
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-clog-money-migrations-pvc
         {{- end }}
+        {{- if $migrationPersistence }}
+        - name: {{ .Release.Name }}-clog-core-migration
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-clog-core-migration-pvc
+        - name: {{ .Release.Name }}-clog-money-migration
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-clog-money-migration-pvc
+        {{- end }}
+        {{- if $staticPersistence }}
+        - name: {{ .Release.Name }}-clog-static
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-clog-static-pvc
+        {{- end }}
+      securityContext:
+        fsGroup: 33

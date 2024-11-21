@@ -9,41 +9,59 @@ replicaCount: ""
 # Container images used for Grocy.
 image:
   # Backend container image configurations.
+  # Source: https://hub.docker.com/r/grocy/backend
   backend:
-    # The registry where the backend container image is hosted.
+    # The registry where the Backend container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the backend container image used.
+    # The name of the repository that contains the Backend container image used.
     # Default: "grocy/backend"
     repository: ""
-    # The tag that specifies the version of the backend container image used.
+    # The tag that specifies the version of the Backend container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the backend container image.
+    # The policy that determines when Kubernetes should pull the Backend container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Frontend container image configurations.
+  # Source: https://hub.docker.com/r/grocy/frontend
   frontend:
-    # The registry where the frontend container image is hosted.
+    # The registry where the Frontend container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the frontend container image used.
+    # The name of the repository that contains the Frontend container image used.
     # Default: "grocy/frontend"
     repository: ""
-    # The tag that specifies the version of the frontend container image used.
+    # The tag that specifies the version of the Frontend container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the frontend container image.
+    # The policy that determines when Kubernetes should pull the Frontend container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/r/grocy/backend
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "grocy/backend"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
 
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
 # Grocy configurations.
 grocy:
-  # The mode to deploy grocy in which determines whether to enable user authentication.
-  # Default: "production"
-  # Example:
-  # mode: "demo"
-  mode: ""
   # The localisation of the Grocy application.
   # Default: "en_GB"
   # Example:
@@ -54,89 +72,198 @@ grocy:
   # Example:
   # currency: "USD"
   currency: ""
+  # The ingress domain name that hosts the Grocy server.
+  # Example:
+  # domain: "grocy.example.com"
+  domain: ""
   # The preferred unit for displaying energy values in Grocy.
   # Default: "kcal"
   # Example:
   # energy: "kJ"
   energy: ""
+  # Custom init script to run before the Grocy container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+  # The mode to deploy grocy in which determines whether to enable user authentication.
+  # Default: "production"
+  # Example:
+  # mode: "demo"
+  mode: ""
+  # The target operating system and architecture for the Grocy container.
+  # Default: "linux/amd64"
+  # Example:
+  # platform: "linux/arm64"
+  platform: ""
   # Grocy PHP configurations.
   php:
-    # Specifies the maximum size of an individual file that can be uploaded through PHP.
-    # Default: "50M"
-    # Example:
-    # upload_limit: "100M"
-    upload_limit: ""
     # Sets the maximum number of files that can be uploaded simultaneously through PHP.
     # Default: "200"
     # Example:
     # file_limit: "100"
     file_limit: ""
-    # Defines the maximum size of the entire HTTP POST request that PHP can handle.
-    # Default: "100M"
-    # Example:
-    # post_limit: "200M"
-    post_limit: ""
     # Determines the maximum amount of memory that PHP can allocate for executing scripts.
     # Default: "512M"
     # Example:
     # memory_limit: "256M"
     memory_limit: ""
-  # Grocy data configurations.
+    # Defines the maximum size of the entire HTTP POST request that PHP can handle.
+    # Default: "100M"
+    # Example:
+    # post_limit: "200M"
+    post_limit: ""
+    # Specifies the maximum size of an individual file that can be uploaded through PHP.
+    # Default: "50M"
+    # Example:
+    # upload_limit: "100M"
+    upload_limit: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Grocy services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The type of service used for Grocy services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+  # Backend service port configurations.
+  backend:
+    # The optional node port to expose for backend when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The backend port on which the Grocy server should listen.
+    # Default: "9000"
+    # Example:
+    # port: "9090"
+    port: ""
+  # Frontend service port configurations.
+  frontend:
+    # The optional node port to expose for frontend when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
+    # The frontend port on which the Grocy server should listen.
+    # Default: "8080"
+    # Example:
+    # port: "80"
+    port: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
   data:
-    # The amount of persistent storage allocated for the Grocy instance.
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/var/www/data"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
     # Default: "500Mi"
     # Example:
-    # storage: "1Gi"
+    # storage: "10Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the Grocy storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
 
 # Resource requirements and limits for Grocy containers.
 resources:
   # Backend container resources.
-  backend:
-    # The minimum amount of resources required by the backend to run.
-    requests:
-      # The minimum amount of CPU resources required by the backend.
-      # Example:
-      # cpu: "10m"
-      cpu: "50m"
-      # The minimum amount of memory required by the backend.
-      # Example:
-      # memory: "10Mi"
-      memory: "50Mi"
-    # The maximum amount of resources allowed for the backend.
-    limits:
-      # The maximum amount of CPU resources allowed for the backend.
-      # Example:
-      # cpu: "250m"
-      cpu: "100m"
-      # The maximum amount of memory allowed for the backend.
-      # Example:
-      # memory: "250Mi"
-      memory: "100Mi"
+  # Example:
+  # backend:
+  #   # The minimum amount of resources required by Backend to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Backend.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "50m"
+  #     # The minimum amount of memory required by Backend.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "50Mi"
+  #   # The maximum amount of resources allowed for Backend.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Backend.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "100m"
+  #     # The maximum amount of memory allowed for Backend.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "100Mi"
+  backend: {}
   # Frontend container resources.
-  frontend:
-    # The minimum amount of resources required by the frontend to run.
-    requests:
-      # The minimum amount of CPU resources required by the frontend.
-      # Example:
-      # cpu: "10m"
-      cpu: "10m"
-      # The minimum amount of memory required by the frontend.
-      # Example:
-      # memory: "10Mi"
-      memory: "10Mi"
-    # The maximum amount of resources allowed for the frontend.
-    limits:
-      # The maximum amount of CPU resources allowed for the frontend.
-      # Example:
-      # cpu: "250m"
-      cpu: "100m"
-      # The maximum amount of memory allowed for the frontend.
-      # Example:
-      # memory: "250Mi"
-      memory: "50Mi"
+  # Example:
+  # frontend:
+  #   # The minimum amount of resources required by Frontend to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Frontend.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Frontend.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for Frontend.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Frontend.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "100m"
+  #     # The maximum amount of memory allowed for Frontend.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "50Mi"
+  frontend: {}

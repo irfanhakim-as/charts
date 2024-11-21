@@ -2,7 +2,7 @@ apiVersion: v2
 name: postgres
 description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
 type: application
-version: 0.2.1
+version: 0.2.2
 appVersion: "13.3"
 keywords:
   - "PostgreSQL"
@@ -11,7 +11,7 @@ keywords:
   - "Relational"
   - "Database"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/postgres.png"
+icon: "https://irfanhakim-as.github.io/charts/logos/postgres.svg"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:

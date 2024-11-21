@@ -1,14 +1,15 @@
-{{- $host := .Values.postgres.host | default "postgres" | toString }}
-{{- $registry := .Values.image.postgres.registry | default "docker.io" | toString }}
-{{- $repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
-{{- $tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
-{{- $pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString }}
+{{- $postgres_registry := .Values.image.postgres.registry | default "docker.io" | toString }}
+{{- $postgres_repository := .Values.image.postgres.repository | default "bitnami/postgresql" | toString }}
+{{- $postgres_tag := .Values.image.postgres.tag | default .Chart.AppVersion | toString }}
+{{- $postgres_pullPolicy := .Values.image.postgres.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $databases := .Values.postgres.databases }}
+{{- $postgresHost := .Values.postgres.host | default "postgres" | toString }}
+{{- $rootDB := .Values.postgres.root.database | default "$(ROOT_USER)" | toString | quote }}
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ printf "%s-%s-%s" (index (splitList "." $host) 0) .Release.Name "postgres-agent" }}
+  name: {{ printf "%s-%s-%s" (index (splitList "." $postgresHost) 0) .Release.Name "postgres-agent" }}
   labels:
     {{- include "postgres-agent.labels" . | nindent 4 }}
 spec:
@@ -29,32 +30,40 @@ spec:
       {{- end }}
       containers:
         - name: postgres-agent
-          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
-          imagePullPolicy: {{ $pullPolicy }}
+          image: {{ printf "%s/%s:%s" $postgres_registry $postgres_repository $postgres_tag | quote }}
+          imagePullPolicy: {{ $postgres_pullPolicy }}
           resources:
             {{- toYaml .Values.resources.postgres | nindent 12 }}
           command: ["/bin/bash"]
           args:
             - -c
             - >-
-              psql -h $(DB_HOST) -U $(ROOT_USER) -d {{ $rootDB | quote }} <<EOF
+              psql -h $(DB_HOST) -p $(DB_PORT) -U $(ROOT_USER) -d {{ $rootDB }} <<EOF
             {{- range $databases }}
-            {{- if .create }}
-                CREATE USER {{ .user | quote }} WITH ENCRYPTED PASSWORD '{{ .password }}';
-                CREATE DATABASE {{ .name | quote }};
-                GRANT ALL ON DATABASE {{ .name | quote }} TO {{ .user | quote }};
-                ALTER DATABASE {{ .name | quote }} OWNER TO {{ .user | quote }};
-                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ .user | quote }};
-            {{- else if .drop }}
-                DROP DATABASE IF EXISTS {{ .name | quote }};
-                REVOKE ALL ON SCHEMA PUBLIC FROM {{ .user | quote }};
-                DROP USER IF EXISTS {{ .user | quote }};
-            {{- end }}
-            {{- if and .custom .custom_command }}
-                \connect {{ .name | quote }};
-                {{- .custom_command | replace "$.name" .name | replace "$.user" .user | replace "$.password" .password | nindent 16 }}
-                \connect {{ $rootDB | quote }};
-            {{- end }}
+              {{- $create := .create }}
+              {{- $drop := .drop }}
+              {{- $custom := .custom }}
+              {{- $command := .custom_command }}
+              {{- $db := .name | toString }}
+              {{- $user := .user | toString }}
+              {{- $password := .password | toString }}
+              {{- if $drop }}
+                DROP DATABASE IF EXISTS {{ $db | quote }};
+                REVOKE ALL ON SCHEMA PUBLIC FROM {{ $user | quote }};
+                DROP USER IF EXISTS {{ $user | quote }};
+              {{- end }}
+              {{- if $create }}
+                CREATE USER {{ $user | quote }} WITH ENCRYPTED PASSWORD '{{ $password }}';
+                CREATE DATABASE {{ $db | quote }};
+                GRANT ALL ON DATABASE {{ $db | quote }} TO {{ $user | quote }};
+                ALTER DATABASE {{ $db | quote }} OWNER TO {{ $user | quote }};
+                GRANT USAGE, CREATE ON SCHEMA PUBLIC TO {{ $user | quote }};
+              {{- end }}
+              {{- if and $custom $command }}
+                \connect {{ $db | quote }};
+                {{- $command | toString | replace "$.name" $db | replace "$.user" $user | replace "$.password" $password | nindent 16 }}
+                \connect {{ $rootDB }};
+              {{- end }}
             {{- end }}
               EOF
           envFrom:

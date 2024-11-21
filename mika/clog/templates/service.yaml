@@ -1,3 +1,7 @@
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- $port := .Values.service.port | default "80" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -5,11 +9,14 @@ metadata:
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ $type }}
   ports:
-    - port: 80
+    - port: {{ int $port }}
       targetPort: clog
+      {{- if and (eq $type "NodePort") $nodePort }}
+      nodePort: {{ int $nodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-clog
+      name: clog
   selector:
     {{- include "clog.selectorLabels" . | nindent 4 }}

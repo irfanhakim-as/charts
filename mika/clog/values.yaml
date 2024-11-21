@@ -9,6 +9,7 @@ replicaCount: ""
 # Container images used for Clog.
 image:
   # Clog container image configurations.
+  # Source: https://github.com/irfanhakim-as/clog/pkgs/container/clog
   clog:
     # The registry where the Clog container image is hosted.
     # Default: "ghcr.io"
@@ -23,6 +24,7 @@ image:
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Ngrok container image configurations.
+  # Source: https://hub.docker.com/r/wernight/ngrok
   ngrok:
     # The registry where the Ngrok container image is hosted.
     # Default: "docker.io"
@@ -43,104 +45,66 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
+# Clog configurations.
 clog:
-  # The name of the Clog service.
+  # Specifies whether Clog should run in debug mode.
+  # Default: "false"
+  # Example:
+  # debug: "true"
+  debug: ""
+  # The ingress domain name that hosts the Clog server.
+  # Default: "localhost"
+  # Example:
+  # domain: "clog.example.com"
+  domain: ""
+  # The full name of the Clog web application.
   # Default: "Clog"
   # Example:
-  # name: "Clog"
-  name: "" 
-  # Specifies whether Clog should run in debug mode.
-  # Default: false
-  # Example:
-  # debug: true
-  debug: "" 
+  # name: "My Blog"
+  name: ""
   # A 50-character secret key used for secure session management and cryptographic operations within the Clog service.
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
-  secret: "" 
-  # Clog storage persistence configurations.
-  persistence:
-    # Specifies whether Clog should persist its storage.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The storage class name used for dynamically provisioning a persistent volume for the Clog storage.
-    # Default: "longhorn"
-    # Example:
-    # storageClassName: "longhorn"
-    storageClassName: ""
-    # Clog static files persistence configurations.
-    static:
-      # The amount of persistent storage allocated for Clog static files.
-      # Default: "50Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Clog media files persistence configurations.
-    media:
-      # The amount of persistent storage allocated for Clog media files.
-      # Default: "100Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Clog logs persistence configurations.
-    logs:
-      # The amount of persistent storage allocated for Clog logs.
-      # Default: "50Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-    # Clog migration files persistence configurations.
-    migrations:
-      # The amount of persistent storage allocated for Clog migration files.
-      # Default: "20Mi"
-      # Example:
-      # storage: "1Gi"
-      storage: ""
-  # Clog Cloudflare configurations.
+  secret: ""
+  # The email address displayed by Apache for server administration contact.
+  # Default: "admin@example.com"
+  # Example:
+  # serverAdmin: "foo@example.com"
+  serverAdmin: ""
+  # Cloudflare Tunnel configurations.
   cloudflared:
-    # Specifies whether Clog should run using a Cloudflare tunnel.
+    # Specifies whether Cloudflare Tunnel should be enabled for hosting Clog services.
     # Example:
     # enabled: true
     enabled: false
-    # Registered domain name on Cloudflare used for Clog.
-    # Default: "localhost"
-    # Example:
-    # domain: "clog.example.com"
-    domain: ""
-  # Clog Ingress configurations.
-  ingress:
-    # Specifies whether Clog should be hosted using an Ingress.
-    # Example:
-    # enabled: true
-    enabled: false
-    # The name of the cluster issuer for Ingress.
-    # Default: "letsencrypt-dns-prod"
-    clusterIssuer: ""
-    # Registered domain name for Clog.
-    # Default: "localhost"
-    # Example:
-    # domain: "clog.example.com"
-    domain: ""
-  # Clog Ngrok configurations.
+  # Ngrok configurations.
   ngrok:
-    # Specifies whether Clog should run using an Ngrok tunnel.
+    # Specifies whether Ngrok should be enabled for hosting Clog services.
     # Example:
     # enabled: true
     enabled: false
-    # Ngrok authentication token.
+    # The authentication token used to authenticate with Ngrok.
     # Example:
     # token: "s7Ed4IO23nw1HWRJwumSgcyB7BtcXr4ZYLtziJCDDLIVDv7uq"
     token: ""
 
 # Database configurations.
 db:
-  # The type of the database used by Clog.
+  # The database engine or backend being used by Clog.
   # Default: "postgresql"
   # Example:
-  # type: "postgresql"
+  # type: "mysql"
   type: ""
-  # The name of the database used by Clog.
+  # The hostname or IP address of the Clog database server.
+  # Example:
+  # host: "clog.default.svc.cluster.local"
+  host: ""
+  # The port number the Clog database server is listening for connections.
+  # Default: "5432"
+  # Example:
+  # port: "3306"
+  port: ""
+  # The name of the database being used by Clog.
   # Example:
   # name: "clog"
   name: ""
@@ -148,41 +112,208 @@ db:
   # Example:
   # user: "root"
   user: ""
-  # The password associated with the Clog database's user.
+  # The password associated with the Clog database user.
   # Example:
   # password: "password"
   password: ""
-  # The hostname or IP address of the Clog database server.
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Clog services.
   # Example:
-  # host: "clog.default.svc.cluster.local"
-  host: ""
-  # The port number on which the Clog database server is listening.
-  # Default: "5432"
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
   # Example:
-  # port: "5432"
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Clog server should listen for connections.
+  # Default: "80"
+  # Example:
+  # port: "8080"
   port: ""
+  # The type of service used to expose Clog services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Log storage configurations.
+  log:
+    # Specifies whether persistent storage should be provisioned for log storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the log storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the log storage should be mounted on the container.
+    # Default: "/var/log/apache2"
+    # Example:
+    # mountPath: "/log"
+    mountPath: ""
+    # The subpath within the log storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Log"
+    subPath: ""
+    # The default amount of persistent storage allocated for the log storage.
+    # Default: "50Mi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the log storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+  # Media storage configurations.
+  media:
+    # Specifies whether persistent storage should be provisioned for media storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the media storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the media storage should be mounted on the container.
+    # Default: "/clog/media"
+    # Example:
+    # mountPath: "/media"
+    mountPath: ""
+    # The subpath within the media storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Media"
+    subPath: ""
+    # The default amount of persistent storage allocated for the media storage.
+    # Default: "100Mi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the media storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+  # Migration storage configurations.
+  migration:
+    # Specifies whether persistent storage should be provisioned for migration storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the migration storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the migration storage should be mounted on the container.
+    # Default: "/clog/%s/migrations"
+    # Example:
+    # mountPath: "/migration"
+    mountPath: ""
+    # The subpath within the migration storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Migration"
+    subPath: ""
+    # The default amount of persistent storage allocated for the migration storage.
+    # Default: "20Mi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the migration storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+  # Static storage configurations.
+  static:
+    # Specifies whether persistent storage should be provisioned for static storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the static storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the static storage should be mounted on the container.
+    # Default: "/static"
+    # Example:
+    # mountPath: "/static"
+    mountPath: ""
+    # The subpath within the static storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Static"
+    subPath: ""
+    # The default amount of persistent storage allocated for the static storage.
+    # Default: "50Mi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the static storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
 
 # Resource requirements and limits for Clog containers.
 resources:
   # Clog container resources.
-  clog:
-    # The minimum amount of resources required by Clog to run.
-    requests:
-      # The minimum amount of CPU resources required by Clog.
-      # Example:
-      # cpu: "20m"
-      cpu: "10m"
-      # The minimum amount of memory required by Clog.
-      # Example:
-      # memory: "250Mi"
-      memory: "100Mi"
-    # The maximum amount of resources allowed for Clog.
-    limits:
-      # The maximum amount of CPU resources allowed for Clog.
-      # Example:
-      # cpu: "50m"
-      cpu: "50m"
-      # The maximum amount of memory allowed for Clog.
-      # Example:
-      # memory: "450Mi"
-      memory: "200Mi"
+  # Example:
+  # clog:
+  #   # The minimum amount of resources required by Clog to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Clog.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Clog.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for Clog.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Clog.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "50m"
+  #     # The maximum amount of memory allowed for Clog.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "200Mi"
+  clog: {}
