@@ -79,6 +79,10 @@ ingress:
   # Example:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
   # Additional configuration annotations to be added to the Ingress resource.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
@@ -97,10 +101,6 @@ ingress:
   #   # value: "120"
   #     value: ""
   customAnnotations: []
-  # Specifies whether the WWW subdomain should be enabled.
-  # Example:
-  # www: true
-  www: false
 
 # Service configurations.
 service:
@@ -108,12 +108,12 @@ service:
   # Example:
   # nodePort: "32000"
   nodePort: ""
-  # The port on which the ChartName server should listen.
+  # The port on which the ChartName server should listen for connections.
   # Default: "80"
   # Example:
   # port: "8080"
   port: ""
-  # The type of service used for ChartName services.
+  # The type of service used to expose ChartName services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
@@ -149,7 +149,7 @@ storage:
     # The storage class name used for dynamically provisioning a persistent volume for the data storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
 
 # Resource requirements and limits for ChartName containers.

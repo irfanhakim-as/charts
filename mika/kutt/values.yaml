@@ -9,44 +9,46 @@ replicaCount: ""
 # Container images used for Kutt.
 image:
   # Kutt container image configurations.
+  # Source: https://hub.docker.com/r/kutt/kutt
   kutt:
-    # The registry where the kutt container image is hosted.
+    # The registry where the Kutt container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the kutt container image used.
+    # The name of the repository that contains the Kutt container image used.
     # Default: "kutt/kutt"
     repository: ""
-    # The tag that specifies the version of the kutt container image used.
+    # The tag that specifies the version of the Kutt container image used.
     # Default: Chart appVersion
     tag: ""
-    # The policy that determines when Kubernetes should pull the kutt container image.
+    # The policy that determines when Kubernetes should pull the Kutt container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Redis container image configurations.
+  # Source: https://hub.docker.com/_/redis
   redis:
-    # The registry where the redis container image is hosted.
+    # The registry where the Redis container image is hosted.
     # Default: "docker.io"
     registry: ""
-    # The name of the repository that contains the redis container image used.
+    # The name of the repository that contains the Redis container image used.
     # Default: "redis"
     repository: ""
-    # The tag that specifies the version of the redis container image used.
+    # The tag that specifies the version of the Redis container image used.
     # Default: "6.0-alpine"
     tag: ""
-    # The policy that determines when Kubernetes should pull the redis container image.
+    # The policy that determines when Kubernetes should pull the Redis container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
 
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
 # Kutt configurations.
 kutt:
-  # Email addresses of the administrators of the Kutt application so they can access admin actions.
-  # Example:
-  # admins:
-  #   - "admin@example.com"
-  #   - "su@example.com"
-  admins: []
-  # The domain name that is hosting the Kutt application.
-  # Default: "localhost:$service.kutt.port" if `ingress` is disabled
+  # The ingress domain name that hosts the Kutt server.
+  # Default: "%s-kutt-svc:kutt .Release.Name"
   # Example:
   # domain: "kutt.example.com"
   domain: ""
@@ -58,31 +60,40 @@ kutt:
   # The name of the site where Kutt is hosted.
   # Default: "Kutt"
   # Example:
-  # name: "Kutt"
+  # name: "URL Shortener"
   name: ""
   # A 50-character secret key used for encrypting JSON Web Tokens (JWTs).
   # Example:
   # secret: "6&p4%t)-$8a14fmfh92py8j55+us51r6%e52dzy&=a3-6yd4#e"
   secret: ""
   # Specifies whether Kutt should use HTTPS for custom domains.
+  # Default: "true"
   # Example:
-  # useHttps: false
-  useHttps: true
+  # useHttps: "false"
+  useHttps: ""
   # Kutt administration configurations.
   administration:
+    # Email addresses of the administrators of the Kutt application so they can access admin actions.
+    # Example:
+    # admins:
+    #   - "admin@example.com"
+    #   - "su@example.com"
+    admins: []
     # The maximum number of links that can be created by a user in a day.
     # Default: "50"
     # Example:
     # dailyUserLimit: "15"
     dailyUserLimit: ""
     # Specifies whether Kutt should disallow creating links without an account.
+    # Default: "false"
     # Example:
-    # disableAnonLinks: true
-    disableAnonLinks: false
+    # disableAnonLinks: "true"
+    disableAnonLinks: ""
     # Specifies whether Kutt should disallow user registrations.
+    # Default: "false"
     # Example:
-    # disableRegistration: true
-    disableRegistration: false
+    # disableRegistration: "true"
+    disableRegistration: ""
     # The maximum number of visits for a link to have detailed statistics.
     # Default: "5000"
     # Example:
@@ -93,31 +104,54 @@ kutt:
     # Example:
     # nonUserCooldown: "1"
     nonUserCooldown: ""
-  # Kutt Google configurations.
-  google:
-    # The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro.
-    # Example:
-    # recaptchaSecretKey: "01eHZ5I71tcYAhDOG9IlJqDk6sOx4X8rNsOFBcXz"
-    recaptchaSecretKey: ""
-    # The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro.
-    # Example:
-    # recaptchaSiteKey: "01eHZ5I71tcYA4DYuVcw7mUqZAWujE7SUr9r7XAm"
-    recaptchaSiteKey: ""
-    # The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started.
-    # Example:
-    # safeBrowsingKey: "Z0VNqFK9NqYYwFP27v9-eC1St4HTz3uRTJRfii5"
-    safeBrowsingKey: ""
-  # Kutt mail configurations.
-  mail:
+
+# Google configurations.
+google:
+  # The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro.
+  # Example:
+  # recaptchaSecretKey: "01eHZ5I71tcYAhDOG9IlJqDk6sOx4X8rNsOFBcXz"
+  recaptchaSecretKey: ""
+  # The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro.
+  # Example:
+  # recaptchaSiteKey: "01eHZ5I71tcYA4DYuVcw7mUqZAWujE7SUr9r7XAm"
+  recaptchaSiteKey: ""
+  # The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started.
+  # Example:
+  # safeBrowsingKey: "Z0VNqFK9NqYYwFP27v9-eC1St4HTz3uRTJRfii5"
+  safeBrowsingKey: ""
+
+# Mail configurations.
+mail:
+  # The email address to be displayed as the contact email in the application.
+  # Example:
+  # contact_email: "contact@example.com"
+  contact_email: ""
+  # The email address used as the "from" address for sent emails.
+  # Default: "$name <$mail.user>"
+  # Example:
+  # from_email: "Example User <no-reply@example.com>"
+  from_email: ""
+  # The email address that will receive submitted reports.
+  # Example:
+  # report_email: "report@example.com"
+  report_email: ""
+  # Specifies whether Kutt should use a secure TLS connection when sending emails.
+  # Note: In most cases, set this to true if the SMTP port is 465 (SSL) and false if you are using port 587 (TLS) or 25 (SSL/TLS).
+  # Default: "true"
+  # Example
+  # secure: "false"
+  secure: ""
+  # SMTP server configurations.
+  smtp:
     # The hostname or IP address of the SMTP server for sending emails.
     # Default: "smtp.gmail.com"
     # Example:
-    # host: ""
+    # host: "smtp.mail.yahoo.com"
     host: ""
     # The port number on the SMTP server used for sending emails.
     # Default: "465"
     # Example:
-    # port: ""
+    # port: "587"
     port: ""
     # The username for authenticating with the SMTP server.
     # Example:
@@ -127,106 +161,44 @@ kutt:
     # Example:
     # password: "password"
     password: ""
-    # Specifies whether Kutt should use a secure TLS connection when sending emails.
-    # Note: In most cases, set this to true if the SMTP port is 465 (SSL) and false if you are using port 587 (TLS) or 25 (SSL/TLS).
-    # Example
-    # secure: false
-    secure: true
-    # The email address used as the "from" address for sent emails.
-    # Default: "$name <$mail.user>"
-    # Example:
-    # from_email: "Example User <no-reply@example.com>"
-    from_email: ""
-    # The email address to be displayed as the contact email in the application.
-    # Example:
-    # contact_email: "contact@example.com"
-    contact_email: ""
-    # The email address that will receive submitted reports.
-    # Example:
-    # report_email: "report@example.com"
-    report_email: ""
 
-# Redis configurations.
+# External Redis configurations.
 redis:
   # Specifies whether Kutt should use an external Redis server.
   # Example:
   # external: true
   external: false
-  # The hostname or IP address of the Redis server.
-  # Default: "localhost"
+  # The hostname or IP address of the external Redis server.
   # Example:
   # host: "redis.default.svc.cluster.local"
   host: ""
-  # The port number on which the EXTERNAL Redis server is listening.
+  # The port number on which the external Redis server is listening for connections.
   # Default: "6379"
   # Example:
   # port: "9763"
   port: ""
-  # The password for authenticating with the Redis server.
+  # The password for authenticating with the external Redis server.
   # Example:
   # password: "password"
   password: ""
 
-# Data persistence configurations.
-data:
-  # The access mode that defines how the volume can be accessed by one or many nodes.
-  # Default: "ReadWriteOnce"
-  # Example:
-  # accessMode: "ReadWriteMany"
-  accessMode: ""
-  # The amount of persistent storage allocated for the Kutt instance.
-  # Default: "100Mi"
-  # Example:
-  # storage: "1Gi"
-  storage: ""
-  # The storage class name used for dynamically provisioning a persistent volume for the Kutt storage.
-  # Default: "longhorn"
-  # Example:
-  # storageClassName: "longhorn"
-  storageClassName: ""
-
-# Ingress configurations.
-ingress:
-  # Specifies whether Kutt should be hosted using an Ingress.
-  # Example:
-  # enabled: true
-  enabled: false
-  # The name of the cluster issuer for Ingress.
-  # Default: "letsencrypt-dns-prod"
-  clusterIssuer: ""
-
-# Service configurations.
-service:
-  # The type of service used for Kutt.
-  # Default: "ClusterIP"
-  # Example:
-  # type: "ClusterIP"
-  type: ""
-  # Kutt service configurations.
-  kutt:
-    # The port number on which the Kutt service is listening.
-    # Default: "3000"
-    # Example:
-    # port: "3500"
-    port: ""
-    # The protocol used by the Kutt service.
-    # Default: "TCP"
-    # Example:
-    # protocol: "TCP"
-    protocol: ""
-
-# Database configurations.
-db:
+# PostgreSQL configurations.
+postgres:
   # The hostname or IP address of the Kutt database server.
   # Example:
   # host: "kutt.default.svc.cluster.local"
   host: ""
-  # The port number on which the Kutt database server is listening.
+  # The port number the Kutt database server is listening for connections.
   # Default: "5432"
   # Example:
-  # port: "5432"
+  # port: "3306"
   port: ""
-  # The name of the database used by Kutt.
+  # Specifies whether the Kutt database server should use SSL.
+  # Default: "false"
+  # Example:
+  # ssl: "true"
+  ssl: ""
+  # The name of the database being used by Kutt.
   # Example:
   # name: "kutt"
   name: ""
@@ -234,58 +206,155 @@ db:
   # Example:
   # user: "root"
   user: ""
-  # The password associated with the Kutt database's user.
+  # The password associated with the Kutt database user.
   # Example:
   # password: "password"
   password: ""
-  # Specifies whether the Kutt database server should use SSL.
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Kutt services.
   # Example:
-  # ssl: true
-  ssl: false
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The type of service used to expose Kutt services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+  # Kutt service port configurations.
+  kutt:
+    # The optional node port to expose for Kutt when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Kutt port on which the Kutt server should listen for connections.
+    # Default: "3000"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Redis service port configurations.
+  redis:
+    # The optional node port to expose for Redis when the service type is NodePort.
+    # Example:
+    # nodePort: "32000"
+    nodePort: ""
+    # The Redis port on which the Kutt server should listen for connections.
+    # Default: "6379"
+    # Example:
+    # port: "8443"
+    port: ""
+
+# Storage configurations.
+storage:
+  # Redis storage configurations.
+  redis:
+    # Specifies whether persistent storage should be provisioned for Redis storage.
+    # Example:
+    # enabled: false
+    enabled: true
+    # The access mode defining how the Redis storage can be mounted.
+    # Default: "ReadWriteOnce"
+    # Example:
+    # accessMode: "ReadWriteMany"
+    accessMode: ""
+    # The path where the Redis storage should be mounted on the container.
+    # Default: "/data"
+    # Example:
+    # mountPath: "/config"
+    mountPath: ""
+    # The subpath within the Redis storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Redis"
+    subPath: ""
+    # The default amount of persistent storage allocated for the Redis storage.
+    # Default: "100Mi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the Redis storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
 
 # Resource requirements and limits for Kutt containers.
 resources:
   # Kutt container resources.
-  kutt:
-    # The minimum amount of resources required by the kutt to run.
-    requests:
-      # The minimum amount of CPU resources required by the kutt.
-      # Example:
-      # cpu: "10m"
-      cpu: "100m"
-      # The minimum amount of memory required by the kutt.
-      # Example:
-      # memory: "10Mi"
-      memory: "200Mi"
-    # The maximum amount of resources allowed for the kutt.
-    limits:
-      # The maximum amount of CPU resources allowed for the kutt.
-      # Example:
-      # cpu: "250m"
-      cpu: "150m"
-      # The maximum amount of memory allowed for the kutt.
-      # Example:
-      # memory: "250Mi"
-      memory: "400Mi"
+  # Example:
+  # kutt:
+  #   # The minimum amount of resources required by Kutt to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Kutt.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "100m"
+  #     # The minimum amount of memory required by Kutt.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "200Mi"
+  #   # The maximum amount of resources allowed for Kutt.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Kutt.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "150m"
+  #     # The maximum amount of memory allowed for Kutt.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  kutt: {}
   # Redis container resources.
-  redis:
-    # The minimum amount of resources required by the redis to run.
-    requests:
-      # The minimum amount of CPU resources required by the redis.
-      # Example:
-      # cpu: "10m"
-      cpu: "10m"
-      # The minimum amount of memory required by the redis.
-      # Example:
-      # memory: "10Mi"
-      memory: "20Mi"
-    # The maximum amount of resources allowed for the redis.
-    limits:
-      # The maximum amount of CPU resources allowed for the redis.
-      # Example:
-      # cpu: "250m"
-      cpu: "20m"
-      # The maximum amount of memory allowed for the redis.
-      # Example:
-      # memory: "250Mi"
-      memory: "50Mi"
+  # Example:
+  # redis:
+  #   # The minimum amount of resources required by Redis to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Redis.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Redis.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "20Mi"
+  #   # The maximum amount of resources allowed for Redis.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Redis.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "20m"
+  #     # The maximum amount of memory allowed for Redis.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "50Mi"
+  redis: {}

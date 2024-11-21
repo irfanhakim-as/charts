@@ -1,5 +1,46 @@
-Grocy is now installed and configured for {{ .Release.Name | toString }}.
+{{- $serviceAddress := "" }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.grocy.domain | toString }}
+{{- $frontend := .Values.service.frontend.port | default "8080" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $serviceName := printf "%s-grocy-svc" .Release.Name | toString }}
+Grocy has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-See the values.yaml file of this chart for more configuration options.
+{{- if $ingress }}
+    {{- $serviceAddress = printf "https://%s" $domain | toString }}
+{{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
 
-Please refer to the official documentation for more information on how to use Grocy.
+Please run the following command(s) to obtain the right address to the service:
+
+    ```sh
+    {{- if eq $type "ClusterIP" }}
+        {{- $forwardPort := "8080" | toString }}
+        {{- $serviceAddress = printf "http://127.0.0.1:%s" $forwardPort | toString }}
+    export POD_NAME=$(kubectl get pod --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "grocy.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} ${POD_NAME} -o jsonpath="{.spec.containers[1].ports[0].containerPort}")
+    kubectl port-forward --namespace {{ .Release.Namespace }} ${POD_NAME} {{ $forwardPort }}:${CONTAINER_PORT}
+    {{- else if eq $type "LoadBalancer" }}
+        {{- $serviceAddress = printf "$(echo http://${SERVICE_IP}:%s)" $frontend | toString }}
+    export SERVICE_IP=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} --template "{{"{{- range (index .status.loadBalancer.ingress 0) }}{{ . }}{{- end }}"}}")
+    {{- else if eq $type "NodePort" }}
+        {{- $serviceAddress = "$(echo http://${NODE_IP}:${NODE_PORT})" | toString }}
+    export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+    export NODE_PORT=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} -o jsonpath="{.spec.ports[1].nodePort}")
+    {{- end }}
+    ```
+
+{{- end }}
+
+Visit the following service(s) at the provided address:
+
+{{- if $serviceAddress }}
+
+    - Grocy: {{ $serviceAddress }}
+
+{{- else }}
+
+    ⚠️ This chart may have no accessible services available
+
+{{- end }}
+
+For more information on how to use and configure Grocy, please refer to the official documentation.

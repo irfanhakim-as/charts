@@ -1,3 +1,4 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
 {{- $backend_registry := .Values.image.backend.registry | default "docker.io" | toString }}
 {{- $backend_repository := .Values.image.backend.repository | default "grocy/backend" | toString }}
 {{- $backend_tag := .Values.image.backend.tag | default .Chart.AppVersion | toString }}
@@ -6,7 +7,15 @@
 {{- $frontend_repository := .Values.image.frontend.repository | default "grocy/frontend" | toString }}
 {{- $frontend_tag := .Values.image.frontend.tag | default .Chart.AppVersion | toString }}
 {{- $frontend_pullPolicy := .Values.image.frontend.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "grocy/backend" | toString }}
+{{- $init_tag := .Values.image.init.tag | default .Chart.AppVersion | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/var/www/data" | toString }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $initScript := .Values.grocy.initScript | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -31,14 +40,42 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if or $dataPersistence $initScript }}
+      {{- $initDataMountPath := printf "/mnt/%s" ($dataMountPath | trimPrefix "/") | toString }}
       initContainers:
-        - name: copy-data
-          image: {{ printf "%s/%s:%s" $backend_registry $backend_repository $backend_tag | quote }}
-          imagePullPolicy: {{ $backend_pullPolicy }}
-          command: ["sh", "-c", "cp -rf /var/www/data/. /scratch/data"]
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+            {{- if $initScript }}
+              {{- $initScript | nindent 14 }}
+            {{- else }}
+              if [ -z "$(ls -A {{ $initDataMountPath }} | grep -v 'lost+found')" ]; then
+                echo "Initialising {{ $initDataMountPath }}"
+                cp -Ra /var/www/data/. {{ $initDataMountPath }}
+                chown -R 82:82 {{ $initDataMountPath }}
+                find {{ $initDataMountPath }} -type d -exec chmod 755 {} \;
+                find {{ $initDataMountPath }} -type f -exec chmod 644 {} \;
+              else
+                echo "Skipping initialisation as {{ $initDataMountPath }} is not empty"
+              fi
+            {{- end }}
+          {{- if or $dataPersistence }}
           volumeMounts:
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-grocy-data
-              mountPath: /scratch/data
+              mountPath: {{ $initDataMountPath | quote }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          securityContext:
+            runAsUser: 0
+      {{- end }}
       containers:
         - name: backend
           image: {{ printf "%s/%s:%s" $backend_registry $backend_repository $backend_tag | quote }}
@@ -53,10 +90,13 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-grocy-cm
           volumeMounts:
-            - name: {{ .Release.Name }}-tmp-volume
-              mountPath: /tmp
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-grocy-data
-              mountPath: /var/www/data
+              mountPath: {{ $dataMountPath | quote }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
         - name: frontend
           image: {{ printf "%s/%s:%s" $frontend_registry $frontend_repository $frontend_tag | quote }}
           imagePullPolicy: {{ $frontend_pullPolicy }}
@@ -70,19 +110,15 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-grocy-cm
           volumeMounts:
-            - name: {{ .Release.Name }}-tmp-volume
-              mountPath: /tmp
             - name: {{ .Release.Name }}-grocy-nginx-config
               mountPath: /etc/nginx/common.conf
               subPath: common.conf
       volumes:
-        - name: {{ .Release.Name }}-tmp-volume
-          emptyDir: {}
         - name: {{ .Release.Name }}-grocy-nginx-config
           configMap:
             name: {{ .Release.Name }}-grocy-nginx-config
+        {{- if $dataPersistence }}
         - name: {{ .Release.Name }}-grocy-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-grocy-data-pvc
-      securityContext:
-        fsGroup: 82
+        {{- end }}

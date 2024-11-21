@@ -5,7 +5,7 @@ Apache site-config.conf template
 <VirtualHost *:80>
     ServerName DOMAIN:443
     UseCanonicalName On
-    ServerAdmin support@mikahomelab.com
+    ServerAdmin SERVER_ADMIN
     DocumentRoot /base
     WSGIScriptAlias / /base/base/wsgi.py
     WSGIDaemonProcess DOMAIN python-path=/base
@@ -22,7 +22,7 @@ Apache site-config.conf template
         Require all granted
     </Directory>
 
-    ErrorLog /var/log/apache2/apache.error.log
-    CustomLog /var/log/apache2/apache.access.log combined
+    ErrorLog LOG_MOUNT_PATH/apache.error.log
+    CustomLog LOG_MOUNT_PATH/apache.access.log combined
 </VirtualHost>
 {{- end }}

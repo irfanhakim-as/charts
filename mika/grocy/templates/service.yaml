@@ -1,3 +1,9 @@
+{{- $backend := .Values.service.backend.port | default "9000" | toString }}
+{{- $backendNodePort := .Values.service.backend.nodePort | toString }}
+{{- $frontend := .Values.service.frontend.port | default "8080" | toString }}
+{{- $frontendNodePort := .Values.service.frontend.nodePort | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -5,15 +11,21 @@ metadata:
   labels:
     {{- include "grocy.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ $type }}
   ports:
-    - port: 9000
+    - port: {{ int $backend }}
       targetPort: backend
+      {{- if and (eq $type "NodePort") $backendNodePort }}
+      nodePort: {{ int $backendNodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-grocy-backend
-    - port: 8080
+      name: backend
+    - port: {{ int $frontend }}
       targetPort: frontend
+      {{- if and (eq $type "NodePort") $frontendNodePort }}
+      nodePort: {{ int $frontendNodePort }}
+      {{- end }}
       protocol: TCP
-      name: {{ .Release.Name }}-grocy-frontend
+      name: frontend
   selector:
     {{- include "grocy.selectorLabels" . | nindent 4 }}

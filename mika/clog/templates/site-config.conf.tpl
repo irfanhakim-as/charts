@@ -1,17 +1,17 @@
 {{/*
 Apache site-config.conf template
 */}}
-{{- define "waktusolat.site-config-conf" -}}
+{{- define "clog.site-config-conf" -}}
 <VirtualHost *:80>
     ServerName DOMAIN:443
     UseCanonicalName On
     ServerAdmin SERVER_ADMIN
-    DocumentRoot /base
-    WSGIScriptAlias / /base/base/wsgi.py
-    WSGIDaemonProcess DOMAIN python-path=/base
+    DocumentRoot /clog
+    WSGIScriptAlias / /clog/clog/wsgi.py
+    WSGIDaemonProcess DOMAIN python-path=/clog
     WSGIProcessGroup DOMAIN
 
-    <Directory /base/base>
+    <Directory /clog/clog>
         <Files wsgi.py>
             Require all granted
         </Files>
@@ -19,6 +19,11 @@ Apache site-config.conf template
 
     Alias /static /static
     <Directory /static>
+        Require all granted
+    </Directory>
+
+    Alias /media /clog/media
+    <Directory /clog/media>
         Require all granted
     </Directory>
 

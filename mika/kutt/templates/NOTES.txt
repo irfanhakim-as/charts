@@ -1,22 +1,51 @@
-{{- $domain := .Values.kutt.domain | toString }}
+{{- $serviceAddress := "" }}
+{{- $urlProtocol := "http" | toString }}
 {{- $ingress := .Values.ingress.enabled }}
-{{- $kutt_port := .Values.service.kutt.port | default "3000" | toString }}
-{{- $useHttps := .Values.kutt.useHttps }}
-{{- if not $ingress }}
-{{- $domain = $domain | default (printf "localhost:%s" $kutt_port) | printf "http://%s" }}
-{{- else }}
-{{- if $useHttps }}
-{{- $domain = $domain | printf "https://%s" }}
-{{- else }}
-{{- $domain = $domain | printf "http://%s" }}
+{{- $domain := .Values.kutt.domain | toString }}
+{{- $port := .Values.service.port | default "80" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $serviceName := printf "%s-kutt-svc" .Release.Name | toString }}
+{{- $useHttps := .Values.kutt.useHttps | default "true" | toString | quote }}
+{{- if eq $useHttps "true" }}
+    {{- $urlProtocol = "https" | toString }}
 {{- end }}
+Kutt has been installed and configured for {{ .Release.Name | toString }} 🎉
+
+{{- if $ingress }}
+    {{- $serviceAddress = printf "%s://%s" $urlProtocol $domain | toString }}
+{{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
+
+Please run the following command(s) to obtain the right address to the service:
+
+    ```sh
+    {{- if eq $type "ClusterIP" }}
+        {{- $forwardPort := "8080" | toString }}
+        {{- $serviceAddress = printf "http://127.0.0.1:%s" $forwardPort | toString }}
+    export POD_NAME=$(kubectl get pod --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "kutt.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} ${POD_NAME} -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+    kubectl port-forward --namespace {{ .Release.Namespace }} ${POD_NAME} {{ $forwardPort }}:${CONTAINER_PORT}
+    {{- else if eq $type "LoadBalancer" }}
+        {{- $serviceAddress = printf "$(echo http://${SERVICE_IP}:%s)" $port | toString }}
+    export SERVICE_IP=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} --template "{{"{{- range (index .status.loadBalancer.ingress 0) }}{{ . }}{{- end }}"}}")
+    {{- else if eq $type "NodePort" }}
+        {{- $serviceAddress = "$(echo http://${NODE_IP}:${NODE_PORT})" | toString }}
+    export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+    export NODE_PORT=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} -o jsonpath="{.spec.ports[0].nodePort}")
+    {{- end }}
+    ```
+
 {{- end }}
-Kutt is now installed and configured for {{ .Release.Name | toString }}.
 
-Visit the Kutt portal to get started:
+Visit the following service(s) at the provided address:
 
-    - {{ $domain }}
+{{- if $serviceAddress }}
 
-See the values.yaml file of this chart for more configuration options.
+    - Kutt: {{ $serviceAddress }}
 
-Please refer to the official documentation for more information on how to use Kutt.
+{{- else }}
+
+    ⚠️ This chart may have no accessible services available
+
+{{- end }}
+
+For more information on how to use and configure Kutt, please refer to the official documentation.
