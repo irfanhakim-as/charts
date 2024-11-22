@@ -1,0 +1,21 @@
+{{- $domain := .Values.linkstack.domain | default "localhost" | toString | quote }}
+{{- $logLevel := .Values.linkstack.logLevel | default "info" | toString | quote }}
+{{- $phpMemLimit := .Values.linkstack.phpMemLimit | default "256M" | toString | quote }}
+{{- $serverAdmin := .Values.linkstack.serverAdmin | default "admin@example.com" | toString | quote }}
+{{- $timezone := .Values.linkstack.timezone | default "UTC" | toString | quote }}
+{{- $uploadMaxFilesize := .Values.linkstack.uploadMaxFilesize | default "8M" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-linkstack-cm
+  labels:
+    {{- include "linkstack.labels" . | nindent 4 }}
+data:
+  HTTP_SERVER_NAME: {{ $domain }}
+  HTTPS_SERVER_NAME: {{ $domain }}
+  LOG_LEVEL: {{ $logLevel }}
+  PHP_MEMORY_LIMIT: {{ $phpMemLimit }}
+  SERVER_ADMIN: {{ $serverAdmin }}
+  TZ: {{ $timezone }}
+  UPLOAD_MAX_FILESIZE: {{ $uploadMaxFilesize }}

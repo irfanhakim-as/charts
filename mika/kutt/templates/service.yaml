@@ -1,7 +1,10 @@
+{{- $externalRedis := .Values.redis.external }}
+{{- $kuttPort := .Values.service.kutt.port | default "3000" | toString }}
+{{- $kuttNodePort := .Values.service.kutt.nodePort | toString }}
+{{- $redisPort := .Values.service.redis.port | default "6379" | toString }}
+{{- $redisNodePort := .Values.service.redis.nodePort | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
-{{- $kutt_port := .Values.service.kutt.port | default "3000" | toString | int }}
-{{- $kutt_protocol := .Values.service.kutt.protocol | default "TCP" | toString }}
-{{- $external_redis := .Values.redis.external }}
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -11,13 +14,19 @@ metadata:
 spec:
   type: {{ $type }}
   ports:
-    - port: {{ $kutt_port }}
+    - port: {{ int $kuttPort }}
       targetPort: kutt
-      protocol: {{ $kutt_protocol }}
+      {{- if and (eq $type "NodePort") $kuttNodePort }}
+      nodePort: {{ int $kuttNodePort }}
+      {{- end }}
+      protocol: TCP
       name: kutt
-    {{- if not $external_redis }}
-    - port: 6379
+    {{- if not $externalRedis }}
+    - port: {{ int $redisPort }}
       targetPort: redis
+      {{- if and (eq $type "NodePort") $redisNodePort }}
+      nodePort: {{ int $redisNodePort }}
+      {{- end }}
       protocol: TCP
       name: redis
     {{- end }}

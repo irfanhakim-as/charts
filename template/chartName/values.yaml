@@ -83,15 +83,37 @@ ingress:
   # Example:
   # www: true
   www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
 
 # Service configurations.
 service:
-  # The port on which the ChartName server should listen.
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the ChartName server should listen for connections.
   # Default: "80"
   # Example:
   # port: "8080"
   port: ""
-  # The type of service used for ChartName services.
+  # The type of service used to expose ChartName services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
@@ -127,7 +149,7 @@ storage:
     # The storage class name used for dynamically provisioning a persistent volume for the data storage.
     # Default: "longhorn"
     # Example:
-    # storageClassName: "longhorn"
+    # storageClassName: "smb"
     storageClassName: ""
 
 # Resource requirements and limits for ChartName containers.

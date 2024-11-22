@@ -14,7 +14,7 @@ A Helm chart for deploying ChartName.
 
 ---
 
-## External dependencies
+## Preflight checklist
 
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
@@ -142,12 +142,14 @@ A Helm chart for deploying ChartName.
 | image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting ChartName services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
 | resources.chartName | object | `{}` | ChartName container resources. |
-| service.port | string | `""` | The port on which the ChartName server should listen. Default: `"80"`. |
-| service.type | string | `""` | The type of service used for ChartName services. Default: `"ClusterIP"`. |
+| service.nodePort | string | `""` | The optional node port to expose when the service type is NodePort. |
+| service.port | string | `""` | The port on which the ChartName server should listen for connections. Default: `"80"`. |
+| service.type | string | `""` | The type of service used to expose ChartName services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |

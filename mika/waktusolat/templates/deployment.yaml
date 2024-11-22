@@ -1,5 +1,8 @@
-{{- $release_name := .Release.Name | toString }}
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $accounts := .Values.waktusolat.account }}
+{{- $apscheduler := .Values.scheduler.apscheduler }}
+{{- $celery := .Values.scheduler.celery }}
+{{- $feeds := .Values.waktusolat.feed }}
+{{- $logPersistence := .Values.storage.log.enabled }}
 {{- $waktusolat_registry := .Values.image.waktusolat.registry | default "ghcr.io" | toString }}
 {{- $waktusolat_repository := .Values.image.waktusolat.repository | default "irfanhakim-as/waktusolat" | toString }}
 {{- $waktusolat_tag := .Values.image.waktusolat.tag | default .Chart.AppVersion | toString }}
@@ -8,9 +11,10 @@
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
 {{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $apscheduler := .Values.waktusolat.scheduler.apscheduler }}
-{{- $celery := .Values.waktusolat.scheduler.celery }}
-{{- $persistence := .Values.waktusolat.persistence.enabled }}
+{{- $release_name := .Release.Name | toString }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
+{{- $logSubPath := .Values.storage.log.subPath | toString }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -55,11 +59,11 @@ spec:
               mountPath: /etc/apache2/sites-available/000-default.conf
               subPath: site-config.conf
               readOnly: true
-            - name: {{ .Release.Name }}-waktusolat-mastodon-config
+            - name: {{ .Release.Name }}-waktusolat-account-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
-            {{- if .Values.waktusolat.feed }}
+            {{- if $feeds }}
             - name: {{ .Release.Name }}-waktusolat-feed-config
               mountPath: /base/data/feeds.json
               subPath: feeds.json
@@ -85,7 +89,7 @@ spec:
               mountPath: /base/base/__init__.py
               subPath: init.py
             {{- end }}
-            {{- range .Values.waktusolat.mastodon }}
+            {{- range $accounts }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-waktusolat-token-secret
@@ -93,9 +97,12 @@ spec:
               subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
-            {{- if $persistence }}
-            - name: {{ .Release.Name }}-waktusolat-logs
-              mountPath: /var/log/apache2
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-waktusolat-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
             {{- end }}
         {{- if $apscheduler }}
         - name: apscheduler
@@ -113,7 +120,7 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-waktusolat-secret
           volumeMounts:
-            - name: {{ .Release.Name }}-waktusolat-mastodon-config
+            - name: {{ .Release.Name }}-waktusolat-account-config
               mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
@@ -126,7 +133,7 @@ spec:
             - name: {{ .Release.Name }}-waktusolat-scheduler-config
               mountPath: /base/base/tasks.py
               subPath: tasks.py
-            {{- range .Values.waktusolat.mastodon }}
+            {{- range $accounts }}
             {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
             {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
             - name: {{ $release_name }}-waktusolat-token-secret
@@ -134,15 +141,18 @@ spec:
               subPath: {{ $token_secret }}
               readOnly: true
             {{- end }}
-            {{- if .Values.waktusolat.feed }}
+            {{- if $feeds }}
             - name: {{ .Release.Name }}-waktusolat-feed-config
               mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
             {{- end }}
-            {{- if $persistence }}
-            - name: {{ .Release.Name }}-waktusolat-logs
-              mountPath: /var/log/apache2
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-waktusolat-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
             {{- end }}
         {{- else if $celery }}
         - name: redis
@@ -159,10 +169,10 @@ spec:
         - name: {{ .Release.Name }}-waktusolat-site-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-site-config
-        - name: {{ .Release.Name }}-waktusolat-mastodon-config
+        - name: {{ .Release.Name }}-waktusolat-account-config
           secret:
-            secretName: {{ .Release.Name }}-waktusolat-mastodon-config
-        {{- if .Values.waktusolat.feed }}
+            secretName: {{ .Release.Name }}-waktusolat-account-config
+        {{- if $feeds }}
         - name: {{ .Release.Name }}-waktusolat-feed-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-feed-config
@@ -211,22 +221,22 @@ spec:
               - key: tasks.py
                 path: tasks.py
         {{- end }}
-        {{- if .Values.waktusolat.mastodon }}
+        {{- if $accounts }}
         - name: {{ .Release.Name }}-waktusolat-token-secret
           secret:
             secretName: {{ .Release.Name }}-waktusolat-token-secret
             items:
-              {{- range .Values.waktusolat.mastodon }}
+              {{- range $accounts }}
               {{- $normalised_api := .api | toString | replace "https" "" | replace ":" "" | replace "/" "" | replace "." "-" }}
               {{- $token_secret := printf "%s-%s.secret" .id $normalised_api | toString | replace " " "" }}
               - key: {{ $token_secret }}
                 path: {{ $token_secret }}
               {{- end }}
         {{- end }}
-        {{- if $persistence }}
-        - name: {{ .Release.Name }}-waktusolat-logs
+        {{- if $logPersistence }}
+        - name: {{ .Release.Name }}-waktusolat-log
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-waktusolat-logs-pvc
+            claimName: {{ .Release.Name }}-waktusolat-log-pvc
         {{- end }}
       securityContext:
         fsGroup: 33

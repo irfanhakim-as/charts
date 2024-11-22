@@ -1,9 +1,10 @@
-{{- $registry := .Values.image.cloudflareddns.registry | default "docker.io" | toString }}
-{{- $repository := .Values.image.cloudflareddns.repository | default "timothyjmiller/cloudflare-ddns" | toString }}
-{{- $tag := .Values.image.cloudflareddns.tag | default .Chart.AppVersion | toString }}
-{{- $pullPolicy := .Values.image.cloudflareddns.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $cloudflareddns_registry := .Values.image.cloudflareddns.registry | default "docker.io" | toString }}
+{{- $cloudflareddns_repository := .Values.image.cloudflareddns.repository | default "timothyjmiller/cloudflare-ddns" | toString }}
+{{- $cloudflareddns_tag := .Values.image.cloudflareddns.tag | default .Chart.AppVersion | toString }}
+{{- $cloudflareddns_pullPolicy := .Values.image.cloudflareddns.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $config_path := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString }}
+{{- $configPath := .Values.cloudflareddns.configPath | default "/etc/cloudflare-ddns" | toString }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,22 +31,19 @@ spec:
       {{- end }}
       containers:
         - name: cloudflareddns
-          image: {{ printf "%s/%s:%s" $registry $repository $tag | quote }}
-          imagePullPolicy: {{ $pullPolicy }}
+          image: {{ printf "%s/%s:%s" $cloudflareddns_registry $cloudflareddns_repository $cloudflareddns_tag | quote }}
+          imagePullPolicy: {{ $cloudflareddns_pullPolicy }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.cloudflareddns | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-cloudflareddns-cm
           volumeMounts:
             - name: {{ .Release.Name }}-cloudflareddns-config
-              mountPath: {{ $config_path }}/config.json
-              subPath: config.json
+              mountPath: {{ printf "%s/%s" $configPath "config.json" | quote }}
+              subPath: "config.json"
               readOnly: true
       volumes:
         - name: {{ .Release.Name }}-cloudflareddns-config
           secret:
             secretName: {{ .Release.Name }}-cloudflareddns-config
-            items:
-              - key: config.json
-                path: config.json

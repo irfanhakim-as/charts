@@ -1,23 +1,36 @@
-{{- $static_storage := .Values.clog.persistence.static.storage | default "50Mi" | toString | quote }}
-{{- $media_storage := .Values.clog.persistence.media.storage | default "100Mi" | toString | quote }}
-{{- $logs_storage := .Values.clog.persistence.logs.storage | default "50Mi" | toString | quote }}
-{{- $migrations_storage := .Values.clog.persistence.migrations.storage | default "20Mi" | toString | quote }}
-{{- $storage_class_name := .Values.clog.persistence.storageClassName | default "longhorn" | toString | quote }}
-{{- $persistence := .Values.clog.persistence.enabled }}
-{{- if $persistence }}
+{{- $logPersistence := .Values.storage.log.enabled }}
+{{- $logAccessMode := .Values.storage.log.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $logStorage := .Values.storage.log.storage | default "50Mi" | toString | quote }}
+{{- $logStorageClassName := .Values.storage.log.storageClassName | default "longhorn" | toString | quote }}
+{{- $mediaPersistence := .Values.storage.media.enabled }}
+{{- $mediaAccessMode := .Values.storage.media.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $mediaStorage := .Values.storage.media.storage | default "100Mi" | toString | quote }}
+{{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
+{{- $migrationPersistence := .Values.storage.migration.enabled }}
+{{- $migrationAccessMode := .Values.storage.migration.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $migrationStorage := .Values.storage.migration.storage | default "20Mi" | toString | quote }}
+{{- $migrationStorageClassName := .Values.storage.migration.storageClassName | default "longhorn" | toString | quote }}
+{{- $staticPersistence := .Values.storage.static.enabled }}
+{{- $staticAccessMode := .Values.storage.static.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $staticStorage := .Values.storage.static.storage | default "50Mi" | toString | quote }}
+{{- $staticStorageClassName := .Values.storage.static.storageClassName | default "longhorn" | toString | quote }}
+{{- if $logPersistence }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-clog-static-pvc
+  name: {{ .Release.Name }}-clog-log-pvc
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $logAccessMode }}
   resources:
     requests:
-      storage: {{ $static_storage }}
-  storageClassName: {{ $storage_class_name }}
+      storage: {{ $logStorage }}
+  storageClassName: {{ $logStorageClassName }}
+{{- end }}
+{{- if $mediaPersistence }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -27,51 +40,55 @@ metadata:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $mediaAccessMode }}
   resources:
     requests:
-      storage: {{ $media_storage }}
-  storageClassName: {{ $storage_class_name }}
+      storage: {{ $mediaStorage }}
+  storageClassName: {{ $mediaStorageClassName }}
+{{- end }}
+{{- if $migrationPersistence }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-clog-logs-pvc
+  name: {{ .Release.Name }}-clog-core-migration-pvc
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $migrationAccessMode }}
   resources:
     requests:
-      storage: {{ $logs_storage }}
-  storageClassName: {{ $storage_class_name }}
+      storage: {{ $migrationStorage }}
+  storageClassName: {{ $migrationStorageClassName }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-clog-core-migrations-pvc
+  name: {{ .Release.Name }}-clog-money-migration-pvc
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $migrationAccessMode }}
   resources:
     requests:
-      storage: {{ $migrations_storage }}
-  storageClassName: {{ $storage_class_name }}
+      storage: {{ $migrationStorage }}
+  storageClassName: {{ $migrationStorageClassName }}
+{{- end }}
+{{- if $staticPersistence }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-clog-money-migrations-pvc
+  name: {{ .Release.Name }}-clog-static-pvc
   labels:
     {{- include "clog.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $staticAccessMode }}
   resources:
     requests:
-      storage: {{ $migrations_storage }}
-  storageClassName: {{ $storage_class_name }}
+      storage: {{ $staticStorage }}
+  storageClassName: {{ $staticStorageClassName }}
 {{- end }}

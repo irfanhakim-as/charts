@@ -3,18 +3,18 @@ APScheduler /base/base/tasks.py template
 */}}
 {{- define "waktusolat.apscheduler-tasks-py" -}}
 
-{{- $clean_db_hour := .Values.waktusolat.scheduler.schedule.clean_db.hour | default "0" | toString -}}
-{{- $clean_db_minute := .Values.waktusolat.scheduler.schedule.clean_db.minute | default "0" | toString -}}
-{{- $clean_db_second := .Values.waktusolat.scheduler.schedule.clean_db.second | default "0" | toString -}}
-{{- $notify_solat_schedule_hour := .Values.waktusolat.scheduler.schedule.notify_solat_schedule.hour | default "5" | toString -}}
-{{- $notify_solat_schedule_minute := .Values.waktusolat.scheduler.schedule.notify_solat_schedule.minute | default "0" | toString -}}
-{{- $notify_solat_schedule_second := .Values.waktusolat.scheduler.schedule.notify_solat_schedule.second | default "0" | toString -}}
-{{- $notify_solat_times_hour := .Values.waktusolat.scheduler.schedule.notify_solat_times.hour | default "*" | toString -}}
-{{- $notify_solat_times_minute := .Values.waktusolat.scheduler.schedule.notify_solat_times.minute | default "*/1" | toString -}}
-{{- $notify_solat_times_second := .Values.waktusolat.scheduler.schedule.notify_solat_times.second | default "0" | toString -}}
-{{- $post_scheduler_hour := .Values.waktusolat.scheduler.schedule.post_scheduler.hour | default "*" | toString -}}
-{{- $post_scheduler_minute := .Values.waktusolat.scheduler.schedule.post_scheduler.minute | default "*" | toString -}}
-{{- $post_scheduler_second := .Values.waktusolat.scheduler.schedule.post_scheduler.second | default "*/1" | toString -}}
+{{- $clean_db_hour := .Values.scheduler.schedule.clean_db.hour | default "0" | toString -}}
+{{- $clean_db_minute := .Values.scheduler.schedule.clean_db.minute | default "0" | toString -}}
+{{- $clean_db_second := .Values.scheduler.schedule.clean_db.second | default "0" | toString -}}
+{{- $notify_solat_schedule_hour := .Values.scheduler.schedule.notify_solat_schedule.hour | default "5" | toString -}}
+{{- $notify_solat_schedule_minute := .Values.scheduler.schedule.notify_solat_schedule.minute | default "0" | toString -}}
+{{- $notify_solat_schedule_second := .Values.scheduler.schedule.notify_solat_schedule.second | default "0" | toString -}}
+{{- $notify_solat_times_hour := .Values.scheduler.schedule.notify_solat_times.hour | default "*" | toString -}}
+{{- $notify_solat_times_minute := .Values.scheduler.schedule.notify_solat_times.minute | default "*/1" | toString -}}
+{{- $notify_solat_times_second := .Values.scheduler.schedule.notify_solat_times.second | default "0" | toString -}}
+{{- $post_scheduler_hour := .Values.scheduler.schedule.post_scheduler.hour | default "*" | toString -}}
+{{- $post_scheduler_minute := .Values.scheduler.schedule.post_scheduler.minute | default "*" | toString -}}
+{{- $post_scheduler_second := .Values.scheduler.schedule.post_scheduler.second | default "*/1" | toString -}}
 
 from apscheduler.schedulers.blocking import BlockingScheduler
 from django.conf import settings
