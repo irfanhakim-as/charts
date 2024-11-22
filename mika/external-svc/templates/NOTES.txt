@@ -1,5 +1,5 @@
 {{- $ingress := .Values.ingress.enabled }}
-{{- $domain := .Values.external-svc.domain | toString }}
+{{- $domain := .Values.externalSvc.domain | toString }}
 {{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-external-svc-svc" .Release.Name | toString }}

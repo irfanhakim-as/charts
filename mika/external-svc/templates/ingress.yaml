@@ -1,7 +1,7 @@
 {{- $ingress := .Values.ingress.enabled }}
 {{- $www := .Values.ingress.www }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
-{{- $domain := .Values.external-svc.domain | toString }}
+{{- $domain := .Values.externalSvc.domain | toString }}
 {{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
 {{- if and $ingress $domain }}
 ---
