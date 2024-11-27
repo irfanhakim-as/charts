@@ -2,32 +2,37 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# The desired number of running replicas for External Service.
-# Default: "1"
-replicaCount: ""
-
-# External Service configurations.
-externalSvc:
-  # The secret value of the External Service bar.
-  # Default: "bar"
-  # Example:
-  # bar: "bar"
-  bar: ""
-  # The ingress domain name that hosts the External Service server.
-  # Example:
-  # domain: "external-svc.example.com"
-  domain: ""
-  # The value of the External Service foo.
-  # Default: "foo"
-  # Example:
-  # foo: "foo"
-  foo: ""
-  # Custom init script to run before the External Service container starts.
-  # Example:
-  # initScript: >-
-  #   echo "Hello, World!"
-  #   echo "This is a custom init script."
-  initScript: ""
+# Services configurations.
+# Items: `.host`, `.name`, `.nodePort`, `.port`, `.targetPort`, `.type`
+# Example:
+# services:
+#   # The IP address or hostname of the external service.
+#   # Example:
+#   # host: "10.42.1.130"
+#   - host: ""
+#   # The unique name used to identify the external service.
+#   # Example:
+#   # name: "mysvc"
+#     name: ""
+#   # The optional node port to expose for the external service when the service type is NodePort.
+#   # Example:
+#   # nodePort: "30000"
+#     nodePort: ""
+#   # The port on which the external service is listening.
+#   # Example:
+#   # port: "8080"
+#     port: ""
+#   # The target port on the external service that traffic will be directed to.
+#   # Default: `.port`
+#   # Example:
+#   # targetPort: "80"
+#     targetPort: ""
+#   # The type of service used to expose the external service.
+#   # Default: "ClusterIP"
+#   # Example:
+#   # type: "NodePort"
+#     type: ""
+services: []
 
 # Ingress configurations.
 ingress:
@@ -40,10 +45,6 @@ ingress:
   # Example:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
-  # Specifies whether the WWW subdomain should be enabled.
-  # Example:
-  # www: true
-  www: false
   # Additional configuration annotations to be added to the Ingress resource.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
@@ -62,16 +63,20 @@ ingress:
   #   # value: "120"
   #     value: ""
   customAnnotations: []
-
-# Service configurations.
-service:
-  # The port on which the External Service server should listen.
-  # Default: "80"
+  # List of domains and their configurations.
+  # Items: `.name`, `.port`, `.www`
   # Example:
-  # port: "8080"
-  port: ""
-  # The type of service used for External Service services.
-  # Default: "ClusterIP"
-  # Example:
-  # type: "NodePort"
-  type: ""
+  # domains:
+  #   # The ingress domain name that hosts the external service.
+  #   # Example:
+  #   # name: "mysvc.example.com"
+  #   - name: ""
+  #   # The name of the service port to route traffic to.
+  #   # Example:
+  #   # port: "mysvc"
+  #     port: ""
+  #   # Specifies whether the WWW subdomain should be enabled.
+  #   # Example:
+  #   # www: true
+  #     www: false
+  domains: []
