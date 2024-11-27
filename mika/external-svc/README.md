@@ -1,6 +1,6 @@
 # External Service
 
-A Helm chart for deploying External Service.
+Seamlessly connect external services to your Kubernetes environment.
 
 ## Prerequisites
 

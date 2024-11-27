@@ -1,6 +1,6 @@
 apiVersion: v2
 name: external-svc
-description: A Helm chart for deploying External Service.
+description: Seamlessly connect external services to your Kubernetes environment.
 type: application
 version: 0.1.0
 keywords:
