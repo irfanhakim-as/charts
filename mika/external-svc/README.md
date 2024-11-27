@@ -126,29 +126,8 @@ Seamlessly connect external services to your Kubernetes environment.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| external-svc.bar | string | `""` | The secret value of the External Service bar. Default: `"bar"`. |
-| external-svc.domain | string | `""` | The ingress domain name that hosts the External Service server. |
-| external-svc.foo | string | `""` | The value of the External Service foo. Default: `"foo"`. |
-| external-svc.initScript | string | `""` | Custom init script to run before the External Service container starts. |
-| image.external-svc.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the External Service container image. Default: `"IfNotPresent"`. |
-| image.external-svc.registry | string | `""` | The registry where the External Service container image is hosted. Default: `"ghcr.io"`. |
-| image.external-svc.repository | string | `""` | The name of the repository that contains the External Service container image used. Default: `"external-svc"`. |
-| image.external-svc.tag | string | `""` | The tag that specifies the version of the External Service container image used. Default: `Chart appVersion`. |
-| image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
-| image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
-| image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
-| image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
-| imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
+| ingress.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.www`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting External Service services. |
-| ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
-| replicaCount | string | `""` | The desired number of running replicas for External Service. Default: `"1"`. |
-| resources.external-svc | object | `{}` | External Service container resources. |
-| service.port | string | `""` | The port on which the External Service server should listen. Default: `"80"`. |
-| service.type | string | `""` | The type of service used for External Service services. Default: `"ClusterIP"`. |
-| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
-| storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
-| storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
-| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
-| storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
+| services | list | `[]` | Service configurations. Items: `.host`, `.name`, `.nodePort`, `.port`, `.targetPort`, `.type`. |
