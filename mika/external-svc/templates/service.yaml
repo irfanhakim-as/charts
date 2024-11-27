@@ -1,18 +1,41 @@
-{{- $port := .Values.service.port | default "80" | toString }}
-{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $services := .Values.services }}
+{{- $releaseName := .Release.Name | toString }}
+{{- range $services }}
+{{- $host := .host | toString }}
+{{- $name := .name | toString }}
+{{- $nodePort := .nodePort }}
+{{- $port := .port | int }}
+{{- $targetPort := .targetPort | default $port | int }}
+{{- $type := .type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-external-svc-svc
+  name: {{ $releaseName }}-{{ $name }}-extsvc-svc
   labels:
-    {{- include "external-svc.labels" . | nindent 4 }}
+    {{- include "external-svc.labels" $ | nindent 4 }}
 spec:
   type: {{ $type }}
   ports:
-    - port: {{ int $port }}
-      targetPort: external-svc
+    - port: {{ $port }}
+      targetPort: {{ $targetPort }}
+      {{- if and (eq $type "NodePort") $nodePort }}
+      nodePort: {{ $nodePort | int }}
+      {{- end }}
       protocol: TCP
-      name: external-svc
-  selector:
-    {{- include "external-svc.selectorLabels" . | nindent 4 }}
+      name: {{ $name }}
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: {{ $releaseName }}-{{ $name }}-extsvc-svc
+  labels:
+    {{- include "external-svc.labels" $ | nindent 4 }}
+subsets:
+  - addresses:
+    - ip: {{ $host }}
+    ports:
+      - name: {{ $name }}
+        port: {{ $targetPort }}
+        protocol: TCP
+{{- end }}
