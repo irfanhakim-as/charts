@@ -1,17 +1,22 @@
 {{- $ingress := .Values.ingress.enabled }}
-{{- $www := .Values.ingress.www }}
-{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
-{{- $domain := .Values.externalSvc.domain | toString }}
-{{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
-{{- if and $ingress $domain }}
+{{- $domains := .Values.ingress.domains }}
+{{- $services := .Values.services }}
+{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $releaseName := .Release.Name | toString }}
+{{- if and $ingress $services $domains }}
+{{- range $domains }}
+{{- $www := .www }}
+{{- $name := .name | toString }}
+{{- $port := .port | toString }}
+{{- $wwwDomain := printf "www.%s" $name | toString | quote }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-external-svc-ingress
+  name: {{ $releaseName }}-{{ $port }}-extsvc-ingress
   labels:
-    {{- include "external-svc.labels" . | nindent 4 }}
+    {{- include "external-svc.labels" $ | nindent 4 }}
   annotations:
     cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
     cert-manager.io/private-key-algorithm: "ECDSA"
@@ -28,14 +33,14 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
-    - host: {{ $domain | quote }}
+    - host: {{ $name | quote }}
       http:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-external-svc-svc
+                name: {{ $releaseName }}-{{ $port }}-extsvc-svc
                 port:
-                  name: external-svc
+                  name: {{ $port }}
             path: /
             pathType: Prefix
   {{- if $www }}
@@ -44,17 +49,18 @@ spec:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-external-svc-svc
+                name: {{ $releaseName }}-{{ $port }}-extsvc-svc
                 port:
-                  name: external-svc
+                  name: {{ $port }}
             path: /
             pathType: Prefix
   {{- end }}
   tls:
     - hosts:
-        - {{ $domain | quote }}
+        - {{ $name | quote }}
       {{- if $www }}
         - {{ $wwwDomain }}
       {{- end }}
-      secretName: {{ .Release.Name }}-external-svc-tls-cert
+      secretName: {{ $releaseName }}-{{ $port }}-extsvc-tls-cert
+{{- end }}
 {{- end }}
