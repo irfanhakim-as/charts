@@ -14,7 +14,7 @@ Seamlessly connect external services to your Kubernetes environment.
 
 ---
 
-## External dependencies
+## Preflight checklist
 
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
