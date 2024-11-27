@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Services configurations.
+# Service configurations.
 # Items: `.host`, `.name`, `.nodePort`, `.port`, `.targetPort`, `.type`
 # Example:
 # services:
@@ -63,7 +63,7 @@ ingress:
   #   # value: "120"
   #     value: ""
   customAnnotations: []
-  # List of domains and their configurations.
+  # Domain configurations.
   # Items: `.name`, `.port`, `.www`
   # Example:
   # domains:
