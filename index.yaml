@@ -420,6 +420,29 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/cloudflareddns-0.1.0/cloudflareddns-0.1.0.tgz
     version: 0.1.0
+  external-svc:
+  - apiVersion: v2
+    created: "2024-11-27T02:59:55.456007859Z"
+    description: Seamlessly connect external services to your Kubernetes environment.
+    digest: c7b550c148bf8eed8cb191545d6b14746a47d0d51a9f82f124138801cb26bd58
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - external-svc
+    - external
+    - service
+    - ingress
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: external-svc
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/external-svc-0.1.0/external-svc-0.1.0.tgz
+    version: 0.1.0
   flex:
   - apiVersion: v2
     appVersion: 1.40.0.7998-c29d4c0c8
@@ -2715,4 +2738,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-24T09:49:07.954158356Z"
+generated: "2024-11-27T02:59:55.456326976Z"
