@@ -5,6 +5,9 @@ type: application
 version: 0.1.0
 keywords:
   - "external-svc"
+  - "external"
+  - "service"
+  - "ingress"
 home: "https://github.com/irfanhakim-as/charts"
 icon: "https://irfanhakim-as.github.io/charts/logos/external-svc.png"
 sources:
