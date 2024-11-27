@@ -1,45 +1,47 @@
 {{- $ingress := .Values.ingress.enabled }}
-{{- $domain := .Values.externalSvc.domain | toString }}
-{{- $port := .Values.service.port | default "80" | toString }}
-{{- $type := .Values.service.type | default "ClusterIP" | toString }}
-{{- $serviceName := printf "%s-external-svc-svc" .Release.Name | toString }}
-{{- $serviceAddress := "" }}
+{{- $domains := .Values.ingress.domains }}
+{{- $services := .Values.services }}
 External Service has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-{{- if $ingress }}
-{{- $serviceAddress = printf "https://%s" $domain | toString }}
-{{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
+The following are a list of external service(s) you have supplied to be updated:
 
-Please run the following command(s) to obtain the right address to the service:
+{{- if not $services }}
 
-    ```sh
-    {{- if eq $type "ClusterIP" }}
-    {{- $forwardPort := "8080" | toString }}
-    {{- $serviceAddress = printf "http://127.0.0.1:%s" $forwardPort | toString }}
-    export POD_NAME=$(kubectl get pod --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "external-svc.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-    export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} ${POD_NAME} -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-    kubectl port-forward --namespace {{ .Release.Namespace }} ${POD_NAME} {{ $forwardPort }}:${CONTAINER_PORT}
-    {{- else if eq $type "LoadBalancer" }}
-    {{- $serviceAddress = printf "$(echo http://${SERVICE_IP}:%s)" $port | toString }}
-    export SERVICE_IP=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} --template "{{"{{- range (index .status.loadBalancer.ingress 0) }}{{ . }}{{- end }}"}}")
-    {{- else if eq $type "NodePort" }}
-    {{- $serviceAddress = "$(echo http://${NODE_IP}:${NODE_PORT})" | toString }}
-    export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-    export NODE_PORT=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} -o jsonpath="{.spec.ports[0].nodePort}")
-    {{- end }}
-    ```
-
-{{- end }}
-
-{{- if $serviceAddress }}
-
-Visit the following service at the provided address:
-
-    - External Service: {{ $serviceAddress }}
+    ⚠️ No external services were supplied for External Service to update
 
 {{- else }}
 
-    ⚠️ This chart may have no accessible services available
+    {{- range $index, $service := $services }}
+        {{- $custom_command := "false" }}
+        {{- $host := $service.host | toString }}
+        {{- $name := $service.name | toString }}
+        {{- $nodePort := $service.nodePort }}
+        {{- $port := $service.port | int }}
+        {{- $targetPort := $service.targetPort | default $port | int }}
+        {{- $type := $service.type | default "ClusterIP" | toString }}
+
+    {{ printf "%s. name=%s | host=%s | port=%s" ($index | add1 | toString) $name $host ($targetPort | toString) }}
+
+    {{- end }}
+
+{{- end }}
+
+The following are a list of domain(s) you have supplied for the external service(s):
+
+{{- if not (and $ingress $domains $services) }}
+
+    ⚠️ No domains were supplied for External Service to update
+
+{{- else }}
+
+    {{- range $index, $domain := $domains }}
+        {{- $www := $domain.www }}
+        {{- $name := $domain.name | toString }}
+        {{- $port := $domain.port | toString }}
+
+    {{ printf "%s. name=%s | domain=%s | www=%s" ($index | add1 | toString) $port $name ($www | toString) }}
+
+    {{- end }}
 
 {{- end }}
 
