@@ -21,6 +21,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [clog](mika/clog) | Creative blog, Career blog, Coin blog, you name it. | ✅ | 🔒 |
 | [cloudflared](mika/cloudflared) | Cloudflare Tunnel is a tunneling software that lets you quickly secure and encrypt application traffic to any type of infrastructure. | ✅ | ✅ |
 | [cloudflareddns](mika/cloudflareddns) | Access your home network remotely via a custom domain name without a static IP! | ✅ | ✅ |
+| [external-svc](mika/external-svc) | Seamlessly connect external services to your Kubernetes environment. | ✅ | ✅ |
 | [flex](mika/flex) | Flex is a collection of curated services that aims to provide a complete home media server solution. | ✅ | ✅ |
 | [grocy](mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
 | [kutt](mika/kutt) | Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics. | ✅ | ✅ |

@@ -1,0 +1,48 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domains := .Values.ingress.domains }}
+{{- $services := .Values.services }}
+External Service has been installed and configured for {{ .Release.Name | toString }} 🎉
+
+The following are a list of external service(s) you have supplied to be updated:
+
+{{- if not $services }}
+
+    ⚠️ No external services were supplied for External Service to update
+
+{{- else }}
+
+    {{- range $index, $service := $services }}
+        {{- $custom_command := "false" }}
+        {{- $host := $service.host | toString }}
+        {{- $name := $service.name | toString }}
+        {{- $nodePort := $service.nodePort }}
+        {{- $port := $service.port | int }}
+        {{- $targetPort := $service.targetPort | default $port | int }}
+        {{- $type := $service.type | default "ClusterIP" | toString }}
+
+    {{ printf "%s. name=%s | host=%s | port=%s" ($index | add1 | toString) $name $host ($targetPort | toString) }}
+
+    {{- end }}
+
+{{- end }}
+
+The following are a list of domain(s) you have supplied for the external service(s):
+
+{{- if not (and $ingress $domains $services) }}
+
+    ⚠️ No domains were supplied for External Service to update
+
+{{- else }}
+
+    {{- range $index, $domain := $domains }}
+        {{- $www := $domain.www }}
+        {{- $name := $domain.name | toString }}
+        {{- $port := $domain.port | toString }}
+
+    {{ printf "%s. name=%s | domain=%s | www=%s" ($index | add1 | toString) $port $name ($www | toString) }}
+
+    {{- end }}
+
+{{- end }}
+
+For more information on how to use and configure External Service, please refer to the official documentation.

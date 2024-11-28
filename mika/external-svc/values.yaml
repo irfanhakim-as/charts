@@ -1,0 +1,82 @@
+# Default values for external-svc.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Service configurations.
+# Items: `.host`, `.name`, `.nodePort`, `.port`, `.targetPort`, `.type`
+# Example:
+# services:
+#   # The IP address or hostname of the external service.
+#   # Example:
+#   # host: "10.42.1.130"
+#   - host: ""
+#   # The unique name used to identify the external service.
+#   # Example:
+#   # name: "mysvc"
+#     name: ""
+#   # The optional node port to expose for the external service when the service type is NodePort.
+#   # Example:
+#   # nodePort: "30000"
+#     nodePort: ""
+#   # The port on which the external service is listening.
+#   # Example:
+#   # port: "8080"
+#     port: ""
+#   # The target port on the external service that traffic will be directed to.
+#   # Default: `.port`
+#   # Example:
+#   # targetPort: "80"
+#     targetPort: ""
+#   # The type of service used to expose the external service.
+#   # Default: "ClusterIP"
+#   # Example:
+#   # type: "NodePort"
+#     type: ""
+services: []
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting External Service services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+  # Domain configurations.
+  # Items: `.name`, `.port`, `.www`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the external service.
+  #   # Example:
+  #   # name: "mysvc.example.com"
+  #   - name: ""
+  #   # The name of the service port to route traffic to.
+  #   # Example:
+  #   # port: "mysvc"
+  #     port: ""
+  #   # Specifies whether the WWW subdomain should be enabled.
+  #   # Example:
+  #   # www: true
+  #     www: false
+  domains: []

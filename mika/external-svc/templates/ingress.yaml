@@ -1,0 +1,66 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $customAnnotations := .Values.ingress.customAnnotations }}
+{{- $domains := .Values.ingress.domains }}
+{{- $services := .Values.services }}
+{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $releaseName := .Release.Name | toString }}
+{{- if and $ingress $services $domains }}
+{{- range $domains }}
+{{- $www := .www }}
+{{- $name := .name | toString }}
+{{- $port := .port | toString }}
+{{- $wwwDomain := printf "www.%s" $name | toString | quote }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $releaseName }}-{{ $port }}-extsvc-ingress
+  labels:
+    {{- include "external-svc.labels" $ | nindent 4 }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
+    cert-manager.io/private-key-algorithm: "ECDSA"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.org/client-max-body-size: "100m"
+    {{- range $customAnnotations }}
+    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+    {{- end }}
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ $name | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ $releaseName }}-{{ $port }}-extsvc-svc
+                port:
+                  name: {{ $port }}
+            path: /
+            pathType: Prefix
+  {{- if $www }}
+    - host: {{ $wwwDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ $releaseName }}-{{ $port }}-extsvc-svc
+                port:
+                  name: {{ $port }}
+            path: /
+            pathType: Prefix
+  {{- end }}
+  tls:
+    - hosts:
+        - {{ $name | quote }}
+      {{- if $www }}
+        - {{ $wwwDomain }}
+      {{- end }}
+      secretName: {{ $releaseName }}-{{ $port }}-extsvc-tls-cert
+{{- end }}
+{{- end }}
