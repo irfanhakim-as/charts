@@ -1,0 +1,22 @@
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- $port := .Values.service.port | default "2368" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-ghost-svc
+  labels:
+    {{- include "ghost.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ int $port }}
+      targetPort: ghost
+      {{- if and (eq $type "NodePort") $nodePort }}
+      nodePort: {{ int $nodePort }}
+      {{- end }}
+      protocol: TCP
+      name: ghost
+  selector:
+    {{- include "ghost.selectorLabels" . | nindent 4 }}
