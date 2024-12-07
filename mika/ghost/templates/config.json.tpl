@@ -6,10 +6,14 @@ Ghost config.json template
 {{- $logLevel := "info" | quote }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $mail := .Values.mail.enabled }}
+{{- $debug := .Values.ghost.debug | default "false" | toString }}
 {{- $domain := .Values.ghost.domain | default "localhost" | toString }}
 {{- $environment := .Values.ghost.environment | default "production" | toString }}
 {{- if and $ingress (not (eq $domain "localhost")) (eq $environment "production") }}
 {{- $endpoint = printf "https://%s" $domain | quote }}
+{{- end }}
+{{- if eq $debug "true" }}
+{{- $logLevel = "debug" | quote }}
 {{- end }}
 {{- $mailSecure := .Values.mail.secure | default "true" | toString }}
 {{- $mailService := .Values.mail.service | default "Google" | toString | quote }}
