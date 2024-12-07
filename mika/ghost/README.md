@@ -10,7 +10,6 @@ Ghost is an independent platform for publishing online by web and email newslett
 - Kubernetes 1.19+
 - Helm 3.2.0+
 - Longhorn 1.4.1+
-- csi-driver-smb 1.14.0+
 
 ---
 
