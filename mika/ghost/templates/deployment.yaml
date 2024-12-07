@@ -54,7 +54,7 @@ spec:
           command: ["/bin/sh"]
           args:
             - -c
-            - >-
+            - |
             {{- if $initScript }}
               {{- $initScript | nindent 14 }}
             {{- else }}
@@ -63,11 +63,11 @@ spec:
               echo 'Check if base dirs exists, if not, create them'
               echo "Directories to check: $DIRS"
               for dir in $DIRS; do
-                if [ ! -d ${GHOST_CONTENT}/${dir} ]; then
-                  echo "Creating ${GHOST_CONTENT}/${dir} directory"
-                  mkdir -pv ${GHOST_CONTENT}/${dir} || echo "Error creating ${GHOST_CONTENT}/${dir} directory"
+                if [ ! -d "{{ $dataMountPath }}/$dir" ]; then
+                  echo "Creating {{ $dataMountPath }}/$dir directory"
+                  mkdir -pv "{{ $dataMountPath }}/$dir" || echo "Error creating {{ $dataMountPath }}/$dir directory"
                 fi
-                chown -Rfv 65532:65532 ${GHOST_CONTENT}/${dir} && echo "chown ok on ${dir}" || echo "Error changing ownership of ${GHOST_CONTENT}/${dir} directory"
+                chown -Rfv 65532:65532 "{{ $dataMountPath }}/$dir" && echo "chown ok on $dir" || echo "Error changing ownership of {{ $dataMountPath }}/$dir directory"
               done
               exit 0
             {{- end }}
