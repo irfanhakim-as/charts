@@ -28,9 +28,6 @@ Ghost config.json template
 {
     {{- if $endpoint }}
     "url": {{ $endpoint }},
-    # "admin": {
-    #     "url": {{ $endpoint }}
-    # },
     {{- end }}
     "server": {
         "port": 2368,
