@@ -7,7 +7,6 @@ Ghost config.json template
 {{- $mail := .Values.mail.enabled }}
 {{- $domain := .Values.ghost.domain | default "localhost" | toString }}
 {{- $environment := .Values.ghost.environment | default "production" | toString }}
-{{- $port := .Values.service.port | default "2368" | toString }}
 {{- if and $ingress (not (eq $domain "localhost")) (eq $environment "production") }}
 {{- $endpoint = printf "https://%s" $domain | quote }}
 {{- end }}
@@ -34,7 +33,7 @@ Ghost config.json template
     # },
     {{- end }}
     "server": {
-        "port": {{ int $port }},
+        "port": 2368,
         "host": "0.0.0.0"
     },
     {{- if and $mail (eq $environment "production") }}
