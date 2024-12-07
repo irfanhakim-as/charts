@@ -43,11 +43,6 @@ spec:
         - name: init
           image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
           imagePullPolicy: {{ $init_pullPolicy }}
-          env:
-            - name: GHOST_INSTALL
-              value: {{ $install_dir | quote }}
-            - name: GHOST_CONTENT
-              value: {{ $dataMountPath }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-ghost-cm
