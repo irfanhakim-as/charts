@@ -6,6 +6,10 @@ version: 0.1.0
 appVersion: "v5.101.6"
 keywords:
   - "ghost"
+  - "web"
+  - "blog"
+  - "newsletter"
+  - "cms"
 home: "https://github.com/irfanhakim-as/charts"
 icon: "https://irfanhakim-as.github.io/charts/logos/ghost.png"
 sources:
