@@ -71,6 +71,10 @@ ghost:
 
 # Mail configurations.
 mail:
+  # Specifies whether email support should be enabled for Ghost.
+  # Example:
+  # enabled: true
+  enabled: false
   # The email address used as the "from" address for sent emails.
   # Default: "${.smtp.user}"
   # Example:
