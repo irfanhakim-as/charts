@@ -57,12 +57,12 @@ ghost:
   # Example:
   # domain: "ghost.example.com"
   domain: ""
-  # X.
+  # The runtime environment for the Ghost server.
   # Default: "production"
   # Example:
   # environment: "development"
   environment: ""
-  # X.
+  # The directory where Ghost is installed on the container.
   # Default: "/home/nonroot/app/ghost"
   # Example:
   # install_dir: "/opt/app/ghost"
@@ -91,7 +91,7 @@ mail:
   # Example
   # secure: "false"
   secure: ""
-  # X.
+  # The email service provider used for sending emails.
   # Default: "Google"
   # Example:
   # service: "Mailgun"
