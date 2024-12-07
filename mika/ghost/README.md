@@ -1,6 +1,6 @@
 # Ghost
 
-A Helm chart for deploying Ghost.
+Ghost is an independent platform for publishing online by web and email newsletter.
 
 ## Prerequisites
 
