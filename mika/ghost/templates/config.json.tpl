@@ -35,8 +35,8 @@ Ghost config.json template
     "url": {{ $endpoint }},
     {{- end }}
     "server": {
-        "port": 2368,
-        "host": "0.0.0.0"
+        "host": "0.0.0.0",
+        "port": 2368
     },
     {{- if and $mail (eq $environment "production") }}
     "mail": {
