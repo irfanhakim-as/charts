@@ -9,7 +9,7 @@
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $install_dir := .Values.ghost.install_dir | default "/home/nonroot/app/ghost" | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default (printf "%s/content" $install_dir) | toString | quote }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default (printf "%s/content" $install_dir) | toString }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
 {{- $initScript := .Values.ghost.initScript | toString }}
 {{- $environment := .Values.ghost.environment | default "production" | toString }}
@@ -75,7 +75,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-ghost-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $dataMountPath | quote }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -107,7 +107,7 @@ spec:
               mountPath: "/tmp"
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-ghost-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $dataMountPath | quote }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
