@@ -3,6 +3,7 @@ Ghost config.json template
 */}}
 {{- define "ghost.config-json" -}}
 {{- $endpoint := "" }}
+{{- $logLevel := "info" | quote }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $mail := .Values.mail.enabled }}
 {{- $domain := .Values.ghost.domain | default "localhost" | toString }}
@@ -50,6 +51,7 @@ Ghost config.json template
     },
     {{- end }}
     "logging": {
+        "level": {{ $logLevel }},
         "transports": [
             "stdout"
         ]
