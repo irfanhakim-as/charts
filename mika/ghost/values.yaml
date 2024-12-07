@@ -187,7 +187,7 @@ service:
   # nodePort: "32000"
   nodePort: ""
   # The port on which the Ghost server should listen for connections.
-  # Default: "2368"
+  # Default: "80"
   # Example:
   # port: "8080"
   port: ""

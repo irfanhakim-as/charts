@@ -1,5 +1,5 @@
 {{- $nodePort := .Values.service.nodePort | toString }}
-{{- $port := .Values.service.port | default "2368" | toString }}
+{{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
