@@ -2,8 +2,15 @@
 Ghost config.json template
 */}}
 {{- define "ghost.config-json" -}}
-{{- $domain := .Values.ghost.domain | default "localhost" | toString | quote }}
+{{- $endpoint := "" }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $mail := .Values.mail.enabled }}
+{{- $domain := .Values.ghost.domain | default "localhost" | toString }}
+{{- $environment := .Values.ghost.environment | default "production" | toString }}
 {{- $port := .Values.service.port | default "2368" | toString }}
+{{- if and $ingress (not (eq $domain "localhost")) (eq $environment "production") }}
+{{- $endpoint = printf "https://%s" $domain | quote }}
+{{- end }}
 {{- $mailSecure := .Values.mail.secure | default "true" | toString }}
 {{- $mailService := .Values.mail.service | default "Google" | toString | quote }}
 {{- $smtpHost := .Values.mail.smtp.host | default "smtp.gmail.com" | toString | quote }}
@@ -20,14 +27,17 @@ Ghost config.json template
 {{- $install_dir := .Values.ghost.install_dir | default "/home/nonroot/app/ghost" | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default (printf "%s/content" $install_dir) | toString | quote }}
 {
-    "url": {{ $domain }},
-    "admin": {
-        "url": {{ $domain }}
-    },
+    {{- if $endpoint }}
+    "url": {{ $endpoint }},
+    # "admin": {
+    #     "url": {{ $endpoint }}
+    # },
+    {{- end }}
     "server": {
         "port": {{ int $port }},
         "host": "0.0.0.0"
     },
+    {{- if and $mail (eq $environment "production") }}
     "mail": {
         "transport": "SMTP",
         "from": {{ $mailFrom }},
@@ -42,6 +52,7 @@ Ghost config.json template
             }
         }
     },
+    {{- end }}
     "logging": {
         "transports": [
             "stdout"
