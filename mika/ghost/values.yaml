@@ -47,6 +47,11 @@ imagePullSecrets: []
 
 # Ghost configurations.
 ghost:
+  # Specifies whether Ghost should run in debug mode.
+  # Default: "false"
+  # Example:
+  # debug: "true"
+  debug: ""
   # The ingress domain name that hosts the Ghost server.
   # Default: "localhost"
   # Example:
