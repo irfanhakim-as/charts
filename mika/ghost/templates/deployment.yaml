@@ -1,0 +1,124 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $ghost_registry := .Values.image.ghost.registry | default "ghcr.io" | toString }}
+{{- $ghost_repository := .Values.image.ghost.repository | default "sredevopsorg/ghost-on-kubernetes" | toString }}
+{{- $ghost_tag := .Values.image.ghost.tag | default .Chart.AppVersion | toString }}
+{{- $ghost_pullPolicy := .Values.image.ghost.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "stable-musl" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $install_dir := .Values.ghost.install_dir | default "/home/nonroot/app/ghost" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default (printf "%s/content" $install_dir) | toString }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $initScript := .Values.ghost.initScript | toString }}
+{{- $environment := .Values.ghost.environment | default "production" | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-ghost
+  labels:
+    {{- include "ghost.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "ghost.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ghost.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if or $dataPersistence $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+            {{- if $initScript }}
+              {{- $initScript | nindent 14 }}
+            {{- else }}
+              set -e
+              export DIRS='files logs apps themes data public settings images media'
+              echo 'Check if base dirs exists, if not, create them'
+              echo "Directories to check: $DIRS"
+              for dir in $DIRS; do
+                if [ ! -d "{{ $dataMountPath }}/$dir" ]; then
+                  echo "Creating {{ $dataMountPath }}/$dir directory"
+                  mkdir -pv "{{ $dataMountPath }}/$dir" || echo "Error creating {{ $dataMountPath }}/$dir directory"
+                fi
+                chown -Rfv 65532:65532 "{{ $dataMountPath }}/$dir" && echo "chown ok on $dir" || echo "Error changing ownership of {{ $dataMountPath }}/$dir directory"
+              done
+              exit 0
+            {{- end }}
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-ghost-data
+              mountPath: {{ $dataMountPath | quote }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+      {{- end }}
+      containers:
+        - name: ghost
+          image: {{ printf "%s/%s:%s" $ghost_registry $ghost_repository $ghost_tag | quote }}
+          imagePullPolicy: {{ $ghost_pullPolicy }}
+          ports:
+            - name: ghost
+              containerPort: 2368
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.ghost | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-ghost-cm
+          volumeMounts:
+            - name: {{ .Release.Name }}-ghost-config
+              mountPath: {{ printf "%s/config.%s.json" $install_dir $environment | quote }}
+              subPath: {{ printf "config.%s.json" $environment | quote }}
+              readOnly: true
+            - name: {{ .Release.Name }}-ghost-tmp
+              mountPath: "/tmp"
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-ghost-data
+              mountPath: {{ $dataMountPath | quote }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 65532
+      volumes:
+        - name: {{ .Release.Name }}-ghost-config
+          secret:
+            secretName: {{ .Release.Name }}-ghost-config
+            defaultMode: 420
+        - name: {{ .Release.Name }}-ghost-tmp
+          emptyDir:
+            sizeLimit: 64Mi
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-ghost-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-ghost-data-pvc
+        {{- end }}

@@ -1,0 +1,20 @@
+apiVersion: v2
+name: ghost
+description: Ghost is an independent platform for publishing online by web and email newsletter.
+type: application
+version: 0.1.0
+appVersion: "v5.101.6"
+keywords:
+  - "ghost"
+  - "web"
+  - "blog"
+  - "newsletter"
+  - "cms"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/ghost.png"
+sources:
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

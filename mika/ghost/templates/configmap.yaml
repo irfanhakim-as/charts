@@ -1,0 +1,10 @@
+{{- $environment := .Values.ghost.environment | default "production" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-ghost-cm
+  labels:
+    {{- include "ghost.labels" . | nindent 4 }}
+data:
+  NODE_ENV: {{ $environment }}
