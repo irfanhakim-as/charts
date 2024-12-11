@@ -23,6 +23,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [cloudflareddns](mika/cloudflareddns) | Access your home network remotely via a custom domain name without a static IP! | ✅ | ✅ |
 | [external-svc](mika/external-svc) | Seamlessly connect external services to your Kubernetes environment. | ✅ | ✅ |
 | [flex](mika/flex) | Flex is a collection of curated services that aims to provide a complete home media server solution. | ✅ | ✅ |
+| [ghost](mika/ghost) | Ghost is an independent platform for publishing online by web and email newsletter. | ✅ | ✅ |
 | [grocy](mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
 | [kutt](mika/kutt) | Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics. | ✅ | ✅ |
 | [linkstack](mika/linkstack) | LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface. | ✅ | ✅ |
