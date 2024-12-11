@@ -78,10 +78,10 @@ spec:
           image: {{ printf "%s/%s:%s" $linkstack_registry $linkstack_repository $linkstack_tag | quote }}
           imagePullPolicy: {{ $linkstack_pullPolicy }}
           ports:
-            - name: linkstack-http
+            - name: http
               containerPort: 80
               protocol: TCP
-            - name: linkstack-https
+            - name: https
               containerPort: 443
               protocol: TCP
           resources:

@@ -14,18 +14,18 @@ spec:
   type: {{ $type }}
   ports:
     - port: {{ int $http }}
-      targetPort: linkstack-http
+      targetPort: http
       {{- if and (eq $type "NodePort") $httpNodePort }}
       nodePort: {{ int $httpNodePort }}
       {{- end }}
       protocol: TCP
-      name: linkstack-http
+      name: http
     - port: {{ int $https }}
-      targetPort: linkstack-https
+      targetPort: https
       {{- if and (eq $type "NodePort") $httpsNodePort }}
       nodePort: {{ int $httpsNodePort }}
       {{- end }}
       protocol: TCP
-      name: linkstack-https
+      name: https
   selector:
     {{- include "linkstack.selectorLabels" . | nindent 4 }}
