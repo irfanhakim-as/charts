@@ -638,6 +638,32 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.0/flex-0.1.0.tgz
     version: 0.1.0
+  ghost:
+  - apiVersion: v2
+    appVersion: v5.101.6
+    created: "2024-12-11T06:16:37.692232636Z"
+    description: Ghost is an independent platform for publishing online by web and
+      email newsletter.
+    digest: 8d100defee8e87978acaba0435b7a5c76a48bbe452283783bf61a545fea435f0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/ghost.png
+    keywords:
+    - ghost
+    - web
+    - blog
+    - newsletter
+    - cms
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: ghost
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/ghost-0.1.0/ghost-0.1.0.tgz
+    version: 0.1.0
   grocy:
   - apiVersion: v2
     appVersion: v3.3.2
@@ -2738,4 +2764,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-11-27T02:59:55.456326976Z"
+generated: "2024-12-11T06:16:37.692583714Z"
