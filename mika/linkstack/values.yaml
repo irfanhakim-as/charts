@@ -100,6 +100,7 @@ ingress:
   # www: true
   www: false
   # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
   # Example:
   # customAnnotations:
   #   # The prefix of the annotation.
@@ -125,7 +126,7 @@ service:
     # Example:
     # nodePort: "30000"
     nodePort: ""
-    # The http port on which the LinkStack server should listen.
+    # The http port on which the LinkStack server should listen for connections.
     # Default: "80"
     # Example:
     # port: "8080"
@@ -136,12 +137,12 @@ service:
     # Example:
     # nodePort: "32000"
     nodePort: ""
-    # The https port on which the LinkStack server should listen.
+    # The https port on which the LinkStack server should listen for connections.
     # Default: "443"
     # Example:
     # port: "8443"
     port: ""
-  # The type of service used for LinkStack services.
+  # The type of service used to expose LinkStack services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
