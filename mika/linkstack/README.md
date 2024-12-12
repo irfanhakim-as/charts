@@ -13,7 +13,7 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 
 ---
 
-## External dependencies
+## Preflight checklist
 
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
