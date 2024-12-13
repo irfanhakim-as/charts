@@ -13,7 +13,7 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 
 ---
 
-## External dependencies
+## Preflight checklist
 
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
@@ -137,7 +137,7 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 | image.linkstack.tag | string | `""` | The tag that specifies the version of the LinkStack container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting LinkStack services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | linkstack.domain | string | `""` | The ingress domain name that hosts the LinkStack server. Default: `"localhost"`. |
@@ -150,10 +150,10 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 | replicaCount | string | `""` | The desired number of running replicas for LinkStack. Default: `"1"`. |
 | resources.linkstack | object | `{}` | LinkStack container resources. |
 | service.http.nodePort | string | `""` | The optional node port to expose for http when the service type is NodePort. |
-| service.http.port | string | `""` | The http port on which the LinkStack server should listen. Default: `"80"`. |
+| service.http.port | string | `""` | The http port on which the LinkStack server should listen for connections. Default: `"80"`. |
 | service.https.nodePort | string | `""` | The optional node port to expose for https when the service type is NodePort. |
-| service.https.port | string | `""` | The https port on which the LinkStack server should listen. Default: `"443"`. |
-| service.type | string | `""` | The type of service used for LinkStack services. Default: `"ClusterIP"`. |
+| service.https.port | string | `""` | The https port on which the LinkStack server should listen for connections. Default: `"443"`. |
+| service.type | string | `""` | The type of service used to expose LinkStack services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/htdocs"`. |

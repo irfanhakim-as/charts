@@ -2,7 +2,7 @@ apiVersion: v2
 name: linkstack
 description: LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "latest"
 keywords:
   - "linkstack"

@@ -35,7 +35,7 @@ spec:
               service:
                 name: {{ .Release.Name }}-linkstack-svc
                 port:
-                  name: linkstack-http
+                  name: http
             path: /
             pathType: Prefix
   {{- if $www }}
@@ -46,7 +46,7 @@ spec:
               service:
                 name: {{ .Release.Name }}-linkstack-svc
                 port:
-                  name: linkstack-http
+                  name: http
             path: /
             pathType: Prefix
   {{- end }}
