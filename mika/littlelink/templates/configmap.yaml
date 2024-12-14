@@ -1,9 +1,9 @@
 {{- $endpoint := "" }}
-{{- $custom_links := list }}
+{{- $customLinks := list }}
 {{- $links := .Values.littlelink.links }}
 {{- range $links }}
   {{- if .custom.enabled }}
-    {{- $custom_links = append $custom_links . }}
+    {{- $customLinks = append $customLinks . }}
   {{- end }}
 {{- end }}
 {{- $ingress := .Values.ingress.enabled }}
@@ -57,12 +57,12 @@ data:
     {{- end }}
   {{- end }}
 {{- end }}
-{{- if $custom_links }}
-  CUSTOM_BUTTON_NAME: "{{- range $index, $link := $custom_links }}{{- if $index }},{{- end }}{{ $link.name | toString | upper }}{{- end }}"
-  CUSTOM_BUTTON_TEXT: "{{- range $index, $link := $custom_links }}{{- if $index }},{{- end }}{{ $link.custom.text | default ($link.name | toString | title) | toString }}{{- end }}"
-  CUSTOM_BUTTON_URL: "{{- range $index, $link := $custom_links }}{{- if $index }},{{- end }}{{ $link.url | toString }}{{- end }}"
-  CUSTOM_BUTTON_COLOR: "{{- range $index, $link := $custom_links }}{{- if $index }},{{- end }}{{ $link.custom.color | default "#000000" | toString }}{{- end }}"
-  CUSTOM_BUTTON_TEXT_COLOR: "{{- range $index, $link := $custom_links }}{{- if $index }},{{- end }}{{ $link.custom.text_color | default "#ffffff" | toString }}{{- end }}"
-  CUSTOM_BUTTON_ALT_TEXT: "{{- range $index, $link := $custom_links }}{{- if $index }},{{- end }}{{ $link.custom.alt | default ($link.custom.text | default ($link.name | toString | title)) | toString }}{{- end }}"
-  CUSTOM_BUTTON_ICON: "{{- range $index, $link := $custom_links }}{{- if $index }},{{- end }}{{ $link.custom.icon | toString }}{{- end }}"
+{{- if $customLinks }}
+  CUSTOM_BUTTON_NAME: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.name | toString | upper }}{{- end }}"
+  CUSTOM_BUTTON_TEXT: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.text | default ($link.name | toString | title) | toString }}{{- end }}"
+  CUSTOM_BUTTON_URL: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.url | toString }}{{- end }}"
+  CUSTOM_BUTTON_COLOR: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.color | default "#000000" | toString }}{{- end }}"
+  CUSTOM_BUTTON_TEXT_COLOR: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.text_color | default "#ffffff" | toString }}{{- end }}"
+  CUSTOM_BUTTON_ALT_TEXT: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.alt | default ($link.custom.text | default ($link.name | toString | title)) | toString }}{{- end }}"
+  CUSTOM_BUTTON_ICON: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.icon | toString }}{{- end }}"
 {{- end }}
