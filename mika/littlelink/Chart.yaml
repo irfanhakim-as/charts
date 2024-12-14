@@ -1,0 +1,20 @@
+apiVersion: v2
+name: littlelink
+description: The DIY self-hosted LinkTree alternative.
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - "littlelink"
+  - "linktree"
+  - "links"
+home: "https://github.com/sethcottle/littlelink"
+icon: "https://irfanhakim-as.github.io/charts/logos/littlelink.png"
+sources:
+  - "https://github.com/sethcottle/littlelink"
+  - "https://github.com/techno-tim/littlelink-server"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
