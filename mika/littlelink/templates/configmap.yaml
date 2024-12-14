@@ -1,12 +1,12 @@
 {{- $endpoint := "" }}
 {{- $customLinks := list }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $links := .Values.littlelink.links }}
 {{- range $links }}
   {{- if .custom.enabled }}
     {{- $customLinks = append $customLinks . }}
   {{- end }}
 {{- end }}
-{{- $ingress := .Values.ingress.enabled }}
 {{- $author := .Values.littlelink.author | toString | quote }}
 {{- $biography := .Values.littlelink.biography | toString | quote }}
 {{- $domain := .Values.littlelink.domain | default "localhost" | toString }}
