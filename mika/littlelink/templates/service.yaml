@@ -1,0 +1,22 @@
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- $port := .Values.service.port | default "8080" | toString }}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-littlelink-svc
+  labels:
+    {{- include "littlelink.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ int $port }}
+      targetPort: littlelink
+      {{- if and (eq $type "NodePort") $nodePort }}
+      nodePort: {{ int $nodePort }}
+      {{- end }}
+      protocol: TCP
+      name: littlelink
+  selector:
+    {{- include "littlelink.selectorLabels" . | nindent 4 }}
