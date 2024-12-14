@@ -1,6 +1,6 @@
 {{- $endpoint := "" }}
-{{- $links := .Values.littlelink.links }}
 {{- $custom_links := list }}
+{{- $links := .Values.littlelink.links }}
 {{- range $links }}
   {{- if .custom.enabled }}
     {{- $custom_links = append $custom_links . }}
