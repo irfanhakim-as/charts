@@ -1,5 +1,5 @@
 {{- $littlelink_registry := .Values.image.littlelink.registry | default "ghcr.io" | toString }}
-{{- $littlelink_repository := .Values.image.littlelink.repository | default "littlelink" | toString }}
+{{- $littlelink_repository := .Values.image.littlelink.repository | default "techno-tim/littlelink-server" | toString }}
 {{- $littlelink_tag := .Values.image.littlelink.tag | default .Chart.AppVersion | toString }}
 {{- $littlelink_pullPolicy := .Values.image.littlelink.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
