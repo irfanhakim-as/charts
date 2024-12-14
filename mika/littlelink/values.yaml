@@ -1,0 +1,231 @@
+# Default values for littlelink.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for LittleLink.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for LittleLink.
+image:
+  # LittleLink container image configurations.
+  # Source: https://github.com/techno-tim/littlelink-server/pkgs/container/littlelink-server
+  littlelink:
+    # The registry where the LittleLink container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the LittleLink container image used.
+    # Default: "techno-tim/littlelink-server"
+    repository: ""
+    # The tag that specifies the version of the LittleLink container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the LittleLink container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# LittleLink configurations.
+littlelink:
+  # X.
+  # Example:
+  # author: "foo"
+  author: ""
+  # X. (META_DESCRIPTION, OG_DESCRIPTION, BIO)
+  # Example:
+  # biography: "foo"
+  biography: ""
+  # The ingress domain name that hosts the LittleLink server. (OG_URL)
+  # Example:
+  # domain: "littlelink.example.com"
+  domain: ""
+  # X.
+  # Example:
+  # favicon: "https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_200x200.jpg"
+  favicon: ""
+  # X.
+  # Example:
+  # footer: "foo"
+  footer: ""
+  # X.
+  # Default: "LittleLink"
+  # Example:
+  # site_name: "foo"
+  site_name: ""
+  # X.
+  # Default: "dark"
+  # Example:
+  # theme: "light"
+  theme: ""
+  # X.
+  # Default: "foo"
+  # Example:
+  # title: "foo"
+  title: ""
+  # Avatar configurations.
+  avatar:
+    # X.
+    # Example:
+    # url: "https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_400x400.jpg"
+    url: ""
+    # X.
+    # Example:
+    # alt: "foo"
+    alt: ""
+    # X.
+    # Default: "400"
+    # Example:
+    # width: "600"
+    width: ""
+    # X.
+    # Default: "400"
+    # Example:
+    # height: "600"
+    height: ""
+  # X.
+  # Example:
+  # links:
+  #   # X.
+  #   # Example:
+  #   # name: "github"
+  #   - name: ""
+  #   # X.
+  #   # Example:
+  #   # url: "https://l.technotim.live/github"
+  #     url: ""
+  #   # Custom link configurations.
+  #   # Items: `.enabled`, `.text`, `.alt`, `.icon`, `.color`, `.text_color`
+  #     custom:
+  #       # Specifies whether the link is custom.
+  #       # Example:
+  #       # enabled: true
+  #       enabled: false
+  #       # X.
+  #       # Default: `${links.name}`
+  #       # Example:
+  #       # text: "Documentation"
+  #       text: ""
+  #       # X.
+  #       # Default: `${links.custom.text}`
+  #       # Example:
+  #       # alt: "foo"
+  #       alt: ""
+  #       # X.
+  #       # Example:
+  #       # icon: "fas file-alt"
+  #       icon: ""
+  #       # X.
+  #       # Default: "#000000"
+  #       # Example:
+  #       # color: "#ffffff"
+  #       color: ""
+  #       # X.
+  #       # Default: "#ffffff"
+  #       # Example:
+  #       # text_color: "#000000"
+  #       text_color: ""
+  links: []
+  # Custom init script to run before the LittleLink container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting LittleLink services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the LittleLink server should listen for connections.
+  # Default: "8080"
+  # Example:
+  # port: "80"
+  port: ""
+  # The type of service used to expose LittleLink services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Resource requirements and limits for LittleLink containers.
+resources:
+  # LittleLink container resources.
+  # Example:
+  # littlelink:
+  #   # The minimum amount of resources required by LittleLink to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by LittleLink.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by LittleLink.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for LittleLink.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for LittleLink.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for LittleLink.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  littlelink: {}
