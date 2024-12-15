@@ -72,7 +72,7 @@ littlelink:
   # Example:
   # name: "My Link Page"
   name: ""
-  # The theme for the LittleLink page, which defines the visual style, such as colors and layouts.
+  # The selected LittleLink theme which features a predefined visual style, colors, and layouts.
   # Default: "dark"
   # Example:
   # theme: "light"
@@ -109,7 +109,8 @@ littlelink:
   #   echo "Hello, World!"
   #   echo "This is a custom init script."
   initScript: ""
-  # X.
+  # The list of links to be displayed on the LittleLink interface.
+  # Items: `.name`, `.url`, `.custom`
   # Example:
   # links:
   #   # The unique identifier or title for the link.
