@@ -84,7 +84,13 @@ littlelink:
   title: ""
   # Avatar configurations.
   avatar:
+    # The file of the avatar image to display on the LittleLink page.
+    # Note: The `${.url}` option is ignored if this option is set.
+    # Example:
+    # ```--set-file littlelink.avatar.file=avatar.jpg```
+    file: ""
     # The URL of the avatar image to display on the LittleLink page.
+    # Note: This option is ignored if the `${.file}` option is set.
     # Example:
     # url: "https://example.com/avatar.jpg"
     url: ""
