@@ -1,5 +1,6 @@
 {{- $endpoint := "" }}
 {{- $customLinks := list }}
+{{- $avatarFile := .Values.littlelink.avatar.file }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $links := .Values.littlelink.links }}
 {{- range $links }}
@@ -19,6 +20,9 @@
 {{- $theme := .Values.littlelink.theme | default "dark" | toString | title | quote }}
 {{- $title := .Values.littlelink.title | default "LittleLink" | toString | quote }}
 {{- $avatarUrl := .Values.littlelink.avatar.url | toString }}
+{{- if $avatarFile }}
+  {{- $avatarUrl = "/static/media/avatar.jpg" | toString }}
+{{- end }}
 {{- $avatarAlt := .Values.littlelink.avatar.alt | default $name | toString | quote }}
 {{- $avatarWidth := .Values.littlelink.avatar.width | default "400" | toString | quote }}
 {{- $avatarHeight := .Values.littlelink.avatar.height | default "400" | toString | quote }}
