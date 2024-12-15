@@ -47,58 +47,58 @@ imagePullSecrets: []
 
 # LittleLink configurations.
 littlelink:
-  # X.
+  # The author of the LittleLink page, used for meta tags and general attribution.
   # Example:
-  # author: "foo"
+  # author: "John Doe"
   author: ""
-  # X. (META_DESCRIPTION, OG_DESCRIPTION, BIO)
+  # A short description or biography about the owner of the LittleLink page.
   # Example:
-  # biography: "foo"
+  # biography: "Tech enthusiast sharing useful links and resources."
   biography: ""
-  # The ingress domain name that hosts the LittleLink server. (OG_URL)
+  # The ingress domain name that hosts the LittleLink server.
   # Example:
   # domain: "littlelink.example.com"
   domain: ""
-  # X.
+  # The URL of the favicon representing the LittleLink page.
   # Example:
-  # favicon: "https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_200x200.jpg"
+  # favicon: "https://example.com/favicon.ico"
   favicon: ""
-  # X.
+  # The text to display at the bottom of the LittleLink page.
   # Example:
-  # footer: "foo"
+  # footer: "LittleLink © 2024"
   footer: ""
-  # X.
+  # The display name to be shown prominently as the LittleLink page header.
   # Default: "LittleLink"
   # Example:
-  # name: "foo"
+  # name: "My Link Page"
   name: ""
-  # X.
+  # The theme for the LittleLink page, which defines the visual style, such as colors and layouts.
   # Default: "dark"
   # Example:
   # theme: "light"
   theme: ""
-  # X.
+  # The title displayed in the browser tab of the LittleLink page.
   # Default: "LittleLink"
   # Example:
-  # title: "foo"
+  # title: "My Link Page"
   title: ""
   # Avatar configurations.
   avatar:
-    # X.
+    # The URL of the avatar image to display on the LittleLink page.
     # Example:
-    # url: "https://pbs.twimg.com/profile_images/1286144221217316864/qIAsKOpB_400x400.jpg"
+    # url: "https://example.com/avatar.jpg"
     url: ""
-    # X.
+    # The accessible alternate text for the avatar image.
     # Default: `${.name}`
     # Example:
-    # alt: "foo"
+    # alt: "Profile picture"
     alt: ""
-    # X.
+    # The width of the avatar image in pixels.
     # Default: "400"
     # Example:
     # width: "600"
     width: ""
-    # X.
+    # The height of the avatar image in pixels.
     # Default: "400"
     # Example:
     # height: "600"
@@ -112,41 +112,41 @@ littlelink:
   # X.
   # Example:
   # links:
-  #   # X.
+  #   # The unique identifier or title for the link.
   #   # Example:
   #   # name: "github"
   #   - name: ""
-  #   # X.
+  #   # The URL to which the link should point.
   #   # Example:
-  #   # url: "https://l.technotim.live/github"
+  #   # url: "https://github.com"
   #     url: ""
   #   # Custom link configurations.
   #   # Items: `.enabled`, `.text`, `.alt`, `.icon`, `.color`, `.text_color`
   #     custom:
-  #       # Specifies whether the link is custom.
+  #       # Specifies whether the link should use custom configurations.
   #       # Example:
   #       # enabled: true
   #       enabled: false
-  #       # X.
+  #       # The text that will be displayed for the custom link.
   #       # Default: `${links.name}`
   #       # Example:
   #       # text: "Documentation"
   #       text: ""
-  #       # X.
+  #       # The accessible alternate text for the custom link.
   #       # Default: `${links.custom.text}`
   #       # Example:
-  #       # alt: "foo"
+  #       # alt: "Link to documentation"
   #       alt: ""
-  #       # X.
+  #       # The icon that will be displayed on the custom link, typically using an icon class.
   #       # Example:
-  #       # icon: "fas file-alt"
+  #       # icon: "fas fa-file-alt"
   #       icon: ""
-  #       # X.
+  #       # The background color of the custom link button.
   #       # Default: "#000000"
   #       # Example:
   #       # color: "#ffffff"
   #       color: ""
-  #       # X.
+  #       # The color of the text within the custom link button.
   #       # Default: "#ffffff"
   #       # Example:
   #       # text_color: "#000000"
