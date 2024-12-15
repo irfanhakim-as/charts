@@ -2,7 +2,7 @@ apiVersion: v2
 name: littlelink
 description: The DIY self-hosted LinkTree alternative.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "latest"
 keywords:
   - "littlelink"

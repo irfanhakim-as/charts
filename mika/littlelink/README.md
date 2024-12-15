@@ -141,12 +141,14 @@ The DIY self-hosted LinkTree alternative.
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | littlelink.author | string | `""` | The author of the LittleLink page, used for meta tags and general attribution. |
 | littlelink.avatar.alt | string | `""` | The accessible alternate text for the avatar image. Default: `${.name}`. |
+| littlelink.avatar.file | string | `""` | The file of the avatar image to display on the LittleLink page. |
 | littlelink.avatar.height | string | `""` | The height of the avatar image in pixels. Default: `"400"`. |
 | littlelink.avatar.url | string | `""` | The URL of the avatar image to display on the LittleLink page. |
 | littlelink.avatar.width | string | `""` | The width of the avatar image in pixels. Default: `"400"`. |
 | littlelink.biography | string | `""` | A short description or biography about the owner of the LittleLink page. |
 | littlelink.domain | string | `""` | The ingress domain name that hosts the LittleLink server. |
-| littlelink.favicon | string | `""` | The URL of the favicon representing the LittleLink page. |
+| littlelink.favicon.file | string | `""` | The file of the favicon representing the LittleLink page. |
+| littlelink.favicon.url | string | `""` | The URL of the favicon representing the LittleLink page. |
 | littlelink.footer | string | `""` | The text to display at the bottom of the LittleLink page. |
 | littlelink.initScript | string | `""` | Custom init script to run before the LittleLink container starts. |
 | littlelink.links | list | `[]` | The list of links to be displayed on the LittleLink interface. Items: `.name`, `.url`, `.custom`. |

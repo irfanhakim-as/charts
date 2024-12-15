@@ -1,3 +1,5 @@
+{{- $avatarFile := .Values.littlelink.avatar.file }}
+{{- $faviconFile := .Values.littlelink.favicon.file }}
 {{- $littlelink_registry := .Values.image.littlelink.registry | default "ghcr.io" | toString }}
 {{- $littlelink_repository := .Values.image.littlelink.repository | default "techno-tim/littlelink-server" | toString }}
 {{- $littlelink_tag := .Values.image.littlelink.tag | default .Chart.AppVersion | toString }}
@@ -57,3 +59,32 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-littlelink-cm
+          {{- if or $avatarFile $faviconFile }}
+          volumeMounts:
+            {{- if $avatarFile }}
+            - name: {{ .Release.Name }}-littlelink-assets
+              mountPath: "/usr/src/app/build/public/static/media/avatar.jpg"
+              subPath: "avatar.jpg"
+            {{- end }}
+            {{- if $faviconFile }}
+            - name: {{ .Release.Name }}-littlelink-assets
+              mountPath: "/usr/src/app/build/public/static/media/favicon.jpg"
+              subPath: "favicon.jpg"
+            {{- end }}
+          {{- end }}
+      {{- if or $avatarFile $faviconFile }}
+      volumes:
+        - name: {{ .Release.Name }}-littlelink-assets
+          secret:
+            secretName: {{ .Release.Name }}-littlelink-assets
+            defaultMode: 0644
+            items:
+              {{- if $avatarFile }}
+              - key: "avatar.jpg"
+                path: "avatar.jpg"
+              {{- end }}
+              {{- if $faviconFile }}
+              - key: "favicon.jpg"
+                path: "favicon.jpg"
+              {{- end }}
+      {{- end }}
