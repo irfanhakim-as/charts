@@ -1,4 +1,4 @@
-# LittleLink
+# [LittleLink](https://github.com/sethcottle/littlelink)
 
 The DIY self-hosted LinkTree alternative.
 
