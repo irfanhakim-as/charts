@@ -45,8 +45,10 @@ data:
   OG_IMAGE: {{ $avatarUrl | quote }}
   AVATAR_2X_URL: {{ $avatarUrl | quote }}
   AVATAR_ALT: {{ $avatarAlt }}
+{{- if $avatarUrl }}
   OG_IMAGE_WIDTH: {{ $avatarWidth }}
   OG_IMAGE_HEIGHT: {{ $avatarHeight }}
+{{- end }}
 {{- if $endpoint }}
   OG_URL: {{ $endpoint }}
 {{- end }}
