@@ -15,7 +15,7 @@
 {{- end }}
 {{- $favicon := .Values.littlelink.favicon | toString | quote }}
 {{- $footer := .Values.littlelink.footer | toString | quote }}
-{{- $site_name := .Values.littlelink.site_name | default "LittleLink" | toString | quote }}
+{{- $name := .Values.littlelink.name | default "LittleLink" | toString | quote }}
 {{- $theme := .Values.littlelink.theme | default "dark" | toString | title | quote }}
 {{- $title := .Values.littlelink.title | default "LittleLink" | toString | quote }}
 {{- $avatarUrl := .Values.littlelink.avatar.url | toString }}
@@ -36,7 +36,7 @@ data:
   OG_DESCRIPTION: {{ $biography }}
   FAVICON_URL: {{ $favicon }}
   FOOTER: {{ $footer }}
-  OG_SITE_NAME: {{ $site_name }}
+  OG_SITE_NAME: {{ $name }}
   THEME: {{ $theme }}
   META_TITLE: {{ $title }}
   OG_TITLE: {{ $title }}

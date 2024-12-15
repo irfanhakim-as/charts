@@ -70,8 +70,8 @@ littlelink:
   # X.
   # Default: "LittleLink"
   # Example:
-  # site_name: "foo"
-  site_name: ""
+  # name: "foo"
+  name: ""
   # X.
   # Default: "dark"
   # Example:
