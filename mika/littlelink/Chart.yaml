@@ -9,7 +9,7 @@ keywords:
   - "linktree"
   - "links"
 home: "https://github.com/sethcottle/littlelink"
-icon: "https://irfanhakim-as.github.io/charts/logos/littlelink.png"
+icon: "https://irfanhakim-as.github.io/charts/logos/littlelink.svg"
 sources:
   - "https://github.com/sethcottle/littlelink"
   - "https://github.com/techno-tim/littlelink-server"
