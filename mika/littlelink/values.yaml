@@ -78,7 +78,7 @@ littlelink:
   # theme: "light"
   theme: ""
   # X.
-  # Default: "foo"
+  # Default: "LittleLink"
   # Example:
   # title: "foo"
   title: ""
