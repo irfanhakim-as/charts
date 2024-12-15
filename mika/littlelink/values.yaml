@@ -59,10 +59,6 @@ littlelink:
   # Example:
   # domain: "littlelink.example.com"
   domain: ""
-  # The URL of the favicon representing the LittleLink page.
-  # Example:
-  # favicon: "https://example.com/favicon.ico"
-  favicon: ""
   # The text to display at the bottom of the LittleLink page.
   # Example:
   # footer: "LittleLink © 2024"
@@ -109,6 +105,18 @@ littlelink:
     # Example:
     # height: "600"
     height: ""
+  # Favicon configurations.
+  favicon:
+    # The file of the favicon representing the LittleLink page.
+    # Note: The `${.url}` option is ignored if this option is set.
+    # Example:
+    # ```--set-file littlelink.favicon.file=favicon.jpg```
+    file: ""
+    # The URL of the favicon representing the LittleLink page.
+    # Note: This option is ignored if the `${.file}` option is set.
+    # Example:
+    # favicon: "https://example.com/favicon.ico"
+    url: ""
   # Custom init script to run before the LittleLink container starts.
   # Example:
   # initScript: >-
