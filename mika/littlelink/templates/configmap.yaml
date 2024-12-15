@@ -36,6 +36,7 @@ data:
   OG_DESCRIPTION: {{ $biography }}
   FAVICON_URL: {{ $favicon }}
   FOOTER: {{ $footer }}
+  NAME: {{ $name }}
   OG_SITE_NAME: {{ $name }}
   THEME: {{ $theme }}
   META_TITLE: {{ $title }}
