@@ -1,0 +1,71 @@
+{{- $endpoint := "" }}
+{{- $customLinks := list }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $links := .Values.littlelink.links }}
+{{- range $links }}
+  {{- if .custom.enabled }}
+    {{- $customLinks = append $customLinks . }}
+  {{- end }}
+{{- end }}
+{{- $author := .Values.littlelink.author | toString | quote }}
+{{- $biography := .Values.littlelink.biography | toString | quote }}
+{{- $domain := .Values.littlelink.domain | default "localhost" | toString }}
+{{- if and $ingress (not (eq $domain "localhost")) }}
+{{- $endpoint = printf "https://%s" $domain | quote }}
+{{- end }}
+{{- $favicon := .Values.littlelink.favicon | toString | quote }}
+{{- $footer := .Values.littlelink.footer | toString | quote }}
+{{- $name := .Values.littlelink.name | default "LittleLink" | toString }}
+{{- $theme := .Values.littlelink.theme | default "dark" | toString | title | quote }}
+{{- $title := .Values.littlelink.title | default "LittleLink" | toString | quote }}
+{{- $avatarUrl := .Values.littlelink.avatar.url | toString }}
+{{- $avatarAlt := .Values.littlelink.avatar.alt | default $name | toString | quote }}
+{{- $avatarWidth := .Values.littlelink.avatar.width | default "400" | toString | quote }}
+{{- $avatarHeight := .Values.littlelink.avatar.height | default "400" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-littlelink-cm
+  labels:
+    {{- include "littlelink.labels" . | nindent 4 }}
+data:
+  META_AUTHOR: {{ $author }}
+  BIO: {{ $biography }}
+  META_DESCRIPTION: {{ $biography }}
+  OG_DESCRIPTION: {{ $biography }}
+  FAVICON_URL: {{ $favicon }}
+  FOOTER: {{ $footer }}
+  NAME: {{ $name | quote }}
+  OG_SITE_NAME: {{ $name | quote }}
+  THEME: {{ $theme }}
+  META_TITLE: {{ $title }}
+  OG_TITLE: {{ $title }}
+  AVATAR_URL: {{ $avatarUrl | quote }}
+  OG_IMAGE: {{ $avatarUrl | quote }}
+  AVATAR_2X_URL: {{ $avatarUrl | quote }}
+  AVATAR_ALT: {{ $avatarAlt }}
+{{- if $avatarUrl }}
+  OG_IMAGE_WIDTH: {{ $avatarWidth }}
+  OG_IMAGE_HEIGHT: {{ $avatarHeight }}
+{{- end }}
+{{- if $endpoint }}
+  OG_URL: {{ $endpoint }}
+{{- end }}
+{{- if $links }}
+  BUTTON_ORDER: "{{- range $index, $link := $links }}{{- if and $index $link.name }},{{- end }}{{ $link.name | toString | upper }}{{- end }}"
+  {{- range $index, $link := $links }}
+    {{- if and $link.name (not $link.custom.enabled) }}
+  {{ $link.name | toString | upper }}: {{ $link.url | toString | quote }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- if $customLinks }}
+  CUSTOM_BUTTON_NAME: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.name | toString | upper }}{{- end }}"
+  CUSTOM_BUTTON_TEXT: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.text | default ($link.name | toString | title) | toString }}{{- end }}"
+  CUSTOM_BUTTON_URL: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.url | toString }}{{- end }}"
+  CUSTOM_BUTTON_COLOR: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.color | default "#000000" | toString }}{{- end }}"
+  CUSTOM_BUTTON_TEXT_COLOR: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.text_color | default "#ffffff" | toString }}{{- end }}"
+  CUSTOM_BUTTON_ALT_TEXT: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.alt | default ($link.custom.text | default ($link.name | toString | title)) | toString }}{{- end }}"
+  CUSTOM_BUTTON_ICON: "{{- range $index, $link := $customLinks }}{{- if $index }},{{- end }}{{ $link.custom.icon | toString }}{{- end }}"
+{{- end }}

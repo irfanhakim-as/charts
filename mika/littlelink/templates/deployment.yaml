@@ -1,0 +1,59 @@
+{{- $littlelink_registry := .Values.image.littlelink.registry | default "ghcr.io" | toString }}
+{{- $littlelink_repository := .Values.image.littlelink.repository | default "techno-tim/littlelink-server" | toString }}
+{{- $littlelink_tag := .Values.image.littlelink.tag | default .Chart.AppVersion | toString }}
+{{- $littlelink_pullPolicy := .Values.image.littlelink.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $initScript := .Values.littlelink.initScript | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-littlelink
+  labels:
+    {{- include "littlelink.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "littlelink.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "littlelink.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - >-
+              {{- $initScript | nindent 14 }}
+      {{- end }}
+      containers:
+        - name: littlelink
+          image: {{ printf "%s/%s:%s" $littlelink_registry $littlelink_repository $littlelink_tag | quote }}
+          imagePullPolicy: {{ $littlelink_pullPolicy }}
+          ports:
+            - name: littlelink
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.littlelink | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-littlelink-cm

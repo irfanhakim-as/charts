@@ -1,0 +1,233 @@
+# Default values for littlelink.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for LittleLink.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for LittleLink.
+image:
+  # LittleLink container image configurations.
+  # Source: https://github.com/techno-tim/littlelink-server/pkgs/container/littlelink-server
+  littlelink:
+    # The registry where the LittleLink container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the LittleLink container image used.
+    # Default: "techno-tim/littlelink-server"
+    repository: ""
+    # The tag that specifies the version of the LittleLink container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the LittleLink container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# LittleLink configurations.
+littlelink:
+  # The author of the LittleLink page, used for meta tags and general attribution.
+  # Example:
+  # author: "John Doe"
+  author: ""
+  # A short description or biography about the owner of the LittleLink page.
+  # Example:
+  # biography: "Tech enthusiast sharing useful links and resources."
+  biography: ""
+  # The ingress domain name that hosts the LittleLink server.
+  # Example:
+  # domain: "littlelink.example.com"
+  domain: ""
+  # The URL of the favicon representing the LittleLink page.
+  # Example:
+  # favicon: "https://example.com/favicon.ico"
+  favicon: ""
+  # The text to display at the bottom of the LittleLink page.
+  # Example:
+  # footer: "LittleLink © 2024"
+  footer: ""
+  # The display name to be shown prominently as the LittleLink page header.
+  # Default: "LittleLink"
+  # Example:
+  # name: "My Link Page"
+  name: ""
+  # The selected LittleLink theme which features a predefined visual style, colors, and layouts.
+  # Default: "dark"
+  # Example:
+  # theme: "light"
+  theme: ""
+  # The title displayed in the browser tab of the LittleLink page.
+  # Default: "LittleLink"
+  # Example:
+  # title: "My Link Page"
+  title: ""
+  # Avatar configurations.
+  avatar:
+    # The URL of the avatar image to display on the LittleLink page.
+    # Example:
+    # url: "https://example.com/avatar.jpg"
+    url: ""
+    # The accessible alternate text for the avatar image.
+    # Default: `${.name}`
+    # Example:
+    # alt: "Profile picture"
+    alt: ""
+    # The width of the avatar image in pixels.
+    # Default: "400"
+    # Example:
+    # width: "600"
+    width: ""
+    # The height of the avatar image in pixels.
+    # Default: "400"
+    # Example:
+    # height: "600"
+    height: ""
+  # Custom init script to run before the LittleLink container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+  # The list of links to be displayed on the LittleLink interface.
+  # Items: `.name`, `.url`, `.custom`
+  # Example:
+  # links:
+  #   # The unique identifier or title for the link.
+  #   # Example:
+  #   # name: "github"
+  #   - name: ""
+  #   # The URL to which the link should point.
+  #   # Example:
+  #   # url: "https://github.com"
+  #     url: ""
+  #   # Custom link configurations.
+  #   # Items: `.enabled`, `.text`, `.alt`, `.icon`, `.color`, `.text_color`
+  #     custom:
+  #       # Specifies whether the link should use custom configurations.
+  #       # Example:
+  #       # enabled: true
+  #       enabled: false
+  #       # The text that will be displayed for the custom link.
+  #       # Default: `${links.name}`
+  #       # Example:
+  #       # text: "Documentation"
+  #       text: ""
+  #       # The accessible alternate text for the custom link.
+  #       # Default: `${links.custom.text}`
+  #       # Example:
+  #       # alt: "Link to documentation"
+  #       alt: ""
+  #       # The icon that will be displayed on the custom link, typically using an icon class.
+  #       # Example:
+  #       # icon: "fas fa-file-alt"
+  #       icon: ""
+  #       # The background color of the custom link button.
+  #       # Default: "#000000"
+  #       # Example:
+  #       # color: "#ffffff"
+  #       color: ""
+  #       # The color of the text within the custom link button.
+  #       # Default: "#ffffff"
+  #       # Example:
+  #       # text_color: "#000000"
+  #       text_color: ""
+  links: []
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting LittleLink services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the LittleLink server should listen for connections.
+  # Default: "8080"
+  # Example:
+  # port: "80"
+  port: ""
+  # The type of service used to expose LittleLink services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Resource requirements and limits for LittleLink containers.
+resources:
+  # LittleLink container resources.
+  # Example:
+  # littlelink:
+  #   # The minimum amount of resources required by LittleLink to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by LittleLink.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "50m"
+  #     # The minimum amount of memory required by LittleLink.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "50Mi"
+  #   # The maximum amount of resources allowed for LittleLink.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for LittleLink.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "100m"
+  #     # The maximum amount of memory allowed for LittleLink.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "100Mi"
+  littlelink: {}
