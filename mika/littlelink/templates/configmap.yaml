@@ -18,7 +18,7 @@
 {{- $site_name := .Values.littlelink.site_name | default "LittleLink" | toString | quote }}
 {{- $theme := .Values.littlelink.theme | default "dark" | toString | title | quote }}
 {{- $title := .Values.littlelink.title | default "LittleLink" | toString | quote }}
-{{- $avatarUrl := .Values.littlelink.avatar.url | toString | quote }}
+{{- $avatarUrl := .Values.littlelink.avatar.url | toString }}
 {{- $avatarAlt := .Values.littlelink.avatar.alt | toString | quote }}
 {{- $avatarWidth := .Values.littlelink.avatar.width | default "400" | toString | quote }}
 {{- $avatarHeight := .Values.littlelink.avatar.height | default "400" | toString | quote }}
@@ -40,9 +40,9 @@ data:
   THEME: {{ $theme }}
   META_TITLE: {{ $title }}
   OG_TITLE: {{ $title }}
-  AVATAR_URL: {{ $avatarUrl }}
-  OG_IMAGE: {{ $avatarUrl }}
-  AVATAR_2X_URL: {{ $avatarUrl }}
+  AVATAR_URL: {{ $avatarUrl | quote }}
+  OG_IMAGE: {{ $avatarUrl | quote }}
+  AVATAR_2X_URL: {{ $avatarUrl | quote }}
   AVATAR_ALT: {{ $avatarAlt }}
   OG_IMAGE_WIDTH: {{ $avatarWidth }}
   OG_IMAGE_HEIGHT: {{ $avatarHeight }}
