@@ -215,19 +215,19 @@ resources:
   #     # The minimum amount of CPU resources required by LittleLink.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "10m"
+  #     cpu: "50m"
   #     # The minimum amount of memory required by LittleLink.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "10Mi"
+  #     memory: "50Mi"
   #   # The maximum amount of resources allowed for LittleLink.
   #   limits:
   #     # The maximum amount of CPU resources allowed for LittleLink.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "250m"
+  #     cpu: "100m"
   #     # The maximum amount of memory allowed for LittleLink.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "250Mi"
+  #     memory: "100Mi"
   littlelink: {}
