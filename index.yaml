@@ -834,6 +834,31 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/linkstack-0.1.0/linkstack-0.1.0.tgz
     version: 0.1.0
+  littlelink:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-12-15T08:02:39.094521715Z"
+    description: The DIY self-hosted LinkTree alternative.
+    digest: 85510bd8492f3c0ca9bec6282512bfd714c7ff7e0b838562978d3ec230c00b70
+    home: https://github.com/sethcottle/littlelink
+    icon: https://irfanhakim-as.github.io/charts/logos/littlelink.svg
+    keywords:
+    - littlelink
+    - linktree
+    - links
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: littlelink
+    sources:
+    - https://github.com/sethcottle/littlelink
+    - https://github.com/techno-tim/littlelink-server
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/littlelink-0.1.0/littlelink-0.1.0.tgz
+    version: 0.1.0
   mango:
   - apiVersion: v2
     appVersion: 0.0.1-stable
@@ -2788,4 +2813,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-13T17:42:55.20519641Z"
+generated: "2024-12-15T08:02:39.094944887Z"
