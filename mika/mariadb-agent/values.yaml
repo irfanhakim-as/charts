@@ -28,6 +28,11 @@ imagePullSecrets: []
 
 # MariaDB-Agent configurations.
 mariadb:
+  # The command-line client tool to connect to the database server.
+  # Default: "mariadb"
+  # Example:
+  # client: "mysql"
+  client: ""
   # The hostname or IP address of the MariaDB database server.
   # Example:
   # host: "mariadb.default.svc.cluster.local"
