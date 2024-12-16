@@ -1,6 +1,6 @@
 # [MariaDB-Agent](https://github.com/MariaDB/server)
 
-Easily create or delete multiple pairs of databases and users in a remote MariaDB instance.
+Easily create or delete multiple pairs of databases and users in a remote MariaDB or MySQL instance.
 
 ## Prerequisites
 
