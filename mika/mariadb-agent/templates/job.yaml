@@ -1,8 +1,9 @@
+{{- $databases := .Values.mariadb.databases }}
 {{- $mariadb_registry := .Values.image.mariadb.registry | default "docker.io" | toString }}
 {{- $mariadb_repository := .Values.image.mariadb.repository | default "bitnami/mariadb" | toString }}
 {{- $mariadb_tag := .Values.image.mariadb.tag | default .Chart.AppVersion | toString }}
 {{- $mariadb_pullPolicy := .Values.image.mariadb.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $databases := .Values.mariadb.databases }}
+{{- $client := .Values.mariadb.client | default "mariadb" | toString }}
 {{- $mariadbHost := .Values.mariadb.host | default "mariadb" | toString }}
 ---
 apiVersion: batch/v1
@@ -37,7 +38,7 @@ spec:
           args:
             - -c
             - >-
-              mariadb -h $(DB_HOST) -P $(DB_PORT) -u $(ROOT_USER) -e '
+              {{ $client }} -h $(DB_HOST) -P $(DB_PORT) -u $(ROOT_USER) -e '
             {{- range $databases }}
               {{- $create := .create }}
               {{- $drop := .drop }}
