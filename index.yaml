@@ -956,6 +956,30 @@ entries:
   mariadb-agent:
   - apiVersion: v2
     appVersion: 11.1.3-debian-11-r0
+    created: "2024-12-16T06:40:50.884482343Z"
+    description: Easily create or delete multiple pairs of databases and users in
+      a remote MariaDB or MySQL instance.
+    digest: d334ba97c7d9fddb1002705172857c8a17f161d5e66bc4e65aa3b0347fe9d7c8
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mariadb.svg
+    keywords:
+    - mariadb
+    - mysql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mariadb-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.3/mariadb-agent-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 11.1.3-debian-11-r0
     created: "2024-11-21T08:34:05.276244682Z"
     description: Easily create or delete multiple pairs of databases and users in
       a remote MariaDB instance.
@@ -2837,4 +2861,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-15T16:41:46.320084493Z"
+generated: "2024-12-16T06:40:50.88485911Z"
