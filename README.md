@@ -28,7 +28,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [kutt](mika/kutt) | Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics. | ✅ | ✅ |
 | [linkstack](mika/linkstack) | LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface. | ✅ | ✅ |
 | [littlelink](mika/littlelink) | The DIY self-hosted LinkTree alternative. | ✅ | ✅ |
-| [mariadb-agent](mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB instance. | ✅ | ✅ |
+| [mariadb-agent](mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB or MySQL instance. | ✅ | ✅ |
 | [postgres](mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
 | [postgres-agent](mika/postgres-agent) | Easily create or delete a database and user pair in a remote PostgreSQL instance. | ✅ | ✅ |
 | [rizz](mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to Mastodon. | ✅ | 🔒 |
