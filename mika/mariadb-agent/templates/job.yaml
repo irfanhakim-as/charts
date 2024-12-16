@@ -52,7 +52,7 @@ spec:
               {{- end }}
               {{- if $create }}
                 CREATE USER IF NOT EXISTS {{ $user | quote }}@"%";
-                SET PASSWORD FOR {{ $user | quote }}@"%" = PASSWORD({{ $password | quote }});
+                ALTER USER {{ $user | quote }}@"%" IDENTIFIED BY {{ $password | quote }};
                 CREATE DATABASE IF NOT EXISTS {{ $db }};
                 GRANT ALL PRIVILEGES ON {{ $db }}.* TO {{ $user | quote }}@"%";
               {{- end }}
