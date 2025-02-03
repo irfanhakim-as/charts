@@ -121,3 +121,9 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
     ```
 
     Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
+
+---
+
+## License
+
+This project is licensed under the [MIT](https://choosealicense.com/licenses/mit) License. Please refer to the [LICENSE](LICENSE) file for more information.
