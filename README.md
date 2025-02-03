@@ -126,4 +126,4 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 
 ## License
 
-This project is licensed under the [MIT](https://choosealicense.com/licenses/mit) License. Please refer to the [LICENSE](LICENSE) file for more information.
+This project is licensed under the [AGPL-3.0-only](https://choosealicense.com/licenses/agpl-3.0) license. Please refer to the [LICENSE](LICENSE) file for more information.
