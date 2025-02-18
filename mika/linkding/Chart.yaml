@@ -1,0 +1,17 @@
+apiVersion: v2
+name: linkding
+description: Linkding is a bookmark manager that you can host yourself. It's designed be to be minimal, fast, and easy to set up using Docker.
+type: application
+version: 0.1.0
+appVersion: "1.38.0-alpine"
+keywords:
+  - "linkding"
+home: "https://github.com/sissbruecker/linkding"
+icon: "https://raw.githubusercontent.com/sissbruecker/linkding/refs/heads/master/assets/logo.svg"
+sources:
+  - "https://github.com/sissbruecker/linkding"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://l.irfanhak.im/links"

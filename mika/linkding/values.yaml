@@ -1,0 +1,224 @@
+# Default values for linkding.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Linkding.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Linkding.
+image:
+  # Linkding container image configurations.
+  # Source: https://hub.docker.com/r/sissbruecker/linkding
+  linkding:
+    # The registry where the Linkding container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Linkding container image used.
+    # Default: "sissbruecker/linkding"
+    repository: ""
+    # The tag that specifies the version of the Linkding container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Linkding container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Linkding configurations.
+linkding:
+  # X.
+  # Default: "false"
+  # Example:
+  # disableBackgroundTasks: "true"
+  disableBackgroundTasks: ""
+  # X.
+  # Default: "false"
+  # Example:
+  # disableUrlValidation: "true"
+  disableUrlValidation: ""
+  # The ingress domain name that hosts the Linkding server.
+  # Example:
+  # domain: "linkding.example.com"
+  domain: ""
+  # X.
+  # Example:
+  # csrfTrustedOrigins:
+  #   - "X"
+  #   - "X"
+  csrfTrustedOrigins: []
+  # Custom init script to run before the Linkding container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+  # X.
+  admin:
+    # X.
+    # Example:
+    # user: "X"
+    user: ""
+    # X.
+    # Example:
+    # password: "X"
+    password: ""
+
+# Database configurations.
+db:
+  # The database engine or backend being used by Linkding.
+  # Default: "sqlite"
+  # Example:
+  # type: "postgres"
+  type: ""
+  # The hostname or IP address of the Linkding database server.
+  # Example:
+  # host: "linkding.default.svc.cluster.local"
+  host: ""
+  # The port number the Linkding database server is listening for connections.
+  # Example:
+  # port: "5432"
+  port: ""
+  # The name of the database being used by Linkding.
+  # Example:
+  # name: "linkding"
+  name: ""
+  # The username or user account for accessing the Linkding database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Linkding database user.
+  # Example:
+  # password: "password"
+  password: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Linkding services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Linkding server should listen for connections.
+  # Default: "9090"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used to expose Linkding services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/etc/linkding/data"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+
+# Resource requirements and limits for Linkding containers.
+resources:
+  # Linkding container resources.
+  # Example:
+  # linkding:
+  #   # The minimum amount of resources required by Linkding to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Linkding.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Linkding.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for Linkding.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Linkding.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for Linkding.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  linkding: {}
