@@ -26,6 +26,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [ghost](mika/ghost) | Ghost is an independent platform for publishing online by web and email newsletter. | ✅ | ✅ |
 | [grocy](mika/grocy) | Grocy is a web-based self-hosted groceries & household management solution for your home. | ✅ | ✅ |
 | [kutt](mika/kutt) | Kutt is a modern URL shortener with support for custom domains. Shorten URLs, manage your links and view the click rate statistics. | ✅ | ✅ |
+| [linkding](mika/linkding) | Linkding is a bookmark manager that you can host yourself. It's designed to be minimal, fast, and easy to set up using Docker. | ✅ | ✅ |
 | [linkstack](mika/linkstack) | LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface. | ✅ | ✅ |
 | [littlelink](mika/littlelink) | The DIY self-hosted LinkTree alternative. | ✅ | ✅ |
 | [mariadb-agent](mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB or MySQL instance. | ✅ | ✅ |
