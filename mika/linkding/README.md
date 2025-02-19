@@ -127,31 +127,40 @@ Linkding is a bookmark manager that you can host yourself. It's designed be to b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| linkding.bar | string | `""` | The secret value of the Linkding bar. Default: `"bar"`. |
-| linkding.domain | string | `""` | The ingress domain name that hosts the Linkding server. |
-| linkding.foo | string | `""` | The value of the Linkding foo. Default: `"foo"`. |
-| linkding.initScript | string | `""` | Custom init script to run before the Linkding container starts. |
-| image.linkding.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Linkding container image. Default: `"IfNotPresent"`. |
-| image.linkding.registry | string | `""` | The registry where the Linkding container image is hosted. Default: `"docker.io"`. |
-| image.linkding.repository | string | `""` | The name of the repository that contains the Linkding container image used. Default: `"linkding"`. |
-| image.linkding.tag | string | `""` | The tag that specifies the version of the Linkding container image used. Default: `Chart appVersion`. |
+| db.host | string | `""` | The hostname or IP address of the Linkding database server. |
+| db.name | string | `""` | The name of the database being used by Linkding. |
+| db.password | string | `""` | The password associated with the Linkding database user. |
+| db.port | string | `""` | The port number the Linkding database server is listening for connections. |
+| db.type | string | `""` | The database engine or backend being used by Linkding. Default: `"sqlite"`. |
+| db.user | string | `""` | The username or user account for accessing the Linkding database. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
 | image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
+| image.linkding.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Linkding container image. Default: `"IfNotPresent"`. |
+| image.linkding.registry | string | `""` | The registry where the Linkding container image is hosted. Default: `"docker.io"`. |
+| image.linkding.repository | string | `""` | The name of the repository that contains the Linkding container image used. Default: `"sissbruecker/linkding"`. |
+| image.linkding.tag | string | `""` | The tag that specifies the version of the Linkding container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Linkding services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
+| linkding.admin.password | string | `""` | The password associated with the initial admin user. |
+| linkding.admin.user | string | `""` | The username of the initial admin user for accessing the Linkding portal. |
+| linkding.csrfTrustedOrigins | list | `[]` | A list of trusted origins that will be accepted during CSRF verification even if their headers do not match. |
+| linkding.disableBackgroundTasks | string | `""` | Specifies whether to disable background tasks and task scheduling. Default: `"false"`. |
+| linkding.disableUrlValidation | string | `""` | Specifies whether to disable URL validation for added bookmarks. Default: `"false"`. |
+| linkding.domain | string | `""` | The ingress domain name that hosts the Linkding server. |
+| linkding.initScript | string | `""` | Custom init script to run before the Linkding container starts. |
 | replicaCount | string | `""` | The desired number of running replicas for Linkding. Default: `"1"`. |
 | resources.linkding | object | `{}` | Linkding container resources. |
 | service.nodePort | string | `""` | The optional node port to expose when the service type is NodePort. |
-| service.port | string | `""` | The port on which the Linkding server should listen for connections. Default: `"80"`. |
+| service.port | string | `""` | The port on which the Linkding server should listen for connections. Default: `"9090"`. |
 | service.type | string | `""` | The type of service used to expose Linkding services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/etc/linkding/data"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
