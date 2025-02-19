@@ -1,6 +1,6 @@
 # Linkding
 
-A Helm chart for deploying Linkding.
+Linkding is a bookmark manager that you can host yourself. It's designed be to be minimal, fast, and easy to set up using Docker.
 
 ## Prerequisites
 
