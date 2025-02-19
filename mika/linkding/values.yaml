@@ -47,12 +47,12 @@ imagePullSecrets: []
 
 # Linkding configurations.
 linkding:
-  # X.
+  # Specifies whether to disable background tasks and task scheduling.
   # Default: "false"
   # Example:
   # disableBackgroundTasks: "true"
   disableBackgroundTasks: ""
-  # X.
+  # Specifies whether to disable URL validation for added bookmarks.
   # Default: "false"
   # Example:
   # disableUrlValidation: "true"
@@ -61,11 +61,11 @@ linkding:
   # Example:
   # domain: "linkding.example.com"
   domain: ""
-  # X.
+  # A list of trusted origins that will be accepted during CSRF verification even if their headers do not match.
   # Example:
   # csrfTrustedOrigins:
-  #   - "X"
-  #   - "X"
+  #   - "https://linkding.example.com"
+  #   - "https://www.linkding.example.com"
   csrfTrustedOrigins: []
   # Custom init script to run before the Linkding container starts.
   # Example:
@@ -73,15 +73,15 @@ linkding:
   #   echo "Hello, World!"
   #   echo "This is a custom init script."
   initScript: ""
-  # X.
+  # Administration configurations.
   admin:
-    # X.
+    # The username of the initial admin user for accessing the Linkding portal.
     # Example:
-    # user: "X"
+    # user: "linkding"
     user: ""
-    # X.
+    # The password associated with the initial admin user.
     # Example:
-    # password: "X"
+    # password: "password"
     password: ""
 
 # Database configurations.
