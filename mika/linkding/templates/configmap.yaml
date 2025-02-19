@@ -1,0 +1,14 @@
+{{- $disableBackgroundTasks := .Values.linkding.disableBackgroundTasks | default "false" | toString | title | quote }}
+{{- $disableUrlValidation := .Values.linkding.disableUrlValidation | default "false" | toString | title | quote }}
+{{- $csrfTrustedOrigins := .Values.linkding.csrfTrustedOrigins | join "," | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-linkding-cm
+  labels:
+    {{- include "linkding.labels" . | nindent 4 }}
+data:
+  LD_DISABLE_BACKGROUND_TASKS: {{ $disableBackgroundTasks }}
+  LD_DISABLE_URL_VALIDATION: {{ $disableUrlValidation }}
+  LD_CSRF_TRUSTED_ORIGINS: {{ $csrfTrustedOrigins }}
