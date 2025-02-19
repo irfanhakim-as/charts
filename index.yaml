@@ -785,6 +785,29 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.1.0/kutt-0.1.0.tgz
     version: 0.1.0
+  linkding:
+  - apiVersion: v2
+    appVersion: 1.38.0-alpine
+    created: "2025-02-19T08:47:30.253521549Z"
+    description: Linkding is a bookmark manager that you can host yourself. It's designed
+      to be minimal, fast, and easy to set up using Docker.
+    digest: 9318e83c9a2d4230ef0ce2673735a6fb1289b76a496848a4d3c37195c0e5af23
+    home: https://github.com/sissbruecker/linkding
+    icon: https://raw.githubusercontent.com/sissbruecker/linkding/refs/heads/master/assets/logo.svg
+    keywords:
+    - linkding
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://l.irfanhak.im/links
+    name: linkding
+    sources:
+    - https://github.com/sissbruecker/linkding
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/linkding-0.1.0/linkding-0.1.0.tgz
+    version: 0.1.0
   linkstack:
   - apiVersion: v2
     appVersion: latest
@@ -2861,4 +2884,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-16T06:40:50.88485911Z"
+generated: "2025-02-19T08:47:30.253900401Z"
