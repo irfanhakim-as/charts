@@ -206,19 +206,19 @@ resources:
   #     # The minimum amount of CPU resources required by Linkding.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "10m"
+  #     cpu: "100m"
   #     # The minimum amount of memory required by Linkding.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "10Mi"
+  #     memory: "256Mi"
   #   # The maximum amount of resources allowed for Linkding.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Linkding.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "250m"
+  #     cpu: "200m"
   #     # The maximum amount of memory allowed for Linkding.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "250Mi"
+  #     memory: "384Mi"
   linkding: {}
