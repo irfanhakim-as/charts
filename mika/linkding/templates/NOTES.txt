@@ -1,7 +1,7 @@
 {{- $serviceAddress := "" }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.linkding.domain | toString }}
-{{- $port := .Values.service.port | default "80" | toString }}
+{{- $port := .Values.service.port | default "9090" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-linkding-svc" .Release.Name | toString }}
 Linkding has been installed and configured for {{ .Release.Name | toString }} 🎉
