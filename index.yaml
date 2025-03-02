@@ -2519,6 +2519,31 @@ entries:
     version: 0.1.1
   waktusolat:
   - apiVersion: v2
+    appVersion: 0.4.0-stable-r1
+    created: "2025-03-02T13:11:57.771009169Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: c3fe3a2aaff0c312e215fcf833836778cfaedaf01eeedc53834120af38e49e16
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.4/waktusolat-0.4.4.tgz
+    version: 0.4.4
+  - apiVersion: v2
     appVersion: 0.3.0-stable-r5
     created: "2024-11-24T09:49:07.95393627Z"
     description: Waktu Solat is a simple web application that posts local prayer times
@@ -2884,4 +2909,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-19T08:47:30.253900401Z"
+generated: "2025-03-02T13:11:57.771256264Z"
