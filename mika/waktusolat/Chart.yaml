@@ -3,7 +3,7 @@ name: waktusolat
 description: Waktu Solat is a simple web application that posts local prayer times to federated social network.
 type: application
 version: 0.4.3
-appVersion: "0.3.0-stable-r5"
+appVersion: "0.4.0-stable-r1"
 keywords:
   - "waktu solat"
   - "prayer time"
