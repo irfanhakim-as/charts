@@ -9,7 +9,7 @@
 {{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
 Rizz has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-{{- if $ingress }}
+{{- if and $ingress (ne $domain "localhost") }}
     {{- $serviceAddress = printf "https://%s" $domain | toString }}
 {{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
 
