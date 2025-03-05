@@ -9,7 +9,8 @@
 {{- $organic := .Values.waktusolat.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.waktusolat.post_limit | default "0" | toString | quote }}
 {{- $retry_post := .Values.waktusolat.retry_post | default "true" | toString | quote }}
-{{- $redis_service := printf "redis://%s-waktusolat-svc" .Release.Name | quote }}
+{{- $serviceName := printf "%s-waktusolat-svc" .Release.Name | toString }}
+{{- $redis_service := printf "redis://%s" $serviceName | quote }}
 {{- $domain := .Values.waktusolat.domain | toString }}
 {{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $serverAdmin := .Values.waktusolat.serverAdmin | default "admin@example.com" | toString }}
