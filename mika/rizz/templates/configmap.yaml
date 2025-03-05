@@ -6,7 +6,8 @@
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
-{{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
+{{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
+{{- $redis_service := printf "redis://%s" $serviceName | quote }}
 {{- $domain := .Values.rizz.domain | default "localhost" | toString }}
 {{- $serverAdmin := .Values.rizz.serverAdmin | default "admin@example.com" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString }}
