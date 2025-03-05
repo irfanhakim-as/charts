@@ -269,13 +269,13 @@ A secure application access token is required for each configured account.
 | scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
 | scheduler.schedule.clean_data.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
 | scheduler.schedule.clean_data.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
-| scheduler.schedule.clean_data.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.clean_data.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` (APScheduler). |
 | scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"8-23/3"`. |
 | scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"0"`. |
-| scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"0"` (APScheduler). |
 | scheduler.schedule.update_data.hour | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
 | scheduler.schedule.update_data.minute | string | `""` | The minutes at which the task scheduler updates the database. Default: `"0"`. |
-| scheduler.schedule.update_data.second | string | `""` | The seconds at which the task scheduler updates the database. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.update_data.second | string | `""` | The seconds at which the task scheduler updates the database. Default: `"0"` (APScheduler). |
 | scheduler.timezone | string | `""` | The timezone for the task scheduler used by Rizz to schedule time-dependent operations. Default: `"Etc/UTC"`. |
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
 | service.redis.port | string | `""` | The Redis port on which the Rizz server should listen for connections. Default: `"6379"`. |
