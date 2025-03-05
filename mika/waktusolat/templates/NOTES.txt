@@ -3,6 +3,7 @@
 {{- $feeds := .Values.waktusolat.feed }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.waktusolat.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $waktusolatPort := .Values.service.waktusolat.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-waktusolat-svc" .Release.Name | toString }}
