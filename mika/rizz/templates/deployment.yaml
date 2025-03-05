@@ -121,6 +121,13 @@ spec:
             - name: rizz
               containerPort: 80
               protocol: TCP
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              python3 manage.py makemigrations && \
+              python3 manage.py migrate && \
+              tail -f /dev/null
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
           env:
@@ -144,9 +151,6 @@ spec:
               mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
-            - name: {{ .Release.Name }}-rizz-apscheduler-config
-              mountPath: /entrypoint.sh
-              subPath: entrypoint.sh
             - name: {{ .Release.Name }}-rizz-scheduler-config
               mountPath: /base/base/apps.py
               subPath: apps.py
@@ -189,15 +193,7 @@ spec:
         - name: {{ .Release.Name }}-rizz-feed-config
           configMap:
             name: {{ .Release.Name }}-rizz-feed-config
-        {{- if $apscheduler }}
-        - name: {{ .Release.Name }}-rizz-apscheduler-config
-          configMap:
-            name: {{ .Release.Name }}-rizz-apscheduler-config
-            defaultMode: 0755
-            items:
-              - key: entrypoint.sh
-                path: entrypoint.sh
-        {{- else if $celery }}
+        {{- if $celery }}
         - name: {{ .Release.Name }}-rizz-default-celery-config
           configMap:
             name: {{ .Release.Name }}-rizz-default-celery-config

@@ -53,18 +53,7 @@ metadata:
 data:
   feeds.json: |-
     {{- include "rizz.feeds-json" . | toString | nindent 4 }}
-{{- if $apscheduler }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-rizz-apscheduler-config
-  labels:
-    {{- include "rizz.labels" . | nindent 4 }}
-data:
-  entrypoint.sh: |-
-    {{- include "rizz.apscheduler-entrypoint-sh" . | toString | nindent 4 }}
-{{- else if $celery }}
+{{- if $celery }}
 ---
 apiVersion: v1
 kind: ConfigMap
