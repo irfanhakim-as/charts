@@ -503,21 +503,21 @@ resources:
   #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "500m" or more if using `celery` as the scheduler.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "200m"
+  #     cpu: "350m"
   #     # The minimum amount of memory required by Rizz.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "550Mi" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "850Mi" or more if using `celery` as the scheduler.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "100Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for Rizz.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Rizz.
   #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "1" or more if using `celery` as the scheduler.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "450m"
   #     # The maximum amount of memory allowed for Rizz.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "650Mi" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "1024Mi" or more if using `celery` as the scheduler.
   #     # Example:
   #     # memory: "250Mi"
   #     memory: "350Mi"
@@ -536,7 +536,7 @@ resources:
   #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "50Mi" or more if using `celery` as the scheduler.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "250Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for Scheduler.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Scheduler.
