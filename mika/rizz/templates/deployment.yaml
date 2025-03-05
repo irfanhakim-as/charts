@@ -1,6 +1,7 @@
 {{- $accounts := .Values.rizz.account }}
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $logPersistence := .Values.storage.log.enabled }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
@@ -14,6 +15,10 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
+{{- $allowedHosts := .Values.rizz.allowedHosts | join "," | toString }}
+{{- $domain := .Values.rizz.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,6 +53,13 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.rizz | nindent 12 }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: ALLOWED_HOSTS
+              value: "127.0.0.1,localhost,{{ $serviceName }},$(POD_IP){{ if ne $domain "localhost" }},{{ $domain }}{{ end }}{{ if $allowedHosts }},{{ $allowedHosts }}{{ end }}"
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-rizz-cm
@@ -111,6 +123,13 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: ALLOWED_HOSTS
+              value: "127.0.0.1,localhost,{{ $serviceName }},$(POD_IP){{ if ne $domain "localhost" }},{{ $domain }}{{ end }}{{ if $allowedHosts }},{{ $allowedHosts }}{{ end }}"
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-rizz-cm
