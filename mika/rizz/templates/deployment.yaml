@@ -3,6 +3,18 @@
 {{- $celery := .Values.scheduler.celery }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $logPersistence := .Values.storage.log.enabled }}
+{{- $rizzStartupProbe := .Values.probes.rizz.startup.enabled }}
+{{- $rizzStartupProbeSpec := .Values.probes.rizz.startup.spec }}
+{{- $rizzLivenessProbe := .Values.probes.rizz.liveness.enabled }}
+{{- $rizzLivenessProbeSpec := .Values.probes.rizz.liveness.spec }}
+{{- $rizzReadinessProbe := .Values.probes.rizz.readiness.enabled }}
+{{- $rizzReadinessProbeSpec := .Values.probes.rizz.readiness.spec }}
+{{- $schedulerStartupProbe := .Values.probes.scheduler.startup.enabled }}
+{{- $schedulerStartupProbeSpec := .Values.probes.scheduler.startup.spec }}
+{{- $schedulerLivenessProbe := .Values.probes.scheduler.liveness.enabled }}
+{{- $schedulerLivenessProbeSpec := .Values.probes.scheduler.liveness.spec }}
+{{- $schedulerReadinessProbe := .Values.probes.scheduler.readiness.enabled }}
+{{- $schedulerReadinessProbeSpec := .Values.probes.scheduler.readiness.spec }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
 {{- $rizz_tag := .Values.image.rizz.tag | default .Chart.AppVersion | toString }}
@@ -53,6 +65,29 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.rizz | nindent 12 }}
+          {{- if and $rizzStartupProbe $rizzStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $rizzStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if $rizzLivenessProbe }}
+          livenessProbe:
+            {{- if $rizzLivenessProbeSpec }}
+              {{- toYaml $rizzLivenessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: rizz
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 15
+            failureThreshold: 2
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          {{- if and $rizzReadinessProbe $rizzReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $rizzReadinessProbeSpec | nindent 12 }}
+          {{- end }}
           env:
             - name: POD_IP
               valueFrom:
@@ -130,6 +165,29 @@ spec:
               tail -f /dev/null
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          {{- if and $schedulerStartupProbe $schedulerStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $schedulerStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if $schedulerLivenessProbe }}
+          livenessProbe:
+            {{- if $schedulerLivenessProbeSpec }}
+              {{- toYaml $schedulerLivenessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: rizz
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 15
+            failureThreshold: 2
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          {{- if and $schedulerReadinessProbe $schedulerReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $schedulerReadinessProbeSpec | nindent 12 }}
+          {{- end }}
           env:
             - name: POD_IP
               valueFrom:
@@ -182,6 +240,18 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          {{- if and $schedulerStartupProbe $schedulerStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $schedulerStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if and $schedulerLivenessProbe $schedulerLivenessProbeSpec }}
+          livenessProbe:
+            {{- toYaml $schedulerLivenessProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if and $schedulerReadinessProbe $schedulerReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $schedulerReadinessProbeSpec | nindent 12 }}
+          {{- end }}
         {{- end }}
       volumes:
         - name: {{ .Release.Name }}-rizz-site-config
