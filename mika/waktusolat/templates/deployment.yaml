@@ -2,6 +2,7 @@
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
 {{- $feeds := .Values.waktusolat.feed }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $logPersistence := .Values.storage.log.enabled }}
 {{- $waktusolat_registry := .Values.image.waktusolat.registry | default "ghcr.io" | toString }}
 {{- $waktusolat_repository := .Values.image.waktusolat.repository | default "irfanhakim-as/waktusolat" | toString }}
@@ -15,6 +16,10 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
+{{- $allowedHosts := .Values.waktusolat.allowedHosts | join "," | toString }}
+{{- $domain := .Values.waktusolat.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $serviceName := printf "%s-waktusolat-svc" .Release.Name | toString }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -49,6 +54,13 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.waktusolat | nindent 12 }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: ALLOWED_HOSTS
+              value: "127.0.0.1,localhost,{{ $serviceName }},$(POD_IP){{ if ne $domain "localhost" }},{{ $domain }}{{ end }}{{ if $allowedHosts }},{{ $allowedHosts }}{{ end }}"
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-waktusolat-cm
@@ -121,6 +133,13 @@ spec:
               tail -f /dev/null
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: ALLOWED_HOSTS
+              value: "127.0.0.1,localhost,{{ $serviceName }},$(POD_IP){{ if ne $domain "localhost" }},{{ $domain }}{{ end }}{{ if $allowedHosts }},{{ $allowedHosts }}{{ end }}"
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-waktusolat-cm
