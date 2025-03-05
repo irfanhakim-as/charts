@@ -1,5 +1,6 @@
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
 {{- $scheduler_timezone := .Values.scheduler.timezone | default "Etc/UTC" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
@@ -8,7 +9,8 @@
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
 {{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
 {{- $redis_service := printf "redis://%s" $serviceName | quote }}
-{{- $domain := .Values.rizz.domain | default "localhost" | toString }}
+{{- $domain := .Values.rizz.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $serverAdmin := .Values.rizz.serverAdmin | default "admin@example.com" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString }}
 ---
