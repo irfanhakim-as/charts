@@ -239,6 +239,18 @@ A secure application access token is required for each configured account.
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Rizz services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
+| probes.rizz.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Rizz container. |
+| probes.rizz.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Rizz container health. |
+| probes.rizz.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Rizz container. |
+| probes.rizz.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the Rizz container health. |
+| probes.rizz.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the Rizz container. |
+| probes.rizz.startup.spec | object | `{}` | The specification defining how the startup probe checks the Rizz container health. |
+| probes.scheduler.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Scheduler container. |
+| probes.scheduler.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Scheduler container health. |
+| probes.scheduler.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Scheduler container. |
+| probes.scheduler.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the Scheduler container health. |
+| probes.scheduler.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the Scheduler container. |
+| probes.scheduler.startup.spec | object | `{}` | The specification defining how the startup probe checks the Scheduler container health. |
 | replicaCount | string | `""` | The desired number of running replicas for Rizz. Default: `"1"`. |
 | resources.rizz | object | `{}` | Rizz container resources. |
 | resources.scheduler | object | `{}` | Scheduler container resources. |
