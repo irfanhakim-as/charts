@@ -86,6 +86,13 @@ rizz:
   # Example:
   # visibility: "unlisted"
   visibility: ""
+  # A list of hosts that are allowed to access the Rizz service in addition to the default.
+  # Default: "127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"
+  # Example:
+  # allowedHosts:
+  #   - "192.168.0.16"
+  #   - "192.168.0.17"
+  allowedHosts: []
   # Account configurations.
   # Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`
   # Example:

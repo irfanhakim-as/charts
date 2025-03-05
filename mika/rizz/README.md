@@ -243,6 +243,7 @@ A secure application access token is required for each configured account.
 | resources.rizz | object | `{}` | Rizz container resources. |
 | resources.scheduler | object | `{}` | Scheduler container resources. |
 | rizz.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
+| rizz.allowedHosts | list | `[]` | A list of hosts that are allowed to access the Rizz service in addition to the default. Default: `"127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"`. |
 | rizz.debug | string | `""` | Specifies whether Rizz should run in debug mode. Default: `"false"`. |
 | rizz.domain | string | `""` | The ingress domain name that hosts the Rizz server. Default: `"localhost"`. |
 | rizz.feed | list | `[]` | RSS feed configurations. Items: `.endpoint`, `.id`, `.enabled`. |
