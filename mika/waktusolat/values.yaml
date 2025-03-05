@@ -81,6 +81,13 @@ waktusolat:
   # Example:
   # visibility: "unlisted"
   visibility: ""
+  # A list of hosts that are allowed to access the WaktuSolat service in addition to the default.
+  # Default: "127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"
+  # Example:
+  # allowedHosts:
+  #   - "192.168.0.16"
+  #   - "192.168.0.17"
+  allowedHosts: []
   # The code of locations WaktuSolat should fetch and update prayer times for.
   # Default: "wlp-0"
   # Example:

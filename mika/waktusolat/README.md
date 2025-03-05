@@ -269,6 +269,7 @@ A secure application access token is required for each configured account.
 | storage.log.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the log storage. Default: `"longhorn"`. |
 | storage.log.subPath | string | `""` | The subpath within the log storage to mount to the container. Leave empty if not required. |
 | waktusolat.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
+| waktusolat.allowedHosts | list | `[]` | A list of hosts that are allowed to access the WaktuSolat service in addition to the default. Default: `"127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"`. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
 | waktusolat.domain | string | `""` | The ingress domain name that hosts the WaktuSolat server. Default: `"localhost"`. |
 | waktusolat.feed | list | `[]` | WaktuSolat feed configurations. Items: `.endpoint`, `.id`, `.enabled`. |
