@@ -112,6 +112,13 @@ spec:
             - name: waktusolat
               containerPort: 80
               protocol: TCP
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              python3 manage.py makemigrations && \
+              python3 manage.py migrate && \
+              tail -f /dev/null
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
           envFrom:
@@ -124,9 +131,6 @@ spec:
               mountPath: /base/data/accounts.json
               subPath: accounts.json
               readOnly: true
-            - name: {{ .Release.Name }}-waktusolat-apscheduler-config
-              mountPath: /entrypoint.sh
-              subPath: entrypoint.sh
             - name: {{ .Release.Name }}-waktusolat-scheduler-config
               mountPath: /base/base/apps.py
               subPath: apps.py
@@ -177,15 +181,7 @@ spec:
           configMap:
             name: {{ .Release.Name }}-waktusolat-feed-config
         {{- end }}
-        {{- if $apscheduler }}
-        - name: {{ .Release.Name }}-waktusolat-apscheduler-config
-          configMap:
-            name: {{ .Release.Name }}-waktusolat-apscheduler-config
-            defaultMode: 0755
-            items:
-              - key: entrypoint.sh
-                path: entrypoint.sh
-        {{- else if $celery }}
+        {{- if $celery }}
         - name: {{ .Release.Name }}-waktusolat-default-celery-config
           configMap:
             name: {{ .Release.Name }}-waktusolat-default-celery-config

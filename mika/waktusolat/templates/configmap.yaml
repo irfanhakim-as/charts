@@ -58,18 +58,7 @@ data:
   feeds.json: |-
     {{- include "waktusolat.feeds-json" . | toString | nindent 4 }}
 {{- end }}
-{{- if $apscheduler }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-waktusolat-apscheduler-config
-  labels:
-    {{- include "waktusolat.labels" . | nindent 4 }}
-data:
-  entrypoint.sh: |-
-    {{- include "waktusolat.apscheduler-entrypoint-sh" . | toString | nindent 4 }}
-{{- else if $celery }}
+{{- if $celery }}
 ---
 apiVersion: v1
 kind: ConfigMap
