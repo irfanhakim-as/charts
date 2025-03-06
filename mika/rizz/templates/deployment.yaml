@@ -80,7 +80,7 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 60
             timeoutSeconds: 15
-            failureThreshold: 2
+            failureThreshold: 1
             successThreshold: 1
             {{- end }}
           {{- end }}
@@ -180,7 +180,7 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 60
             timeoutSeconds: 15
-            failureThreshold: 2
+            failureThreshold: 1
             successThreshold: 1
             {{- end }}
           {{- end }}
