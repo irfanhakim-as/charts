@@ -1,13 +1,16 @@
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
 {{- $scheduler_timezone := .Values.scheduler.timezone | default "Etc/UTC" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
-{{- $redis_service := printf "redis://%s-rizz-svc" .Release.Name | quote }}
-{{- $domain := .Values.rizz.domain | default "localhost" | toString }}
+{{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
+{{- $redis_service := printf "redis://%s" $serviceName | quote }}
+{{- $domain := .Values.rizz.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $serverAdmin := .Values.rizz.serverAdmin | default "admin@example.com" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString }}
 ---
@@ -50,18 +53,7 @@ metadata:
 data:
   feeds.json: |-
     {{- include "rizz.feeds-json" . | toString | nindent 4 }}
-{{- if $apscheduler }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-rizz-apscheduler-config
-  labels:
-    {{- include "rizz.labels" . | nindent 4 }}
-data:
-  entrypoint.sh: |-
-    {{- include "rizz.apscheduler-entrypoint-sh" . | toString | nindent 4 }}
-{{- else if $celery }}
+{{- if $celery }}
 ---
 apiVersion: v1
 kind: ConfigMap
