@@ -4,6 +4,18 @@
 {{- $feeds := .Values.waktusolat.feed }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $logPersistence := .Values.storage.log.enabled }}
+{{- $waktusolatStartupProbe := .Values.probes.waktusolat.startup.enabled }}
+{{- $waktusolatStartupProbeSpec := .Values.probes.waktusolat.startup.spec }}
+{{- $waktusolatLivenessProbe := .Values.probes.waktusolat.liveness.enabled }}
+{{- $waktusolatLivenessProbeSpec := .Values.probes.waktusolat.liveness.spec }}
+{{- $waktusolatReadinessProbe := .Values.probes.waktusolat.readiness.enabled }}
+{{- $waktusolatReadinessProbeSpec := .Values.probes.waktusolat.readiness.spec }}
+{{- $schedulerStartupProbe := .Values.probes.scheduler.startup.enabled }}
+{{- $schedulerStartupProbeSpec := .Values.probes.scheduler.startup.spec }}
+{{- $schedulerLivenessProbe := .Values.probes.scheduler.liveness.enabled }}
+{{- $schedulerLivenessProbeSpec := .Values.probes.scheduler.liveness.spec }}
+{{- $schedulerReadinessProbe := .Values.probes.scheduler.readiness.enabled }}
+{{- $schedulerReadinessProbeSpec := .Values.probes.scheduler.readiness.spec }}
 {{- $waktusolat_registry := .Values.image.waktusolat.registry | default "ghcr.io" | toString }}
 {{- $waktusolat_repository := .Values.image.waktusolat.repository | default "irfanhakim-as/waktusolat" | toString }}
 {{- $waktusolat_tag := .Values.image.waktusolat.tag | default .Chart.AppVersion | toString }}
@@ -54,6 +66,29 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.waktusolat | nindent 12 }}
+          {{- if and $waktusolatStartupProbe $waktusolatStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $waktusolatStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if $waktusolatLivenessProbe }}
+          livenessProbe:
+            {{- if $waktusolatLivenessProbeSpec }}
+              {{- toYaml $waktusolatLivenessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: waktusolat
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 15
+            failureThreshold: 2
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          {{- if and $waktusolatReadinessProbe $waktusolatReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $waktusolatReadinessProbeSpec | nindent 12 }}
+          {{- end }}
           env:
             - name: POD_IP
               valueFrom:
@@ -133,6 +168,29 @@ spec:
               tail -f /dev/null
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          {{- if and $schedulerStartupProbe $schedulerStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $schedulerStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if $schedulerLivenessProbe }}
+          livenessProbe:
+            {{- if $schedulerLivenessProbeSpec }}
+              {{- toYaml $schedulerLivenessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: waktusolat
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 15
+            failureThreshold: 2
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          {{- if and $schedulerReadinessProbe $schedulerReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $schedulerReadinessProbeSpec | nindent 12 }}
+          {{- end }}
           env:
             - name: POD_IP
               valueFrom:
@@ -187,6 +245,18 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          {{- if and $schedulerStartupProbe $schedulerStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $schedulerStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if and $schedulerLivenessProbe $schedulerLivenessProbeSpec }}
+          livenessProbe:
+            {{- toYaml $schedulerLivenessProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if and $schedulerReadinessProbe $schedulerReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $schedulerReadinessProbeSpec | nindent 12 }}
+          {{- end }}
         {{- end }}
       volumes:
         - name: {{ .Release.Name }}-waktusolat-site-config
