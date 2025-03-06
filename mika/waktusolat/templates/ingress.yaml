@@ -3,8 +3,9 @@
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
 {{- $domain := .Values.waktusolat.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
-{{- if and $ingress $domain }}
+{{- if and $ingress (ne $domain "localhost") }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

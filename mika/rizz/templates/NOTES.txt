@@ -3,12 +3,13 @@
 {{- $feeds := .Values.rizz.feed }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.rizz.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $rizzPort := .Values.service.rizz.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
 Rizz has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-{{- if $ingress }}
+{{- if and $ingress (ne $domain "localhost") }}
     {{- $serviceAddress = printf "https://%s" $domain | toString }}
 {{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
 

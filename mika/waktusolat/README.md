@@ -239,6 +239,18 @@ A secure application access token is required for each configured account.
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting WaktuSolat services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
+| probes.scheduler.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Scheduler container. |
+| probes.scheduler.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Scheduler container health. |
+| probes.scheduler.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Scheduler container. |
+| probes.scheduler.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the Scheduler container health. |
+| probes.scheduler.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the Scheduler container. |
+| probes.scheduler.startup.spec | object | `{}` | The specification defining how the startup probe checks the Scheduler container health. |
+| probes.waktusolat.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the WaktuSolat container. |
+| probes.waktusolat.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the WaktuSolat container health. |
+| probes.waktusolat.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the WaktuSolat container. |
+| probes.waktusolat.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the WaktuSolat container health. |
+| probes.waktusolat.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the WaktuSolat container. |
+| probes.waktusolat.startup.spec | object | `{}` | The specification defining how the startup probe checks the WaktuSolat container health. |
 | replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
 | resources.scheduler | object | `{}` | Scheduler container resources. |
 | resources.waktusolat | object | `{}` | WaktuSolat container resources. |
@@ -246,16 +258,16 @@ A secure application access token is required for each configured account.
 | scheduler.celery | bool | `false` | Specifies whether Celery should be used by WaktuSolat as the task scheduler. |
 | scheduler.schedule.clean_db.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
 | scheduler.schedule.clean_db.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
-| scheduler.schedule.clean_db.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: "0" (`apscheduler`). |
+| scheduler.schedule.clean_db.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: "0" (APScheduler). |
 | scheduler.schedule.notify_solat_schedule.hour | string | `""` | The hours at which the task scheduler schedules the daily prayer time post. Default: `"5"`. |
 | scheduler.schedule.notify_solat_schedule.minute | string | `""` | The minutes at which the task scheduler schedules the daily prayer time post. Default: `"0"`. |
-| scheduler.schedule.notify_solat_schedule.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time post. Default: "0" (`apscheduler`). |
+| scheduler.schedule.notify_solat_schedule.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time post. Default: "0" (APScheduler). |
 | scheduler.schedule.notify_solat_times.hour | string | `""` | The hours at which the task scheduler schedules the daily prayer time notifications. Default: `"*"`. |
 | scheduler.schedule.notify_solat_times.minute | string | `""` | The minutes at which the task scheduler schedules the daily prayer time notifications. Default: `"*/1"`. |
-| scheduler.schedule.notify_solat_times.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time notifications. Default: "0" (`apscheduler`). |
+| scheduler.schedule.notify_solat_times.second | string | `""` | The seconds at which the task scheduler schedules the daily prayer time notifications. Default: "0" (APScheduler). |
 | scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"*"`. |
 | scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"*"`. |
-| scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: "*/1" (`apscheduler`). |
+| scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: "*/1" (APScheduler). |
 | scheduler.timezone | string | `""` | The timezone for the task scheduler used by WaktuSolat to schedule time-dependent operations. Default: `"Etc/UTC"`. |
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
 | service.redis.port | string | `""` | The Redis port on which the WaktuSolat server should listen for connections. Default: `"6379"`. |
@@ -269,6 +281,7 @@ A secure application access token is required for each configured account.
 | storage.log.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the log storage. Default: `"longhorn"`. |
 | storage.log.subPath | string | `""` | The subpath within the log storage to mount to the container. Leave empty if not required. |
 | waktusolat.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
+| waktusolat.allowedHosts | list | `[]` | A list of hosts that are allowed to access the WaktuSolat service in addition to the default. Default: `"127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"`. |
 | waktusolat.debug | bool | `false` | Specifies whether WaktuSolat should run in debug mode. Default: `false`. |
 | waktusolat.domain | string | `""` | The ingress domain name that hosts the WaktuSolat server. Default: `"localhost"`. |
 | waktusolat.feed | list | `[]` | WaktuSolat feed configurations. Items: `.endpoint`, `.id`, `.enabled`. |

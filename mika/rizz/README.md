@@ -239,10 +239,23 @@ A secure application access token is required for each configured account.
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Rizz services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
+| probes.rizz.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Rizz container. |
+| probes.rizz.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Rizz container health. |
+| probes.rizz.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Rizz container. |
+| probes.rizz.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the Rizz container health. |
+| probes.rizz.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the Rizz container. |
+| probes.rizz.startup.spec | object | `{}` | The specification defining how the startup probe checks the Rizz container health. |
+| probes.scheduler.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Scheduler container. |
+| probes.scheduler.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Scheduler container health. |
+| probes.scheduler.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Scheduler container. |
+| probes.scheduler.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the Scheduler container health. |
+| probes.scheduler.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the Scheduler container. |
+| probes.scheduler.startup.spec | object | `{}` | The specification defining how the startup probe checks the Scheduler container health. |
 | replicaCount | string | `""` | The desired number of running replicas for Rizz. Default: `"1"`. |
 | resources.rizz | object | `{}` | Rizz container resources. |
 | resources.scheduler | object | `{}` | Scheduler container resources. |
 | rizz.account | list | `[]` | Account configurations. Items: `.api`, `.id`, `.host`, `.token`, `.bot`, `.discoverable`, `.enabled`, `.display_name`, `.fields`, `.locked`, `.note`. |
+| rizz.allowedHosts | list | `[]` | A list of hosts that are allowed to access the Rizz service in addition to the default. Default: `"127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"`. |
 | rizz.debug | string | `""` | Specifies whether Rizz should run in debug mode. Default: `"false"`. |
 | rizz.domain | string | `""` | The ingress domain name that hosts the Rizz server. Default: `"localhost"`. |
 | rizz.feed | list | `[]` | RSS feed configurations. Items: `.endpoint`, `.id`, `.enabled`. |
@@ -256,13 +269,13 @@ A secure application access token is required for each configured account.
 | scheduler.celery | bool | `false` | Specifies whether Celery should be used by Rizz as the task scheduler. |
 | scheduler.schedule.clean_data.hour | string | `""` | The hours at which the task scheduler cleans up the database. Default: `"0"`. |
 | scheduler.schedule.clean_data.minute | string | `""` | The minutes at which the task scheduler cleans up the database. Default: `"0"`. |
-| scheduler.schedule.clean_data.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.clean_data.second | string | `""` | The seconds at which the task scheduler cleans up the database. Default: `"0"` (APScheduler). |
 | scheduler.schedule.post_scheduler.hour | string | `""` | The hours at which the task scheduler posts scheduled posts. Default: `"8-23/3"`. |
 | scheduler.schedule.post_scheduler.minute | string | `""` | The minutes at which the task scheduler posts scheduled posts. Default: `"0"`. |
-| scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.post_scheduler.second | string | `""` | The seconds at which the task scheduler posts scheduled posts. Default: `"0"` (APScheduler). |
 | scheduler.schedule.update_data.hour | string | `""` | The hours at which the task scheduler updates the database. Default: `"7-22/3"`. |
 | scheduler.schedule.update_data.minute | string | `""` | The minutes at which the task scheduler updates the database. Default: `"0"`. |
-| scheduler.schedule.update_data.second | string | `""` | The seconds at which the task scheduler updates the database. Default: `"0"` (`apscheduler`). |
+| scheduler.schedule.update_data.second | string | `""` | The seconds at which the task scheduler updates the database. Default: `"0"` (APScheduler). |
 | scheduler.timezone | string | `""` | The timezone for the task scheduler used by Rizz to schedule time-dependent operations. Default: `"Etc/UTC"`. |
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
 | service.redis.port | string | `""` | The Redis port on which the Rizz server should listen for connections. Default: `"6379"`. |

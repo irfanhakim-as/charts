@@ -1,7 +1,20 @@
 {{- $accounts := .Values.rizz.account }}
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
+{{- $ingress := .Values.ingress.enabled }}
 {{- $logPersistence := .Values.storage.log.enabled }}
+{{- $rizzStartupProbe := .Values.probes.rizz.startup.enabled }}
+{{- $rizzStartupProbeSpec := .Values.probes.rizz.startup.spec }}
+{{- $rizzLivenessProbe := .Values.probes.rizz.liveness.enabled }}
+{{- $rizzLivenessProbeSpec := .Values.probes.rizz.liveness.spec }}
+{{- $rizzReadinessProbe := .Values.probes.rizz.readiness.enabled }}
+{{- $rizzReadinessProbeSpec := .Values.probes.rizz.readiness.spec }}
+{{- $schedulerStartupProbe := .Values.probes.scheduler.startup.enabled }}
+{{- $schedulerStartupProbeSpec := .Values.probes.scheduler.startup.spec }}
+{{- $schedulerLivenessProbe := .Values.probes.scheduler.liveness.enabled }}
+{{- $schedulerLivenessProbeSpec := .Values.probes.scheduler.liveness.spec }}
+{{- $schedulerReadinessProbe := .Values.probes.scheduler.readiness.enabled }}
+{{- $schedulerReadinessProbeSpec := .Values.probes.scheduler.readiness.spec }}
 {{- $rizz_registry := .Values.image.rizz.registry | default "ghcr.io" | toString }}
 {{- $rizz_repository := .Values.image.rizz.repository | default "irfanhakim-as/rizz" | toString }}
 {{- $rizz_tag := .Values.image.rizz.tag | default .Chart.AppVersion | toString }}
@@ -14,6 +27,10 @@
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
+{{- $allowedHosts := .Values.rizz.allowedHosts | join "," | toString }}
+{{- $domain := .Values.rizz.domain | toString }}
+{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,6 +65,36 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.rizz | nindent 12 }}
+          {{- if and $rizzStartupProbe $rizzStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $rizzStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if $rizzLivenessProbe }}
+          livenessProbe:
+            {{- if $rizzLivenessProbeSpec }}
+              {{- toYaml $rizzLivenessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: rizz
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 15
+            failureThreshold: 1
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          {{- if and $rizzReadinessProbe $rizzReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $rizzReadinessProbeSpec | nindent 12 }}
+          {{- end }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: ALLOWED_HOSTS
+              value: "127.0.0.1,localhost,{{ $serviceName }},$(POD_IP){{ if ne $domain "localhost" }},{{ $domain }}{{ end }}{{ if $allowedHosts }},{{ $allowedHosts }}{{ end }}"
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-rizz-cm
@@ -109,8 +156,45 @@ spec:
             - name: rizz
               containerPort: 80
               protocol: TCP
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              python3 manage.py makemigrations && \
+              python3 manage.py migrate && \
+              tail -f /dev/null
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          {{- if and $schedulerStartupProbe $schedulerStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $schedulerStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if $schedulerLivenessProbe }}
+          livenessProbe:
+            {{- if $schedulerLivenessProbeSpec }}
+              {{- toYaml $schedulerLivenessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /healthz
+              port: rizz
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            timeoutSeconds: 15
+            failureThreshold: 1
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          {{- if and $schedulerReadinessProbe $schedulerReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $schedulerReadinessProbeSpec | nindent 12 }}
+          {{- end }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: ALLOWED_HOSTS
+              value: "127.0.0.1,localhost,{{ $serviceName }},$(POD_IP){{ if ne $domain "localhost" }},{{ $domain }}{{ end }}{{ if $allowedHosts }},{{ $allowedHosts }}{{ end }}"
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-rizz-cm
@@ -125,9 +209,6 @@ spec:
               mountPath: /base/data/feeds.json
               subPath: feeds.json
               readOnly: true
-            - name: {{ .Release.Name }}-rizz-apscheduler-config
-              mountPath: /entrypoint.sh
-              subPath: entrypoint.sh
             - name: {{ .Release.Name }}-rizz-scheduler-config
               mountPath: /base/base/apps.py
               subPath: apps.py
@@ -159,6 +240,18 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.scheduler | nindent 12 }}
+          {{- if and $schedulerStartupProbe $schedulerStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $schedulerStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if and $schedulerLivenessProbe $schedulerLivenessProbeSpec }}
+          livenessProbe:
+            {{- toYaml $schedulerLivenessProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if and $schedulerReadinessProbe $schedulerReadinessProbeSpec }}
+          readinessProbe:
+            {{- toYaml $schedulerReadinessProbeSpec | nindent 12 }}
+          {{- end }}
         {{- end }}
       volumes:
         - name: {{ .Release.Name }}-rizz-site-config
@@ -170,15 +263,7 @@ spec:
         - name: {{ .Release.Name }}-rizz-feed-config
           configMap:
             name: {{ .Release.Name }}-rizz-feed-config
-        {{- if $apscheduler }}
-        - name: {{ .Release.Name }}-rizz-apscheduler-config
-          configMap:
-            name: {{ .Release.Name }}-rizz-apscheduler-config
-            defaultMode: 0755
-            items:
-              - key: entrypoint.sh
-                path: entrypoint.sh
-        {{- else if $celery }}
+        {{- if $celery }}
         - name: {{ .Release.Name }}-rizz-default-celery-config
           configMap:
             name: {{ .Release.Name }}-rizz-default-celery-config

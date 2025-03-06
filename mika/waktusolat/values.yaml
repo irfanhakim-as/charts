@@ -81,6 +81,13 @@ waktusolat:
   # Example:
   # visibility: "unlisted"
   visibility: ""
+  # A list of hosts that are allowed to access the WaktuSolat service in addition to the default.
+  # Default: "127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"
+  # Example:
+  # allowedHosts:
+  #   - "192.168.0.16"
+  #   - "192.168.0.17"
+  allowedHosts: []
   # The code of locations WaktuSolat should fetch and update prayer times for.
   # Default: "wlp-0"
   # Example:
@@ -189,8 +196,8 @@ scheduler:
   # timezone: "Asia/Kuala_Lumpur"
   timezone: ""
   # The schedule for the task scheduler used by WaktuSolat.
-  # Note: The `apscheduler` scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
-  # The `celery` scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
+  # Note: The APScheduler scheduler supports the `hour`, `minute`, and `second` fields simultaneously.
+  # The Celery scheduler only supports a combination of the `hour` and `minute` fields, or the `second` field alone.
   schedule:
     # The schedule for cleaning up the database.
     clean_db:
@@ -205,7 +212,7 @@ scheduler:
       # minute: "30"
       minute: ""
       # The seconds at which the task scheduler cleans up the database.
-      # Default: "0" (`apscheduler`)
+      # Default: "0" (APScheduler)
       # Example:
       # second: "30"
       second: ""
@@ -222,7 +229,7 @@ scheduler:
       # minute: "15"
       minute: ""
       # The seconds at which the task scheduler schedules the daily prayer time post.
-      # Default: "0" (`apscheduler`)
+      # Default: "0" (APScheduler)
       # Example:
       # second: "30"
       second: ""
@@ -239,7 +246,7 @@ scheduler:
       # minute: "*"
       minute: ""
       # The seconds at which the task scheduler schedules the daily prayer time notifications.
-      # Default: "0" (`apscheduler`)
+      # Default: "0" (APScheduler)
       # Example:
       # second: "30"
       second: ""
@@ -256,7 +263,7 @@ scheduler:
       # minute: "*/30"
       minute: ""
       # The seconds at which the task scheduler posts scheduled posts.
-      # Default: "*/1" (`apscheduler`)
+      # Default: "*/1" (APScheduler)
       # Example:
       # second: "30"
       second: ""
@@ -387,6 +394,123 @@ storage:
     # storageClassName: "smb"
     storageClassName: ""
 
+# Health probes configurations.
+probes:
+  # WaktuSolat container health probes.
+  waktusolat:
+    # Startup probe to check if the WaktuSolat container has started successfully.
+    startup:
+      # Specifies whether to enable the startup probe for the WaktuSolat container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the startup probe checks the WaktuSolat container health.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: waktusolat
+      #   initialDelaySeconds: 30
+      #   periodSeconds: 60
+      #   timeoutSeconds: 15
+      #   failureThreshold: 2
+      #   successThreshold: 1
+      spec: {}
+    # Liveness probe to check if the WaktuSolat container is running properly.
+    liveness:
+      # Specifies whether to enable the liveness probe for the WaktuSolat container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the liveness probe checks the WaktuSolat container health.
+      # Note: A default probe configuration will be used if not set for the container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: waktusolat
+      #   initialDelaySeconds: 30
+      #   periodSeconds: 60
+      #   timeoutSeconds: 15
+      #   failureThreshold: 2
+      #   successThreshold: 1
+      spec: {}
+    # Readiness probe to check if the WaktuSolat container is ready to serve requests.
+    readiness:
+      # Specifies whether to enable the readiness probe for the WaktuSolat container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the readiness probe checks the WaktuSolat container health.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: waktusolat
+      #   initialDelaySeconds: 30
+      #   periodSeconds: 60
+      #   timeoutSeconds: 15
+      #   failureThreshold: 2
+      #   successThreshold: 1
+      spec: {}
+  # Scheduler container health probes.
+  scheduler:
+    # Startup probe to check if the Scheduler container has started successfully.
+    startup:
+      # Specifies whether to enable the startup probe for the Scheduler container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the startup probe checks the Scheduler container health.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: scheduler
+      #   initialDelaySeconds: 30
+      #   periodSeconds: 60
+      #   timeoutSeconds: 15
+      #   failureThreshold: 2
+      #   successThreshold: 1
+      spec: {}
+    # Liveness probe to check if the Scheduler container is running properly.
+    liveness:
+      # Specifies whether to enable the liveness probe for the Scheduler container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the liveness probe checks the Scheduler container health.
+      # Note: A default probe configuration will be used if not set for the APScheduler container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: scheduler
+      #   initialDelaySeconds: 30
+      #   periodSeconds: 60
+      #   timeoutSeconds: 15
+      #   failureThreshold: 2
+      #   successThreshold: 1
+      spec: {}
+    # Readiness probe to check if the Scheduler container is ready to serve requests.
+    readiness:
+      # Specifies whether to enable the readiness probe for the Scheduler container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the readiness probe checks the Scheduler container health.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: scheduler
+      #   initialDelaySeconds: 30
+      #   periodSeconds: 60
+      #   timeoutSeconds: 15
+      #   failureThreshold: 2
+      #   successThreshold: 1
+      spec: {}
+
 # Resource requirements and limits for WaktuSolat containers.
 resources:
   # WaktuSolat container resources.
@@ -395,24 +519,24 @@ resources:
   #   # The minimum amount of resources required by WaktuSolat to run.
   #   requests:
   #     # The minimum amount of CPU resources required by WaktuSolat.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "500m" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "500m" or more if using Celery as the scheduler.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "200m"
+  #     cpu: "350m"
   #     # The minimum amount of memory required by WaktuSolat.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "550Mi" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "850Mi" or more if using Celery as the scheduler.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "100Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for WaktuSolat.
   #   limits:
   #     # The maximum amount of CPU resources allowed for WaktuSolat.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "1" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "1" or more if using Celery as the scheduler.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "450m"
   #     # The maximum amount of memory allowed for WaktuSolat.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "650Mi" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "1024Mi" or more if using Celery as the scheduler.
   #     # Example:
   #     # memory: "250Mi"
   #     memory: "350Mi"
@@ -423,24 +547,24 @@ resources:
   #   # The minimum amount of resources required by Scheduler to run.
   #   requests:
   #     # The minimum amount of CPU resources required by Scheduler.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "10m" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "10m" or more if using Celery as the scheduler.
   #     # Example:
   #     # cpu: "10m"
   #     cpu: "200m"
   #     # The minimum amount of memory required by Scheduler.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "50Mi" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "50Mi" or more if using Celery as the scheduler.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "250Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for Scheduler.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Scheduler.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "20m" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "20m" or more if using Celery as the scheduler.
   #     # Example:
   #     # cpu: "250m"
   #     cpu: "300m"
   #     # The maximum amount of memory allowed for Scheduler.
-  #     # Note: This is the recommended default when using `apscheduler` as the scheduler. Allocate "100Mi" or more if using `celery` as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "100Mi" or more if using Celery as the scheduler.
   #     # Example:
   #     # memory: "250Mi"
   #     memory: "350Mi"
