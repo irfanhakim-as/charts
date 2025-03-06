@@ -2,7 +2,7 @@ apiVersion: v2
 name: rizz
 description: Rizz is a simple web application that tracks and posts content from RSS Feeds to federated social network.
 type: application
-version: 0.2.3
+version: 0.2.4
 appVersion: "0.2.1-stable-r1"
 keywords:
   - "rss"
