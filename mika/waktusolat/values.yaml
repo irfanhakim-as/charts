@@ -522,21 +522,21 @@ resources:
   #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "500m" or more if using Celery as the scheduler.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "200m"
+  #     cpu: "350m"
   #     # The minimum amount of memory required by WaktuSolat.
-  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "550Mi" or more if using Celery as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "850Mi" or more if using Celery as the scheduler.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "100Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for WaktuSolat.
   #   limits:
   #     # The maximum amount of CPU resources allowed for WaktuSolat.
   #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "1" or more if using Celery as the scheduler.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "450m"
   #     # The maximum amount of memory allowed for WaktuSolat.
-  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "650Mi" or more if using Celery as the scheduler.
+  #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "1024Mi" or more if using Celery as the scheduler.
   #     # Example:
   #     # memory: "250Mi"
   #     memory: "350Mi"
@@ -555,7 +555,7 @@ resources:
   #     # Note: This is the recommended default when using APScheduler as the scheduler. Allocate "50Mi" or more if using Celery as the scheduler.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "250Mi"
+  #     memory: "300Mi"
   #   # The maximum amount of resources allowed for Scheduler.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Scheduler.
