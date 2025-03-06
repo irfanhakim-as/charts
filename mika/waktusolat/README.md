@@ -239,6 +239,18 @@ A secure application access token is required for each configured account.
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting WaktuSolat services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
+| probes.scheduler.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Scheduler container. |
+| probes.scheduler.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Scheduler container health. |
+| probes.scheduler.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Scheduler container. |
+| probes.scheduler.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the Scheduler container health. |
+| probes.scheduler.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the Scheduler container. |
+| probes.scheduler.startup.spec | object | `{}` | The specification defining how the startup probe checks the Scheduler container health. |
+| probes.waktusolat.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the WaktuSolat container. |
+| probes.waktusolat.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the WaktuSolat container health. |
+| probes.waktusolat.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the WaktuSolat container. |
+| probes.waktusolat.readiness.spec | object | `{}` | The specification defining how the readiness probe checks the WaktuSolat container health. |
+| probes.waktusolat.startup.enabled | bool | `false` | Specifies whether to enable the startup probe for the WaktuSolat container. |
+| probes.waktusolat.startup.spec | object | `{}` | The specification defining how the startup probe checks the WaktuSolat container health. |
 | replicaCount | string | `""` | The desired number of running replicas for WaktuSolat. Default: `"1"`. |
 | resources.scheduler | object | `{}` | Scheduler container resources. |
 | resources.waktusolat | object | `{}` | WaktuSolat container resources. |
