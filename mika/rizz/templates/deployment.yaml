@@ -32,6 +32,7 @@
 {{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
 {{- $alpineVariant := contains "alpine" ($rizz_repository | lower) }}
+{{- $containerGid := ternary 101 33 $alpineVariant }}
 {{- $siteConfigDir := ternary "conf.d" "sites-available" $alpineVariant }}
 apiVersion: apps/v1
 kind: Deployment
@@ -319,4 +320,4 @@ spec:
             claimName: {{ .Release.Name }}-rizz-log-pvc
         {{- end }}
       securityContext:
-        fsGroup: 33
+        fsGroup: {{ $containerGid }}
