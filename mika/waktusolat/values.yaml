@@ -9,7 +9,7 @@ replicaCount: ""
 # Container images used for WaktuSolat.
 image:
   # WaktuSolat container image configurations.
-  # Source: https://github.com/irfanhakim-as/waktusolat/pkgs/container/waktusolat
+  # Source: https://github.com/irfanhakim-as?tab=packages&repo_name=waktusolat
   waktusolat:
     # The registry where the WaktuSolat container image is hosted.
     # Default: "ghcr.io"
