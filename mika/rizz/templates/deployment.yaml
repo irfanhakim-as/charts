@@ -31,6 +31,7 @@
 {{- $domain := .Values.rizz.domain | toString }}
 {{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
+{{- $alpineVariant := contains "alpine" ($rizz_repository | lower) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
