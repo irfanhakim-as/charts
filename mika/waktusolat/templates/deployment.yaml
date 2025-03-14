@@ -32,6 +32,9 @@
 {{- $domain := .Values.waktusolat.domain | toString }}
 {{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $serviceName := printf "%s-waktusolat-svc" .Release.Name | toString }}
+{{- $alpineVariant := contains "alpine" ($waktusolat_repository | lower) }}
+{{- $containerGid := ternary 101 33 $alpineVariant }}
+{{- $siteConfigDir := ternary "conf.d" "sites-available" $alpineVariant }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -103,7 +106,7 @@ spec:
                 name: {{ .Release.Name }}-waktusolat-secret
           volumeMounts:
             - name: {{ .Release.Name }}-waktusolat-site-config
-              mountPath: /etc/apache2/sites-available/000-default.conf
+              mountPath: {{ printf "/etc/apache2/%s/000-default.conf" $siteConfigDir }}
               subPath: site-config.conf
               readOnly: true
             - name: {{ .Release.Name }}-waktusolat-account-config
@@ -324,4 +327,4 @@ spec:
             claimName: {{ .Release.Name }}-waktusolat-log-pvc
         {{- end }}
       securityContext:
-        fsGroup: 33
+        fsGroup: {{ $containerGid }}

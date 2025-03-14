@@ -9,7 +9,7 @@ replicaCount: ""
 # Container images used for Rizz.
 image:
   # Rizz container image configurations.
-  # Source: https://github.com/irfanhakim-as/rizz/pkgs/container/rizz
+  # Source: https://github.com/irfanhakim-as?tab=packages&repo_name=rizz
   rizz:
     # The registry where the Rizz container image is hosted.
     # Default: "ghcr.io"
