@@ -6,7 +6,7 @@
 {{- $fsLogHtml := .Values.flaresolverr.logHtml | default "false" | toString | quote }}
 {{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
 {{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
-{{- $jackettAutoUpdate := .Values.jackett.autoUpdate | toString | quote }}
+{{- $jackettAutoUpdate := .Values.jackett.autoUpdate | default "true" | toString | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

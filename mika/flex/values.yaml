@@ -257,9 +257,10 @@ flaresolverr:
 # Jackett configurations.
 jackett:
   # Specifies whether to allow Jackett to automatically update itself inside the container.
+  # Default: "true"
   # Example:
-  # autoUpdate: false
-  autoUpdate: true
+  # autoUpdate: "false"
+  autoUpdate: ""
   # The amount of persistent storage allocated for the Jackett data storage.
   # Example:
   # dataStorage: "10Gi"
