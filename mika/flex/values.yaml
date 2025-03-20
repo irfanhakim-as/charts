@@ -188,6 +188,7 @@ bazarr:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Bazarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -231,6 +232,7 @@ flaresolverr:
   # timezone: "Asia/Kuala_Lumpur"
   timezone: ""
   # Optional custom configurations to be mounted as a file inside the FlareSolverr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -271,6 +273,7 @@ jackett:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Jackett container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -307,6 +310,7 @@ overseerr:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Overseerr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -351,6 +355,7 @@ plex:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Plex container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -391,6 +396,7 @@ qbt:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the qBittorrent container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -427,6 +433,7 @@ radarr:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Radarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -463,6 +470,7 @@ sonarr:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Sonarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
   #   # The target path inside the container where the configuration file should be mounted.
@@ -496,6 +504,7 @@ ingress:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
   # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
   # Example:
   # customAnnotations:
   #   # The prefix of the annotation.
