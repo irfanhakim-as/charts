@@ -1,10 +1,10 @@
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
-{{- $persistent_data := .Values.storage.data.enabled }}
-{{- $persistent_downloads := .Values.storage.downloads.enabled }}
-{{- $persistent_global := .Values.storage.global.enabled }}
-{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $downloadsPersistence := .Values.storage.downloads.enabled }}
+{{- $globalPersistence := .Values.storage.global.enabled }}
+{{- $mediaPersistence := .Values.storage.media.enabled }}
 {{- $smb := .Values.smb.enabled }}
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $globalSmb := .Values.storage.global.smb }}
@@ -31,7 +31,7 @@
 {{- $qbtDataStorage := .Values.qbt.dataStorage | default $dataStorage | toString | quote }}
 {{- $radarrDataStorage := .Values.radarr.dataStorage | default $dataStorage | toString | quote }}
 {{- $sonarrDataStorage := .Values.sonarr.dataStorage | default $dataStorage | toString | quote }}
-{{- if $persistent_data }}
+{{- if $dataPersistence }}
   {{- if $bazarr }}
 ---
 apiVersion: v1
@@ -137,7 +137,7 @@ spec:
       storage: {{ $sonarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 {{- end }}
-{{- if and $persistent_downloads (not (and $downloadsSmb $smb)) (not $persistent_global) }}
+{{- if and $downloadsPersistence (not (and $downloadsSmb $smb)) (not $globalPersistence) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -153,7 +153,7 @@ spec:
       storage: {{ $downloadsStorage }}
   storageClassName: {{ $downloadsStorageClassName }}
 {{- end }}
-{{- if and $persistent_global (not (and $globalSmb $smb)) }}
+{{- if and $globalPersistence (not (and $globalSmb $smb)) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -169,7 +169,7 @@ spec:
       storage: {{ $globalStorage }}
   storageClassName: {{ $globalStorageClassName }}
 {{- end }}
-{{- if and $persistent_media (not (and $mediaSmb $smb)) (not $persistent_global) }}
+{{- if and $mediaPersistence (not (and $mediaSmb $smb)) (not $globalPersistence) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -185,7 +185,7 @@ spec:
       storage: {{ $mediaStorage }}
   storageClassName: {{ $mediaStorageClassName }}
 {{- end }}
-{{- if and $smb (or (and $persistent_downloads $downloadsSmb (not $persistent_global)) (and $persistent_media $mediaSmb (not $persistent_global)) (and $persistent_global $globalSmb)) }}
+{{- if and $smb (or (and $downloadsPersistence $downloadsSmb (not $globalPersistence)) (and $mediaPersistence $mediaSmb (not $globalPersistence)) (and $globalPersistence $globalSmb)) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
