@@ -1,3 +1,4 @@
+{{- $ingress := .Values.ingress.enabled }}
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
