@@ -2,12 +2,11 @@
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
-{{- $ingress := .Values.ingress.enabled }}
-{{- $bazarrIngress := .Values.bazarr.ingress }}
+{{- $bazarrIngress := and $bazarr .Values.bazarr.ingress }}
 {{- $jackettIngress := .Values.jackett.ingress }}
 {{- $overseerrIngress := .Values.overseerr.ingress }}
-{{- $plexIngress := .Values.plex.ingress }}
-{{- $qbtIngress := .Values.qbt.ingress }}
+{{- $plexIngress := and $plex .Values.plex.ingress }}
+{{- $qbtIngress := and $qbt .Values.qbt.ingress }}
 {{- $radarrIngress := .Values.radarr.ingress }}
 {{- $sonarrIngress := .Values.sonarr.ingress }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
