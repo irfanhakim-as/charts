@@ -171,6 +171,10 @@ global:
 
 # Bazarr configurations.
 bazarr:
+  # Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # The amount of persistent storage allocated for the Bazarr data storage.
   # Example:
   # dataStorage: "10Gi"
@@ -179,10 +183,6 @@ bazarr:
   # Example:
   # domain: "bazarr.example.com"
   domain: ""
-  # Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used.
-  # Example:
-  # enabled: false
-  enabled: true
   # Specifies whether Bazarr should be hosted using an Ingress.
   # Example:
   # ingress: true
@@ -294,6 +294,10 @@ overseerr:
 
 # Plex configurations.
 plex:
+  # Specifies whether Plex should be deployed or excluded in case an external Plex server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim.
   # Example:
   # claim: "claim-bW419gvogwjNfYCowOGa"
@@ -306,10 +310,6 @@ plex:
   # Example:
   # domain: "plex.example.com"
   domain: ""
-  # Specifies whether Plex should be deployed or excluded in case an external Plex server is used.
-  # Example:
-  # enabled: false
-  enabled: true
   # Specifies whether Plex should be hosted using an Ingress.
   # Example:
   # ingress: true
@@ -329,6 +329,10 @@ plex:
 
 # qBittorrent configurations.
 qbt:
+  # Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # The amount of persistent storage allocated for the qBittorrent data storage.
   # Example:
   # dataStorage: "10Gi"
@@ -337,10 +341,6 @@ qbt:
   # Example:
   # domain: "qbt.example.com"
   domain: ""
-  # Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used.
-  # Example:
-  # enabled: false
-  enabled: true
   # Specifies whether qBittorrent should be hosted using an Ingress.
   # Example:
   # ingress: true
