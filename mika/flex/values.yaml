@@ -538,6 +538,11 @@ storage:
     # Example:
     # enabled: false
     enabled: true
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteOnce"
+    # Example:
+    # accessMode: "ReadWriteMany"
+    accessMode: ""
     # The path where the data storage should be mounted on the container.
     # Default: "/config"
     # Example:
@@ -563,6 +568,11 @@ storage:
     # Example:
     # enabled: true
     enabled: false
+    # The access mode defining how the downloads storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
     # The path where the downloads storage should be mounted on the container.
     # Default: "/downloads"
     # Example:
@@ -592,6 +602,11 @@ storage:
     # Example:
     # enabled: false
     enabled: true
+    # The access mode defining how the global storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
     # The path where the global storage should be mounted on the container.
     # Default: "/flex"
     # Example:
@@ -621,6 +636,11 @@ storage:
     # Example:
     # enabled: true
     enabled: false
+    # The access mode defining how the media storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
     # The path where the media storage should be mounted on the container.
     # Default: "/data"
     # Example:
@@ -651,6 +671,11 @@ smb:
   # Example:
   # enabled: true
   enabled: false
+  # The access mode defining how the SMB share storage can be mounted.
+  # Default: "ReadWriteMany"
+  # Example:
+  # accessMode: "ReadWriteOnce"
+  accessMode: ""
   # The additional mount options used to mount the SMB share volume.
   # Example:
   # mountOptions:

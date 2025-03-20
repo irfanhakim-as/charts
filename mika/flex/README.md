@@ -824,6 +824,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.radarr | object | `{}` | Radarr container resources. |
 | resources.sonarr | object | `{}` | Sonarr container resources. |
 | service.type | string | `""` | The type of service used for Flex services. Default: `"ClusterIP"`. |
+| smb.accessMode | string | `""` | The access mode defining how the SMB share storage can be mounted. Default: `"ReadWriteMany"`. |
 | smb.enabled | bool | `false` | Specifies whether to enable persistent storage to be provisioned in the form of an SMB share. |
 | smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |
 | smb.pvStorage | string | `""` | The amount of persistent storage available on the SMB share volume. Default: `"100Gi"`. |
@@ -836,23 +837,27 @@ Flex is a collection of curated services that aims to provide a complete home me
 | sonarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Sonarr data storage. |
 | sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
 | sonarr.ingress | bool | `false` | Specifies whether Sonarr should be hosted using an Ingress. |
+| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for each data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
+| storage.downloads.accessMode | string | `""` | The access mode defining how the downloads storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.downloads.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for downloads storage. |
 | storage.downloads.mountPath | string | `""` | The path where the downloads storage should be mounted on the container. Default: `"/downloads"`. |
 | storage.downloads.smb | bool | `false` | Specifies whether to use an SMB share for the downloads storage. |
 | storage.downloads.storage | string | `""` | The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
 | storage.downloads.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
 | storage.downloads.subPath | string | `""` | The subpath within the downloads storage to mount to the container. Leave empty if not required. |
+| storage.global.accessMode | string | `""` | The access mode defining how the global storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.global.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for global storage. This storage will override the downloads and media storage. |
 | storage.global.mountPath | string | `""` | The path where the global storage should be mounted on the container. Default: `"/flex"`. |
 | storage.global.smb | bool | `false` | Specifies whether to use an SMB share for the global storage. |
 | storage.global.storage | string | `""` | The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage. Default: `"1Gi"`. |
 | storage.global.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the global storage. This setting is ignored if SMB is enabled for said storage. Default: `"longhorn"`. |
 | storage.global.subPath | string | `""` | The subpath within the global storage to mount to the container. Leave empty if not required. |
+| storage.media.accessMode | string | `""` | The access mode defining how the media storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.media.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for media storage. |
 | storage.media.mountPath | string | `""` | The path where the media storage should be mounted on the container. Default: `"/data"`. |
 | storage.media.smb | bool | `false` | Specifies whether to use an SMB share for the media storage. |
