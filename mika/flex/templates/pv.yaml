@@ -40,9 +40,9 @@ spec:
     - mfsymlinks
     - cache=strict
     - noserverino  # required to prevent data corruption
-    {{- range $option := $smbMountOptions }}
+  {{- range $option := $smbMountOptions }}
     - {{ $option }}
-    {{- end }}
+  {{- end }}
   csi:
     driver: smb.csi.k8s.io
     readOnly: false

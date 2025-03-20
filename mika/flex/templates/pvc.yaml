@@ -32,7 +32,7 @@
 {{- $radarrDataStorage := .Values.radarr.dataStorage | default $dataStorage | toString | quote }}
 {{- $sonarrDataStorage := .Values.sonarr.dataStorage | default $dataStorage | toString | quote }}
 {{- if $persistent_data }}
-{{- if $bazarr }}
+  {{- if $bazarr }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -47,7 +47,7 @@ spec:
     requests:
       storage: {{ $bazarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
-{{- end }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -76,7 +76,7 @@ spec:
     requests:
       storage: {{ $overseerrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
-{{- if $plex }}
+  {{- if $plex }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -91,8 +91,8 @@ spec:
     requests:
       storage: {{ $plexDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
-{{- end }}
-{{- if $qbt }}
+  {{- end }}
+  {{- if $qbt }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -107,7 +107,7 @@ spec:
     requests:
       storage: {{ $qbtDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
-{{- end }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
