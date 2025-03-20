@@ -9,6 +9,7 @@
 {{- $secretName := .Values.smb.secretName | default "smbcreds" | toString | quote }}
 {{- $secretNamespace := .Values.smb.secretNamespace | default "default" | toString | quote }}
 {{- $share := .Values.smb.share | toString | quote }}
+{{- $smbAccessMode := .Values.smb.accessMode | default "ReadWriteMany" | toString | quote }}
 {{- $storage := .Values.smb.pvStorage | default "100Gi" | toString | quote }}
 {{- $storageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
 {{- $uid := .Values.global.uid | default "1000" | toString }}
@@ -27,7 +28,7 @@ spec:
   capacity:
     storage: {{ $storage }}
   accessModes:
-    - ReadWriteMany
+    - {{ $smbAccessMode }}
   persistentVolumeReclaimPolicy: Retain
   storageClassName: {{ $storageClassName }}
   mountOptions:
