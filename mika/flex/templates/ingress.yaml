@@ -11,14 +11,21 @@
 {{- $sonarrIngress := .Values.sonarr.ingress }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
-{{- $bazarrDomain := .Values.bazarr.domain | toString | quote }}
-{{- $jackettDomain := .Values.jackett.domain | toString | quote }}
-{{- $overseerrDomain := .Values.overseerr.domain | toString | quote }}
-{{- $plexDomain := .Values.plex.domain | toString | quote }}
-{{- $qbtDomain := .Values.qbt.domain | toString | quote }}
-{{- $radarrDomain := .Values.radarr.domain | toString | quote }}
-{{- $sonarrDomain := .Values.sonarr.domain | toString | quote }}
-{{- if and $ingress (or (and $bazarr $bazarrIngress) $jackettIngress $overseerrIngress $plexIngress (and $qbt $qbtIngress) $radarrIngress $sonarrIngress) }}
+{{- $bazarrDomain := .Values.bazarr.domain | toString }}
+{{- $bazarrDomain = ternary $bazarrDomain "" (and $ingress $bazarrIngress (ne $bazarrDomain "") (ne $bazarrDomain "localhost")) }}
+{{- $jackettDomain := .Values.jackett.domain | toString }}
+{{- $jackettDomain = ternary $jackettDomain "" (and $ingress $jackettIngress (ne $jackettDomain "") (ne $jackettDomain "localhost")) }}
+{{- $overseerrDomain := .Values.overseerr.domain | toString }}
+{{- $overseerrDomain = ternary $overseerrDomain "" (and $ingress $overseerrIngress (ne $overseerrDomain "") (ne $overseerrDomain "localhost")) }}
+{{- $plexDomain := .Values.plex.domain | toString }}
+{{- $plexDomain = ternary $plexDomain "" (and $ingress $plexIngress (ne $plexDomain "") (ne $plexDomain "localhost")) }}
+{{- $qbtDomain := .Values.qbt.domain | toString }}
+{{- $qbtDomain = ternary $qbtDomain "" (and $ingress $qbtIngress (ne $qbtDomain "") (ne $qbtDomain "localhost")) }}
+{{- $radarrDomain := .Values.radarr.domain | toString }}
+{{- $radarrDomain = ternary $radarrDomain "" (and $ingress $radarrIngress (ne $radarrDomain "") (ne $radarrDomain "localhost")) }}
+{{- $sonarrDomain := .Values.sonarr.domain | toString }}
+{{- $sonarrDomain = ternary $sonarrDomain "" (and $ingress $sonarrIngress (ne $sonarrDomain "") (ne $sonarrDomain "localhost")) }}
+{{- if or $bazarrDomain $jackettDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
