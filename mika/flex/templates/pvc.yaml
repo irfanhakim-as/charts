@@ -9,14 +9,19 @@
 {{- $downloadsSmb := .Values.storage.downloads.smb }}
 {{- $globalSmb := .Values.storage.global.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
+{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteOnce" | toString | quote }}
 {{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString }}
 {{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $downloadsAccessMode := .Values.storage.downloads.accessMode | default "ReadWriteMany" | toString | quote }}
 {{- $downloadsStorage := .Values.storage.downloads.storage | default "1Gi" | toString | quote }}
 {{- $downloadsStorageClassName := .Values.storage.downloads.storageClassName | default "longhorn" | toString | quote }}
+{{- $globalAccessMode := .Values.storage.global.accessMode | default "ReadWriteMany" | toString | quote }}
 {{- $globalStorage := .Values.storage.global.storage | default "1Gi" | toString | quote }}
 {{- $globalStorageClassName := .Values.storage.global.storageClassName | default "longhorn" | toString | quote }}
+{{- $mediaAccessMode := .Values.storage.media.accessMode | default "ReadWriteMany" | toString | quote }}
 {{- $mediaStorage := .Values.storage.media.storage | default "1Gi" | toString | quote }}
 {{- $mediaStorageClassName := .Values.storage.media.storageClassName | default "longhorn" | toString | quote }}
+{{- $smbAccessMode := .Values.smb.accessMode | default "ReadWriteMany" | toString | quote }}
 {{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
 {{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
 {{- $bazarrDataStorage := .Values.bazarr.dataStorage | default $dataStorage | toString | quote }}
@@ -37,7 +42,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $bazarrDataStorage }}
@@ -52,7 +57,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $jackettDataStorage }}
@@ -66,7 +71,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $overseerrDataStorage }}
@@ -81,7 +86,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $plexDataStorage }}
@@ -97,7 +102,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $qbtDataStorage }}
@@ -112,7 +117,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $radarrDataStorage }}
@@ -126,7 +131,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteOnce
+    - {{ $dataAccessMode }}
   resources:
     requests:
       storage: {{ $sonarrDataStorage }}
@@ -142,7 +147,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $downloadsAccessMode }}
   resources:
     requests:
       storage: {{ $downloadsStorage }}
@@ -158,7 +163,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $globalAccessMode }}
   resources:
     requests:
       storage: {{ $globalStorage }}
@@ -174,7 +179,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $mediaAccessMode }}
   resources:
     requests:
       storage: {{ $mediaStorage }}
@@ -190,7 +195,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - {{ $smbAccessMode }}
   resources:
     requests:
       storage: {{ $smbStorage }}
