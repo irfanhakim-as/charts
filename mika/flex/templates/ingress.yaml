@@ -49,7 +49,7 @@ metadata:
 spec:
   ingressClassName: "nginx"
   rules:
-    {{- if and $bazarr $bazarrIngress }}
+  {{- if $bazarrDomain }}
     - host: {{ $bazarrDomain }}
       http:
         paths:
@@ -60,8 +60,8 @@ spec:
                   name: bazarr
             path: /
             pathType: Prefix
-    {{- end }}
-    {{- if $jackettIngress }}
+  {{- end }}
+  {{- if $jackettDomain }}
     - host: {{ $jackettDomain }}
       http:
         paths:
@@ -72,8 +72,8 @@ spec:
                   name: jackett
             path: /
             pathType: Prefix
-    {{- end }}
-    {{- if $overseerrIngress }}
+  {{- end }}
+  {{- if $overseerrDomain }}
     - host: {{ $overseerrDomain }}
       http:
         paths:
@@ -84,8 +84,8 @@ spec:
                   name: overseerr
             path: /
             pathType: Prefix
-    {{- end }}
-    {{- if and $plex $plexIngress }}
+  {{- end }}
+  {{- if $plexDomain }}
     - host: {{ $plexDomain }}
       http:
         paths:
@@ -96,8 +96,8 @@ spec:
                   name: plex
             path: /
             pathType: Prefix
-    {{- end }}
-    {{- if and $qbt $qbtIngress }}
+  {{- end }}
+  {{- if $qbtDomain }}
     - host: {{ $qbtDomain }}$qbtIngress
       http:
         paths:
@@ -108,8 +108,8 @@ spec:
                   name: qbt-web
             path: /
             pathType: Prefix
-    {{- end }}
-    {{- if $radarrIngress }}
+  {{- end }}
+  {{- if $radarrDomain }}
     - host: {{ $radarrDomain }}
       http:
         paths:
@@ -120,8 +120,8 @@ spec:
                   name: radarr
             path: /
             pathType: Prefix
-    {{- end }}
-    {{- if $sonarrIngress }}
+  {{- end }}
+  {{- if $sonarrDomain }}
     - host: {{ $sonarrDomain }}
       http:
         paths:
@@ -132,29 +132,29 @@ spec:
                   name: sonarr
             path: /
             pathType: Prefix
-    {{- end }}
+  {{- end }}
   tls:
     - hosts:
-        {{- if and $bazarr $bazarrIngress }}
+      {{- if $bazarrDomain }}
         - {{ $bazarrDomain }}
-        {{- end }}
-        {{- if $jackettIngress }}
+      {{- end }}
+      {{- if $jackettDomain }}
         - {{ $jackettDomain }}
-        {{- end }}
-        {{- if $overseerrIngress }}
+      {{- end }}
+      {{- if $overseerrDomain }}
         - {{ $overseerrDomain }}
-        {{- end }}
-        {{- if and $plex $plexIngress }}
+      {{- end }}
+      {{- if $plexDomain }}
         - {{ $plexDomain }}
-        {{- end }}
-        {{- if and $qbt $qbtIngress }}
+      {{- end }}
+      {{- if $qbtDomain }}
         - {{ $qbtDomain }}
-        {{- end }}
-        {{- if $radarrIngress }}
+      {{- end }}
+      {{- if $radarrDomain }}
         - {{ $radarrDomain }}
-        {{- end }}
-        {{- if $sonarrIngress }}
+      {{- end }}
+      {{- if $sonarrDomain }}
         - {{ $sonarrDomain }}
-        {{- end }}
+      {{- end }}
       secretName: {{ .Release.Name }}-flex-tls-cert
 {{- end }}
