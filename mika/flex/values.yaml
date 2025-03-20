@@ -190,14 +190,23 @@ bazarr:
   # Optional custom configurations to be mounted as a file inside the Bazarr container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # FlareSolverr configurations.
@@ -224,14 +233,23 @@ flaresolverr:
   # Optional custom configurations to be mounted as a file inside the FlareSolverr container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Jackett configurations.
@@ -255,14 +273,23 @@ jackett:
   # Optional custom configurations to be mounted as a file inside the Jackett container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Overseerr configurations.
@@ -282,14 +309,23 @@ overseerr:
   # Optional custom configurations to be mounted as a file inside the Overseerr container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Plex configurations.
@@ -317,14 +353,23 @@ plex:
   # Optional custom configurations to be mounted as a file inside the Plex container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # qBittorrent configurations.
@@ -348,14 +393,23 @@ qbt:
   # Optional custom configurations to be mounted as a file inside the qBittorrent container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Radarr configurations.
@@ -375,14 +429,23 @@ radarr:
   # Optional custom configurations to be mounted as a file inside the Radarr container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Sonarr configurations.
@@ -402,14 +465,23 @@ sonarr:
   # Optional custom configurations to be mounted as a file inside the Sonarr container.
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Ingress configurations.
