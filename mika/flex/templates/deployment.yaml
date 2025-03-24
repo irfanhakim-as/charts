@@ -12,11 +12,15 @@
 {{- $globalSmb := .Values.storage.global.smb }}
 {{- $mediaSmb := .Values.storage.media.smb }}
 {{- $bazarrConfigs := .Values.bazarr.customConfigs }}
+{{- $bazarrConfigs = ternary $bazarrConfigs (list) (and $bazarr (not (empty $bazarrConfigs))) }}
 {{- $fsConfigs := .Values.flaresolverr.customConfigs }}
+{{- $fsConfigs = ternary $fsConfigs (list) (and $flaresolverr (not (empty $fsConfigs))) }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
 {{- $plexConfigs := .Values.plex.customConfigs }}
+{{- $plexConfigs = ternary $plexConfigs (list) (and $plex (not (empty $plexConfigs))) }}
 {{- $qbtConfigs := .Values.qbt.customConfigs }}
+{{- $qbtConfigs = ternary $qbtConfigs (list) (and $qbt (not (empty $qbtConfigs))) }}
 {{- $radarrConfigs := .Values.radarr.customConfigs }}
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
 {{- $bazarr_registry := .Values.image.bazarr.registry | default "lscr.io" | toString }}
