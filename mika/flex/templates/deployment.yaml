@@ -456,7 +456,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $dataPersistence $downloadsPersistence $mediaPersistence $globalPersistence (or (and $bazarr $bazarrConfigs) (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
+      {{- if or $dataPersistence $downloadsPersistence $mediaPersistence $globalPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $dataPersistence }}
         {{- if $bazarr }}
@@ -510,7 +510,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or (and $bazarr $bazarrConfigs) (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
+        {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-custom-configs
           secret:
             secretName: {{ .Release.Name }}-custom-configs
