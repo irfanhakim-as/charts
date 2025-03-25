@@ -10,12 +10,19 @@
 {{- $radarrIngress := .Values.radarr.ingress }}
 {{- $sonarrIngress := .Values.sonarr.ingress }}
 {{- $bazarrDomain := .Values.bazarr.domain | toString }}
+{{- $bazarrDomain = ternary $bazarrDomain "" (and $ingress $bazarrIngress (ne $bazarrDomain "") (ne $bazarrDomain "localhost")) }}
 {{- $jackettDomain := .Values.jackett.domain | toString }}
+{{- $jackettDomain = ternary $jackettDomain "" (and $ingress $jackettIngress (ne $jackettDomain "") (ne $jackettDomain "localhost")) }}
 {{- $overseerrDomain := .Values.overseerr.domain | toString }}
+{{- $overseerrDomain = ternary $overseerrDomain "" (and $ingress $overseerrIngress (ne $overseerrDomain "") (ne $overseerrDomain "localhost")) }}
 {{- $plexDomain := .Values.plex.domain | toString }}
+{{- $plexDomain = ternary $plexDomain "" (and $ingress $plexIngress (ne $plexDomain "") (ne $plexDomain "localhost")) }}
 {{- $qbtDomain := .Values.qbt.domain | toString }}
+{{- $qbtDomain = ternary $qbtDomain "" (and $ingress $qbtIngress (ne $qbtDomain "") (ne $qbtDomain "localhost")) }}
 {{- $radarrDomain := .Values.radarr.domain | toString }}
+{{- $radarrDomain = ternary $radarrDomain "" (and $ingress $radarrIngress (ne $radarrDomain "") (ne $radarrDomain "localhost")) }}
 {{- $sonarrDomain := .Values.sonarr.domain | toString }}
+{{- $sonarrDomain = ternary $sonarrDomain "" (and $ingress $sonarrIngress (ne $sonarrDomain "") (ne $sonarrDomain "localhost")) }}
 Flex is now installed and configured for {{ .Release.Name | toString }}.
 
 Follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/flex#application-configuration to complete the initial setup of each deployed Flex service.
