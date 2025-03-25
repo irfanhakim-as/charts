@@ -13,18 +13,18 @@ metadata:
 spec:
   type: {{ $type }}
   ports:
-    {{- if $bazarr }}
+  {{- if $bazarr }}
     - port: 6767
       targetPort: bazarr
       protocol: TCP
       name: bazarr
-    {{- end }}
-    {{- if $flaresolverr }}
+  {{- end }}
+  {{- if $flaresolverr }}
     - port: 8191
       targetPort: flaresolverr
       protocol: TCP
       name: flaresolverr
-    {{- end }}
+  {{- end }}
     - port: 9117
       targetPort: jackett
       protocol: TCP
@@ -33,13 +33,13 @@ spec:
       targetPort: overseerr
       protocol: TCP
       name: overseerr
-    {{- if $plex }}
+  {{- if $plex }}
     - port: 32400
       targetPort: plex
       protocol: TCP
       name: plex
-    {{- end }}
-    {{- if $qbt }}
+  {{- end }}
+  {{- if $qbt }}
     - port: 6881
       targetPort: qbt
       protocol: TCP
@@ -52,7 +52,7 @@ spec:
       targetPort: qbt-web
       protocol: TCP
       name: qbt-web
-    {{- end }}
+  {{- end }}
     - port: 7878
       targetPort: radarr
       protocol: TCP
