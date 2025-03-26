@@ -25,16 +25,22 @@
 {{- $sonarrDomain = ternary $sonarrDomain "" (and $ingress $sonarrIngress (ne $sonarrDomain "") (ne $sonarrDomain "localhost")) }}
 Flex has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-Follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/flex#application-configuration to complete the initial setup of each deployed Flex service.
+Visit the following service(s) at the provided address:
 
-Visit the following services to get started:
+{{- if or $bazarrDomain $jackettDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 
-    - Bazarr: {{ if $bazarr }}{{ if and $ingress $bazarrIngress }}https://{{ $bazarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external Bazarr server{{- end }}
-    - Jackett: {{ if and $ingress $jackettIngress }}https://{{ $jackettDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
-    - Overseerr: {{ if and $ingress $overseerrIngress }}https://{{ $overseerrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
-    - Plex: {{ if $plex }}{{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external Plex server{{- end }}
-    - qBittorrent: {{ if $qbt }}{{- if and $ingress $qbtIngress }}https://{{ $qbtDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external qBittorrent server{{- end }}
-    - Radarr: {{ if and $ingress $radarrIngress }}https://{{ $radarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
-    - Sonarr: {{ if and $ingress $sonarrIngress }}https://{{ $sonarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
+    {{ if $bazarrDomain }}- Bazarr: {{ printf "https://%s" $bazarrDomain | toString }}{{- end }}
+    {{ if $jackettDomain }}- Jackett: {{ printf "https://%s" $jackettDomain | toString }}{{- end }}
+    {{ if $overseerrDomain }}- Overseerr: {{ printf "https://%s" $overseerrDomain | toString }}{{- end }}
+    {{ if $plexDomain }}- Plex: {{ printf "https://%s" $plexDomain | toString }}{{- end }}
+    {{ if $qbtDomain }}- qBittorrent: {{ printf "https://%s" $qbtDomain | toString }}{{- end }}
+    {{ if $radarrDomain }}- Radarr: {{ printf "https://%s" $radarrDomain | toString }}{{- end }}
+    {{ if $sonarrDomain }}- Sonarr: {{ printf "https://%s" $sonarrDomain | toString }}{{- end }}
+
+{{- else }}
+
+    ⚠️ This chart may have no accessible services available
+
+{{- end }}
 
 Please follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/flex#application-configurations to complete the initial setup of each deployed Flex service.
