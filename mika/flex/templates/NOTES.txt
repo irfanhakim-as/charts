@@ -37,4 +37,4 @@ Visit the following services to get started:
     - Radarr: {{ if and $ingress $radarrIngress }}https://{{ $radarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
     - Sonarr: {{ if and $ingress $sonarrIngress }}https://{{ $sonarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
 
-For more information on how to use and configure Flex, please refer to the official documentation.
+Please follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/flex#application-configurations to complete the initial setup of each deployed Flex service.
