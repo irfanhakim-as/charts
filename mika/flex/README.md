@@ -823,7 +823,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.radarr | object | `{}` | Radarr container resources. |
 | resources.sonarr | object | `{}` | Sonarr container resources. |
-| service.type | string | `""` | The type of service used for Flex services. Default: `"ClusterIP"`. |
+| service.type | string | `""` | The type of service used to expose Flex services. Default: `"ClusterIP"`. |
 | smb.accessMode | string | `""` | The access mode defining how the SMB share storage can be mounted. Default: `"ReadWriteMany"`. |
 | smb.enabled | bool | `false` | Specifies whether to enable persistent storage to be provisioned in the form of an SMB share. |
 | smb.mountOptions | list | `[]` | The additional mount options used to mount the SMB share volume. |

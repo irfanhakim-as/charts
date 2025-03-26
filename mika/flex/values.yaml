@@ -525,7 +525,7 @@ ingress:
 
 # Service configurations.
 service:
-  # The type of service used for Flex services.
+  # The type of service used to expose Flex services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
