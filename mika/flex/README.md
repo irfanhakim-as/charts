@@ -14,7 +14,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
-## Recommended Configurations
+## Recommended configurations
 
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
@@ -196,7 +196,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
-## Application Configurations
+## Application configurations
 
 ### [Bazarr](https://www.bazarr.media)
 
@@ -730,7 +730,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
-## Chart Configurations
+## Chart configurations
 
 > [!NOTE]  
 > Refer to the chart values file directly for more detailed configuration options including their descriptions and sample values.
