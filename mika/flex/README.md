@@ -756,7 +756,6 @@ Flex is a collection of curated services that aims to provide a complete home me
 | flaresolverr.logLevel | string | `""` | The verbosity level of the FlareSolverr logs. Default: `"info"`. |
 | flaresolverr.timezone | string | `""` | The timezone used in the FlareSolverr logs and web browser. Default: `"UTC"`. |
 | global.gid | string | `""` | The group ID used to run the Flex containers. Default: `"1000"`. |
-| global.initScript | string | `""` | Custom init script to run before the Flex containers start. |
 | global.uid | string | `""` | The user ID used to run the Flex containers. Default: `"1000"`. |
 | image.bazarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Bazarr container image. Default: `"IfNotPresent"`. |
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
@@ -766,10 +765,6 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
 | image.flaresolverr.tag | string | `""` | The tag that specifies the version of the FlareSolverr container image used. Default: `"v3.3.13"`. |
-| image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
-| image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
-| image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
-| image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.34"`. |
 | image.jackett.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jackett container image. Default: `"IfNotPresent"`. |
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |

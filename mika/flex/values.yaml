@@ -38,21 +38,6 @@ image:
     # The policy that determines when Kubernetes should pull the FlareSolverr container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
-  # Init container image configurations.
-  # Source: https://hub.docker.com/_/busybox
-  init:
-    # The registry where the Init container image is hosted.
-    # Default: "docker.io"
-    registry: ""
-    # The name of the repository that contains the Init container image used.
-    # Default: "busybox"
-    repository: ""
-    # The tag that specifies the version of the Init container image used.
-    # Default: "1.36.1"
-    tag: ""
-    # The policy that determines when Kubernetes should pull the Init container image.
-    # Default: "IfNotPresent"
-    pullPolicy: ""
   # Jackett container image configurations.
   # Source: https://github.com/linuxserver/docker-jackett/pkgs/container/jackett
   jackett:
@@ -152,12 +137,6 @@ imagePullSecrets: []
 
 # Global configurations.
 global:
-  # Custom init script to run before the Flex containers start.
-  # Example:
-  # initScript: >-
-  #   echo "Hello, World!"
-  #   echo "This is a custom init script."
-  initScript: ""
   # The user ID used to run the Flex containers.
   # Default: "1000"
   # Example:

@@ -31,10 +31,6 @@
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
 {{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.14-hotfix2" | toString }}
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
-{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
-{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
 {{- $jackett_tag := .Values.image.jackett.tag | default "v0.21.1792-ls311" | toString }}
@@ -68,7 +64,6 @@
 {{- $qbtResources := .Values.resources.qbt }}
 {{- $radarrResources := .Values.resources.radarr }}
 {{- $sonarrResources := .Values.resources.sonarr }}
-{{- $initScript := .Values.global.initScript | toString }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
 {{- $downloadsMountPath := .Values.storage.downloads.mountPath | default "/downloads" | toString | quote }}
 {{- $globalMountPath := .Values.storage.global.mountPath | default "/flex" | toString | quote }}
@@ -102,17 +97,6 @@ spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- if $initScript }}
-      initContainers:
-        - name: init
-          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
-          imagePullPolicy: {{ $init_pullPolicy }}
-          command: ["/bin/sh"]
-          args:
-            - -c
-            - >-
-              {{- $initScript | nindent 14 }}
       {{- end }}
       containers:
         {{- if $bazarr }}
