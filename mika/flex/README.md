@@ -92,21 +92,15 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Plex: `plex.ingress: true` and `plex.domain: "plex.example.com"`.
 
-         > [!TIP]  
-         > If you are using an external Plex server, you may exclude Plex from these configurations.
-
      - qBittorrent: `qbt.ingress: true` and `qbt.domain: "qbt.example.com"`.
-
-         > [!TIP]  
-         > If you are using an external qBittorrent server as recommended, you may exclude qBittorrent from these configurations.
 
      - Radarr: `radarr.ingress: true` and `radarr.domain: "radarr.example.com"`.
 
      - Sonarr: `sonarr.ingress: true` and `sonarr.domain: "sonarr.example.com"`.
 
-   - Configure the `ingress.clusterIssuer` setting in the `values.yaml` file according to the name of the cluster issuer you have set up for your Ingress on your Kubernetes cluster. It currently defaults to `"letsencrypt-dns-prod"`.
+      If any of these services were deployed externally, you may exclude them from these configuration options.
 
-   - This is recommended for easier access to the Flex services from any devices from outside your network.
+   - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the `values.yaml` file as required by your own cluster environment.
 
 ---
 
