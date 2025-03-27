@@ -743,9 +743,6 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ## Chart configurations
 
-> [!NOTE]  
-> Refer to the chart values file directly for more detailed configuration options including their descriptions and sample values.
-
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | bazarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Bazarr container. Items: `.mountPath`, `.subPath`, `.config`. |
