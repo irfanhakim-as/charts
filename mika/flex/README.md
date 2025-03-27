@@ -141,7 +141,7 @@ Flex is a collection of curated services that aims to provide a complete home me
     helm show values mika/flex > values.yaml
     ```
 
-    Alternatively, get the values file of an existing Flex release:
+    **Alternatively**, get the values file of an existing Flex release:
 
     ```sh
     helm get values ${releaseName} --namespace ${namespace} > values.yaml
@@ -728,7 +728,7 @@ Flex is a collection of curated services that aims to provide a complete home me
       > [!TIP]  
       > If you'd like it to start searching and downloading, click the **Start search for missing movie/episodes** button in the form.
 
-   - Alternatively, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to use [Overseerr](#overseerr) to request them.
+   - **Alternatively**, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to use [Overseerr](#overseerr) to request them.
 
 ---
 
