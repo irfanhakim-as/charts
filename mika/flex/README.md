@@ -32,7 +32,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Set up an external qBittorrent server. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to do so.
 
-   - Exclude qBittorrent from the Flex installation by setting `qbt.enabled: false` in the `values.yaml` file.
+   - Exclude qBittorrent from the Flex installation by setting `qbt.enabled: false` in the chart values file.
 
       > [!IMPORTANT]  
       > Using an external qBittorrent server will require you to use SMB for either the global storage (**Preferred**) or alternatively, the downloads storage. Otherwise, you will encounter issues with Flex services such as Radarr and Sonarr not being able to access the downloaded media from the external qBittorrent server.
@@ -41,7 +41,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 2. Use the global storage instead of the downloads and media storage combo.
 
-   - Enable the global storage by setting `storage.global.enabled: true` in the `values.yaml` file.
+   - Enable the global storage by setting `storage.global.enabled: true` in the chart values file.
 
       > [!NOTE]  
       > Using the global storage will automatically override the downloads and media storage settings and their roles.
@@ -67,13 +67,13 @@ Flex is a collection of curated services that aims to provide a complete home me
       > [!IMPORTANT]  
       > Using SMB with a Flex storage means that the SMB share must be available and accessible on your network at all times for the Flex services to function properly.
 
-   - Enable SMB for the Flex installation by setting `smb.enabled: true` in the `values.yaml` file.
+   - Enable SMB for the Flex installation by setting `smb.enabled: true` in the chart values file.
 
-   - Enable SMB for the global storage by setting `storage.global.smb: true` in the `values.yaml` file.
+   - Enable SMB for the global storage by setting `storage.global.smb: true` in the chart values file.
 
-   - Configure the `smb` settings in the `values.yaml` file accordingly.
+   - Configure the `smb` settings in the chart values file accordingly.
 
-   - Update the `storage.global.subPath` setting in the `values.yaml` file to point to the root of your _Flex_ directory on the SMB share.
+   - Update the `storage.global.subPath` setting in the chart values file to point to the root of your _Flex_ directory on the SMB share.
 
       > [!TIP]  
       > From the sample directory layout above, the `storage.global.subPath` value should be set to `"Flex"`.
@@ -88,9 +88,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 4. **(Optional)** Use Ingress for serving Flex services outside of your network.
 
-   - Enable Ingress for the Flex installation by setting `ingress.enabled: true` in the `values.yaml` file.
+   - Enable Ingress for the Flex installation by setting `ingress.enabled: true` in the chart values file.
 
-   - Enable Ingress and specify the registered domain name for each Flex service by setting their corresponding `ingress` and `domain` settings in the `values.yaml` file:
+   - Enable Ingress and specify the registered domain name for each Flex service by setting their corresponding `ingress` and `domain` settings in the chart values file:
 
       > [!IMPORTANT]  
       > Replace the sample domain names with your actual domain names that have been registered to your DNS provider and pointed to your Kubernetes cluster.
@@ -109,13 +109,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 
       If any of these services were deployed externally, you may exclude them from these configuration options.
 
-   - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the `values.yaml` file as required by your own cluster environment.
+   - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the chart values file as required by your cluster environment.
 
 5. **(Optional)** Use NodePort for serving Flex services exclusively within your network.
 
-   - Set the service type of the Flex installation to NodePort by setting `service.type: "NodePort"` in the `values.yaml` file.
+   - Set the service type of the Flex installation to NodePort by setting `service.type: "NodePort"` in the chart values file.
 
-   - **(Optional)** Explicitly set the node port for each Flex service by updating their corresponding `service.nodePort` setting in the `values.yaml` file (i.e. `service.bazarr.nodePort: "30000"`). Otherwise, a random, available port will be allocated for each service.
+   - **(Optional)** Explicitly set the node port for each Flex service by updating their corresponding `service.nodePort` setting in the chart values file (i.e. `service.bazarr.nodePort: "30000"`). Otherwise, a random, available port will be allocated for each service.
 
    - Access any of the deployed Flex service from any device within your network by using the node IP and node port assigned to the corresponding service (i.e. `http://<node_ip>:<node_port>`).
 
@@ -140,7 +140,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ## How to install or upgrade a chart release
 
 > [!IMPORTANT]  
-> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the `values.yaml` file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
+> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the release values file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
 
 1. Get the values file of the Flex chart or an existing installation (release).
 
