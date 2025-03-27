@@ -2,15 +2,31 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
-{{- $bazarrPort := .Values.service.bazarr.port | default "6767" | toString }}
-{{- $flaresolverrPort := .Values.service.flaresolverr.port | default "8191" | toString }}
-{{- $jackettPort := .Values.service.jackett.port | default "9117" | toString }}
-{{- $overseerrPort := .Values.service.overseerr.port | default "5055" | toString }}
-{{- $plexPort := .Values.service.plex.port | default "32400" | toString }}
-{{- $qbtPort := .Values.service.qbt.port | default "8080" | toString }}
-{{- $radarrPort := .Values.service.radarr.port | default "7878" | toString }}
-{{- $sonarrPort := .Values.service.sonarr.port | default "8989" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $bazarrPort := .Values.service.bazarr.port | default "6767" | toString }}
+{{- $bazarrNodePort := .Values.service.bazarr.nodePort | toString }}
+{{- $bazarrNodePort = ternary $bazarrNodePort "" (and (eq $type "NodePort") (ne $bazarrNodePort "")) }}
+{{- $flaresolverrPort := .Values.service.flaresolverr.port | default "8191" | toString }}
+{{- $flaresolverrNodePort := .Values.service.flaresolverr.nodePort | toString }}
+{{- $flaresolverrNodePort = ternary $flaresolverrNodePort "" (and (eq $type "NodePort") (ne $flaresolverrNodePort "")) }}
+{{- $jackettPort := .Values.service.jackett.port | default "9117" | toString }}
+{{- $jackettNodePort := .Values.service.jackett.nodePort | toString }}
+{{- $jackettNodePort = ternary $jackettNodePort "" (and (eq $type "NodePort") (ne $jackettNodePort "")) }}
+{{- $overseerrPort := .Values.service.overseerr.port | default "5055" | toString }}
+{{- $overseerrNodePort := .Values.service.overseerr.nodePort | toString }}
+{{- $overseerrNodePort = ternary $overseerrNodePort "" (and (eq $type "NodePort") (ne $overseerrNodePort "")) }}
+{{- $plexPort := .Values.service.plex.port | default "32400" | toString }}
+{{- $plexNodePort := .Values.service.plex.nodePort | toString }}
+{{- $plexNodePort = ternary $plexNodePort "" (and (eq $type "NodePort") (ne $plexNodePort "")) }}
+{{- $qbtPort := .Values.service.qbt.port | default "8080" | toString }}
+{{- $qbtNodePort := .Values.service.qbt.nodePort | toString }}
+{{- $qbtNodePort = ternary $qbtNodePort "" (and (eq $type "NodePort") (ne $qbtNodePort "")) }}
+{{- $radarrPort := .Values.service.radarr.port | default "7878" | toString }}
+{{- $radarrNodePort := .Values.service.radarr.nodePort | toString }}
+{{- $radarrNodePort = ternary $radarrNodePort "" (and (eq $type "NodePort") (ne $radarrNodePort "")) }}
+{{- $sonarrPort := .Values.service.sonarr.port | default "8989" | toString }}
+{{- $sonarrNodePort := .Values.service.sonarr.nodePort | toString }}
+{{- $sonarrNodePort = ternary $sonarrNodePort "" (and (eq $type "NodePort") (ne $sonarrNodePort "")) }}
 ---
 apiVersion: v1
 kind: Service
@@ -24,26 +40,41 @@ spec:
   {{- if $bazarr }}
     - port: {{ int $bazarrPort }}
       targetPort: bazarr
+    {{- if $bazarrNodePort }}
+      nodePort: {{ int $bazarrNodePort }}
+    {{- end }}
       protocol: TCP
       name: bazarr
   {{- end }}
   {{- if $flaresolverr }}
     - port: {{ int $flaresolverrPort }}
       targetPort: flaresolverr
+    {{- if $flaresolverrNodePort }}
+      nodePort: {{ int $flaresolverrNodePort }}
+    {{- end }}
       protocol: TCP
       name: flaresolverr
   {{- end }}
     - port: {{ int $jackettPort }}
       targetPort: jackett
+    {{- if $jackettNodePort }}
+      nodePort: {{ int $jackettNodePort }}
+    {{- end }}
       protocol: TCP
       name: jackett
     - port: {{ int $overseerrPort }}
       targetPort: overseerr
+    {{- if $overseerrNodePort }}
+      nodePort: {{ int $overseerrNodePort }}
+    {{- end }}
       protocol: TCP
       name: overseerr
   {{- if $plex }}
     - port: {{ int $plexPort }}
       targetPort: plex
+    {{- if $plexNodePort }}
+      nodePort: {{ int $plexNodePort }}
+    {{- end }}
       protocol: TCP
       name: plex
   {{- end }}
@@ -58,15 +89,24 @@ spec:
       name: qbt-udp
     - port: {{ int $qbtPort }}
       targetPort: qbt-web
+    {{- if $qbtNodePort }}
+      nodePort: {{ int $qbtNodePort }}
+    {{- end }}
       protocol: TCP
       name: qbt-web
   {{- end }}
     - port: {{ int $radarrPort }}
       targetPort: radarr
+    {{- if $radarrNodePort }}
+      nodePort: {{ int $radarrNodePort }}
+    {{- end }}
       protocol: TCP
       name: radarr
     - port: {{ int $sonarrPort }}
       targetPort: sonarr
+    {{- if $sonarrNodePort }}
+      nodePort: {{ int $sonarrNodePort }}
+    {{- end }}
       protocol: TCP
       name: sonarr
   selector:
