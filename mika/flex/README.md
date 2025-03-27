@@ -823,6 +823,22 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.radarr | object | `{}` | Radarr container resources. |
 | resources.sonarr | object | `{}` | Sonarr container resources. |
+| service.bazarr.nodePort | string | `""` | The optional node port to expose for Bazarr when the service type is NodePort. |
+| service.bazarr.port | string | `""` | The Bazarr port on which the Bazarr server should listen for connections. Default: `"6767"`. |
+| service.flaresolverr.nodePort | string | `""` | The optional node port to expose for FlareSolverr when the service type is NodePort. |
+| service.flaresolverr.port | string | `""` | The FlareSolverr port on which the FlareSolverr server should listen for connections. Default: `"8191"`. |
+| service.jackett.nodePort | string | `""` | The optional node port to expose for Jackett when the service type is NodePort. |
+| service.jackett.port | string | `""` | The Jackett port on which the Jackett server should listen for connections. Default: `"9117"`. |
+| service.overseerr.nodePort | string | `""` | The optional node port to expose for Overseerr when the service type is NodePort. |
+| service.overseerr.port | string | `""` | The Overseerr port on which the Overseerr server should listen for connections. Default: `"5055"`. |
+| service.plex.nodePort | string | `""` | The optional node port to expose for Plex when the service type is NodePort. |
+| service.plex.port | string | `""` | The Plex port on which the Plex server should listen for connections. Default: `"32400"`. |
+| service.qbt.nodePort | string | `""` | The optional node port to expose for qBittorrent when the service type is NodePort. |
+| service.qbt.port | string | `""` | The qBittorrent port on which the qBittorrent server should listen for connections. Default: `"8080"`. |
+| service.radarr.nodePort | string | `""` | The optional node port to expose for Radarr when the service type is NodePort. |
+| service.radarr.port | string | `""` | The Radarr port on which the Radarr server should listen for connections. Default: `"7878"`. |
+| service.sonarr.nodePort | string | `""` | The optional node port to expose for Sonarr when the service type is NodePort. |
+| service.sonarr.port | string | `""` | The Sonarr port on which the Sonarr server should listen for connections. Default: `"8989"`. |
 | service.type | string | `""` | The type of service used to expose Flex services. Default: `"ClusterIP"`. |
 | smb.accessMode | string | `""` | The access mode defining how the SMB share storage can be mounted. Default: `"ReadWriteMany"`. |
 | smb.enabled | bool | `false` | Specifies whether to enable persistent storage to be provisioned in the form of an SMB share. |

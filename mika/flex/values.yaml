@@ -530,6 +530,94 @@ service:
   # Example:
   # type: "NodePort"
   type: ""
+  # Bazarr service port configurations.
+  bazarr:
+    # The optional node port to expose for Bazarr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Bazarr port on which the Bazarr server should listen for connections.
+    # Default: "6767"
+    # Example:
+    # port: "8080"
+    port: ""
+  # FlareSolverr service port configurations.
+  flaresolverr:
+    # The optional node port to expose for FlareSolverr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The FlareSolverr port on which the FlareSolverr server should listen for connections.
+    # Default: "8191"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Jackett service port configurations.
+  jackett:
+    # The optional node port to expose for Jackett when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Jackett port on which the Jackett server should listen for connections.
+    # Default: "9117"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Overseerr service port configurations.
+  overseerr:
+    # The optional node port to expose for Overseerr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Overseerr port on which the Overseerr server should listen for connections.
+    # Default: "5055"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Plex service port configurations.
+  plex:
+    # The optional node port to expose for Plex when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Plex port on which the Plex server should listen for connections.
+    # Default: "32400"
+    # Example:
+    # port: "8080"
+    port: ""
+  # qBittorrent service port configurations.
+  qbt:
+    # The optional node port to expose for qBittorrent when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The qBittorrent port on which the qBittorrent server should listen for connections.
+    # Default: "8080"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Radarr service port configurations.
+  radarr:
+    # The optional node port to expose for Radarr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Radarr port on which the Radarr server should listen for connections.
+    # Default: "7878"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Sonarr service port configurations.
+  sonarr:
+    # The optional node port to expose for Sonarr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Sonarr port on which the Sonarr server should listen for connections.
+    # Default: "8989"
+    # Example:
+    # port: "8080"
+    port: ""
 
 # Storage configurations.
 storage:
