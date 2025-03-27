@@ -102,6 +102,14 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the `values.yaml` file as required by your own cluster environment.
 
+5. **(Optional)** Use NodePort for serving Flex services exclusively within your network.
+
+   - Set the service type of the Flex installation to NodePort by setting `service.type: "NodePort"` in the `values.yaml` file.
+
+   - **(Optional)** Explicitly set the node port for each Flex service by updating their corresponding `service.nodePort` setting in the `values.yaml` file (i.e. `service.bazarr.nodePort: "30000"`). Otherwise, a random, available port will be allocated for each service.
+
+   - Access any of the deployed Flex service from any device within your network by using the node IP and node port assigned to the corresponding service (i.e. `http://<node_ip>:<node_port>`).
+
 ---
 
 ## How to add the chart repo
