@@ -2,6 +2,14 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
+{{- $bazarrPort := .Values.service.bazarr.port | default "6767" | toString }}
+{{- $flaresolverrPort := .Values.service.flaresolverr.port | default "8191" | toString }}
+{{- $jackettPort := .Values.service.jackett.port | default "9117" | toString }}
+{{- $overseerrPort := .Values.service.overseerr.port | default "5055" | toString }}
+{{- $plexPort := .Values.service.plex.port | default "32400" | toString }}
+{{- $qbtPort := .Values.service.qbt.port | default "8080" | toString }}
+{{- $radarrPort := .Values.service.radarr.port | default "7878" | toString }}
+{{- $sonarrPort := .Values.service.sonarr.port | default "8989" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
 apiVersion: v1
@@ -14,27 +22,27 @@ spec:
   type: {{ $type }}
   ports:
   {{- if $bazarr }}
-    - port: 6767
+    - port: {{ int $bazarrPort }}
       targetPort: bazarr
       protocol: TCP
       name: bazarr
   {{- end }}
   {{- if $flaresolverr }}
-    - port: 8191
+    - port: {{ int $flaresolverrPort }}
       targetPort: flaresolverr
       protocol: TCP
       name: flaresolverr
   {{- end }}
-    - port: 9117
+    - port: {{ int $jackettPort }}
       targetPort: jackett
       protocol: TCP
       name: jackett
-    - port: 5055
+    - port: {{ int $overseerrPort }}
       targetPort: overseerr
       protocol: TCP
       name: overseerr
   {{- if $plex }}
-    - port: 32400
+    - port: {{ int $plexPort }}
       targetPort: plex
       protocol: TCP
       name: plex
@@ -48,16 +56,16 @@ spec:
       targetPort: qbt-udp
       protocol: UDP
       name: qbt-udp
-    - port: 8080
+    - port: {{ int $qbtPort }}
       targetPort: qbt-web
       protocol: TCP
       name: qbt-web
   {{- end }}
-    - port: 7878
+    - port: {{ int $radarrPort }}
       targetPort: radarr
       protocol: TCP
       name: radarr
-    - port: 8989
+    - port: {{ int $sonarrPort }}
       targetPort: sonarr
       protocol: TCP
       name: sonarr
