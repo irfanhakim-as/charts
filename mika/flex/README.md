@@ -77,7 +77,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Plex or qBittorrent.
 
-4. Use Ingress for hosting Flex services.
+4. Use Ingress for serving Flex services outside of your network.
 
    - Enable Ingress for the Flex installation by setting `ingress.enabled: true` in the `values.yaml` file.
 
