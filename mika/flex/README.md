@@ -14,6 +14,15 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
+## Preflight checklist
+
+> [!IMPORTANT]  
+> The following items are required to be set up prior to installing this chart.
+
+**This section does not apply to this chart.**
+
+---
+
 ## Recommended configurations
 
 > [!NOTE]  
