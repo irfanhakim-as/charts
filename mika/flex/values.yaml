@@ -162,7 +162,7 @@ bazarr:
   # Example:
   # domain: "bazarr.example.com"
   domain: ""
-  # Specifies whether Bazarr should be hosted using an Ingress.
+  # Specifies whether the Bazarr service should be served publicly using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -248,7 +248,7 @@ jackett:
   # Example:
   # domain: "jackett.example.com"
   domain: ""
-  # Specifies whether Jackett should be hosted using an Ingress.
+  # Specifies whether the Jackett service should be served publicly using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -285,7 +285,7 @@ overseerr:
   # Example:
   # domain: "overseerr.example.com"
   domain: ""
-  # Specifies whether Overseerr should be hosted using an Ingress.
+  # Specifies whether the Overseerr service should be served publicly using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -330,7 +330,7 @@ plex:
   # Example:
   # domain: "plex.example.com"
   domain: ""
-  # Specifies whether Plex should be hosted using an Ingress.
+  # Specifies whether the Plex service should be served publicly using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -371,7 +371,7 @@ qbt:
   # Example:
   # domain: "qbt.example.com"
   domain: ""
-  # Specifies whether qBittorrent should be hosted using an Ingress.
+  # Specifies whether the qBittorrent service should be served publicly using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -408,7 +408,7 @@ radarr:
   # Example:
   # domain: "radarr.example.com"
   domain: ""
-  # Specifies whether Radarr should be hosted using an Ingress.
+  # Specifies whether the Radarr service should be served publicly using an Ingress.
   # Example:
   # ingress: true
   ingress: false
@@ -445,7 +445,7 @@ sonarr:
   # Example:
   # domain: "sonarr.example.com"
   domain: ""
-  # Specifies whether Sonarr should be hosted using an Ingress.
+  # Specifies whether the Sonarr service should be served publicly using an Ingress.
   # Example:
   # ingress: true
   ingress: false
