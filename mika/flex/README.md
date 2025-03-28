@@ -413,7 +413,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - **Radarr Settings**:
 
-     - Click the **Add Radarr Server** button.
+      Click the **Add Radarr Server** button and configure the following:
+
      - Default Server: `Enabled`.
      - 4K Server: `Disabled`.
      - Server Name: `Radarr`.
@@ -421,17 +422,21 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Port: `7878`.
      - Use SSL: `Disabled`.
      - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
-     - Click the **Test** button to verify the settings and for it to load some data from the Radarr server.
+
+      Click the **Test** button to verify and load some data from the Radarr server based on the current settings, then continue:
+
      - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
      - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/flex/Media/Movies`.
      - Minimum Availability: `Announced`.
      - Enable Scan: `Enabled`.
      - Enable Automatic Search: `Enabled`.
-     - Click the **Add Server** button.
+
+      Click the **Add Server** button to complete the Radarr server configuration.
 
    - **Sonarr Settings**:
 
-     - Click the **Add Sonarr Server** button.
+      Click the **Add Sonarr Server** button and configure the following:
+
      - Default Server: `Enabled`.
      - 4K Server: `Disabled`.
      - Server Name: `Sonarr`.
@@ -439,7 +444,9 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Port: `8989`.
      - Use SSL: `Disabled`.
      - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
-     - Click the **Test** button to verify the settings and for it to load some data from the Sonarr server.
+
+      Click the **Test** button to verify and load some data from the Sonarr server based on the current settings, then continue:
+
      - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
      - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
      - Language Profile: `Deprecated`.
@@ -449,7 +456,8 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Season Folders: `Enabled`.
      - Enable Scan: `Enabled`.
      - Enable Automatic Search: `Enabled`.
-     - Click the **Add Server** button.
+
+      Click the **Add Server** button to complete the Sonarr server configuration.
 
    - Click the **Finish Setup** button.
 
