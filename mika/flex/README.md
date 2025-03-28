@@ -566,9 +566,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Do not count slow torrents in these limits: `Enabled`.
 
-   - When ratio reaches: `1`.
+   - When ratio reaches: `1` (the higher the better for other peers).
 
-   - When total seeding time reaches: `1440 minutes`.
+   - When total seeding time reaches: `1440 minutes` (the higher the better for other peers).
 
    - then: `Pause torrent`.
 
