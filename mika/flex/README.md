@@ -494,7 +494,7 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Custom server access URLs: Enter the domain name of the Plex server i.e. `https://plex.example.com`.
 
       > [!NOTE]  
-      > You may skip this setting if you are using an external Plex server.
+      > You may skip this setting if your Plex server does not have a domain name set up.
 
    - Click the **Save Changes** button.
 
