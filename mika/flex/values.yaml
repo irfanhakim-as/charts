@@ -670,12 +670,14 @@ storage:
     # Example:
     # smb: true
     smb: false
-    # The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage.
+    # The amount of persistent storage allocated for the downloads storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
@@ -705,12 +707,14 @@ storage:
     # Example:
     # smb: true
     smb: false
-    # The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # The amount of persistent storage allocated for the global storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the global storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
