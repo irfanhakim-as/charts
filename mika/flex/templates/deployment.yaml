@@ -112,7 +112,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-flex-cm
-          {{- if or $dataPersistence $mediaPersistence $globalPersistence $bazarrConfigs }}
+          {{- if or $dataPersistence $globalPersistence $mediaPersistence $bazarrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-bazarr-data
@@ -122,18 +122,17 @@ spec:
               {{- end }}
             {{- end }}
             {{- if $globalPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
+              {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $mediaPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $bazarrConfigs }}
@@ -190,19 +189,18 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $globalPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $downloadsPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- range $jackettConfigs }}
@@ -224,7 +222,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-flex-cm
-          {{- if or $dataPersistence $mediaPersistence $globalPersistence $overseerrConfigs }}
+          {{- if or $dataPersistence $overseerrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-overseerr-data
@@ -255,7 +253,7 @@ spec:
                 name: {{ .Release.Name }}-plex-cm
             - secretRef:
                 name: {{ .Release.Name }}-plex-secret
-          {{- if or $dataPersistence $mediaPersistence $globalPersistence $plexConfigs }}
+          {{- if or $dataPersistence $globalPersistence $mediaPersistence $plexConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-plex-data
@@ -265,18 +263,17 @@ spec:
               {{- end }}
             {{- end }}
             {{- if $globalPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
+              {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $mediaPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $plexConfigs }}
@@ -317,19 +314,18 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $globalPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $downloadsPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- range $qbtConfigs }}
@@ -352,7 +348,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-flex-cm
-          {{- if or $dataPersistence $downloadsPersistence $mediaPersistence $globalPersistence $radarrConfigs }}
+          {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $radarrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-radarr-data
@@ -361,26 +357,25 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $globalPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $downloadsPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
               {{- end }}
-              {{- if $mediaPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $radarrConfigs }}
@@ -402,7 +397,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-flex-cm
-          {{- if or $dataPersistence $downloadsPersistence $mediaPersistence $globalPersistence $sonarrConfigs }}
+          {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $sonarrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-sonarr-data
@@ -411,26 +406,25 @@ spec:
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $globalPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $downloadsPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
               {{- end }}
-              {{- if $mediaPersistence }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $sonarrConfigs }}
@@ -440,30 +434,30 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $dataPersistence $downloadsPersistence $mediaPersistence $globalPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
+      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $dataPersistence }}
-        {{- if $bazarr }}
+          {{- if $bazarr }}
         - name: {{ .Release.Name }}-flex-bazarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-bazarr-data-pvc
-        {{- end }}
+          {{- end }}
         - name: {{ .Release.Name }}-flex-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jackett-data-pvc
         - name: {{ .Release.Name }}-flex-overseerr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-overseerr-data-pvc
-        {{- if $plex }}
+          {{- if $plex }}
         - name: {{ .Release.Name }}-flex-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-plex-data-pvc
-        {{- end }}
-        {{- if $qbt }}
+          {{- end }}
+          {{- if $qbt }}
         - name: {{ .Release.Name }}-flex-qbt-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-qbt-data-pvc
-        {{- end }}
+          {{- end }}
         - name: {{ .Release.Name }}-flex-radarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-radarr-data-pvc
@@ -471,25 +465,22 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-sonarr-data-pvc
         {{- end }}
-        {{- if $globalPersistence }}
-          {{- if not (and $globalSmb $smb) }}
-        - name: {{ .Release.Name }}-flex-global
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-flex-global-pvc
-          {{- end }}
-        {{- else }}
-          {{- if and $downloadsPersistence (not (and $downloadsSmb $smb)) }}
+        {{- if and $downloadsPersistence (not $downloadsSmb) }}
         - name: {{ .Release.Name }}-flex-downloads
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-downloads-pvc
-          {{- end }}
-          {{- if and $mediaPersistence (not (and $mediaSmb $smb)) }}
+        {{- end }}
+        {{- if and $globalPersistence (not $globalSmb) }}
+        - name: {{ .Release.Name }}-flex-global
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-global-pvc
+        {{- end }}
+        {{- if and $mediaPersistence (not $mediaSmb) }}
         - name: {{ .Release.Name }}-flex-media
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-media-pvc
-          {{- end }}
         {{- end }}
-        {{- if and $smb (or (and $downloadsPersistence $downloadsSmb (not $globalPersistence)) (and $mediaPersistence $mediaSmb (not $globalPersistence)) (and $globalPersistence $globalSmb)) }}
+        {{- if or $downloadsSmb $globalSmb $mediaSmb }}
         - name: {{ .Release.Name }}-flex-smb
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc

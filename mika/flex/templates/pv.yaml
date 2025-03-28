@@ -14,7 +14,7 @@
 {{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
 {{- $uid := .Values.global.uid | default "1000" | toString }}
 {{- $gid := .Values.global.gid | default "1000" | toString }}
-{{- if and $smb (or (and $downloadsPersistence $downloadsSmb (not $globalPersistence)) (and $mediaPersistence $mediaSmb (not $globalPersistence)) (and $globalPersistence $globalSmb)) }}
+{{- if or $downloadsSmb $globalSmb $mediaSmb }}
 ---
 apiVersion: v1
 kind: PersistentVolume

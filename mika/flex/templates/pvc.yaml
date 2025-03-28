@@ -137,7 +137,7 @@ spec:
       storage: {{ $sonarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
 {{- end }}
-{{- if and $downloadsPersistence (not (and $downloadsSmb $smb)) (not $globalPersistence) }}
+{{- if and $downloadsPersistence (not $downloadsSmb) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -153,7 +153,7 @@ spec:
       storage: {{ $downloadsStorage }}
   storageClassName: {{ $downloadsStorageClassName }}
 {{- end }}
-{{- if and $globalPersistence (not (and $globalSmb $smb)) }}
+{{- if and $globalPersistence (not $globalSmb) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -169,7 +169,7 @@ spec:
       storage: {{ $globalStorage }}
   storageClassName: {{ $globalStorageClassName }}
 {{- end }}
-{{- if and $mediaPersistence (not (and $mediaSmb $smb)) (not $globalPersistence) }}
+{{- if and $mediaPersistence (not $mediaSmb) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -185,7 +185,7 @@ spec:
       storage: {{ $mediaStorage }}
   storageClassName: {{ $mediaStorageClassName }}
 {{- end }}
-{{- if and $smb (or (and $downloadsPersistence $downloadsSmb (not $globalPersistence)) (and $mediaPersistence $mediaSmb (not $globalPersistence)) (and $globalPersistence $globalSmb)) }}
+{{- if or $downloadsSmb $globalSmb $mediaSmb }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
