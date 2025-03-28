@@ -734,7 +734,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Store the backup file in a safe location.
 
-9. Add a Movie (Radarr) or TV series (Sonarr) for download (using qBittorrent) and streaming (using Plex):
+9. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Plex):
 
    - Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
 
