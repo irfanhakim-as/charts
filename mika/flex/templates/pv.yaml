@@ -1,10 +1,10 @@
-{{- $downloadsPersistence := .Values.storage.downloads.enabled }}
 {{- $globalPersistence := .Values.storage.global.enabled }}
-{{- $mediaPersistence := .Values.storage.media.enabled }}
+{{- $downloadsPersistence := and .Values.storage.downloads.enabled (not $globalPersistence) }}
+{{- $mediaPersistence := and .Values.storage.media.enabled (not $globalPersistence) }}
 {{- $smb := .Values.smb.enabled }}
-{{- $downloadsSmb := .Values.storage.downloads.smb }}
-{{- $globalSmb := .Values.storage.global.smb }}
-{{- $mediaSmb := .Values.storage.media.smb }}
+{{- $downloadsSmb := and $downloadsPersistence $smb .Values.storage.downloads.smb }}
+{{- $globalSmb := and $globalPersistence $smb .Values.storage.global.smb }}
+{{- $mediaSmb := and $mediaPersistence $smb .Values.storage.media.smb }}
 {{- $smbMountOptions := .Values.smb.mountOptions }}
 {{- $smbSecretName := .Values.smb.secretName | default "smbcreds" | toString | quote }}
 {{- $smbSecretNamespace := .Values.smb.secretNamespace | default "default" | toString | quote }}
