@@ -814,12 +814,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. Items: `.mountPath`, `.subPath`, `.config`. |
 | plex.dataStorage | string | `""` | The amount of persistent storage allocated for the Plex data storage. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
-| plex.enabled | bool | `true` | Specifies whether Plex should be deployed or excluded in case an external Plex server is used. |
+| plex.enabled | bool | `false` | Specifies whether Plex should be deployed or excluded in case an external Plex server is used. |
 | plex.ingress | bool | `false` | Specifies whether the Plex service should be served publicly using an Ingress. |
 | qbt.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the qBittorrent container. Items: `.mountPath`, `.subPath`, `.config`. |
 | qbt.dataStorage | string | `""` | The amount of persistent storage allocated for the qBittorrent data storage. |
 | qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
-| qbt.enabled | bool | `true` | Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used. |
+| qbt.enabled | bool | `false` | Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used. |
 | qbt.ingress | bool | `false` | Specifies whether the qBittorrent service should be served publicly using an Ingress. |
 | radarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Radarr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | radarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Radarr data storage. |

@@ -316,8 +316,8 @@ overseerr:
 plex:
   # Specifies whether Plex should be deployed or excluded in case an external Plex server is used.
   # Example:
-  # enabled: false
-  enabled: true
+  # enabled: true
+  enabled: false
   # The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim.
   # Example:
   # claim: "claim-bW419gvogwjNfYCowOGa"
@@ -361,8 +361,8 @@ plex:
 qbt:
   # Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used.
   # Example:
-  # enabled: false
-  enabled: true
+  # enabled: true
+  enabled: false
   # The amount of persistent storage allocated for the qBittorrent data storage.
   # Example:
   # dataStorage: "10Gi"
