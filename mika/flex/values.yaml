@@ -155,6 +155,7 @@ bazarr:
   # enabled: false
   enabled: true
   # The amount of persistent storage allocated for the Bazarr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -163,6 +164,7 @@ bazarr:
   # domain: "bazarr.example.com"
   domain: ""
   # Specifies whether the Bazarr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
@@ -241,6 +243,7 @@ jackett:
   # autoUpdate: "false"
   autoUpdate: ""
   # The amount of persistent storage allocated for the Jackett data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -249,6 +252,7 @@ jackett:
   # domain: "jackett.example.com"
   domain: ""
   # Specifies whether the Jackett service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
@@ -278,6 +282,7 @@ jackett:
 # Overseerr configurations.
 overseerr:
   # The amount of persistent storage allocated for the Overseerr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -286,6 +291,7 @@ overseerr:
   # domain: "overseerr.example.com"
   domain: ""
   # Specifies whether the Overseerr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
@@ -323,6 +329,7 @@ plex:
   # claim: "claim-bW419gvogwjNfYCowOGa"
   claim: ""
   # The amount of persistent storage allocated for the Plex data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -331,6 +338,7 @@ plex:
   # domain: "plex.example.com"
   domain: ""
   # Specifies whether the Plex service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
@@ -364,6 +372,7 @@ qbt:
   # enabled: true
   enabled: false
   # The amount of persistent storage allocated for the qBittorrent data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -372,6 +381,7 @@ qbt:
   # domain: "qbt.example.com"
   domain: ""
   # Specifies whether the qBittorrent service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
@@ -401,6 +411,7 @@ qbt:
 # Radarr configurations.
 radarr:
   # The amount of persistent storage allocated for the Radarr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -409,6 +420,7 @@ radarr:
   # domain: "radarr.example.com"
   domain: ""
   # Specifies whether the Radarr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
@@ -438,6 +450,7 @@ radarr:
 # Sonarr configurations.
 sonarr:
   # The amount of persistent storage allocated for the Sonarr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -446,6 +459,7 @@ sonarr:
   # domain: "sonarr.example.com"
   domain: ""
   # Specifies whether the Sonarr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
@@ -633,10 +647,12 @@ storage:
   # Downloads storage configurations.
   downloads:
     # Specifies whether persistent storage should be provisioned for downloads storage.
+    # Note: This setting is overridden if the global storage is enabled.
     # Example:
     # enabled: true
     enabled: false
     # The access mode defining how the downloads storage can be mounted.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "ReadWriteMany"
     # Example:
     # accessMode: "ReadWriteOnce"
@@ -671,6 +687,7 @@ storage:
     # enabled: false
     enabled: true
     # The access mode defining how the global storage can be mounted.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "ReadWriteMany"
     # Example:
     # accessMode: "ReadWriteOnce"
@@ -701,10 +718,12 @@ storage:
   # Media storage configurations.
   media:
     # Specifies whether persistent storage should be provisioned for media storage.
+    # Note: This setting is overridden if the global storage is enabled.
     # Example:
     # enabled: true
     enabled: false
     # The access mode defining how the media storage can be mounted.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "ReadWriteMany"
     # Example:
     # accessMode: "ReadWriteOnce"
@@ -722,12 +741,14 @@ storage:
     # Example:
     # smb: true
     smb: false
-    # The amount of persistent storage allocated for the media storage. This setting is ignored if SMB is enabled for said storage.
+    # The amount of persistent storage allocated for the media storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the media storage. This setting is ignored if SMB is enabled for said storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the media storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
