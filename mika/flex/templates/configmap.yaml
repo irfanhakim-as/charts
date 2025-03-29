@@ -1,12 +1,18 @@
+{{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $jackett := .Values.jackett.enabled }}
+{{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
+{{- $radarr := .Values.radarr.enabled }}
+{{- $sonarr := .Values.sonarr.enabled }}
 {{- $uid := .Values.global.uid | default "1000" | toString | quote }}
 {{- $gid := .Values.global.gid | default "1000" | toString | quote }}
 {{- $fsLogHtml := .Values.flaresolverr.logHtml | default "false" | toString | quote }}
 {{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
 {{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
 {{- $jackettAutoUpdate := .Values.jackett.autoUpdate | default "true" | toString | quote }}
+{{- if or $bazarr $jackett $overseerr $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -17,6 +23,7 @@ metadata:
 data:
   PUID: {{ $uid }}
   PGID: {{ $gid }}
+{{- end }}
 {{- if $flaresolverr }}
 ---
 apiVersion: v1
