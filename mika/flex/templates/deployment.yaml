@@ -119,7 +119,7 @@ spec:
             {{- toYaml $bazarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $globalPersistence $mediaPersistence $bazarrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
@@ -186,7 +186,7 @@ spec:
             {{- toYaml $jackettResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
                 name: {{ .Release.Name }}-jackett-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $jackettConfigs }}
@@ -232,7 +232,7 @@ spec:
             {{- toYaml $overseerrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $overseerrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
@@ -314,7 +314,7 @@ spec:
             {{- toYaml $qbtResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
                 name: {{ .Release.Name }}-qbittorrent-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $qbtConfigs }}
@@ -360,7 +360,7 @@ spec:
             {{- toYaml $radarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $radarrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
@@ -411,7 +411,7 @@ spec:
             {{- toYaml $sonarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $sonarrConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
