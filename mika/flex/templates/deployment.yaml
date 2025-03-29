@@ -1,8 +1,12 @@
 {{- $releaseName := .Release.Name | toString }}
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $jackett := .Values.jackett.enabled }}
+{{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
+{{- $radarr := .Values.radarr.enabled }}
+{{- $sonarr := .Values.sonarr.enabled }}
 {{- $dataPersistence := .Values.storage.data.enabled }}
 {{- $globalPersistence := .Values.storage.global.enabled }}
 {{- $downloadsPersistence := and .Values.storage.downloads.enabled (not $globalPersistence) }}
@@ -16,13 +20,17 @@
 {{- $fsConfigs := .Values.flaresolverr.customConfigs }}
 {{- $fsConfigs = ternary $fsConfigs (list) (and $flaresolverr (not (empty $fsConfigs))) }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
+{{- $jackettConfigs = ternary $jackettConfigs (list) (and $jackett (not (empty $jackettConfigs))) }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
+{{- $overseerrConfigs = ternary $overseerrConfigs (list) (and $overseerr (not (empty $overseerrConfigs))) }}
 {{- $plexConfigs := .Values.plex.customConfigs }}
 {{- $plexConfigs = ternary $plexConfigs (list) (and $plex (not (empty $plexConfigs))) }}
 {{- $qbtConfigs := .Values.qbt.customConfigs }}
 {{- $qbtConfigs = ternary $qbtConfigs (list) (and $qbt (not (empty $qbtConfigs))) }}
 {{- $radarrConfigs := .Values.radarr.customConfigs }}
+{{- $radarrConfigs = ternary $radarrConfigs (list) (and $radarr (not (empty $radarrConfigs))) }}
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
+{{- $sonarrConfigs = ternary $sonarrConfigs (list) (and $sonarr (not (empty $sonarrConfigs))) }}
 {{- $bazarr_registry := .Values.image.bazarr.registry | default "lscr.io" | toString }}
 {{- $bazarr_repository := .Values.image.bazarr.repository | default "linuxserver/bazarr" | toString }}
 {{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.4.2-ls239" | toString }}
@@ -166,6 +174,7 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
+        {{- if $jackett }}
         - name: jackett
           image: {{ printf "%s/%s:%s" $jackett_registry $jackett_repository $jackett_tag | quote }}
           imagePullPolicy: {{ $jackett_pullPolicy }}
@@ -210,6 +219,8 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
+        {{- if $overseerr }}
         - name: overseerr
           image: {{ printf "%s/%s:%s" $overseerr_registry $overseerr_repository $overseerr_tag | quote }}
           imagePullPolicy: {{ $overseerr_pullPolicy }}
@@ -238,6 +249,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
         {{- if $plex }}
         - name: plex
           image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
@@ -336,6 +348,7 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
+        {{- if $radarr }}
         - name: radarr
           image: {{ printf "%s/%s:%s" $radarr_registry $radarr_repository $radarr_tag | quote }}
           imagePullPolicy: {{ $radarr_pullPolicy }}
@@ -385,6 +398,8 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
+        {{- if $sonarr }}
         - name: sonarr
           image: {{ printf "%s/%s:%s" $sonarr_registry $sonarr_repository $sonarr_tag | quote }}
           imagePullPolicy: {{ $sonarr_pullPolicy }}
@@ -434,6 +449,7 @@ spec:
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
       {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $dataPersistence }}
@@ -442,12 +458,16 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-bazarr-data-pvc
           {{- end }}
+          {{- if $jackett }}
         - name: {{ .Release.Name }}-flex-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jackett-data-pvc
+          {{- end }}
+          {{- if $overseerr }}
         - name: {{ .Release.Name }}-flex-overseerr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-overseerr-data-pvc
+          {{- end }}
           {{- if $plex }}
         - name: {{ .Release.Name }}-flex-plex-data
           persistentVolumeClaim:
@@ -458,12 +478,16 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-qbt-data-pvc
           {{- end }}
+          {{- if $radarr }}
         - name: {{ .Release.Name }}-flex-radarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-radarr-data-pvc
+          {{- end }}
+          {{- if $sonarr }}
         - name: {{ .Release.Name }}-flex-sonarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-sonarr-data-pvc
+          {{- end }}
         {{- end }}
         {{- if and $downloadsPersistence (not $downloadsSmb) }}
         - name: {{ .Release.Name }}-flex-downloads

@@ -1,6 +1,10 @@
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $jackett := .Values.jackett.enabled }}
+{{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
+{{- $radarr := .Values.radarr.enabled }}
+{{- $sonarr := .Values.sonarr.enabled }}
 {{- $dataPersistence := .Values.storage.data.enabled }}
 {{- $globalPersistence := .Values.storage.global.enabled }}
 {{- $downloadsPersistence := and .Values.storage.downloads.enabled (not $globalPersistence) }}
@@ -48,6 +52,7 @@ spec:
       storage: {{ $bazarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
   {{- end }}
+  {{- if $jackett }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -62,6 +67,8 @@ spec:
     requests:
       storage: {{ $jackettDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
+  {{- end }}
+  {{- if $overseerr }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -76,6 +83,7 @@ spec:
     requests:
       storage: {{ $overseerrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
+  {{- end }}
   {{- if $plex }}
 ---
 apiVersion: v1
@@ -108,6 +116,7 @@ spec:
       storage: {{ $qbtDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
   {{- end }}
+  {{- if $radarr }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -122,6 +131,8 @@ spec:
     requests:
       storage: {{ $radarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
+  {{- end }}
+  {{- if $sonarr }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -136,6 +147,7 @@ spec:
     requests:
       storage: {{ $sonarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
+  {{- end }}
 {{- end }}
 {{- if and $downloadsPersistence (not $downloadsSmb) }}
 ---

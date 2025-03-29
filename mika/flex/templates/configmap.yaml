@@ -37,6 +37,7 @@ data:
   LOG_LEVEL: {{ $fsLogLevel }}
   TZ: {{ $fsTimezone }}
 {{- end }}
+{{- if $jackett }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -46,6 +47,7 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 data:
   AUTO_UPDATE: {{ $jackettAutoUpdate }}
+{{- end }}
 {{- if $plex }}
 ---
 apiVersion: v1
