@@ -163,7 +163,7 @@ spec:
             {{- toYaml $flaresolverrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flaresolverr-cm
+                name: {{ .Release.Name }}-flex-flaresolverr-cm
           {{- if $fsConfigs }}
           volumeMounts:
             {{- range $fsConfigs }}
@@ -188,7 +188,7 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
-                name: {{ .Release.Name }}-jackett-cm
+                name: {{ .Release.Name }}-flex-jackett-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $jackettConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
@@ -262,7 +262,7 @@ spec:
             {{- toYaml $plexResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-plex-cm
+                name: {{ .Release.Name }}-flex-plex-cm
             - secretRef:
                 name: {{ .Release.Name }}-flex-plex-secret
           {{- if or $dataPersistence $globalPersistence $mediaPersistence $plexConfigs }}
@@ -316,7 +316,7 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
-                name: {{ .Release.Name }}-qbittorrent-cm
+                name: {{ .Release.Name }}-flex-qbittorrent-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $qbtConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
