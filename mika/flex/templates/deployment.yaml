@@ -264,7 +264,7 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-plex-cm
             - secretRef:
-                name: {{ .Release.Name }}-plex-secret
+                name: {{ .Release.Name }}-flex-plex-secret
           {{- if or $dataPersistence $globalPersistence $mediaPersistence $plexConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}
@@ -510,9 +510,9 @@ spec:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
         {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
-        - name: {{ .Release.Name }}-custom-configs
+        - name: {{ .Release.Name }}-flex-custom-configs
           secret:
-            secretName: {{ .Release.Name }}-custom-configs
+            secretName: {{ .Release.Name }}-flex-custom-configs
         {{- end }}
       {{- end }}
       {{- if or $bazarr $jackett $overseerr $qbt $radarr $sonarr }}
