@@ -515,5 +515,7 @@ spec:
             secretName: {{ .Release.Name }}-custom-configs
         {{- end }}
       {{- end }}
+      {{- if or $bazarr $jackett $overseerr $qbt $radarr $sonarr }}
       securityContext:
         fsGroup: {{ $gid }}
+      {{- end }}
