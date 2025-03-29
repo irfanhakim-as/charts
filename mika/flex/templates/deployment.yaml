@@ -144,7 +144,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- range $bazarrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: bazarr-{{ .subPath }}
               readOnly: false
@@ -167,7 +167,7 @@ spec:
           {{- if $fsConfigs }}
           volumeMounts:
             {{- range $fsConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: flaresolverr-{{ .subPath }}
               readOnly: false
@@ -213,7 +213,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- range $jackettConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: jackett-{{ .subPath }}
               readOnly: false
@@ -243,7 +243,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- range $overseerrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: overseerr-{{ .subPath }}
               readOnly: false
@@ -289,7 +289,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- range $plexConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: plex-{{ .subPath }}
               readOnly: false
@@ -341,7 +341,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- range $qbtConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: qbt-{{ .subPath }}
               readOnly: false
@@ -392,7 +392,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- range $radarrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: radarr-{{ .subPath }}
               readOnly: false
@@ -443,7 +443,7 @@ spec:
               {{- end }}
             {{- end }}
             {{- range $sonarrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: sonarr-{{ .subPath }}
               readOnly: false
