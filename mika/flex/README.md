@@ -805,10 +805,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jackett.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jackett container. Items: `.mountPath`, `.subPath`, `.config`. |
 | jackett.dataStorage | string | `""` | The amount of persistent storage allocated for the Jackett data storage. |
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
+| jackett.enabled | bool | `true` | Specifies whether Jackett should be deployed or excluded in case an external Jackett server is used. |
 | jackett.ingress | bool | `false` | Specifies whether the Jackett service should be served publicly using an Ingress. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
+| overseerr.enabled | bool | `true` | Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used. |
 | overseerr.ingress | bool | `false` | Specifies whether the Overseerr service should be served publicly using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. Items: `.mountPath`, `.subPath`, `.config`. |
@@ -824,6 +826,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | radarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Radarr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | radarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Radarr data storage. |
 | radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
+| radarr.enabled | bool | `true` | Specifies whether Radarr should be deployed or excluded in case an external Radarr server is used. |
 | radarr.ingress | bool | `false` | Specifies whether the Radarr service should be served publicly using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for Flex. Default: `"1"`. |
 | resources.bazarr | object | `{}` | Bazarr container resources. |
@@ -863,6 +866,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | sonarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Sonarr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | sonarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Sonarr data storage. |
 | sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
+| sonarr.enabled | bool | `true` | Specifies whether Sonarr should be deployed or excluded in case an external Sonarr server is used. |
 | sonarr.ingress | bool | `false` | Specifies whether the Sonarr service should be served publicly using an Ingress. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |

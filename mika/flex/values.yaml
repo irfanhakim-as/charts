@@ -237,6 +237,10 @@ flaresolverr:
 
 # Jackett configurations.
 jackett:
+  # Specifies whether Jackett should be deployed or excluded in case an external Jackett server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # Specifies whether to allow Jackett to automatically update itself inside the container.
   # Default: "true"
   # Example:
@@ -281,6 +285,10 @@ jackett:
 
 # Overseerr configurations.
 overseerr:
+  # Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # The amount of persistent storage allocated for the Overseerr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -410,6 +418,10 @@ qbt:
 
 # Radarr configurations.
 radarr:
+  # Specifies whether Radarr should be deployed or excluded in case an external Radarr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # The amount of persistent storage allocated for the Radarr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -449,6 +461,10 @@ radarr:
 
 # Sonarr configurations.
 sonarr:
+  # Specifies whether Sonarr should be deployed or excluded in case an external Sonarr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
   # The amount of persistent storage allocated for the Sonarr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
