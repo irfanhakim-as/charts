@@ -1,6 +1,7 @@
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
+{{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -16,6 +17,15 @@
 {{- $jackettPort := .Values.service.jackett.port | default "9117" | toString }}
 {{- $jackettNodePort := .Values.service.jackett.nodePort | toString }}
 {{- $jackettNodePort = ternary $jackettNodePort "" (and (eq $type "NodePort") (ne $jackettNodePort "")) }}
+{{- $jellyfinCDPort := .Values.service.jellyfin.cd.port | default "1900" | toString }}
+{{- $jellyfinCDNodePort := .Values.service.jellyfin.cd.nodePort | toString }}
+{{- $jellyfinCDNodePort = ternary $jellyfinCDNodePort "" (and (eq $type "NodePort") (ne $jellyfinCDNodePort "")) }}
+{{- $jellyfinSDPort := .Values.service.jellyfin.sd.port | default "7359" | toString }}
+{{- $jellyfinSDNodePort := .Values.service.jellyfin.sd.nodePort | toString }}
+{{- $jellyfinSDNodePort = ternary $jellyfinSDNodePort "" (and (eq $type "NodePort") (ne $jellyfinSDNodePort "")) }}
+{{- $jellyfinWebPort := .Values.service.jellyfin.web.port | default "8096" | toString }}
+{{- $jellyfinWebNodePort := .Values.service.jellyfin.web.nodePort | toString }}
+{{- $jellyfinWebNodePort = ternary $jellyfinWebNodePort "" (and (eq $type "NodePort") (ne $jellyfinWebNodePort "")) }}
 {{- $overseerrPort := .Values.service.overseerr.port | default "5055" | toString }}
 {{- $overseerrNodePort := .Values.service.overseerr.nodePort | toString }}
 {{- $overseerrNodePort = ternary $overseerrNodePort "" (and (eq $type "NodePort") (ne $overseerrNodePort "")) }}
@@ -34,7 +44,7 @@
 {{- $sonarrPort := .Values.service.sonarr.port | default "8989" | toString }}
 {{- $sonarrNodePort := .Values.service.sonarr.nodePort | toString }}
 {{- $sonarrNodePort = ternary $sonarrNodePort "" (and (eq $type "NodePort") (ne $sonarrNodePort "")) }}
-{{- if or $bazarr $flaresolverr $jackett $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $flaresolverr $jackett $jellyfin $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
 kind: Service
@@ -72,6 +82,29 @@ spec:
       protocol: TCP
       name: jackett
   {{- end }}
+  {{- if $jellyfin }}
+    - port: {{ int $jellyfinCDPort }}
+      targetPort: jellyfin-cd
+    {{- if $jellyfinCDNodePort }}
+      nodePort: {{ int $jellyfinCDNodePort }}
+    {{- end }}
+      protocol: UDP
+      name: jellyfin-cd
+    - port: {{ int $jellyfinSDPort }}
+      targetPort: jellyfin-sd
+    {{- if $jellyfinSDNodePort }}
+      nodePort: {{ int $jellyfinSDNodePort }}
+    {{- end }}
+      protocol: UDP
+      name: jellyfin-sd
+    - port: {{ int $jellyfinWebPort }}
+      targetPort: jellyfin-web
+    {{- if $jellyfinWebNodePort }}
+      nodePort: {{ int $jellyfinWebNodePort }}
+    {{- end }}
+      protocol: TCP
+      name: jellyfin-web
+  {{- end }}
   {{- if $overseerr }}
     - port: {{ int $overseerrPort }}
       targetPort: overseerr
@@ -91,14 +124,14 @@ spec:
       name: plex
   {{- end }}
   {{- if $qbt }}
-    - port: {{ $qbtTorrentPort }}
+    - port: {{ int $qbtTorrentPort }}
       targetPort: qbt
     {{- if $qbtTorrentNodePort }}
       nodePort: {{ int $qbtTorrentNodePort }}
     {{- end }}
       protocol: TCP
       name: qbt
-    - port: {{ $qbtTorrentPort }}
+    - port: {{ int $qbtTorrentPort }}
       targetPort: qbt-udp
     {{- if $qbtTorrentNodePort }}
       nodePort: {{ int $qbtTorrentNodePort }}

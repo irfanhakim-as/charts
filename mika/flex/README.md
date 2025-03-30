@@ -28,7 +28,15 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-1. Disable qBittorrent and use an external qBittorrent server.
+1. Choose between enabling Plex, Jellyfin, or neither, should you choose to deploy one or both of these streaming services externally.
+
+   - To enable Plex, set `plex.enabled: true` in the chart values file.
+
+   - To enable Jellyfin, set `jellyfin.enabled: true` in the chart values file.
+
+   - To disable both Plex and Jellyfin, set `plex.enabled: false` and `jellyfin.enabled: false` in the chart values file.
+
+2. Disable qBittorrent and use an external qBittorrent server.
 
    - Set up an external qBittorrent server. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to do so.
 
@@ -39,7 +47,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Using an external qBittorrent server helps avoid potential throttling issues with download/upload speeds.
 
-2. Use the global storage instead of the downloads and media storage combo.
+3. Use the global storage instead of the downloads and media storage combo.
 
    - Enable the global storage by setting `storage.global.enabled: true` in the chart values file.
 
@@ -48,7 +56,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Using the global storage is highly recommended to ensure that features such as hard linking (in Radarr and Sonarr) work as intended. Otherwise, downloaded media from the downloads storage will be copied over to the media storage, consuming more storage space and time.
 
-3. Use SMB with the global storage.
+4. Use SMB with the global storage.
 
    - Going this route will require you to set up an external SMB share on your network or use an existing one. This SMB storage will be used as the primary storage for your media files.
 
@@ -86,7 +94,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Plex or qBittorrent.
 
-4. **(Optional)** Use Ingress for serving Flex services outside of your network.
+5. **(Optional)** Use Ingress for serving Flex services outside of your network.
 
    - Enable Ingress for the Flex installation by setting `ingress.enabled: true` in the chart values file.
 
@@ -111,7 +119,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the chart values file as required by your cluster environment.
 
-5. **(Optional)** Use NodePort for serving Flex services exclusively within your network.
+6. **(Optional)** Use NodePort for serving Flex services exclusively within your network.
 
    - Set the service type of the Flex installation to NodePort by setting `service.type: "NodePort"` in the chart values file.
 
@@ -370,6 +378,54 @@ Flex is a collection of curated services that aims to provide a complete home me
 4. Test the indexers by clicking the **Test All** button on the dashboard.
 
 5. Remove any indexer that consistently fails the test by clicking the **Delete** (trash can) button corresponding to the indexer.
+
+---
+
+### [Jellyfin](https://jellyfin.org)
+
+> [!IMPORTANT]  
+> Some of the following steps can be skipped or modified if you are using an external Jellyfin server.
+
+1. Launch the Jellyfin web interface.
+
+2. Go through the initial server setup including creating the default administrator account.
+
+3. In the **Set up your media libraries** step, configure the following:
+
+   - Click the **Add Media Library** button.
+
+   - Content type: Expand the dropdown and select `Movies`.
+
+   - Display name: `Movies`.
+
+   - Click the corresponding **+** button to **Folders** and configure the following:
+
+     - Folder: Navigate to the folder where your movie media is stored i.e. `/data/Movies` or `/flex/Media/Movies`.
+     - Click the **Ok** button.
+
+   - Library Settings:
+
+     - Enable the library: Check the corresponding checkbox to enable it.
+     - Preferred download language: Expand the dropdown and select your preferred content language (i.e. `English`).
+     - Country/Region: Expand the dropdown and select your country (i.e. `Malaysia`).
+     - Enable real time monitoring: Check the corresponding checkbox to enable it.
+     - Save artwork into media folders: Check the corresponding checkbox to enable it.
+
+   - Make other configuration changes as you see fit, then click the **Ok** button.
+
+   - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
+
+   - Click the **Next** button once you have added all of your media libraries.
+
+4. In the **Set up Remote Access** step, configure the following:
+
+   - Allow remote connections to this server: Check the corresponding checkbox to enable it.
+
+   - Enable automatic port mapping: Uncheck the corresponding checkbox to disable it.
+
+   - Click the **Next** button.
+
+5. Finish the rest of the Jellyfin setup as you see fit.
 
 ---
 
@@ -777,6 +833,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |
 | image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"v0.22.1709-ls721"`. |
+| image.jellyfin.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyfin container image. Default: `"IfNotPresent"`. |
+| image.jellyfin.registry | string | `""` | The registry where the Jellyfin container image is hosted. Default: `"lscr.io"`. |
+| image.jellyfin.repository | string | `""` | The name of the repository that contains the Jellyfin container image used. Default: `"linuxserver/jellyfin"`. |
+| image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.10.6ubu2404-ls56"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
@@ -807,6 +867,11 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
 | jackett.enabled | bool | `true` | Specifies whether Jackett should be deployed or excluded in case an external Jackett server is used. |
 | jackett.ingress | bool | `false` | Specifies whether the Jackett service should be served publicly using an Ingress. |
+| jellyfin.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jellyfin container. Items: `.mountPath`, `.subPath`, `.config`. |
+| jellyfin.dataStorage | string | `""` | The amount of persistent storage allocated for the Jellyfin data storage. |
+| jellyfin.domain | string | `""` | The ingress domain name that hosts the Jellyfin server. |
+| jellyfin.enabled | bool | `false` | Specifies whether Jellyfin should be deployed or excluded in case an external Jellyfin server is used. |
+| jellyfin.ingress | bool | `false` | Specifies whether the Jellyfin service should be served publicly using an Ingress. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
@@ -832,6 +897,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.bazarr | object | `{}` | Bazarr container resources. |
 | resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
+| resources.jellyfin | object | `{}` | Jellyfin container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
@@ -843,6 +909,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | service.flaresolverr.port | string | `""` | The FlareSolverr port on which the FlareSolverr server should listen for connections. Default: `"8191"`. |
 | service.jackett.nodePort | string | `""` | The optional node port to expose for Jackett when the service type is NodePort. |
 | service.jackett.port | string | `""` | The Jackett port on which the Jackett server should listen for connections. Default: `"9117"`. |
+| service.jellyfin.cd.nodePort | string | `""` | The optional node port to expose for Jellyfin client discovery when the service type is NodePort. |
+| service.jellyfin.cd.port | string | `""` | The Jellyfin client discovery port on which the Jellyfin server should listen for connections. Default: `"1900"`. |
+| service.jellyfin.sd.nodePort | string | `""` | The optional node port to expose for Jellyfin service discovery when the service type is NodePort. |
+| service.jellyfin.sd.port | string | `""` | The Jellyfin service discovery port on which the Jellyfin server should listen for connections. Default: `"7359"`. |
+| service.jellyfin.web.nodePort | string | `""` | The optional node port to expose for Jellyfin web when the service type is NodePort. |
+| service.jellyfin.web.port | string | `""` | The Jellyfin web port on which the Jellyfin server should listen for connections. Default: `"8096"`. |
 | service.overseerr.nodePort | string | `""` | The optional node port to expose for Overseerr when the service type is NodePort. |
 | service.overseerr.port | string | `""` | The Overseerr port on which the Overseerr server should listen for connections. Default: `"5055"`. |
 | service.plex.nodePort | string | `""` | The optional node port to expose for Plex when the service type is NodePort. |
