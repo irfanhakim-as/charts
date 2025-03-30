@@ -18,7 +18,7 @@ image:
     # Default: "linuxserver/bazarr"
     repository: ""
     # The tag that specifies the version of the Bazarr container image used.
-    # Default: "v1.4.2-ls239"
+    # Default: "v1.5.1-ls297"
     tag: ""
     # The policy that determines when Kubernetes should pull the Bazarr container image.
     # Default: "IfNotPresent"
@@ -33,7 +33,7 @@ image:
     # Default: "flaresolverr/flaresolverr"
     repository: ""
     # The tag that specifies the version of the FlareSolverr container image used.
-    # Default: "v3.3.14-hotfix2"
+    # Default: "v3.3.21"
     tag: ""
     # The policy that determines when Kubernetes should pull the FlareSolverr container image.
     # Default: "IfNotPresent"
@@ -48,7 +48,7 @@ image:
     # Default: "linuxserver/jackett"
     repository: ""
     # The tag that specifies the version of the Jackett container image used.
-    # Default: "v0.21.1792-ls311"
+    # Default: "v0.22.1709-ls721"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jackett container image.
     # Default: "IfNotPresent"
@@ -63,7 +63,7 @@ image:
     # Default: "linuxserver/overseerr"
     repository: ""
     # The tag that specifies the version of the Overseerr container image used.
-    # Default: "v1.33.2-ls95"
+    # Default: "v1.34.0-ls136"
     tag: ""
     # The policy that determines when Kubernetes should pull the Overseerr container image.
     # Default: "IfNotPresent"
@@ -93,7 +93,7 @@ image:
     # Default: "linuxserver/qbittorrent"
     repository: ""
     # The tag that specifies the version of the qBittorrent container image used.
-    # Default: "4.6.3-r0-ls314"
+    # Default: "5.0.4-r0-ls387"
     tag: ""
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"
@@ -108,7 +108,7 @@ image:
     # Default: "linuxserver/radarr"
     repository: ""
     # The tag that specifies the version of the Radarr container image used.
-    # Default: "5.3.6.8612-ls204"
+    # Default: "5.21.1.9799-ls266"
     tag: ""
     # The policy that determines when Kubernetes should pull the Radarr container image.
     # Default: "IfNotPresent"
@@ -123,7 +123,7 @@ image:
     # Default: "linuxserver/sonarr"
     repository: ""
     # The tag that specifies the version of the Sonarr container image used.
-    # Default: "4.0.1.929-ls226"
+    # Default: "4.0.14.2939-ls276"
     tag: ""
     # The policy that determines when Kubernetes should pull the Sonarr container image.
     # Default: "IfNotPresent"

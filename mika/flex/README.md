@@ -768,19 +768,19 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.bazarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Bazarr container image. Default: `"IfNotPresent"`. |
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
 | image.bazarr.repository | string | `""` | The name of the repository that contains the Bazarr container image used. Default: `"linuxserver/bazarr"`. |
-| image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.4.2-ls239"`. |
+| image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.5.1-ls297"`. |
 | image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
-| image.flaresolverr.tag | string | `""` | The tag that specifies the version of the FlareSolverr container image used. Default: `"v3.3.13"`. |
+| image.flaresolverr.tag | string | `""` | The tag that specifies the version of the FlareSolverr container image used. Default: `"v3.3.21"`. |
 | image.jackett.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jackett container image. Default: `"IfNotPresent"`. |
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |
-| image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"0.21.1700"`. |
+| image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"v0.22.1709-ls721"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
-| image.overseerr.tag | string | `""` | The tag that specifies the version of the Overseerr container image used. Default: `"v1.33.2-ls95"`. |
+| image.overseerr.tag | string | `""` | The tag that specifies the version of the Overseerr container image used. Default: `"v1.34.0-ls136"`. |
 | image.plex.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Plex container image. Default: `"IfNotPresent"`. |
 | image.plex.registry | string | `""` | The registry where the Plex container image is hosted. Default: `"index.docker.io"`. |
 | image.plex.repository | string | `""` | The name of the repository that contains the Plex container image used. Default: `"plexinc/pms-docker"`. |
@@ -788,15 +788,15 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.qbt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the qBittorrent container image. Default: `"IfNotPresent"`. |
 | image.qbt.registry | string | `""` | The registry where the qBittorrent container image is hosted. Default: `"lscr.io"`. |
 | image.qbt.repository | string | `""` | The name of the repository that contains the qBittorrent container image used. Default: `"linuxserver/qbittorrent"`. |
-| image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `4.6.3-r0-ls310`. |
+| image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `"5.0.4-r0-ls387"`. |
 | image.radarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Radarr container image. Default: `"IfNotPresent"`. |
 | image.radarr.registry | string | `""` | The registry where the Radarr container image is hosted. Default: `"lscr.io"`. |
 | image.radarr.repository | string | `""` | The name of the repository that contains the Radarr container image used. Default: `"linuxserver/radarr"`. |
-| image.radarr.tag | string | `""` | The tag that specifies the version of the Radarr container image used. Default: `5.2.6.8376-ls202`. |
+| image.radarr.tag | string | `""` | The tag that specifies the version of the Radarr container image used. Default: `"5.21.1.9799-ls266"`. |
 | image.sonarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Sonarr container image. Default: `"IfNotPresent"`. |
 | image.sonarr.registry | string | `""` | The registry where the Sonarr container image is hosted. Default: `"lscr.io"`. |
 | image.sonarr.repository | string | `""` | The name of the repository that contains the Sonarr container image used. Default: `"linuxserver/sonarr"`. |
-| image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `4.0.1.929-ls224`. |
+| image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `"4.0.14.2939-ls276"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
