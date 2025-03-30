@@ -317,7 +317,7 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
-                name: {{ .Release.Name }}-flex-qbittorrent-cm
+                name: {{ .Release.Name }}-flex-qbt-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $qbtConfigs }}
           volumeMounts:
             {{- if $dataPersistence }}

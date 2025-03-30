@@ -65,7 +65,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-flex-qbittorrent-cm
+  name: {{ .Release.Name }}-flex-qbt-cm
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
