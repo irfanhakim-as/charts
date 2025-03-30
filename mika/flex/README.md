@@ -847,8 +847,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | service.overseerr.port | string | `""` | The Overseerr port on which the Overseerr server should listen for connections. Default: `"5055"`. |
 | service.plex.nodePort | string | `""` | The optional node port to expose for Plex when the service type is NodePort. |
 | service.plex.port | string | `""` | The Plex port on which the Plex server should listen for connections. Default: `"32400"`. |
-| service.qbt.nodePort | string | `""` | The optional node port to expose for qBittorrent when the service type is NodePort. |
-| service.qbt.port | string | `""` | The qBittorrent port on which the qBittorrent server should listen for connections. Default: `"8080"`. |
+| service.qbt.torrent.nodePort | string | `""` | The optional node port to expose for qBittorrent torrent when the service type is NodePort. |
+| service.qbt.torrent.port | string | `""` | The qBittorrent torrent port on which the qBittorrent server should listen for connections. Default: `"6881"`. |
+| service.qbt.web.nodePort | string | `""` | The optional node port to expose for qBittorrent web when the service type is NodePort. |
+| service.qbt.web.port | string | `""` | The qBittorrent web port on which the qBittorrent server should listen for connections. Default: `"8080"`. |
 | service.radarr.nodePort | string | `""` | The optional node port to expose for Radarr when the service type is NodePort. |
 | service.radarr.port | string | `""` | The Radarr port on which the Radarr server should listen for connections. Default: `"7878"`. |
 | service.sonarr.nodePort | string | `""` | The optional node port to expose for Sonarr when the service type is NodePort. |

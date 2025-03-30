@@ -596,15 +596,28 @@ service:
     port: ""
   # qBittorrent service port configurations.
   qbt:
-    # The optional node port to expose for qBittorrent when the service type is NodePort.
-    # Example:
-    # nodePort: "30000"
-    nodePort: ""
-    # The qBittorrent port on which the qBittorrent server should listen for connections.
-    # Default: "8080"
-    # Example:
-    # port: "8080"
-    port: ""
+    # qBittorrent torrent port configurations.
+    torrent:
+      # The optional node port to expose for qBittorrent torrent when the service type is NodePort.
+      # Example:
+      # nodePort: "30000"
+      nodePort: ""
+      # The qBittorrent torrent port on which the qBittorrent server should listen for connections.
+      # Default: "6881"
+      # Example:
+      # port: "6887"
+      port: ""
+    # qBittorrent web port configurations.
+    web:
+      # The optional node port to expose for qBittorrent web when the service type is NodePort.
+      # Example:
+      # nodePort: "30000"
+      nodePort: ""
+      # The qBittorrent web port on which the qBittorrent server should listen for connections.
+      # Default: "8080"
+      # Example:
+      # port: "8123"
+      port: ""
   # Radarr service port configurations.
   radarr:
     # The optional node port to expose for Radarr when the service type is NodePort.
