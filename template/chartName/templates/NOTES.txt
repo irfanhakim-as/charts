@@ -1,6 +1,7 @@
 {{- $serviceAddress := "" }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $domain := .Values.chartName.domain | toString }}
+{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-chartName-svc" .Release.Name | toString }}
