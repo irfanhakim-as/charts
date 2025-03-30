@@ -1,6 +1,7 @@
-{{- $nodePort := .Values.service.nodePort | toString }}
-{{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $port := .Values.service.port | default "80" | toString }}
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- $nodePort = ternary $nodePort "" (and (eq $type "NodePort") (ne $nodePort "")) }}
 ---
 apiVersion: v1
 kind: Service
