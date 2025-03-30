@@ -40,8 +40,8 @@ spec:
                   name: chartName
             path: /
             pathType: Prefix
-  {{- if $www }}
-    - host: {{ $wwwDomain }}
+  {{- if $wwwDomain }}
+    - host: {{ $wwwDomain | quote }}
       http:
         paths:
           - backend:
@@ -55,8 +55,8 @@ spec:
   tls:
     - hosts:
         - {{ $domain | quote }}
-      {{- if $www }}
-        - {{ $wwwDomain }}
+      {{- if $wwwDomain }}
+        - {{ $wwwDomain | quote }}
       {{- end }}
       secretName: {{ .Release.Name }}-chartName-tls-cert
 {{- end }}
