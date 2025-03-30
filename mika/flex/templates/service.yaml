@@ -91,14 +91,14 @@ spec:
       name: plex
   {{- end }}
   {{- if $qbt }}
-    - port: {{ $qbtTorrentPort }}
+    - port: {{ int $qbtTorrentPort }}
       targetPort: qbt
     {{- if $qbtTorrentNodePort }}
       nodePort: {{ int $qbtTorrentNodePort }}
     {{- end }}
       protocol: TCP
       name: qbt
-    - port: {{ $qbtTorrentPort }}
+    - port: {{ int $qbtTorrentPort }}
       targetPort: qbt-udp
     {{- if $qbtTorrentNodePort }}
       nodePort: {{ int $qbtTorrentNodePort }}
