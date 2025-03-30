@@ -386,7 +386,44 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!IMPORTANT]  
 > Some of the following steps can be skipped or modified if you are using an external Jellyfin server.
 
-1. TODO
+1. Launch the Jellyfin web interface.
+
+2. Go through the initial server setup including creating the default administrator account.
+
+3. In the **Set up your media libraries** step, configure the following:
+
+   - Click the **Add Media Library** button.
+
+   - Content type: Expand the dropdown and select `Movies`.
+
+   - Display name: `Movies`.
+
+   - Click the corresponding **+** button to **Folders** and configure the following:
+
+     - Folder: Navigate to the folder where your movie media is stored i.e. `/data/Movies` or `/flex/Media/Movies`.
+     - Click the **Ok** button.
+
+   - Library Settings:
+
+     - Enable the library: Check the corresponding checkbox to enable it.
+     - Preferred download language: Expand the dropdown and select your preferred content language (i.e. `English`).
+     - Country/Region: Expand the dropdown and select your country (i.e. `Malaysia`).
+     - Enable real time monitoring: Check the corresponding checkbox to enable it.
+     - Save artwork into media folders: Check the corresponding checkbox to enable it.
+
+   - Make other configuration changes as you see fit, then click the **Ok** button.
+
+   - Repeat the same steps for the **TV Shows** library with the corresponding folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
+
+   - Click the **Next** button once you have added all of your media libraries.
+
+4. In the **Set up Remote Access** step, configure the following:
+
+   - Allow remote connections to this server: Check the corresponding checkbox to enable it.
+
+   - Enable automatic port mapping: Uncheck the corresponding checkbox to disable it.
+
+   - Click the **Next** button.
 
 ---
 
