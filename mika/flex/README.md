@@ -425,6 +425,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Click the **Next** button.
 
+5. Finish the rest of the Jellyfin setup as you see fit.
+
 ---
 
 ### [Overseerr](https://overseerr.dev)
