@@ -1,5 +1,5 @@
 {{- $ingress := .Values.ingress.enabled }}
-{{- $www := .Values.ingress.www }}
+{{- $www := and $ingress .Values.ingress.www }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
 {{- $domain := .Values.chartName.domain | toString }}
