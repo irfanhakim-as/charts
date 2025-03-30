@@ -2,6 +2,7 @@
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
+{{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -21,6 +22,8 @@
 {{- $fsConfigs = ternary $fsConfigs (list) (and $flaresolverr (not (empty $fsConfigs))) }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
 {{- $jackettConfigs = ternary $jackettConfigs (list) (and $jackett (not (empty $jackettConfigs))) }}
+{{- $jellyfinConfigs := .Values.jellyfin.customConfigs }}
+{{- $jellyfinConfigs = ternary $jellyfinConfigs (list) (and $jellyfin (not (empty $jellyfinConfigs))) }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
 {{- $overseerrConfigs = ternary $overseerrConfigs (list) (and $overseerr (not (empty $overseerrConfigs))) }}
 {{- $plexConfigs := .Values.plex.customConfigs }}
@@ -43,6 +46,10 @@
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
 {{- $jackett_tag := .Values.image.jackett.tag | default "v0.22.1709-ls721" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jellyfin_registry := .Values.image.jellyfin.registry | default "lscr.io" | toString }}
+{{- $jellyfin_repository := .Values.image.jellyfin.repository | default "linuxserver/jellyfin" | toString }}
+{{- $jellyfin_tag := .Values.image.jellyfin.tag | default "10.10.6ubu2404-ls56" | toString }}
+{{- $jellyfin_pullPolicy := .Values.image.jellyfin.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
 {{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
 {{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.34.0-ls136" | toString }}
@@ -67,6 +74,7 @@
 {{- $bazarrResources := .Values.resources.bazarr }}
 {{- $flaresolverrResources := .Values.resources.flaresolverr }}
 {{- $jackettResources := .Values.resources.jackett }}
+{{- $jellyfinResources := .Values.resources.jellyfin }}
 {{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
@@ -81,7 +89,7 @@
 {{- $globalSubPath := .Values.storage.global.subPath | toString }}
 {{- $mediaSubPath := .Values.storage.media.subPath | toString }}
 {{- $gid := .Values.global.gid | default "1000" | int }}
-{{- if or $bazarr $flaresolverr $jackett $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $flaresolverr $jackett $jellyfin $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -217,6 +225,56 @@ spec:
             - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: jackett-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if $jellyfin }}
+        - name: jellyfin
+          image: {{ printf "%s/%s:%s" $jellyfin_registry $jellyfin_repository $jellyfin_tag | quote }}
+          imagePullPolicy: {{ $jellyfin_pullPolicy }}
+          ports:
+            - name: jellyfin-cd
+              containerPort: 1900
+              protocol: UDP
+            - name: jellyfin-sd
+              containerPort: 7359
+              protocol: UDP
+            - name: jellyfin-web
+              containerPort: 8096
+              protocol: TCP
+          resources:
+            {{- toYaml $jellyfinResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-lsio-cm
+          {{- if or $dataPersistence $globalPersistence $mediaPersistence $jellyfinConfigs }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-flex-jellyfin-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+              {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- range $jellyfinConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jellyfin-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
@@ -451,7 +509,7 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
-      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
+      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $dataPersistence }}
           {{- if $bazarr }}
@@ -463,6 +521,11 @@ spec:
         - name: {{ .Release.Name }}-flex-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jackett-data-pvc
+          {{- end }}
+          {{- if $jellyfin }}
+        - name: {{ .Release.Name }}-flex-jellyfin-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-jellyfin-data-pvc
           {{- end }}
           {{- if $overseerr }}
         - name: {{ .Release.Name }}-flex-overseerr-data
@@ -510,13 +573,13 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
+        {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-flex-custom-configs
           secret:
             secretName: {{ .Release.Name }}-flex-custom-configs
         {{- end }}
       {{- end }}
-      {{- if or $bazarr $jackett $overseerr $qbt $radarr $sonarr }}
+      {{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
       securityContext:
         fsGroup: {{ $gid }}
       {{- end }}
