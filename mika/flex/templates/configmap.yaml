@@ -69,5 +69,6 @@ metadata:
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
+  TORRENTING_PORT: "6881"
   WEBUI_PORT: "8080"
 {{- end }}
