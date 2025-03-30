@@ -28,7 +28,15 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-1. Disable qBittorrent and use an external qBittorrent server.
+1. Choose between enabling Plex, Jellyfin, or neither, should you choose to deploy one or both of these streaming services externally.
+
+   - To enable Plex, set `plex.enabled: true` in the chart values file.
+
+   - To enable Jellyfin, set `jellyfin.enabled: true` in the chart values file.
+
+   - To disable both Plex and Jellyfin, set `plex.enabled: false` and `jellyfin.enabled: false` in the chart values file.
+
+2. Disable qBittorrent and use an external qBittorrent server.
 
    - Set up an external qBittorrent server. Refer to [this](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-(WebUI-only,-systemd-service-set-up,-Ubuntu-15.04-or-newer)) guide on how to do so.
 
@@ -39,7 +47,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Using an external qBittorrent server helps avoid potential throttling issues with download/upload speeds.
 
-2. Use the global storage instead of the downloads and media storage combo.
+3. Use the global storage instead of the downloads and media storage combo.
 
    - Enable the global storage by setting `storage.global.enabled: true` in the chart values file.
 
@@ -48,7 +56,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Using the global storage is highly recommended to ensure that features such as hard linking (in Radarr and Sonarr) work as intended. Otherwise, downloaded media from the downloads storage will be copied over to the media storage, consuming more storage space and time.
 
-3. Use SMB with the global storage.
+4. Use SMB with the global storage.
 
    - Going this route will require you to set up an external SMB share on your network or use an existing one. This SMB storage will be used as the primary storage for your media files.
 
@@ -86,7 +94,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Plex or qBittorrent.
 
-4. **(Optional)** Use Ingress for serving Flex services outside of your network.
+5. **(Optional)** Use Ingress for serving Flex services outside of your network.
 
    - Enable Ingress for the Flex installation by setting `ingress.enabled: true` in the chart values file.
 
@@ -111,7 +119,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the chart values file as required by your cluster environment.
 
-5. **(Optional)** Use NodePort for serving Flex services exclusively within your network.
+6. **(Optional)** Use NodePort for serving Flex services exclusively within your network.
 
    - Set the service type of the Flex installation to NodePort by setting `service.type: "NodePort"` in the chart values file.
 
