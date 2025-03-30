@@ -99,10 +99,10 @@ spec:
       targetPort: qbt-udp
       protocol: UDP
       name: qbt-udp
-    - port: {{ int $qbtPort }}
+    - port: {{ int $qbtWebPort }}
       targetPort: qbt-web
-    {{- if $qbtNodePort }}
-      nodePort: {{ int $qbtNodePort }}
+    {{- if $qbtWebNodePort }}
+      nodePort: {{ int $qbtWebNodePort }}
     {{- end }}
       protocol: TCP
       name: qbt-web
