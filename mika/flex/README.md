@@ -777,6 +777,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |
 | image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"v0.22.1709-ls721"`. |
+| image.jellyfin.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyfin container image. Default: `"IfNotPresent"`. |
+| image.jellyfin.registry | string | `""` | The registry where the Jellyfin container image is hosted. Default: `"lscr.io"`. |
+| image.jellyfin.repository | string | `""` | The name of the repository that contains the Jellyfin container image used. Default: `"linuxserver/jellyfin"`. |
+| image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.10.6ubu2404-ls56"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
@@ -807,6 +811,11 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
 | jackett.enabled | bool | `true` | Specifies whether Jackett should be deployed or excluded in case an external Jackett server is used. |
 | jackett.ingress | bool | `false` | Specifies whether the Jackett service should be served publicly using an Ingress. |
+| jellyfin.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jellyfin container. Items: `.mountPath`, `.subPath`, `.config`. |
+| jellyfin.dataStorage | string | `""` | The amount of persistent storage allocated for the Jellyfin data storage. |
+| jellyfin.domain | string | `""` | The ingress domain name that hosts the Jellyfin server. |
+| jellyfin.enabled | bool | `false` | Specifies whether Jellyfin should be deployed or excluded in case an external Jellyfin server is used. |
+| jellyfin.ingress | bool | `false` | Specifies whether the Jellyfin service should be served publicly using an Ingress. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
@@ -832,6 +841,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.bazarr | object | `{}` | Bazarr container resources. |
 | resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
+| resources.jellyfin | object | `{}` | Jellyfin container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
@@ -843,6 +853,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | service.flaresolverr.port | string | `""` | The FlareSolverr port on which the FlareSolverr server should listen for connections. Default: `"8191"`. |
 | service.jackett.nodePort | string | `""` | The optional node port to expose for Jackett when the service type is NodePort. |
 | service.jackett.port | string | `""` | The Jackett port on which the Jackett server should listen for connections. Default: `"9117"`. |
+| service.jellyfin.cd.nodePort | string | `""` | The optional node port to expose for Jellyfin client discovery when the service type is NodePort. |
+| service.jellyfin.cd.port | string | `""` | The Jellyfin client discovery port on which the Jellyfin server should listen for connections. Default: `"1900"`. |
+| service.jellyfin.sd.nodePort | string | `""` | The optional node port to expose for Jellyfin service discovery when the service type is NodePort. |
+| service.jellyfin.sd.port | string | `""` | The Jellyfin service discovery port on which the Jellyfin server should listen for connections. Default: `"7359"`. |
+| service.jellyfin.web.nodePort | string | `""` | The optional node port to expose for Jellyfin web when the service type is NodePort. |
+| service.jellyfin.web.port | string | `""` | The Jellyfin web port on which the Jellyfin server should listen for connections. Default: `"8096"`. |
 | service.overseerr.nodePort | string | `""` | The optional node port to expose for Overseerr when the service type is NodePort. |
 | service.overseerr.port | string | `""` | The Overseerr port on which the Overseerr server should listen for connections. Default: `"5055"`. |
 | service.plex.nodePort | string | `""` | The optional node port to expose for Plex when the service type is NodePort. |
