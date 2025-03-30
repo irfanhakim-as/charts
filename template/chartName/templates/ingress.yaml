@@ -24,9 +24,9 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/session-cookie-name: "route"
     nginx.org/client-max-body-size: "100m"
-    {{- range $customAnnotations }}
+  {{- range $customAnnotations }}
     {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
-    {{- end }}
+  {{- end }}
 spec:
   ingressClassName: "nginx"
   rules:
