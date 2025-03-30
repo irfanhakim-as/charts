@@ -14,9 +14,9 @@ spec:
   ports:
     - port: {{ int $port }}
       targetPort: chartName
-      {{- if and (eq $type "NodePort") $nodePort }}
+    {{- if $nodePort }}
       nodePort: {{ int $nodePort }}
-      {{- end }}
+    {{- end }}
       protocol: TCP
       name: chartName
   selector:
