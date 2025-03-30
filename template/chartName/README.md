@@ -67,7 +67,7 @@ A Helm chart for deploying ChartName.
     helm show values mika/chartName > values.yaml
     ```
 
-    Alternatively, get the values file of an existing ChartName release:
+    **Alternatively**, get the values file of an existing ChartName release:
 
     ```sh
     helm get values ${releaseName} --namespace ${namespace} > values.yaml
