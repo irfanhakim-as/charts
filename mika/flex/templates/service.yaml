@@ -22,9 +22,12 @@
 {{- $plexPort := .Values.service.plex.port | default "32400" | toString }}
 {{- $plexNodePort := .Values.service.plex.nodePort | toString }}
 {{- $plexNodePort = ternary $plexNodePort "" (and (eq $type "NodePort") (ne $plexNodePort "")) }}
-{{- $qbtPort := .Values.service.qbt.port | default "8080" | toString }}
-{{- $qbtNodePort := .Values.service.qbt.nodePort | toString }}
-{{- $qbtNodePort = ternary $qbtNodePort "" (and (eq $type "NodePort") (ne $qbtNodePort "")) }}
+{{- $qbtTorrentPort := .Values.service.qbt.torrent.port | default "6881" | toString }}
+{{- $qbtTorrentNodePort := .Values.service.qbt.torrent.nodePort | toString }}
+{{- $qbtTorrentNodePort = ternary $qbtTorrentNodePort "" (and (eq $type "NodePort") (ne $qbtTorrentNodePort "")) }}
+{{- $qbtWebPort := .Values.service.qbt.web.port | default "8080" | toString }}
+{{- $qbtWebNodePort := .Values.service.qbt.web.nodePort | toString }}
+{{- $qbtWebNodePort = ternary $qbtWebNodePort "" (and (eq $type "NodePort") (ne $qbtWebNodePort "")) }}
 {{- $radarrPort := .Values.service.radarr.port | default "7878" | toString }}
 {{- $radarrNodePort := .Values.service.radarr.nodePort | toString }}
 {{- $radarrNodePort = ternary $radarrNodePort "" (and (eq $type "NodePort") (ne $radarrNodePort "")) }}
