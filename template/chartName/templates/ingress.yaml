@@ -4,7 +4,8 @@
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
 {{- $domain := .Values.chartName.domain | toString }}
 {{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
-{{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
+{{- $wwwDomain := printf "www.%s" $domain | toString }}
+{{- $wwwDomain = ternary $wwwDomain "" (and $www (ne $domain "")) }}
 {{- if $domain }}
 ---
 apiVersion: networking.k8s.io/v1
