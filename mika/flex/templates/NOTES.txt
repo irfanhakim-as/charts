@@ -33,13 +33,13 @@ Visit the following service(s) at the provided address:
 
 {{- if or $bazarrDomain $jackettDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 
-    {{ if $bazarrDomain }}- Bazarr: {{ printf "https://%s" $bazarrDomain | toString }}{{- end }}
-    {{ if $jackettDomain }}- Jackett: {{ printf "https://%s" $jackettDomain | toString }}{{- end }}
-    {{ if $overseerrDomain }}- Overseerr: {{ printf "https://%s" $overseerrDomain | toString }}{{- end }}
-    {{ if $plexDomain }}- Plex: {{ printf "https://%s" $plexDomain | toString }}{{- end }}
-    {{ if $qbtDomain }}- qBittorrent: {{ printf "https://%s" $qbtDomain | toString }}{{- end }}
-    {{ if $radarrDomain }}- Radarr: {{ printf "https://%s" $radarrDomain | toString }}{{- end }}
-    {{ if $sonarrDomain }}- Sonarr: {{ printf "https://%s" $sonarrDomain | toString }}{{- end }}
+    - Bazarr: {{ if $bazarrDomain }}{{ printf "https://%s" $bazarrDomain | toString }}{{- end }}
+    - Jackett: {{ if $jackettDomain }}{{ printf "https://%s" $jackettDomain | toString }}{{- end }}
+    - Overseerr: {{ if $overseerrDomain }}{{ printf "https://%s" $overseerrDomain | toString }}{{- end }}
+    - Plex: {{ if $plexDomain }}{{ printf "https://%s" $plexDomain | toString }}{{- end }}
+    - qBittorrent: {{ if $qbtDomain }}{{ printf "https://%s" $qbtDomain | toString }}{{- end }}
+    - Radarr: {{ if $radarrDomain }}{{ printf "https://%s" $radarrDomain | toString }}{{- end }}
+    - Sonarr: {{ if $sonarrDomain }}{{ printf "https://%s" $sonarrDomain | toString }}{{- end }}
 
 {{- else }}
 
