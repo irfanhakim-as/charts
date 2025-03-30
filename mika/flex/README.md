@@ -373,6 +373,15 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
+### [Jellyfin](https://jellyfin.org)
+
+> [!IMPORTANT]  
+> Some of the following steps can be skipped or modified if you are using an external Jellyfin server.
+
+1. TODO
+
+---
+
 ### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
