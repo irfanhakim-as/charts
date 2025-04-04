@@ -891,10 +891,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyplexWatched.generateGUIDs | string | `""` | Specifies whether to identify available media files through GUID. Default: `"True"`. |
 | jellyplexWatched.generateLocations | string | `""` | Specifies whether to identify available media files through file path. Default: `"True"`. |
 | jellyplexWatched.jellyfin.servers | list | `[]` | List of Jellyfin servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
-| jellyplexWatched.jellyfin.syncToPlex | string | `""` | Specifies whether watched status from Jellyfin should be sent to Plex. Default: `"True"`. |
+| jellyplexWatched.jellyfin.syncToPlex | string | `""` | Specifies whether watch status from Jellyfin should be sent to Plex. Default: `"True"`. |
 | jellyplexWatched.libraries | list | `[]` | The list of media libraries for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
 | jellyplexWatched.plex.servers | list | `[]` | List of Plex servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
-| jellyplexWatched.plex.syncToJellyfin | string | `""` | Specifies whether watched status from Plex should be sent to Jellyfin. Default: `"True"`. |
+| jellyplexWatched.plex.syncToJellyfin | string | `""` | Specifies whether watch status from Plex should be sent to Jellyfin. Default: `"True"`. |
 | jellyplexWatched.sslBypass | string | `""` | Specifies whether SSL certificate verification should be skipped. Default: `"False"`. |
 | jellyplexWatched.users | list | `[]` | The list of user account pairs for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |

@@ -384,7 +384,7 @@ jellyplexWatched:
   sslBypass: ""
   # JellyPlex-Watched Jellyfin configurations.
   jellyfin:
-    # Specifies whether watched status from Jellyfin should be sent to Plex.
+    # Specifies whether watch status from Jellyfin should be sent to Plex.
     # Default: "True"
     # Example:
     # syncToPlex: "False"
@@ -405,7 +405,7 @@ jellyplexWatched:
     servers: []
   # JellyPlex-Watched Plex configurations.
   plex:
-    # Specifies whether watched status from Plex should be sent to Jellyfin.
+    # Specifies whether watch status from Plex should be sent to Jellyfin.
     # Default: "True"
     # Example:
     # syncToJellyfin: "False"
