@@ -129,92 +129,6 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
-## How to add the chart repo
-
-1. Add the repo to your local helm client:
-
-    ```sh
-    helm repo add mika https://irfanhakim-as.github.io/charts
-    ```
-
-2. Update the repo to retrieve the latest versions of the packages:
-
-    ```sh
-    helm repo update
-    ```
-
----
-
-## How to install or upgrade a chart release
-
-> [!IMPORTANT]  
-> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the release values file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
-
-1. Get the values file of the Flex chart or an existing installation (release).
-
-    Get the latest Flex chart values file for a new installation:
-
-    ```sh
-    helm show values mika/flex > values.yaml
-    ```
-
-    **Alternatively**, get the values file of an existing Flex release:
-
-    ```sh
-    helm get values ${releaseName} --namespace ${namespace} > values.yaml
-    ```
-
-    Replace `${releaseName}` and `${namespace}` accordingly.
-
-2. Edit your Flex values file with the intended configurations:
-
-    ```sh
-    nano values.yaml
-    ```
-
-    Pay extra attention to the descriptions and sample values provided in the chart values file.
-
-3. Install a new release for Flex or upgrade an existing Flex release:
-
-    ```sh
-    helm upgrade --install ${releaseName} mika/flex --namespace ${namespace} --create-namespace --values values.yaml --wait
-    ```
-
-    Replace `${releaseName}` and `${namespace}` accordingly.
-
-4. Verify that your Flex release has been installed:
-
-    ```sh
-    helm ls --namespace ${namespace} | grep "${releaseName}"
-    ```
-
-    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
-
----
-
-## How to uninstall a chart release
-
-> [!CAUTION]  
-> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
-
-1. Uninstall the desired release:
-
-    ```sh
-    helm uninstall ${releaseName} --namespace ${namespace} --wait
-    ```
-
-    Replace `${releaseName}` and `${namespace}` accordingly.
-
-2. Verify that the release has been uninstalled:
-
-    ```sh
-    helm ls --namespace ${namespace} | grep "${releaseName}"
-    ```
-
-    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
-
----
-
 ## Application configurations
 
 > [!NOTE]  
@@ -805,6 +719,92 @@ Flex is a collection of curated services that aims to provide a complete home me
       > If you'd like it to start searching and downloading, click the **Start search for missing movie/episodes** button in the form.
 
    - **Alternatively**, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to use [Overseerr](#overseerr) to request them.
+
+---
+
+## How to add the chart repo
+
+1. Add the repo to your local helm client:
+
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
+
+2. Update the repo to retrieve the latest versions of the packages:
+
+    ```sh
+    helm repo update
+    ```
+
+---
+
+## How to install or upgrade a chart release
+
+> [!IMPORTANT]  
+> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the release values file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
+
+1. Get the values file of the Flex chart or an existing installation (release).
+
+    Get the latest Flex chart values file for a new installation:
+
+    ```sh
+    helm show values mika/flex > values.yaml
+    ```
+
+    **Alternatively**, get the values file of an existing Flex release:
+
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Edit your Flex values file with the intended configurations:
+
+    ```sh
+    nano values.yaml
+    ```
+
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
+
+3. Install a new release for Flex or upgrade an existing Flex release:
+
+    ```sh
+    helm upgrade --install ${releaseName} mika/flex --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+4. Verify that your Flex release has been installed:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
+
+---
+
+## How to uninstall a chart release
+
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
+1. Uninstall the desired release:
+
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
 
 ---
 
