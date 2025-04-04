@@ -127,7 +127,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Access any of the deployed Flex service from any device within your network by using the node IP and node port assigned to the corresponding service (i.e. `http://<node_ip>:<node_port>`).
 
-7. **(Optional)** Sync watch status between multiple streaming services if you either have both Jellyfin and Plex servers, or multiple server instances for either of the two.
+7. **(Optional)** Sync watch state between multiple streaming services if you either have both Jellyfin and Plex servers, or multiple server instances for either of the two.
 
    - Enable JellyPlex-Watched by setting `jellyplexWatched.enabled: true` in the chart values file.
 
