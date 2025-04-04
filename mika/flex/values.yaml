@@ -390,7 +390,8 @@ plex:
   # Example:
   # enabled: true
   enabled: false
-  # The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim.
+  # The secret claim token used to claim ownership of the Plex server.
+  # Note: You may acquire the token from https://www.plex.tv/claim.
   # Example:
   # claim: "claim-bW419gvogwjNfYCowOGa"
   claim: ""
