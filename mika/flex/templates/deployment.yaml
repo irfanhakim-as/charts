@@ -53,6 +53,10 @@
 {{- $jellyfin_repository := .Values.image.jellyfin.repository | default "linuxserver/jellyfin" | toString }}
 {{- $jellyfin_tag := .Values.image.jellyfin.tag | default "10.10.6ubu2404-ls56" | toString }}
 {{- $jellyfin_pullPolicy := .Values.image.jellyfin.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jpw_registry := .Values.image.jellyplexWatched.registry | default "ghcr.io" | toString }}
+{{- $jpw_repository := .Values.image.jellyplexWatched.repository | default "luigi311/jellyplex-watched" | toString }}
+{{- $jpw_tag := .Values.image.jellyplexWatched.tag | default "7.0.3-alpine" | toString }}
+{{- $jpw_pullPolicy := .Values.image.jellyplexWatched.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
 {{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
 {{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.34.0-ls136" | toString }}
@@ -78,6 +82,7 @@
 {{- $flaresolverrResources := .Values.resources.flaresolverr }}
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $jellyfinResources := .Values.resources.jellyfin }}
+{{- $jpwResources := .Values.resources.jellyplexWatched }}
 {{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
@@ -92,7 +97,7 @@
 {{- $globalSubPath := .Values.storage.global.subPath | toString }}
 {{- $mediaSubPath := .Values.storage.media.subPath | toString }}
 {{- $gid := .Values.global.gid | default "1000" | int }}
-{{- if or $bazarr $flaresolverr $jackett $jellyfin $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $flaresolverr $jackett $jellyfin $jellyplexWatched $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -278,6 +283,27 @@ spec:
             - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: jellyfin-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if $jellyplexWatched }}
+        - name: jellyplex-watched
+          image: {{ printf "%s/%s:%s" $jpw_registry $jpw_repository $jpw_tag | quote }}
+          imagePullPolicy: {{ $jpw_pullPolicy }}
+          resources:
+            {{- toYaml $jpwResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-jellyplex-watched-cm
+            - secretRef:
+                name: {{ .Release.Name }}-flex-jellyplex-watched-secret
+          {{- if $jpwConfigs }}
+          volumeMounts:
+            {{- range $jpwConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jpw-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
