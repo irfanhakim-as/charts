@@ -28,7 +28,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-1. Choose between enabling Plex, Jellyfin, or neither, should you choose to deploy one or both of these streaming services externally.
+1. Choose between enabling Plex, Jellyfin, both, or neither, should you choose to deploy one or both of these streaming services externally.
 
    - To enable Plex, set `plex.enabled: true` in the chart values file.
 
