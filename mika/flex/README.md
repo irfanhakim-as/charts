@@ -324,10 +324,16 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Library Settings:
 
      - Enable the library: Check the corresponding checkbox to enable it.
-     - Preferred download language: Expand the dropdown and select your preferred content language (i.e. `English`).
-     - Country/Region: Expand the dropdown and select your country (i.e. `Malaysia`).
      - Enable real time monitoring: Check the corresponding checkbox to enable it.
      - Save artwork into media folders: Uncheck the corresponding checkbox to disable it.
+
+   - Trickplay:
+
+     - Enable trickplay image extraction: Check the corresponding checkbox to enable it.
+
+   - Subtitle Downloads:
+
+     - Save subtitles into media folders: Check the corresponding checkbox to enable it.
 
    - Click the corresponding **+** button to **Folders** and configure the following:
 
