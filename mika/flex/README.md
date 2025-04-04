@@ -837,6 +837,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jellyfin.registry | string | `""` | The registry where the Jellyfin container image is hosted. Default: `"lscr.io"`. |
 | image.jellyfin.repository | string | `""` | The name of the repository that contains the Jellyfin container image used. Default: `"linuxserver/jellyfin"`. |
 | image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.10.6ubu2404-ls56"`. |
+| image.jellyplexWatched.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the JellyPlex-Watched container image. Default: `"IfNotPresent"`. |
+| image.jellyplexWatched.registry | string | `""` | The registry where the JellyPlex-Watched container image is hosted. Default: `"ghcr.io"`. |
+| image.jellyplexWatched.repository | string | `""` | The name of the repository that contains the JellyPlex-Watched container image used. Default: `"luigi311/jellyplex-watched"`. |
+| image.jellyplexWatched.tag | string | `""` | The tag that specifies the version of the JellyPlex-Watched container image used. Default: `"7.0.3-alpine"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
@@ -872,6 +876,18 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyfin.domain | string | `""` | The ingress domain name that hosts the Jellyfin server. |
 | jellyfin.enabled | bool | `false` | Specifies whether Jellyfin should be deployed or excluded in case an external Jellyfin server is used. |
 | jellyfin.ingress | bool | `false` | Specifies whether the Jellyfin service should be served publicly using an Ingress. |
+| jellyplexWatched.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the JellyPlex-Watched container. Items: `.mountPath`, `.subPath`, `.config`. |
+| jellyplexWatched.debugLevel | string | `""` | The verbosity level of the JellyPlex-Watched logs. Default: `"info"`. |
+| jellyplexWatched.enabled | bool | `false` | Specifies whether JellyPlex-Watched should be deployed or excluded in case an external JellyPlex-Watched server is used. |
+| jellyplexWatched.generateGUIDs | string | `""` | Specifies whether to identify available media files through GUID. Default: `"True"`. |
+| jellyplexWatched.generateLocations | string | `""` | Specifies whether to identify available media files through file path. Default: `"True"`. |
+| jellyplexWatched.jellyfin.servers | list | `[]` | List of Jellyfin servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
+| jellyplexWatched.jellyfin.syncToPlex | string | `""` | Specifies whether watched status from Jellyfin should be sent to Plex. Default: `"True"`. |
+| jellyplexWatched.libraries | list | `[]` | The list of media libraries for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
+| jellyplexWatched.plex.servers | list | `[]` | List of Plex servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
+| jellyplexWatched.plex.syncToJellyfin | string | `""` | Specifies whether watched status from Plex should be sent to Jellyfin. Default: `"True"`. |
+| jellyplexWatched.sslBypass | string | `""` | Specifies whether SSL certificate verification should be skipped. Default: `"False"`. |
+| jellyplexWatched.users | list | `[]` | The list of user account pairs for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
@@ -899,6 +915,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.jellyfin | object | `{}` | Jellyfin container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
+| resources.jellyplexWatched | object | `{}` | JellyPlex-Watched container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.radarr | object | `{}` | Radarr container resources. |
