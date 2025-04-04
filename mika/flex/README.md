@@ -217,6 +217,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ## Application configurations
 
+> [!NOTE]  
+> The following configurations are expected or recommended to be set up from within the application after completing the installation.
+
 ### [Bazarr](https://www.bazarr.media)
 
 > [!NOTE]  
