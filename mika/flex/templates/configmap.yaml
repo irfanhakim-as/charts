@@ -2,6 +2,7 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyplexWatched := .Values.jellyplexWatched.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -13,6 +14,26 @@
 {{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
 {{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
 {{- $jackettAutoUpdate := .Values.jackett.autoUpdate | default "true" | toString | quote }}
+{{- $jpwDebugLevel := .Values.jellyplexWatched.debugLevel | default "info" | toString | quote }}
+{{- $jpwGenerateGUIDs := .Values.jellyplexWatched.generateGUIDs | default "True" | toString | quote }}
+{{- $jpwGenerateLocations := .Values.jellyplexWatched.generateLocations | default "True" | toString | quote }}
+{{- $jpwSslBypass := .Values.jellyplexWatched.sslBypass | default "False" | toString | quote }}
+{{- $jpwSyncToPlex := .Values.jellyplexWatched.jellyfin.syncToPlex | default "True" | toString | quote }}
+{{- $jpwSyncToJellyfin := .Values.jellyplexWatched.plex.syncToJellyfin | default "True" | toString | quote }}
+{{- $jpwLibraries := .Values.jellyplexWatched.libraries }}
+{{- $jpwLibraryMap := dict -}}
+{{- range $jpwLibraries }}
+  {{- if and .source .target }}
+    {{- $_ := set $jpwLibraryMap .source .target }}
+  {{- end }}
+{{- end }}
+{{- $jpwUsers := .Values.jellyplexWatched.users }}
+{{- $jpwUserMap := dict -}}
+{{- range $jpwUsers }}
+  {{- if and .source .target }}
+    {{- $_ := set $jpwUserMap .source .target }}
+  {{- end }}
+{{- end }}
 {{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
@@ -48,6 +69,31 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 data:
   AUTO_UPDATE: {{ $jackettAutoUpdate }}
+{{- end }}
+{{- if $jellyplexWatched }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flex-jellyplex-watched-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  DEBUG_LEVEL: {{ $jpwDebugLevel }}
+  DRYRUN: "False"
+  GENERATE_GUIDS: {{ $jpwGenerateGUIDs }}
+  GENERATE_LOCATIONS: {{ $jpwGenerateLocations }}
+  SSL_BYPASS: {{ $jpwSslBypass }}
+  SYNC_FROM_JELLYFIN_TO_JELLYFIN: "True"
+  SYNC_FROM_JELLYFIN_TO_PLEX: {{ $jpwSyncToPlex }}
+  SYNC_FROM_PLEX_TO_JELLYFIN: {{ $jpwSyncToJellyfin }}
+  SYNC_FROM_PLEX_TO_PLEX: "True"
+  {{- if $jpwLibraryMap }}
+  LIBRARY_MAPPING: {{ $jpwLibraryMap | toJson | quote }}
+  {{- end }}
+  {{- if $jpwUserMap }}
+  USER_MAPPING: {{ $jpwUserMap | toJson | quote }}
+  {{- end }}
 {{- end }}
 {{- if $plex }}
 ---
