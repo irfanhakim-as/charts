@@ -894,6 +894,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyplexWatched.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the JellyPlex-Watched container. Items: `.mountPath`, `.subPath`, `.config`. |
 | jellyplexWatched.debugLevel | string | `""` | The verbosity level of the JellyPlex-Watched logs. Default: `"info"`. |
 | jellyplexWatched.enabled | bool | `false` | Specifies whether JellyPlex-Watched should be deployed or excluded in case an external JellyPlex-Watched server is used. |
+| jellyplexWatched.frequency | string | `""` | The interval in seconds for syncing watch state between the Jellyfin or Plex servers. Default: `"3600"`. |
 | jellyplexWatched.generateGUIDs | string | `""` | Specifies whether to identify available media files through GUID. Default: `"True"`. |
 | jellyplexWatched.generateLocations | string | `""` | Specifies whether to identify available media files through file path. Default: `"True"`. |
 | jellyplexWatched.jellyfin.servers | list | `[]` | List of Jellyfin servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |

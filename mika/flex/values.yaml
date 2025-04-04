@@ -367,6 +367,11 @@ jellyplexWatched:
   # Example:
   # debugLevel: "debug"
   debugLevel: ""
+  # The interval in seconds for syncing watch state between the Jellyfin or Plex servers.
+  # Default: "3600"
+  # Example:
+  # frequency: "600"
+  frequency: ""
   # Specifies whether to identify available media files through GUID.
   # Default: "True"
   # Example:

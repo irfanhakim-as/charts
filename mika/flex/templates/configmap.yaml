@@ -15,6 +15,7 @@
 {{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
 {{- $jackettAutoUpdate := .Values.jackett.autoUpdate | default "true" | toString | quote }}
 {{- $jpwDebugLevel := .Values.jellyplexWatched.debugLevel | default "info" | toString | quote }}
+{{- $jpwFrequency := .Values.jellyplexWatched.frequency | default "3600" | toString | quote }}
 {{- $jpwGenerateGUIDs := .Values.jellyplexWatched.generateGUIDs | default "True" | toString | quote }}
 {{- $jpwGenerateLocations := .Values.jellyplexWatched.generateLocations | default "True" | toString | quote }}
 {{- $jpwSslBypass := .Values.jellyplexWatched.sslBypass | default "False" | toString | quote }}
@@ -81,6 +82,7 @@ metadata:
 data:
   DEBUG_LEVEL: {{ $jpwDebugLevel }}
   DRYRUN: "False"
+  SLEEP_DURATION: {{ $jpwFrequency }}
   GENERATE_GUIDS: {{ $jpwGenerateGUIDs }}
   GENERATE_LOCATIONS: {{ $jpwGenerateLocations }}
   SSL_BYPASS: {{ $jpwSslBypass }}
