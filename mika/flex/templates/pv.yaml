@@ -1,19 +1,20 @@
-{{- $persistent_downloads := .Values.storage.downloads.enabled }}
-{{- $persistent_global := .Values.storage.global.enabled }}
-{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $globalPersistence := .Values.storage.global.enabled }}
+{{- $downloadsPersistence := and .Values.storage.downloads.enabled (not $globalPersistence) }}
+{{- $mediaPersistence := and .Values.storage.media.enabled (not $globalPersistence) }}
 {{- $smb := .Values.smb.enabled }}
-{{- $downloadsSmb := .Values.storage.downloads.smb }}
-{{- $globalSmb := .Values.storage.global.smb }}
-{{- $mediaSmb := .Values.storage.media.smb }}
-{{- $mountOptions := .Values.smb.mountOptions }}
-{{- $secretName := .Values.smb.secretName | default "smbcreds" | toString | quote }}
-{{- $secretNamespace := .Values.smb.secretNamespace | default "default" | toString | quote }}
-{{- $share := .Values.smb.share | toString | quote }}
-{{- $storage := .Values.smb.pvStorage | default "100Gi" | toString | quote }}
-{{- $storageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
+{{- $downloadsSmb := and $downloadsPersistence $smb .Values.storage.downloads.smb }}
+{{- $globalSmb := and $globalPersistence $smb .Values.storage.global.smb }}
+{{- $mediaSmb := and $mediaPersistence $smb .Values.storage.media.smb }}
+{{- $smbMountOptions := .Values.smb.mountOptions }}
+{{- $smbSecretName := .Values.smb.secretName | default "smbcreds" | toString | quote }}
+{{- $smbSecretNamespace := .Values.smb.secretNamespace | default "default" | toString | quote }}
+{{- $smbShare := .Values.smb.share | toString | quote }}
+{{- $smbAccessMode := .Values.smb.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $smbStorage := .Values.smb.pvStorage | default "100Gi" | toString | quote }}
+{{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
 {{- $uid := .Values.global.uid | default "1000" | toString }}
 {{- $gid := .Values.global.gid | default "1000" | toString }}
-{{- if and $smb (or (and $persistent_downloads $downloadsSmb (not $persistent_global)) (and $persistent_media $mediaSmb (not $persistent_global)) (and $persistent_global $globalSmb)) }}
+{{- if or $downloadsSmb $globalSmb $mediaSmb }}
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -25,11 +26,11 @@ metadata:
     {{- include "flex.labels" . | nindent 4 }}
 spec:
   capacity:
-    storage: {{ $storage }}
+    storage: {{ $smbStorage }}
   accessModes:
-    - ReadWriteMany
+    - {{ $smbAccessMode }}
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: {{ $storageClassName }}
+  storageClassName: {{ $smbStorageClassName }}
   mountOptions:
     - dir_mode=0777
     - file_mode=0777
@@ -39,16 +40,16 @@ spec:
     - mfsymlinks
     - cache=strict
     - noserverino  # required to prevent data corruption
-    {{- range $option := $mountOptions }}
+  {{- range $option := $smbMountOptions }}
     - {{ $option }}
-    {{- end }}
+  {{- end }}
   csi:
     driver: smb.csi.k8s.io
     readOnly: false
     volumeHandle: {{ .Release.Name }}-flex-smb-pv
     volumeAttributes:
-      source: {{ $share }}
+      source: {{ $smbShare }}
     nodeStageSecretRef:
-      name: {{ $secretName }}
-      namespace: {{ $secretNamespace }}
+      name: {{ $smbSecretName }}
+      namespace: {{ $smbSecretNamespace }}
 {{- end }}
