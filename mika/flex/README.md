@@ -907,7 +907,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
-| overseerr.enabled | bool | `true` | Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used. |
+| overseerr.enabled | bool | `false` | Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used. |
 | overseerr.ingress | bool | `false` | Specifies whether the Overseerr service should be served publicly using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. |
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. Items: `.mountPath`, `.subPath`, `.config`. |
