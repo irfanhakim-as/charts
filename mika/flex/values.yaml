@@ -177,6 +177,11 @@ global:
   # Example:
   # gid: ""
   gid: ""
+  # The timezone applied to all Flex containers for general operations.
+  # Default: "Etc/UTC"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
 
 # Bazarr configurations.
 bazarr:

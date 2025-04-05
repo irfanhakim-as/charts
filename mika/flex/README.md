@@ -835,6 +835,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | flaresolverr.logLevel | string | `""` | The verbosity level of the FlareSolverr logs. Default: `"info"`. |
 | flaresolverr.timezone | string | `""` | The timezone used in the FlareSolverr logs and web browser. Default: `"UTC"`. |
 | global.gid | string | `""` | The group ID used to run the Flex containers. Default: `"1000"`. |
+| global.timezone | string | `""` | The timezone applied to all Flex containers for general operations. Default: `"Etc/UTC"`. |
 | global.uid | string | `""` | The user ID used to run the Flex containers. Default: `"1000"`. |
 | image.bazarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Bazarr container image. Default: `"IfNotPresent"`. |
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
