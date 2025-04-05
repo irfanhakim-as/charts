@@ -242,11 +242,6 @@ flaresolverr:
   # Example:
   # logLevel: "debug"
   logLevel: ""
-  # The timezone used in the FlareSolverr logs and web browser.
-  # Default: "UTC"
-  # Example:
-  # timezone: "Asia/Kuala_Lumpur"
-  timezone: ""
   # Optional custom configurations to be mounted as a file inside the FlareSolverr container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
