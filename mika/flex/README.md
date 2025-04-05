@@ -100,22 +100,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Enable Ingress and specify the registered domain name for each Flex service by setting their corresponding `ingress` and `domain` settings in the chart values file:
 
-      > [!IMPORTANT]  
-      > Replace the sample domain names with your actual domain names that have been registered to your DNS provider and pointed to your Kubernetes cluster.
+     - For example, to enable ingress for Jackett: Set `jackett.ingress: true` and `jackett.domain` to the registered domain name corresponding to the service (i.e. `"jackett.example.com"`) in the chart values file.
 
-     - Jackett: `jackett.ingress: true` and `jackett.domain: "jackett.example.com"`.
-
-     - Overseerr: `overseerr.ingress: true` and `overseerr.domain: "overseerr.example.com"`.
-
-     - Plex: `plex.ingress: true` and `plex.domain: "plex.example.com"`.
-
-     - qBittorrent: `qbt.ingress: true` and `qbt.domain: "qbt.example.com"`.
-
-     - Radarr: `radarr.ingress: true` and `radarr.domain: "radarr.example.com"`.
-
-     - Sonarr: `sonarr.ingress: true` and `sonarr.domain: "sonarr.example.com"`.
-
-      If any of these services were deployed externally, you may exclude them from these configuration options.
+      If any of the Flex services were deployed externally, you may exclude them from these configuration options.
 
    - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the chart values file as required by your cluster environment.
 
