@@ -28,7 +28,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-1. Choose between enabling Plex, Jellyfin, or neither, should you choose to deploy one or both of these streaming services externally.
+1. Choose between enabling Plex, Jellyfin, both, or neither, should you choose to deploy one or both of these streaming services externally.
 
    - To enable Plex, set `plex.enabled: true` in the chart values file.
 
@@ -127,95 +127,18 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Access any of the deployed Flex service from any device within your network by using the node IP and node port assigned to the corresponding service (i.e. `http://<node_ip>:<node_port>`).
 
----
+7. **(Optional)** Sync watch state between multiple streaming services if you either have both Jellyfin and Plex servers, or multiple server instances for either of the two.
 
-## How to add the chart repo
+   - Enable JellyPlex-Watched by setting `jellyplexWatched.enabled: true` in the chart values file.
 
-1. Add the repo to your local helm client:
-
-    ```sh
-    helm repo add mika https://irfanhakim-as.github.io/charts
-    ```
-
-2. Update the repo to retrieve the latest versions of the packages:
-
-    ```sh
-    helm repo update
-    ```
-
----
-
-## How to install or upgrade a chart release
-
-> [!IMPORTANT]  
-> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the release values file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
-
-1. Get the values file of the Flex chart or an existing installation (release).
-
-    Get the latest Flex chart values file for a new installation:
-
-    ```sh
-    helm show values mika/flex > values.yaml
-    ```
-
-    **Alternatively**, get the values file of an existing Flex release:
-
-    ```sh
-    helm get values ${releaseName} --namespace ${namespace} > values.yaml
-    ```
-
-    Replace `${releaseName}` and `${namespace}` accordingly.
-
-2. Edit your Flex values file with the intended configurations:
-
-    ```sh
-    nano values.yaml
-    ```
-
-    Pay extra attention to the descriptions and sample values provided in the chart values file.
-
-3. Install a new release for Flex or upgrade an existing Flex release:
-
-    ```sh
-    helm upgrade --install ${releaseName} mika/flex --namespace ${namespace} --create-namespace --values values.yaml --wait
-    ```
-
-    Replace `${releaseName}` and `${namespace}` accordingly.
-
-4. Verify that your Flex release has been installed:
-
-    ```sh
-    helm ls --namespace ${namespace} | grep "${releaseName}"
-    ```
-
-    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
-
----
-
-## How to uninstall a chart release
-
-> [!CAUTION]  
-> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
-
-1. Uninstall the desired release:
-
-    ```sh
-    helm uninstall ${releaseName} --namespace ${namespace} --wait
-    ```
-
-    Replace `${releaseName}` and `${namespace}` accordingly.
-
-2. Verify that the release has been uninstalled:
-
-    ```sh
-    helm ls --namespace ${namespace} | grep "${releaseName}"
-    ```
-
-    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
+   - Configure the rest of the JellyPlex-Watched settings according to your setup by referring to the notes and sample values provided in the chart values file, and by referring to the [JellyPlex-Watched documentation](https://github.com/luigi311/JellyPlex-Watched).
 
 ---
 
 ## Application configurations
+
+> [!NOTE]  
+> The following configurations are expected or recommended to be set up from within the application after completing the installation.
 
 ### [Bazarr](https://www.bazarr.media)
 
@@ -401,10 +324,16 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Library Settings:
 
      - Enable the library: Check the corresponding checkbox to enable it.
-     - Preferred download language: Expand the dropdown and select your preferred content language (i.e. `English`).
-     - Country/Region: Expand the dropdown and select your country (i.e. `Malaysia`).
      - Enable real time monitoring: Check the corresponding checkbox to enable it.
      - Save artwork into media folders: Uncheck the corresponding checkbox to disable it.
+
+   - Trickplay:
+
+     - Enable trickplay image extraction: Check the corresponding checkbox to enable it.
+
+   - Subtitle Downloads:
+
+     - Save subtitles into media folders: Check the corresponding checkbox to enable it.
 
    - Click the corresponding **+** button to **Folders** and configure the following:
 
@@ -805,6 +734,92 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
+## How to add the chart repo
+
+1. Add the repo to your local helm client:
+
+    ```sh
+    helm repo add mika https://irfanhakim-as.github.io/charts
+    ```
+
+2. Update the repo to retrieve the latest versions of the packages:
+
+    ```sh
+    helm repo update
+    ```
+
+---
+
+## How to install or upgrade a chart release
+
+> [!IMPORTANT]  
+> To prevent a potential issue with attaching/mounting volumes to multiple nodes, you may need to set the value of `replicaCount` to `"0"` in the release values file before upgrading. After the upgrade is complete, revert the value back to its previous setting and upgrade the chart once again to complete the upgrade process.
+
+1. Get the values file of the Flex chart or an existing installation (release).
+
+    Get the latest Flex chart values file for a new installation:
+
+    ```sh
+    helm show values mika/flex > values.yaml
+    ```
+
+    **Alternatively**, get the values file of an existing Flex release:
+
+    ```sh
+    helm get values ${releaseName} --namespace ${namespace} > values.yaml
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Edit your Flex values file with the intended configurations:
+
+    ```sh
+    nano values.yaml
+    ```
+
+    Pay extra attention to the descriptions and sample values provided in the chart values file.
+
+3. Install a new release for Flex or upgrade an existing Flex release:
+
+    ```sh
+    helm upgrade --install ${releaseName} mika/flex --namespace ${namespace} --create-namespace --values values.yaml --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+4. Verify that your Flex release has been installed:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return the release information if the release has been installed.
+
+---
+
+## How to uninstall a chart release
+
+> [!CAUTION]  
+> Uninstalling a release will irreversibly delete all the resources associated with the release, including any persistent data.
+
+1. Uninstall the desired release:
+
+    ```sh
+    helm uninstall ${releaseName} --namespace ${namespace} --wait
+    ```
+
+    Replace `${releaseName}` and `${namespace}` accordingly.
+
+2. Verify that the release has been uninstalled:
+
+    ```sh
+    helm ls --namespace ${namespace} | grep "${releaseName}"
+    ```
+
+    Replace `${namespace}` and `${releaseName}` accordingly. This should return nothing if the release has been uninstalled.
+
+---
+
 ## Chart configurations
 
 | Key | Type | Default | Description |
@@ -837,6 +852,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jellyfin.registry | string | `""` | The registry where the Jellyfin container image is hosted. Default: `"lscr.io"`. |
 | image.jellyfin.repository | string | `""` | The name of the repository that contains the Jellyfin container image used. Default: `"linuxserver/jellyfin"`. |
 | image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.10.6ubu2404-ls56"`. |
+| image.jellyplexWatched.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the JellyPlex-Watched container image. Default: `"IfNotPresent"`. |
+| image.jellyplexWatched.registry | string | `""` | The registry where the JellyPlex-Watched container image is hosted. Default: `"ghcr.io"`. |
+| image.jellyplexWatched.repository | string | `""` | The name of the repository that contains the JellyPlex-Watched container image used. Default: `"luigi311/jellyplex-watched"`. |
+| image.jellyplexWatched.tag | string | `""` | The tag that specifies the version of the JellyPlex-Watched container image used. Default: `"7.0.3-alpine"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
@@ -872,12 +891,25 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyfin.domain | string | `""` | The ingress domain name that hosts the Jellyfin server. |
 | jellyfin.enabled | bool | `false` | Specifies whether Jellyfin should be deployed or excluded in case an external Jellyfin server is used. |
 | jellyfin.ingress | bool | `false` | Specifies whether the Jellyfin service should be served publicly using an Ingress. |
+| jellyplexWatched.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the JellyPlex-Watched container. Items: `.mountPath`, `.subPath`, `.config`. |
+| jellyplexWatched.debugLevel | string | `""` | The verbosity level of the JellyPlex-Watched logs. Default: `"info"`. |
+| jellyplexWatched.enabled | bool | `false` | Specifies whether JellyPlex-Watched should be deployed or excluded in case an external JellyPlex-Watched server is used. |
+| jellyplexWatched.frequency | string | `""` | The interval in seconds for syncing watch state between the Jellyfin or Plex servers. Default: `"3600"`. |
+| jellyplexWatched.generateGUIDs | string | `""` | Specifies whether to identify available media files through GUID. Default: `"True"`. |
+| jellyplexWatched.generateLocations | string | `""` | Specifies whether to identify available media files through file path. Default: `"True"`. |
+| jellyplexWatched.jellyfin.servers | list | `[]` | List of Jellyfin servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
+| jellyplexWatched.jellyfin.syncToPlex | string | `""` | Specifies whether watch state from Jellyfin should be synchronised to Plex. Default: `"True"`. |
+| jellyplexWatched.libraries | list | `[]` | The list of media libraries for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
+| jellyplexWatched.plex.servers | list | `[]` | List of Plex servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
+| jellyplexWatched.plex.syncToJellyfin | string | `""` | Specifies whether watch state from Plex should be synchronised to Jellyfin. Default: `"True"`. |
+| jellyplexWatched.sslBypass | string | `""` | Specifies whether SSL certificate verification should be skipped. Default: `"False"`. |
+| jellyplexWatched.users | list | `[]` | The list of user account pairs for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
 | overseerr.enabled | bool | `true` | Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used. |
 | overseerr.ingress | bool | `false` | Specifies whether the Overseerr service should be served publicly using an Ingress. |
-| plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim. |
+| plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. |
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. Items: `.mountPath`, `.subPath`, `.config`. |
 | plex.dataStorage | string | `""` | The amount of persistent storage allocated for the Plex data storage. |
 | plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
@@ -899,6 +931,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.jellyfin | object | `{}` | Jellyfin container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
+| resources.jellyplexWatched | object | `{}` | JellyPlex-Watched container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.radarr | object | `{}` | Radarr container resources. |
