@@ -939,7 +939,7 @@ storage:
     # Example:
     # accessMode: "ReadWriteMany"
     accessMode: ""
-    # The path where the data storage should be mounted on the container.
+    # The default path where the data storage should be mounted on the container.
     # Default: "/config"
     # Example:
     # mountPath: "/data"
