@@ -403,7 +403,7 @@ jellyplexWatched:
     #   # baseUrl: "http://localhost:32400"
     #   - baseUrl: ""
     #   # The issued API key to communicate with the Jellyfin server.
-    #   # Note: You may issue the token from Jellyfin through Dashboard > Advanced > Api Keys.
+    #   # Note: You may issue the token from Jellyfin through Dashboard > Advanced > API Keys.
     #   # Example:
     #   # token: "secret"
     #     token: ""
