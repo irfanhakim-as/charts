@@ -18,7 +18,7 @@ image:
     # Default: "linuxserver/bazarr"
     repository: ""
     # The tag that specifies the version of the Bazarr container image used.
-    # Default: "v1.4.2-ls239"
+    # Default: "v1.5.1-ls297"
     tag: ""
     # The policy that determines when Kubernetes should pull the Bazarr container image.
     # Default: "IfNotPresent"
@@ -33,24 +33,9 @@ image:
     # Default: "flaresolverr/flaresolverr"
     repository: ""
     # The tag that specifies the version of the FlareSolverr container image used.
-    # Default: "v3.3.14-hotfix2"
+    # Default: "v3.3.21"
     tag: ""
     # The policy that determines when Kubernetes should pull the FlareSolverr container image.
-    # Default: "IfNotPresent"
-    pullPolicy: ""
-  # Init container image configurations.
-  # Source: https://hub.docker.com/_/busybox
-  init:
-    # The registry where the Init container image is hosted.
-    # Default: "docker.io"
-    registry: ""
-    # The name of the repository that contains the Init container image used.
-    # Default: "busybox"
-    repository: ""
-    # The tag that specifies the version of the Init container image used.
-    # Default: "1.36.1"
-    tag: ""
-    # The policy that determines when Kubernetes should pull the Init container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Jackett container image configurations.
@@ -63,9 +48,54 @@ image:
     # Default: "linuxserver/jackett"
     repository: ""
     # The tag that specifies the version of the Jackett container image used.
-    # Default: "v0.21.1792-ls311"
+    # Default: "v0.22.1709-ls721"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jackett container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Jellyfin container image configurations.
+  # Source: https://github.com/linuxserver/docker-jellyfin/pkgs/container/jellyfin
+  jellyfin:
+    # The registry where the Jellyfin container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Jellyfin container image used.
+    # Default: "linuxserver/jellyfin"
+    repository: ""
+    # The tag that specifies the version of the Jellyfin container image used.
+    # Default: "10.10.6ubu2404-ls56"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Jellyfin container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # JellyPlex-Watched container image configurations.
+  # Source: https://github.com/luigi311/JellyPlex-Watched/pkgs/container/jellyplex-watched
+  jellyplexWatched:
+    # The registry where the JellyPlex-Watched container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the JellyPlex-Watched container image used.
+    # Default: "luigi311/jellyplex-watched"
+    repository: ""
+    # The tag that specifies the version of the JellyPlex-Watched container image used.
+    # Default: "7.0.3-alpine"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the JellyPlex-Watched container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Jellyseerr container image configurations.
+  # Source: https://github.com/fallenbagel/jellyseerr/pkgs/container/jellyseerr
+  jellyseerr:
+    # The registry where the Jellyseerr container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Jellyseerr container image used.
+    # Default: "fallenbagel/jellyseerr"
+    repository: ""
+    # The tag that specifies the version of the Jellyseerr container image used.
+    # Default: "2.5.2"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Jellyseerr container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Overseerr container image configurations.
@@ -78,7 +108,7 @@ image:
     # Default: "linuxserver/overseerr"
     repository: ""
     # The tag that specifies the version of the Overseerr container image used.
-    # Default: "v1.33.2-ls95"
+    # Default: "v1.34.0-ls136"
     tag: ""
     # The policy that determines when Kubernetes should pull the Overseerr container image.
     # Default: "IfNotPresent"
@@ -108,7 +138,7 @@ image:
     # Default: "linuxserver/qbittorrent"
     repository: ""
     # The tag that specifies the version of the qBittorrent container image used.
-    # Default: "4.6.3-r0-ls314"
+    # Default: "5.0.4-r0-ls387"
     tag: ""
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"
@@ -123,7 +153,7 @@ image:
     # Default: "linuxserver/radarr"
     repository: ""
     # The tag that specifies the version of the Radarr container image used.
-    # Default: "5.3.6.8612-ls204"
+    # Default: "5.21.1.9799-ls266"
     tag: ""
     # The policy that determines when Kubernetes should pull the Radarr container image.
     # Default: "IfNotPresent"
@@ -138,7 +168,7 @@ image:
     # Default: "linuxserver/sonarr"
     repository: ""
     # The tag that specifies the version of the Sonarr container image used.
-    # Default: "4.0.1.929-ls226"
+    # Default: "4.0.14.2939-ls276"
     tag: ""
     # The policy that determines when Kubernetes should pull the Sonarr container image.
     # Default: "IfNotPresent"
@@ -152,12 +182,6 @@ imagePullSecrets: []
 
 # Global configurations.
 global:
-  # Custom init script to run before the Flex containers start.
-  # Example:
-  # initScript: >-
-  #   echo "Hello, World!"
-  #   echo "This is a custom init script."
-  initScript: ""
   # The user ID used to run the Flex containers.
   # Default: "1000"
   # Example:
@@ -168,10 +192,25 @@ global:
   # Example:
   # gid: ""
   gid: ""
+  # The timezone applied to all Flex containers for general operations.
+  # Default: "Etc/UTC"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
 
 # Bazarr configurations.
 bazarr:
+  # Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
+  # The path where the data storage should be mounted on the Bazarr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Bazarr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -179,25 +218,32 @@ bazarr:
   # Example:
   # domain: "bazarr.example.com"
   domain: ""
-  # Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used.
-  # Example:
-  # enabled: false
-  enabled: true
-  # Specifies whether Bazarr should be hosted using an Ingress.
+  # Specifies whether the Bazarr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Bazarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # FlareSolverr configurations.
@@ -216,31 +262,47 @@ flaresolverr:
   # Example:
   # logLevel: "debug"
   logLevel: ""
-  # The timezone used in the FlareSolverr logs and web browser.
-  # Default: "UTC"
-  # Example:
-  # timezone: "Asia/Kuala_Lumpur"
-  timezone: ""
   # Optional custom configurations to be mounted as a file inside the FlareSolverr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Jackett configurations.
 jackett:
-  # Specifies whether to allow Jackett to automatically update itself inside the container.
+  # Specifies whether Jackett should be deployed or excluded in case an external Jackett server is used.
   # Example:
-  # autoUpdate: false
-  autoUpdate: true
+  # enabled: false
+  enabled: true
+  # Specifies whether to allow Jackett to automatically update itself inside the container.
+  # Default: "true"
+  # Example:
+  # autoUpdate: "false"
+  autoUpdate: ""
+  # The path where the data storage should be mounted on the Jackett container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Jackett data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -248,26 +310,271 @@ jackett:
   # Example:
   # domain: "jackett.example.com"
   domain: ""
-  # Specifies whether Jackett should be hosted using an Ingress.
+  # Specifies whether the Jackett service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Jackett container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
+  customConfigs: []
+
+# Jellyfin configurations.
+jellyfin:
+  # Specifies whether Jellyfin should be deployed or excluded in case an external Jellyfin server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The path where the data storage should be mounted on the Jellyfin container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
+  # The amount of persistent storage allocated for the Jellyfin data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
+  # The ingress domain name that hosts the Jellyfin server.
+  # Example:
+  # domain: "jellyfin.example.com"
+  domain: ""
+  # Specifies whether the Jellyfin service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Jellyfin container.
+  # Items: `.mountPath`, `.subPath`, `.config`
+  # Example:
+  # customConfigs:
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
+  customConfigs: []
+
+# JellyPlex-Watched configurations.
+jellyplexWatched:
+  # Specifies whether JellyPlex-Watched should be deployed or excluded in case an external JellyPlex-Watched server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The interval in seconds for syncing watch state between the Jellyfin or Plex servers.
+  # Default: "3600"
+  # Example:
+  # frequency: "600"
+  frequency: ""
+  # Specifies whether to identify available media files through GUID.
+  # Default: "True"
+  # Example:
+  # generateGUIDs: "False"
+  generateGUIDs: ""
+  # Specifies whether to identify available media files through file path.
+  # Default: "True"
+  # Example:
+  # generateLocations: "False"
+  generateLocations: ""
+  # The verbosity level of the JellyPlex-Watched logs.
+  # Default: "info"
+  # Example:
+  # logLevel: "debug"
+  logLevel: ""
+  # Specifies whether SSL certificate verification should be skipped.
+  # Default: "False"
+  # Example:
+  # sslBypass: "True"
+  sslBypass: ""
+  # JellyPlex-Watched Jellyfin configurations.
+  jellyfin:
+    # Specifies whether watch state from Jellyfin should be synchronised to Plex.
+    # Default: "True"
+    # Example:
+    # syncToPlex: "False"
+    syncToPlex: ""
+    # List of Jellyfin servers to synchronise and their corresponding authentication configurations.
+    # Items: `.baseUrl`, `.token`
+    # Example:
+    # servers:
+    #   # The endpoint of the Jellyfin server.
+    #   # Example:
+    #   # baseUrl: "http://localhost:32400"
+    #   - baseUrl: ""
+    #   # The issued API key to communicate with the Jellyfin server.
+    #   # Note: You may issue the token from Jellyfin through Dashboard > Advanced > API Keys.
+    #   # Example:
+    #   # token: "secret"
+    #     token: ""
+    servers: []
+  # JellyPlex-Watched Plex configurations.
+  plex:
+    # Specifies whether watch state from Plex should be synchronised to Jellyfin.
+    # Default: "True"
+    # Example:
+    # syncToJellyfin: "False"
+    syncToJellyfin: ""
+    # List of Plex servers to synchronise and their corresponding authentication configurations.
+    # Items: `.baseUrl`, `.token`
+    # Example:
+    # servers:
+    #   # The endpoint of the Plex server.
+    #   # Example:
+    #   # baseUrl: "http://localhost:32400"
+    #   - baseUrl: ""
+    #   # The acquired authentication token to communicate with the Plex server.
+    #   # Note: You may acquire the token from https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token.
+    #   # Example:
+    #   # token: "secret"
+    #     token: ""
+    servers: []
+  # The list of media libraries for syncing between the Jellyfin or Plex servers.
+  # Items: `.source`, `.target`
+  # Example:
+  # libraries:
+  #   # The name of the source media library.
+  #   # Example:
+  #   # source: "Plex TV"
+  #   - source: ""
+  #   # The names of the corresponding media library, separated by a comma.
+  #   # Example:
+  #   # target: "Jellyfin TV"
+  #     target: ""
+  libraries: []
+  # The list of user account pairs for syncing between the Jellyfin or Plex servers.
+  # Items: `.source`, `.target`
+  # Example:
+  # users:
+  #   # The username of the source user account.
+  #   # Example:
+  #   # source: "plex-user"
+  #   - source: ""
+  #   # The usernames of the corresponding user account, separated by a comma.
+  #   # Example:
+  #   # target: "jellyfin-user"
+  #     target: ""
+  users: []
+  # Optional custom configurations to be mounted as a file inside the JellyPlex-Watched container.
+  # Items: `.mountPath`, `.subPath`, `.config`
+  # Example:
+  # customConfigs:
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
+  customConfigs: []
+
+# Jellyseerr configurations.
+jellyseerr:
+  # Specifies whether Jellyseerr should be deployed or excluded in case an external Jellyseerr server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The path where the data storage should be mounted on the Jellyseerr container.
+  # Note: This setting takes precedence over the default data mount path.
+  # Default: "/app/config"
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
+  # The amount of persistent storage allocated for the Jellyseerr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
+  # The ingress domain name that hosts the Jellyseerr server.
+  # Example:
+  # domain: "jellyseerr.example.com"
+  domain: ""
+  # Specifies whether the Jellyseerr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # ingress: true
+  ingress: false
+  # The verbosity level of the Jellyseerr logs.
+  # Default: "info"
+  # Example:
+  # logLevel: "debug"
+  logLevel: ""
+  # Optional custom configurations to be mounted as a file inside the Jellyseerr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
+  # Example:
+  # customConfigs:
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Overseerr configurations.
 overseerr:
+  # Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The path where the data storage should be mounted on the Overseerr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Overseerr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -275,30 +582,52 @@ overseerr:
   # Example:
   # domain: "overseerr.example.com"
   domain: ""
-  # Specifies whether Overseerr should be hosted using an Ingress.
+  # Specifies whether the Overseerr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Overseerr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Plex configurations.
 plex:
-  # The secret claim token used to claim ownership of the Plex server. Get it from https://www.plex.tv/claim.
+  # Specifies whether Plex should be deployed or excluded in case an external Plex server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The secret claim token used to claim ownership of the Plex server.
+  # Note: You may acquire the token from https://www.plex.tv/claim.
   # Example:
   # claim: "claim-bW419gvogwjNfYCowOGa"
   claim: ""
+  # The path where the data storage should be mounted on the Plex container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Plex data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -306,30 +635,47 @@ plex:
   # Example:
   # domain: "plex.example.com"
   domain: ""
-  # Specifies whether Plex should be deployed or excluded in case an external Plex server is used.
-  # Example:
-  # enabled: false
-  enabled: true
-  # Specifies whether Plex should be hosted using an Ingress.
+  # Specifies whether the Plex service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Plex container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # qBittorrent configurations.
 qbt:
+  # Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The path where the data storage should be mounted on the qBittorrent container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the qBittorrent data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -337,30 +683,47 @@ qbt:
   # Example:
   # domain: "qbt.example.com"
   domain: ""
-  # Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used.
-  # Example:
-  # enabled: false
-  enabled: true
-  # Specifies whether qBittorrent should be hosted using an Ingress.
+  # Specifies whether the qBittorrent service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the qBittorrent container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Radarr configurations.
 radarr:
+  # Specifies whether Radarr should be deployed or excluded in case an external Radarr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
+  # The path where the data storage should be mounted on the Radarr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Radarr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -368,26 +731,47 @@ radarr:
   # Example:
   # domain: "radarr.example.com"
   domain: ""
-  # Specifies whether Radarr should be hosted using an Ingress.
+  # Specifies whether the Radarr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Radarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Sonarr configurations.
 sonarr:
+  # Specifies whether Sonarr should be deployed or excluded in case an external Sonarr server is used.
+  # Example:
+  # enabled: false
+  enabled: true
+  # The path where the data storage should be mounted on the Sonarr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Sonarr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
@@ -395,21 +779,32 @@ sonarr:
   # Example:
   # domain: "sonarr.example.com"
   domain: ""
-  # Specifies whether Sonarr should be hosted using an Ingress.
+  # Specifies whether the Sonarr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Sonarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
-  #   - mountPath: "/config"
-  #     subPath: "config.xml"
-  #     config: >-
-  #       <Config>
-  #         <BindAddress>*</BindAddress>
-  #         <Port>8989</Port>
-  #         <SslPort>9898</SslPort>
-  #       </Config>
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
   customConfigs: []
 
 # Ingress configurations.
@@ -420,32 +815,182 @@ ingress:
   enabled: false
   # The name of the cluster issuer for Ingress.
   # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
   # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
   # Example:
   # customAnnotations:
   #   # The prefix of the annotation.
   #   # Default: "nginx.ingress.kubernetes.io"
   #   # Example:
-  #   # - prefix: "nginx.org"
+  #   # prefix: "nginx.org"
   #   - prefix: ""
   #   # The name of the annotation.
   #   # Example:
-  #     # name: "proxy-connect-timeout"
+  #   # name: "proxy-connect-timeout"
   #     name: ""
   #   # The value of the annotation.
   #   # Example:
-  #     # value: "120"
+  #   # value: "120"
   #     value: ""
   customAnnotations: []
 
 # Service configurations.
 service:
-  # The type of service used for Flex services.
+  # The type of service used to expose Flex services.
   # Default: "ClusterIP"
   # Example:
   # type: "NodePort"
   type: ""
+  # Bazarr service port configurations.
+  bazarr:
+    # The optional node port to expose for Bazarr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Bazarr port on which the Bazarr server should listen for connections.
+    # Default: "6767"
+    # Example:
+    # port: "8080"
+    port: ""
+  # FlareSolverr service port configurations.
+  flaresolverr:
+    # The optional node port to expose for FlareSolverr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The FlareSolverr port on which the FlareSolverr server should listen for connections.
+    # Default: "8191"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Jackett service port configurations.
+  jackett:
+    # The optional node port to expose for Jackett when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Jackett port on which the Jackett server should listen for connections.
+    # Default: "9117"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Jellyfin service port configurations.
+  jellyfin:
+    # Jellyfin client discovery port configurations.
+    cd:
+      # The optional node port to expose for Jellyfin client discovery when the service type is NodePort.
+      # Example:
+      # nodePort: "30000"
+      nodePort: ""
+      # The Jellyfin client discovery port on which the Jellyfin server should listen for connections.
+      # Default: "1900"
+      # Example:
+      # port: "1919"
+      port: ""
+    # Jellyfin service discovery port configurations.
+    sd:
+      # The optional node port to expose for Jellyfin service discovery when the service type is NodePort.
+      # Example:
+      # nodePort: "30000"
+      nodePort: ""
+      # The Jellyfin service discovery port on which the Jellyfin server should listen for connections.
+      # Default: "7359"
+      # Example:
+      # port: "7395"
+      port: ""
+    # Jellyfin web port configurations.
+    web:
+      # The optional node port to expose for Jellyfin web when the service type is NodePort.
+      # Example:
+      # nodePort: "30000"
+      nodePort: ""
+      # The Jellyfin web port on which the Jellyfin server should listen for connections.
+      # Default: "8096"
+      # Example:
+      # port: "8080"
+      port: ""
+  # Jellyseerr service port configurations.
+  jellyseerr:
+    # The optional node port to expose for Jellyseerr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Jellyseerr port on which the Jellyseerr server should listen for connections.
+    # Default: "5550"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Overseerr service port configurations.
+  overseerr:
+    # The optional node port to expose for Overseerr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Overseerr port on which the Overseerr server should listen for connections.
+    # Default: "5055"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Plex service port configurations.
+  plex:
+    # The optional node port to expose for Plex when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Plex port on which the Plex server should listen for connections.
+    # Default: "32400"
+    # Example:
+    # port: "8080"
+    port: ""
+  # qBittorrent service port configurations.
+  qbt:
+    # qBittorrent torrent port configurations.
+    torrent:
+      # The optional node port to expose for qBittorrent torrent when the service type is NodePort.
+      # Example:
+      # nodePort: "30000"
+      nodePort: ""
+      # The qBittorrent torrent port on which the qBittorrent server should listen for connections.
+      # Default: "6881"
+      # Example:
+      # port: "6887"
+      port: ""
+    # qBittorrent web port configurations.
+    web:
+      # The optional node port to expose for qBittorrent web when the service type is NodePort.
+      # Example:
+      # nodePort: "30000"
+      nodePort: ""
+      # The qBittorrent web port on which the qBittorrent server should listen for connections.
+      # Default: "8080"
+      # Example:
+      # port: "8123"
+      port: ""
+  # Radarr service port configurations.
+  radarr:
+    # The optional node port to expose for Radarr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Radarr port on which the Radarr server should listen for connections.
+    # Default: "7878"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Sonarr service port configurations.
+  sonarr:
+    # The optional node port to expose for Sonarr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Sonarr port on which the Sonarr server should listen for connections.
+    # Default: "8989"
+    # Example:
+    # port: "8080"
+    port: ""
 
 # Storage configurations.
 storage:
@@ -455,7 +1000,12 @@ storage:
     # Example:
     # enabled: false
     enabled: true
-    # The path where the data storage should be mounted on the container.
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteOnce"
+    # Example:
+    # accessMode: "ReadWriteMany"
+    accessMode: ""
+    # The default path where the data storage should be mounted on the container.
     # Default: "/config"
     # Example:
     # mountPath: "/data"
@@ -477,9 +1027,16 @@ storage:
   # Downloads storage configurations.
   downloads:
     # Specifies whether persistent storage should be provisioned for downloads storage.
+    # Note: This setting is overridden if the global storage is enabled.
     # Example:
     # enabled: true
     enabled: false
+    # The access mode defining how the downloads storage can be mounted.
+    # Note: This setting is ignored if SMB is enabled for said storage.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
     # The path where the downloads storage should be mounted on the container.
     # Default: "/downloads"
     # Example:
@@ -493,12 +1050,14 @@ storage:
     # Example:
     # smb: true
     smb: false
-    # The amount of persistent storage allocated for the downloads storage. This setting is ignored if SMB is enabled for said storage.
+    # The amount of persistent storage allocated for the downloads storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage. This setting is ignored if SMB is enabled for said storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the downloads storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
@@ -509,6 +1068,12 @@ storage:
     # Example:
     # enabled: false
     enabled: true
+    # The access mode defining how the global storage can be mounted.
+    # Note: This setting is ignored if SMB is enabled for said storage.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
     # The path where the global storage should be mounted on the container.
     # Default: "/flex"
     # Example:
@@ -522,12 +1087,14 @@ storage:
     # Example:
     # smb: true
     smb: false
-    # The amount of persistent storage allocated for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # The amount of persistent storage allocated for the global storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the global storage. This setting is ignored if SMB is enabled for said storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the global storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
@@ -535,9 +1102,16 @@ storage:
   # Media storage configurations.
   media:
     # Specifies whether persistent storage should be provisioned for media storage.
+    # Note: This setting is overridden if the global storage is enabled.
     # Example:
     # enabled: true
     enabled: false
+    # The access mode defining how the media storage can be mounted.
+    # Note: This setting is ignored if SMB is enabled for said storage.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
     # The path where the media storage should be mounted on the container.
     # Default: "/data"
     # Example:
@@ -551,12 +1125,14 @@ storage:
     # Example:
     # smb: true
     smb: false
-    # The amount of persistent storage allocated for the media storage. This setting is ignored if SMB is enabled for said storage.
+    # The amount of persistent storage allocated for the media storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "1Gi"
     # Example:
     # storage: "1Gi"
     storage: ""
-    # The storage class name used for dynamically provisioning a persistent volume for the media storage. This setting is ignored if SMB is enabled for said storage.
+    # The storage class name used for dynamically provisioning a persistent volume for the media storage.
+    # Note: This setting is ignored if SMB is enabled for said storage.
     # Default: "longhorn"
     # Example:
     # storageClassName: "longhorn"
@@ -568,6 +1144,11 @@ smb:
   # Example:
   # enabled: true
   enabled: false
+  # The access mode defining how the SMB share storage can be mounted.
+  # Default: "ReadWriteMany"
+  # Example:
+  # accessMode: "ReadWriteOnce"
+  accessMode: ""
   # The additional mount options used to mount the SMB share volume.
   # Example:
   # mountOptions:
@@ -680,6 +1261,78 @@ resources:
   #     # memory: "250Mi"
   #     memory: "500Mi"
   jackett: {}
+  # Jellyfin container resources.
+  # Example:
+  # jellyfin:
+  #   # The minimum amount of resources required by Jellyfin to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Jellyfin.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "1"
+  #     # The minimum amount of memory required by Jellyfin.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "1.5Gi"
+  #   # The maximum amount of resources allowed for Jellyfin.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Jellyfin.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "1.5"
+  #     # The maximum amount of memory allowed for Jellyfin.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "2Gi"
+  jellyfin: {}
+  # JellyPlex-Watched container resources.
+  # Example:
+  # jellyplexWatched:
+  #   # The minimum amount of resources required by JellyPlex-Watched to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by JellyPlex-Watched.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "300m"
+  #     # The minimum amount of memory required by JellyPlex-Watched.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for JellyPlex-Watched.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for JellyPlex-Watched.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for JellyPlex-Watched.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "200Mi"
+  jellyplexWatched: {}
+  # Jellyseerr container resources.
+  # Example:
+  # jellyseerr:
+  #   # The minimum amount of resources required by Jellyseerr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Jellyseerr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "400m"
+  #     # The minimum amount of memory required by Jellyseerr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "250Mi"
+  #   # The maximum amount of resources allowed for Jellyseerr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Jellyseerr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "600m"
+  #     # The maximum amount of memory allowed for Jellyseerr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  jellyseerr: {}
   # Overseerr container resources.
   # Example:
   # overseerr:

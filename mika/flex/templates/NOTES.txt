@@ -1,33 +1,60 @@
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $jackett := .Values.jackett.enabled }}
+{{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
+{{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
+{{- $radarr := .Values.radarr.enabled }}
+{{- $sonarr := .Values.sonarr.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
-{{- $bazarrIngress := .Values.bazarr.ingress }}
-{{- $jackettIngress := .Values.jackett.ingress }}
-{{- $overseerrIngress := .Values.overseerr.ingress }}
-{{- $plexIngress := .Values.plex.ingress }}
-{{- $qbtIngress := .Values.qbt.ingress }}
-{{- $radarrIngress := .Values.radarr.ingress }}
-{{- $sonarrIngress := .Values.sonarr.ingress }}
+{{- $bazarrIngress := and $bazarr $ingress .Values.bazarr.ingress }}
+{{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress }}
+{{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress }}
+{{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress }}
+{{- $overseerrIngress := and $overseerr $ingress .Values.overseerr.ingress }}
+{{- $plexIngress := and $plex $ingress .Values.plex.ingress }}
+{{- $qbtIngress := and $qbt $ingress .Values.qbt.ingress }}
+{{- $radarrIngress := and $radarr $ingress .Values.radarr.ingress }}
+{{- $sonarrIngress := and $sonarr $ingress .Values.sonarr.ingress }}
 {{- $bazarrDomain := .Values.bazarr.domain | toString }}
+{{- $bazarrDomain = ternary $bazarrDomain "" (and $bazarrIngress (ne $bazarrDomain "") (ne $bazarrDomain "localhost")) }}
 {{- $jackettDomain := .Values.jackett.domain | toString }}
+{{- $jackettDomain = ternary $jackettDomain "" (and $jackettIngress (ne $jackettDomain "") (ne $jackettDomain "localhost")) }}
+{{- $jellyfinDomain := .Values.jellyfin.domain | toString }}
+{{- $jellyfinDomain = ternary $jellyfinDomain "" (and $jellyfinIngress (ne $jellyfinDomain "") (ne $jellyfinDomain "localhost")) }}
+{{- $jellyseerrDomain := .Values.jellyseerr.domain | toString }}
+{{- $jellyseerrDomain = ternary $jellyseerrDomain "" (and $jellyseerrIngress (ne $jellyseerrDomain "") (ne $jellyseerrDomain "localhost")) }}
 {{- $overseerrDomain := .Values.overseerr.domain | toString }}
+{{- $overseerrDomain = ternary $overseerrDomain "" (and $overseerrIngress (ne $overseerrDomain "") (ne $overseerrDomain "localhost")) }}
 {{- $plexDomain := .Values.plex.domain | toString }}
+{{- $plexDomain = ternary $plexDomain "" (and $plexIngress (ne $plexDomain "") (ne $plexDomain "localhost")) }}
 {{- $qbtDomain := .Values.qbt.domain | toString }}
+{{- $qbtDomain = ternary $qbtDomain "" (and $qbtIngress (ne $qbtDomain "") (ne $qbtDomain "localhost")) }}
 {{- $radarrDomain := .Values.radarr.domain | toString }}
+{{- $radarrDomain = ternary $radarrDomain "" (and $radarrIngress (ne $radarrDomain "") (ne $radarrDomain "localhost")) }}
 {{- $sonarrDomain := .Values.sonarr.domain | toString }}
-Flex is now installed and configured for {{ .Release.Name | toString }}.
+{{- $sonarrDomain = ternary $sonarrDomain "" (and $sonarrIngress (ne $sonarrDomain "") (ne $sonarrDomain "localhost")) }}
+Flex has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-Follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/flex#application-configuration to complete the initial setup of each deployed Flex service.
+Visit the following service(s) at the provided address:
 
-Visit the following services to get started:
+{{- if or $bazarrDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 
-    - Bazarr: {{ if $bazarr }}{{ if and $ingress $bazarrIngress }}https://{{ $bazarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external Bazarr server{{- end }}
-    - Jackett: {{ if and $ingress $jackettIngress }}https://{{ $jackettDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
-    - Overseerr: {{ if and $ingress $overseerrIngress }}https://{{ $overseerrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
-    - Plex: {{ if $plex }}{{ if and $ingress $plexIngress }}https://{{ $plexDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external Plex server{{- end }}
-    - qBittorrent: {{ if $qbt }}{{- if and $ingress $qbtIngress }}https://{{ $qbtDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}{{- else }}Please visit the address of the external qBittorrent server{{- end }}
-    - Radarr: {{ if and $ingress $radarrIngress }}https://{{ $radarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
-    - Sonarr: {{ if and $ingress $sonarrIngress }}https://{{ $sonarrDomain }}{{- else }}Please refer to {{ .Release.Name }}-flex-svc for the right address{{- end }}
+    - Bazarr: {{ if $bazarrDomain }}{{ printf "https://%s" $bazarrDomain | toString }}{{- end }}
+    - Jackett: {{ if $jackettDomain }}{{ printf "https://%s" $jackettDomain | toString }}{{- end }}
+    - Jellyfin: {{ if $jellyfinDomain }}{{ printf "https://%s" $jellyfinDomain | toString }}{{- end }}
+    - Jellyseerr: {{ if $jellyseerrDomain }}{{ printf "https://%s" $jellyseerrDomain | toString }}{{- end }}
+    - Overseerr: {{ if $overseerrDomain }}{{ printf "https://%s" $overseerrDomain | toString }}{{- end }}
+    - Plex: {{ if $plexDomain }}{{ printf "https://%s" $plexDomain | toString }}{{- end }}
+    - qBittorrent: {{ if $qbtDomain }}{{ printf "https://%s" $qbtDomain | toString }}{{- end }}
+    - Radarr: {{ if $radarrDomain }}{{ printf "https://%s" $radarrDomain | toString }}{{- end }}
+    - Sonarr: {{ if $sonarrDomain }}{{ printf "https://%s" $sonarrDomain | toString }}{{- end }}
 
-For more information on how to use and configure Flex, please refer to the official documentation.
+{{- else }}
+
+    ⚠️ This chart may have no accessible services available
+
+{{- end }}
+
+Please follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/mika/flex#application-configurations to complete the initial setup of each deployed Flex service.

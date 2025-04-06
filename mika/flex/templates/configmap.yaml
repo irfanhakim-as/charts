@@ -1,64 +1,141 @@
+{{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $jackett := .Values.jackett.enabled }}
+{{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
+{{- $jellyplexWatched := .Values.jellyplexWatched.enabled }}
+{{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
+{{- $radarr := .Values.radarr.enabled }}
+{{- $sonarr := .Values.sonarr.enabled }}
 {{- $uid := .Values.global.uid | default "1000" | toString | quote }}
 {{- $gid := .Values.global.gid | default "1000" | toString | quote }}
+{{- $timezone := .Values.global.timezone | default "Etc/UTC" | toString | quote }}
 {{- $fsLogHtml := .Values.flaresolverr.logHtml | default "false" | toString | quote }}
 {{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
-{{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
-{{- $jackettAutoUpdate := .Values.jackett.autoUpdate | toString | quote }}
+{{- $jackettAutoUpdate := .Values.jackett.autoUpdate | default "true" | toString | quote }}
+{{- $jpwFrequency := .Values.jellyplexWatched.frequency | default "3600" | toString | quote }}
+{{- $jpwGenerateGUIDs := .Values.jellyplexWatched.generateGUIDs | default "True" | toString | quote }}
+{{- $jpwGenerateLocations := .Values.jellyplexWatched.generateLocations | default "True" | toString | quote }}
+{{- $jpwLogLevel := .Values.jellyplexWatched.logLevel | default "info" | toString | quote }}
+{{- $jpwSslBypass := .Values.jellyplexWatched.sslBypass | default "False" | toString | quote }}
+{{- $jpwSyncToPlex := .Values.jellyplexWatched.jellyfin.syncToPlex | default "True" | toString | quote }}
+{{- $jpwSyncToJellyfin := .Values.jellyplexWatched.plex.syncToJellyfin | default "True" | toString | quote }}
+{{- $jpwLibraries := .Values.jellyplexWatched.libraries }}
+{{- $jpwLibraryMap := dict -}}
+{{- range $jpwLibraries }}
+  {{- if and .source .target }}
+    {{- $_ := set $jpwLibraryMap .source .target }}
+  {{- end }}
+{{- end }}
+{{- $jpwUsers := .Values.jellyplexWatched.users }}
+{{- $jpwUserMap := dict -}}
+{{- range $jpwUsers }}
+  {{- if and .source .target }}
+    {{- $_ := set $jpwUserMap .source .target }}
+  {{- end }}
+{{- end }}
+{{- $jellyseerrLogLevel := .Values.jellyseerr.logLevel | default "info" | toString | quote }}
+{{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-flex-cm
+  name: {{ .Release.Name }}-flex-lsio-cm
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
   PUID: {{ $uid }}
   PGID: {{ $gid }}
+  TZ: {{ $timezone }}
+{{- end }}
 {{- if $flaresolverr }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-flaresolverr-cm
+  name: {{ .Release.Name }}-flex-flaresolverr-cm
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
   LOG_HTML: {{ $fsLogHtml }}
   LOG_LEVEL: {{ $fsLogLevel }}
-  TZ: {{ $fsTimezone }}
+  TZ: {{ $timezone }}
 {{- end }}
+{{- if $jackett }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-jackett-cm
+  name: {{ .Release.Name }}-flex-jackett-cm
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
   AUTO_UPDATE: {{ $jackettAutoUpdate }}
+{{- end }}
+{{- if $jellyplexWatched }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flex-jellyplex-watched-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  DEBUG_LEVEL: {{ $jpwLogLevel }}
+  DRYRUN: "False"
+  SLEEP_DURATION: {{ $jpwFrequency }}
+  GENERATE_GUIDS: {{ $jpwGenerateGUIDs }}
+  GENERATE_LOCATIONS: {{ $jpwGenerateLocations }}
+  SSL_BYPASS: {{ $jpwSslBypass }}
+  SYNC_FROM_JELLYFIN_TO_JELLYFIN: "True"
+  SYNC_FROM_JELLYFIN_TO_PLEX: {{ $jpwSyncToPlex }}
+  SYNC_FROM_PLEX_TO_JELLYFIN: {{ $jpwSyncToJellyfin }}
+  SYNC_FROM_PLEX_TO_PLEX: "True"
+  TZ: {{ $timezone }}
+  {{- if $jpwLibraryMap }}
+  LIBRARY_MAPPING: {{ $jpwLibraryMap | toJson | quote }}
+  {{- end }}
+  {{- if $jpwUserMap }}
+  USER_MAPPING: {{ $jpwUserMap | toJson | quote }}
+  {{- end }}
+{{- end }}
+{{- if $jellyseerr }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flex-jellyseerr-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  LOG_LEVEL: {{ $jellyseerrLogLevel }}
+  PORT: "5550"
+  TZ: {{ $timezone }}
+{{- end }}
 {{- if $plex }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-plex-cm
+  name: {{ .Release.Name }}-flex-plex-cm
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
   PLEX_UID: {{ $uid }}
   PLEX_GID: {{ $gid }}
+  TZ: {{ $timezone }}
 {{- end }}
 {{- if $qbt }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-qbittorrent-cm
+  name: {{ .Release.Name }}-flex-qbt-cm
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
+  TORRENTING_PORT: "6881"
   WEBUI_PORT: "8080"
 {{- end }}

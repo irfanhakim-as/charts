@@ -1,43 +1,72 @@
 {{- $releaseName := .Release.Name | toString }}
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
+{{- $jackett := .Values.jackett.enabled }}
+{{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyplexWatched := .Values.jellyplexWatched.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
+{{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
-{{- $persistent_data := .Values.storage.data.enabled }}
-{{- $persistent_downloads := .Values.storage.downloads.enabled }}
-{{- $persistent_global := .Values.storage.global.enabled }}
-{{- $persistent_media := .Values.storage.media.enabled }}
+{{- $radarr := .Values.radarr.enabled }}
+{{- $sonarr := .Values.sonarr.enabled }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $globalPersistence := .Values.storage.global.enabled }}
+{{- $downloadsPersistence := and .Values.storage.downloads.enabled (not $globalPersistence) }}
+{{- $mediaPersistence := and .Values.storage.media.enabled (not $globalPersistence) }}
 {{- $smb := .Values.smb.enabled }}
-{{- $downloadsSmb := .Values.storage.downloads.smb }}
-{{- $globalSmb := .Values.storage.global.smb }}
-{{- $mediaSmb := .Values.storage.media.smb }}
+{{- $downloadsSmb := and $downloadsPersistence $smb .Values.storage.downloads.smb }}
+{{- $globalSmb := and $globalPersistence $smb .Values.storage.global.smb }}
+{{- $mediaSmb := and $mediaPersistence $smb .Values.storage.media.smb }}
 {{- $bazarrConfigs := .Values.bazarr.customConfigs }}
+{{- $bazarrConfigs = ternary $bazarrConfigs (list) (and $bazarr (not (empty $bazarrConfigs))) }}
 {{- $fsConfigs := .Values.flaresolverr.customConfigs }}
+{{- $fsConfigs = ternary $fsConfigs (list) (and $flaresolverr (not (empty $fsConfigs))) }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
+{{- $jackettConfigs = ternary $jackettConfigs (list) (and $jackett (not (empty $jackettConfigs))) }}
+{{- $jellyfinConfigs := .Values.jellyfin.customConfigs }}
+{{- $jellyfinConfigs = ternary $jellyfinConfigs (list) (and $jellyfin (not (empty $jellyfinConfigs))) }}
+{{- $jpwConfigs := .Values.jellyplexWatched.customConfigs }}
+{{- $jpwConfigs = ternary $jpwConfigs (list) (and $jellyplexWatched (not (empty $jpwConfigs))) }}
+{{- $jellyseerrConfigs := .Values.jellyseerr.customConfigs }}
+{{- $jellyseerrConfigs = ternary $jellyseerrConfigs (list) (and $jellyseerr (not (empty $jellyseerrConfigs))) }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
+{{- $overseerrConfigs = ternary $overseerrConfigs (list) (and $overseerr (not (empty $overseerrConfigs))) }}
 {{- $plexConfigs := .Values.plex.customConfigs }}
+{{- $plexConfigs = ternary $plexConfigs (list) (and $plex (not (empty $plexConfigs))) }}
 {{- $qbtConfigs := .Values.qbt.customConfigs }}
+{{- $qbtConfigs = ternary $qbtConfigs (list) (and $qbt (not (empty $qbtConfigs))) }}
 {{- $radarrConfigs := .Values.radarr.customConfigs }}
+{{- $radarrConfigs = ternary $radarrConfigs (list) (and $radarr (not (empty $radarrConfigs))) }}
 {{- $sonarrConfigs := .Values.sonarr.customConfigs }}
+{{- $sonarrConfigs = ternary $sonarrConfigs (list) (and $sonarr (not (empty $sonarrConfigs))) }}
 {{- $bazarr_registry := .Values.image.bazarr.registry | default "lscr.io" | toString }}
 {{- $bazarr_repository := .Values.image.bazarr.repository | default "linuxserver/bazarr" | toString }}
-{{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.4.2-ls239" | toString }}
+{{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.5.1-ls297" | toString }}
 {{- $bazarr_pullPolicy := .Values.image.bazarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
-{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.14-hotfix2" | toString }}
+{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.21" | toString }}
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
-{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
-{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
-{{- $jackett_tag := .Values.image.jackett.tag | default "v0.21.1792-ls311" | toString }}
+{{- $jackett_tag := .Values.image.jackett.tag | default "v0.22.1709-ls721" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jellyfin_registry := .Values.image.jellyfin.registry | default "lscr.io" | toString }}
+{{- $jellyfin_repository := .Values.image.jellyfin.repository | default "linuxserver/jellyfin" | toString }}
+{{- $jellyfin_tag := .Values.image.jellyfin.tag | default "10.10.6ubu2404-ls56" | toString }}
+{{- $jellyfin_pullPolicy := .Values.image.jellyfin.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jpw_registry := .Values.image.jellyplexWatched.registry | default "ghcr.io" | toString }}
+{{- $jpw_repository := .Values.image.jellyplexWatched.repository | default "luigi311/jellyplex-watched" | toString }}
+{{- $jpw_tag := .Values.image.jellyplexWatched.tag | default "7.0.3-alpine" | toString }}
+{{- $jpw_pullPolicy := .Values.image.jellyplexWatched.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jellyseerr_registry := .Values.image.jellyseerr.registry | default "ghcr.io" | toString }}
+{{- $jellyseerr_repository := .Values.image.jellyseerr.repository | default "fallenbagel/jellyseerr" | toString }}
+{{- $jellyseerr_tag := .Values.image.jellyseerr.tag | default "2.5.2" | toString }}
+{{- $jellyseerr_pullPolicy := .Values.image.jellyseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
 {{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
-{{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.33.2-ls95" | toString }}
+{{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.34.0-ls136" | toString }}
 {{- $overseerr_pullPolicy := .Values.image.overseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
 {{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
@@ -45,27 +74,38 @@
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
-{{- $qbt_tag := .Values.image.qbt.tag | default "4.6.3-r0-ls314" | toString }}
+{{- $qbt_tag := .Values.image.qbt.tag | default "5.0.4-r0-ls387" | toString }}
 {{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $radarr_registry := .Values.image.radarr.registry | default "lscr.io" | toString }}
 {{- $radarr_repository := .Values.image.radarr.repository | default "linuxserver/radarr" | toString }}
-{{- $radarr_tag := .Values.image.radarr.tag | default "5.3.6.8612-ls204" | toString }}
+{{- $radarr_tag := .Values.image.radarr.tag | default "5.21.1.9799-ls266" | toString }}
 {{- $radarr_pullPolicy := .Values.image.radarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
 {{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
-{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.1.929-ls226" | toString }}
+{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.14.2939-ls276" | toString }}
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $bazarrResources := .Values.resources.bazarr }}
 {{- $flaresolverrResources := .Values.resources.flaresolverr }}
 {{- $jackettResources := .Values.resources.jackett }}
+{{- $jellyfinResources := .Values.resources.jellyfin }}
+{{- $jpwResources := .Values.resources.jellyplexWatched }}
+{{- $jellyseerrResources := .Values.resources.jellyseerr }}
 {{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
 {{- $radarrResources := .Values.resources.radarr }}
 {{- $sonarrResources := .Values.resources.sonarr }}
-{{- $initScript := .Values.global.initScript | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString }}
+{{- $bazarrDataMountPath := .Values.bazarr.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $jackettDataMountPath := .Values.jackett.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $jellyfinDataMountPath := .Values.jellyfin.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $jellyseerrDataMountPath := .Values.jellyseerr.dataMountPath | default "/app/config" | toString | quote }}
+{{- $overseerrDataMountPath := .Values.overseerr.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $plexDataMountPath := .Values.plex.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $qbtDataMountPath := .Values.qbt.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $radarrDataMountPath := .Values.radarr.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $sonarrDataMountPath := .Values.sonarr.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $downloadsMountPath := .Values.storage.downloads.mountPath | default "/downloads" | toString | quote }}
 {{- $globalMountPath := .Values.storage.global.mountPath | default "/flex" | toString | quote }}
 {{- $mediaMountPath := .Values.storage.media.mountPath | default "/data" | toString | quote }}
@@ -74,6 +114,7 @@
 {{- $globalSubPath := .Values.storage.global.subPath | toString }}
 {{- $mediaSubPath := .Values.storage.media.subPath | toString }}
 {{- $gid := .Values.global.gid | default "1000" | int }}
+{{- if or $bazarr $flaresolverr $jackett $jellyfin $jellyplexWatched $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -99,17 +140,6 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if $initScript }}
-      initContainers:
-        - name: init
-          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
-          imagePullPolicy: {{ $init_pullPolicy }}
-          command: ["/bin/sh"]
-          args:
-            - -c
-            - >-
-              {{- $initScript | nindent 14 }}
-      {{- end }}
       containers:
         {{- if $bazarr }}
         - name: bazarr
@@ -123,33 +153,32 @@ spec:
             {{- toYaml $bazarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
-          {{- if or $persistent_data $persistent_media $persistent_global $bazarrConfigs }}
+                name: {{ .Release.Name }}-flex-lsio-cm
+          {{- if or $dataPersistence $globalPersistence $mediaPersistence $bazarrConfigs }}
           volumeMounts:
-            {{- if $persistent_data }}
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-bazarr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $bazarrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
+              {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $persistent_media }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $bazarrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: bazarr-{{ .subPath }}
               readOnly: false
@@ -168,17 +197,18 @@ spec:
             {{- toYaml $flaresolverrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flaresolverr-cm
+                name: {{ .Release.Name }}-flex-flaresolverr-cm
           {{- if $fsConfigs }}
           volumeMounts:
             {{- range $fsConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: flaresolverr-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
         {{- end }}
+        {{- if $jackett }}
         - name: jackett
           image: {{ printf "%s/%s:%s" $jackett_registry $jackett_repository $jackett_tag | quote }}
           imagePullPolicy: {{ $jackett_pullPolicy }}
@@ -190,40 +220,142 @@ spec:
             {{- toYaml $jackettResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
-                name: {{ .Release.Name }}-jackett-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_global $jackettConfigs }}
+                name: {{ .Release.Name }}-flex-jackett-cm
+          {{- if or $dataPersistence $downloadsPersistence $globalPersistence $jackettConfigs }}
           volumeMounts:
-            {{- if $persistent_data }}
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-jackett-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $jackettDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- range $jackettConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: jackett-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
+        {{- if $jellyfin }}
+        - name: jellyfin
+          image: {{ printf "%s/%s:%s" $jellyfin_registry $jellyfin_repository $jellyfin_tag | quote }}
+          imagePullPolicy: {{ $jellyfin_pullPolicy }}
+          ports:
+            - name: jellyfin-cd
+              containerPort: 1900
+              protocol: UDP
+            - name: jellyfin-sd
+              containerPort: 7359
+              protocol: UDP
+            - name: jellyfin-web
+              containerPort: 8096
+              protocol: TCP
+          resources:
+            {{- toYaml $jellyfinResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-lsio-cm
+          {{- if or $dataPersistence $globalPersistence $mediaPersistence $jellyfinConfigs }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-flex-jellyfin-data
+              mountPath: {{ $jellyfinDataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+              {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- range $jellyfinConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jellyfin-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if $jellyplexWatched }}
+        - name: jellyplex-watched
+          image: {{ printf "%s/%s:%s" $jpw_registry $jpw_repository $jpw_tag | quote }}
+          imagePullPolicy: {{ $jpw_pullPolicy }}
+          resources:
+            {{- toYaml $jpwResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-jellyplex-watched-cm
+            - secretRef:
+                name: {{ .Release.Name }}-flex-jellyplex-watched-secret
+          {{- if $jpwConfigs }}
+          volumeMounts:
+            {{- range $jpwConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jpw-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if $jellyseerr }}
+        - name: jellyseerr
+          image: {{ printf "%s/%s:%s" $jellyseerr_registry $jellyseerr_repository $jellyseerr_tag | quote }}
+          imagePullPolicy: {{ $jellyseerr_pullPolicy }}
+          ports:
+            - name: jellyseerr
+              containerPort: 5550
+              protocol: TCP
+          resources:
+            {{- toYaml $jellyseerrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-jellyseerr-cm
+          {{- if or $dataPersistence $jellyseerrConfigs }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-flex-jellyseerr-data
+              mountPath: {{ $jellyseerrDataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- range $jellyseerrConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jellyseerr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if $overseerr }}
         - name: overseerr
           image: {{ printf "%s/%s:%s" $overseerr_registry $overseerr_repository $overseerr_tag | quote }}
           imagePullPolicy: {{ $overseerr_pullPolicy }}
@@ -235,23 +367,24 @@ spec:
             {{- toYaml $overseerrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
-          {{- if or $persistent_data $persistent_media $persistent_global $overseerrConfigs }}
+                name: {{ .Release.Name }}-flex-lsio-cm
+          {{- if or $dataPersistence $overseerrConfigs }}
           volumeMounts:
-            {{- if $persistent_data }}
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-overseerr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $overseerrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- range $overseerrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: overseerr-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
         {{- if $plex }}
         - name: plex
           image: {{ printf "%s/%s:%s" $plex_registry $plex_repository $plex_tag | quote }}
@@ -264,35 +397,34 @@ spec:
             {{- toYaml $plexResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-plex-cm
+                name: {{ .Release.Name }}-flex-plex-cm
             - secretRef:
-                name: {{ .Release.Name }}-plex-secret
-          {{- if or $persistent_data $persistent_media $persistent_global $plexConfigs }}
+                name: {{ .Release.Name }}-flex-plex-secret
+          {{- if or $dataPersistence $globalPersistence $mediaPersistence $plexConfigs }}
           volumeMounts:
-            {{- if $persistent_data }}
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-plex-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $plexDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
               mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
+              {{- if $globalSubPath }}
               subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $persistent_media }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $plexConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: plex-{{ .subPath }}
               readOnly: false
@@ -317,41 +449,41 @@ spec:
             {{- toYaml $qbtResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
+                name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
-                name: {{ .Release.Name }}-qbittorrent-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_global $qbtConfigs }}
+                name: {{ .Release.Name }}-flex-qbt-cm
+          {{- if or $dataPersistence $downloadsPersistence $globalPersistence $qbtConfigs }}
           volumeMounts:
-            {{- if $persistent_data }}
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-qbt-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $qbtDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
+              {{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
               {{- end }}
             {{- end }}
             {{- range $qbtConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: qbt-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
         {{- end }}
+        {{- if $radarr }}
         - name: radarr
           image: {{ printf "%s/%s:%s" $radarr_registry $radarr_repository $radarr_tag | quote }}
           imagePullPolicy: {{ $radarr_pullPolicy }}
@@ -363,45 +495,46 @@ spec:
             {{- toYaml $radarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $radarrConfigs }}
+                name: {{ .Release.Name }}-flex-lsio-cm
+          {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $radarrConfigs }}
           volumeMounts:
-            {{- if $persistent_data }}
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-radarr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $radarrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
               {{- end }}
-              {{- if $persistent_media }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $radarrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: radarr-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
+        {{- end }}
+        {{- if $sonarr }}
         - name: sonarr
           image: {{ printf "%s/%s:%s" $sonarr_registry $sonarr_repository $sonarr_tag | quote }}
           imagePullPolicy: {{ $sonarr_pullPolicy }}
@@ -413,104 +546,122 @@ spec:
             {{- toYaml $sonarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ .Release.Name }}-flex-cm
-          {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global $sonarrConfigs }}
+                name: {{ .Release.Name }}-flex-lsio-cm
+          {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $sonarrConfigs }}
           volumeMounts:
-            {{- if $persistent_data }}
+            {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-sonarr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $sonarrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
             {{- end }}
-            {{- if $persistent_global }}
-            - name: {{ .Release.Name }}-flex-{{- if and $globalSmb $smb }}smb{{- else }}global{{- end }}
-              mountPath: {{ $globalMountPath }}
-                {{- if $globalSubPath }}
-              subPath: {{ $globalSubPath | quote }}
-                {{- end }}
-            {{- else }}
-              {{- if $persistent_downloads }}
-            - name: {{ .Release.Name }}-flex-{{- if and $downloadsSmb $smb }}smb{{- else }}downloads{{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
               mountPath: {{ $downloadsMountPath }}
-                {{- if $downloadsSubPath }}
+              {{- if $downloadsSubPath }}
               subPath: {{ $downloadsSubPath | quote }}
-                {{- end }}
               {{- end }}
-              {{- if $persistent_media }}
-            - name: {{ .Release.Name }}-flex-{{- if and $mediaSmb $smb }}smb{{- else }}media{{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
               mountPath: {{ $mediaMountPath }}
-                {{- if $mediaSubPath }}
+              {{- if $mediaSubPath }}
               subPath: {{ $mediaSubPath | quote }}
-                {{- end }}
               {{- end }}
             {{- end }}
             {{- range $sonarrConfigs }}
-            - name: {{ $releaseName }}-custom-configs
+            - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: sonarr-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
-      {{- if or $persistent_data $persistent_downloads $persistent_media $persistent_global (or (and $bazarr $bazarrConfigs) (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs) }}
+        {{- end }}
+      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
-        {{- if $persistent_data }}
-        {{- if $bazarr }}
+        {{- if $dataPersistence }}
+          {{- if $bazarr }}
         - name: {{ .Release.Name }}-flex-bazarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-bazarr-data-pvc
-        {{- end }}
+          {{- end }}
+          {{- if $jackett }}
         - name: {{ .Release.Name }}-flex-jackett-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jackett-data-pvc
+          {{- end }}
+          {{- if $jellyfin }}
+        - name: {{ .Release.Name }}-flex-jellyfin-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-jellyfin-data-pvc
+          {{- end }}
+          {{- if $jellyseerr }}
+        - name: {{ .Release.Name }}-flex-jellyseerr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-jellyseerr-data-pvc
+          {{- end }}
+          {{- if $overseerr }}
         - name: {{ .Release.Name }}-flex-overseerr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-overseerr-data-pvc
-        {{- if $plex }}
+          {{- end }}
+          {{- if $plex }}
         - name: {{ .Release.Name }}-flex-plex-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-plex-data-pvc
-        {{- end }}
-        {{- if $qbt }}
+          {{- end }}
+          {{- if $qbt }}
         - name: {{ .Release.Name }}-flex-qbt-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-qbt-data-pvc
-        {{- end }}
+          {{- end }}
+          {{- if $radarr }}
         - name: {{ .Release.Name }}-flex-radarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-radarr-data-pvc
+          {{- end }}
+          {{- if $sonarr }}
         - name: {{ .Release.Name }}-flex-sonarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-sonarr-data-pvc
-        {{- end }}
-        {{- if $persistent_global }}
-          {{- if not (and $globalSmb $smb) }}
-        - name: {{ .Release.Name }}-flex-global
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-flex-global-pvc
           {{- end }}
-        {{- else }}
-          {{- if and $persistent_downloads (not (and $downloadsSmb $smb)) }}
+        {{- end }}
+        {{- if and $downloadsPersistence (not $downloadsSmb) }}
         - name: {{ .Release.Name }}-flex-downloads
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-downloads-pvc
-          {{- end }}
-          {{- if and $persistent_media (not (and $mediaSmb $smb)) }}
+        {{- end }}
+        {{- if and $globalPersistence (not $globalSmb) }}
+        - name: {{ .Release.Name }}-flex-global
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-global-pvc
+        {{- end }}
+        {{- if and $mediaPersistence (not $mediaSmb) }}
         - name: {{ .Release.Name }}-flex-media
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-media-pvc
-          {{- end }}
         {{- end }}
-        {{- if and $smb (or (and $persistent_downloads $downloadsSmb (not $persistent_global)) (and $persistent_media $mediaSmb (not $persistent_global)) (and $persistent_global $globalSmb)) }}
+        {{- if or $downloadsSmb $globalSmb $mediaSmb }}
         - name: {{ .Release.Name }}-flex-smb
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or (and $bazarr $bazarrConfigs) (and $flaresolverr $fsConfigs) $jackettConfigs $overseerrConfigs (and $plex $plexConfigs) (and $qbt $qbtConfigs) $radarrConfigs $sonarrConfigs }}
-        - name: {{ .Release.Name }}-custom-configs
+        {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
+        - name: {{ .Release.Name }}-flex-custom-configs
           secret:
-            secretName: {{ .Release.Name }}-custom-configs
+            secretName: {{ .Release.Name }}-flex-custom-configs
         {{- end }}
       {{- end }}
+      {{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
       securityContext:
         fsGroup: {{ $gid }}
+      {{- end }}
+{{- end }}
