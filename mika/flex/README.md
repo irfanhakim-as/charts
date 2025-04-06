@@ -92,7 +92,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Manage your storage space more effectively i.e. expanding and using the SMB share for other purposes, rather than allocating that storage space solely for the Flex installation.
 
-     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Plex or qBittorrent.
+     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Jellyfin, Plex, or qBittorrent.
 
 5. **(Optional)** Use Ingress for serving Flex services outside of your network.
 
@@ -808,7 +808,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Click the **Add Root Folder** button to add a folder.
 
-   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
+   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Jellyfin and Plex), and click the **Ok** button.
 
    - Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
 
@@ -833,11 +833,11 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Store the backup file in a safe location.
 
-10. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Plex):
+10. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Jellyfin or Plex):
 
    - Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
 
-   - In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to download and add to Plex, and select it from the search results.
+   - In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to download and add to Jellyfin or Plex, and select it from the search results.
 
    - In the show's details modal, leave the form as default or configure accordingly, and click the **Add Movie/{Show Name}** button.
 
