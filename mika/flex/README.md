@@ -28,13 +28,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-1. Choose between enabling Plex, Jellyfin, both, or neither, should you choose to deploy one or both of these streaming services externally.
-
-   - To enable Plex, set `plex.enabled: true` in the chart values file.
+1. Choose between enabling Jellyfin, Plex, both, or neither, should you choose to deploy one or both of these streaming services externally.
 
    - To enable Jellyfin, set `jellyfin.enabled: true` in the chart values file.
 
-   - To disable both Plex and Jellyfin, set `plex.enabled: false` and `jellyfin.enabled: false` in the chart values file.
+   - To enable Plex, set `plex.enabled: true` in the chart values file.
+
+   - To disable both Jellyfin and Plex, set `jellyfin.enabled: false` and `plex.enabled: false` in the chart values file.
 
 2. Disable qBittorrent and use an external qBittorrent server.
 
