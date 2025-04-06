@@ -551,7 +551,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
+> The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Jellyfin](#jellyfin) or [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
 
 1. Launch the Radarr/Sonarr web interface.
 
@@ -642,7 +642,34 @@ Flex is a collection of curated services that aims to provide a complete home me
 
        - Click the **Save** button.
 
-5. Add a connection to Plex from Radarr/Sonarr:
+5. **(Optional)** Add a connection to Jellyfin from Radarr/Sonarr:
+
+   - Click the **Settings** menu item on the left, and then click the **Connect** link.
+
+   - Under the **Connections** section, click the **+** button to add a new connection.
+
+   - Under **Add Connection**, click **Emby / Jellyfin**.
+
+   - In the **Add Connection - Emby / Jellyfin** form:
+
+     - Host: `localhost`.
+
+         > [!NOTE]  
+         > If you are using an external Jellyfin server, replace the value with the actual address to the Jellyfin server.
+
+     - API Key: Add an API key generated from the Jellyfin web interface at `Dashboard > Advanced > API Keys`.
+
+     - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+
+     - If you're using an external Jellyfin server and require path mapping:
+
+       - Map Paths From: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on Flex i.e. `/flex/Media`.
+
+       - Map Paths To: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on the external Jellyfin server i.e. `/data`.
+
+     - Click the **Save** button.
+
+6. **(Optional)** Add a connection to Plex from Radarr/Sonarr:
 
    - Click the **Settings** menu item on the left, and then click the **Connect** link.
 
@@ -669,7 +696,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Click the **Save** button.
 
-6. Configure the media management settings on Radarr/Sonarr:
+7. Configure the media management settings on Radarr/Sonarr:
 
    - Click the **Settings** menu item on the left, and then click the **Media Management** link.
 
@@ -687,7 +714,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Click the **Save Changes** button.
 
-7. Configure quality profiles on Radarr/Sonarr:
+8. Configure quality profiles on Radarr/Sonarr:
 
    - Click the **Settings** menu item on the left, and then click the **Profiles** link.
 
@@ -696,7 +723,7 @@ Flex is a collection of curated services that aims to provide a complete home me
       > [!TIP]  
       > You may also configure any existing profiles or add new ones to better suit your preferences, make sure to click the **Save** button after making any changes.
 
-8. Create a backup of the Radarr/Sonarr configuration:
+9. Create a backup of the Radarr/Sonarr configuration:
 
    - Click the **System** menu item on the left, and then click the **Backup** link.
 
@@ -706,7 +733,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Store the backup file in a safe location.
 
-9. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Plex):
+10. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Plex):
 
    - Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
 
