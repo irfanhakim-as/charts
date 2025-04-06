@@ -60,6 +60,10 @@
 {{- $jpw_repository := .Values.image.jellyplexWatched.repository | default "luigi311/jellyplex-watched" | toString }}
 {{- $jpw_tag := .Values.image.jellyplexWatched.tag | default "7.0.3-alpine" | toString }}
 {{- $jpw_pullPolicy := .Values.image.jellyplexWatched.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $jellyseerr_registry := .Values.image.jellyseerr.registry | default "ghcr.io" | toString }}
+{{- $jellyseerr_repository := .Values.image.jellyseerr.repository | default "fallenbagel/jellyseerr" | toString }}
+{{- $jellyseerr_tag := .Values.image.jellyseerr.tag | default "2.5.2" | toString }}
+{{- $jellyseerr_pullPolicy := .Values.image.jellyseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
 {{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
 {{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.34.0-ls136" | toString }}
@@ -86,12 +90,14 @@
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $jellyfinResources := .Values.resources.jellyfin }}
 {{- $jpwResources := .Values.resources.jellyplexWatched }}
+{{- $jellyseerrResources := .Values.resources.jellyseerr }}
 {{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
 {{- $radarrResources := .Values.resources.radarr }}
 {{- $sonarrResources := .Values.resources.sonarr }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
+{{- $jellyseerrDataMountPath := .Values.jellyseerr.dataMountPath | default "/app/config" | toString | quote }}
 {{- $downloadsMountPath := .Values.storage.downloads.mountPath | default "/downloads" | toString | quote }}
 {{- $globalMountPath := .Values.storage.global.mountPath | default "/flex" | toString | quote }}
 {{- $mediaMountPath := .Values.storage.media.mountPath | default "/data" | toString | quote }}
@@ -100,7 +106,7 @@
 {{- $globalSubPath := .Values.storage.global.subPath | toString }}
 {{- $mediaSubPath := .Values.storage.media.subPath | toString }}
 {{- $gid := .Values.global.gid | default "1000" | int }}
-{{- if or $bazarr $flaresolverr $jackett $jellyfin $jellyplexWatched $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $flaresolverr $jackett $jellyfin $jellyplexWatched $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -307,6 +313,36 @@ spec:
             - name: {{ $releaseName }}-flex-custom-configs
               mountPath: {{ .mountPath }}
               subPath: jpw-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
+        {{- if $jellyseerr }}
+        - name: jellyseerr
+          image: {{ printf "%s/%s:%s" $jellyseerr_registry $jellyseerr_repository $jellyseerr_tag | quote }}
+          imagePullPolicy: {{ $jellyseerr_pullPolicy }}
+          ports:
+            - name: jellyseerr
+              containerPort: 5550
+              protocol: TCP
+          resources:
+            {{- toYaml $jellyseerrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-jellyseerr-cm
+          {{- if or $dataPersistence $jellyseerrConfigs }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-flex-jellyseerr-data
+              mountPath: {{ $jellyseerrDataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- range $jellyseerrConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: jellyseerr-{{ .subPath }}
               readOnly: false
             {{- end }}
           {{- end }}
@@ -558,6 +594,11 @@ spec:
         - name: {{ .Release.Name }}-flex-jellyfin-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jellyfin-data-pvc
+          {{- end }}
+          {{- if $jellyseerr }}
+        - name: {{ .Release.Name }}-flex-jellyseerr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-jellyseerr-data-pvc
           {{- end }}
           {{- if $overseerr }}
         - name: {{ .Release.Name }}-flex-overseerr-data
