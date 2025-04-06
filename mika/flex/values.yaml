@@ -204,6 +204,11 @@ bazarr:
   # Example:
   # enabled: false
   enabled: true
+  # The path where the data storage should be mounted on the Bazarr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Bazarr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -291,6 +296,11 @@ jackett:
   # Example:
   # autoUpdate: "false"
   autoUpdate: ""
+  # The path where the data storage should be mounted on the Jackett container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Jackett data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -334,6 +344,11 @@ jellyfin:
   # Example:
   # enabled: true
   enabled: false
+  # The path where the data storage should be mounted on the Jellyfin container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Jellyfin data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -553,6 +568,11 @@ overseerr:
   # Example:
   # enabled: true
   enabled: false
+  # The path where the data storage should be mounted on the Overseerr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Overseerr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -601,6 +621,11 @@ plex:
   # Example:
   # claim: "claim-bW419gvogwjNfYCowOGa"
   claim: ""
+  # The path where the data storage should be mounted on the Plex container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Plex data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -644,6 +669,11 @@ qbt:
   # Example:
   # enabled: true
   enabled: false
+  # The path where the data storage should be mounted on the qBittorrent container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the qBittorrent data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -687,6 +717,11 @@ radarr:
   # Example:
   # enabled: false
   enabled: true
+  # The path where the data storage should be mounted on the Radarr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Radarr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -730,6 +765,11 @@ sonarr:
   # Example:
   # enabled: false
   enabled: true
+  # The path where the data storage should be mounted on the Sonarr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
   # The amount of persistent storage allocated for the Sonarr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
