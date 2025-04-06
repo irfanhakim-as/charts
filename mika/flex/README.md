@@ -114,7 +114,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Access any of the deployed Flex service from any device within your network by using the node IP and node port assigned to the corresponding service (i.e. `http://<node_ip>:<node_port>`).
 
-7. **(Optional)** Choose between enabling Jellyseerr (for Jellyfin), Overseerr (for Plex), or both for a streamlined experience for requesting media.
+7. **(Optional)** Choose between enabling Jellyseerr (for Jellyfin), Overseerr (for Plex), or both for a streamlined experience for your users to request media.
 
    - To enable Jellyseerr, set `jellyseerr.enabled: true` in the chart values file.
 
