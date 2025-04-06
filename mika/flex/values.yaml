@@ -377,11 +377,6 @@ jellyplexWatched:
   # Example:
   # enabled: true
   enabled: false
-  # The verbosity level of the JellyPlex-Watched logs.
-  # Default: "info"
-  # Example:
-  # debugLevel: "debug"
-  debugLevel: ""
   # The interval in seconds for syncing watch state between the Jellyfin or Plex servers.
   # Default: "3600"
   # Example:
@@ -397,6 +392,11 @@ jellyplexWatched:
   # Example:
   # generateLocations: "False"
   generateLocations: ""
+  # The verbosity level of the JellyPlex-Watched logs.
+  # Default: "info"
+  # Example:
+  # logLevel: "debug"
+  logLevel: ""
   # Specifies whether SSL certificate verification should be skipped.
   # Default: "False"
   # Example:

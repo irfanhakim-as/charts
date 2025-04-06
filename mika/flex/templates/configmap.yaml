@@ -15,10 +15,10 @@
 {{- $fsLogHtml := .Values.flaresolverr.logHtml | default "false" | toString | quote }}
 {{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
 {{- $jackettAutoUpdate := .Values.jackett.autoUpdate | default "true" | toString | quote }}
-{{- $jpwDebugLevel := .Values.jellyplexWatched.debugLevel | default "info" | toString | quote }}
 {{- $jpwFrequency := .Values.jellyplexWatched.frequency | default "3600" | toString | quote }}
 {{- $jpwGenerateGUIDs := .Values.jellyplexWatched.generateGUIDs | default "True" | toString | quote }}
 {{- $jpwGenerateLocations := .Values.jellyplexWatched.generateLocations | default "True" | toString | quote }}
+{{- $jpwLogLevel := .Values.jellyplexWatched.logLevel | default "info" | toString | quote }}
 {{- $jpwSslBypass := .Values.jellyplexWatched.sslBypass | default "False" | toString | quote }}
 {{- $jpwSyncToPlex := .Values.jellyplexWatched.jellyfin.syncToPlex | default "True" | toString | quote }}
 {{- $jpwSyncToJellyfin := .Values.jellyplexWatched.plex.syncToJellyfin | default "True" | toString | quote }}
@@ -83,7 +83,7 @@ metadata:
   labels:
     {{- include "flex.labels" . | nindent 4 }}
 data:
-  DEBUG_LEVEL: {{ $jpwDebugLevel }}
+  DEBUG_LEVEL: {{ $jpwLogLevel }}
   DRYRUN: "False"
   SLEEP_DURATION: {{ $jpwFrequency }}
   GENERATE_GUIDS: {{ $jpwGenerateGUIDs }}

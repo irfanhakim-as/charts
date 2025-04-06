@@ -1010,7 +1010,6 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyfin.enabled | bool | `false` | Specifies whether Jellyfin should be deployed or excluded in case an external Jellyfin server is used. |
 | jellyfin.ingress | bool | `false` | Specifies whether the Jellyfin service should be served publicly using an Ingress. |
 | jellyplexWatched.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the JellyPlex-Watched container. Items: `.mountPath`, `.subPath`, `.config`. |
-| jellyplexWatched.debugLevel | string | `""` | The verbosity level of the JellyPlex-Watched logs. Default: `"info"`. |
 | jellyplexWatched.enabled | bool | `false` | Specifies whether JellyPlex-Watched should be deployed or excluded in case an external JellyPlex-Watched server is used. |
 | jellyplexWatched.frequency | string | `""` | The interval in seconds for syncing watch state between the Jellyfin or Plex servers. Default: `"3600"`. |
 | jellyplexWatched.generateGUIDs | string | `""` | Specifies whether to identify available media files through GUID. Default: `"True"`. |
@@ -1018,6 +1017,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyplexWatched.jellyfin.servers | list | `[]` | List of Jellyfin servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
 | jellyplexWatched.jellyfin.syncToPlex | string | `""` | Specifies whether watch state from Jellyfin should be synchronised to Plex. Default: `"True"`. |
 | jellyplexWatched.libraries | list | `[]` | The list of media libraries for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
+| jellyplexWatched.logLevel | string | `""` | The verbosity level of the JellyPlex-Watched logs. Default: `"info"`. |
 | jellyplexWatched.plex.servers | list | `[]` | List of Plex servers to synchronise and their corresponding authentication configurations. Items: `.baseUrl`, `.token`. |
 | jellyplexWatched.plex.syncToJellyfin | string | `""` | Specifies whether watch state from Plex should be synchronised to Jellyfin. Default: `"True"`. |
 | jellyplexWatched.sslBypass | string | `""` | Specifies whether SSL certificate verification should be skipped. Default: `"False"`. |
