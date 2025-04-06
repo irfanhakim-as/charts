@@ -1,6 +1,7 @@
 {{- $bazarr := .Values.bazarr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -10,6 +11,7 @@
 {{- $bazarrIngress := and $bazarr $ingress .Values.bazarr.ingress }}
 {{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress }}
 {{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress }}
+{{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress }}
 {{- $overseerrIngress := and $overseerr $ingress .Values.overseerr.ingress }}
 {{- $plexIngress := and $plex $ingress .Values.plex.ingress }}
 {{- $qbtIngress := and $qbt $ingress .Values.qbt.ingress }}
@@ -21,6 +23,8 @@
 {{- $jackettDomain = ternary $jackettDomain "" (and $jackettIngress (ne $jackettDomain "") (ne $jackettDomain "localhost")) }}
 {{- $jellyfinDomain := .Values.jellyfin.domain | toString }}
 {{- $jellyfinDomain = ternary $jellyfinDomain "" (and $jellyfinIngress (ne $jellyfinDomain "") (ne $jellyfinDomain "localhost")) }}
+{{- $jellyseerrDomain := .Values.jellyseerr.domain | toString }}
+{{- $jellyseerrDomain = ternary $jellyseerrDomain "" (and $jellyseerrIngress (ne $jellyseerrDomain "") (ne $jellyseerrDomain "localhost")) }}
 {{- $overseerrDomain := .Values.overseerr.domain | toString }}
 {{- $overseerrDomain = ternary $overseerrDomain "" (and $overseerrIngress (ne $overseerrDomain "") (ne $overseerrDomain "localhost")) }}
 {{- $plexDomain := .Values.plex.domain | toString }}
@@ -35,11 +39,12 @@ Flex has been installed and configured for {{ .Release.Name | toString }} 🎉
 
 Visit the following service(s) at the provided address:
 
-{{- if or $bazarrDomain $jackettDomain $jellyfinDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
+{{- if or $bazarrDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 
     - Bazarr: {{ if $bazarrDomain }}{{ printf "https://%s" $bazarrDomain | toString }}{{- end }}
     - Jackett: {{ if $jackettDomain }}{{ printf "https://%s" $jackettDomain | toString }}{{- end }}
     - Jellyfin: {{ if $jellyfinDomain }}{{ printf "https://%s" $jellyfinDomain | toString }}{{- end }}
+    - Jellyseerr: {{ if $jellyseerrDomain }}{{ printf "https://%s" $jellyseerrDomain | toString }}{{- end }}
     - Overseerr: {{ if $overseerrDomain }}{{ printf "https://%s" $overseerrDomain | toString }}{{- end }}
     - Plex: {{ if $plexDomain }}{{ printf "https://%s" $plexDomain | toString }}{{- end }}
     - qBittorrent: {{ if $qbtDomain }}{{ printf "https://%s" $qbtDomain | toString }}{{- end }}
