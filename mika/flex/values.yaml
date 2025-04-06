@@ -83,6 +83,21 @@ image:
     # The policy that determines when Kubernetes should pull the JellyPlex-Watched container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Jellyseerr container image configurations.
+  # Source: https://github.com/fallenbagel/jellyseerr/pkgs/container/jellyseerr
+  jellyseerr:
+    # The registry where the Jellyseerr container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Jellyseerr container image used.
+    # Default: "fallenbagel/jellyseerr"
+    repository: ""
+    # The tag that specifies the version of the Jellyseerr container image used.
+    # Default: "2.5.2"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Jellyseerr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # Overseerr container image configurations.
   # Source: https://github.com/linuxserver/docker-overseerr/pkgs/container/overseerr
   overseerr:
@@ -857,6 +872,17 @@ service:
       # Example:
       # port: "8080"
       port: ""
+  # Jellyseerr service port configurations.
+  jellyseerr:
+    # The optional node port to expose for Jellyseerr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Jellyseerr port on which the Jellyseerr server should listen for connections.
+    # Default: "5550"
+    # Example:
+    # port: "8080"
+    port: ""
   # Overseerr service port configurations.
   overseerr:
     # The optional node port to expose for Overseerr when the service type is NodePort.
@@ -1243,6 +1269,30 @@ resources:
   #     # memory: "250Mi"
   #     memory: "200Mi"
   jellyplexWatched: {}
+  # Jellyseerr container resources.
+  # Example:
+  # jellyseerr:
+  #   # The minimum amount of resources required by Jellyseerr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Jellyseerr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "400m"
+  #     # The minimum amount of memory required by Jellyseerr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "250Mi"
+  #   # The maximum amount of resources allowed for Jellyseerr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Jellyseerr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "600m"
+  #     # The maximum amount of memory allowed for Jellyseerr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  jellyseerr: {}
   # Overseerr container resources.
   # Example:
   # overseerr:
