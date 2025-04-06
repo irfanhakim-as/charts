@@ -2,6 +2,7 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -26,6 +27,9 @@
 {{- $jellyfinWebPort := .Values.service.jellyfin.web.port | default "8096" | toString }}
 {{- $jellyfinWebNodePort := .Values.service.jellyfin.web.nodePort | toString }}
 {{- $jellyfinWebNodePort = ternary $jellyfinWebNodePort "" (and (eq $type "NodePort") (ne $jellyfinWebNodePort "")) }}
+{{- $jellyseerrPort := .Values.service.jellyseerr.port | default "5550" | toString }}
+{{- $jellyseerrNodePort := .Values.service.jellyseerr.nodePort | toString }}
+{{- $jellyseerrNodePort = ternary $jellyseerrNodePort "" (and (eq $type "NodePort") (ne $jellyseerrNodePort "")) }}
 {{- $overseerrPort := .Values.service.overseerr.port | default "5055" | toString }}
 {{- $overseerrNodePort := .Values.service.overseerr.nodePort | toString }}
 {{- $overseerrNodePort = ternary $overseerrNodePort "" (and (eq $type "NodePort") (ne $overseerrNodePort "")) }}
@@ -44,7 +48,7 @@
 {{- $sonarrPort := .Values.service.sonarr.port | default "8989" | toString }}
 {{- $sonarrNodePort := .Values.service.sonarr.nodePort | toString }}
 {{- $sonarrNodePort = ternary $sonarrNodePort "" (and (eq $type "NodePort") (ne $sonarrNodePort "")) }}
-{{- if or $bazarr $flaresolverr $jackett $jellyfin $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $flaresolverr $jackett $jellyfin $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
 kind: Service
@@ -104,6 +108,15 @@ spec:
     {{- end }}
       protocol: TCP
       name: jellyfin-web
+  {{- end }}
+  {{- if $jellyseerr }}
+    - port: {{ int $jellyseerrPort }}
+      targetPort: jellyseerr
+    {{- if $jellyseerrNodePort }}
+      nodePort: {{ int $jellyseerrNodePort }}
+    {{- end }}
+      protocol: TCP
+      name: jellyseerr
   {{- end }}
   {{- if $overseerr }}
     - port: {{ int $overseerrPort }}

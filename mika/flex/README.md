@@ -28,13 +28,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 > [!NOTE]  
 > The following configuration recommendations might not be the default settings for this chart but are **highly recommended**. Please carefully consider them before configuring your installation.
 
-1. Choose between enabling Plex, Jellyfin, both, or neither, should you choose to deploy one or both of these streaming services externally.
-
-   - To enable Plex, set `plex.enabled: true` in the chart values file.
+1. Choose between enabling Jellyfin, Plex, both, or neither, should you choose to deploy one or both of these streaming services externally.
 
    - To enable Jellyfin, set `jellyfin.enabled: true` in the chart values file.
 
-   - To disable both Plex and Jellyfin, set `plex.enabled: false` and `jellyfin.enabled: false` in the chart values file.
+   - To enable Plex, set `plex.enabled: true` in the chart values file.
+
+   - To disable both Jellyfin and Plex, set `jellyfin.enabled: false` and `plex.enabled: false` in the chart values file.
 
 2. Disable qBittorrent and use an external qBittorrent server.
 
@@ -92,7 +92,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Manage your storage space more effectively i.e. expanding and using the SMB share for other purposes, rather than allocating that storage space solely for the Flex installation.
 
-     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Plex or qBittorrent.
+     - Using SMB is **required** for Flex services to be able to access media files and downloads they need for their tasks when relying on an external server i.e. Jellyfin, Plex, or qBittorrent.
 
 5. **(Optional)** Use Ingress for serving Flex services outside of your network.
 
@@ -100,22 +100,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Enable Ingress and specify the registered domain name for each Flex service by setting their corresponding `ingress` and `domain` settings in the chart values file:
 
-      > [!IMPORTANT]  
-      > Replace the sample domain names with your actual domain names that have been registered to your DNS provider and pointed to your Kubernetes cluster.
+     - For example, to enable ingress for Jackett: Set `jackett.ingress: true` and `jackett.domain` to the registered domain name corresponding to the service (i.e. `"jackett.example.com"`) in the chart values file.
 
-     - Jackett: `jackett.ingress: true` and `jackett.domain: "jackett.example.com"`.
-
-     - Overseerr: `overseerr.ingress: true` and `overseerr.domain: "overseerr.example.com"`.
-
-     - Plex: `plex.ingress: true` and `plex.domain: "plex.example.com"`.
-
-     - qBittorrent: `qbt.ingress: true` and `qbt.domain: "qbt.example.com"`.
-
-     - Radarr: `radarr.ingress: true` and `radarr.domain: "radarr.example.com"`.
-
-     - Sonarr: `sonarr.ingress: true` and `sonarr.domain: "sonarr.example.com"`.
-
-      If any of these services were deployed externally, you may exclude them from these configuration options.
+      If any of the Flex services were deployed externally, you may exclude them from these configuration options.
 
    - Configure the rest of the `ingress` settings (i.e. `ingress.clusterIssuer`) in the chart values file as required by your cluster environment.
 
@@ -127,7 +114,15 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Access any of the deployed Flex service from any device within your network by using the node IP and node port assigned to the corresponding service (i.e. `http://<node_ip>:<node_port>`).
 
-7. **(Optional)** Sync watch state between multiple streaming services if you either have both Jellyfin and Plex servers, or multiple server instances for either of the two.
+7. **(Optional)** Choose between enabling Jellyseerr (for Jellyfin), Overseerr (for Plex), or both for a streamlined experience for your users to request media.
+
+   - To enable Jellyseerr, set `jellyseerr.enabled: true` in the chart values file.
+
+   - To enable Overseerr, set `overseerr.enabled: true` in the chart values file.
+
+   - If you wish to do away with either of the two, set their corresponding `enabled` settings to `false` in the chart values file.
+
+8. **(Optional)** Sync watch state between multiple streaming services if you either have both Jellyfin and Plex servers, or multiple server instances for either of the two.
 
    - Enable JellyPlex-Watched by setting `jellyplexWatched.enabled: true` in the chart values file.
 
@@ -358,6 +353,98 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
+### [Jellyseerr](https://docs.jellyseerr.dev)
+
+> [!NOTE]  
+> The following steps require you to have set up and configured [Jellyfin](#jellyfin), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
+
+1. Launch the Jellyseerr web interface and choose the server type (i.e. Jellyfin) by selecting their corresponding **Configure** button, and proceeding to login to the selected server.
+
+2. In the **Configure Media Server** section:
+
+   - **Jellyfin Libraries**:
+
+     - Click the **Sync Libraries** button.
+
+     - Toggle the corresponding switches to each media library you wish to enable (i.e. **Movies** and **TV Shows**).
+
+   - **Manual Library Scan**:
+
+     - Click the **Start Scan** button to perform the initial, full library scan.
+
+   - **Jellyfin Settings**:
+
+     - API key: This setting should have already been prefilled with a dedicated Jellyfin API key generated for and by Jellyseerr.
+
+     - External URL: If your Jellyfin server deployed by Flex or externally has a public domain name, add it here (i.e. `https://jellyfin.example.com`).
+
+     - Click the **Save Changes** button.
+
+   - Click the **Continue** button.
+
+3. In the **Configure Services** page:
+
+   - **Radarr Settings**:
+
+      Click the **Add Radarr Server** button and configure the following:
+
+     - Default Server: `Enabled`.
+     - 4K Server: `Disabled`.
+     - Server Name: `Radarr`.
+     - Hostname or IP Address: `localhost`.
+     - Port: `7878`.
+     - Use SSL: `Disabled`.
+     - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+
+      Click the **Test** button to verify and load some data from the Radarr server based on the current settings, then continue:
+
+     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/flex/Media/Movies`.
+     - Minimum Availability: `Announced`.
+     - Enable Scan: `Enabled`.
+     - Enable Automatic Search: `Enabled`.
+
+      Click the **Add Server** button to complete the Radarr server configuration.
+
+   - **Sonarr Settings**:
+
+      Click the **Add Sonarr Server** button and configure the following:
+
+     - Default Server: `Enabled`.
+     - 4K Server: `Disabled`.
+     - Server Name: `Sonarr`.
+     - Hostname or IP Address: `localhost`.
+     - Port: `8989`.
+     - Use SSL: `Disabled`.
+     - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+
+      Click the **Test** button to verify and load some data from the Sonarr server based on the current settings, then continue:
+
+     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
+     - Language Profile: `Deprecated`.
+     - Anime Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
+     - Season Folders: `Enabled`.
+     - Enable Scan: `Enabled`.
+     - Enable Automatic Search: `Enabled`.
+
+      Click the **Add Server** button to complete the Sonarr server configuration.
+
+   - Click the **Finish Setup** button.
+
+4. To request a Movie or TV series to be added to your media server (i.e. Jellyfin):
+
+   - In the **Discover** page of the Jellyseerr web interface, search for the Movie or TV series.
+
+   - From the **Search Results**, locate and click the Movie or TV series.
+
+   - In the selected media's details page, click the **Request** button.
+
+   - Click the **Request** button in the confirmation modal.
+
+---
+
 ### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
@@ -564,7 +651,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
+> The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Jellyfin](#jellyfin) or [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
 
 1. Launch the Radarr/Sonarr web interface.
 
@@ -655,7 +742,34 @@ Flex is a collection of curated services that aims to provide a complete home me
 
        - Click the **Save** button.
 
-5. Add a connection to Plex from Radarr/Sonarr:
+5. **(Optional)** Add a connection to Jellyfin from Radarr/Sonarr:
+
+   - Click the **Settings** menu item on the left, and then click the **Connect** link.
+
+   - Under the **Connections** section, click the **+** button to add a new connection.
+
+   - Under **Add Connection**, click **Emby / Jellyfin**.
+
+   - In the **Add Connection - Emby / Jellyfin** form:
+
+     - Host: `localhost`.
+
+         > [!NOTE]  
+         > If you are using an external Jellyfin server, replace the value with the actual address to the Jellyfin server.
+
+     - API Key: Add an API key generated from the Jellyfin web interface at `Dashboard > Advanced > API Keys`.
+
+     - Click the **Test** button to verify the settings and wait for a green checkmark indicating that the test was successful.
+
+     - If you're using an external Jellyfin server and require path mapping:
+
+       - Map Paths From: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on Flex i.e. `/flex/Media`.
+
+       - Map Paths To: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on the external Jellyfin server i.e. `/data`.
+
+     - Click the **Save** button.
+
+6. **(Optional)** Add a connection to Plex from Radarr/Sonarr:
 
    - Click the **Settings** menu item on the left, and then click the **Connect** link.
 
@@ -682,7 +796,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Click the **Save** button.
 
-6. Configure the media management settings on Radarr/Sonarr:
+7. Configure the media management settings on Radarr/Sonarr:
 
    - Click the **Settings** menu item on the left, and then click the **Media Management** link.
 
@@ -694,13 +808,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Click the **Add Root Folder** button to add a folder.
 
-   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Plex), and click the **Ok** button.
+   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Jellyfin and Plex), and click the **Ok** button.
 
    - Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
 
    - Click the **Save Changes** button.
 
-7. Configure quality profiles on Radarr/Sonarr:
+8. Configure quality profiles on Radarr/Sonarr:
 
    - Click the **Settings** menu item on the left, and then click the **Profiles** link.
 
@@ -709,7 +823,7 @@ Flex is a collection of curated services that aims to provide a complete home me
       > [!TIP]  
       > You may also configure any existing profiles or add new ones to better suit your preferences, make sure to click the **Save** button after making any changes.
 
-8. Create a backup of the Radarr/Sonarr configuration:
+9. Create a backup of the Radarr/Sonarr configuration:
 
    - Click the **System** menu item on the left, and then click the **Backup** link.
 
@@ -719,18 +833,18 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Store the backup file in a safe location.
 
-9. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Plex):
+10. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Jellyfin or Plex):
 
    - Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
 
-   - In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to download and add to Plex, and select it from the search results.
+   - In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to download and add to Jellyfin or Plex, and select it from the search results.
 
    - In the show's details modal, leave the form as default or configure accordingly, and click the **Add Movie/{Show Name}** button.
 
       > [!TIP]  
       > If you'd like it to start searching and downloading, click the **Start search for missing movie/episodes** button in the form.
 
-   - **Alternatively**, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to use [Overseerr](#overseerr) to request them.
+   - **Alternatively**, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to use either [Jellyseerr](#jellyseerr) or [Overseerr](#overseerr) to request them.
 
 ---
 
@@ -833,8 +947,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 | flaresolverr.enabled | bool | `true` | Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used. |
 | flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
 | flaresolverr.logLevel | string | `""` | The verbosity level of the FlareSolverr logs. Default: `"info"`. |
-| flaresolverr.timezone | string | `""` | The timezone used in the FlareSolverr logs and web browser. Default: `"UTC"`. |
 | global.gid | string | `""` | The group ID used to run the Flex containers. Default: `"1000"`. |
+| global.timezone | string | `""` | The timezone applied to all Flex containers for general operations. Default: `"Etc/UTC"`. |
 | global.uid | string | `""` | The user ID used to run the Flex containers. Default: `"1000"`. |
 | image.bazarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Bazarr container image. Default: `"IfNotPresent"`. |
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
@@ -856,6 +970,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jellyplexWatched.registry | string | `""` | The registry where the JellyPlex-Watched container image is hosted. Default: `"ghcr.io"`. |
 | image.jellyplexWatched.repository | string | `""` | The name of the repository that contains the JellyPlex-Watched container image used. Default: `"luigi311/jellyplex-watched"`. |
 | image.jellyplexWatched.tag | string | `""` | The tag that specifies the version of the JellyPlex-Watched container image used. Default: `"7.0.3-alpine"`. |
+| image.jellyseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyseerr container image. Default: `"IfNotPresent"`. |
+| image.jellyseerr.registry | string | `""` | The registry where the Jellyseerr container image is hosted. Default: `"ghcr.io"`. |
+| image.jellyseerr.repository | string | `""` | The name of the repository that contains the Jellyseerr container image used. Default: `"fallenbagel/jellyseerr"`. |
+| image.jellyseerr.tag | string | `""` | The tag that specifies the version of the Jellyseerr container image used. Default: `"2.5.2"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
@@ -904,10 +1022,17 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyplexWatched.plex.syncToJellyfin | string | `""` | Specifies whether watch state from Plex should be synchronised to Jellyfin. Default: `"True"`. |
 | jellyplexWatched.sslBypass | string | `""` | Specifies whether SSL certificate verification should be skipped. Default: `"False"`. |
 | jellyplexWatched.users | list | `[]` | The list of user account pairs for syncing between the Jellyfin or Plex servers. Items: `.source`, `.target`. |
+| jellyseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jellyseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
+| jellyseerr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Jellyseerr container. Default: `"/app/config"`. |
+| jellyseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Jellyseerr data storage. |
+| jellyseerr.domain | string | `""` | The ingress domain name that hosts the Jellyseerr server. |
+| jellyseerr.enabled | bool | `false` | Specifies whether Jellyseerr should be deployed or excluded in case an external Jellyseerr server is used. |
+| jellyseerr.ingress | bool | `false` | Specifies whether the Jellyseerr service should be served publicly using an Ingress. |
+| jellyseerr.logLevel | string | `""` | The verbosity level of the Jellyseerr logs. Default: `"info"`. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
 | overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
-| overseerr.enabled | bool | `true` | Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used. |
+| overseerr.enabled | bool | `false` | Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used. |
 | overseerr.ingress | bool | `false` | Specifies whether the Overseerr service should be served publicly using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. |
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. Items: `.mountPath`, `.subPath`, `.config`. |
@@ -930,8 +1055,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.jellyfin | object | `{}` | Jellyfin container resources. |
-| resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.jellyplexWatched | object | `{}` | JellyPlex-Watched container resources. |
+| resources.jellyseerr | object | `{}` | Jellyseerr container resources. |
+| resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
 | resources.radarr | object | `{}` | Radarr container resources. |
@@ -948,6 +1074,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 | service.jellyfin.sd.port | string | `""` | The Jellyfin service discovery port on which the Jellyfin server should listen for connections. Default: `"7359"`. |
 | service.jellyfin.web.nodePort | string | `""` | The optional node port to expose for Jellyfin web when the service type is NodePort. |
 | service.jellyfin.web.port | string | `""` | The Jellyfin web port on which the Jellyfin server should listen for connections. Default: `"8096"`. |
+| service.jellyseerr.nodePort | string | `""` | The optional node port to expose for Jellyseerr when the service type is NodePort. |
+| service.jellyseerr.port | string | `""` | The Jellyseerr port on which the Jellyseerr server should listen for connections. Default: `"5550"`. |
 | service.overseerr.nodePort | string | `""` | The optional node port to expose for Overseerr when the service type is NodePort. |
 | service.overseerr.port | string | `""` | The Overseerr port on which the Overseerr server should listen for connections. Default: `"5055"`. |
 | service.plex.nodePort | string | `""` | The optional node port to expose for Plex when the service type is NodePort. |
@@ -977,7 +1105,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | sonarr.ingress | bool | `false` | Specifies whether the Sonarr service should be served publicly using an Ingress. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.mountPath | string | `""` | The default path where the data storage should be mounted on the container. Default: `"/config"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for each data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |

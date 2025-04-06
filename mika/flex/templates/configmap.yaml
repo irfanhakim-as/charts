@@ -2,6 +2,7 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
 {{- $jellyplexWatched := .Values.jellyplexWatched.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
@@ -10,9 +11,9 @@
 {{- $sonarr := .Values.sonarr.enabled }}
 {{- $uid := .Values.global.uid | default "1000" | toString | quote }}
 {{- $gid := .Values.global.gid | default "1000" | toString | quote }}
+{{- $timezone := .Values.global.timezone | default "Etc/UTC" | toString | quote }}
 {{- $fsLogHtml := .Values.flaresolverr.logHtml | default "false" | toString | quote }}
 {{- $fsLogLevel := .Values.flaresolverr.logLevel | default "info" | toString | quote }}
-{{- $fsTimezone := .Values.flaresolverr.timezone | default "UTC" | toString | quote }}
 {{- $jackettAutoUpdate := .Values.jackett.autoUpdate | default "true" | toString | quote }}
 {{- $jpwDebugLevel := .Values.jellyplexWatched.debugLevel | default "info" | toString | quote }}
 {{- $jpwFrequency := .Values.jellyplexWatched.frequency | default "3600" | toString | quote }}
@@ -35,6 +36,7 @@
     {{- $_ := set $jpwUserMap .source .target }}
   {{- end }}
 {{- end }}
+{{- $jellyseerrLogLevel := .Values.jellyseerr.logLevel | default "info" | toString | quote }}
 {{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
@@ -46,6 +48,7 @@ metadata:
 data:
   PUID: {{ $uid }}
   PGID: {{ $gid }}
+  TZ: {{ $timezone }}
 {{- end }}
 {{- if $flaresolverr }}
 ---
@@ -58,7 +61,7 @@ metadata:
 data:
   LOG_HTML: {{ $fsLogHtml }}
   LOG_LEVEL: {{ $fsLogLevel }}
-  TZ: {{ $fsTimezone }}
+  TZ: {{ $timezone }}
 {{- end }}
 {{- if $jackett }}
 ---
@@ -90,12 +93,26 @@ data:
   SYNC_FROM_JELLYFIN_TO_PLEX: {{ $jpwSyncToPlex }}
   SYNC_FROM_PLEX_TO_JELLYFIN: {{ $jpwSyncToJellyfin }}
   SYNC_FROM_PLEX_TO_PLEX: "True"
+  TZ: {{ $timezone }}
   {{- if $jpwLibraryMap }}
   LIBRARY_MAPPING: {{ $jpwLibraryMap | toJson | quote }}
   {{- end }}
   {{- if $jpwUserMap }}
   USER_MAPPING: {{ $jpwUserMap | toJson | quote }}
   {{- end }}
+{{- end }}
+{{- if $jellyseerr }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flex-jellyseerr-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  LOG_LEVEL: {{ $jellyseerrLogLevel }}
+  PORT: "5550"
+  TZ: {{ $timezone }}
 {{- end }}
 {{- if $plex }}
 ---
@@ -108,6 +125,7 @@ metadata:
 data:
   PLEX_UID: {{ $uid }}
   PLEX_GID: {{ $gid }}
+  TZ: {{ $timezone }}
 {{- end }}
 {{- if $qbt }}
 ---

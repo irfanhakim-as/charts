@@ -83,6 +83,21 @@ image:
     # The policy that determines when Kubernetes should pull the JellyPlex-Watched container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # Jellyseerr container image configurations.
+  # Source: https://github.com/fallenbagel/jellyseerr/pkgs/container/jellyseerr
+  jellyseerr:
+    # The registry where the Jellyseerr container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Jellyseerr container image used.
+    # Default: "fallenbagel/jellyseerr"
+    repository: ""
+    # The tag that specifies the version of the Jellyseerr container image used.
+    # Default: "2.5.2"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Jellyseerr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # Overseerr container image configurations.
   # Source: https://github.com/linuxserver/docker-overseerr/pkgs/container/overseerr
   overseerr:
@@ -177,6 +192,11 @@ global:
   # Example:
   # gid: ""
   gid: ""
+  # The timezone applied to all Flex containers for general operations.
+  # Default: "Etc/UTC"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
 
 # Bazarr configurations.
 bazarr:
@@ -237,11 +257,6 @@ flaresolverr:
   # Example:
   # logLevel: "debug"
   logLevel: ""
-  # The timezone used in the FlareSolverr logs and web browser.
-  # Default: "UTC"
-  # Example:
-  # timezone: "Asia/Kuala_Lumpur"
-  timezone: ""
   # Optional custom configurations to be mounted as a file inside the FlareSolverr container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -403,7 +418,7 @@ jellyplexWatched:
     #   # baseUrl: "http://localhost:32400"
     #   - baseUrl: ""
     #   # The issued API key to communicate with the Jellyfin server.
-    #   # Note: You may issue the token from Jellyfin through Dashboard > Advanced > Api Keys.
+    #   # Note: You may issue the token from Jellyfin through Dashboard > Advanced > API Keys.
     #   # Example:
     #   # token: "secret"
     #     token: ""
@@ -478,12 +493,66 @@ jellyplexWatched:
   #     config: ""
   customConfigs: []
 
+# Jellyseerr configurations.
+jellyseerr:
+  # Specifies whether Jellyseerr should be deployed or excluded in case an external Jellyseerr server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The path where the data storage should be mounted on the Jellyseerr container.
+  # Note: This setting takes precedence over the default data mount path.
+  # Default: "/app/config"
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
+  # The amount of persistent storage allocated for the Jellyseerr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
+  # The ingress domain name that hosts the Jellyseerr server.
+  # Example:
+  # domain: "jellyseerr.example.com"
+  domain: ""
+  # Specifies whether the Jellyseerr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # ingress: true
+  ingress: false
+  # The verbosity level of the Jellyseerr logs.
+  # Default: "info"
+  # Example:
+  # logLevel: "debug"
+  logLevel: ""
+  # Optional custom configurations to be mounted as a file inside the Jellyseerr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
+  # Example:
+  # customConfigs:
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
+  customConfigs: []
+
 # Overseerr configurations.
 overseerr:
   # Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used.
   # Example:
-  # enabled: false
-  enabled: true
+  # enabled: true
+  enabled: false
   # The amount of persistent storage allocated for the Overseerr data storage.
   # Note: This setting takes precedence over the default data storage amount if defined.
   # Example:
@@ -803,6 +872,17 @@ service:
       # Example:
       # port: "8080"
       port: ""
+  # Jellyseerr service port configurations.
+  jellyseerr:
+    # The optional node port to expose for Jellyseerr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Jellyseerr port on which the Jellyseerr server should listen for connections.
+    # Default: "5550"
+    # Example:
+    # port: "8080"
+    port: ""
   # Overseerr service port configurations.
   overseerr:
     # The optional node port to expose for Overseerr when the service type is NodePort.
@@ -885,7 +965,7 @@ storage:
     # Example:
     # accessMode: "ReadWriteMany"
     accessMode: ""
-    # The path where the data storage should be mounted on the container.
+    # The default path where the data storage should be mounted on the container.
     # Default: "/config"
     # Example:
     # mountPath: "/data"
@@ -1189,6 +1269,30 @@ resources:
   #     # memory: "250Mi"
   #     memory: "200Mi"
   jellyplexWatched: {}
+  # Jellyseerr container resources.
+  # Example:
+  # jellyseerr:
+  #   # The minimum amount of resources required by Jellyseerr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Jellyseerr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "400m"
+  #     # The minimum amount of memory required by Jellyseerr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "250Mi"
+  #   # The maximum amount of resources allowed for Jellyseerr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Jellyseerr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "600m"
+  #     # The maximum amount of memory allowed for Jellyseerr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "400Mi"
+  jellyseerr: {}
   # Overseerr container resources.
   # Example:
   # overseerr:
