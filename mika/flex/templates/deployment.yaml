@@ -96,8 +96,16 @@
 {{- $qbtResources := .Values.resources.qbt }}
 {{- $radarrResources := .Values.resources.radarr }}
 {{- $sonarrResources := .Values.resources.sonarr }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString | quote }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString }}
+{{- $bazarrDataMountPath := .Values.bazarr.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $jackettDataMountPath := .Values.jackett.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $jellyfinDataMountPath := .Values.jellyfin.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $jellyseerrDataMountPath := .Values.jellyseerr.dataMountPath | default "/app/config" | toString | quote }}
+{{- $overseerrDataMountPath := .Values.overseerr.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $plexDataMountPath := .Values.plex.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $qbtDataMountPath := .Values.qbt.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $radarrDataMountPath := .Values.radarr.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $sonarrDataMountPath := .Values.sonarr.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $downloadsMountPath := .Values.storage.downloads.mountPath | default "/downloads" | toString | quote }}
 {{- $globalMountPath := .Values.storage.global.mountPath | default "/flex" | toString | quote }}
 {{- $mediaMountPath := .Values.storage.media.mountPath | default "/data" | toString | quote }}
@@ -150,7 +158,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-bazarr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $bazarrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -219,7 +227,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-jackett-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $jackettDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -269,7 +277,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-jellyfin-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $jellyfinDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -364,7 +372,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-overseerr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $overseerrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -396,7 +404,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-plex-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $plexDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -448,7 +456,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-qbt-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $qbtDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -492,7 +500,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-radarr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $radarrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
@@ -543,7 +551,7 @@ spec:
           volumeMounts:
             {{- if $dataPersistence }}
             - name: {{ .Release.Name }}-flex-sonarr-data
-              mountPath: {{ $dataMountPath }}
+              mountPath: {{ $sonarrDataMountPath }}
               {{- if $dataSubPath }}
               subPath: {{ $dataSubPath | quote }}
               {{- end }}
