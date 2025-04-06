@@ -2,6 +2,7 @@
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
 {{- $jellyplexWatched := .Values.jellyplexWatched.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
@@ -35,6 +36,7 @@
     {{- $_ := set $jpwUserMap .source .target }}
   {{- end }}
 {{- end }}
+{{- $jellyseerrLogLevel := .Values.jellyseerr.logLevel | default "info" | toString | quote }}
 {{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
@@ -98,6 +100,19 @@ data:
   {{- if $jpwUserMap }}
   USER_MAPPING: {{ $jpwUserMap | toJson | quote }}
   {{- end }}
+{{- end }}
+{{- if $jellyseerr }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flex-jellyseerr-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  LOG_LEVEL: {{ $jellyseerrLogLevel }}
+  PORT: "5550"
+  TZ: {{ $timezone }}
 {{- end }}
 {{- if $plex }}
 ---
