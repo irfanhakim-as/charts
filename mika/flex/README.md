@@ -345,6 +345,98 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
+### [Jellyseerr](https://docs.jellyseerr.dev)
+
+> [!NOTE]  
+> The following steps require you to have set up and configured [Jellyfin](#jellyfin), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
+
+1. Launch the Jellyseerr web interface and choose the server type (i.e. Jellyfin) by selecting their corresponding **Configure** button, and proceeding to login to the selected server.
+
+2. In the **Configure Media Server** section:
+
+   - **Jellyfin Libraries**:
+
+     - Click the **Sync Libraries** button.
+
+     - Toggle the corresponding switches to each media library you wish to enable (i.e. **Movies** and **TV Shows**).
+
+   - **Manual Library Scan**:
+
+     - Click the **Start Scan** button to perform the initial, full library scan.
+
+   - **Jellyfin Settings**:
+
+     - API key: This setting should have already been prefilled with a dedicated Jellyfin API key generated for and by Jellyseerr.
+
+     - External URL: If your Jellyfin server deployed by Flex or externally has a public domain name, add it here (i.e. `https://jellyfin.example.com`).
+
+     - Click the **Save Changes** button.
+
+   - Click the **Continue** button.
+
+3. In the **Configure Services** page:
+
+   - **Radarr Settings**:
+
+      Click the **Add Radarr Server** button and configure the following:
+
+     - Default Server: `Enabled`.
+     - 4K Server: `Disabled`.
+     - Server Name: `Radarr`.
+     - Hostname or IP Address: `localhost`.
+     - Port: `7878`.
+     - Use SSL: `Disabled`.
+     - API Key: Get the API key from the Radarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+
+      Click the **Test** button to verify and load some data from the Radarr server based on the current settings, then continue:
+
+     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Root Folder: Expand the dropdown and select the folder where your Movie media is stored i.e. `/data/Movies` or `/flex/Media/Movies`.
+     - Minimum Availability: `Announced`.
+     - Enable Scan: `Enabled`.
+     - Enable Automatic Search: `Enabled`.
+
+      Click the **Add Server** button to complete the Radarr server configuration.
+
+   - **Sonarr Settings**:
+
+      Click the **Add Sonarr Server** button and configure the following:
+
+     - Default Server: `Enabled`.
+     - 4K Server: `Disabled`.
+     - Server Name: `Sonarr`.
+     - Hostname or IP Address: `localhost`.
+     - Port: `8989`.
+     - Use SSL: `Disabled`.
+     - API Key: Get the API key from the Sonarr web interface at `Settings > General > Security > API Key` and paste it in this field.
+
+      Click the **Test** button to verify and load some data from the Sonarr server based on the current settings, then continue:
+
+     - Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
+     - Language Profile: `Deprecated`.
+     - Anime Quality Profile: Expand the dropdown and select the desired quality profile i.e. `HD-1080p`.
+     - Anime Root Folder: Expand the dropdown and select the folder where your TV media is stored i.e. `/data/TV` or `/flex/Media/TV`.
+     - Season Folders: `Enabled`.
+     - Enable Scan: `Enabled`.
+     - Enable Automatic Search: `Enabled`.
+
+      Click the **Add Server** button to complete the Sonarr server configuration.
+
+   - Click the **Finish Setup** button.
+
+4. To request a Movie or TV series to be added to your media server (i.e. Jellyfin):
+
+   - In the **Discover** page of the Jellyseerr web interface, search for the Movie or TV series.
+
+   - From the **Search Results**, locate and click the Movie or TV series.
+
+   - In the selected media's details page, click the **Request** button.
+
+   - Click the **Request** button in the confirmation modal.
+
+---
+
 ### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
