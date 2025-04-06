@@ -4,6 +4,7 @@
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $jellyplexWatched := .Values.jellyplexWatched.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -27,6 +28,8 @@
 {{- $jellyfinConfigs = ternary $jellyfinConfigs (list) (and $jellyfin (not (empty $jellyfinConfigs))) }}
 {{- $jpwConfigs := .Values.jellyplexWatched.customConfigs }}
 {{- $jpwConfigs = ternary $jpwConfigs (list) (and $jellyplexWatched (not (empty $jpwConfigs))) }}
+{{- $jellyseerrConfigs := .Values.jellyseerr.customConfigs }}
+{{- $jellyseerrConfigs = ternary $jellyseerrConfigs (list) (and $jellyseerr (not (empty $jellyseerrConfigs))) }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
 {{- $overseerrConfigs = ternary $overseerrConfigs (list) (and $overseerr (not (empty $overseerrConfigs))) }}
 {{- $plexConfigs := .Values.plex.customConfigs }}
@@ -538,7 +541,7 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
-      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
+      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $dataPersistence }}
           {{- if $bazarr }}
@@ -602,7 +605,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
+        {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-flex-custom-configs
           secret:
             secretName: {{ .Release.Name }}-flex-custom-configs
