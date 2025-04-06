@@ -445,6 +445,52 @@ entries:
     version: 0.1.0
   flex:
   - apiVersion: v2
+    appVersion: 1.41.5.9522-a96edc606
+    created: "2025-04-06T14:03:24.53074515Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: d6c909a77802e2b4cf3720bbaf2935d455a116fd4296cf9d06abdab45bcba42c
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - flaresolverr
+    - jackett
+    - jellyfin
+    - jellyplex-watched
+    - jellyseerr
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-jellyfin
+    - https://github.com/luigi311/JellyPlex-Watched
+    - https://github.com/fallenbagel/jellyseerr
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.2.0/flex-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 1.40.0.7998-c29d4c0c8
     created: "2024-03-10T05:09:22.486745173Z"
     description: Flex is a collection of curated services that aims to provide a complete
@@ -3009,4 +3055,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-14T00:58:13.372834645Z"
+generated: "2025-04-06T14:03:24.53107215Z"
