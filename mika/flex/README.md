@@ -268,6 +268,135 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
+### [ErsatzTV](https://ersatztv.org)
+
+> [!NOTE]  
+> The following steps require you to have set up and configured [Jellyfin](#jellyfin) before proceeding.
+
+1. Launch the ErsatzTV web interface.
+
+2. Connect your Jellyfin server with ErsatzTV:
+
+   - Expand the **Media Sources** group on the left-hand side of the interface and select the **Jellyfin** option.
+
+   - In the **Jellyfin Media Sources** page, click the **CONNECT JELLYFIN** button.
+
+   - In the provided form, fill in the following:
+
+     - Address: Fill in the address of the Jellyfin server (i.e. `http://localhost:8096`)
+     - Api Key: Add an API key generated from the Jellyfin web interface at `Dashboard > Advanced > API Keys`
+
+3. Synchronise Jellyfin media libraries with ErsatzTV:
+
+   - Click the **Edit Libraries** button corresponding to the Jellyfin server.
+
+   - Toggle the **Synchronize** switch corresponding to each library you wish to sync (i.e. **Movies** and **TV Shows**).
+
+   - Click the **SAVE CHANGES** button to start the synchronisation process.
+
+4. Once your media libraries have been synchronised, create a collection of media you wish to broadcast:
+
+   - Expand the **Media Sources** group on the left-hand side of the interface and select either of the **TV Shows** or **Movies** option.
+
+   - Select the checkbox corresponding to each media you wish to add to the collection.
+
+   - Click the **ADD TO COLLECTION** button.
+
+   - In the provided form, fill in the following:
+
+     - Collection: Expand the dropdown and select the `(New Collection)` option if the collection has not been created
+     - New Collection Name: Add a name for the collection (i.e. `Anime`)
+
+   - Click the **ADD TO COLLECTION** button.
+
+5. Create a channel that will broadcast your collection:
+
+   - Click the **Channels** option on the left-hand side of the interface.
+
+   - Click the **ADD CHANNEL** button.
+
+   - In the provided form, fill in the following:
+
+     - Number: Set a number for the channel (i.e. `100`)
+     - Name: Set a name for the channel (i.e. `Anime`)
+     - Progress Mode: Expand the dropdown and select the `Always` option
+     - Streaming Mode: Expand the dropdown and select either the `HLS Segmenter` (Transcoding) or `HLS Direct` (Direct Play) option
+     - Preferred Audio Language: Expand the dropdown and select a language for the channel (i.e. `English`)
+     - Preferred Subtitle Language: Expand the dropdown and select a language for the channel (i.e. `English`)
+     - Subtitle Mode: Expand the dropdown and select the `Any` option
+
+   - Click the **ADD CHANNEL** button.
+
+6. Add a broadcast schedule for your collection:
+
+   - Expand the **Scheduling** group on the left-hand side of the interface and select the **Schedules** option.
+
+   - In the **Add Schedule** form, configure the following:
+
+     - Name: Add a name for the schedule (i.e. `Anime`)
+     - Keep Multi-Part Episodes Together: Select the corresponding checkbox to enable it
+     - Shuffle Schedule Items: Select the corresponding checkbox to enable it
+
+   - Click the **ADD SCHEDULE** button.
+
+   - Click the **ADD SCHEDULE ITEM** button.
+
+   - In the **Schedule Item** form, configure the following:
+
+     - Collection Type: Expand the dropdown and select the `Collection` option
+     - Collection: Fill in the name of the collection you wish to schedule (i.e. `Anime`)
+     - Playback Order: Expand the dropdown and select the `Shuffle In Order` option
+     - Preferred Audio Language: Expand the dropdown and select a language for the collection schedule (i.e. `English`)
+     - Preferred Subtitle Language: Expand the dropdown and select a language for the collection schedule (i.e. `English`)
+     - Subtitle Mode: Expand the dropdown and select the `Any` option
+
+   - Click the **SAVE CHANGES** button.
+
+7. Create a playout to start broadcasting:
+
+   - Expand the **Scheduling** group on the left-hand side of the interface and select the **Playouts** option.
+
+   - In the **Add Playout** form, configure the following:
+
+     - Channel: Expand the dropdown and select the channel you wish to broadcast to (i.e. `Anime`)
+     - Schedule: Expand the dropdown and select the schedule you wish to assign (i.e. `Anime`)
+
+   - Click the **ADD PLAYOUT** button.
+
+8. Add your TV channels to the streaming service (i.e. Jellyfin):
+
+   - From the top right-hand corner of the web interface of ErsatzTV, do the following:
+
+     - Right click the **M3U** link item, select the **Copy Link** option, and take note of the link
+     - Right click the **XMLTV** link item, select the **Copy Link** option, and take note of the link
+
+   - Launch and log into the Jellyfin web interface as an administrator.
+
+   - Navigate to the **Settings** menu by clicking your profile icon, and select the **Dashboard** option under the **Administration** section.
+
+   - Under the **Live TV** section on the left-hand side of the interface, select the **Live TV** option.
+
+   - Click the **+** button corresponding to the **Tuner Devices** section.
+
+   - In the **Live TV Tuner Setup** form, configure the following:
+
+     - Tuner type: Expand the dropdown and select the `M3U Tuner` option
+     - File or URL: Paste in the **M3U** link you had copied earlier from ErsatzTV
+
+   - Click the **Save** button.
+
+   - Click the **+** button corresponding to the **TV Guide Data Providers** section.
+
+   - Select the `XMLTV` option.
+
+   - In the **Xml TV** form, configure the following:
+
+     - File or URL: Paste in the **XMLTV** link you had copied earlier from ErsatzTV
+
+   - Click the **Save** button.
+
+---
+
 ### [Jackett](https://github.com/Jackett/Jackett) (and [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr))
 
 1. Launch the Jackett web interface.
