@@ -128,6 +128,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Configure the rest of the JellyPlex-Watched settings according to your setup by referring to the notes and sample values provided in the chart values file, and by referring to the [JellyPlex-Watched documentation](https://github.com/luigi311/JellyPlex-Watched).
 
+9. **(Optional)** Enable ErsatzTV to broadcast your media collection in a Live TV format.
+
+   - Enable ErsatzTV by setting `ersatztv.enabled: true` in the chart values file.
+
 ---
 
 ## Application configurations
