@@ -1,4 +1,5 @@
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $ersatztv := .Values.ersatztv.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
@@ -12,6 +13,9 @@
 {{- $bazarrPort := .Values.service.bazarr.port | default "6767" | toString }}
 {{- $bazarrNodePort := .Values.service.bazarr.nodePort | toString }}
 {{- $bazarrNodePort = ternary $bazarrNodePort "" (and (eq $type "NodePort") (ne $bazarrNodePort "")) }}
+{{- $ersatztvPort := .Values.service.ersatztv.port | default "8409" | toString }}
+{{- $ersatztvNodePort := .Values.service.ersatztv.nodePort | toString }}
+{{- $ersatztvNodePort = ternary $ersatztvNodePort "" (and (eq $type "NodePort") (ne $ersatztvNodePort "")) }}
 {{- $flaresolverrPort := .Values.service.flaresolverr.port | default "8191" | toString }}
 {{- $flaresolverrNodePort := .Values.service.flaresolverr.nodePort | toString }}
 {{- $flaresolverrNodePort = ternary $flaresolverrNodePort "" (and (eq $type "NodePort") (ne $flaresolverrNodePort "")) }}
@@ -48,7 +52,7 @@
 {{- $sonarrPort := .Values.service.sonarr.port | default "8989" | toString }}
 {{- $sonarrNodePort := .Values.service.sonarr.nodePort | toString }}
 {{- $sonarrNodePort = ternary $sonarrNodePort "" (and (eq $type "NodePort") (ne $sonarrNodePort "")) }}
-{{- if or $bazarr $flaresolverr $jackett $jellyfin $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $ersatztv $flaresolverr $jackett $jellyfin $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
 kind: Service
@@ -67,6 +71,15 @@ spec:
     {{- end }}
       protocol: TCP
       name: bazarr
+  {{- end }}
+  {{- if $ersatztv }}
+    - port: {{ int $ersatztvPort }}
+      targetPort: ersatztv
+    {{- if $ersatztvNodePort }}
+      nodePort: {{ int $ersatztvNodePort }}
+    {{- end }}
+      protocol: TCP
+      name: ersatztv
   {{- end }}
   {{- if $flaresolverr }}
     - port: {{ int $flaresolverrPort }}
