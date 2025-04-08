@@ -1296,21 +1296,21 @@ resources:
   #     # The minimum amount of CPU resources required by ErsatzTV.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "200m"
+  #     cpu: "1"
   #     # The minimum amount of memory required by ErsatzTV.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "300Mi"
+  #     memory: "1Gi"
   #   # The maximum amount of resources allowed for ErsatzTV.
   #   limits:
   #     # The maximum amount of CPU resources allowed for ErsatzTV.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "300m"
+  #     cpu: "2"
   #     # The maximum amount of memory allowed for ErsatzTV.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "500Mi"
+  #     memory: "2Gi"
   ersatztv: {}
   # FlareSolverr container resources.
   # Example:
