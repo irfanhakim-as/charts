@@ -944,6 +944,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | bazarr.domain | string | `""` | The ingress domain name that hosts the Bazarr server. |
 | bazarr.enabled | bool | `true` | Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used. |
 | bazarr.ingress | bool | `false` | Specifies whether the Bazarr service should be served publicly using an Ingress. |
+| ersatztv.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the ErsatzTV container. Items: `.mountPath`, `.subPath`, `.config`. |
+| ersatztv.dataMountPath | string | `""` | The path where the data storage should be mounted on the ErsatzTV container. Default: `"/root/.local/share/ersatztv"`. |
+| ersatztv.dataStorage | string | `""` | The amount of persistent storage allocated for the ErsatzTV data storage. |
+| ersatztv.domain | string | `""` | The ingress domain name that hosts the ErsatzTV server. |
+| ersatztv.enabled | bool | `false` | Specifies whether ErsatzTV should be deployed or excluded in case an external ErsatzTV server is used. |
+| ersatztv.ingress | bool | `false` | Specifies whether the ErsatzTV service should be served publicly using an Ingress. |
 | flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the FlareSolverr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | flaresolverr.enabled | bool | `true` | Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used. |
 | flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
@@ -955,6 +961,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
 | image.bazarr.repository | string | `""` | The name of the repository that contains the Bazarr container image used. Default: `"linuxserver/bazarr"`. |
 | image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.5.1-ls297"`. |
+| image.ersatztv.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ErsatzTV container image. Default: `"IfNotPresent"`. |
+| image.ersatztv.registry | string | `""` | The registry where the ErsatzTV container image is hosted. Default: `"docker.io"`. |
+| image.ersatztv.repository | string | `""` | The name of the repository that contains the ErsatzTV container image used. Default: `"jasongdove/ersatztv"`. |
+| image.ersatztv.tag | string | `""` | The tag that specifies the version of the ErsatzTV container image used. Default: `"v25.1.0"`. |
 | image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
@@ -1059,6 +1069,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | radarr.ingress | bool | `false` | Specifies whether the Radarr service should be served publicly using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for Flex. Default: `"1"`. |
 | resources.bazarr | object | `{}` | Bazarr container resources. |
+| resources.ersatztv | object | `{}` | ErsatzTV container resources. |
 | resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.jellyfin | object | `{}` | Jellyfin container resources. |
@@ -1071,6 +1082,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.sonarr | object | `{}` | Sonarr container resources. |
 | service.bazarr.nodePort | string | `""` | The optional node port to expose for Bazarr when the service type is NodePort. |
 | service.bazarr.port | string | `""` | The Bazarr port on which the Bazarr server should listen for connections. Default: `"6767"`. |
+| service.ersatztv.nodePort | string | `""` | The optional node port to expose for ErsatzTV when the service type is NodePort. |
+| service.ersatztv.port | string | `""` | The ErsatzTV port on which the ErsatzTV server should listen for connections. Default: `"8409"`. |
 | service.flaresolverr.nodePort | string | `""` | The optional node port to expose for FlareSolverr when the service type is NodePort. |
 | service.flaresolverr.port | string | `""` | The FlareSolverr port on which the FlareSolverr server should listen for connections. Default: `"8191"`. |
 | service.jackett.nodePort | string | `""` | The optional node port to expose for Jackett when the service type is NodePort. |
