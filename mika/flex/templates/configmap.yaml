@@ -1,4 +1,5 @@
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $ersatztv := .Values.ersatztv.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
@@ -37,6 +38,17 @@
   {{- end }}
 {{- end }}
 {{- $jellyseerrLogLevel := .Values.jellyseerr.logLevel | default "info" | toString | quote }}
+{{- if or $bazarr $ersatztv $flaresolverr $jackett $jellyfin $jellyplexWatched $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flex-global-cm
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+data:
+  TZ: {{ $timezone }}
+{{- end }}
 {{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
 ---
 apiVersion: v1
@@ -48,7 +60,6 @@ metadata:
 data:
   PUID: {{ $uid }}
   PGID: {{ $gid }}
-  TZ: {{ $timezone }}
 {{- end }}
 {{- if $flaresolverr }}
 ---
@@ -61,7 +72,6 @@ metadata:
 data:
   LOG_HTML: {{ $fsLogHtml }}
   LOG_LEVEL: {{ $fsLogLevel }}
-  TZ: {{ $timezone }}
 {{- end }}
 {{- if $jackett }}
 ---
@@ -93,7 +103,6 @@ data:
   SYNC_FROM_JELLYFIN_TO_PLEX: {{ $jpwSyncToPlex }}
   SYNC_FROM_PLEX_TO_JELLYFIN: {{ $jpwSyncToJellyfin }}
   SYNC_FROM_PLEX_TO_PLEX: "True"
-  TZ: {{ $timezone }}
   {{- if $jpwLibraryMap }}
   LIBRARY_MAPPING: {{ $jpwLibraryMap | toJson | quote }}
   {{- end }}
@@ -112,7 +121,6 @@ metadata:
 data:
   LOG_LEVEL: {{ $jellyseerrLogLevel }}
   PORT: "5550"
-  TZ: {{ $timezone }}
 {{- end }}
 {{- if $plex }}
 ---
@@ -125,7 +133,6 @@ metadata:
 data:
   PLEX_UID: {{ $uid }}
   PLEX_GID: {{ $gid }}
-  TZ: {{ $timezone }}
 {{- end }}
 {{- if $qbt }}
 ---
