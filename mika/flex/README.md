@@ -191,6 +191,7 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Click the **Add Language** button to add the desired language(s) we've added earlier to the profile.
      - Configure the **Subtitles Type** (i.e. `Normal or hearing-impaired`) and **Exclude If Matching Audio** (i.e. `Disabled`) settings for each language(s) accordingly.
      - **(Optional)** Cutoff: Set one of the language(s) you have set as the cutoff language (don't download more subtitles when one of this language is already found) i.e. `English`.
+     - **(Optional)** Use Original Format: Toggle the switch to enable it if you wish to retain the format of subtitles uploaded or extracted.
      - Click the **Save** button.
 
    - Under the **Default Settings** section:
