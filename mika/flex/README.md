@@ -213,7 +213,7 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Select the desired provider from the dropdown and fill in the required fields accordingly (if any).
 
          > [!TIP]  
-         > Recommended providers include `OpenSubtitles.com`, `Subscenter`, `Supersubtitles`, `TVSubtitles`, `Wizdom`, and `YIFY Subtitles`.
+         > Recommended providers include `Embedded Subtitles`, `OpenSubtitles.com`, `Subscenter`, `Supersubtitles`, `TVSubtitles`, `Wizdom`, and `YIFY Subtitles`.
 
      - Click the **Save** button.
 
@@ -226,6 +226,10 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Under the **Basic Options** section, configure the following:
 
      - Hearing-impaired subtitles extension: `.sdh`.
+
+   - If you wish to extract embedded subtitles, and have added the `Embedded Subtitles` provider, under the **Embedded Subtitles Handling** section, configure the following:
+
+     - Treat Embedded Subtitles as Downloaded: Toggle the corresponding switch to disable it.
 
    - Under the **Subzero Modifications** section, configure the following:
 
