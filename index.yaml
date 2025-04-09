@@ -446,6 +446,54 @@ entries:
   flex:
   - apiVersion: v2
     appVersion: 1.41.5.9522-a96edc606
+    created: "2025-04-09T03:08:58.555139896Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 9b02b13bc8f5e2200206d8796f88e5493c510dea1b23acddc711ddd7c0e32196
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - ersatztv
+    - flaresolverr
+    - jackett
+    - jellyfin
+    - jellyplex-watched
+    - jellyseerr
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/ErsatzTV/ErsatzTV
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-jellyfin
+    - https://github.com/luigi311/JellyPlex-Watched
+    - https://github.com/fallenbagel/jellyseerr
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.2.1/flex-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 1.41.5.9522-a96edc606
     created: "2025-04-06T14:03:24.53074515Z"
     description: Flex is a collection of curated services that aims to provide a complete
       home media server solution.
@@ -3055,4 +3103,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-06T14:03:24.53107215Z"
+generated: "2025-04-09T03:08:58.55559337Z"
