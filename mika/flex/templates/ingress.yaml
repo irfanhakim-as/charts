@@ -1,4 +1,5 @@
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $ersatztv := .Values.ersatztv.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $jellyseerr := .Values.jellyseerr.enabled }}
@@ -9,6 +10,7 @@
 {{- $sonarr := .Values.sonarr.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $bazarrIngress := and $bazarr $ingress .Values.bazarr.ingress }}
+{{- $ersatztvIngress := and $ersatztv $ingress .Values.ersatztv.ingress }}
 {{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress }}
 {{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress }}
 {{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress }}
@@ -21,6 +23,8 @@
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
 {{- $bazarrDomain := .Values.bazarr.domain | toString }}
 {{- $bazarrDomain = ternary $bazarrDomain "" (and $bazarrIngress (ne $bazarrDomain "") (ne $bazarrDomain "localhost")) }}
+{{- $ersatztvDomain := .Values.ersatztv.domain | toString }}
+{{- $ersatztvDomain = ternary $ersatztvDomain "" (and $ersatztvIngress (ne $ersatztvDomain "") (ne $ersatztvDomain "localhost")) }}
 {{- $jackettDomain := .Values.jackett.domain | toString }}
 {{- $jackettDomain = ternary $jackettDomain "" (and $jackettIngress (ne $jackettDomain "") (ne $jackettDomain "localhost")) }}
 {{- $jellyfinDomain := .Values.jellyfin.domain | toString }}
@@ -37,7 +41,7 @@
 {{- $radarrDomain = ternary $radarrDomain "" (and $radarrIngress (ne $radarrDomain "") (ne $radarrDomain "localhost")) }}
 {{- $sonarrDomain := .Values.sonarr.domain | toString }}
 {{- $sonarrDomain = ternary $sonarrDomain "" (and $sonarrIngress (ne $sonarrDomain "") (ne $sonarrDomain "localhost")) }}
-{{- if or $bazarrDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
+{{- if or $bazarrDomain $ersatztvDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -70,6 +74,18 @@ spec:
                 name: {{ .Release.Name }}-flex-svc
                 port:
                   name: bazarr
+            path: /
+            pathType: Prefix
+  {{- end }}
+  {{- if $ersatztvDomain }}
+    - host: {{ $ersatztvDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-flex-svc
+                port:
+                  name: ersatztv
             path: /
             pathType: Prefix
   {{- end }}
@@ -173,6 +189,9 @@ spec:
     - hosts:
       {{- if $bazarrDomain }}
         - {{ $bazarrDomain }}
+      {{- end }}
+      {{- if $ersatztvDomain }}
+        - {{ $ersatztvDomain }}
       {{- end }}
       {{- if $jackettDomain }}
         - {{ $jackettDomain }}

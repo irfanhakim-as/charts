@@ -128,6 +128,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Configure the rest of the JellyPlex-Watched settings according to your setup by referring to the notes and sample values provided in the chart values file, and by referring to the [JellyPlex-Watched documentation](https://github.com/luigi311/JellyPlex-Watched).
 
+9. **(Optional)** Enable ErsatzTV to broadcast your media collection in a Live TV format.
+
+   - Enable ErsatzTV by setting `ersatztv.enabled: true` in the chart values file.
+
 ---
 
 ## Application configurations
@@ -185,8 +189,9 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Name: Fill in the desired name for the profile i.e. `Master`.
      - Click the **Add Language** button to add the desired language(s) we've added earlier to the profile.
-     - Configure the **Subtitles Type** and **Exclude If Matching Audio** settings for each language(s) accordingly.
-     - (Optional) Cutoff: Set one of the language(s) you have set as the cutoff language (don't download more subtitles when one of this language is already found) i.e. `English`.
+     - Configure the **Subtitles Type** (i.e. `Normal or hearing-impaired`) and **Exclude If Matching Audio** (i.e. `Disabled`) settings for each language(s) accordingly.
+     - **(Optional)** Cutoff: Set one of the language(s) you have set as the cutoff language (don't download more subtitles when one of this language is already found) i.e. `English`.
+     - **(Optional)** Use Original Format: Toggle the switch to enable it if you wish to retain the format of subtitles uploaded or extracted.
      - Click the **Save** button.
 
    - Under the **Default Settings** section:
@@ -209,7 +214,7 @@ Flex is a collection of curated services that aims to provide a complete home me
      - Select the desired provider from the dropdown and fill in the required fields accordingly (if any).
 
          > [!TIP]  
-         > Recommended providers include `OpenSubtitles.com`, `Subscenter`, `Supersubtitles`, `TVSubtitles`, `Wizdom`, and `YIFY Subtitles`.
+         > Recommended providers include `Embedded Subtitles`, `OpenSubtitles.com`, `Subscenter`, `Supersubtitles`, `TVSubtitles`, `Wizdom`, and `YIFY Subtitles`.
 
      - Click the **Save** button.
 
@@ -222,6 +227,10 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Under the **Basic Options** section, configure the following:
 
      - Hearing-impaired subtitles extension: `.sdh`.
+
+   - If you wish to extract embedded subtitles, and have added the `Embedded Subtitles` provider, under the **Embedded Subtitles Handling** section, configure the following:
+
+     - Treat Embedded Subtitles as Downloaded: Toggle the corresponding switch to disable it.
 
    - Under the **Subzero Modifications** section, configure the following:
 
@@ -261,6 +270,135 @@ Flex is a collection of curated services that aims to provide a complete home me
    - Wait for the backup to be created, then click the name (link) of the newly created backup file to download it.
 
    - Store the backup file in a safe location.
+
+---
+
+### [ErsatzTV](https://ersatztv.org)
+
+> [!NOTE]  
+> The following steps require you to have set up and configured [Jellyfin](#jellyfin) before proceeding.
+
+1. Launch the ErsatzTV web interface.
+
+2. Connect your Jellyfin server with ErsatzTV:
+
+   - Expand the **Media Sources** group on the left-hand side of the interface and select the **Jellyfin** option.
+
+   - In the **Jellyfin Media Sources** page, click the **CONNECT JELLYFIN** button.
+
+   - In the provided form, fill in the following:
+
+     - Address: Fill in the address of the Jellyfin server (i.e. `http://localhost:8096`)
+     - Api Key: Add an API key generated from the Jellyfin web interface at `Dashboard > Advanced > API Keys`
+
+3. Synchronise Jellyfin media libraries with ErsatzTV:
+
+   - Click the **Edit Libraries** button corresponding to the Jellyfin server.
+
+   - Toggle the **Synchronize** switch corresponding to each library you wish to sync (i.e. **Movies** and **TV Shows**).
+
+   - Click the **SAVE CHANGES** button to start the synchronisation process.
+
+4. Once your media libraries have been synchronised, create a collection of media you wish to broadcast:
+
+   - Expand the **Media Sources** group on the left-hand side of the interface and select either of the **TV Shows** or **Movies** option.
+
+   - Select the checkbox corresponding to each media you wish to add to the collection.
+
+   - Click the **ADD TO COLLECTION** button.
+
+   - In the provided form, fill in the following:
+
+     - Collection: Expand the dropdown and select the `(New Collection)` option if the collection has not been created
+     - New Collection Name: Add a name for the collection (i.e. `Anime`)
+
+   - Click the **ADD TO COLLECTION** button.
+
+5. Create a channel that will broadcast your collection:
+
+   - Click the **Channels** option on the left-hand side of the interface.
+
+   - Click the **ADD CHANNEL** button.
+
+   - In the provided form, fill in the following:
+
+     - Number: Set a number for the channel (i.e. `100`)
+     - Name: Set a name for the channel (i.e. `Anime`)
+     - Progress Mode: Expand the dropdown and select the `Always` option
+     - Streaming Mode: Expand the dropdown and select either the `HLS Segmenter` (Transcoding) or `HLS Direct` (Direct Play) option
+     - Preferred Audio Language: Expand the dropdown and select a language for the channel (i.e. `English`)
+     - Preferred Subtitle Language: Expand the dropdown and select a language for the channel (i.e. `English`)
+     - Subtitle Mode: Expand the dropdown and select the `Any` option
+
+   - Click the **ADD CHANNEL** button.
+
+6. Add a broadcast schedule for your collection:
+
+   - Expand the **Scheduling** group on the left-hand side of the interface and select the **Schedules** option.
+
+   - In the **Add Schedule** form, configure the following:
+
+     - Name: Add a name for the schedule (i.e. `Anime`)
+     - Keep Multi-Part Episodes Together: Select the corresponding checkbox to enable it
+     - Shuffle Schedule Items: Select the corresponding checkbox to enable it
+
+   - Click the **ADD SCHEDULE** button.
+
+   - Click the **ADD SCHEDULE ITEM** button.
+
+   - In the **Schedule Item** form, configure the following:
+
+     - Collection Type: Expand the dropdown and select the `Collection` option
+     - Collection: Fill in the name of the collection you wish to schedule (i.e. `Anime`)
+     - Playback Order: Expand the dropdown and select the `Shuffle In Order` option
+     - Preferred Audio Language: Expand the dropdown and select a language for the collection schedule (i.e. `English`)
+     - Preferred Subtitle Language: Expand the dropdown and select a language for the collection schedule (i.e. `English`)
+     - Subtitle Mode: Expand the dropdown and select the `Any` option
+
+   - Click the **SAVE CHANGES** button.
+
+7. Create a playout to start broadcasting:
+
+   - Expand the **Scheduling** group on the left-hand side of the interface and select the **Playouts** option.
+
+   - In the **Add Playout** form, configure the following:
+
+     - Channel: Expand the dropdown and select the channel you wish to broadcast to (i.e. `Anime`)
+     - Schedule: Expand the dropdown and select the schedule you wish to assign (i.e. `Anime`)
+
+   - Click the **ADD PLAYOUT** button.
+
+8. Add your TV channels to the streaming service (i.e. Jellyfin):
+
+   - From the top right-hand corner of the web interface of ErsatzTV, do the following:
+
+     - Right click the **M3U** link item, select the **Copy Link** option, and take note of the link
+     - Right click the **XMLTV** link item, select the **Copy Link** option, and take note of the link
+
+   - Launch and log into the Jellyfin web interface as an administrator.
+
+   - Navigate to the **Settings** menu by clicking your profile icon, and select the **Dashboard** option under the **Administration** section.
+
+   - Under the **Live TV** section on the left-hand side of the interface, select the **Live TV** option.
+
+   - Click the **+** button corresponding to the **Tuner Devices** section.
+
+   - In the **Live TV Tuner Setup** form, configure the following:
+
+     - Tuner type: Expand the dropdown and select the `M3U Tuner` option
+     - File or URL: Paste in the **M3U** link you had copied earlier from ErsatzTV
+
+   - Click the **Save** button.
+
+   - Click the **+** button corresponding to the **TV Guide Data Providers** section.
+
+   - Select the `XMLTV` option.
+
+   - In the **Xml TV** form, configure the following:
+
+     - File or URL: Paste in the **XMLTV** link you had copied earlier from ErsatzTV
+
+   - Click the **Save** button.
 
 ---
 
@@ -944,6 +1082,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | bazarr.domain | string | `""` | The ingress domain name that hosts the Bazarr server. |
 | bazarr.enabled | bool | `true` | Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used. |
 | bazarr.ingress | bool | `false` | Specifies whether the Bazarr service should be served publicly using an Ingress. |
+| ersatztv.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the ErsatzTV container. Items: `.mountPath`, `.subPath`, `.config`. |
+| ersatztv.dataMountPath | string | `""` | The path where the data storage should be mounted on the ErsatzTV container. Default: `"/root/.local/share/ersatztv"`. |
+| ersatztv.dataStorage | string | `""` | The amount of persistent storage allocated for the ErsatzTV data storage. |
+| ersatztv.domain | string | `""` | The ingress domain name that hosts the ErsatzTV server. |
+| ersatztv.enabled | bool | `false` | Specifies whether ErsatzTV should be deployed or excluded in case an external ErsatzTV server is used. |
+| ersatztv.ingress | bool | `false` | Specifies whether the ErsatzTV service should be served publicly using an Ingress. |
 | flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the FlareSolverr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | flaresolverr.enabled | bool | `true` | Specifies whether FlareSolverr should be deployed or excluded in case an external FlareSolverr server is used. |
 | flaresolverr.logHtml | string | `""` | Specifies whether to log all HTML that passes through the proxy. Default: `"false"`. |
@@ -955,6 +1099,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
 | image.bazarr.repository | string | `""` | The name of the repository that contains the Bazarr container image used. Default: `"linuxserver/bazarr"`. |
 | image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.5.1-ls297"`. |
+| image.ersatztv.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ErsatzTV container image. Default: `"IfNotPresent"`. |
+| image.ersatztv.registry | string | `""` | The registry where the ErsatzTV container image is hosted. Default: `"docker.io"`. |
+| image.ersatztv.repository | string | `""` | The name of the repository that contains the ErsatzTV container image used. Default: `"jasongdove/ersatztv"`. |
+| image.ersatztv.tag | string | `""` | The tag that specifies the version of the ErsatzTV container image used. Default: `"v25.1.0"`. |
 | image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
@@ -1059,6 +1207,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | radarr.ingress | bool | `false` | Specifies whether the Radarr service should be served publicly using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for Flex. Default: `"1"`. |
 | resources.bazarr | object | `{}` | Bazarr container resources. |
+| resources.ersatztv | object | `{}` | ErsatzTV container resources. |
 | resources.flaresolverr | object | `{}` | FlareSolverr container resources. |
 | resources.jackett | object | `{}` | Jackett container resources. |
 | resources.jellyfin | object | `{}` | Jellyfin container resources. |
@@ -1071,6 +1220,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.sonarr | object | `{}` | Sonarr container resources. |
 | service.bazarr.nodePort | string | `""` | The optional node port to expose for Bazarr when the service type is NodePort. |
 | service.bazarr.port | string | `""` | The Bazarr port on which the Bazarr server should listen for connections. Default: `"6767"`. |
+| service.ersatztv.nodePort | string | `""` | The optional node port to expose for ErsatzTV when the service type is NodePort. |
+| service.ersatztv.port | string | `""` | The ErsatzTV port on which the ErsatzTV server should listen for connections. Default: `"8409"`. |
 | service.flaresolverr.nodePort | string | `""` | The optional node port to expose for FlareSolverr when the service type is NodePort. |
 | service.flaresolverr.port | string | `""` | The FlareSolverr port on which the FlareSolverr server should listen for connections. Default: `"8191"`. |
 | service.jackett.nodePort | string | `""` | The optional node port to expose for Jackett when the service type is NodePort. |

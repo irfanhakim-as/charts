@@ -2,7 +2,7 @@ apiVersion: v2
 name: flex
 description: Flex is a collection of curated services that aims to provide a complete home media server solution.
 type: application
-version: 0.2.0
+version: 0.2.1
 appVersion: "1.41.5.9522-a96edc606"
 keywords:
   - "flex"
@@ -11,6 +11,7 @@ keywords:
   - "server"
   - "streaming"
   - "bazarr"
+  - "ersatztv"
   - "flaresolverr"
   - "jackett"
   - "jellyfin"
@@ -25,6 +26,7 @@ icon: "https://irfanhakim-as.github.io/charts/logos/flex.png"
 sources:
   - "https://github.com/plexinc/pms-docker"
   - "https://github.com/linuxserver/docker-bazarr"
+  - "https://github.com/ErsatzTV/ErsatzTV"
   - "https://github.com/FlareSolverr/FlareSolverr"
   - "https://github.com/linuxserver/docker-jackett"
   - "https://github.com/linuxserver/docker-jellyfin"

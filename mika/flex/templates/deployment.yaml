@@ -1,5 +1,6 @@
 {{- $releaseName := .Release.Name | toString }}
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $ersatztv := .Values.ersatztv.enabled }}
 {{- $flaresolverr := .Values.flaresolverr.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
@@ -20,6 +21,8 @@
 {{- $mediaSmb := and $mediaPersistence $smb .Values.storage.media.smb }}
 {{- $bazarrConfigs := .Values.bazarr.customConfigs }}
 {{- $bazarrConfigs = ternary $bazarrConfigs (list) (and $bazarr (not (empty $bazarrConfigs))) }}
+{{- $ersatztvConfigs := .Values.ersatztv.customConfigs }}
+{{- $ersatztvConfigs = ternary $ersatztvConfigs (list) (and $ersatztv (not (empty $ersatztvConfigs))) }}
 {{- $fsConfigs := .Values.flaresolverr.customConfigs }}
 {{- $fsConfigs = ternary $fsConfigs (list) (and $flaresolverr (not (empty $fsConfigs))) }}
 {{- $jackettConfigs := .Values.jackett.customConfigs }}
@@ -44,6 +47,10 @@
 {{- $bazarr_repository := .Values.image.bazarr.repository | default "linuxserver/bazarr" | toString }}
 {{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.5.1-ls297" | toString }}
 {{- $bazarr_pullPolicy := .Values.image.bazarr.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $ersatztv_registry := .Values.image.ersatztv.registry | default "docker.io" | toString }}
+{{- $ersatztv_repository := .Values.image.ersatztv.repository | default "jasongdove/ersatztv" | toString }}
+{{- $ersatztv_tag := .Values.image.ersatztv.tag | default "v25.1.0" | toString }}
+{{- $ersatztv_pullPolicy := .Values.image.ersatztv.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
 {{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.21" | toString }}
@@ -86,6 +93,7 @@
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $bazarrResources := .Values.resources.bazarr }}
+{{- $ersatztvResources := .Values.resources.ersatztv }}
 {{- $flaresolverrResources := .Values.resources.flaresolverr }}
 {{- $jackettResources := .Values.resources.jackett }}
 {{- $jellyfinResources := .Values.resources.jellyfin }}
@@ -98,6 +106,7 @@
 {{- $sonarrResources := .Values.resources.sonarr }}
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/config" | toString }}
 {{- $bazarrDataMountPath := .Values.bazarr.dataMountPath | default $dataMountPath | toString | quote }}
+{{- $ersatztvDataMountPath := .Values.ersatztv.dataMountPath | default "/root/.local/share/ersatztv" | toString | quote }}
 {{- $jackettDataMountPath := .Values.jackett.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $jellyfinDataMountPath := .Values.jellyfin.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $jellyseerrDataMountPath := .Values.jellyseerr.dataMountPath | default "/app/config" | toString | quote }}
@@ -114,7 +123,7 @@
 {{- $globalSubPath := .Values.storage.global.subPath | toString }}
 {{- $mediaSubPath := .Values.storage.media.subPath | toString }}
 {{- $gid := .Values.global.gid | default "1000" | int }}
-{{- if or $bazarr $flaresolverr $jackett $jellyfin $jellyplexWatched $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $ersatztv $flaresolverr $jackett $jellyfin $jellyplexWatched $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -153,6 +162,8 @@ spec:
             {{- toYaml $bazarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+            - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $globalPersistence $mediaPersistence $bazarrConfigs }}
           volumeMounts:
@@ -185,6 +196,36 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
+        {{- if $ersatztv }}
+        - name: ersatztv
+          image: {{ printf "%s/%s:%s" $ersatztv_registry $ersatztv_repository $ersatztv_tag | quote }}
+          imagePullPolicy: {{ $ersatztv_pullPolicy }}
+          ports:
+            - name: ersatztv
+              containerPort: 8409
+              protocol: TCP
+          resources:
+            {{- toYaml $ersatztvResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+          {{- if or $dataPersistence $ersatztvConfigs }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-flex-ersatztv-data
+              mountPath: {{ $ersatztvDataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- range $ersatztvConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: ersatztv-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
         {{- if $flaresolverr }}
         - name: flaresolverr
           image: {{ printf "%s/%s:%s" $flaresolverr_registry $flaresolverr_repository $flaresolverr_tag | quote }}
@@ -196,6 +237,8 @@ spec:
           resources:
             {{- toYaml $flaresolverrResources | nindent 12 }}
           envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
             - configMapRef:
                 name: {{ .Release.Name }}-flex-flaresolverr-cm
           {{- if $fsConfigs }}
@@ -219,6 +262,8 @@ spec:
           resources:
             {{- toYaml $jackettResources | nindent 12 }}
           envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
             - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
@@ -272,6 +317,8 @@ spec:
             {{- toYaml $jellyfinResources | nindent 12 }}
           envFrom:
             - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+            - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $globalPersistence $mediaPersistence $jellyfinConfigs }}
           volumeMounts:
@@ -312,6 +359,8 @@ spec:
             {{- toYaml $jpwResources | nindent 12 }}
           envFrom:
             - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+            - configMapRef:
                 name: {{ .Release.Name }}-flex-jellyplex-watched-cm
             - secretRef:
                 name: {{ .Release.Name }}-flex-jellyplex-watched-secret
@@ -336,6 +385,8 @@ spec:
           resources:
             {{- toYaml $jellyseerrResources | nindent 12 }}
           envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
             - configMapRef:
                 name: {{ .Release.Name }}-flex-jellyseerr-cm
           {{- if or $dataPersistence $jellyseerrConfigs }}
@@ -367,6 +418,8 @@ spec:
             {{- toYaml $overseerrResources | nindent 12 }}
           envFrom:
             - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+            - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $overseerrConfigs }}
           volumeMounts:
@@ -396,6 +449,8 @@ spec:
           resources:
             {{- toYaml $plexResources | nindent 12 }}
           envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
             - configMapRef:
                 name: {{ .Release.Name }}-flex-plex-cm
             - secretRef:
@@ -449,6 +504,8 @@ spec:
             {{- toYaml $qbtResources | nindent 12 }}
           envFrom:
             - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+            - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
             - configMapRef:
                 name: {{ .Release.Name }}-flex-qbt-cm
@@ -494,6 +551,8 @@ spec:
           resources:
             {{- toYaml $radarrResources | nindent 12 }}
           envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
             - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $radarrConfigs }}
@@ -546,6 +605,8 @@ spec:
             {{- toYaml $sonarrResources | nindent 12 }}
           envFrom:
             - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+            - configMapRef:
                 name: {{ .Release.Name }}-flex-lsio-cm
           {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $sonarrConfigs }}
           volumeMounts:
@@ -585,13 +646,18 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
-      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
+      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $ersatztvConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $dataPersistence }}
           {{- if $bazarr }}
         - name: {{ .Release.Name }}-flex-bazarr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-bazarr-data-pvc
+          {{- end }}
+          {{- if $ersatztv }}
+        - name: {{ .Release.Name }}-flex-ersatztv-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-ersatztv-data-pvc
           {{- end }}
           {{- if $jackett }}
         - name: {{ .Release.Name }}-flex-jackett-data
@@ -654,13 +720,13 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or $bazarrConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
+        {{- if or $bazarrConfigs $ersatztvConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-flex-custom-configs
           secret:
             secretName: {{ .Release.Name }}-flex-custom-configs
         {{- end }}
       {{- end }}
-      {{- if or $bazarr $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
+      {{- if or $bazarr $ersatztv $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
       securityContext:
         fsGroup: {{ $gid }}
       {{- end }}

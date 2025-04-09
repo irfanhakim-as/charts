@@ -1,4 +1,5 @@
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $ersatztv := .Values.ersatztv.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $jellyseerr := .Values.jellyseerr.enabled }}
@@ -31,6 +32,7 @@
 {{- $smbStorage := .Values.smb.pvcStorage | default "1Gi" | toString | quote }}
 {{- $smbStorageClassName := .Values.smb.storageClassName | default "smb" | toString | quote }}
 {{- $bazarrDataStorage := .Values.bazarr.dataStorage | default $dataStorage | toString | quote }}
+{{- $ersatztvDataStorage := .Values.ersatztv.dataStorage | default $dataStorage | toString | quote }}
 {{- $jackettDataStorage := .Values.jackett.dataStorage | default $dataStorage | toString | quote }}
 {{- $jellyfinDataStorage := .Values.jellyfin.dataStorage | default $dataStorage | toString | quote }}
 {{- $jellyseerrDataStorage := .Values.jellyseerr.dataStorage | default $dataStorage | toString | quote }}
@@ -54,6 +56,22 @@ spec:
   resources:
     requests:
       storage: {{ $bazarrDataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+  {{- end }}
+  {{- if $ersatztv }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-ersatztv-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $dataAccessMode }}
+  resources:
+    requests:
+      storage: {{ $ersatztvDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
   {{- end }}
   {{- if $jackett }}

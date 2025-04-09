@@ -1,4 +1,5 @@
 {{- $bazarr := .Values.bazarr.enabled }}
+{{- $ersatztv := .Values.ersatztv.enabled }}
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $jellyseerr := .Values.jellyseerr.enabled }}
@@ -9,6 +10,7 @@
 {{- $sonarr := .Values.sonarr.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
 {{- $bazarrIngress := and $bazarr $ingress .Values.bazarr.ingress }}
+{{- $ersatztvIngress := and $ersatztv $ingress .Values.ersatztv.ingress }}
 {{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress }}
 {{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress }}
 {{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress }}
@@ -19,6 +21,8 @@
 {{- $sonarrIngress := and $sonarr $ingress .Values.sonarr.ingress }}
 {{- $bazarrDomain := .Values.bazarr.domain | toString }}
 {{- $bazarrDomain = ternary $bazarrDomain "" (and $bazarrIngress (ne $bazarrDomain "") (ne $bazarrDomain "localhost")) }}
+{{- $ersatztvDomain := .Values.ersatztv.domain | toString }}
+{{- $ersatztvDomain = ternary $ersatztvDomain "" (and $ersatztvIngress (ne $ersatztvDomain "") (ne $ersatztvDomain "localhost")) }}
 {{- $jackettDomain := .Values.jackett.domain | toString }}
 {{- $jackettDomain = ternary $jackettDomain "" (and $jackettIngress (ne $jackettDomain "") (ne $jackettDomain "localhost")) }}
 {{- $jellyfinDomain := .Values.jellyfin.domain | toString }}
@@ -39,9 +43,10 @@ Flex has been installed and configured for {{ .Release.Name | toString }} 🎉
 
 Visit the following service(s) at the provided address:
 
-{{- if or $bazarrDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
+{{- if or $bazarrDomain $ersatztvDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 
     - Bazarr: {{ if $bazarrDomain }}{{ printf "https://%s" $bazarrDomain | toString }}{{- end }}
+    - ErsatzTV: {{ if $ersatztvDomain }}{{ printf "https://%s" $ersatztvDomain | toString }}{{- end }}
     - Jackett: {{ if $jackettDomain }}{{ printf "https://%s" $jackettDomain | toString }}{{- end }}
     - Jellyfin: {{ if $jellyfinDomain }}{{ printf "https://%s" $jellyfinDomain | toString }}{{- end }}
     - Jellyseerr: {{ if $jellyseerrDomain }}{{ printf "https://%s" $jellyseerrDomain | toString }}{{- end }}

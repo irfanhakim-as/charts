@@ -23,6 +23,21 @@ image:
     # The policy that determines when Kubernetes should pull the Bazarr container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
+  # ErsatzTV container image configurations.
+  # Source: https://hub.docker.com/r/jasongdove/ersatztv
+  ersatztv:
+    # The registry where the ErsatzTV container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the ErsatzTV container image used.
+    # Default: "jasongdove/ersatztv"
+    repository: ""
+    # The tag that specifies the version of the ErsatzTV container image used.
+    # Default: "v25.1.0"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the ErsatzTV container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
   # FlareSolverr container image configurations.
   # Source: https://github.com/FlareSolverr/FlareSolverr/pkgs/container/flaresolverr
   flaresolverr:
@@ -224,6 +239,55 @@ bazarr:
   # ingress: true
   ingress: false
   # Optional custom configurations to be mounted as a file inside the Bazarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
+  # Example:
+  # customConfigs:
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
+  customConfigs: []
+
+# ErsatzTV configurations.
+ersatztv:
+  # Specifies whether ErsatzTV should be deployed or excluded in case an external ErsatzTV server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The path where the data storage should be mounted on the ErsatzTV container.
+  # Note: This setting takes precedence over the default data mount path.
+  # Default: "/root/.local/share/ersatztv"
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
+  # The amount of persistent storage allocated for the ErsatzTV data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
+  # The ingress domain name that hosts the ErsatzTV server.
+  # Example:
+  # domain: "ersatztv.example.com"
+  domain: ""
+  # Specifies whether the ErsatzTV service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the ErsatzTV container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
   # customConfigs:
@@ -855,6 +919,17 @@ service:
     # Example:
     # port: "8080"
     port: ""
+  # ErsatzTV service port configurations.
+  ersatztv:
+    # The optional node port to expose for ErsatzTV when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The ErsatzTV port on which the ErsatzTV server should listen for connections.
+    # Default: "8409"
+    # Example:
+    # port: "8080"
+    port: ""
   # FlareSolverr service port configurations.
   flaresolverr:
     # The optional node port to expose for FlareSolverr when the service type is NodePort.
@@ -1213,6 +1288,30 @@ resources:
   #     # memory: "250Mi"
   #     memory: "400Mi"
   bazarr: {}
+  # ErsatzTV container resources.
+  # Example:
+  # ersatztv:
+  #   # The minimum amount of resources required by ErsatzTV to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by ErsatzTV.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "1"
+  #     # The minimum amount of memory required by ErsatzTV.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "1Gi"
+  #   # The maximum amount of resources allowed for ErsatzTV.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for ErsatzTV.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "2"
+  #     # The maximum amount of memory allowed for ErsatzTV.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "2Gi"
+  ersatztv: {}
   # FlareSolverr container resources.
   # Example:
   # flaresolverr:
