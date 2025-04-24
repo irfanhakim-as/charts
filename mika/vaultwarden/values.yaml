@@ -1,0 +1,405 @@
+# Default values for vaultwarden.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Vaultwarden.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Vaultwarden.
+image:
+  # Vaultwarden container image configurations.
+  # Source: https://github.com/dani-garcia/vaultwarden/pkgs/container/vaultwarden
+  vaultwarden:
+    # The registry where the Vaultwarden container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Vaultwarden container image used.
+    # Default: "dani-garcia/vaultwarden"
+    repository: ""
+    # The tag that specifies the version of the Vaultwarden container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Vaultwarden container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Vaultwarden configurations.
+vaultwarden:
+  # x
+  # Example:
+  # adminToken: "secret"
+  adminToken: ""
+  # x
+  # Example:
+  # clearTrash: "30"
+  clearTrash: ""
+  # The ingress domain name that hosts the Vaultwarden server.
+  # Example:
+  # domain: "vaultwarden.example.com"
+  domain: ""
+  # x
+  # Default: "true"
+  # Example:
+  # emailUpdate: "false"
+  emailUpdate: ""
+  # x
+  # Default: "true"
+  # Example:
+  # emergencyAccess: "false"
+  emergencyAccess: ""
+  # x
+  # Example:
+  # hibpApiKey: "secret"
+  hibpApiKey: ""
+  # x
+  # Default: "info"
+  # Example:
+  # logLevel: "debug"
+  logLevel: ""
+  # x
+  # Default: "false"
+  # Example:
+  # notifyNewDevice: "true"
+  notifyNewDevice: ""
+  # x
+  # Default: "true"
+  # Example:
+  # send: "false"
+  send: ""
+  # x
+  # Example:
+  # expFeatures:
+  #   - "autofill-v2"
+  #   - "extension-refresh"
+  expFeatures: []
+  # Custom init script to run before the Vaultwarden container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# x
+invitation:
+  # x
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # x
+  # Default: "120"
+  # Example:
+  # expiry: "48"
+  expiry: ""
+  # x
+  # Default: "Vaultwarden"
+  # Example:
+  # organisation: "ExampleOrg"
+  organisation: ""
+
+# Mail configurations.
+mail:
+  # The email address used in the "from" address for sent emails.
+  # Default: "${.smtp.user}"
+  # Example:
+  # fromEmail: "no-reply@example.com"
+  fromEmail: ""
+  # The name used in the "from" address for sent emails.
+  # Default: "Vaultwarden"
+  # Example:
+  # fromName: "Example User"
+  fromName: ""
+  # Specifies whether Vaultwarden should use a secure TLS connection when sending emails.
+  # Default: "starttls"
+  # Example
+  # security: "force_tls"
+  security: ""
+  # SMTP server configurations.
+  smtp:
+    # The hostname or IP address of the SMTP server for sending emails.
+    # Example:
+    # host: "smtp.gmail.com"
+    host: ""
+    # The port number on the SMTP server used for sending emails.
+    # Note: In most cases, depending on the specified security type, set the SMTP port to 587 (starttls), 465 (force_tls), or 25 (off).
+    # Default: "587"
+    # Example:
+    # port: "465"
+    port: ""
+    # The username for authenticating with the SMTP server.
+    # Example:
+    # user: "vaultwarden@example.com"
+    user: ""
+    # The password for authenticating with the SMTP server.
+    # Example:
+    # password: "password"
+    password: ""
+
+# Bitwarden Push Relay configurations.
+push:
+  # x
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # x
+  # Example:
+  # id: "x"
+  id: ""
+  # x
+  # Example:
+  # key: "secret"
+  key: ""
+
+# x
+signup:
+  # x
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # x
+  # Default: "false"
+  # Example:
+  # verification: "true"
+  verification: ""
+  # x
+  # Default: "3600"
+  # Example:
+  # resendInterval: "1800"
+  resendInterval: ""
+  # x
+  # Default: "6"
+  # Example:
+  # resendLimit: "3"
+  resendLimit: ""
+  # x
+  # Example:
+  # domainWhitelist:
+  #   - "example.com"
+  #   - "example.org"
+  domainWhitelist: []
+
+# x
+tfa:
+  # x
+  # Default: "3"
+  # Example:
+  # expiry: "0"
+  expiry: ""
+  # x
+  # Default: "6"
+  # Example:
+  # emailTokenSize: "255"
+  emailTokenSize: ""
+  # x
+  # Default: "600"
+  # Example:
+  # emailExpiry: "300"
+  emailExpiry: ""
+  # x
+  # Default: "3"
+  # Example:
+  # emailLimit: "2"
+  emailLimit: ""
+  # x
+  # Default: "false"
+  # Example:
+  # emailEnforce: "true"
+  emailEnforce: ""
+  # x
+  # Default: "false"
+  # Example:
+  # emailFallback: "true"
+  emailFallback: ""
+  # x
+  # Default: "true"
+  # Example:
+  # rememberDevice: "false"
+  rememberDevice: ""
+  # x
+  # Default: "true"
+  # Example:
+  # allowTimeDrift: "false"
+  allowTimeDrift: ""
+
+# x
+yubico:
+  # x
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # x
+  # Example:
+  # id: "x"
+  id: ""
+  # x
+  # Example:
+  # key: "secret"
+  key: ""
+  # x
+  # Example:
+  # server: "http://example.com/wsapi/2.0/verify"
+  server: ""
+
+# Database configurations.
+db:
+  # The database engine or backend being used by Vaultwarden.
+  # Default: "sqlite"
+  # Example:
+  # type: "mysql"
+  type: ""
+  # The hostname or IP address of the Vaultwarden database server.
+  # Example:
+  # host: "vaultwarden.default.svc.cluster.local"
+  host: ""
+  # The port number the Vaultwarden database server is listening for connections.
+  # Example:
+  # port: "3306"
+  port: ""
+  # The name of the database being used by Vaultwarden.
+  # Example:
+  # name: "vaultwarden"
+  name: ""
+  # The username or user account for accessing the Vaultwarden database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Vaultwarden database user.
+  # Example:
+  # password: "password"
+  password: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Vaultwarden services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Vaultwarden server should listen for connections.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used to expose Vaultwarden services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteOnce"
+    # Example:
+    # accessMode: "ReadWriteMany"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/data"
+    # Example:
+    # mountPath: "/config"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+
+# Resource requirements and limits for Vaultwarden containers.
+resources:
+  # Vaultwarden container resources.
+  # Example:
+  # vaultwarden:
+  #   # The minimum amount of resources required by Vaultwarden to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Vaultwarden.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by Vaultwarden.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "10Mi"
+  #   # The maximum amount of resources allowed for Vaultwarden.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Vaultwarden.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "250m"
+  #     # The maximum amount of memory allowed for Vaultwarden.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  vaultwarden: {}

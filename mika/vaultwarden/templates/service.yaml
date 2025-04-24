@@ -1,0 +1,23 @@
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $port := .Values.service.port | default "80" | toString }}
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- $nodePort = ternary $nodePort "" (and (eq $type "NodePort") (ne $nodePort "")) }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-vaultwarden-svc
+  labels:
+    {{- include "vaultwarden.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ int $port }}
+      targetPort: vaultwarden
+    {{- if $nodePort }}
+      nodePort: {{ int $nodePort }}
+    {{- end }}
+      protocol: TCP
+      name: vaultwarden
+  selector:
+    {{- include "vaultwarden.selectorLabels" . | nindent 4 }}
