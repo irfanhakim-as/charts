@@ -171,31 +171,74 @@ A unique, secure admin token (password) is required for each Vaultwarden install
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| vaultwarden.bar | string | `""` | The secret value of the Vaultwarden bar. Default: `"bar"`. |
-| vaultwarden.domain | string | `""` | The ingress domain name that hosts the Vaultwarden server. |
-| vaultwarden.foo | string | `""` | The value of the Vaultwarden foo. Default: `"foo"`. |
-| vaultwarden.initScript | string | `""` | Custom init script to run before the Vaultwarden container starts. |
-| image.vaultwarden.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Vaultwarden container image. Default: `"IfNotPresent"`. |
-| image.vaultwarden.registry | string | `""` | The registry where the Vaultwarden container image is hosted. Default: `"ghcr.io"`. |
-| image.vaultwarden.repository | string | `""` | The name of the repository that contains the Vaultwarden container image used. Default: `"vaultwarden"`. |
-| image.vaultwarden.tag | string | `""` | The tag that specifies the version of the Vaultwarden container image used. Default: `Chart appVersion`. |
+| db.host | string | `""` | The hostname or IP address of the Vaultwarden database server. |
+| db.name | string | `""` | The name of the database being used by Vaultwarden. |
+| db.password | string | `""` | The password associated with the Vaultwarden database user. |
+| db.port | string | `""` | The port number the Vaultwarden database server is listening for connections. |
+| db.type | string | `""` | The database engine or backend being used by Vaultwarden. Default: `"sqlite"`. |
+| db.user | string | `""` | The username or user account for accessing the Vaultwarden database. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
 | image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
+| image.vaultwarden.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Vaultwarden container image. Default: `"IfNotPresent"`. |
+| image.vaultwarden.registry | string | `""` | The registry where the Vaultwarden container image is hosted. Default: `"ghcr.io"`. |
+| image.vaultwarden.repository | string | `""` | The name of the repository that contains the Vaultwarden container image used. Default: `"dani-garcia/vaultwarden"`. |
+| image.vaultwarden.tag | string | `""` | The tag that specifies the version of the Vaultwarden container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Vaultwarden services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
+| invitation.enabled | string | `""` | Specifies whether to allow organisation admins to send user invitations. Default: `"false"`. |
+| invitation.expiry | string | `""` | The number of hours after which an invitation token expires. Default: `"120"`. |
+| invitation.organisation | string | `""` | The default organisation display name shown in invitation emails. Default: `"Vaultwarden"`. |
+| mail.fromEmail | string | `""` | The email address used in the "from" address for sent emails. Default: `"${.smtp.user}"`. |
+| mail.fromName | string | `""` | The display name used in the "from" address for sent emails. Default: `"Vaultwarden"`. |
+| mail.smtp.host | string | `""` | The hostname or IP address of the SMTP server for sending emails. |
+| mail.smtp.password | string | `""` | The password for authenticating with the SMTP server. |
+| mail.smtp.port | string | `""` | The port number on the SMTP server used for sending emails. Default: `"587"`. |
+| mail.smtp.security | string | `""` | The SMTP security protocol used for securing email communication. Default: `"starttls"`. |
+| mail.smtp.user | string | `""` | The username for authenticating with the SMTP server. |
+| push.enabled | string | `""` | Specifies whether to enable automatic vault sync in all clients using push notifications. Default: `"false"`. |
+| push.id | string | `""` | The private installation ID for self-hosting or unlocking certain Bitwarden features. |
+| push.key | string | `""` | The private installation key for self-hosting or unlocking certain Bitwarden features. |
 | replicaCount | string | `""` | The desired number of running replicas for Vaultwarden. Default: `"1"`. |
 | resources.vaultwarden | object | `{}` | Vaultwarden container resources. |
 | service.nodePort | string | `""` | The optional node port to expose when the service type is NodePort. |
 | service.port | string | `""` | The port on which the Vaultwarden server should listen for connections. Default: `"80"`. |
 | service.type | string | `""` | The type of service used to expose Vaultwarden services. Default: `"ClusterIP"`. |
-| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
+| signup.domainWhitelist | list | `[]` | A list of domains allowed for user account registration. |
+| signup.enabled | string | `""` | Specifies whether to open up the Vaultwarden instance to new user account registrations. Default: `"false"`. |
+| signup.resendInterval | string | `""` | The number of seconds before a verification email can be resent. Default: `"3600"`. |
+| signup.resendLimit | string | `""` | The maximum number of times a verification email can be resent. Default: `"6"`. |
+| signup.verification | string | `""` | Specifies whether to require email verification for new user registrations. Default: `"false"`. |
+| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/data"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
+| tfa.allowTimeDrift | string | `""` | Specifies whether to allow small time discrepancies for TOTP code validation. Default: `"true"`. |
+| tfa.emailEnforce | string | `""` | Specifies whether to setup email 2FA upon registration. Default: `"false"`. |
+| tfa.emailExpiry | string | `""` | The number of seconds after which a 2FA email token expires. Default: `"600"`. |
+| tfa.emailFallback | string | `""` | Specifies whether to automatically use email as a fallback 2FA method. Default: `"false"`. |
+| tfa.emailLimit | string | `""` | The maximum number of attempts after which the 2FA email token is reset. Default: `"3"`. |
+| tfa.emailTokenSize | string | `""` | The length of the secret 2FA email token. Default: `"6"`. |
+| tfa.expiry | string | `""` | The number of minutes before a pending 2FA-enabled login is considered incomplete. Default: `"3"`. |
+| tfa.rememberDevice | string | `""` | Specifies whether to allow users to remember their device for 2FA sessions. Default: `"true"`. |
+| vaultwarden.adminToken | string | `""` | The secret password for accessing the Vaultwarden admin panel. |
+| vaultwarden.clearTrash | string | `""` | Number of days to retain trashed items before permanent deletion. |
+| vaultwarden.domain | string | `""` | The ingress domain name that hosts the Vaultwarden server. |
+| vaultwarden.emailUpdate | string | `""` | Specifies whether to allow users to change their account email address. Default: `"true"`. |
+| vaultwarden.emergencyAccess | string | `""` | Specifies whether to allow enabling emergency access to user accounts. Default: `"true"`. |
+| vaultwarden.expFeatures | list | `[]` | A list of experimental client feature flags to enable certain experimental functionality. |
+| vaultwarden.hibpApiKey | string | `""` | The Have I Been Pwned API key for password breach checks. |
+| vaultwarden.initScript | string | `""` | Custom init script to run before the Vaultwarden container starts. |
+| vaultwarden.logLevel | string | `""` | The verbosity level of the Vaultwarden logs. Default: `"info"`. |
+| vaultwarden.notifyNewDevice | string | `""` | Specifies whether to require notifying users when a new device logs into their account. Default: `"false"`. |
+| vaultwarden.send | string | `""` | Specifies whether to allow users to use the Bitwarden Send feature. Default: `"true"`. |
+| yubico.enabled | string | `""` | Specifies whether to enable Yubico 2FA integration. Default: `"false"`. |
+| yubico.id | string | `""` | The API client ID for enabling YubiKey OTP authentication. |
+| yubico.key | string | `""` | The API secret key for enabling YubiKey OTP authentication. |
+| yubico.server | string | `""` | The URL of the Yubico API server for 2FA verification. |
