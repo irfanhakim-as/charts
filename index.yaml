@@ -2351,6 +2351,32 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/uptimekuma-0.1.0/uptimekuma-0.1.0.tgz
     version: 0.1.0
+  vaultwarden:
+  - apiVersion: v2
+    appVersion: 1.33.2
+    created: "2025-04-25T13:20:48.014979091Z"
+    description: An alternative server implementation of the Bitwarden Client API
+      written in Rust and compatible with official Bitwarden clients.
+    digest: a2021058cf79128dc50e2f9a74208896850acc2f32db5dcb3893ad87ffabb8c0
+    home: https://github.com/dani-garcia/vaultwarden
+    icon: https://raw.githubusercontent.com/dani-garcia/vaultwarden/refs/heads/main/resources/vaultwarden-logo.svg
+    keywords:
+    - vaultwarden
+    - bitwarden
+    - password
+    - manager
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vaultwarden-0.1.0/vaultwarden-0.1.0.tgz
+    version: 0.1.0
   vpbot:
   - apiVersion: v2
     appVersion: 0.1.0-preview-r4-1
@@ -3103,4 +3129,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-09T03:08:58.55559337Z"
+generated: "2025-04-25T13:20:48.015367164Z"
