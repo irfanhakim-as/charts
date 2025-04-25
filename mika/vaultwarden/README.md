@@ -1,6 +1,6 @@
 # [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
-A Helm chart for deploying Vaultwarden.
+An alternative server implementation of the Bitwarden Client API written in Rust and compatible with official Bitwarden clients.
 
 ## Prerequisites
 
