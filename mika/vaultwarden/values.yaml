@@ -131,11 +131,6 @@ mail:
   # Example:
   # fromName: "Example User"
   fromName: ""
-  # Specifies whether Vaultwarden should use a secure TLS connection when sending emails.
-  # Default: "starttls"
-  # Example
-  # security: "force_tls"
-  security: ""
   # SMTP server configurations.
   smtp:
     # The hostname or IP address of the SMTP server for sending emails.
@@ -148,6 +143,11 @@ mail:
     # Example:
     # port: "465"
     port: ""
+    # Specifies whether Vaultwarden should use a secure TLS connection when sending emails.
+    # Default: "starttls"
+    # Example
+    # security: "force_tls"
+    security: ""
     # The username for authenticating with the SMTP server.
     # Example:
     # user: "vaultwarden@example.com"
