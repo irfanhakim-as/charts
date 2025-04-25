@@ -1,31 +1,24 @@
 {{- $ingress := .Values.ingress.enabled }}
-
 {{- $dataMountPath := .Values.storage.data.mountPath | default "/data" | toString | trimPrefix "/" | quote }}
 {{- $push := .Values.push.enabled | default "false" | toString | quote }}
-
 {{- $domain := .Values.vaultwarden.domain | toString }}
 {{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
 {{- $serviceAddress := ternary (printf "https://%s" $domain) "http://localhost" (ne $domain "") | quote }}
-
 {{- $send := .Values.vaultwarden.send | default "true" | toString | quote }}
 {{- $clearTrash := .Values.vaultwarden.clearTrash | toString }}
-
 {{- $signup := .Values.signup.enabled | default "false" | toString }}
 {{- $domainWhitelist := .Values.signup.domainWhitelist | join "," | toString }}
 {{- $verification := ternary (.Values.signup.verification | default "false" | toString) "false" (or (eq $signup "true") (ne $domainWhitelist "")) }}
 {{- $resendInterval := .Values.signup.resendInterval | default "3600" | toString | quote }}
 {{- $resendLimit := .Values.signup.resendLimit | default "6" | toString | quote }}
-
 {{- $invitation := .Values.invitation.enabled | default "false" | toString | quote }}
 {{- $invitationExpiry := .Values.invitation.expiry | default "120" | toString | quote }}
 {{- $invitationOrg := .Values.invitation.organisation | default "Vaultwarden" | toString | quote }}
-
 {{- $emailUpdate := .Values.vaultwarden.emailUpdate | default "true" | toString | quote }}
 {{- $emergencyAccess := .Values.vaultwarden.emergencyAccess | default "true" | toString | quote }}
 {{- $expFeatures := .Values.vaultwarden.expFeatures | join "," | toString }}
 {{- $notifyNewDevice := .Values.vaultwarden.notifyNewDevice | default "false" | toString | quote }}
 {{- $logLevel := .Values.vaultwarden.logLevel | default "info" | toString | quote }}
-
 {{- $tfaExpiry := .Values.tfa.expiry | default "3" | toString | quote }}
 {{- $tfaEmailTokenSize := .Values.tfa.emailTokenSize | default "6" | toString | quote }}
 {{- $tfaEmailExpiry := .Values.tfa.emailExpiry | default "600" | toString | quote }}
@@ -34,14 +27,12 @@
 {{- $tfaEmailFallback := .Values.tfa.emailFallback | default "false" | toString | quote }}
 {{- $tfaRememberDevice := ternary "false" "true" (eq (.Values.tfa.rememberDevice | default "true" | toString) "true") | quote }}
 {{- $tfaAllowTimeDrift := ternary "false" "true" (eq (.Values.tfa.allowTimeDrift | default "true" | toString) "true") | quote }}
-
 {{- $smtpHost := .Values.mail.smtp.host | toString }}
 {{- $smtpUser := .Values.mail.smtp.user | toString }}
 {{- $mailFromEmail := .Values.mail.fromEmail | default $smtpUser | toString }}
 {{- $mailFromName := .Values.mail.fromName | default "Vaultwarden" | toString | quote }}
 {{- $smtpSecurity := .Values.mail.smtp.security | default "starttls" | toString | quote }}
 {{- $mail := and $mailFromEmail $smtpHost }}
-
 ---
 apiVersion: v1
 kind: ConfigMap
