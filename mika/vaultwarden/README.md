@@ -10,7 +10,6 @@ A Helm chart for deploying Vaultwarden.
 - Kubernetes 1.19+
 - Helm 3.2.0+
 - Longhorn 1.4.1+
-- csi-driver-smb 1.14.0+
 
 ---
 
