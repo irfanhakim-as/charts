@@ -19,7 +19,51 @@ A Helm chart for deploying Vaultwarden.
 > [!IMPORTANT]  
 > The following items are required to be set up prior to installing this chart.
 
-**This section does not apply to this chart.**
+### Generate admin token
+
+A unique, secure admin token (password) is required for each Vaultwarden installation to allow access to the admin panel.
+
+1. Generate an admin password using the following command:
+
+    ```sh
+    python -c 'import random; print("".join([random.choice("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)") for i in range(50)]))'
+    ```
+
+    Sample value:
+
+    ```
+      6bkw1l_+4u^&sinqb2dmpt-u&rnhlmi*@u=j7z^@(a0k^ys=h4
+    ```
+
+2. Secure the generated password with a hash using Argon2:
+
+    ```sh
+    echo -n '<admin-token>' | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4
+    ```
+
+    Replace `<admin-token>` with the secure password you have generated. For example:
+
+    ```sh
+    echo -n '6bkw1l_+4u^&sinqb2dmpt-u&rnhlmi*@u=j7z^@(a0k^ys=h4' | argon2 "$(openssl rand -base64 32)" -e -id -k 65540 -t 3 -p 4
+    ```
+
+    Sample hash value:
+
+    ```
+      $argon2id$v=19$m=65540,t=3,p=4$K1ZEaDRCbTdGdUwrT3RuV3VodE9FVFFmYmhQNThaNUF3dWgvejV6R0VkRT0$RGdC5jEqxf661ayok4F8gK+7HuFESqPEUaEi1tO9LrI
+    ```
+
+2. Set the admin token that has been secured as the value of the `vaultwarden.adminToken` setting in your installation's values file:
+
+    ```yaml
+    adminToken: "<secure-admin-token>"
+    ```
+
+    Replace `<secure-admin-token>` with the admin token that has been hashed using Argon2. For example:
+
+    ```sh
+    adminToken: "$argon2id$v=19$m=65540,t=3,p=4$K1ZEaDRCbTdGdUwrT3RuV3VodE9FVFFmYmhQNThaNUF3dWgvejV6R0VkRT0$RGdC5jEqxf661ayok4F8gK+7HuFESqPEUaEi1tO9LrI"
+    ```
 
 ---
 
