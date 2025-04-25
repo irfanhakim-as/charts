@@ -1,4 +1,4 @@
-# Vaultwarden
+# [Vaultwarden](https://github.com/dani-garcia/vaultwarden)
 
 A Helm chart for deploying Vaultwarden.
 
