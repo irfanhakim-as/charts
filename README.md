@@ -36,6 +36,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [syncthing](mika/syncthing) | Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers. | ✅ | ✅ |
 | [telego](mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
 | [uptimekuma](mika/uptimekuma) | Uptime Kuma is an easy-to-use self-hosted monitoring tool. | ✅ | ✅ |
+| [vaultwarden](mika/vaultwarden) | An alternative server implementation of the Bitwarden Client API written in Rust and compatible with official Bitwarden clients. | ✅ | ✅ |
 | [vpbot](mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
 | [waktusolat](mika/waktusolat) | Waktu Solat is a simple web application that posts local prayer times to federated social network. | ✅ | 🔒 |
 | [yuzu-multiplayer](mika/yuzu-multiplayer) | Quickly stand up new dedicated multiplayer lobbies that will be broadcasted on yuzu. | ✅ | ✅ |
