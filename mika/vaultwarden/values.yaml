@@ -211,47 +211,47 @@ signup:
 
 # Two-factor authentication (2FA) configurations.
 tfa:
+  # Specifies whether to allow small time discrepancies for TOTP code validation.
+  # Default: "true"
+  # Example:
+  # allowTimeDrift: "false"
+  allowTimeDrift: ""
   # The number of minutes before a pending 2FA-enabled login is considered incomplete.
   # Default: "3"
   # Example:
   # expiry: "0"
   expiry: ""
+  # Specifies whether to allow users to remember their device for 2FA sessions.
+  # Default: "true"
+  # Example:
+  # rememberDevice: "false"
+  rememberDevice: ""
+  # Specifies whether to setup email 2FA upon registration.
+  # Default: "false"
+  # Example:
+  # emailEnforce: "true"
+  emailEnforce: ""
+  # The number of seconds after which a 2FA email token expires.
+  # Default: "600"
+  # Example:
+  # emailExpiry: "300"
+  emailExpiry: ""
+  # Specifies whether to automatically use email as a fallback 2FA method.
+  # Default: "false"
+  # Example:
+  # emailFallback: "true"
+  emailFallback: ""
+  # The maximum number of attempts after which the 2FA email token is reset.
+  # Default: "3"
+  # Example:
+  # emailLimit: "2"
+  emailLimit: ""
   # The length of the secret 2FA email token.
   # Note: Bitwarden clients are hardcoded to mention 6 digit codes regardless of this setting.
   # Default: "6"
   # Example:
   # emailTokenSize: "255"
   emailTokenSize: ""
-  # The number of seconds after which a 2FA email token expires.
-  # Default: "600"
-  # Example:
-  # emailExpiry: "300"
-  emailExpiry: ""
-  # The maximum number of attempts after which the 2FA email token is reset.
-  # Default: "3"
-  # Example:
-  # emailLimit: "2"
-  emailLimit: ""
-  # Specifies whether to setup email 2FA upon registration.
-  # Default: "false"
-  # Example:
-  # emailEnforce: "true"
-  emailEnforce: ""
-  # Specifies whether to automatically use email as a fallback 2FA method.
-  # Default: "false"
-  # Example:
-  # emailFallback: "true"
-  emailFallback: ""
-  # Specifies whether to allow users to remember their device for 2FA sessions.
-  # Default: "true"
-  # Example:
-  # rememberDevice: "false"
-  rememberDevice: ""
-  # Specifies whether to allow small time discrepancies for TOTP code validation.
-  # Default: "true"
-  # Example:
-  # allowTimeDrift: "false"
-  allowTimeDrift: ""
 
 # Yubico (YubiKey) configurations.
 yubico:
