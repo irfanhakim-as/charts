@@ -47,11 +47,12 @@ imagePullSecrets: []
 
 # Vaultwarden configurations.
 vaultwarden:
-  # x
+  # The secret password for accessing the Vaultwarden admin panel.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page#secure-the-admin_token.
   # Example:
-  # adminToken: "secret"
+  # adminToken: "password"
   adminToken: ""
-  # x
+  # Number of days to retain trashed items before permanent deletion.
   # Example:
   # clearTrash: "30"
   clearTrash: ""
@@ -59,36 +60,38 @@ vaultwarden:
   # Example:
   # domain: "vaultwarden.example.com"
   domain: ""
-  # x
+  # Specifies whether to allow users to change their account email address.
   # Default: "true"
   # Example:
   # emailUpdate: "false"
   emailUpdate: ""
-  # x
+  # Specifies whether to allow enabling emergency access to user accounts.
   # Default: "true"
   # Example:
   # emergencyAccess: "false"
   emergencyAccess: ""
-  # x
+  # The Have I Been Pwned API key for password breach checks.
+  # Note: You may acquire the API key from https://haveibeenpwned.com/API/Key.
   # Example:
   # hibpApiKey: "secret"
   hibpApiKey: ""
-  # x
+  # The verbosity level of the Vaultwarden logs.
   # Default: "info"
   # Example:
   # logLevel: "debug"
   logLevel: ""
-  # x
+  # Specifies whether to require notifying users when a new device logs into their account.
   # Default: "false"
   # Example:
   # notifyNewDevice: "true"
   notifyNewDevice: ""
-  # x
+  # Specifies whether to allow users to use the Bitwarden Send feature.
   # Default: "true"
   # Example:
   # send: "false"
   send: ""
-  # x
+  # A list of experimental client feature flags to enable certain experimental functionality.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/blob/main/.env.template#L348 for the full list of options.
   # Example:
   # expFeatures:
   #   - "autofill-v2"
@@ -101,19 +104,20 @@ vaultwarden:
   #   echo "This is a custom init script."
   initScript: ""
 
-# x
+# Invitation configurations.
 invitation:
-  # x
+  # Specifies whether to allow organisation admins to send user invitations.
   # Default: "false"
   # Example:
   # enabled: "true"
   enabled: ""
-  # x
+  # The number of hours after which an invitation token expires.
+  # Note: This expiry duration applies to all organisation invite, emergency access invite, email verification, and deletion request tokens.
   # Default: "120"
   # Example:
   # expiry: "48"
   expiry: ""
-  # x
+  # The default organisation display name shown in invitation emails.
   # Default: "Vaultwarden"
   # Example:
   # organisation: "ExampleOrg"
@@ -126,7 +130,7 @@ mail:
   # Example:
   # fromEmail: "no-reply@example.com"
   fromEmail: ""
-  # The name used in the "from" address for sent emails.
+  # The display name used in the "from" address for sent emails.
   # Default: "Vaultwarden"
   # Example:
   # fromName: "Example User"
@@ -143,7 +147,7 @@ mail:
     # Example:
     # port: "465"
     port: ""
-    # Specifies whether Vaultwarden should use a secure TLS connection when sending emails.
+    # The SMTP security protocol used for securing email communication.
     # Default: "starttls"
     # Example
     # security: "force_tls"
@@ -159,110 +163,116 @@ mail:
 
 # Bitwarden Push Relay configurations.
 push:
-  # x
+  # Specifies whether to enable automatic vault sync in all clients using push notifications.
   # Default: "false"
   # Example:
   # enabled: "true"
   enabled: ""
-  # x
+  # The private installation ID for self-hosting or unlocking certain Bitwarden features.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Mobile-Client-push-notification on how to acquire the installation ID.
   # Example:
-  # id: "x"
+  # id: "id"
   id: ""
-  # x
+  # The private installation key for self-hosting or unlocking certain Bitwarden features.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Mobile-Client-push-notification on how to acquire the installation key.
   # Example:
   # key: "secret"
   key: ""
 
-# x
+# Account registration configurations.
 signup:
-  # x
+  # Specifies whether to open up the Vaultwarden instance to new user account registrations.
   # Default: "false"
   # Example:
   # enabled: "true"
   enabled: ""
-  # x
+  # Specifies whether to require email verification for new user registrations.
   # Default: "false"
   # Example:
   # verification: "true"
   verification: ""
-  # x
+  # The number of seconds before a verification email can be resent.
   # Default: "3600"
   # Example:
   # resendInterval: "1800"
   resendInterval: ""
-  # x
+  # The maximum number of times a verification email can be resent.
   # Default: "6"
   # Example:
   # resendLimit: "3"
   resendLimit: ""
-  # x
+  # A list of domains allowed for user account registration.
+  # Note: This setting is applied regardless if the Vaultwarden instance is set to accept user registrations.
   # Example:
   # domainWhitelist:
   #   - "example.com"
   #   - "example.org"
   domainWhitelist: []
 
-# x
+# Two-factor authentication (2FA) configurations.
 tfa:
-  # x
+  # The number of minutes before a pending 2FA-enabled login is considered incomplete.
   # Default: "3"
   # Example:
   # expiry: "0"
   expiry: ""
-  # x
+  # The length of the secret 2FA email token.
+  # Note: Bitwarden clients are hardcoded to mention 6 digit codes regardless of this setting.
   # Default: "6"
   # Example:
   # emailTokenSize: "255"
   emailTokenSize: ""
-  # x
+  # The number of seconds after which a 2FA email token expires.
   # Default: "600"
   # Example:
   # emailExpiry: "300"
   emailExpiry: ""
-  # x
+  # The maximum number of attempts after which the 2FA email token is reset.
   # Default: "3"
   # Example:
   # emailLimit: "2"
   emailLimit: ""
-  # x
+  # Specifies whether to setup email 2FA upon registration.
   # Default: "false"
   # Example:
   # emailEnforce: "true"
   emailEnforce: ""
-  # x
+  # Specifies whether to automatically use email as a fallback 2FA method.
   # Default: "false"
   # Example:
   # emailFallback: "true"
   emailFallback: ""
-  # x
+  # Specifies whether to allow users to remember their device for 2FA sessions.
   # Default: "true"
   # Example:
   # rememberDevice: "false"
   rememberDevice: ""
-  # x
+  # Specifies whether to allow small time discrepancies for TOTP code validation.
   # Default: "true"
   # Example:
   # allowTimeDrift: "false"
   allowTimeDrift: ""
 
-# x
+# Yubico (YubiKey) configurations.
 yubico:
-  # x
+  # Specifies whether to enable Yubico 2FA integration.
   # Default: "false"
   # Example:
   # enabled: "true"
   enabled: ""
-  # x
+  # The API client ID for enabling YubiKey OTP authentication.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Yubikey-OTP-authentication on how to acquire the client ID.
   # Example:
-  # id: "x"
+  # id: "id"
   id: ""
-  # x
+  # The API secret key for enabling YubiKey OTP authentication.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Yubikey-OTP-authentication on how to acquire the secret key.
   # Example:
   # key: "secret"
   key: ""
-  # x
+  # The URL of the Yubico API server for 2FA verification.
   # Example:
-  # server: "http://example.com/wsapi/2.0/verify"
+  # server: "http://yubico.example.com/wsapi/2.0/verify"
   server: ""
 
 # Database configurations.
@@ -387,19 +397,19 @@ resources:
   #     # The minimum amount of CPU resources required by Vaultwarden.
   #     # Example:
   #     # cpu: "10m"
-  #     cpu: "10m"
+  #     cpu: "50m"
   #     # The minimum amount of memory required by Vaultwarden.
   #     # Example:
   #     # memory: "10Mi"
-  #     memory: "10Mi"
+  #     memory: "50Mi"
   #   # The maximum amount of resources allowed for Vaultwarden.
   #   limits:
   #     # The maximum amount of CPU resources allowed for Vaultwarden.
   #     # Example:
   #     # cpu: "250m"
-  #     cpu: "250m"
+  #     cpu: "100m"
   #     # The maximum amount of memory allowed for Vaultwarden.
   #     # Example:
   #     # memory: "250Mi"
-  #     memory: "250Mi"
+  #     memory: "100Mi"
   vaultwarden: {}
