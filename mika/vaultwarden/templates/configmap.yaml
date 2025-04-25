@@ -11,10 +11,10 @@
 {{- $clearTrash := .Values.vaultwarden.clearTrash | toString }}
 
 {{- $signup := .Values.signup.enabled | default "false" | toString }}
-{{- $verification := ternary (.Values.signup.verification | default "false" | toString) "false" (eq $signup "true") }}
+{{- $domainWhitelist := .Values.signup.domainWhitelist | join "," | toString }}
+{{- $verification := ternary (.Values.signup.verification | default "false" | toString) "false" (or (eq $signup "true") (ne $domainWhitelist "")) }}
 {{- $resendInterval := .Values.signup.resendInterval | default "3600" | toString | quote }}
 {{- $resendLimit := .Values.signup.resendLimit | default "6" | toString | quote }}
-{{- $domainWhitelist := .Values.signup.domainWhitelist | join "," | toString }}
 
 {{- $invitation := .Values.invitation.enabled | default "false" | toString | quote }}
 {{- $invitationExpiry := .Values.invitation.expiry | default "120" | toString | quote }}
