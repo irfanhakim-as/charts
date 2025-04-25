@@ -1,0 +1,82 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/data" | toString | trimPrefix "/" | quote }}
+{{- $push := .Values.push.enabled | default "false" | toString | quote }}
+{{- $domain := .Values.vaultwarden.domain | toString }}
+{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $serviceAddress := ternary (printf "https://%s" $domain) "http://localhost" (ne $domain "") | quote }}
+{{- $send := .Values.vaultwarden.send | default "true" | toString | quote }}
+{{- $clearTrash := .Values.vaultwarden.clearTrash | toString }}
+{{- $signup := .Values.signup.enabled | default "false" | toString }}
+{{- $domainWhitelist := .Values.signup.domainWhitelist | join "," | toString }}
+{{- $verification := ternary (.Values.signup.verification | default "false" | toString) "false" (or (eq $signup "true") (ne $domainWhitelist "")) }}
+{{- $resendInterval := .Values.signup.resendInterval | default "3600" | toString | quote }}
+{{- $resendLimit := .Values.signup.resendLimit | default "6" | toString | quote }}
+{{- $invitation := .Values.invitation.enabled | default "false" | toString | quote }}
+{{- $invitationExpiry := .Values.invitation.expiry | default "120" | toString | quote }}
+{{- $invitationOrg := .Values.invitation.organisation | default "Vaultwarden" | toString | quote }}
+{{- $emailUpdate := .Values.vaultwarden.emailUpdate | default "true" | toString | quote }}
+{{- $emergencyAccess := .Values.vaultwarden.emergencyAccess | default "true" | toString | quote }}
+{{- $expFeatures := .Values.vaultwarden.expFeatures | join "," | toString }}
+{{- $notifyNewDevice := .Values.vaultwarden.notifyNewDevice | default "false" | toString | quote }}
+{{- $logLevel := .Values.vaultwarden.logLevel | default "info" | toString | quote }}
+{{- $tfaExpiry := .Values.tfa.expiry | default "3" | toString | quote }}
+{{- $tfaEmailTokenSize := .Values.tfa.emailTokenSize | default "6" | toString | quote }}
+{{- $tfaEmailExpiry := .Values.tfa.emailExpiry | default "600" | toString | quote }}
+{{- $tfaEmailLimit := .Values.tfa.emailLimit | default "3" | toString | quote }}
+{{- $tfaEmailEnforce := .Values.tfa.emailEnforce | default "false" | toString | quote }}
+{{- $tfaEmailFallback := .Values.tfa.emailFallback | default "false" | toString | quote }}
+{{- $tfaRememberDevice := ternary "false" "true" (eq (.Values.tfa.rememberDevice | default "true" | toString) "true") | quote }}
+{{- $tfaAllowTimeDrift := ternary "false" "true" (eq (.Values.tfa.allowTimeDrift | default "true" | toString) "true") | quote }}
+{{- $smtpHost := .Values.mail.smtp.host | toString }}
+{{- $smtpUser := .Values.mail.smtp.user | toString }}
+{{- $mailFromEmail := .Values.mail.fromEmail | default $smtpUser | toString }}
+{{- $mailFromName := .Values.mail.fromName | default "Vaultwarden" | toString | quote }}
+{{- $smtpSecurity := .Values.mail.smtp.security | default "starttls" | toString | quote }}
+{{- $mail := and $mailFromEmail $smtpHost }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-vaultwarden-cm
+  labels:
+    {{- include "vaultwarden.labels" . | nindent 4 }}
+data:
+  DATA_FOLDER: {{ $dataMountPath }}
+  PUSH_ENABLED: {{ $push }}
+  DOMAIN: {{ $serviceAddress }}
+  SENDS_ALLOWED: {{ $send }}
+{{- if $clearTrash }}
+  TRASH_AUTO_DELETE_DAYS: {{ $clearTrash | quote }}
+{{- end }}
+  SIGNUPS_ALLOWED: {{ $signup | quote }}
+  SIGNUPS_VERIFY: {{ $verification | quote }}
+{{- if eq $verification "true" }}
+  SIGNUPS_VERIFY_RESEND_TIME: {{ $resendInterval }}
+  SIGNUPS_VERIFY_RESEND_LIMIT: {{ $resendLimit }}
+{{- end }}
+{{- if $domainWhitelist }}
+  SIGNUPS_DOMAINS_WHITELIST: {{ $domainWhitelist | quote }}
+{{- end }}
+  INVITATIONS_ALLOWED: {{ $invitation }}
+  INVITATION_ORG_NAME: {{ $invitationOrg }}
+  INVITATION_EXPIRATION_HOURS: {{ $invitationExpiry }}
+  EMERGENCY_ACCESS_ALLOWED: {{ $emergencyAccess }}
+  EMAIL_CHANGE_ALLOWED: {{ $emailUpdate }}
+{{- if $expFeatures }}
+  EXPERIMENTAL_CLIENT_FEATURE_FLAGS: {{ $expFeatures | quote }}
+{{- end }}
+  REQUIRE_DEVICE_EMAIL: {{ $notifyNewDevice }}
+  LOG_LEVEL: {{ $logLevel }}
+  INCOMPLETE_2FA_TIME_LIMIT: {{ $tfaExpiry }}
+  EMAIL_TOKEN_SIZE: {{ $tfaEmailTokenSize }}
+  EMAIL_EXPIRATION_TIME: {{ $tfaEmailExpiry }}
+  EMAIL_ATTEMPTS_LIMIT: {{ $tfaEmailLimit }}
+  EMAIL_2FA_ENFORCE_ON_VERIFIED_INVITE: {{ $tfaEmailEnforce }}
+  EMAIL_2FA_AUTO_FALLBACK: {{ $tfaEmailFallback }}
+  DISABLE_2FA_REMEMBER: {{ $tfaRememberDevice }}
+  AUTHENTICATOR_DISABLE_TIME_DRIFT: {{ $tfaAllowTimeDrift }}
+{{- if $mail }}
+  SMTP_FROM: {{ $mailFromEmail | quote }}
+  SMTP_FROM_NAME: {{ $mailFromName }}
+  SMTP_SECURITY: {{ $smtpSecurity }}
+{{- end }}

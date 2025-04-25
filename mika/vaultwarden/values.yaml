@@ -1,0 +1,415 @@
+# Default values for vaultwarden.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Vaultwarden.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Vaultwarden.
+image:
+  # Vaultwarden container image configurations.
+  # Source: https://github.com/dani-garcia/vaultwarden/pkgs/container/vaultwarden
+  vaultwarden:
+    # The registry where the Vaultwarden container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Vaultwarden container image used.
+    # Default: "dani-garcia/vaultwarden"
+    repository: ""
+    # The tag that specifies the version of the Vaultwarden container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Vaultwarden container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Vaultwarden configurations.
+vaultwarden:
+  # The secret password for accessing the Vaultwarden admin panel.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page#secure-the-admin_token.
+  # Example:
+  # adminToken: "password"
+  adminToken: ""
+  # Number of days to retain trashed items before permanent deletion.
+  # Example:
+  # clearTrash: "30"
+  clearTrash: ""
+  # The ingress domain name that hosts the Vaultwarden server.
+  # Example:
+  # domain: "vaultwarden.example.com"
+  domain: ""
+  # Specifies whether to allow users to change their account email address.
+  # Default: "true"
+  # Example:
+  # emailUpdate: "false"
+  emailUpdate: ""
+  # Specifies whether to allow enabling emergency access to user accounts.
+  # Default: "true"
+  # Example:
+  # emergencyAccess: "false"
+  emergencyAccess: ""
+  # The Have I Been Pwned API key for password breach checks.
+  # Note: You may acquire the API key from https://haveibeenpwned.com/API/Key.
+  # Example:
+  # hibpApiKey: "secret"
+  hibpApiKey: ""
+  # The verbosity level of the Vaultwarden logs.
+  # Default: "info"
+  # Example:
+  # logLevel: "debug"
+  logLevel: ""
+  # Specifies whether to require notifying users when a new device logs into their account.
+  # Default: "false"
+  # Example:
+  # notifyNewDevice: "true"
+  notifyNewDevice: ""
+  # Specifies whether to allow users to use the Bitwarden Send feature.
+  # Default: "true"
+  # Example:
+  # send: "false"
+  send: ""
+  # A list of experimental client feature flags to enable certain experimental functionality.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/blob/main/.env.template#L348 for the full list of options.
+  # Example:
+  # expFeatures:
+  #   - "autofill-v2"
+  #   - "extension-refresh"
+  expFeatures: []
+  # Custom init script to run before the Vaultwarden container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# Invitation configurations.
+invitation:
+  # Specifies whether to allow organisation admins to send user invitations.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The number of hours after which an invitation token expires.
+  # Note: This expiry duration applies to all organisation invite, emergency access invite, email verification, and deletion request tokens.
+  # Default: "120"
+  # Example:
+  # expiry: "48"
+  expiry: ""
+  # The default organisation display name shown in invitation emails.
+  # Default: "Vaultwarden"
+  # Example:
+  # organisation: "ExampleOrg"
+  organisation: ""
+
+# Mail configurations.
+mail:
+  # The email address used in the "from" address for sent emails.
+  # Default: "${.smtp.user}"
+  # Example:
+  # fromEmail: "no-reply@example.com"
+  fromEmail: ""
+  # The display name used in the "from" address for sent emails.
+  # Default: "Vaultwarden"
+  # Example:
+  # fromName: "Example User"
+  fromName: ""
+  # SMTP server configurations.
+  smtp:
+    # The hostname or IP address of the SMTP server for sending emails.
+    # Example:
+    # host: "smtp.gmail.com"
+    host: ""
+    # The port number on the SMTP server used for sending emails.
+    # Note: In most cases, depending on the specified security type, set the SMTP port to 587 (starttls), 465 (force_tls), or 25 (off).
+    # Default: "587"
+    # Example:
+    # port: "465"
+    port: ""
+    # The SMTP security protocol used for securing email communication.
+    # Default: "starttls"
+    # Example
+    # security: "force_tls"
+    security: ""
+    # The username for authenticating with the SMTP server.
+    # Example:
+    # user: "vaultwarden@example.com"
+    user: ""
+    # The password for authenticating with the SMTP server.
+    # Example:
+    # password: "password"
+    password: ""
+
+# Bitwarden Push Relay configurations.
+push:
+  # Specifies whether to enable automatic vault sync in all clients using push notifications.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The private installation ID for self-hosting or unlocking certain Bitwarden features.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Mobile-Client-push-notification on how to acquire the installation ID.
+  # Example:
+  # id: "id"
+  id: ""
+  # The private installation key for self-hosting or unlocking certain Bitwarden features.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Mobile-Client-push-notification on how to acquire the installation key.
+  # Example:
+  # key: "secret"
+  key: ""
+
+# Account registration configurations.
+signup:
+  # Specifies whether to open up the Vaultwarden instance to new user account registrations.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # Specifies whether to require email verification for new user registrations.
+  # Default: "false"
+  # Example:
+  # verification: "true"
+  verification: ""
+  # The number of seconds before a verification email can be resent.
+  # Default: "3600"
+  # Example:
+  # resendInterval: "1800"
+  resendInterval: ""
+  # The maximum number of times a verification email can be resent.
+  # Default: "6"
+  # Example:
+  # resendLimit: "3"
+  resendLimit: ""
+  # A list of domains allowed for user account registration.
+  # Note: This setting is applied regardless if the Vaultwarden instance is set to accept user registrations.
+  # Example:
+  # domainWhitelist:
+  #   - "example.com"
+  #   - "example.org"
+  domainWhitelist: []
+
+# Two-factor authentication (2FA) configurations.
+tfa:
+  # Specifies whether to allow small time discrepancies for TOTP code validation.
+  # Default: "true"
+  # Example:
+  # allowTimeDrift: "false"
+  allowTimeDrift: ""
+  # The number of minutes before a pending 2FA-enabled login is considered incomplete.
+  # Default: "3"
+  # Example:
+  # expiry: "0"
+  expiry: ""
+  # Specifies whether to allow users to remember their device for 2FA sessions.
+  # Default: "true"
+  # Example:
+  # rememberDevice: "false"
+  rememberDevice: ""
+  # Specifies whether to setup email 2FA upon registration.
+  # Default: "false"
+  # Example:
+  # emailEnforce: "true"
+  emailEnforce: ""
+  # The number of seconds after which a 2FA email token expires.
+  # Default: "600"
+  # Example:
+  # emailExpiry: "300"
+  emailExpiry: ""
+  # Specifies whether to automatically use email as a fallback 2FA method.
+  # Default: "false"
+  # Example:
+  # emailFallback: "true"
+  emailFallback: ""
+  # The maximum number of attempts after which the 2FA email token is reset.
+  # Default: "3"
+  # Example:
+  # emailLimit: "2"
+  emailLimit: ""
+  # The length of the secret 2FA email token.
+  # Note: Bitwarden clients are hardcoded to mention 6 digit codes regardless of this setting.
+  # Default: "6"
+  # Example:
+  # emailTokenSize: "255"
+  emailTokenSize: ""
+
+# Yubico (YubiKey) configurations.
+yubico:
+  # Specifies whether to enable Yubico 2FA integration.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The API client ID for enabling YubiKey OTP authentication.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Yubikey-OTP-authentication on how to acquire the client ID.
+  # Example:
+  # id: "id"
+  id: ""
+  # The API secret key for enabling YubiKey OTP authentication.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/wiki/Enabling-Yubikey-OTP-authentication on how to acquire the secret key.
+  # Example:
+  # key: "secret"
+  key: ""
+  # The URL of the Yubico API server for 2FA verification.
+  # Example:
+  # server: "http://yubico.example.com/wsapi/2.0/verify"
+  server: ""
+
+# Database configurations.
+db:
+  # The database engine or backend being used by Vaultwarden.
+  # Default: "sqlite"
+  # Example:
+  # type: "mysql"
+  type: ""
+  # The hostname or IP address of the Vaultwarden database server.
+  # Example:
+  # host: "vaultwarden.default.svc.cluster.local"
+  host: ""
+  # The port number the Vaultwarden database server is listening for connections.
+  # Example:
+  # port: "3306"
+  port: ""
+  # The name of the database being used by Vaultwarden.
+  # Example:
+  # name: "vaultwarden"
+  name: ""
+  # The username or user account for accessing the Vaultwarden database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Vaultwarden database user.
+  # Example:
+  # password: "password"
+  password: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Vaultwarden services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Vaultwarden server should listen for connections.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used to expose Vaultwarden services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteOnce"
+    # Example:
+    # accessMode: "ReadWriteMany"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/data"
+    # Example:
+    # mountPath: "/config"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+
+# Resource requirements and limits for Vaultwarden containers.
+resources:
+  # Vaultwarden container resources.
+  # Example:
+  # vaultwarden:
+  #   # The minimum amount of resources required by Vaultwarden to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Vaultwarden.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "50m"
+  #     # The minimum amount of memory required by Vaultwarden.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "150Mi"
+  #   # The maximum amount of resources allowed for Vaultwarden.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Vaultwarden.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "100m"
+  #     # The maximum amount of memory allowed for Vaultwarden.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "250Mi"
+  vaultwarden: {}
