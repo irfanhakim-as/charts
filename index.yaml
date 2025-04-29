@@ -734,6 +734,31 @@ entries:
     version: 0.1.0
   ghost:
   - apiVersion: v2
+    appVersion: v5.118.1
+    created: "2025-04-29T04:35:31.872570751Z"
+    description: Ghost is an independent platform for publishing online by web and
+      email newsletter.
+    digest: 767da9a935752ffbba15de700e2ca1b92b272c6b591deaef886903dcb2c82ce0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/ghost.png
+    keywords:
+    - ghost
+    - web
+    - blog
+    - newsletter
+    - cms
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: ghost
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/ghost-0.1.1/ghost-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: v5.101.6
     created: "2024-12-11T06:16:37.692232636Z"
     description: Ghost is an independent platform for publishing online by web and
@@ -3129,4 +3154,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-25T13:20:48.015367164Z"
+generated: "2025-04-29T04:35:31.872921307Z"
