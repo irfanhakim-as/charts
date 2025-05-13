@@ -30,7 +30,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [linkstack](mika/linkstack) | LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface. | ✅ | ✅ |
 | [littlelink](mika/littlelink) | The DIY self-hosted LinkTree alternative. | ✅ | ✅ |
 | [mariadb-agent](mika/mariadb-agent) | Easily create or delete multiple pairs of databases and users in a remote MariaDB or MySQL instance. | ✅ | ✅ |
-| [postgres](mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ✅ | ✅ |
+| [postgres](mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ❌ | ✅ |
 | [postgres-agent](mika/postgres-agent) | Easily create or delete a database and user pair in a remote PostgreSQL instance. | ✅ | ✅ |
 | [rizz](mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to federated social network. | ✅ | 🔒 |
 | [syncthing](mika/syncthing) | Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers. | ✅ | ✅ |
@@ -39,7 +39,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [vaultwarden](mika/vaultwarden) | An alternative server implementation of the Bitwarden Client API written in Rust and compatible with official Bitwarden clients. | ✅ | ✅ |
 | [vpbot](mika/vpbot) | Vpbot is a Telegram bot with support for a number of useful features such as prayer time notifications, COVID-19 statistics, and more. | ✅ | 🔒 |
 | [waktusolat](mika/waktusolat) | Waktu Solat is a simple web application that posts local prayer times to federated social network. | ✅ | 🔒 |
-| [yuzu-multiplayer](mika/yuzu-multiplayer) | Quickly stand up new dedicated multiplayer lobbies that will be broadcasted on yuzu. | ✅ | ✅ |
+| [yuzu-multiplayer](mika/yuzu-multiplayer) | Quickly stand up new dedicated multiplayer lobbies that will be broadcasted on yuzu. | ❌ | ✅ |
 
 ---
 
