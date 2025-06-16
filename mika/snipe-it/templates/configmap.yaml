@@ -1,0 +1,39 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.snipeit.domain | toString }}
+{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $port := .Values.service.port | default "8000" | toString }}
+{{- $serviceAddress := ternary (printf "https://%s" $domain) (printf "http://localhost:%s" $port) (ne $domain "") | quote }}
+{{- $environment := .Values.snipeit.environment | default "production" | toString | quote }}
+{{- $debug := .Values.snipeit.debug | default "false" | toString | quote }}
+{{- $timezone := .Values.snipeit.timezone | default "Etc/UTC" | toString | quote }}
+{{- $locale := .Values.snipeit.locale | default "en-US" | toString | quote }}
+{{- $secure := .Values.snipeit.secure | default "false" | toString | quote }}
+{{- $allowInsecureHosts := .Values.snipeit.allowInsecureHosts | default "false" | toString | quote }}
+{{- $maxResults := .Values.snipeit.maxResults | default "500" | toString | quote }}
+{{- $logLevel := .Values.log.level | default "warning" | toString | quote }}
+{{- $logMaxFiles := .Values.log.maxFiles | default "10" | toString | quote }}
+{{- $logMode := .Values.log.mode | default "single" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-snipe-it-cm
+  labels:
+    {{- include "snipe-it.labels" . | nindent 4 }}
+data:
+  APP_ENV: {{ $environment }}
+  APP_DEBUG: {{ $debug }}
+  APP_URL: {{ $serviceAddress }}
+  APP_TIMEZONE: {{ $timezone }}
+  APP_LOCALE: {{ $locale }}
+  APP_FORCE_TLS: {{ $secure }}
+  APP_ALLOW_INSECURE_HOSTS: {{ $allowInsecureHosts }}
+  MAX_RESULTS: {{ $maxResults }}
+  LOG: {{ $logMode }}
+  APP_LOG_MAX_FILES: {{ $logMaxFiles }}
+  LOG_LEVEL: {{ $logLevel }}
+  PRIVATE_FILESYSTEM_DISK: "local"
+  PUBLIC_FILESYSTEM_DISK: "local_public"
+  MAIL_MAILER: "smtp"
+  MAIL_AUTO_EMBED: "true"
+  MAIL_AUTO_EMBED_METHOD: "attachment"
