@@ -2011,6 +2011,32 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.2/rizz-0.0.2.tgz
     version: 0.0.2
+  snipe-it:
+  - apiVersion: v2
+    appVersion: v8.1.15-alpine
+    created: "2025-06-16T16:55:30.823729779Z"
+    description: Snipe-IT was made for IT asset management, to enable IT departments
+      to track who has which laptop, when it was purchased, which software licenses
+      and accessories are available, and so on.
+    digest: 69f96e912dab5a973bedfa434ca1fc5cc543961d6f2deb9dcba01d562c4f55d2
+    home: https://github.com/grokability/snipe-it
+    icon: https://raw.githubusercontent.com/grokability/snipe-it/refs/heads/master/public/img/logo.png
+    keywords:
+    - snipe-it
+    - asset
+    - management
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: snipe-it
+    sources:
+    - https://github.com/grokability/snipe-it
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/snipe-it-0.1.0/snipe-it-0.1.0.tgz
+    version: 0.1.0
   syncthing:
   - apiVersion: v2
     appVersion: v1.27.3-ls131
@@ -3154,4 +3180,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-29T04:35:31.872921307Z"
+generated: "2025-06-16T16:55:30.824024852Z"
