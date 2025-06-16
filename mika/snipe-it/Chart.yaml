@@ -1,0 +1,19 @@
+apiVersion: v2
+name: snipe-it
+description: Snipe-IT was made for IT asset management, to enable IT departments to track who has which laptop, when it was purchased, which software licenses and accessories are available, and so on.
+type: application
+version: 0.1.0
+appVersion: "v8.1.15-alpine"
+keywords:
+  - "snipe-it"
+  - "asset"
+  - "management"
+home: "https://github.com/grokability/snipe-it"
+icon: "https://raw.githubusercontent.com/grokability/snipe-it/refs/heads/master/public/img/logo.png"
+sources:
+  - "https://github.com/grokability/snipe-it"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
