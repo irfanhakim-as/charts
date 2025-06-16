@@ -33,6 +33,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 | [postgres](mika/postgres) | Easy tool to deploy a PostgreSQL instance on Kubernetes. | ❌ | ✅ |
 | [postgres-agent](mika/postgres-agent) | Easily create or delete a database and user pair in a remote PostgreSQL instance. | ✅ | ✅ |
 | [rizz](mika/rizz) | Rizz is a simple web application that tracks and posts content from RSS Feeds to federated social network. | ✅ | 🔒 |
+| [snipe-it](mika/snipe-it) | Snipe-IT was made for IT asset management, to enable IT departments to track who has which laptop, when it was purchased, which software licenses and accessories are available, and so on. | ✅ | ✅ |
 | [syncthing](mika/syncthing) | Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers. | ✅ | ✅ |
 | [telego](mika/telego) | Telego is an easy to use Telegram bot framework built on top of Django. | ✅ | 🔒 |
 | [uptimekuma](mika/uptimekuma) | Uptime Kuma is an easy-to-use self-hosted monitoring tool. | ✅ | ✅ |
