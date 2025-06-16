@@ -1,0 +1,325 @@
+# Default values for snipe-it.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Snipe-IT.
+# Default: "1"
+replicaCount: ""
+
+# Container images used for Snipe-IT.
+image:
+  # Snipe-IT container image configurations.
+  # Source: https://hub.docker.com/r/snipe/snipe-it
+  snipeit:
+    # The registry where the Snipe-IT container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Snipe-IT container image used.
+    # Default: "snipe/snipe-it"
+    repository: ""
+    # The tag that specifies the version of the Snipe-IT container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Snipe-IT container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Snipe-IT configurations.
+snipeit:
+  # Specifies whether to ignore URL mismatches in case of a secure hosting environment.
+  # Default: "false"
+  # Example:
+  # allowInsecureHosts: "true"
+  allowInsecureHosts: ""
+  # Specifies whether Snipe-IT should run in debug mode.
+  # Default: "false"
+  # Example:
+  # debug: "true"
+  debug: ""
+  # The ingress domain name that hosts the Snipe-IT server.
+  # Example:
+  # domain: "snipe-it.example.com"
+  domain: ""
+  # The runtime environment for the Snipe-IT server.
+  # Default: "production"
+  # Example:
+  # environment: "development"
+  environment: ""
+  # The default language used in the Snipe-IT server.
+  # Default: "en-US"
+  # Example:
+  # locale: "ms-MY"
+  locale: ""
+  # The maximum page size for paginated results.
+  # Default: "500"
+  # Example:
+  # maxResults: "100"
+  maxResults: ""
+  # A secret key used for secure session management and cryptographic operations within the Snipe-IT service.
+  # Example:
+  # secret: "base64:3FhrbiZx3k1DjLo3n9WhzC9kAZNHdD0eOC/cCqKYLMY="
+  secret: ""
+  # Specifies whether to force all connections to use the secure HTTPS protocol.
+  # Default: "false"
+  # Example:
+  # secure: "true"
+  secure: ""
+  # The timezone used by the Snipe-IT server for time-based operations.
+  # Default: "Etc/UTC"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
+  # Custom init script to run before the Snipe-IT container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# Log configurations.
+log:
+  # The verbosity level of the Snipe-IT logs.
+  # Default: "warning"
+  # Example:
+  # level: "info"
+  level: ""
+  # The number of daily log files to retain before older ones are removed.
+  # Note: This setting only applies when logs are set to be written to a new file daily.
+  # Default: "10"
+  # Example:
+  # maxFiles: "5"
+  maxFiles: ""
+  # Sets whether to log to one file or create a new file each day.
+  # Default: "single"
+  # Example:
+  # mode: "daily"
+  mode: ""
+
+# Mail configurations.
+mail:
+  # The email address used in the "from" address for sent emails.
+  # Default: "${.smtp.user}"
+  # Example:
+  # fromEmail: "no-reply@example.com"
+  fromEmail: ""
+  # The display name used in the "from" address for sent emails.
+  # Default: "Snipe-IT"
+  # Example:
+  # fromName: "Example User"
+  fromName: ""
+  # SMTP server configurations.
+  smtp:
+    # The hostname or IP address of the SMTP server for sending emails.
+    # Example:
+    # host: "smtp.gmail.com"
+    host: ""
+    # The port number on the SMTP server used for sending emails.
+    # Default: "587"
+    # Example:
+    # port: "465"
+    port: ""
+    # Specifies whether Snipe-IT should use a secure TLS connection when sending emails.
+    # Note: In most cases, set this to true if the SMTP port is 465 (SSL) and false if you are using port 587 (TLS) or 25 (SSL/TLS).
+    # Default: "true"
+    # Example
+    # secure: "false"
+    secure: ""
+    # The username for authenticating with the SMTP server.
+    # Example:
+    # user: "snipe-it@example.com"
+    user: ""
+    # The password for authenticating with the SMTP server.
+    # Example:
+    # password: "password"
+    password: ""
+
+# Database configurations.
+db:
+  # The database engine or backend being used by Snipe-IT.
+  # Default: "mysql"
+  # Example:
+  # type: "postgresql"
+  type: ""
+  # The hostname or IP address of the Snipe-IT database server.
+  # Example:
+  # host: "snipe-it.default.svc.cluster.local"
+  host: ""
+  # The port number the Snipe-IT database server is listening for connections.
+  # Default: "3306"
+  # Example:
+  # port: "5432"
+  port: ""
+  # The name of the database being used by Snipe-IT.
+  # Example:
+  # name: "snipe-it"
+  name: ""
+  # The username or user account for accessing the Snipe-IT database.
+  # Example:
+  # user: "root"
+  user: ""
+  # The password associated with the Snipe-IT database user.
+  # Example:
+  # password: "password"
+  password: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Snipe-IT services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Snipe-IT server should listen for connections.
+  # Default: "8000"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used to expose Snipe-IT services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/var/lib/snipeit"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+  # Log storage configurations.
+  log:
+    # Specifies whether persistent storage should be provisioned for log storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the log storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The path where the log storage should be mounted on the container.
+    # Default: "/var/www/html/storage/logs"
+    # Example:
+    # mountPath: "/log"
+    mountPath: ""
+    # The subpath within the log storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Log"
+    subPath: ""
+    # The default amount of persistent storage allocated for the log storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the log storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+
+# Resource requirements and limits for Snipe-IT containers.
+resources:
+  # Snipe-IT container resources.
+  # Example:
+  # snipeit:
+  #   # The minimum amount of resources required by Snipe-IT to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Snipe-IT.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "250m"
+  #     # The minimum amount of memory required by Snipe-IT.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "512Mi"
+  #   # The maximum amount of resources allowed for Snipe-IT.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Snipe-IT.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for Snipe-IT.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "640Mi"
+  snipeit: {}

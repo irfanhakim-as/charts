@@ -1,0 +1,62 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $www := and $ingress .Values.ingress.www }}
+{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $customAnnotations := .Values.ingress.customAnnotations }}
+{{- $domain := .Values.snipeit.domain | toString }}
+{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $wwwDomain := printf "www.%s" $domain | toString }}
+{{- $wwwDomain = ternary $wwwDomain "" (and $www (ne $domain "")) }}
+{{- if $domain }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-snipe-it-ingress
+  labels:
+    {{- include "snipe-it.labels" . | nindent 4 }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
+    cert-manager.io/private-key-algorithm: "ECDSA"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.org/client-max-body-size: "100m"
+  {{- range $customAnnotations }}
+    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+  {{- end }}
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ $domain | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-snipe-it-svc
+                port:
+                  name: snipe-it
+            path: /
+            pathType: Prefix
+  {{- if $wwwDomain }}
+    - host: {{ $wwwDomain | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-snipe-it-svc
+                port:
+                  name: snipe-it
+            path: /
+            pathType: Prefix
+  {{- end }}
+  tls:
+    - hosts:
+        - {{ $domain | quote }}
+      {{- if $wwwDomain }}
+        - {{ $wwwDomain | quote }}
+      {{- end }}
+      secretName: {{ .Release.Name }}-snipe-it-tls-cert
+{{- end }}

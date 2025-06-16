@@ -1,0 +1,107 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $logPersistence := .Values.storage.log.enabled }}
+{{- $snipeit_registry := .Values.image.snipeit.registry | default "docker.io" | toString }}
+{{- $snipeit_repository := .Values.image.snipeit.repository | default "snipe/snipe-it" | toString }}
+{{- $snipeit_tag := .Values.image.snipeit.tag | default .Chart.AppVersion | toString }}
+{{- $snipeit_pullPolicy := .Values.image.snipeit.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/var/lib/snipeit" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/var/www/html/storage/logs" | toString | quote }}
+{{- $logSubPath := .Values.storage.log.subPath | toString }}
+{{- $initScript := .Values.snipeit.initScript | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-snipe-it
+  labels:
+    {{- include "snipe-it.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "snipe-it.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "snipe-it.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              {{- $initScript | nindent 14 }}
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-snipe-it-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- end }}
+      containers:
+        - name: snipe-it
+          image: {{ printf "%s/%s:%s" $snipeit_registry $snipeit_repository $snipeit_tag | quote }}
+          imagePullPolicy: {{ $snipeit_pullPolicy }}
+          ports:
+            - name: snipe-it
+              containerPort: 80
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.snipeit | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-snipe-it-cm
+            - secretRef:
+                name: {{ .Release.Name }}-snipe-it-secret
+          {{- if or $dataPersistence $logPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-snipe-it-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-snipe-it-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence $logPersistence }}
+      volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-snipe-it-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-snipe-it-data-pvc
+        {{- end }}
+        {{- if $logPersistence }}
+        - name: {{ .Release.Name }}-snipe-it-log
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-snipe-it-log-pvc
+        {{- end }}
+      {{- end }}

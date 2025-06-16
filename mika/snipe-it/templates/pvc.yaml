@@ -1,0 +1,40 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
+{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $logPersistence := .Values.storage.log.enabled }}
+{{- $logAccessMode := .Values.storage.log.accessMode | default "ReadWriteMany" | toString | quote }}
+{{- $logStorage := .Values.storage.log.storage | default "1Gi" | toString | quote }}
+{{- $logStorageClassName := .Values.storage.log.storageClassName | default "longhorn" | toString | quote }}
+{{- if $dataPersistence }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-snipe-it-data-pvc
+  labels:
+    {{- include "snipe-it.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $dataAccessMode }}
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
+{{- if $logPersistence }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-snipe-it-log-pvc
+  labels:
+    {{- include "snipe-it.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $logAccessMode }}
+  resources:
+    requests:
+      storage: {{ $logStorage }}
+  storageClassName: {{ $logStorageClassName }}
+{{- end }}

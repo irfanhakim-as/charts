@@ -1,0 +1,23 @@
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $port := .Values.service.port | default "8000" | toString }}
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- $nodePort = ternary $nodePort "" (and (eq $type "NodePort") (ne $nodePort "")) }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-snipe-it-svc
+  labels:
+    {{- include "snipe-it.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ int $port }}
+      targetPort: snipe-it
+    {{- if $nodePort }}
+      nodePort: {{ int $nodePort }}
+    {{- end }}
+      protocol: TCP
+      name: snipe-it
+  selector:
+    {{- include "snipe-it.selectorLabels" . | nindent 4 }}
