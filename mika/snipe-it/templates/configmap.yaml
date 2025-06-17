@@ -30,7 +30,7 @@ data:
   APP_ALLOW_INSECURE_HOSTS: {{ $allowInsecureHosts }}
   MAX_RESULTS: {{ $maxResults }}
   LOG_CHANNEL: {{ $logMode }}
-  APP_LOG_MAX_FILES: {{ $logMaxFiles }}
+  LOG_MAX_DAYS: {{ $logMaxFiles }}
   LOG_LEVEL: {{ $logLevel }}
   IMAGE_LIB: "gd"
   PRIVATE_FILESYSTEM_DISK: "local"
