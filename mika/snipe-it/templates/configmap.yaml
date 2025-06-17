@@ -29,9 +29,10 @@ data:
   APP_FORCE_TLS: {{ $secure }}
   APP_ALLOW_INSECURE_HOSTS: {{ $allowInsecureHosts }}
   MAX_RESULTS: {{ $maxResults }}
-  LOG: {{ $logMode }}
-  APP_LOG_MAX_FILES: {{ $logMaxFiles }}
+  LOG_CHANNEL: {{ $logMode }}
+  LOG_MAX_DAYS: {{ $logMaxFiles }}
   LOG_LEVEL: {{ $logLevel }}
+  IMAGE_LIB: "gd"
   PRIVATE_FILESYSTEM_DISK: "local"
   PUBLIC_FILESYSTEM_DISK: "local_public"
   MAIL_MAILER: "smtp"
