@@ -32,6 +32,7 @@ data:
   LOG: {{ $logMode }}
   APP_LOG_MAX_FILES: {{ $logMaxFiles }}
   LOG_LEVEL: {{ $logLevel }}
+  IMAGE_LIB: "gd"
   PRIVATE_FILESYSTEM_DISK: "local"
   PUBLIC_FILESYSTEM_DISK: "local_public"
   MAIL_MAILER: "smtp"
