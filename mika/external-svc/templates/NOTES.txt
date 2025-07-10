@@ -35,11 +35,12 @@ The following are a list of domain(s) you have supplied for the external service
 {{- else }}
 
     {{- range $index, $domain := $domains }}
-        {{- $www := $domain.www }}
+        {{- $www := $domain.www | toString }}
         {{- $name := $domain.name | toString }}
         {{- $port := $domain.port | toString }}
+        {{- $customAnnotations := ternary "true" "false" (not (empty $domain.customAnnotations)) | toString }}
 
-    {{ printf "%s. name=%s | domain=%s | www=%s" ($index | add1 | toString) $port $name ($www | toString) }}
+    {{ printf "%s. name=%s | domain=%s | www=%s | custom_annotations=%s" ($index | add1 | toString) $port $name $www $customAnnotations }}
 
     {{- end }}
 

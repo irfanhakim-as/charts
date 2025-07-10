@@ -45,7 +45,7 @@ ingress:
   # Example:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
-  # Additional configuration annotations to be added to the Ingress resource.
+  # Additional configuration annotations to be added to the Ingress resource of each external service.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
   # customAnnotations:
@@ -64,7 +64,7 @@ ingress:
   #     value: ""
   customAnnotations: []
   # Domain configurations.
-  # Items: `.name`, `.port`, `.www`
+  # Items: `.name`, `.port`, `.www`, `.customAnnotations`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the external service.
@@ -79,4 +79,22 @@ ingress:
   #   # Example:
   #   # www: true
   #     www: false
+  #   # Additional configuration annotations to be added to the Ingress resource.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
   domains: []

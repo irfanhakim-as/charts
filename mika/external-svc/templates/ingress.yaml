@@ -1,11 +1,12 @@
 {{- $ingress := .Values.ingress.enabled }}
-{{- $customAnnotations := .Values.ingress.customAnnotations }}
+{{- $defaultCustomAnnotations := .Values.ingress.customAnnotations }}
 {{- $domains := .Values.ingress.domains }}
 {{- $services := .Values.services }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $releaseName := .Release.Name | toString }}
 {{- if and $ingress $services $domains }}
 {{- range $domains }}
+{{- $customAnnotations := .customAnnotations }}
 {{- $www := .www }}
 {{- $name := .name | toString }}
 {{- $port := .port | toString }}
@@ -27,6 +28,9 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
     nginx.ingress.kubernetes.io/session-cookie-name: "route"
     nginx.org/client-max-body-size: "100m"
+    {{- range $defaultCustomAnnotations }}
+    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+    {{- end }}
     {{- range $customAnnotations }}
     {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
     {{- end }}
