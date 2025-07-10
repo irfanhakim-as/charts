@@ -127,7 +127,7 @@ Seamlessly connect external services to your Kubernetes environment.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource of each external service. Items: `.prefix`, `.name`, `.value`. |
 | ingress.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.www`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting External Service services. |
 | services | list | `[]` | Service configurations. Items: `.host`, `.name`, `.nodePort`, `.port`, `.targetPort`, `.type`. |

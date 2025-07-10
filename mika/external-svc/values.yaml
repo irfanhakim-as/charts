@@ -45,7 +45,7 @@ ingress:
   # Example:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
-  # Additional configuration annotations to be added to the Ingress resource.
+  # Additional configuration annotations to be added to the Ingress resource of each external service.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
   # customAnnotations:
