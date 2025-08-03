@@ -373,6 +373,30 @@ entries:
     version: 0.1.0
   cloudflareddns:
   - apiVersion: v2
+    appVersion: 1.0.2-fix-wrong-ip-r3
+    created: "2025-08-03T04:20:43.886352294Z"
+    description: Access your home network remotely via a custom domain name without
+      a static IP!
+    digest: 80e4b05866eb23dfa138f8d2f0daa7644bd07fd47394a7442fd7904c6e7e0596
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.svg
+    keywords:
+    - cloudflareddns
+    - cloudflare
+    - ddns
+    - cloudflare-ddns
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflareddns
+    sources:
+    - https://github.com/timothymiller/cloudflare-ddns
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflareddns-0.1.2/cloudflareddns-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: latest
     created: "2024-11-21T08:34:04.969991616Z"
     description: Access your home network remotely via a custom domain name without
@@ -3227,4 +3251,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-10T10:14:26.492317672Z"
+generated: "2025-08-03T04:20:43.886711959Z"
