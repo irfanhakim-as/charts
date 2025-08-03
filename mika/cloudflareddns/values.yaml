@@ -9,13 +9,13 @@ replicaCount: ""
 # Container images used for Cloudflare DDNS.
 image:
   # Cloudflare DDNS container image configurations.
-  # Source: https://hub.docker.com/r/timothyjmiller/cloudflare-ddns
+  # Source: https://github.com/irfanhakim-as/cloudflare-ddns/pkgs/container/cloudflare-ddns
   cloudflareddns:
     # The registry where the Cloudflare DDNS container image is hosted.
-    # Default: "docker.io"
+    # Default: "ghcr.io"
     registry: ""
     # The name of the repository that contains the Cloudflare DDNS container image used.
-    # Default: "timothyjmiller/cloudflare-ddns"
+    # Default: "irfanhakim-as/cloudflare-ddns"
     repository: ""
     # The tag that specifies the version of the Cloudflare DDNS container image used.
     # Default: Chart appVersion

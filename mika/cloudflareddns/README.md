@@ -135,8 +135,8 @@ Access your home network remotely via a custom domain name without a static IP!
 | cloudflareddns.ttl | string | `""` | The Time-To-Live (TTL) duration defining how long DNS records are cached in seconds. Default: `"300"`. |
 | cloudflareddns.zoneID | string | `""` | The ID of the zone that will get the records. |
 | image.cloudflareddns.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Cloudflare DDNS container image. Default: `"IfNotPresent"`. |
-| image.cloudflareddns.registry | string | `""` | The registry where the Cloudflare DDNS container image is hosted. Default: `"docker.io"`. |
-| image.cloudflareddns.repository | string | `""` | The name of the repository that contains the Cloudflare DDNS container image used. Default: `"timothyjmiller/cloudflare-ddns"`. |
+| image.cloudflareddns.registry | string | `""` | The registry where the Cloudflare DDNS container image is hosted. Default: `"ghcr.io"`. |
+| image.cloudflareddns.repository | string | `""` | The name of the repository that contains the Cloudflare DDNS container image used. Default: `"irfanhakim-as/cloudflare-ddns"`. |
 | image.cloudflareddns.tag | string | `""` | The tag that specifies the version of the Cloudflare DDNS container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | replicaCount | string | `""` | The desired number of running replicas for Cloudflare DDNS. Default: `"1"`. |

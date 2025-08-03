@@ -1,5 +1,5 @@
-{{- $cloudflareddns_registry := .Values.image.cloudflareddns.registry | default "docker.io" | toString }}
-{{- $cloudflareddns_repository := .Values.image.cloudflareddns.repository | default "timothyjmiller/cloudflare-ddns" | toString }}
+{{- $cloudflareddns_registry := .Values.image.cloudflareddns.registry | default "ghcr.io" | toString }}
+{{- $cloudflareddns_repository := .Values.image.cloudflareddns.repository | default "irfanhakim-as/cloudflare-ddns" | toString }}
 {{- $cloudflareddns_tag := .Values.image.cloudflareddns.tag | default .Chart.AppVersion | toString }}
 {{- $cloudflareddns_pullPolicy := .Values.image.cloudflareddns.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
