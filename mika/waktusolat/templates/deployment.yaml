@@ -26,7 +26,7 @@
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $release_name := .Release.Name | toString }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/apache2" | toString | quote }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/var/log/django" | toString | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
 {{- $allowedHosts := .Values.waktusolat.allowedHosts | join "," | toString }}
 {{- $domain := .Values.waktusolat.domain | toString }}

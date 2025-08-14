@@ -276,7 +276,7 @@ A secure application access token is required for each configured account.
 | service.waktusolat.port | string | `""` | The WaktuSolat port on which the WaktuSolat server should listen for connections. Default: `"80"`. |
 | storage.log.accessMode | string | `""` | The access mode defining how the log storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.log.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for log storage. |
-| storage.log.mountPath | string | `""` | The path where the log storage should be mounted on the container. Default: `"/var/log/apache2"`. |
+| storage.log.mountPath | string | `""` | The path where the log storage should be mounted on the container. Default: `"/var/log/django"`. |
 | storage.log.storage | string | `""` | The default amount of persistent storage allocated for the log storage. Default: `"50Mi"`. |
 | storage.log.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the log storage. Default: `"longhorn"`. |
 | storage.log.subPath | string | `""` | The subpath within the log storage to mount to the container. Leave empty if not required. |
