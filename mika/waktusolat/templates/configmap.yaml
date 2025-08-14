@@ -6,6 +6,9 @@
 {{- $scheduler_timezone := .Values.scheduler.timezone | default "Etc/UTC" | toString | quote }}
 {{- $visibility := .Values.waktusolat.visibility | default "public" | toString | quote }}
 {{- $location := .Values.waktusolat.location | default "wlp-0" | join "," | toString | quote }}
+{{- $logLevel := .Values.waktusolat.log.level | default "info" | toString | quote }}
+{{- $logMaxFiles := .Values.waktusolat.log.maxFiles | default "3" | toString | quote }}
+{{- $logMaxFileSize := .Values.waktusolat.log.maxFileSize | default "10" | toString | quote }}
 {{- $organic := .Values.waktusolat.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.waktusolat.post_limit | default "0" | toString | quote }}
 {{- $retry_post := .Values.waktusolat.retry_post | default "true" | toString | quote }}
@@ -28,6 +31,9 @@ data:
   ORGANIC_POSTS: {{ $organic }}
   POST_LIMIT: {{ $post_limit }}
   RETRY_POST: {{ $retry_post }}
+  LOG_LEVEL: {{ $logLevel }}
+  LOG_MAX_BACKUP: {{ $logMaxFiles }}
+  LOG_MAX_SIZE: {{ $logMaxFileSize }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}

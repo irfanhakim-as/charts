@@ -286,6 +286,9 @@ A secure application access token is required for each configured account.
 | waktusolat.domain | string | `""` | The ingress domain name that hosts the WaktuSolat server. Default: `"localhost"`. |
 | waktusolat.feed | list | `[]` | WaktuSolat feed configurations. Items: `.endpoint`, `.id`, `.enabled`. |
 | waktusolat.location | list | `[]` | The code of locations WaktuSolat should fetch and update prayer times for. Default: `"wlp-0"`. |
+| waktusolat.log.level | string | `""` | The verbosity level of the WaktuSolat service logs. Default: `"info"`. |
+| waktusolat.log.maxFileSize | string | `""` | The maximum size of each log file in megabytes before it is rotated. Default: `"10"`. |
+| waktusolat.log.maxFiles | string | `""` | The number of backup log files to retain before older ones are removed. Default: `"3"`. |
 | waktusolat.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"0"` (Unlimited). |
 | waktusolat.retry_post | string | `""` | Specifies whether to retry posting if the post fails to be sent. Default: `"false"`. |
 | waktusolat.secret | string | `""` | A 50-character secret key used for secure session management and cryptographic operations within the WaktuSolat service. |
