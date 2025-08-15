@@ -4,6 +4,9 @@
 {{- $debug := .Values.rizz.debug | default "false" | toString | quote }}
 {{- $scheduler_timezone := .Values.scheduler.timezone | default "Etc/UTC" | toString | quote }}
 {{- $visibility := .Values.rizz.visibility | default "public" | toString | quote }}
+{{- $logLevel := .Values.rizz.log.level | default "info" | toString | quote }}
+{{- $logMaxFiles := .Values.rizz.log.maxFiles | default "3" | toString | quote }}
+{{- $logMaxFileSize := .Values.rizz.log.maxFileSize | default "10" | toString | quote }}
 {{- $organic := .Values.rizz.organic | default "true" | toString | quote }}
 {{- $post_limit := .Values.rizz.post_limit | default "3" | toString | quote }}
 {{- $retry_post := .Values.rizz.retry_post | default "true" | toString | quote }}
@@ -26,6 +29,9 @@ data:
   ORGANIC_POSTS: {{ $organic }}
   POST_LIMIT: {{ $post_limit }}
   RETRY_POST: {{ $retry_post }}
+  LOG_LEVEL: {{ $logLevel }}
+  LOG_MAX_BACKUP: {{ $logMaxFiles }}
+  LOG_MAX_SIZE: {{ $logMaxFileSize }}
   {{- if $celery }}
   CELERY_BROKER: {{ $redis_service }}
   CELERY_BACKEND: {{ $redis_service }}

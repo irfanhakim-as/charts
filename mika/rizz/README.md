@@ -259,6 +259,9 @@ A secure application access token is required for each configured account.
 | rizz.debug | string | `""` | Specifies whether Rizz should run in debug mode. Default: `"false"`. |
 | rizz.domain | string | `""` | The ingress domain name that hosts the Rizz server. Default: `"localhost"`. |
 | rizz.feed | list | `[]` | RSS feed configurations. Items: `.endpoint`, `.id`, `.enabled`. |
+| rizz.log.level | string | `""` | The verbosity level of the Rizz service logs. Default: `"info"`. |
+| rizz.log.maxFileSize | string | `""` | The maximum size of each log file in megabytes before it is rotated. Default: `"10"`. |
+| rizz.log.maxFiles | string | `""` | The number of backup log files to retain before older ones are removed. Default: `"3"`. |
 | rizz.organic | string | `""` | Specifies whether to enable posting in organic numbers. Default: `"true"`. |
 | rizz.post_limit | string | `""` | The limit number of posts to be scheduled for posting per run. Default: `"3"`. |
 | rizz.retry_post | string | `""` | Specifies whether to retry posting if the post fails to be sent. Default: `"true"`. |
