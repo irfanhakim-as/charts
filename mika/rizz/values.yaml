@@ -356,7 +356,7 @@ storage:
     # accessMode: "ReadWriteOnce"
     accessMode: ""
     # The path where the log storage should be mounted on the container.
-    # Default: "/var/log/apache2"
+    # Default: "/var/log/django"
     # Example:
     # mountPath: "/log"
     mountPath: ""
