@@ -81,6 +81,23 @@ waktusolat:
   # Example:
   # visibility: "unlisted"
   visibility: ""
+  # Log configurations.
+  log:
+    # The verbosity level of the WaktuSolat service logs.
+    # Default: "info"
+    # Example:
+    # level: "debug"
+    level: ""
+    # The number of backup log files to retain before older ones are removed.
+    # Default: "3"
+    # Example:
+    # maxFiles: "0"
+    maxFiles: ""
+    # The maximum size of each log file in megabytes before it is rotated.
+    # Default: "10"
+    # Example:
+    # maxFileSize: "0"
+    maxFileSize: ""
   # A list of hosts that are allowed to access the WaktuSolat service in addition to the default.
   # Default: "127.0.0.1,localhost,$serviceName,$(POD_IP),$domain"
   # Example:
@@ -375,7 +392,7 @@ storage:
     # accessMode: "ReadWriteOnce"
     accessMode: ""
     # The path where the log storage should be mounted on the container.
-    # Default: "/var/log/apache2"
+    # Default: "/var/log/django"
     # Example:
     # mountPath: "/log"
     mountPath: ""
