@@ -168,6 +168,10 @@ mail:
 
 # Redis configurations.
 redis:
+  # Specifies whether to enable Redis integration for the Kutt server.
+  # Example:
+  # enabled: false
+  enabled: true
   # Specifies whether Kutt should use an external Redis server.
   # Example:
   # external: true
