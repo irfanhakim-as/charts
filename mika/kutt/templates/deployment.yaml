@@ -63,7 +63,7 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-kutt-redis-secret
           {{- end }}
-        {{- if not $externalRedis }}
+        {{- if and $redis (not $externalRedis) }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
