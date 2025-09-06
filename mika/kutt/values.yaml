@@ -191,8 +191,8 @@ redis:
   # password: "password"
   password: ""
 
-# PostgreSQL configurations.
-postgres:
+# Database configurations.
+db:
   # The database engine or backend being used by Kutt.
   # Note: Supported database clients: `better-sqlite3` (SQLite), `mysql2` (MySQL), `pg` (PostgreSQL).
   # Default: "better-sqlite3"

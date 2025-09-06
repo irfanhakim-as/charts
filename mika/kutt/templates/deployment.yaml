@@ -1,6 +1,6 @@
 {{- $externalRedis := .Values.redis.external }}
 {{- $redis := .Values.redis.enabled }}
-{{- $db_type := .Values.postgres.type | default "better-sqlite3" | toString }}
+{{- $db_type := .Values.db.type | default "better-sqlite3" | toString }}
 {{- $dataPersistence := and .Values.storage.data.enabled (eq $db_type "better-sqlite3") }}
 {{- $redisPersistence := and .Values.storage.redis.enabled $redis (not $externalRedis) }}
 {{- $kutt_registry := .Values.image.kutt.registry | default "docker.io" | toString }}

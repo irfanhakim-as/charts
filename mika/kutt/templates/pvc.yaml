@@ -1,6 +1,6 @@
 {{- $externalRedis := .Values.redis.external }}
 {{- $redis := .Values.redis.enabled }}
-{{- $db_type := .Values.postgres.type | default "better-sqlite3" | toString }}
+{{- $db_type := .Values.db.type | default "better-sqlite3" | toString }}
 {{- $dataPersistence := and .Values.storage.data.enabled (eq $db_type "better-sqlite3") }}
 {{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteOnce" | toString | quote }}
 {{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}

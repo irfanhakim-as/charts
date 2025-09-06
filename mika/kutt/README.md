@@ -141,6 +141,13 @@ A unique, secure secret key is required for each Kutt installation.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| db.host | string | `""` | The hostname or IP address of the Kutt database server. |
+| db.name | string | `""` | The name of the database being used by Kutt. |
+| db.password | string | `""` | The password associated with the Kutt database user. |
+| db.port | string | `""` | The port number the Kutt database server is listening for connections. Default: `"5432"`. |
+| db.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
+| db.type | string | `""` | The database engine or backend being used by Kutt. Default: `"better-sqlite3"`. |
+| db.user | string | `""` | The username or user account for accessing the Kutt database. |
 | google.recaptchaSecretKey | string | `""` | The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | google.recaptchaSiteKey | string | `""` | The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | google.safeBrowsingKey | string | `""` | The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started. |
@@ -177,13 +184,6 @@ A unique, secure secret key is required for each Kutt installation.
 | mail.smtp.password | string | `""` | The password for authenticating with the SMTP server. |
 | mail.smtp.port | string | `""` | The port number on the SMTP server used for sending emails. Default: `"465"`. |
 | mail.smtp.user | string | `""` | The username for authenticating with the SMTP server. |
-| postgres.host | string | `""` | The hostname or IP address of the Kutt database server. |
-| postgres.name | string | `""` | The name of the database being used by Kutt. |
-| postgres.password | string | `""` | The password associated with the Kutt database user. |
-| postgres.port | string | `""` | The port number the Kutt database server is listening for connections. Default: `"5432"`. |
-| postgres.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
-| postgres.type | string | `""` | The database engine or backend being used by Kutt. Default: `"better-sqlite3"`. |
-| postgres.user | string | `""` | The username or user account for accessing the Kutt database. |
 | redis.enabled | bool | `true` | Specifies whether to enable Redis integration for the Kutt server. |
 | redis.external | bool | `false` | Specifies whether the Redis server is deployed externally. |
 | redis.host | string | `""` | The hostname or IP address of the Redis server. Default: `"localhost"`. |
