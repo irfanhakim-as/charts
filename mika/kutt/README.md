@@ -197,6 +197,12 @@ A unique, secure secret key is required for each Kutt installation.
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
 | service.redis.port | string | `""` | The Redis port on which the Kutt server should listen for connections. Default: `"${redis.port}"`. |
 | service.type | string | `""` | The type of service used to expose Kutt services. Default: `"ClusterIP"`. |
+| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
+| storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/var/lib/kutt"`. |
+| storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
+| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
+| storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
 | storage.redis.accessMode | string | `""` | The access mode defining how the Redis storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.redis.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for Redis storage. |
 | storage.redis.mountPath | string | `""` | The path where the Redis storage should be mounted on the container. Default: `"/data"`. |
