@@ -59,8 +59,10 @@ spec:
                 name: {{ .Release.Name }}-kutt-config
             - secretRef:
                 name: {{ .Release.Name }}-kutt-secret
+          {{- if $redis }}
             - secretRef:
                 name: {{ .Release.Name }}-kutt-redis-secret
+          {{- end }}
         {{- if not $externalRedis }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
