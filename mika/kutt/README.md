@@ -195,7 +195,7 @@ A unique, secure secret key is required for each Kutt installation.
 | service.kutt.nodePort | string | `""` | The optional node port to expose for Kutt when the service type is NodePort. |
 | service.kutt.port | string | `""` | The Kutt port on which the Kutt server should listen for connections. Default: `"3000"`. |
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
-| service.redis.port | string | `""` | The Redis port on which the Kutt server should listen for connections. Default: `"6379"`. |
+| service.redis.port | string | `""` | The Redis port on which the Kutt server should listen for connections. Default: `"${redis.port}"`. |
 | service.type | string | `""` | The type of service used to expose Kutt services. Default: `"ClusterIP"`. |
 | storage.redis.accessMode | string | `""` | The access mode defining how the Redis storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.redis.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for Redis storage. |

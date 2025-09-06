@@ -285,7 +285,7 @@ service:
     # nodePort: "32000"
     nodePort: ""
     # The Redis port on which the Kutt server should listen for connections.
-    # Default: "6379"
+    # Default: "${redis.port}"
     # Example:
     # port: "8443"
     port: ""
