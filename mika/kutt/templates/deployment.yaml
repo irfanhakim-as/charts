@@ -1,5 +1,6 @@
 {{- $externalRedis := .Values.redis.external }}
-{{- $redisPersistence := .Values.storage.redis.enabled }}
+{{- $redis := .Values.redis.enabled }}
+{{- $redisPersistence := and .Values.storage.redis.enabled $redis (not $externalRedis) }}
 {{- $kutt_registry := .Values.image.kutt.registry | default "docker.io" | toString }}
 {{- $kutt_repository := .Values.image.kutt.repository | default "kutt/kutt" | toString }}
 {{- $kutt_tag := .Values.image.kutt.tag | default .Chart.AppVersion | toString }}
