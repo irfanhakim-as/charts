@@ -1,9 +1,10 @@
 {{- $externalRedis := .Values.redis.external }}
-{{- $redisPersistence := .Values.storage.redis.enabled }}
+{{- $redis := .Values.redis.enabled }}
+{{- $redisPersistence := and .Values.storage.redis.enabled $redis (not $externalRedis) }}
 {{- $redisAccessMode := .Values.storage.redis.accessMode | default "ReadWriteOnce" | toString | quote }}
 {{- $redisStorage := .Values.storage.redis.storage | default "100Mi" | toString | quote }}
 {{- $redisStorageClassName := .Values.storage.redis.storageClassName | default "longhorn" | toString | quote }}
-{{- if and (not $externalRedis) $redisPersistence }}
+{{- if $redisPersistence }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
