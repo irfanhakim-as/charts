@@ -1,4 +1,5 @@
 {{- $mail := .Values.mail.enabled | toString | quote }}
+{{- $redis := .Values.redis.enabled | toString | quote }}
 {{- $admins := .Values.kutt.administration.admins | join "," | toString | quote }}
 {{- $dailyUserLimit := .Values.kutt.administration.dailyUserLimit | default "50" | toString | quote }}
 {{- $disableAnonLinks := .Values.kutt.administration.disableAnonLinks | default "false" | toString | quote }}
@@ -30,3 +31,4 @@ data:
   CUSTOM_DOMAIN_USE_HTTPS: {{ $useHttps }}
   ADMIN_EMAILS: {{ $admins }}
   MAIL_ENABLED: {{ $mail }}
+  REDIS_ENABLED: {{ $redis }}
