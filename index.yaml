@@ -879,6 +879,30 @@ entries:
     version: 0.1.0
   kutt:
   - apiVersion: v2
+    appVersion: v3.2.3
+    created: "2025-09-06T17:43:16.161370937Z"
+    description: Kutt is a modern URL shortener with support for custom domains. Shorten
+      URLs, manage your links and view the click rate statistics.
+    digest: 0d738ecba862dde9acd9907ac8a077b5b2e7c815a55ce20af40034791526e677
+    home: https://github.com/thedevs-network/kutt
+    icon: https://irfanhakim-as.github.io/charts/logos/kutt.svg
+    keywords:
+    - kutt
+    - url
+    - shortener
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: kutt
+    sources:
+    - https://github.com/thedevs-network/kutt
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.2.0/kutt-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: v2.7.4
     created: "2024-11-21T08:34:05.193182103Z"
     description: Kutt is a modern URL shortener with support for custom domains. Shorten
@@ -3301,4 +3325,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-08-19T07:53:04.686331221Z"
+generated: "2025-09-06T17:43:16.161807851Z"
