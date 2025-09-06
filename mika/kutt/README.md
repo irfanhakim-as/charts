@@ -182,6 +182,7 @@ A unique, secure secret key is required for each Kutt installation.
 | postgres.password | string | `""` | The password associated with the Kutt database user. |
 | postgres.port | string | `""` | The port number the Kutt database server is listening for connections. Default: `"5432"`. |
 | postgres.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
+| postgres.type | string | `""` | The database engine or backend being used by Kutt. Default: `"better-sqlite3"`. |
 | postgres.user | string | `""` | The username or user account for accessing the Kutt database. |
 | redis.enabled | bool | `true` | Specifies whether to enable Redis integration for the Kutt server. |
 | redis.external | bool | `false` | Specifies whether the Redis server is deployed externally. |

@@ -193,6 +193,12 @@ redis:
 
 # PostgreSQL configurations.
 postgres:
+  # The database engine or backend being used by Kutt.
+  # Note: Supported database clients: `better-sqlite3` (SQLite), `mysql2` (MySQL), `pg` (PostgreSQL).
+  # Default: "better-sqlite3"
+  # Example:
+  # type: "pg"
+  type: ""
   # The hostname or IP address of the Kutt database server.
   # Example:
   # host: "kutt.default.svc.cluster.local"
