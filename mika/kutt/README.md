@@ -169,6 +169,7 @@ A unique, secure secret key is required for each Kutt installation.
 | kutt.secret | string | `""` | A 50-character secret key used for encrypting JSON Web Tokens (JWTs). |
 | kutt.useHttps | string | `""` | Specifies whether Kutt should use HTTPS for custom domains. Default: `"true"`. |
 | mail.contact_email | string | `""` | The email address to be displayed as the contact email in the application. |
+| mail.enabled | bool | `true` | Specifies whether to enable email integration and features that require it. |
 | mail.from_email | string | `""` | The email address used as the "from" address for sent emails. Default: `"$name <$mail.smtp.user>"`. |
 | mail.report_email | string | `""` | The email address that will receive submitted reports. |
 | mail.secure | string | `""` | Specifies whether Kutt should use a secure TLS connection when sending emails. Default: `"true"`. |

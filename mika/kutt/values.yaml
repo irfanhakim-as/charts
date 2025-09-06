@@ -122,6 +122,10 @@ google:
 
 # Mail configurations.
 mail:
+  # Specifies whether to enable email integration and features that require it.
+  # Example:
+  # enabled: false
+  enabled: true
   # The email address to be displayed as the contact email in the application.
   # Example:
   # contact_email: "contact@example.com"
