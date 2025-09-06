@@ -166,7 +166,7 @@ mail:
     # password: "password"
     password: ""
 
-# External Redis configurations.
+# Redis configurations.
 redis:
   # Specifies whether Kutt should use an external Redis server.
   # Example:
