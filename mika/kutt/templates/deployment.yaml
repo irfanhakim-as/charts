@@ -1,5 +1,8 @@
 {{- $externalRedis := .Values.redis.external }}
-{{- $redisPersistence := .Values.storage.redis.enabled }}
+{{- $redis := .Values.redis.enabled }}
+{{- $db_type := .Values.db.type | default "better-sqlite3" | toString }}
+{{- $dataPersistence := and .Values.storage.data.enabled (eq $db_type "better-sqlite3") }}
+{{- $redisPersistence := and .Values.storage.redis.enabled $redis (not $externalRedis) }}
 {{- $kutt_registry := .Values.image.kutt.registry | default "docker.io" | toString }}
 {{- $kutt_repository := .Values.image.kutt.repository | default "kutt/kutt" | toString }}
 {{- $kutt_tag := .Values.image.kutt.tag | default .Chart.AppVersion | toString }}
@@ -9,6 +12,8 @@
 {{- $redis_tag := .Values.image.redis.tag | default "6.0-alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/var/lib/kutt" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
 {{- $redisMountPath := .Values.storage.redis.mountPath | default "/data" | toString | quote }}
 {{- $redisSubPath := .Values.storage.redis.subPath | toString }}
 ---
@@ -40,11 +45,13 @@ spec:
         - name: kutt
           image: {{ printf "%s/%s:%s" $kutt_registry $kutt_repository $kutt_tag | quote }}
           imagePullPolicy: {{ $kutt_pullPolicy }}
+        {{- if semverCompare "<3.0.0" $kutt_tag }}
           command: ["/bin/bash"]
           args:
             - -c
             - >-
               ./wait-for-it.sh $(DB_HOST):$(DB_PORT) -- npm start
+        {{- end }}
           ports:
             - name: kutt
               containerPort: 3000
@@ -56,9 +63,21 @@ spec:
                 name: {{ .Release.Name }}-kutt-config
             - secretRef:
                 name: {{ .Release.Name }}-kutt-secret
+          {{- if $redis }}
             - secretRef:
                 name: {{ .Release.Name }}-kutt-redis-secret
-        {{- if not $externalRedis }}
+          {{- end }}
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-kutt-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+        {{- if and $redis (not $externalRedis) }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
           imagePullPolicy: {{ $redis_pullPolicy }}
@@ -86,9 +105,16 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
-      {{- if and (not $externalRedis) $redisPersistence }}
+      {{- if or $dataPersistence $redisPersistence }}
       volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-kutt-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-kutt-kutt-data-pvc
+        {{- end }}
+        {{- if $redisPersistence }}
         - name: {{ .Release.Name }}-kutt-redis-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-kutt-redis-data-pvc
+        {{- end }}
       {{- end }}

@@ -141,6 +141,13 @@ A unique, secure secret key is required for each Kutt installation.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| db.host | string | `""` | The hostname or IP address of the Kutt database server. |
+| db.name | string | `""` | The name of the database being used by Kutt. |
+| db.password | string | `""` | The password associated with the Kutt database user. |
+| db.port | string | `""` | The port number the Kutt database server is listening for connections. Default: `"5432"`. |
+| db.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
+| db.type | string | `""` | The database engine or backend being used by Kutt. Default: `"better-sqlite3"`. |
+| db.user | string | `""` | The username or user account for accessing the Kutt database. |
 | google.recaptchaSecretKey | string | `""` | The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | google.recaptchaSiteKey | string | `""` | The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | google.safeBrowsingKey | string | `""` | The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started. |
@@ -169,6 +176,7 @@ A unique, secure secret key is required for each Kutt installation.
 | kutt.secret | string | `""` | A 50-character secret key used for encrypting JSON Web Tokens (JWTs). |
 | kutt.useHttps | string | `""` | Specifies whether Kutt should use HTTPS for custom domains. Default: `"true"`. |
 | mail.contact_email | string | `""` | The email address to be displayed as the contact email in the application. |
+| mail.enabled | bool | `true` | Specifies whether to enable email integration and features that require it. |
 | mail.from_email | string | `""` | The email address used as the "from" address for sent emails. Default: `"$name <$mail.smtp.user>"`. |
 | mail.report_email | string | `""` | The email address that will receive submitted reports. |
 | mail.secure | string | `""` | Specifies whether Kutt should use a secure TLS connection when sending emails. Default: `"true"`. |
@@ -176,24 +184,25 @@ A unique, secure secret key is required for each Kutt installation.
 | mail.smtp.password | string | `""` | The password for authenticating with the SMTP server. |
 | mail.smtp.port | string | `""` | The port number on the SMTP server used for sending emails. Default: `"465"`. |
 | mail.smtp.user | string | `""` | The username for authenticating with the SMTP server. |
-| postgres.host | string | `""` | The hostname or IP address of the Kutt database server. |
-| postgres.name | string | `""` | The name of the database being used by Kutt. |
-| postgres.password | string | `""` | The password associated with the Kutt database user. |
-| postgres.port | string | `""` | The port number the Kutt database server is listening for connections. Default: `"5432"`. |
-| postgres.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
-| postgres.user | string | `""` | The username or user account for accessing the Kutt database. |
-| redis.external | bool | `false` | Specifies whether Kutt should use an external Redis server. |
-| redis.host | string | `""` | The hostname or IP address of the external Redis server. |
-| redis.password | string | `""` | The password for authenticating with the external Redis server. |
-| redis.port | string | `""` | The port number on which the external Redis server is listening for connections. Default: `"6379"`. |
+| redis.enabled | bool | `true` | Specifies whether to enable Redis integration for the Kutt server. |
+| redis.external | bool | `false` | Specifies whether the Redis server is deployed externally. |
+| redis.host | string | `""` | The hostname or IP address of the Redis server. Default: `"localhost"`. |
+| redis.password | string | `""` | The password for authenticating with the Redis server. |
+| redis.port | string | `""` | The port number on which the Redis server is listening for connections. Default: `"6379"`. |
 | replicaCount | string | `""` | The desired number of running replicas for Kutt. Default: `"1"`. |
 | resources.kutt | object | `{}` | Kutt container resources. |
 | resources.redis | object | `{}` | Redis container resources. |
 | service.kutt.nodePort | string | `""` | The optional node port to expose for Kutt when the service type is NodePort. |
 | service.kutt.port | string | `""` | The Kutt port on which the Kutt server should listen for connections. Default: `"3000"`. |
 | service.redis.nodePort | string | `""` | The optional node port to expose for Redis when the service type is NodePort. |
-| service.redis.port | string | `""` | The Redis port on which the Kutt server should listen for connections. Default: `"6379"`. |
+| service.redis.port | string | `""` | The Redis port on which the Kutt server should listen for connections. Default: `"${redis.port}"`. |
 | service.type | string | `""` | The type of service used to expose Kutt services. Default: `"ClusterIP"`. |
+| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
+| storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/var/lib/kutt"`. |
+| storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
+| storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
+| storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |
 | storage.redis.accessMode | string | `""` | The access mode defining how the Redis storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.redis.enabled | bool | `true` | Specifies whether persistent storage should be provisioned for Redis storage. |
 | storage.redis.mountPath | string | `""` | The path where the Redis storage should be mounted on the container. Default: `"/data"`. |

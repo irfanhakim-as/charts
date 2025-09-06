@@ -1,7 +1,9 @@
 {{- $externalRedis := .Values.redis.external }}
+{{- $redis := .Values.redis.enabled }}
 {{- $kuttPort := .Values.service.kutt.port | default "3000" | toString }}
 {{- $kuttNodePort := .Values.service.kutt.nodePort | toString }}
-{{- $redisPort := .Values.service.redis.port | default "6379" | toString }}
+{{- $redisPort := .Values.redis.port | default "6379" | toString }}
+{{- $redisSvcPort := .Values.service.redis.port | default $redisPort | toString }}
 {{- $redisNodePort := .Values.service.redis.nodePort | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 ---
@@ -21,14 +23,14 @@ spec:
       {{- end }}
       protocol: TCP
       name: kutt
-    {{- if not $externalRedis }}
-    - port: {{ int $redisPort }}
+  {{- if and $redis (not $externalRedis) }}
+    - port: {{ int $redisSvcPort }}
       targetPort: redis
       {{- if and (eq $type "NodePort") $redisNodePort }}
       nodePort: {{ int $redisNodePort }}
       {{- end }}
       protocol: TCP
       name: redis
-    {{- end }}
+  {{- end }}
   selector:
     {{- include "kutt.selectorLabels" . | nindent 4 }}

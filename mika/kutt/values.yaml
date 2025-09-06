@@ -122,6 +122,10 @@ google:
 
 # Mail configurations.
 mail:
+  # Specifies whether to enable email integration and features that require it.
+  # Example:
+  # enabled: false
+  enabled: true
   # The email address to be displayed as the contact email in the application.
   # Example:
   # contact_email: "contact@example.com"
@@ -162,28 +166,39 @@ mail:
     # password: "password"
     password: ""
 
-# External Redis configurations.
+# Redis configurations.
 redis:
-  # Specifies whether Kutt should use an external Redis server.
+  # Specifies whether to enable Redis integration for the Kutt server.
+  # Example:
+  # enabled: false
+  enabled: true
+  # Specifies whether the Redis server is deployed externally.
   # Example:
   # external: true
   external: false
-  # The hostname or IP address of the external Redis server.
+  # The hostname or IP address of the Redis server.
+  # Default: "localhost"
   # Example:
   # host: "redis.default.svc.cluster.local"
   host: ""
-  # The port number on which the external Redis server is listening for connections.
+  # The port number on which the Redis server is listening for connections.
   # Default: "6379"
   # Example:
   # port: "9763"
   port: ""
-  # The password for authenticating with the external Redis server.
+  # The password for authenticating with the Redis server.
   # Example:
   # password: "password"
   password: ""
 
-# PostgreSQL configurations.
-postgres:
+# Database configurations.
+db:
+  # The database engine or backend being used by Kutt.
+  # Note: Supported database clients: `better-sqlite3` (SQLite), `mysql2` (MySQL), `pg` (PostgreSQL).
+  # Default: "better-sqlite3"
+  # Example:
+  # type: "pg"
+  type: ""
   # The hostname or IP address of the Kutt database server.
   # Example:
   # host: "kutt.default.svc.cluster.local"
@@ -270,13 +285,44 @@ service:
     # nodePort: "32000"
     nodePort: ""
     # The Redis port on which the Kutt server should listen for connections.
-    # Default: "6379"
+    # Default: "${redis.port}"
     # Example:
     # port: "8443"
     port: ""
 
 # Storage configurations.
 storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Note: Enabling data storage persistence will only apply if the database type is set to SQLite.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteOnce"
+    # Example:
+    # accessMode: "ReadWriteMany"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/var/lib/kutt"
+    # Example:
+    # mountPath: "/config"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
   # Redis storage configurations.
   redis:
     # Specifies whether persistent storage should be provisioned for Redis storage.
