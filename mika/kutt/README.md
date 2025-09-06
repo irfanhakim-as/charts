@@ -183,10 +183,11 @@ A unique, secure secret key is required for each Kutt installation.
 | postgres.port | string | `""` | The port number the Kutt database server is listening for connections. Default: `"5432"`. |
 | postgres.ssl | string | `""` | Specifies whether the Kutt database server should use SSL. Default: `"false"`. |
 | postgres.user | string | `""` | The username or user account for accessing the Kutt database. |
-| redis.external | bool | `false` | Specifies whether Kutt should use an external Redis server. |
-| redis.host | string | `""` | The hostname or IP address of the external Redis server. |
-| redis.password | string | `""` | The password for authenticating with the external Redis server. |
-| redis.port | string | `""` | The port number on which the external Redis server is listening for connections. Default: `"6379"`. |
+| redis.enabled | bool | `true` | Specifies whether to enable Redis integration for the Kutt server. |
+| redis.external | bool | `false` | Specifies whether the Redis server is deployed externally. |
+| redis.host | string | `""` | The hostname or IP address of the Redis server. Default: `"localhost"`. |
+| redis.password | string | `""` | The password for authenticating with the Redis server. |
+| redis.port | string | `""` | The port number on which the Redis server is listening for connections. Default: `"6379"`. |
 | replicaCount | string | `""` | The desired number of running replicas for Kutt. Default: `"1"`. |
 | resources.kutt | object | `{}` | Kutt container resources. |
 | resources.redis | object | `{}` | Redis container resources. |
