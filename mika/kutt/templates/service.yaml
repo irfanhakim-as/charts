@@ -1,4 +1,5 @@
 {{- $externalRedis := .Values.redis.external }}
+{{- $redis := .Values.redis.enabled }}
 {{- $kuttPort := .Values.service.kutt.port | default "3000" | toString }}
 {{- $kuttNodePort := .Values.service.kutt.nodePort | toString }}
 {{- $redisPort := .Values.service.redis.port | default "6379" | toString }}
@@ -21,7 +22,7 @@ spec:
       {{- end }}
       protocol: TCP
       name: kutt
-    {{- if not $externalRedis }}
+  {{- if and $redis (not $externalRedis) }}
     - port: {{ int $redisPort }}
       targetPort: redis
       {{- if and (eq $type "NodePort") $redisNodePort }}
@@ -29,6 +30,6 @@ spec:
       {{- end }}
       protocol: TCP
       name: redis
-    {{- end }}
+  {{- end }}
   selector:
     {{- include "kutt.selectorLabels" . | nindent 4 }}
