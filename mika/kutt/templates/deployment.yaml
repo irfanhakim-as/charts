@@ -1,5 +1,7 @@
 {{- $externalRedis := .Values.redis.external }}
 {{- $redis := .Values.redis.enabled }}
+{{- $db_type := .Values.postgres.type | default "better-sqlite3" | toString }}
+{{- $dataPersistence := and .Values.storage.data.enabled (eq $db_type "better-sqlite3") }}
 {{- $redisPersistence := and .Values.storage.redis.enabled $redis (not $externalRedis) }}
 {{- $kutt_registry := .Values.image.kutt.registry | default "docker.io" | toString }}
 {{- $kutt_repository := .Values.image.kutt.repository | default "kutt/kutt" | toString }}
@@ -10,6 +12,8 @@
 {{- $redis_tag := .Values.image.redis.tag | default "6.0-alpine" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/var/lib/kutt" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
 {{- $redisMountPath := .Values.storage.redis.mountPath | default "/data" | toString | quote }}
 {{- $redisSubPath := .Values.storage.redis.subPath | toString }}
 ---
@@ -63,6 +67,16 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-kutt-redis-secret
           {{- end }}
+          {{- if or $dataPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-kutt-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
         {{- if and $redis (not $externalRedis) }}
         - name: redis
           image: {{ printf "%s/%s:%s" $redis_registry $redis_repository $redis_tag | quote }}
@@ -91,9 +105,16 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
-      {{- if and (not $externalRedis) $redisPersistence }}
+      {{- if or $dataPersistence $redisPersistence }}
       volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-kutt-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-kutt-kutt-data-pvc
+        {{- end }}
+        {{- if $redisPersistence }}
         - name: {{ .Release.Name }}-kutt-redis-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-kutt-redis-data-pvc
+        {{- end }}
       {{- end }}
