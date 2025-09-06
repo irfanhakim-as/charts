@@ -40,11 +40,13 @@ spec:
         - name: kutt
           image: {{ printf "%s/%s:%s" $kutt_registry $kutt_repository $kutt_tag | quote }}
           imagePullPolicy: {{ $kutt_pullPolicy }}
+        {{- if semverCompare "<3.0.0" $kutt_tag }}
           command: ["/bin/bash"]
           args:
             - -c
             - >-
               ./wait-for-it.sh $(DB_HOST):$(DB_PORT) -- npm start
+        {{- end }}
           ports:
             - name: kutt
               containerPort: 3000
