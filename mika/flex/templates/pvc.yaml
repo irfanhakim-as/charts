@@ -3,6 +3,7 @@
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $jellyseerr := .Values.jellyseerr.enabled }}
+{{- $lidarr := .Values.lidarr.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -36,6 +37,7 @@
 {{- $jackettDataStorage := .Values.jackett.dataStorage | default $dataStorage | toString | quote }}
 {{- $jellyfinDataStorage := .Values.jellyfin.dataStorage | default $dataStorage | toString | quote }}
 {{- $jellyseerrDataStorage := .Values.jellyseerr.dataStorage | default $dataStorage | toString | quote }}
+{{- $lidarrDataStorage := .Values.lidarr.dataStorage | default $dataStorage | toString | quote }}
 {{- $overseerrDataStorage := .Values.overseerr.dataStorage | default $dataStorage | toString | quote }}
 {{- $plexDataStorage := .Values.plex.dataStorage | default $dataStorage | toString | quote }}
 {{- $qbtDataStorage := .Values.qbt.dataStorage | default $dataStorage | toString | quote }}
@@ -120,6 +122,22 @@ spec:
   resources:
     requests:
       storage: {{ $jellyseerrDataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+  {{- end }}
+  {{- if $lidarr }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-flex-lidarr-data-pvc
+  labels:
+    {{- include "flex.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $dataAccessMode }}
+  resources:
+    requests:
+      storage: {{ $lidarrDataStorage }}
   storageClassName: {{ $dataStorageClassName }}
   {{- end }}
   {{- if $overseerr }}
