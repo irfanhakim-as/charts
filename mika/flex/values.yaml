@@ -198,7 +198,7 @@ image:
     # Default: "linuxserver/sonarr"
     repository: ""
     # The tag that specifies the version of the Sonarr container image used.
-    # Default: "4.0.14.2939-ls276"
+    # Default: "4.0.15.2941-ls291"
     tag: ""
     # The policy that determines when Kubernetes should pull the Sonarr container image.
     # Default: "IfNotPresent"

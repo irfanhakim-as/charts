@@ -96,7 +96,7 @@
 {{- $radarr_pullPolicy := .Values.image.radarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
 {{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
-{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.14.2939-ls276" | toString }}
+{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.15.2941-ls291" | toString }}
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $bazarrResources := .Values.resources.bazarr }}
