@@ -1123,6 +1123,10 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jellyseerr.registry | string | `""` | The registry where the Jellyseerr container image is hosted. Default: `"ghcr.io"`. |
 | image.jellyseerr.repository | string | `""` | The name of the repository that contains the Jellyseerr container image used. Default: `"fallenbagel/jellyseerr"`. |
 | image.jellyseerr.tag | string | `""` | The tag that specifies the version of the Jellyseerr container image used. Default: `"2.5.2"`. |
+| image.lidarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: "IfNotPresent". |
+| image.lidarr.registry | string | `""` | The registry where the Lidarr container image is hosted. Default: `"lscr.io"`. |
+| image.lidarr.repository | string | `""` | The name of the repository that contains the Lidarr container image used. Default: `"linuxserver/lidarr"`. |
+| image.lidarr.tag | string | `""` | The tag that specifies the version of the Lidarr container image used. Default: `"3.1.0.4875-ls15"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
@@ -1180,6 +1184,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyseerr.enabled | bool | `false` | Specifies whether Jellyseerr should be deployed or excluded in case an external Jellyseerr server is used. |
 | jellyseerr.ingress | bool | `false` | Specifies whether the Jellyseerr service should be served publicly using an Ingress. |
 | jellyseerr.logLevel | string | `""` | The verbosity level of the Jellyseerr logs. Default: `"info"`. |
+| lidarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Lidarr container. Items: `.mountPath`, `.subPath`, `.config`. |
+| lidarr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Lidarr container. |
+| lidarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Lidarr data storage. |
+| lidarr.domain | string | `""` | The ingress domain name that hosts the Lidarr server. |
+| lidarr.enabled | bool | `false` | Specifies whether Lidarr should be deployed or excluded in case an external Lidarr server is used. |
+| lidarr.ingress | bool | `false` | Specifies whether the Lidarr service should be served publicly using an Ingress. |
 | nodeSelector | object | `{}` | Specify node labels that target nodes must have for pod scheduling. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Overseerr container. |
@@ -1214,6 +1224,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.jellyfin | object | `{}` | Jellyfin container resources. |
 | resources.jellyplexWatched | object | `{}` | JellyPlex-Watched container resources. |
 | resources.jellyseerr | object | `{}` | Jellyseerr container resources. |
+| resources.lidarr | object | `{}` | Lidarr container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
@@ -1235,6 +1246,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 | service.jellyfin.web.port | string | `""` | The Jellyfin web port on which the Jellyfin server should listen for connections. Default: `"8096"`. |
 | service.jellyseerr.nodePort | string | `""` | The optional node port to expose for Jellyseerr when the service type is NodePort. |
 | service.jellyseerr.port | string | `""` | The Jellyseerr port on which the Jellyseerr server should listen for connections. Default: `"5550"`. |
+| service.lidarr.nodePort | string | `""` | The optional node port to expose for Lidarr when the service type is NodePort. |
+| service.lidarr.port | string | `""` | The Lidarr port on which the Lidarr server should listen for connections. Default: `"8686"`. |
 | service.overseerr.nodePort | string | `""` | The optional node port to expose for Overseerr when the service type is NodePort. |
 | service.overseerr.port | string | `""` | The Overseerr port on which the Overseerr server should listen for connections. Default: `"5055"`. |
 | service.plex.nodePort | string | `""` | The optional node port to expose for Plex when the service type is NodePort. |
