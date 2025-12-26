@@ -1142,7 +1142,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jellyseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyseerr container image. Default: `"IfNotPresent"`. |
 | image.jellyseerr.registry | string | `""` | The registry where the Jellyseerr container image is hosted. Default: `"ghcr.io"`. |
 | image.jellyseerr.repository | string | `""` | The name of the repository that contains the Jellyseerr container image used. Default: `"fallenbagel/jellyseerr"`. |
-| image.jellyseerr.tag | string | `""` | The tag that specifies the version of the Jellyseerr container image used. Default: `"2.5.2"`. |
+| image.jellyseerr.tag | string | `""` | The tag that specifies the version of the Jellyseerr container image used. Default: `"2.7.3"`. |
 | image.lidarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: "IfNotPresent". |
 | image.lidarr.registry | string | `""` | The registry where the Lidarr container image is hosted. Default: `"lscr.io"`. |
 | image.lidarr.repository | string | `""` | The name of the repository that contains the Lidarr container image used. Default: `"linuxserver/lidarr"`. |

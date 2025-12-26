@@ -108,7 +108,7 @@ image:
     # Default: "fallenbagel/jellyseerr"
     repository: ""
     # The tag that specifies the version of the Jellyseerr container image used.
-    # Default: "2.5.2"
+    # Default: "2.7.3"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jellyseerr container image.
     # Default: "IfNotPresent"

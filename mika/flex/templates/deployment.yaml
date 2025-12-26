@@ -72,7 +72,7 @@
 {{- $jpw_pullPolicy := .Values.image.jellyplexWatched.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jellyseerr_registry := .Values.image.jellyseerr.registry | default "ghcr.io" | toString }}
 {{- $jellyseerr_repository := .Values.image.jellyseerr.repository | default "fallenbagel/jellyseerr" | toString }}
-{{- $jellyseerr_tag := .Values.image.jellyseerr.tag | default "2.5.2" | toString }}
+{{- $jellyseerr_tag := .Values.image.jellyseerr.tag | default "2.7.3" | toString }}
 {{- $jellyseerr_pullPolicy := .Values.image.jellyseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $lidarr_registry := .Values.image.lidarr.registry | default "lscr.io" | toString }}
 {{- $lidarr_repository := .Values.image.lidarr.repository | default "linuxserver/lidarr" | toString }}
