@@ -142,7 +142,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Bazarr](https://www.bazarr.media)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Radarr and Sonarr](#radarr-and-sonarr) before proceeding.
+> The following steps require you to have set up and configured [Radarr and Sonarr](#radarr--sonarr--lidarr) before proceeding.
 
 1. Launch the Bazarr web interface.
 
@@ -494,7 +494,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Jellyseerr](https://docs.jellyseerr.dev)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Jellyfin](#jellyfin), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
+> The following steps require you to have set up and configured [Jellyfin](#jellyfin), [Radarr, and Sonarr](#radarr--sonarr--lidarr) before proceeding.
 
 1. Launch the Jellyseerr web interface and choose the server type (i.e. Jellyfin) by selecting their corresponding **Configure** button, and proceeding to login to the selected server.
 
@@ -586,7 +586,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
+> The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr--sonarr--lidarr) before proceeding.
 
 1. Launch the Overseerr web interface and login using your Plex account.
 
@@ -786,7 +786,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
-### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
+### [Radarr](https://radarr.video) / [Sonarr](https://sonarr.tv) / [Lidarr](https://lidarr.audio)
 
 > [!NOTE]  
 > The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Jellyfin](#jellyfin) or [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
