@@ -6,6 +6,7 @@
 {{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $jellyplexWatched := .Values.jellyplexWatched.enabled }}
 {{- $jellyseerr := .Values.jellyseerr.enabled }}
+{{- $lidarr := .Values.lidarr.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -33,6 +34,8 @@
 {{- $jpwConfigs = ternary $jpwConfigs (list) (and $jellyplexWatched (not (empty $jpwConfigs))) }}
 {{- $jellyseerrConfigs := .Values.jellyseerr.customConfigs }}
 {{- $jellyseerrConfigs = ternary $jellyseerrConfigs (list) (and $jellyseerr (not (empty $jellyseerrConfigs))) }}
+{{- $lidarrConfigs := .Values.lidarr.customConfigs }}
+{{- $lidarrConfigs = ternary $lidarrConfigs (list) (and $lidarr (not (empty $lidarrConfigs))) }}
 {{- $overseerrConfigs := .Values.overseerr.customConfigs }}
 {{- $overseerrConfigs = ternary $overseerrConfigs (list) (and $overseerr (not (empty $overseerrConfigs))) }}
 {{- $plexConfigs := .Values.plex.customConfigs }}
@@ -45,51 +48,55 @@
 {{- $sonarrConfigs = ternary $sonarrConfigs (list) (and $sonarr (not (empty $sonarrConfigs))) }}
 {{- $bazarr_registry := .Values.image.bazarr.registry | default "lscr.io" | toString }}
 {{- $bazarr_repository := .Values.image.bazarr.repository | default "linuxserver/bazarr" | toString }}
-{{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.5.1-ls297" | toString }}
+{{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.5.2-ls317" | toString }}
 {{- $bazarr_pullPolicy := .Values.image.bazarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $ersatztv_registry := .Values.image.ersatztv.registry | default "docker.io" | toString }}
 {{- $ersatztv_repository := .Values.image.ersatztv.repository | default "jasongdove/ersatztv" | toString }}
-{{- $ersatztv_tag := .Values.image.ersatztv.tag | default "v25.1.0" | toString }}
+{{- $ersatztv_tag := .Values.image.ersatztv.tag | default "v25.9.0" | toString }}
 {{- $ersatztv_pullPolicy := .Values.image.ersatztv.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
-{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.21" | toString }}
+{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.4.1" | toString }}
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
-{{- $jackett_tag := .Values.image.jackett.tag | default "v0.22.1709-ls721" | toString }}
+{{- $jackett_tag := .Values.image.jackett.tag | default "v0.23.28-ls155" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jellyfin_registry := .Values.image.jellyfin.registry | default "lscr.io" | toString }}
 {{- $jellyfin_repository := .Values.image.jellyfin.repository | default "linuxserver/jellyfin" | toString }}
-{{- $jellyfin_tag := .Values.image.jellyfin.tag | default "10.10.6ubu2404-ls56" | toString }}
+{{- $jellyfin_tag := .Values.image.jellyfin.tag | default "10.11.4ubu2404-ls12" | toString }}
 {{- $jellyfin_pullPolicy := .Values.image.jellyfin.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jpw_registry := .Values.image.jellyplexWatched.registry | default "ghcr.io" | toString }}
 {{- $jpw_repository := .Values.image.jellyplexWatched.repository | default "luigi311/jellyplex-watched" | toString }}
-{{- $jpw_tag := .Values.image.jellyplexWatched.tag | default "7.0.3-alpine" | toString }}
+{{- $jpw_tag := .Values.image.jellyplexWatched.tag | default "8.4.0-alpine" | toString }}
 {{- $jpw_pullPolicy := .Values.image.jellyplexWatched.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jellyseerr_registry := .Values.image.jellyseerr.registry | default "ghcr.io" | toString }}
 {{- $jellyseerr_repository := .Values.image.jellyseerr.repository | default "fallenbagel/jellyseerr" | toString }}
-{{- $jellyseerr_tag := .Values.image.jellyseerr.tag | default "2.5.2" | toString }}
+{{- $jellyseerr_tag := .Values.image.jellyseerr.tag | default "2.7.3" | toString }}
 {{- $jellyseerr_pullPolicy := .Values.image.jellyseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $lidarr_registry := .Values.image.lidarr.registry | default "lscr.io" | toString }}
+{{- $lidarr_repository := .Values.image.lidarr.repository | default "linuxserver/lidarr" | toString }}
+{{- $lidarr_tag := .Values.image.lidarr.tag | default "3.1.0.4875-ls15" | toString }}
+{{- $lidarr_pullPolicy := .Values.image.lidarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $overseerr_registry := .Values.image.overseerr.registry | default "lscr.io" | toString }}
 {{- $overseerr_repository := .Values.image.overseerr.repository | default "linuxserver/overseerr" | toString }}
 {{- $overseerr_tag := .Values.image.overseerr.tag | default "v1.34.0-ls136" | toString }}
 {{- $overseerr_pullPolicy := .Values.image.overseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
 {{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
-{{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
+{{- $plex_tag := .Values.image.plex.tag | default "1.41.5.9522-a96edc606" | toString }}
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
-{{- $qbt_tag := .Values.image.qbt.tag | default "5.0.4-r0-ls387" | toString }}
+{{- $qbt_tag := .Values.image.qbt.tag | default "5.1.4-r1-ls432" | toString }}
 {{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $radarr_registry := .Values.image.radarr.registry | default "lscr.io" | toString }}
 {{- $radarr_repository := .Values.image.radarr.repository | default "linuxserver/radarr" | toString }}
-{{- $radarr_tag := .Values.image.radarr.tag | default "5.21.1.9799-ls266" | toString }}
+{{- $radarr_tag := .Values.image.radarr.tag | default "5.27.5.10198-ls283" | toString }}
 {{- $radarr_pullPolicy := .Values.image.radarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $sonarr_registry := .Values.image.sonarr.registry | default "lscr.io" | toString }}
 {{- $sonarr_repository := .Values.image.sonarr.repository | default "linuxserver/sonarr" | toString }}
-{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.14.2939-ls276" | toString }}
+{{- $sonarr_tag := .Values.image.sonarr.tag | default "4.0.15.2941-ls291" | toString }}
 {{- $sonarr_pullPolicy := .Values.image.sonarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
 {{- $bazarrResources := .Values.resources.bazarr }}
@@ -99,6 +106,7 @@
 {{- $jellyfinResources := .Values.resources.jellyfin }}
 {{- $jpwResources := .Values.resources.jellyplexWatched }}
 {{- $jellyseerrResources := .Values.resources.jellyseerr }}
+{{- $lidarrResources := .Values.resources.lidarr }}
 {{- $overseerrResources := .Values.resources.overseerr }}
 {{- $plexResources := .Values.resources.plex }}
 {{- $qbtResources := .Values.resources.qbt }}
@@ -110,6 +118,7 @@
 {{- $jackettDataMountPath := .Values.jackett.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $jellyfinDataMountPath := .Values.jellyfin.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $jellyseerrDataMountPath := .Values.jellyseerr.dataMountPath | default "/app/config" | toString | quote }}
+{{- $lidarrDataMountPath := .Values.lidarr.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $overseerrDataMountPath := .Values.overseerr.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $plexDataMountPath := .Values.plex.dataMountPath | default $dataMountPath | toString | quote }}
 {{- $qbtDataMountPath := .Values.qbt.dataMountPath | default $dataMountPath | toString | quote }}
@@ -123,7 +132,7 @@
 {{- $globalSubPath := .Values.storage.global.subPath | toString }}
 {{- $mediaSubPath := .Values.storage.media.subPath | toString }}
 {{- $gid := .Values.global.gid | default "1000" | int }}
-{{- if or $bazarr $ersatztv $flaresolverr $jackett $jellyfin $jellyplexWatched $jellyseerr $overseerr $plex $qbt $radarr $sonarr }}
+{{- if or $bazarr $ersatztv $flaresolverr $jackett $jellyfin $jellyplexWatched $jellyseerr $lidarr $overseerr $plex $qbt $radarr $sonarr }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -147,6 +156,10 @@ spec:
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
@@ -406,6 +419,59 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
+        {{- if $lidarr }}
+        - name: lidarr
+          image: {{ printf "%s/%s:%s" $lidarr_registry $lidarr_repository $lidarr_tag | quote }}
+          imagePullPolicy: {{ $lidarr_pullPolicy }}
+          ports:
+            - name: lidarr
+              containerPort: 8686
+              protocol: TCP
+          resources:
+            {{- toYaml $lidarrResources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-global-cm
+            - configMapRef:
+                name: {{ .Release.Name }}-flex-lsio-cm
+          {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence $lidarrConfigs }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-flex-lidarr-data
+              mountPath: {{ $lidarrDataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $downloadsPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $downloadsSmb }}smb{{- else }}downloads{{- end }}
+              mountPath: {{ $downloadsMountPath }}
+              {{- if $downloadsSubPath }}
+              subPath: {{ $downloadsSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $globalPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $globalSmb }}smb{{- else }}global{{- end }}
+              mountPath: {{ $globalMountPath }}
+              {{- if $globalSubPath }}
+              subPath: {{ $globalSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $mediaPersistence }}
+            - name: {{ .Release.Name }}-flex-{{- if $mediaSmb }}smb{{- else }}media{{- end }}
+              mountPath: {{ $mediaMountPath }}
+              {{- if $mediaSubPath }}
+              subPath: {{ $mediaSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- range $lidarrConfigs }}
+            - name: {{ $releaseName }}-flex-custom-configs
+              mountPath: {{ .mountPath }}
+              subPath: lidarr-{{ .subPath }}
+              readOnly: false
+            {{- end }}
+          {{- end }}
+        {{- end }}
         {{- if $overseerr }}
         - name: overseerr
           image: {{ printf "%s/%s:%s" $overseerr_registry $overseerr_repository $overseerr_tag | quote }}
@@ -646,7 +712,7 @@ spec:
             {{- end }}
           {{- end }}
         {{- end }}
-      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $ersatztvConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
+      {{- if or $dataPersistence $downloadsPersistence $globalPersistence $mediaPersistence (or $bazarrConfigs $ersatztvConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $lidarrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs) }}
       volumes:
         {{- if $dataPersistence }}
           {{- if $bazarr }}
@@ -673,6 +739,11 @@ spec:
         - name: {{ .Release.Name }}-flex-jellyseerr-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-jellyseerr-data-pvc
+          {{- end }}
+          {{- if $lidarr }}
+        - name: {{ .Release.Name }}-flex-lidarr-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-flex-lidarr-data-pvc
           {{- end }}
           {{- if $overseerr }}
         - name: {{ .Release.Name }}-flex-overseerr-data
@@ -720,13 +791,13 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-flex-smb-pvc
         {{- end }}
-        {{- if or $bazarrConfigs $ersatztvConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
+        {{- if or $bazarrConfigs $ersatztvConfigs $fsConfigs $jackettConfigs $jellyfinConfigs $jpwConfigs $jellyseerrConfigs $lidarrConfigs $overseerrConfigs $plexConfigs $qbtConfigs $radarrConfigs $sonarrConfigs }}
         - name: {{ .Release.Name }}-flex-custom-configs
           secret:
             secretName: {{ .Release.Name }}-flex-custom-configs
         {{- end }}
       {{- end }}
-      {{- if or $bazarr $ersatztv $jackett $jellyfin $overseerr $qbt $radarr $sonarr }}
+      {{- if or $bazarr $ersatztv $jackett $jellyfin $lidarr $overseerr $qbt $radarr $sonarr }}
       securityContext:
         fsGroup: {{ $gid }}
       {{- end }}

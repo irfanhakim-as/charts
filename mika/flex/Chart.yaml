@@ -2,8 +2,7 @@ apiVersion: v2
 name: flex
 description: Flex is a collection of curated services that aims to provide a complete home media server solution.
 type: application
-version: 0.2.1
-appVersion: "1.41.5.9522-a96edc606"
+version: 0.3.0
 keywords:
   - "flex"
   - "plex"
@@ -17,6 +16,7 @@ keywords:
   - "jellyfin"
   - "jellyplex-watched"
   - "jellyseerr"
+  - "lidarr"
   - "overseerr"
   - "qbittorrent"
   - "radarr"
@@ -32,6 +32,7 @@ sources:
   - "https://github.com/linuxserver/docker-jellyfin"
   - "https://github.com/luigi311/JellyPlex-Watched"
   - "https://github.com/fallenbagel/jellyseerr"
+  - "https://github.com/linuxserver/docker-lidarr"
   - "https://github.com/linuxserver/docker-overseerr"
   - "https://github.com/linuxserver/docker-qbittorrent"
   - "https://github.com/linuxserver/docker-radarr"

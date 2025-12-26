@@ -142,7 +142,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Bazarr](https://www.bazarr.media)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Radarr and Sonarr](#radarr-and-sonarr) before proceeding.
+> The following steps require you to have set up and configured [Radarr and Sonarr](#radarr--sonarr--lidarr) before proceeding.
 
 1. Launch the Bazarr web interface.
 
@@ -494,7 +494,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Jellyseerr](https://docs.jellyseerr.dev)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Jellyfin](#jellyfin), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
+> The following steps require you to have set up and configured [Jellyfin](#jellyfin), [Radarr, and Sonarr](#radarr--sonarr--lidarr) before proceeding.
 
 1. Launch the Jellyseerr web interface and choose the server type (i.e. Jellyfin) by selecting their corresponding **Configure** button, and proceeding to login to the selected server.
 
@@ -586,7 +586,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 ### [Overseerr](https://overseerr.dev)
 
 > [!NOTE]  
-> The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr-and-sonarr) before proceeding.
+> The following steps require you to have set up and configured [Plex](#plex), [Radarr, and Sonarr](#radarr--sonarr--lidarr) before proceeding.
 
 1. Launch the Overseerr web interface and login using your Plex account.
 
@@ -786,12 +786,12 @@ Flex is a collection of curated services that aims to provide a complete home me
 
 ---
 
-### [Radarr](https://radarr.video) and [Sonarr](https://sonarr.tv)
+### [Radarr](https://radarr.video) / [Sonarr](https://sonarr.tv) / [Lidarr](https://lidarr.audio)
 
 > [!NOTE]  
 > The following steps require you to have set up and configured [Jackett](#jackett-and-flaresolverr), [Jellyfin](#jellyfin) or [Plex](#plex), and [qBittorrent](#qbittorrent) before proceeding.
 
-1. Launch the Radarr/Sonarr web interface.
+1. Launch the Radarr/Sonarr/Lidarr web interface.
 
 2. In the **Authentication Required** form:
 
@@ -807,7 +807,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Click the **Save** button.
 
-3. Add indexers to Radarr/Sonarr:
+3. Add indexers to Radarr/Sonarr/Lidarr:
 
    - Click the **Settings** menu item on the left, and then click the **Indexers** link.
 
@@ -826,11 +826,11 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - API Key: Copy the API key from Jackett and paste it in this field.
 
-     - Categories: Expand the dropdown and select all **Movie** (Radarr) or **TV** and **Anime** (Sonarr) related categories.
+     - Categories: Expand the dropdown and select all **Movie** (Radarr), **TV** and **Anime** (Sonarr), or **Audio** (Lidarr) related categories.
 
-     - Anime Categories (Sonarr): Expand the dropdown and select all **Anime** related categories.
+     - **(Sonarr)** Anime Categories: Expand the dropdown and select all **Anime** related categories.
 
-     - Anime Standard Format Search (Sonarr): `Enabled` if the indexer has Anime related categories selected.
+     - **(Sonarr)** Anime Standard Format Search: `Enabled` if the indexer has Anime related categories selected.
 
      - Leave the rest of the fields as default.
 
@@ -840,7 +840,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - Repeat the last step for each indexer you wish to add from Jackett.
 
-4. Add a download client to Radarr/Sonarr:
+4. Add a download client to Radarr/Sonarr/Lidarr:
 
    - Click the **Settings** menu item on the left, and then click the **Download Clients** link.
 
@@ -874,13 +874,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 
        - Host: Expand the dropdown and select the qBittorrent server.
 
-       - Remote Path: Set the parent folder where your Movie media (Radarr) or TV media (Sonarr) is downloaded to on the qBittorrent server i.e. `/downloads/`.
+       - Remote Path: Set the parent folder where your media is downloaded to on the qBittorrent server i.e. `/downloads/`.
 
-       - Local Path: Set the path to the same parent folder where it is mounted on the Radarr/Sonarr container i.e. `/flex/Downloads/`.
+       - Local Path: Set the path to the same parent folder where it is mounted on the Radarr/Sonarr/Lidarr container i.e. `/flex/Downloads/`.
 
        - Click the **Save** button.
 
-5. **(Optional)** Add a connection to Jellyfin from Radarr/Sonarr:
+5. **(Optional)** Add a connection to Jellyfin from Radarr/Sonarr/Lidarr:
 
    - Click the **Settings** menu item on the left, and then click the **Connect** link.
 
@@ -901,13 +901,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - If you're using an external Jellyfin server and require path mapping:
 
-       - Map Paths From: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on Flex i.e. `/flex/Media`.
+       - Map Paths From: Add the path to the parent folder where your media are stored on Flex i.e. `/flex/Media`.
 
-       - Map Paths To: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on the external Jellyfin server i.e. `/data`.
+       - Map Paths To: Add the path to the parent folder where your media are stored on the external Jellyfin server i.e. `/data`.
 
      - Click the **Save** button.
 
-6. **(Optional)** Add a connection to Plex from Radarr/Sonarr:
+6. **(Optional)** Add a connection to Plex from Radarr/Sonarr/Lidarr:
 
    - Click the **Settings** menu item on the left, and then click the **Connect** link.
 
@@ -928,31 +928,51 @@ Flex is a collection of curated services that aims to provide a complete home me
 
      - If you're using an external Plex server and require path mapping:
 
-       - Map Paths From: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on Flex i.e. `/flex/Media`.
+       - Map Paths From: Add the path to the parent folder where your media are stored on Flex i.e. `/flex/Media`.
 
-       - Map Paths To: Add the path to the parent folder where your Movie media (Radarr) and TV media (Sonarr) are stored on the external Plex server i.e. `/data`.
+       - Map Paths To: Add the path to the parent folder where your media are stored on the external Plex server i.e. `/data`.
 
      - Click the **Save** button.
 
-7. Configure the media management settings on Radarr/Sonarr:
+7. Configure the media management settings on Radarr/Sonarr/Lidarr:
 
-   - Click the **Settings** menu item on the left, and then click the **Media Management** link.
+   - Radarr/Sonarr:
 
-   - Under the **Importing** section:
+     - Click the **Settings** menu item on the left, and then click the **Media Management** link.
 
-     - Import Extra Files: Toggle the corresponding checkbox to enable it.
+     - Under the **Importing** section:
 
-     - Import Extra Files: Add a comma-separated list of file extensions you wish to include in the import i.e. `srt`.
+       - Import Extra Files: Toggle the corresponding checkbox to enable it.
+       - Import Extra Files: Add a comma-separated list of file extensions you wish to include in the import i.e. `srt`.
 
-   - Click the **Add Root Folder** button to add a folder.
+     - Click the **Add Root Folder** button to add a folder.
 
-   - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Jellyfin and Plex), and click the **Ok** button.
+     - In the **File Browser** form, locate and select the folder where your Movie media (Radarr) (i.e. `/data/Movies` or `/flex/Media/Movies`) or TV media (Sonarr) (i.e. `/data/TV` or `/flex/Media/TV`) is stored (same as the one used for Jellyfin and Plex), and click the **Ok** button.
 
-   - Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
+     - Under the **Movie Naming** (Radarr) or **Episode Naming** (Sonarr) section, set the **Rename Movies/Episodes** option to `Enabled`.
 
-   - Click the **Save Changes** button.
+     - Click the **Save Changes** button.
 
-8. Configure quality profiles on Radarr/Sonarr:
+   - Lidarr:
+
+     - Click the **Settings** menu item on the left, and then click the **Media Management** link.
+
+     - Under the **Track Naming** section:
+
+       - Rename Tracks: Select to enable the checkbox to allow renaming the existing file names.
+
+     - Click the **Add Root Folder** button to add a folder.
+
+     - In the **Add Root Folder** form, configure the following:
+
+       - Name: Set a unique, descriptive name for the folder (i.e. `Music`).
+       - Path: Click the **Folder** icon to launch the **File browser** and select the folder where your Music media (i.e. `/data/Music` or `/flex/Media/Music`) is stored (same as the one used for Jellyfin and Plex), and click the **Ok** button.
+
+       Click the **Save** button to add the folder.
+
+     - Click the **Save Changes** button.
+
+8. Configure quality profiles on Radarr/Sonarr/Lidarr:
 
    - Click the **Settings** menu item on the left, and then click the **Profiles** link.
 
@@ -961,7 +981,7 @@ Flex is a collection of curated services that aims to provide a complete home me
       > [!TIP]  
       > You may also configure any existing profiles or add new ones to better suit your preferences, make sure to click the **Save** button after making any changes.
 
-9. Create a backup of the Radarr/Sonarr configuration:
+9. Create a backup of the Radarr/Sonarr/Lidarr configuration:
 
    - Click the **System** menu item on the left, and then click the **Backup** link.
 
@@ -971,18 +991,18 @@ Flex is a collection of curated services that aims to provide a complete home me
 
    - Store the backup file in a safe location.
 
-10. Add a Movie (Radarr) or TV series (Sonarr) for download (i.e. using qBittorrent) and streaming (i.e. using Jellyfin or Plex):
+10. Add a media for download (i.e. using qBittorrent) and streaming (i.e. using Jellyfin or Plex):
 
-   - Click the **Movies** (Radarr) or **Series** (Sonarr) menu item on the left, and then click the **Add New** link.
+   - Click the **Movies** (Radarr), **Series** (Sonarr), or **Library** (Lidarr) menu item on the left, and then click the **Add New** link.
 
-   - In the provided search bar, search for a Movie (Radarr) or TV series (Sonarr) you wish to download and add to Jellyfin or Plex, and select it from the search results.
+   - In the provided search bar, search for the media you wish to download and add to Jellyfin or Plex, and select it from the search results.
 
-   - In the show's details modal, leave the form as default or configure accordingly, and click the **Add Movie/{Show Name}** button.
+   - In the selected media's details modal, leave the form as default or configure accordingly, and click the corresponding **Add** button.
 
       > [!TIP]  
-      > If you'd like it to start searching and downloading, click the **Start search for missing movie/episodes** button in the form.
+      > If you'd like it to start searching and downloading, select to enable the corresponding **Start search** checkbox in the form.
 
-   - **Alternatively**, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to use either [Jellyseerr](#jellyseerr) or [Overseerr](#overseerr) to request them.
+   - **Alternatively**, the recommended method of adding Movies (Radarr) or TV series (Sonarr) is to request them on either [Jellyseerr](#jellyseerr) or [Overseerr](#overseerr).
 
 ---
 
@@ -1098,31 +1118,35 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.bazarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Bazarr container image. Default: `"IfNotPresent"`. |
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
 | image.bazarr.repository | string | `""` | The name of the repository that contains the Bazarr container image used. Default: `"linuxserver/bazarr"`. |
-| image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.5.1-ls297"`. |
+| image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.5.2-ls317"`. |
 | image.ersatztv.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ErsatzTV container image. Default: `"IfNotPresent"`. |
 | image.ersatztv.registry | string | `""` | The registry where the ErsatzTV container image is hosted. Default: `"docker.io"`. |
 | image.ersatztv.repository | string | `""` | The name of the repository that contains the ErsatzTV container image used. Default: `"jasongdove/ersatztv"`. |
-| image.ersatztv.tag | string | `""` | The tag that specifies the version of the ErsatzTV container image used. Default: `"v25.1.0"`. |
+| image.ersatztv.tag | string | `""` | The tag that specifies the version of the ErsatzTV container image used. Default: `"v25.9.0"`. |
 | image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
-| image.flaresolverr.tag | string | `""` | The tag that specifies the version of the FlareSolverr container image used. Default: `"v3.3.21"`. |
+| image.flaresolverr.tag | string | `""` | The tag that specifies the version of the FlareSolverr container image used. Default: `"v3.4.1"`. |
 | image.jackett.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jackett container image. Default: `"IfNotPresent"`. |
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |
-| image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"v0.22.1709-ls721"`. |
+| image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"v0.23.28-ls155"`. |
 | image.jellyfin.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyfin container image. Default: `"IfNotPresent"`. |
 | image.jellyfin.registry | string | `""` | The registry where the Jellyfin container image is hosted. Default: `"lscr.io"`. |
 | image.jellyfin.repository | string | `""` | The name of the repository that contains the Jellyfin container image used. Default: `"linuxserver/jellyfin"`. |
-| image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.10.6ubu2404-ls56"`. |
+| image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.11.4ubu2404-ls12"`. |
 | image.jellyplexWatched.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the JellyPlex-Watched container image. Default: `"IfNotPresent"`. |
 | image.jellyplexWatched.registry | string | `""` | The registry where the JellyPlex-Watched container image is hosted. Default: `"ghcr.io"`. |
 | image.jellyplexWatched.repository | string | `""` | The name of the repository that contains the JellyPlex-Watched container image used. Default: `"luigi311/jellyplex-watched"`. |
-| image.jellyplexWatched.tag | string | `""` | The tag that specifies the version of the JellyPlex-Watched container image used. Default: `"7.0.3-alpine"`. |
+| image.jellyplexWatched.tag | string | `""` | The tag that specifies the version of the JellyPlex-Watched container image used. Default: `"8.4.0-alpine"`. |
 | image.jellyseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyseerr container image. Default: `"IfNotPresent"`. |
 | image.jellyseerr.registry | string | `""` | The registry where the Jellyseerr container image is hosted. Default: `"ghcr.io"`. |
 | image.jellyseerr.repository | string | `""` | The name of the repository that contains the Jellyseerr container image used. Default: `"fallenbagel/jellyseerr"`. |
-| image.jellyseerr.tag | string | `""` | The tag that specifies the version of the Jellyseerr container image used. Default: `"2.5.2"`. |
+| image.jellyseerr.tag | string | `""` | The tag that specifies the version of the Jellyseerr container image used. Default: `"2.7.3"`. |
+| image.lidarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: "IfNotPresent". |
+| image.lidarr.registry | string | `""` | The registry where the Lidarr container image is hosted. Default: `"lscr.io"`. |
+| image.lidarr.repository | string | `""` | The name of the repository that contains the Lidarr container image used. Default: `"linuxserver/lidarr"`. |
+| image.lidarr.tag | string | `""` | The tag that specifies the version of the Lidarr container image used. Default: `"3.1.0.4875-ls15"`. |
 | image.overseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Overseerr container image. Default: `"IfNotPresent"`. |
 | image.overseerr.registry | string | `""` | The registry where the Overseerr container image is hosted. Default: `"lscr.io"`. |
 | image.overseerr.repository | string | `""` | The name of the repository that contains the Overseerr container image used. Default: `"linuxserver/overseerr"`. |
@@ -1130,19 +1154,19 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.plex.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Plex container image. Default: `"IfNotPresent"`. |
 | image.plex.registry | string | `""` | The registry where the Plex container image is hosted. Default: `"index.docker.io"`. |
 | image.plex.repository | string | `""` | The name of the repository that contains the Plex container image used. Default: `"plexinc/pms-docker"`. |
-| image.plex.tag | string | `""` | The tag that specifies the version of the Plex container image used. Default: `Chart appVersion`. |
+| image.plex.tag | string | `""` | The tag that specifies the version of the Plex container image used. Default: `"1.41.5.9522-a96edc606"`. |
 | image.qbt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the qBittorrent container image. Default: `"IfNotPresent"`. |
 | image.qbt.registry | string | `""` | The registry where the qBittorrent container image is hosted. Default: `"lscr.io"`. |
 | image.qbt.repository | string | `""` | The name of the repository that contains the qBittorrent container image used. Default: `"linuxserver/qbittorrent"`. |
-| image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `"5.0.4-r0-ls387"`. |
+| image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `"5.1.4-r1-ls432"`. |
 | image.radarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Radarr container image. Default: `"IfNotPresent"`. |
 | image.radarr.registry | string | `""` | The registry where the Radarr container image is hosted. Default: `"lscr.io"`. |
 | image.radarr.repository | string | `""` | The name of the repository that contains the Radarr container image used. Default: `"linuxserver/radarr"`. |
-| image.radarr.tag | string | `""` | The tag that specifies the version of the Radarr container image used. Default: `"5.21.1.9799-ls266"`. |
+| image.radarr.tag | string | `""` | The tag that specifies the version of the Radarr container image used. Default: `"5.27.5.10198-ls283"`. |
 | image.sonarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Sonarr container image. Default: `"IfNotPresent"`. |
 | image.sonarr.registry | string | `""` | The registry where the Sonarr container image is hosted. Default: `"lscr.io"`. |
 | image.sonarr.repository | string | `""` | The name of the repository that contains the Sonarr container image used. Default: `"linuxserver/sonarr"`. |
-| image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `"4.0.14.2939-ls276"`. |
+| image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `"4.0.15.2941-ls291"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
@@ -1180,6 +1204,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyseerr.enabled | bool | `false` | Specifies whether Jellyseerr should be deployed or excluded in case an external Jellyseerr server is used. |
 | jellyseerr.ingress | bool | `false` | Specifies whether the Jellyseerr service should be served publicly using an Ingress. |
 | jellyseerr.logLevel | string | `""` | The verbosity level of the Jellyseerr logs. Default: `"info"`. |
+| lidarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Lidarr container. Items: `.mountPath`, `.subPath`, `.config`. |
+| lidarr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Lidarr container. |
+| lidarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Lidarr data storage. |
+| lidarr.domain | string | `""` | The ingress domain name that hosts the Lidarr server. |
+| lidarr.enabled | bool | `false` | Specifies whether Lidarr should be deployed or excluded in case an external Lidarr server is used. |
+| lidarr.ingress | bool | `false` | Specifies whether the Lidarr service should be served publicly using an Ingress. |
+| nodeSelector | object | `{}` | Specify node labels that target nodes must have for pod scheduling. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Overseerr container. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
@@ -1213,6 +1244,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | resources.jellyfin | object | `{}` | Jellyfin container resources. |
 | resources.jellyplexWatched | object | `{}` | JellyPlex-Watched container resources. |
 | resources.jellyseerr | object | `{}` | Jellyseerr container resources. |
+| resources.lidarr | object | `{}` | Lidarr container resources. |
 | resources.overseerr | object | `{}` | Overseerr container resources. |
 | resources.plex | object | `{}` | Plex container resources. |
 | resources.qbt | object | `{}` | qBittorrent container resources. |
@@ -1234,6 +1266,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 | service.jellyfin.web.port | string | `""` | The Jellyfin web port on which the Jellyfin server should listen for connections. Default: `"8096"`. |
 | service.jellyseerr.nodePort | string | `""` | The optional node port to expose for Jellyseerr when the service type is NodePort. |
 | service.jellyseerr.port | string | `""` | The Jellyseerr port on which the Jellyseerr server should listen for connections. Default: `"5550"`. |
+| service.lidarr.nodePort | string | `""` | The optional node port to expose for Lidarr when the service type is NodePort. |
+| service.lidarr.port | string | `""` | The Lidarr port on which the Lidarr server should listen for connections. Default: `"8686"`. |
 | service.overseerr.nodePort | string | `""` | The optional node port to expose for Overseerr when the service type is NodePort. |
 | service.overseerr.port | string | `""` | The Overseerr port on which the Overseerr server should listen for connections. Default: `"5055"`. |
 | service.plex.nodePort | string | `""` | The optional node port to expose for Plex when the service type is NodePort. |

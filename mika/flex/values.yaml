@@ -18,7 +18,7 @@ image:
     # Default: "linuxserver/bazarr"
     repository: ""
     # The tag that specifies the version of the Bazarr container image used.
-    # Default: "v1.5.1-ls297"
+    # Default: "v1.5.2-ls317"
     tag: ""
     # The policy that determines when Kubernetes should pull the Bazarr container image.
     # Default: "IfNotPresent"
@@ -33,7 +33,7 @@ image:
     # Default: "jasongdove/ersatztv"
     repository: ""
     # The tag that specifies the version of the ErsatzTV container image used.
-    # Default: "v25.1.0"
+    # Default: "v25.9.0"
     tag: ""
     # The policy that determines when Kubernetes should pull the ErsatzTV container image.
     # Default: "IfNotPresent"
@@ -48,7 +48,7 @@ image:
     # Default: "flaresolverr/flaresolverr"
     repository: ""
     # The tag that specifies the version of the FlareSolverr container image used.
-    # Default: "v3.3.21"
+    # Default: "v3.4.1"
     tag: ""
     # The policy that determines when Kubernetes should pull the FlareSolverr container image.
     # Default: "IfNotPresent"
@@ -63,7 +63,7 @@ image:
     # Default: "linuxserver/jackett"
     repository: ""
     # The tag that specifies the version of the Jackett container image used.
-    # Default: "v0.22.1709-ls721"
+    # Default: "v0.23.28-ls155"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jackett container image.
     # Default: "IfNotPresent"
@@ -78,7 +78,7 @@ image:
     # Default: "linuxserver/jellyfin"
     repository: ""
     # The tag that specifies the version of the Jellyfin container image used.
-    # Default: "10.10.6ubu2404-ls56"
+    # Default: "10.11.4ubu2404-ls12"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jellyfin container image.
     # Default: "IfNotPresent"
@@ -93,7 +93,7 @@ image:
     # Default: "luigi311/jellyplex-watched"
     repository: ""
     # The tag that specifies the version of the JellyPlex-Watched container image used.
-    # Default: "7.0.3-alpine"
+    # Default: "8.4.0-alpine"
     tag: ""
     # The policy that determines when Kubernetes should pull the JellyPlex-Watched container image.
     # Default: "IfNotPresent"
@@ -108,9 +108,24 @@ image:
     # Default: "fallenbagel/jellyseerr"
     repository: ""
     # The tag that specifies the version of the Jellyseerr container image used.
-    # Default: "2.5.2"
+    # Default: "2.7.3"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jellyseerr container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Lidarr container image configurations.
+  # Source: https://github.com/linuxserver/docker-lidarr/pkgs/container/lidarr
+  lidarr:
+    # The registry where the Lidarr container image is hosted.
+    # Default: "lscr.io"
+    registry: ""
+    # The name of the repository that contains the Lidarr container image used.
+    # Default: "linuxserver/lidarr"
+    repository: ""
+    # The tag that specifies the version of the Lidarr container image used.
+    # Default: "3.1.0.4875-ls15"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Lidarr container image.
     # Default: "IfNotPresent"
     pullPolicy: ""
   # Overseerr container image configurations.
@@ -138,7 +153,7 @@ image:
     # Default: "plexinc/pms-docker"
     repository: ""
     # The tag that specifies the version of the Plex container image used.
-    # Default: Chart appVersion
+    # Default: "1.41.5.9522-a96edc606"
     tag: ""
     # The policy that determines when Kubernetes should pull the Plex container image.
     # Default: "IfNotPresent"
@@ -153,7 +168,7 @@ image:
     # Default: "linuxserver/qbittorrent"
     repository: ""
     # The tag that specifies the version of the qBittorrent container image used.
-    # Default: "5.0.4-r0-ls387"
+    # Default: "5.1.4-r1-ls432"
     tag: ""
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"
@@ -168,7 +183,7 @@ image:
     # Default: "linuxserver/radarr"
     repository: ""
     # The tag that specifies the version of the Radarr container image used.
-    # Default: "5.21.1.9799-ls266"
+    # Default: "5.27.5.10198-ls283"
     tag: ""
     # The policy that determines when Kubernetes should pull the Radarr container image.
     # Default: "IfNotPresent"
@@ -183,7 +198,7 @@ image:
     # Default: "linuxserver/sonarr"
     repository: ""
     # The tag that specifies the version of the Sonarr container image used.
-    # Default: "4.0.14.2939-ls276"
+    # Default: "4.0.15.2941-ls291"
     tag: ""
     # The policy that determines when Kubernetes should pull the Sonarr container image.
     # Default: "IfNotPresent"
@@ -194,6 +209,12 @@ image:
 # imagePullSecrets:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
+
+# Specify node labels that target nodes must have for pod scheduling.
+# Example:
+# nodeSelector:
+#   kubernetes.io/hostname: "k8s-worker-1.example.com"
+nodeSelector: {}
 
 # Global configurations.
 global:
@@ -626,6 +647,54 @@ jellyseerr:
   #     config: ""
   customConfigs: []
 
+# Lidarr configurations.
+lidarr:
+  # Specifies whether Lidarr should be deployed or excluded in case an external Lidarr server is used.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The path where the data storage should be mounted on the Lidarr container.
+  # Note: This setting takes precedence over the default data mount path if defined.
+  # Example:
+  # dataMountPath: "/data"
+  dataMountPath: ""
+  # The amount of persistent storage allocated for the Lidarr data storage.
+  # Note: This setting takes precedence over the default data storage amount if defined.
+  # Example:
+  # dataStorage: "10Gi"
+  dataStorage: ""
+  # The ingress domain name that hosts the Lidarr server.
+  # Example:
+  # domain: "lidarr.example.com"
+  domain: ""
+  # Specifies whether the Lidarr service should be served publicly using an Ingress.
+  # Note: Ingress must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # ingress: true
+  ingress: false
+  # Optional custom configurations to be mounted as a file inside the Lidarr container.
+  # Items: `.mountPath`, `.subPath`, `.config`
+  # Example:
+  # customConfigs:
+  #   # The target path inside the container where the configuration file should be mounted.
+  #   # Example:
+  #   # mountPath: "/config/config.xml"
+  #   - mountPath: ""
+  #   # The unique name of the custom configuration file.
+  #   # Example:
+  #   # subPath: "config.xml"
+  #     subPath: ""
+  #   # The raw content of the custom configuration file.
+  #   # Example:
+  #   # config: >-
+  #   #   <Config>
+  #   #     <BindAddress>*</BindAddress>
+  #   #     <Port>8989</Port>
+  #   #     <SslPort>9898</SslPort>
+  #   #   </Config>
+  #     config: ""
+  customConfigs: []
+
 # Overseerr configurations.
 overseerr:
   # Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used.
@@ -995,6 +1064,17 @@ service:
     nodePort: ""
     # The Jellyseerr port on which the Jellyseerr server should listen for connections.
     # Default: "5550"
+    # Example:
+    # port: "8080"
+    port: ""
+  # Lidarr service port configurations.
+  lidarr:
+    # The optional node port to expose for Lidarr when the service type is NodePort.
+    # Example:
+    # nodePort: "30000"
+    nodePort: ""
+    # The Lidarr port on which the Lidarr server should listen for connections.
+    # Default: "8686"
     # Example:
     # port: "8080"
     port: ""
@@ -1432,6 +1512,30 @@ resources:
   #     # memory: "250Mi"
   #     memory: "400Mi"
   jellyseerr: {}
+  # Lidarr container resources.
+  # Example:
+  # lidarr:
+  #   # The minimum amount of resources required by Lidarr to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Lidarr.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "300m"
+  #     # The minimum amount of memory required by Lidarr.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "300Mi"
+  #   # The maximum amount of resources allowed for Lidarr.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Lidarr.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for Lidarr.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "500Mi"
+  lidarr: {}
   # Overseerr container resources.
   # Example:
   # overseerr:

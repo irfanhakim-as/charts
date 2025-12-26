@@ -3,6 +3,7 @@
 {{- $jackett := .Values.jackett.enabled }}
 {{- $jellyfin := .Values.jellyfin.enabled }}
 {{- $jellyseerr := .Values.jellyseerr.enabled }}
+{{- $lidarr := .Values.lidarr.enabled }}
 {{- $overseerr := .Values.overseerr.enabled }}
 {{- $plex := .Values.plex.enabled }}
 {{- $qbt := .Values.qbt.enabled }}
@@ -14,6 +15,7 @@
 {{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress }}
 {{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress }}
 {{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress }}
+{{- $lidarrIngress := and $lidarr $ingress .Values.lidarr.ingress }}
 {{- $overseerrIngress := and $overseerr $ingress .Values.overseerr.ingress }}
 {{- $plexIngress := and $plex $ingress .Values.plex.ingress }}
 {{- $qbtIngress := and $qbt $ingress .Values.qbt.ingress }}
@@ -31,6 +33,8 @@
 {{- $jellyfinDomain = ternary $jellyfinDomain "" (and $jellyfinIngress (ne $jellyfinDomain "") (ne $jellyfinDomain "localhost")) }}
 {{- $jellyseerrDomain := .Values.jellyseerr.domain | toString }}
 {{- $jellyseerrDomain = ternary $jellyseerrDomain "" (and $jellyseerrIngress (ne $jellyseerrDomain "") (ne $jellyseerrDomain "localhost")) }}
+{{- $lidarrDomain := .Values.lidarr.domain | toString }}
+{{- $lidarrDomain = ternary $lidarrDomain "" (and $lidarrIngress (ne $lidarrDomain "") (ne $lidarrDomain "localhost")) }}
 {{- $overseerrDomain := .Values.overseerr.domain | toString }}
 {{- $overseerrDomain = ternary $overseerrDomain "" (and $overseerrIngress (ne $overseerrDomain "") (ne $overseerrDomain "localhost")) }}
 {{- $plexDomain := .Values.plex.domain | toString }}
@@ -41,7 +45,7 @@
 {{- $radarrDomain = ternary $radarrDomain "" (and $radarrIngress (ne $radarrDomain "") (ne $radarrDomain "localhost")) }}
 {{- $sonarrDomain := .Values.sonarr.domain | toString }}
 {{- $sonarrDomain = ternary $sonarrDomain "" (and $sonarrIngress (ne $sonarrDomain "") (ne $sonarrDomain "localhost")) }}
-{{- if or $bazarrDomain $ersatztvDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
+{{- if or $bazarrDomain $ersatztvDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $lidarrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -125,6 +129,18 @@ spec:
             path: /
             pathType: Prefix
   {{- end }}
+  {{- if $lidarrDomain }}
+    - host: {{ $lidarrDomain }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-flex-svc
+                port:
+                  name: lidarr
+            path: /
+            pathType: Prefix
+  {{- end }}
   {{- if $overseerrDomain }}
     - host: {{ $overseerrDomain }}
       http:
@@ -201,6 +217,9 @@ spec:
       {{- end }}
       {{- if $jellyseerrDomain }}
         - {{ $jellyseerrDomain }}
+      {{- end }}
+      {{- if $lidarrDomain }}
+        - {{ $lidarrDomain }}
       {{- end }}
       {{- if $overseerrDomain }}
         - {{ $overseerrDomain }}
