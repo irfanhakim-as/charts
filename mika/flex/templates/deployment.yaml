@@ -56,7 +56,7 @@
 {{- $ersatztv_pullPolicy := .Values.image.ersatztv.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
-{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.3.21" | toString }}
+{{- $flaresolverr_tag := .Values.image.flaresolverr.tag | default "v3.4.1" | toString }}
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
