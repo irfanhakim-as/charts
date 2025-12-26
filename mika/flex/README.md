@@ -1130,7 +1130,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jackett.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jackett container image. Default: `"IfNotPresent"`. |
 | image.jackett.registry | string | `""` | The registry where the Jackett container image is hosted. Default: `"lscr.io"`. |
 | image.jackett.repository | string | `""` | The name of the repository that contains the Jackett container image used. Default: `"linuxserver/jackett"`. |
-| image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"v0.22.1709-ls721"`. |
+| image.jackett.tag | string | `""` | The tag that specifies the version of the Jackett container image used. Default: `"v0.23.28-ls155"`. |
 | image.jellyfin.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyfin container image. Default: `"IfNotPresent"`. |
 | image.jellyfin.registry | string | `""` | The registry where the Jellyfin container image is hosted. Default: `"lscr.io"`. |
 | image.jellyfin.repository | string | `""` | The name of the repository that contains the Jellyfin container image used. Default: `"linuxserver/jellyfin"`. |

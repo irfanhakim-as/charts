@@ -60,7 +60,7 @@
 {{- $flaresolverr_pullPolicy := .Values.image.flaresolverr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jackett_registry := .Values.image.jackett.registry | default "lscr.io" | toString }}
 {{- $jackett_repository := .Values.image.jackett.repository | default "linuxserver/jackett" | toString }}
-{{- $jackett_tag := .Values.image.jackett.tag | default "v0.22.1709-ls721" | toString }}
+{{- $jackett_tag := .Values.image.jackett.tag | default "v0.23.28-ls155" | toString }}
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jellyfin_registry := .Values.image.jellyfin.registry | default "lscr.io" | toString }}
 {{- $jellyfin_repository := .Values.image.jellyfin.repository | default "linuxserver/jellyfin" | toString }}
