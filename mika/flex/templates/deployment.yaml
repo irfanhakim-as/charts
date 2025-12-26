@@ -48,7 +48,7 @@
 {{- $sonarrConfigs = ternary $sonarrConfigs (list) (and $sonarr (not (empty $sonarrConfigs))) }}
 {{- $bazarr_registry := .Values.image.bazarr.registry | default "lscr.io" | toString }}
 {{- $bazarr_repository := .Values.image.bazarr.repository | default "linuxserver/bazarr" | toString }}
-{{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.5.1-ls297" | toString }}
+{{- $bazarr_tag := .Values.image.bazarr.tag | default "v1.5.2-ls317" | toString }}
 {{- $bazarr_pullPolicy := .Values.image.bazarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $ersatztv_registry := .Values.image.ersatztv.registry | default "docker.io" | toString }}
 {{- $ersatztv_repository := .Values.image.ersatztv.repository | default "jasongdove/ersatztv" | toString }}

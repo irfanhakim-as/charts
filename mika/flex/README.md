@@ -1118,7 +1118,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.bazarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Bazarr container image. Default: `"IfNotPresent"`. |
 | image.bazarr.registry | string | `""` | The registry where the Bazarr container image is hosted. Default: `"lscr.io"`. |
 | image.bazarr.repository | string | `""` | The name of the repository that contains the Bazarr container image used. Default: `"linuxserver/bazarr"`. |
-| image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.5.1-ls297"`. |
+| image.bazarr.tag | string | `""` | The tag that specifies the version of the Bazarr container image used. Default: `"v1.5.2-ls317"`. |
 | image.ersatztv.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ErsatzTV container image. Default: `"IfNotPresent"`. |
 | image.ersatztv.registry | string | `""` | The registry where the ErsatzTV container image is hosted. Default: `"docker.io"`. |
 | image.ersatztv.repository | string | `""` | The name of the repository that contains the ErsatzTV container image used. Default: `"jasongdove/ersatztv"`. |

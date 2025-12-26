@@ -18,7 +18,7 @@ image:
     # Default: "linuxserver/bazarr"
     repository: ""
     # The tag that specifies the version of the Bazarr container image used.
-    # Default: "v1.5.1-ls297"
+    # Default: "v1.5.2-ls317"
     tag: ""
     # The policy that determines when Kubernetes should pull the Bazarr container image.
     # Default: "IfNotPresent"
