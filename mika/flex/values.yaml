@@ -33,7 +33,7 @@ image:
     # Default: "jasongdove/ersatztv"
     repository: ""
     # The tag that specifies the version of the ErsatzTV container image used.
-    # Default: "v25.1.0"
+    # Default: "v25.9.0"
     tag: ""
     # The policy that determines when Kubernetes should pull the ErsatzTV container image.
     # Default: "IfNotPresent"
@@ -78,7 +78,7 @@ image:
     # Default: "linuxserver/jellyfin"
     repository: ""
     # The tag that specifies the version of the Jellyfin container image used.
-    # Default: "10.10.6ubu2404-ls56"
+    # Default: "10.11.4ubu2404-ls12"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jellyfin container image.
     # Default: "IfNotPresent"
@@ -93,7 +93,7 @@ image:
     # Default: "luigi311/jellyplex-watched"
     repository: ""
     # The tag that specifies the version of the JellyPlex-Watched container image used.
-    # Default: "7.0.3-alpine"
+    # Default: "8.4.0-alpine"
     tag: ""
     # The policy that determines when Kubernetes should pull the JellyPlex-Watched container image.
     # Default: "IfNotPresent"
@@ -168,7 +168,7 @@ image:
     # Default: "linuxserver/qbittorrent"
     repository: ""
     # The tag that specifies the version of the qBittorrent container image used.
-    # Default: "5.0.4-r0-ls387"
+    # Default: "5.1.4-r1-ls432"
     tag: ""
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"

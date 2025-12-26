@@ -52,7 +52,7 @@
 {{- $bazarr_pullPolicy := .Values.image.bazarr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $ersatztv_registry := .Values.image.ersatztv.registry | default "docker.io" | toString }}
 {{- $ersatztv_repository := .Values.image.ersatztv.repository | default "jasongdove/ersatztv" | toString }}
-{{- $ersatztv_tag := .Values.image.ersatztv.tag | default "v25.1.0" | toString }}
+{{- $ersatztv_tag := .Values.image.ersatztv.tag | default "v25.9.0" | toString }}
 {{- $ersatztv_pullPolicy := .Values.image.ersatztv.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $flaresolverr_registry := .Values.image.flaresolverr.registry | default "ghcr.io" | toString }}
 {{- $flaresolverr_repository := .Values.image.flaresolverr.repository | default "flaresolverr/flaresolverr" | toString }}
@@ -64,11 +64,11 @@
 {{- $jackett_pullPolicy := .Values.image.jackett.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jellyfin_registry := .Values.image.jellyfin.registry | default "lscr.io" | toString }}
 {{- $jellyfin_repository := .Values.image.jellyfin.repository | default "linuxserver/jellyfin" | toString }}
-{{- $jellyfin_tag := .Values.image.jellyfin.tag | default "10.10.6ubu2404-ls56" | toString }}
+{{- $jellyfin_tag := .Values.image.jellyfin.tag | default "10.11.4ubu2404-ls12" | toString }}
 {{- $jellyfin_pullPolicy := .Values.image.jellyfin.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jpw_registry := .Values.image.jellyplexWatched.registry | default "ghcr.io" | toString }}
 {{- $jpw_repository := .Values.image.jellyplexWatched.repository | default "luigi311/jellyplex-watched" | toString }}
-{{- $jpw_tag := .Values.image.jellyplexWatched.tag | default "7.0.3-alpine" | toString }}
+{{- $jpw_tag := .Values.image.jellyplexWatched.tag | default "8.4.0-alpine" | toString }}
 {{- $jpw_pullPolicy := .Values.image.jellyplexWatched.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $jellyseerr_registry := .Values.image.jellyseerr.registry | default "ghcr.io" | toString }}
 {{- $jellyseerr_repository := .Values.image.jellyseerr.repository | default "fallenbagel/jellyseerr" | toString }}
@@ -88,7 +88,7 @@
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}
-{{- $qbt_tag := .Values.image.qbt.tag | default "5.0.4-r0-ls387" | toString }}
+{{- $qbt_tag := .Values.image.qbt.tag | default "5.1.4-r1-ls432" | toString }}
 {{- $qbt_pullPolicy := .Values.image.qbt.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $radarr_registry := .Values.image.radarr.registry | default "lscr.io" | toString }}
 {{- $radarr_repository := .Values.image.radarr.repository | default "linuxserver/radarr" | toString }}

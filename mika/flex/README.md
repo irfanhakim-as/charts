@@ -1122,7 +1122,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.ersatztv.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ErsatzTV container image. Default: `"IfNotPresent"`. |
 | image.ersatztv.registry | string | `""` | The registry where the ErsatzTV container image is hosted. Default: `"docker.io"`. |
 | image.ersatztv.repository | string | `""` | The name of the repository that contains the ErsatzTV container image used. Default: `"jasongdove/ersatztv"`. |
-| image.ersatztv.tag | string | `""` | The tag that specifies the version of the ErsatzTV container image used. Default: `"v25.1.0"`. |
+| image.ersatztv.tag | string | `""` | The tag that specifies the version of the ErsatzTV container image used. Default: `"v25.9.0"`. |
 | image.flaresolverr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the FlareSolverr container image. Default: `"IfNotPresent"`. |
 | image.flaresolverr.registry | string | `""` | The registry where the FlareSolverr container image is hosted. Default: `"ghcr.io"`. |
 | image.flaresolverr.repository | string | `""` | The name of the repository that contains the FlareSolverr container image used. Default: `"flaresolverr/flaresolverr"`. |
@@ -1134,11 +1134,11 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.jellyfin.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyfin container image. Default: `"IfNotPresent"`. |
 | image.jellyfin.registry | string | `""` | The registry where the Jellyfin container image is hosted. Default: `"lscr.io"`. |
 | image.jellyfin.repository | string | `""` | The name of the repository that contains the Jellyfin container image used. Default: `"linuxserver/jellyfin"`. |
-| image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.10.6ubu2404-ls56"`. |
+| image.jellyfin.tag | string | `""` | The tag that specifies the version of the Jellyfin container image used. Default: `"10.11.4ubu2404-ls12"`. |
 | image.jellyplexWatched.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the JellyPlex-Watched container image. Default: `"IfNotPresent"`. |
 | image.jellyplexWatched.registry | string | `""` | The registry where the JellyPlex-Watched container image is hosted. Default: `"ghcr.io"`. |
 | image.jellyplexWatched.repository | string | `""` | The name of the repository that contains the JellyPlex-Watched container image used. Default: `"luigi311/jellyplex-watched"`. |
-| image.jellyplexWatched.tag | string | `""` | The tag that specifies the version of the JellyPlex-Watched container image used. Default: `"7.0.3-alpine"`. |
+| image.jellyplexWatched.tag | string | `""` | The tag that specifies the version of the JellyPlex-Watched container image used. Default: `"8.4.0-alpine"`. |
 | image.jellyseerr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Jellyseerr container image. Default: `"IfNotPresent"`. |
 | image.jellyseerr.registry | string | `""` | The registry where the Jellyseerr container image is hosted. Default: `"ghcr.io"`. |
 | image.jellyseerr.repository | string | `""` | The name of the repository that contains the Jellyseerr container image used. Default: `"fallenbagel/jellyseerr"`. |
@@ -1158,7 +1158,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.qbt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the qBittorrent container image. Default: `"IfNotPresent"`. |
 | image.qbt.registry | string | `""` | The registry where the qBittorrent container image is hosted. Default: `"lscr.io"`. |
 | image.qbt.repository | string | `""` | The name of the repository that contains the qBittorrent container image used. Default: `"linuxserver/qbittorrent"`. |
-| image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `"5.0.4-r0-ls387"`. |
+| image.qbt.tag | string | `""` | The tag that specifies the version of the qBittorrent container image used. Default: `"5.1.4-r1-ls432"`. |
 | image.radarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Radarr container image. Default: `"IfNotPresent"`. |
 | image.radarr.registry | string | `""` | The registry where the Radarr container image is hosted. Default: `"lscr.io"`. |
 | image.radarr.repository | string | `""` | The name of the repository that contains the Radarr container image used. Default: `"linuxserver/radarr"`. |
