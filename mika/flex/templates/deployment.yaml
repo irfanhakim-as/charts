@@ -84,7 +84,7 @@
 {{- $overseerr_pullPolicy := .Values.image.overseerr.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $plex_registry := .Values.image.plex.registry | default "index.docker.io" | toString }}
 {{- $plex_repository := .Values.image.plex.repository | default "plexinc/pms-docker" | toString }}
-{{- $plex_tag := .Values.image.plex.tag | default .Chart.AppVersion | toString }}
+{{- $plex_tag := .Values.image.plex.tag | default "1.41.5.9522-a96edc606" | toString }}
 {{- $plex_pullPolicy := .Values.image.plex.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $qbt_registry := .Values.image.qbt.registry | default "lscr.io" | toString }}
 {{- $qbt_repository := .Values.image.qbt.repository | default "linuxserver/qbittorrent" | toString }}

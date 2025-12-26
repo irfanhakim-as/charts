@@ -153,7 +153,7 @@ image:
     # Default: "plexinc/pms-docker"
     repository: ""
     # The tag that specifies the version of the Plex container image used.
-    # Default: Chart appVersion
+    # Default: "1.41.5.9522-a96edc606"
     tag: ""
     # The policy that determines when Kubernetes should pull the Plex container image.
     # Default: "IfNotPresent"
