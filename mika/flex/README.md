@@ -1162,7 +1162,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.radarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Radarr container image. Default: `"IfNotPresent"`. |
 | image.radarr.registry | string | `""` | The registry where the Radarr container image is hosted. Default: `"lscr.io"`. |
 | image.radarr.repository | string | `""` | The name of the repository that contains the Radarr container image used. Default: `"linuxserver/radarr"`. |
-| image.radarr.tag | string | `""` | The tag that specifies the version of the Radarr container image used. Default: `"5.21.1.9799-ls266"`. |
+| image.radarr.tag | string | `""` | The tag that specifies the version of the Radarr container image used. Default: `"5.27.5.10198-ls283"`. |
 | image.sonarr.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Sonarr container image. Default: `"IfNotPresent"`. |
 | image.sonarr.registry | string | `""` | The registry where the Sonarr container image is hosted. Default: `"lscr.io"`. |
 | image.sonarr.repository | string | `""` | The name of the repository that contains the Sonarr container image used. Default: `"linuxserver/sonarr"`. |
