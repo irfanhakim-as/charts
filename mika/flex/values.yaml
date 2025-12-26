@@ -213,7 +213,7 @@ imagePullSecrets: []
 # Specify node labels that target nodes must have for pod scheduling.
 # Example:
 # nodeSelector:
-#   kubernetes.io/hostname: "orked-worker-1.example.com"
+#   kubernetes.io/hostname: "k8s-worker-1.example.com"
 nodeSelector: {}
 
 # Global configurations.
