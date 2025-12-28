@@ -2,7 +2,7 @@ apiVersion: v2
 name: vaultwarden
 description: An alternative server implementation of the Bitwarden Client API written in Rust and compatible with official Bitwarden clients.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "1.35.0-alpine"
 keywords:
   - "vaultwarden"
