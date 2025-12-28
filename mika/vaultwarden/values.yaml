@@ -91,7 +91,7 @@ vaultwarden:
   # send: "false"
   send: ""
   # A list of experimental client feature flags to enable certain experimental functionality.
-  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/blob/main/.env.template#L348 for the full list of options.
+  # Note: Please refer to https://github.com/dani-garcia/vaultwarden/blob/main/.env.template#L369 for the full list of options.
   # Example:
   # expFeatures:
   #   - "autofill-v2"
