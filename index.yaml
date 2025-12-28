@@ -2573,6 +2573,31 @@ entries:
     version: 0.1.0
   vaultwarden:
   - apiVersion: v2
+    appVersion: 1.35.0-alpine
+    created: "2025-12-28T07:52:03.394130674Z"
+    description: An alternative server implementation of the Bitwarden Client API
+      written in Rust and compatible with official Bitwarden clients.
+    digest: 93a10c8b33fe3d7d5bf29c6a7d7782acf93c18e899e5baf8ca6117991d991db1
+    home: https://github.com/dani-garcia/vaultwarden
+    icon: https://raw.githubusercontent.com/dani-garcia/vaultwarden/refs/heads/main/resources/vaultwarden-logo.svg
+    keywords:
+    - vaultwarden
+    - bitwarden
+    - password
+    - manager
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vaultwarden-0.1.1/vaultwarden-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 1.33.2
     created: "2025-04-25T13:20:48.014979091Z"
     description: An alternative server implementation of the Bitwarden Client API
@@ -3374,4 +3399,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-26T08:01:54.830023676Z"
+generated: "2025-12-28T07:52:03.394458745Z"
