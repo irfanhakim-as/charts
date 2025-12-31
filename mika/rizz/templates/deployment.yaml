@@ -21,7 +21,7 @@
 {{- $rizz_pullPolicy := .Values.image.rizz.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $redis_registry := .Values.image.redis.registry | default "docker.io" | toString }}
 {{- $redis_repository := .Values.image.redis.repository | default "redis" | toString }}
-{{- $redis_tag := .Values.image.redis.tag | default "alpine" | toString }}
+{{- $redis_tag := .Values.image.redis.tag | default "8.4.0-alpine3.22" | toString }}
 {{- $redis_pullPolicy := .Values.image.redis.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $release_name := .Release.Name | toString }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
