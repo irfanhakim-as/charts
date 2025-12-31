@@ -229,7 +229,7 @@ A secure application access token is required for each configured account.
 | image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"IfNotPresent"`. |
 | image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |
 | image.redis.repository | string | `""` | The name of the repository that contains the Redis container image used. Default: `"redis"`. |
-| image.redis.tag | string | `""` | The tag that specifies the version of the Redis container image used. Default: `"alpine"`. |
+| image.redis.tag | string | `""` | The tag that specifies the version of the Redis container image used. Default: `"8.4.0-alpine3.22"`. |
 | image.rizz.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Rizz container image. Default: `"IfNotPresent"`. |
 | image.rizz.registry | string | `""` | The registry where the Rizz container image is hosted. Default: `"ghcr.io"`. |
 | image.rizz.repository | string | `""` | The name of the repository that contains the Rizz container image used. Default: `"irfanhakim-as/rizz"`. |
