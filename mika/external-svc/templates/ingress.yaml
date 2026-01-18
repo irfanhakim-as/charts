@@ -20,8 +20,10 @@ metadata:
   labels:
     {{- include "external-svc.labels" $ | nindent 4 }}
   annotations:
+  {{- if $tls }}
     cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
     cert-manager.io/private-key-algorithm: "ECDSA"
+  {{- end }}
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/affinity-mode: "persistent"
     nginx.ingress.kubernetes.io/proxy-body-size: "100m"
