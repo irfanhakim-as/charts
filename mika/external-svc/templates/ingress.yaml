@@ -16,7 +16,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $releaseName }}-{{ $port }}-extsvc-ingress
+  name: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-ingress
   labels:
     {{- include "external-svc.labels" $ | nindent 4 }}
   annotations:
