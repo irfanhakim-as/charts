@@ -64,7 +64,7 @@ ingress:
   #     value: ""
   customAnnotations: []
   # Domain configurations.
-  # Items: `.name`, `.port`, `.www`, `.customAnnotations`
+  # Items: `.name`, `.port`, `.tls`, `.www`, `.customAnnotations`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the external service.
@@ -75,6 +75,11 @@ ingress:
   #   # Example:
   #   # port: "mysvc"
   #     port: ""
+  #   # Specifies whether to enable TLS/HTTPS with Let's Encrypt certificates.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
   #   # Specifies whether the WWW subdomain should be enabled.
   #   # Example:
   #   # www: true

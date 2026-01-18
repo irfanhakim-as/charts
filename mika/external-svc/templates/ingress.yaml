@@ -7,6 +7,7 @@
 {{- if and $ingress $services $domains }}
 {{- range $domains }}
 {{- $customAnnotations := .customAnnotations }}
+{{- $tls := ne .tls false }}
 {{- $www := .www }}
 {{- $name := .name | toString }}
 {{- $port := .port | toString }}
