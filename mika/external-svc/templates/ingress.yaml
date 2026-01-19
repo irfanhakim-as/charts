@@ -7,6 +7,7 @@
 {{- if and $ingress $services $domains }}
 {{- range $domains }}
 {{- $customAnnotations := .customAnnotations }}
+{{- $tls := ne .tls false }}
 {{- $www := .www }}
 {{- $name := .name | toString }}
 {{- $port := .port | toString }}
@@ -15,12 +16,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $releaseName }}-{{ $port }}-extsvc-ingress
+  name: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-ingress
   labels:
     {{- include "external-svc.labels" $ | nindent 4 }}
   annotations:
+  {{- if $tls }}
     cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
     cert-manager.io/private-key-algorithm: "ECDSA"
+  {{- end }}
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/affinity-mode: "persistent"
     nginx.ingress.kubernetes.io/proxy-body-size: "100m"
@@ -59,12 +62,14 @@ spec:
             path: /
             pathType: Prefix
   {{- end }}
+  {{- if $tls }}
   tls:
     - hosts:
         - {{ $name | quote }}
       {{- if $www }}
         - {{ $wwwDomain }}
       {{- end }}
-      secretName: {{ $releaseName }}-{{ $port }}-extsvc-tls-cert
+      secretName: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-tls-cert
+  {{- end }}
 {{- end }}
 {{- end }}
