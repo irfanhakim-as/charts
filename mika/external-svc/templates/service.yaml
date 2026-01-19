@@ -25,17 +25,19 @@ spec:
       protocol: TCP
       name: {{ $name }}
 ---
-apiVersion: v1
-kind: Endpoints
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
-  name: {{ $releaseName }}-{{ $name }}-extsvc-svc
+  name: {{ $releaseName }}-{{ $name }}-extsvc-svc-endpointslice
   labels:
+    kubernetes.io/service-name: {{ $releaseName }}-{{ $name }}-extsvc-svc
     {{- include "external-svc.labels" $ | nindent 4 }}
-subsets:
+addressType: IPv4
+endpoints:
   - addresses:
-    - ip: {{ $host }}
-    ports:
-      - name: {{ $name }}
-        port: {{ $targetPort }}
-        protocol: TCP
+    - {{ $host }}
+ports:
+  - name: {{ $name }}
+    port: {{ $targetPort }}
+    protocol: TCP
 {{- end }}
