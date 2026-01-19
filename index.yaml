@@ -446,6 +446,28 @@ entries:
     version: 0.1.0
   external-svc:
   - apiVersion: v2
+    created: "2026-01-19T01:07:29.696860721Z"
+    description: Seamlessly connect external services to your Kubernetes environment.
+    digest: 4bf00ead22acf6edc17d458c2c4ce0e584f5057a2f6404e1b2ba7619686197cf
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - external-svc
+    - external
+    - service
+    - ingress
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: external-svc
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/external-svc-0.2.0/external-svc-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     created: "2025-07-10T10:14:26.49181213Z"
     description: Seamlessly connect external services to your Kubernetes environment.
     digest: 34b16a7ef9548bf06ef0f7a311916d5348bed29a6316af3791201fb4045775b3
@@ -3449,4 +3471,4 @@ entries:
     urls:
     - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-31T08:52:03.039864808Z"
+generated: "2026-01-19T01:07:29.697318428Z"
