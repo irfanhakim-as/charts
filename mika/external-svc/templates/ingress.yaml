@@ -69,7 +69,7 @@ spec:
       {{- if $www }}
         - {{ $wwwDomain }}
       {{- end }}
-      secretName: {{ $releaseName }}-{{ $port }}-extsvc-tls-cert
+      secretName: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-tls-cert
   {{- end }}
 {{- end }}
 {{- end }}
