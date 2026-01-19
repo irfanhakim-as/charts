@@ -2,7 +2,7 @@ apiVersion: v2
 name: external-svc
 description: Seamlessly connect external services to your Kubernetes environment.
 type: application
-version: 0.1.1
+version: 0.2.0
 keywords:
   - "external-svc"
   - "external"
