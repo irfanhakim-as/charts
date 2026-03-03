@@ -1168,8 +1168,8 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.sonarr.repository | string | `""` | The name of the repository that contains the Sonarr container image used. Default: `"linuxserver/sonarr"`. |
 | image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `"4.0.15.2941-ls291"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
-| ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
+| ingress.clusterIssuer | string | `""` | The name of the cluster issuer for all Ingress resources. Default: `"letsencrypt-dns-prod"`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations applied to all Ingress resources. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Flex services. |
 | jackett.autoUpdate | string | `""` | Specifies whether to allow Jackett to automatically update itself inside the container. Default: `"true"`. |
 | jackett.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jackett container. Items: `.mountPath`, `.subPath`, `.config`. |

@@ -946,12 +946,12 @@ ingress:
   # Example:
   # enabled: true
   enabled: false
-  # The name of the cluster issuer for Ingress.
+  # The name of the cluster issuer for all Ingress resources.
   # Default: "letsencrypt-dns-prod"
   # Example:
   # clusterIssuer: "letsencrypt-http-prod"
   clusterIssuer: ""
-  # Additional configuration annotations to be added to the Ingress resource.
+  # Additional configuration annotations applied to all Ingress resources.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
   # customAnnotations:
