@@ -1,61 +1,39 @@
-{{- $bazarr := .Values.bazarr.enabled }}
-{{- $ersatztv := .Values.ersatztv.enabled }}
-{{- $jackett := .Values.jackett.enabled }}
-{{- $jellyfin := .Values.jellyfin.enabled }}
-{{- $jellyseerr := .Values.jellyseerr.enabled }}
-{{- $lidarr := .Values.lidarr.enabled }}
-{{- $overseerr := .Values.overseerr.enabled }}
-{{- $plex := .Values.plex.enabled }}
-{{- $qbt := .Values.qbt.enabled }}
-{{- $radarr := .Values.radarr.enabled }}
-{{- $sonarr := .Values.sonarr.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
-{{- $bazarrIngress := and $bazarr $ingress .Values.bazarr.ingress }}
-{{- $ersatztvIngress := and $ersatztv $ingress .Values.ersatztv.ingress }}
-{{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress }}
-{{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress }}
-{{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress }}
-{{- $lidarrIngress := and $lidarr $ingress .Values.lidarr.ingress }}
-{{- $overseerrIngress := and $overseerr $ingress .Values.overseerr.ingress }}
-{{- $plexIngress := and $plex $ingress .Values.plex.ingress }}
-{{- $qbtIngress := and $qbt $ingress .Values.qbt.ingress }}
-{{- $radarrIngress := and $radarr $ingress .Values.radarr.ingress }}
-{{- $sonarrIngress := and $sonarr $ingress .Values.sonarr.ingress }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
-{{- $bazarrDomain := .Values.bazarr.domain | toString }}
-{{- $bazarrDomain = ternary $bazarrDomain "" (and $bazarrIngress (ne $bazarrDomain "") (ne $bazarrDomain "localhost")) }}
-{{- $ersatztvDomain := .Values.ersatztv.domain | toString }}
-{{- $ersatztvDomain = ternary $ersatztvDomain "" (and $ersatztvIngress (ne $ersatztvDomain "") (ne $ersatztvDomain "localhost")) }}
-{{- $jackettDomain := .Values.jackett.domain | toString }}
-{{- $jackettDomain = ternary $jackettDomain "" (and $jackettIngress (ne $jackettDomain "") (ne $jackettDomain "localhost")) }}
-{{- $jellyfinDomain := .Values.jellyfin.domain | toString }}
-{{- $jellyfinDomain = ternary $jellyfinDomain "" (and $jellyfinIngress (ne $jellyfinDomain "") (ne $jellyfinDomain "localhost")) }}
-{{- $jellyseerrDomain := .Values.jellyseerr.domain | toString }}
-{{- $jellyseerrDomain = ternary $jellyseerrDomain "" (and $jellyseerrIngress (ne $jellyseerrDomain "") (ne $jellyseerrDomain "localhost")) }}
-{{- $lidarrDomain := .Values.lidarr.domain | toString }}
-{{- $lidarrDomain = ternary $lidarrDomain "" (and $lidarrIngress (ne $lidarrDomain "") (ne $lidarrDomain "localhost")) }}
-{{- $overseerrDomain := .Values.overseerr.domain | toString }}
-{{- $overseerrDomain = ternary $overseerrDomain "" (and $overseerrIngress (ne $overseerrDomain "") (ne $overseerrDomain "localhost")) }}
-{{- $plexDomain := .Values.plex.domain | toString }}
-{{- $plexDomain = ternary $plexDomain "" (and $plexIngress (ne $plexDomain "") (ne $plexDomain "localhost")) }}
-{{- $qbtDomain := .Values.qbt.domain | toString }}
-{{- $qbtDomain = ternary $qbtDomain "" (and $qbtIngress (ne $qbtDomain "") (ne $qbtDomain "localhost")) }}
-{{- $radarrDomain := .Values.radarr.domain | toString }}
-{{- $radarrDomain = ternary $radarrDomain "" (and $radarrIngress (ne $radarrDomain "") (ne $radarrDomain "localhost")) }}
-{{- $sonarrDomain := .Values.sonarr.domain | toString }}
-{{- $sonarrDomain = ternary $sonarrDomain "" (and $sonarrIngress (ne $sonarrDomain "") (ne $sonarrDomain "localhost")) }}
-{{- if or $bazarrDomain $ersatztvDomain $jackettDomain $jellyfinDomain $jellyseerrDomain $lidarrDomain $overseerrDomain $plexDomain $qbtDomain $radarrDomain $sonarrDomain }}
+{{- $releaseName := .Release.Name | toString }}
+{{- if $ingress }}
+  {{- $services := list
+    (dict "port" "bazarr" "enabled" .Values.bazarr.enabled "ingress" .Values.bazarr.ingress "domains" .Values.bazarr.domains)
+    (dict "port" "ersatztv" "enabled" .Values.ersatztv.enabled "ingress" .Values.ersatztv.ingress "domains" .Values.ersatztv.domains)
+    (dict "port" "jackett" "enabled" .Values.jackett.enabled "ingress" .Values.jackett.ingress "domains" .Values.jackett.domains)
+    (dict "port" "jellyfin-web" "enabled" .Values.jellyfin.enabled "ingress" .Values.jellyfin.ingress "domains" .Values.jellyfin.domains)
+    (dict "port" "jellyseerr" "enabled" .Values.jellyseerr.enabled "ingress" .Values.jellyseerr.ingress "domains" .Values.jellyseerr.domains)
+    (dict "port" "lidarr" "enabled" .Values.lidarr.enabled "ingress" .Values.lidarr.ingress "domains" .Values.lidarr.domains)
+    (dict "port" "overseerr" "enabled" .Values.overseerr.enabled "ingress" .Values.overseerr.ingress "domains" .Values.overseerr.domains)
+    (dict "port" "plex" "enabled" .Values.plex.enabled "ingress" .Values.plex.ingress "domains" .Values.plex.domains)
+    (dict "port" "qbt-web" "enabled" .Values.qbt.enabled "ingress" .Values.qbt.ingress "domains" .Values.qbt.domains)
+    (dict "port" "radarr" "enabled" .Values.radarr.enabled "ingress" .Values.radarr.ingress "domains" .Values.radarr.domains)
+    (dict "port" "sonarr" "enabled" .Values.sonarr.enabled "ingress" .Values.sonarr.ingress "domains" .Values.sonarr.domains)
+  }}
+  {{- range $services }}
+    {{- $svc := . }}
+    {{- if and $svc.enabled $svc.ingress $svc.domains }}
+      {{- range $svc.domains }}
+        {{- $tls := ne .tls false }}
+        {{- $domainCustomAnnotations := .customAnnotations }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Release.Name }}-flex-ingress
+  name: {{ $releaseName }}-{{ .name | replace "." "-" }}-flex-ingress
   labels:
-    {{- include "flex.labels" . | nindent 4 }}
+    {{- include "flex.labels" $ | nindent 4 }}
   annotations:
+  {{- if $tls }}
     cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
     cert-manager.io/private-key-algorithm: "ECDSA"
+  {{- end }}
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/affinity-mode: "persistent"
     nginx.ingress.kubernetes.io/proxy-body-size: "100m"
@@ -66,175 +44,29 @@ metadata:
   {{- range $customAnnotations }}
     {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
   {{- end }}
+  {{- range $domainCustomAnnotations }}
+    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+  {{- end }}
 spec:
   ingressClassName: "nginx"
   rules:
-  {{- if $bazarrDomain }}
-    - host: {{ $bazarrDomain }}
+    - host: {{ .name | quote }}
       http:
         paths:
           - backend:
               service:
-                name: {{ .Release.Name }}-flex-svc
+                name: {{ $releaseName }}-flex-svc
                 port:
-                  name: bazarr
+                  name: {{ $svc.port }}
             path: /
             pathType: Prefix
-  {{- end }}
-  {{- if $ersatztvDomain }}
-    - host: {{ $ersatztvDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: ersatztv
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $jackettDomain }}
-    - host: {{ $jackettDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: jackett
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $jellyfinDomain }}
-    - host: {{ $jellyfinDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: jellyfin-web
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $jellyseerrDomain }}
-    - host: {{ $jellyseerrDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: jellyseerr
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $lidarrDomain }}
-    - host: {{ $lidarrDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: lidarr
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $overseerrDomain }}
-    - host: {{ $overseerrDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: overseerr
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $plexDomain }}
-    - host: {{ $plexDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: plex
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $qbtDomain }}
-    - host: {{ $qbtDomain }}$qbtIngress
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: qbt-web
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $radarrDomain }}
-    - host: {{ $radarrDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: radarr
-            path: /
-            pathType: Prefix
-  {{- end }}
-  {{- if $sonarrDomain }}
-    - host: {{ $sonarrDomain }}
-      http:
-        paths:
-          - backend:
-              service:
-                name: {{ .Release.Name }}-flex-svc
-                port:
-                  name: sonarr
-            path: /
-            pathType: Prefix
-  {{- end }}
+  {{- if $tls }}
   tls:
     - hosts:
-      {{- if $bazarrDomain }}
-        - {{ $bazarrDomain }}
+        - {{ .name | quote }}
+      secretName: {{ $releaseName }}-{{ .name | replace "." "-" }}-flex-tls-cert
+  {{- end }}
       {{- end }}
-      {{- if $ersatztvDomain }}
-        - {{ $ersatztvDomain }}
-      {{- end }}
-      {{- if $jackettDomain }}
-        - {{ $jackettDomain }}
-      {{- end }}
-      {{- if $jellyfinDomain }}
-        - {{ $jellyfinDomain }}
-      {{- end }}
-      {{- if $jellyseerrDomain }}
-        - {{ $jellyseerrDomain }}
-      {{- end }}
-      {{- if $lidarrDomain }}
-        - {{ $lidarrDomain }}
-      {{- end }}
-      {{- if $overseerrDomain }}
-        - {{ $overseerrDomain }}
-      {{- end }}
-      {{- if $plexDomain }}
-        - {{ $plexDomain }}
-      {{- end }}
-      {{- if $qbtDomain }}
-        - {{ $qbtDomain }}
-      {{- end }}
-      {{- if $radarrDomain }}
-        - {{ $radarrDomain }}
-      {{- end }}
-      {{- if $sonarrDomain }}
-        - {{ $sonarrDomain }}
-      {{- end }}
-      secretName: {{ .Release.Name }}-flex-tls-cert
+    {{- end }}
+  {{- end }}
 {{- end }}
