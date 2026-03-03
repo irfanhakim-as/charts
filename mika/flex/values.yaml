@@ -250,15 +250,43 @@ bazarr:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Bazarr server.
-  # Example:
-  # domain: "bazarr.example.com"
-  domain: ""
   # Specifies whether the Bazarr service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Bazarr server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Bazarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -299,15 +327,43 @@ ersatztv:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the ErsatzTV server.
-  # Example:
-  # domain: "ersatztv.example.com"
-  domain: ""
   # Specifies whether the ErsatzTV service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the ErsatzTV server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the ErsatzTV container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -391,15 +447,43 @@ jackett:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Jackett server.
-  # Example:
-  # domain: "jackett.example.com"
-  domain: ""
   # Specifies whether the Jackett service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Jackett server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Jackett container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -439,15 +523,43 @@ jellyfin:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Jellyfin server.
-  # Example:
-  # domain: "jellyfin.example.com"
-  domain: ""
   # Specifies whether the Jellyfin service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Jellyfin server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Jellyfin container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -610,15 +722,43 @@ jellyseerr:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Jellyseerr server.
-  # Example:
-  # domain: "jellyseerr.example.com"
-  domain: ""
   # Specifies whether the Jellyseerr service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Jellyseerr server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # The verbosity level of the Jellyseerr logs.
   # Default: "info"
   # Example:
@@ -663,15 +803,43 @@ lidarr:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Lidarr server.
-  # Example:
-  # domain: "lidarr.example.com"
-  domain: ""
   # Specifies whether the Lidarr service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Lidarr server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Lidarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -711,15 +879,43 @@ overseerr:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Overseerr server.
-  # Example:
-  # domain: "overseerr.example.com"
-  domain: ""
   # Specifies whether the Overseerr service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Overseerr server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Overseerr container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -764,15 +960,43 @@ plex:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Plex server.
-  # Example:
-  # domain: "plex.example.com"
-  domain: ""
   # Specifies whether the Plex service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Plex server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Plex container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -812,15 +1036,43 @@ qbt:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the qBittorrent server.
-  # Example:
-  # domain: "qbt.example.com"
-  domain: ""
   # Specifies whether the qBittorrent service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the qBittorrent server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the qBittorrent container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -860,15 +1112,43 @@ radarr:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Radarr server.
-  # Example:
-  # domain: "radarr.example.com"
-  domain: ""
   # Specifies whether the Radarr service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Radarr server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Radarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
@@ -908,15 +1188,43 @@ sonarr:
   # Example:
   # dataStorage: "10Gi"
   dataStorage: ""
-  # The ingress domain name that hosts the Sonarr server.
-  # Example:
-  # domain: "sonarr.example.com"
-  domain: ""
   # Specifies whether the Sonarr service should be served publicly using an Ingress.
   # Note: Ingress must be enabled at the chart level for this setting to be applied.
   # Example:
   # ingress: true
   ingress: false
+  # The list of ingress domain configurations for the Sonarr server.
+  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Example:
+  # domains:
+  #   # The ingress domain name that hosts the service.
+  #   # Example:
+  #   # name: "service.example.com"
+  #   - name: ""
+  #   # Specifies whether to enable TLS/HTTPS using the configured cluster issuer.
+  #   # Default: true
+  #   # Example:
+  #   # tls: false
+  #     tls: true
+  #   # Additional configuration annotations applied to the Ingress resource of this domain.
+  #   # Items: `.prefix`, `.name`, `.value`
+  #   # Example:
+  #   # customAnnotations:
+  #   #   # The prefix of the annotation.
+  #   #   # Default: "nginx.ingress.kubernetes.io"
+  #   #   # Example:
+  #   #   # prefix: "nginx.org"
+  #   #   - prefix: ""
+  #   #   # The name of the annotation.
+  #   #   # Example:
+  #   #   # name: "proxy-connect-timeout"
+  #   #     name: ""
+  #   #   # The value of the annotation.
+  #   #   # Example:
+  #   #   # value: "120"
+  #   #     value: ""
+  #     customAnnotations: []
+  domains: []
   # Optional custom configurations to be mounted as a file inside the Sonarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
   # Example:
