@@ -18,7 +18,7 @@ image:
     # Default: "linuxserver/bazarr"
     repository: ""
     # The tag that specifies the version of the Bazarr container image used.
-    # Default: "v1.5.2-ls317"
+    # Default: "v1.5.6-ls339"
     tag: ""
     # The policy that determines when Kubernetes should pull the Bazarr container image.
     # Default: "IfNotPresent"
@@ -33,7 +33,7 @@ image:
     # Default: "jasongdove/ersatztv"
     repository: ""
     # The tag that specifies the version of the ErsatzTV container image used.
-    # Default: "v25.9.0"
+    # Default: "v26.3.0"
     tag: ""
     # The policy that determines when Kubernetes should pull the ErsatzTV container image.
     # Default: "IfNotPresent"
@@ -48,7 +48,7 @@ image:
     # Default: "flaresolverr/flaresolverr"
     repository: ""
     # The tag that specifies the version of the FlareSolverr container image used.
-    # Default: "v3.4.1"
+    # Default: "v3.4.6"
     tag: ""
     # The policy that determines when Kubernetes should pull the FlareSolverr container image.
     # Default: "IfNotPresent"
@@ -63,7 +63,7 @@ image:
     # Default: "linuxserver/jackett"
     repository: ""
     # The tag that specifies the version of the Jackett container image used.
-    # Default: "v0.23.28-ls155"
+    # Default: "v0.24.1261-ls329"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jackett container image.
     # Default: "IfNotPresent"
@@ -78,7 +78,7 @@ image:
     # Default: "linuxserver/jellyfin"
     repository: ""
     # The tag that specifies the version of the Jellyfin container image used.
-    # Default: "10.11.4ubu2404-ls12"
+    # Default: "10.11.6ubu2404-ls23"
     tag: ""
     # The policy that determines when Kubernetes should pull the Jellyfin container image.
     # Default: "IfNotPresent"
@@ -93,7 +93,7 @@ image:
     # Default: "luigi311/jellyplex-watched"
     repository: ""
     # The tag that specifies the version of the JellyPlex-Watched container image used.
-    # Default: "8.4.0-alpine"
+    # Default: "8.5.1-alpine"
     tag: ""
     # The policy that determines when Kubernetes should pull the JellyPlex-Watched container image.
     # Default: "IfNotPresent"
@@ -123,7 +123,7 @@ image:
     # Default: "linuxserver/lidarr"
     repository: ""
     # The tag that specifies the version of the Lidarr container image used.
-    # Default: "3.1.0.4875-ls15"
+    # Default: "3.1.0.4875-ls20"
     tag: ""
     # The policy that determines when Kubernetes should pull the Lidarr container image.
     # Default: "IfNotPresent"
@@ -153,7 +153,7 @@ image:
     # Default: "plexinc/pms-docker"
     repository: ""
     # The tag that specifies the version of the Plex container image used.
-    # Default: "1.41.5.9522-a96edc606"
+    # Default: "1.43.0.10492-121068a07"
     tag: ""
     # The policy that determines when Kubernetes should pull the Plex container image.
     # Default: "IfNotPresent"
@@ -168,7 +168,7 @@ image:
     # Default: "linuxserver/qbittorrent"
     repository: ""
     # The tag that specifies the version of the qBittorrent container image used.
-    # Default: "5.1.4-r1-ls432"
+    # Default: "5.1.4-r2-ls443"
     tag: ""
     # The policy that determines when Kubernetes should pull the qBittorrent container image.
     # Default: "IfNotPresent"
@@ -183,7 +183,7 @@ image:
     # Default: "linuxserver/radarr"
     repository: ""
     # The tag that specifies the version of the Radarr container image used.
-    # Default: "5.27.5.10198-ls283"
+    # Default: "6.0.4.10291-ls294"
     tag: ""
     # The policy that determines when Kubernetes should pull the Radarr container image.
     # Default: "IfNotPresent"
@@ -198,7 +198,7 @@ image:
     # Default: "linuxserver/sonarr"
     repository: ""
     # The tag that specifies the version of the Sonarr container image used.
-    # Default: "4.0.15.2941-ls291"
+    # Default: "4.0.16.2944-ls303"
     tag: ""
     # The policy that determines when Kubernetes should pull the Sonarr container image.
     # Default: "IfNotPresent"
