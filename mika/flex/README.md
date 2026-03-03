@@ -1099,13 +1099,13 @@ Flex is a collection of curated services that aims to provide a complete home me
 | bazarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Bazarr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | bazarr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Bazarr container. |
 | bazarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Bazarr data storage. |
-| bazarr.domain | string | `""` | The ingress domain name that hosts the Bazarr server. |
+| bazarr.domains | list | `[]` | The list of ingress domain configurations for the Bazarr server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | bazarr.enabled | bool | `true` | Specifies whether Bazarr should be deployed or excluded in case an external Bazarr server is used. |
 | bazarr.ingress | bool | `false` | Specifies whether the Bazarr service should be served publicly using an Ingress. |
 | ersatztv.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the ErsatzTV container. Items: `.mountPath`, `.subPath`, `.config`. |
 | ersatztv.dataMountPath | string | `""` | The path where the data storage should be mounted on the ErsatzTV container. Default: `"/root/.local/share/ersatztv"`. |
 | ersatztv.dataStorage | string | `""` | The amount of persistent storage allocated for the ErsatzTV data storage. |
-| ersatztv.domain | string | `""` | The ingress domain name that hosts the ErsatzTV server. |
+| ersatztv.domains | list | `[]` | The list of ingress domain configurations for the ErsatzTV server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | ersatztv.enabled | bool | `false` | Specifies whether ErsatzTV should be deployed or excluded in case an external ErsatzTV server is used. |
 | ersatztv.ingress | bool | `false` | Specifies whether the ErsatzTV service should be served publicly using an Ingress. |
 | flaresolverr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the FlareSolverr container. Items: `.mountPath`, `.subPath`, `.config`. |
@@ -1168,20 +1168,20 @@ Flex is a collection of curated services that aims to provide a complete home me
 | image.sonarr.repository | string | `""` | The name of the repository that contains the Sonarr container image used. Default: `"linuxserver/sonarr"`. |
 | image.sonarr.tag | string | `""` | The tag that specifies the version of the Sonarr container image used. Default: `"4.0.15.2941-ls291"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
-| ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
-| ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
+| ingress.clusterIssuer | string | `""` | The name of the cluster issuer for all Ingress resources. Default: `"letsencrypt-dns-prod"`. |
+| ingress.customAnnotations | list | `[]` | Additional configuration annotations applied to all Ingress resources. Items: `.prefix`, `.name`, `.value`. |
 | ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Flex services. |
 | jackett.autoUpdate | string | `""` | Specifies whether to allow Jackett to automatically update itself inside the container. Default: `"true"`. |
 | jackett.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jackett container. Items: `.mountPath`, `.subPath`, `.config`. |
 | jackett.dataMountPath | string | `""` | The path where the data storage should be mounted on the Jackett container. |
 | jackett.dataStorage | string | `""` | The amount of persistent storage allocated for the Jackett data storage. |
-| jackett.domain | string | `""` | The ingress domain name that hosts the Jackett server. |
+| jackett.domains | list | `[]` | The list of ingress domain configurations for the Jackett server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | jackett.enabled | bool | `true` | Specifies whether Jackett should be deployed or excluded in case an external Jackett server is used. |
 | jackett.ingress | bool | `false` | Specifies whether the Jackett service should be served publicly using an Ingress. |
 | jellyfin.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jellyfin container. Items: `.mountPath`, `.subPath`, `.config`. |
 | jellyfin.dataMountPath | string | `""` | The path where the data storage should be mounted on the Jellyfin container. |
 | jellyfin.dataStorage | string | `""` | The amount of persistent storage allocated for the Jellyfin data storage. |
-| jellyfin.domain | string | `""` | The ingress domain name that hosts the Jellyfin server. |
+| jellyfin.domains | list | `[]` | The list of ingress domain configurations for the Jellyfin server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | jellyfin.enabled | bool | `false` | Specifies whether Jellyfin should be deployed or excluded in case an external Jellyfin server is used. |
 | jellyfin.ingress | bool | `false` | Specifies whether the Jellyfin service should be served publicly using an Ingress. |
 | jellyplexWatched.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the JellyPlex-Watched container. Items: `.mountPath`, `.subPath`, `.config`. |
@@ -1200,40 +1200,40 @@ Flex is a collection of curated services that aims to provide a complete home me
 | jellyseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Jellyseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | jellyseerr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Jellyseerr container. Default: `"/app/config"`. |
 | jellyseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Jellyseerr data storage. |
-| jellyseerr.domain | string | `""` | The ingress domain name that hosts the Jellyseerr server. |
+| jellyseerr.domains | list | `[]` | The list of ingress domain configurations for the Jellyseerr server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | jellyseerr.enabled | bool | `false` | Specifies whether Jellyseerr should be deployed or excluded in case an external Jellyseerr server is used. |
 | jellyseerr.ingress | bool | `false` | Specifies whether the Jellyseerr service should be served publicly using an Ingress. |
 | jellyseerr.logLevel | string | `""` | The verbosity level of the Jellyseerr logs. Default: `"info"`. |
 | lidarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Lidarr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | lidarr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Lidarr container. |
 | lidarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Lidarr data storage. |
-| lidarr.domain | string | `""` | The ingress domain name that hosts the Lidarr server. |
+| lidarr.domains | list | `[]` | The list of ingress domain configurations for the Lidarr server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | lidarr.enabled | bool | `false` | Specifies whether Lidarr should be deployed or excluded in case an external Lidarr server is used. |
 | lidarr.ingress | bool | `false` | Specifies whether the Lidarr service should be served publicly using an Ingress. |
 | nodeSelector | object | `{}` | Specify node labels that target nodes must have for pod scheduling. |
 | overseerr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Overseerr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | overseerr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Overseerr container. |
 | overseerr.dataStorage | string | `""` | The amount of persistent storage allocated for the Overseerr data storage. |
-| overseerr.domain | string | `""` | The ingress domain name that hosts the Overseerr server. |
+| overseerr.domains | list | `[]` | The list of ingress domain configurations for the Overseerr server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | overseerr.enabled | bool | `false` | Specifies whether Overseerr should be deployed or excluded in case an external Overseerr server is used. |
 | overseerr.ingress | bool | `false` | Specifies whether the Overseerr service should be served publicly using an Ingress. |
 | plex.claim | string | `""` | The secret claim token used to claim ownership of the Plex server. |
 | plex.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Plex container. Items: `.mountPath`, `.subPath`, `.config`. |
 | plex.dataMountPath | string | `""` | The path where the data storage should be mounted on the Plex container. |
 | plex.dataStorage | string | `""` | The amount of persistent storage allocated for the Plex data storage. |
-| plex.domain | string | `""` | The ingress domain name that hosts the Plex server. |
+| plex.domains | list | `[]` | The list of ingress domain configurations for the Plex server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | plex.enabled | bool | `false` | Specifies whether Plex should be deployed or excluded in case an external Plex server is used. |
 | plex.ingress | bool | `false` | Specifies whether the Plex service should be served publicly using an Ingress. |
 | qbt.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the qBittorrent container. Items: `.mountPath`, `.subPath`, `.config`. |
 | qbt.dataMountPath | string | `""` | The path where the data storage should be mounted on the qBittorrent container. |
 | qbt.dataStorage | string | `""` | The amount of persistent storage allocated for the qBittorrent data storage. |
-| qbt.domain | string | `""` | The ingress domain name that hosts the qBittorrent server. |
+| qbt.domains | list | `[]` | The list of ingress domain configurations for the qBittorrent server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | qbt.enabled | bool | `false` | Specifies whether qBittorrent should be deployed or excluded in case an external qBittorrent server is used. |
 | qbt.ingress | bool | `false` | Specifies whether the qBittorrent service should be served publicly using an Ingress. |
 | radarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Radarr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | radarr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Radarr container. |
 | radarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Radarr data storage. |
-| radarr.domain | string | `""` | The ingress domain name that hosts the Radarr server. |
+| radarr.domains | list | `[]` | The list of ingress domain configurations for the Radarr server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | radarr.enabled | bool | `true` | Specifies whether Radarr should be deployed or excluded in case an external Radarr server is used. |
 | radarr.ingress | bool | `false` | Specifies whether the Radarr service should be served publicly using an Ingress. |
 | replicaCount | string | `""` | The desired number of running replicas for Flex. Default: `"1"`. |
@@ -1293,7 +1293,7 @@ Flex is a collection of curated services that aims to provide a complete home me
 | sonarr.customConfigs | list | `[]` | Optional custom configurations to be mounted as a file inside the Sonarr container. Items: `.mountPath`, `.subPath`, `.config`. |
 | sonarr.dataMountPath | string | `""` | The path where the data storage should be mounted on the Sonarr container. |
 | sonarr.dataStorage | string | `""` | The amount of persistent storage allocated for the Sonarr data storage. |
-| sonarr.domain | string | `""` | The ingress domain name that hosts the Sonarr server. |
+| sonarr.domains | list | `[]` | The list of ingress domain configurations for the Sonarr server. Items: `.name`, `.tls`, `.customAnnotations`. |
 | sonarr.enabled | bool | `true` | Specifies whether Sonarr should be deployed or excluded in case an external Sonarr server is used. |
 | sonarr.ingress | bool | `false` | Specifies whether the Sonarr service should be served publicly using an Ingress. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
