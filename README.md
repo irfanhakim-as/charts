@@ -18,6 +18,7 @@ Applications, developed or curated by [mika](https://github.com/irfanhakim-as), 
 
 | Chart Name | Description | Support | Access |
 | ---------- | ----------- | ------- | ------ |
+| [borgmatic](mika/borgmatic) | Simple, configuration-driven backup software for servers and workstations. | ✅ | ✅ |
 | [clog](mika/clog) | Creative blog, Career blog, Coin blog, you name it. | ✅ | 🔒 |
 | [cloudflared](mika/cloudflared) | Cloudflare Tunnel is a tunneling software that lets you quickly secure and encrypt application traffic to any type of infrastructure. | ✅ | ✅ |
 | [cloudflareddns](mika/cloudflareddns) | Access your home network remotely via a custom domain name without a static IP! | ✅ | ✅ |
