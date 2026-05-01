@@ -1,0 +1,141 @@
+# Default values for borgmatic.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Container images used for borgmatic.
+image:
+  # borgmatic container image configurations.
+  # Source: https://github.com/borgmatic-collective/docker-borgmatic/pkgs/container/borgmatic
+  borgmatic:
+    # The registry where the borgmatic container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the borgmatic container image used.
+    # Default: "borgmatic-collective/borgmatic"
+    repository: ""
+    # The tag that specifies the version of the borgmatic container image used.
+    # Default: Chart appVersion
+    tag: ""
+    # The policy that determines when Kubernetes should pull the borgmatic container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# borgmatic configurations.
+borgmatic:
+  # Global configurations applied to all borgmatic jobs unless overridden per job.
+  global:
+    # The passphrase used to encrypt and decrypt the Borg repository, shared across all borgmatic jobs.
+    # Example:
+    # passphrase: "supersecretpassphrase"
+    passphrase: ""
+    # SSH private key content shared across all borgmatic jobs.
+    # Note: Mounted at /root/.ssh/id inside the container.
+    # Example:
+    # sshPrivateKey: |
+    #   -----BEGIN OPENSSH PRIVATE KEY-----
+    #   ...
+    #   -----END OPENSSH PRIVATE KEY-----
+    sshPrivateKey: ""
+    # Secret environment variables shared across all borgmatic jobs.
+    # Note: Values are accessible in borgmatic configs via the ${ENV_VAR} interpolation syntax.
+    # Example:
+    # secrets:
+    #   MYSQL_ROOT_PASSWORD: "secret"
+    secrets: {}
+  # A map of borgmatic configuration jobs, each generating a dedicated CronJob with its own schedule.
+  # Items: `.schedule`, `.passphrase`, `.sshPrivateKey`, `.secrets`, `.volumes`, `.content`
+  # Example:
+  # configs:
+  #   files:
+  #     schedule: "0 2 * * 1,3,6"
+  #     passphrase: "supersecretpassphrase"
+  #     volumes:
+  #       - claimName: "nextcloud-data-pvc"
+  #         mountPath: "/mnt/nextcloud"
+  #       - claimName: "ghost-data-pvc"
+  #         mountPath: "/mnt/ghost"
+  #         subPath: "data"
+  #     content: |
+  #       repositories:
+  #         - path: "ssh://user@backuphost/./files"
+  #           label: "files"
+  #       source_directories:
+  #         - /mnt/nextcloud
+  #         - /mnt/ghost
+  #       keep_daily: 7
+  #   databases:
+  #     schedule: "0 3 * * *"
+  #     passphrase: "supersecretpassphrase"
+  #     secrets:
+  #       MYSQL_ROOT_PASSWORD: "secret"
+  #     content: |
+  #       repositories:
+  #         - path: "ssh://user@backuphost/./databases"
+  #           label: "databases"
+  #       hooks:
+  #         mysql_databases:
+  #           - name: all
+  configs: {}
+  # The timezone used for the borgmatic CronJob schedule and log timestamps.
+  # Default: "UTC"
+  # Note: CronJob timezone scheduling requires Kubernetes 1.27+.
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteMany"
+    # Example:
+    # accessMode: "ReadWriteOnce"
+    accessMode: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "smb"
+    storageClassName: ""
+
+# Resource requirements and limits for borgmatic containers.
+resources:
+  # borgmatic container resources.
+  # Example:
+  # borgmatic:
+  #   # The minimum amount of resources required by borgmatic to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by borgmatic.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "10m"
+  #     # The minimum amount of memory required by borgmatic.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "100Mi"
+  #   # The maximum amount of resources allowed for borgmatic.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for borgmatic.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for borgmatic.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "500Mi"
+  borgmatic: {}
