@@ -1,0 +1,96 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $borgmatic_registry := .Values.image.borgmatic.registry | default "ghcr.io" | toString }}
+{{- $borgmatic_repository := .Values.image.borgmatic.repository | default "borgmatic-collective/borgmatic" | toString }}
+{{- $borgmatic_tag := .Values.image.borgmatic.tag | default .Chart.AppVersion | toString }}
+{{- $borgmatic_pullPolicy := .Values.image.borgmatic.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $borgmaticConfigs := .Values.borgmatic.configs }}
+{{- range $name, $job := $borgmaticConfigs }}
+{{- $jobPassphrase := $job.passphrase | default $.Values.borgmatic.global.passphrase | toString }}
+{{- $jobSecrets := $job.secrets | default $.Values.borgmatic.global.secrets }}
+{{- $sshPrivateKey := $job.sshPrivateKey | default $.Values.borgmatic.global.sshPrivateKey | toString }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ $.Release.Name }}-borgmatic-{{ $name }}-shell
+  labels:
+    {{- include "borgmatic.labels" $ | nindent 4 }}
+spec:
+  schedule: "0 0 * * 0"
+  suspend: true
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "borgmatic.selectorLabels" $ | nindent 12 }}
+        spec:
+          {{- with $.Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          restartPolicy: Never
+          containers:
+            - name: borgmatic
+              image: {{ printf "%s/%s:%s" $borgmatic_registry $borgmatic_repository $borgmatic_tag | quote }}
+              imagePullPolicy: {{ $borgmatic_pullPolicy }}
+              command: ["sleep", "infinity"]
+              resources:
+                {{- toYaml $.Values.resources.borgmatic | nindent 16 }}
+              envFrom:
+                - configMapRef:
+                    name: {{ $.Release.Name }}-borgmatic-cm
+                {{- if or $jobPassphrase $jobSecrets }}
+                - secretRef:
+                    name: {{ $.Release.Name }}-borgmatic-{{ $name }}-secret
+                {{- end }}
+              volumeMounts:
+                {{- if $dataPersistence }}
+                - name: {{ $.Release.Name }}-borgmatic-data
+                  mountPath: /root/.cache/borg
+                  subPath: cache
+                - name: {{ $.Release.Name }}-borgmatic-data
+                  mountPath: /root/.local/state/borgmatic
+                  subPath: state
+                - name: {{ $.Release.Name }}-borgmatic-data
+                  mountPath: /root/.config/borg
+                  subPath: config
+                {{- end }}
+                - name: {{ $.Release.Name }}-borgmatic-config
+                  mountPath: /etc/borgmatic.d
+                  readOnly: true
+                {{- if $sshPrivateKey }}
+                - name: {{ $.Release.Name }}-borgmatic-{{ $name }}-ssh
+                  mountPath: /root/.ssh/id
+                  subPath: id
+                  readOnly: true
+                {{- end }}
+                {{- range $job.volumes }}
+                - name: {{ .claimName }}
+                  mountPath: {{ .mountPath | quote }}
+                  readOnly: true
+                  {{- if .subPath }}
+                  subPath: {{ .subPath | quote }}
+                  {{- end }}
+                {{- end }}
+          volumes:
+            {{- if $dataPersistence }}
+            - name: {{ $.Release.Name }}-borgmatic-data
+              persistentVolumeClaim:
+                claimName: {{ $.Release.Name }}-borgmatic-data-pvc
+            {{- end }}
+            - name: {{ $.Release.Name }}-borgmatic-config
+              configMap:
+                name: {{ $.Release.Name }}-borgmatic-config
+            {{- if $sshPrivateKey }}
+            - name: {{ $.Release.Name }}-borgmatic-{{ $name }}-ssh
+              secret:
+                secretName: {{ $.Release.Name }}-borgmatic-{{ $name }}-ssh-secret
+                defaultMode: 0400
+            {{- end }}
+            {{- range $job.volumes }}
+            - name: {{ .claimName }}
+              persistentVolumeClaim:
+                claimName: {{ .claimName }}
+            {{- end }}
+{{- end }}

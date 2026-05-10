@@ -1,0 +1,67 @@
+{{- $borgmaticConfigs := .Values.borgmatic.configs }}
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $globalPassphrase := .Values.borgmatic.global.passphrase | toString }}
+{{- $globalSSHKey := .Values.borgmatic.global.sshPrivateKey | toString }}
+borgmatic has been installed and configured for {{ .Release.Name | toString }} 🎉
+
+The following are a list of backup job(s) you have configured:
+
+{{- if not $borgmaticConfigs }}
+
+    ⚠️ No backup jobs were configured for borgmatic to run
+
+{{- else }}
+
+    {{- $i := 0 }}
+    {{- range $name, $job := $borgmaticConfigs }}
+        {{- $i = add1 $i }}
+        {{- $schedule := $job.schedule | default "0 3 * * *" | toString }}
+        {{- $passphrase := "no" }}
+        {{- if or ($job.passphrase | toString) $globalPassphrase }}{{- $passphrase = "yes" }}{{- end }}
+        {{- $sshKey := "no" }}
+        {{- if or ($job.sshPrivateKey | toString) $globalSSHKey }}{{- $sshKey = "yes" }}{{- end }}
+        {{- $volumeCount := len ($job.volumes | default (list)) }}
+
+    {{ printf "%s. name=%s | schedule=%s | passphrase=%s | ssh_key=%s | volumes=%s" ($i | toString) $name $schedule $passphrase $sshKey ($volumeCount | toString) }}
+
+    {{- end }}
+
+{{- end }}
+
+Persistent state storage: {{ ternary "enabled" "disabled" $dataPersistence }}
+
+If this is a new installation, initialise each Borg repository before backups can run:
+
+    kubectl create job --namespace {{ .Release.Namespace }} borgmatic-shell --from=cronjob/{{ .Release.Name }}-borgmatic-<name>-shell
+
+    kubectl get pod --namespace {{ .Release.Namespace }} -l job-name=borgmatic-shell
+
+    kubectl exec --namespace {{ .Release.Namespace }} -it <pod-name> -- borgmatic init --encryption repokey-blake2 --config /etc/borgmatic.d/<name>.yaml
+
+    kubectl delete job --namespace {{ .Release.Namespace }} borgmatic-shell
+
+Replace <name> with the config name (e.g. main, databases).
+
+To open an interactive shell for borgmatic inspection (e.g. listing archives), run:
+
+    kubectl create job --namespace {{ .Release.Namespace }} borgmatic-shell --from=cronjob/{{ .Release.Name }}-borgmatic-<name>-shell
+
+    kubectl get pod --namespace {{ .Release.Namespace }} -l job-name=borgmatic-shell
+
+    kubectl exec --namespace {{ .Release.Namespace }} -it <pod-name> -- /bin/sh
+
+    kubectl delete job --namespace {{ .Release.Namespace }} borgmatic-shell
+
+Replace <name> with the config name (e.g. main, databases).
+
+To manually trigger a backup job, run:
+
+    kubectl create job --namespace {{ .Release.Namespace }} --from=cronjob/{{ .Release.Name }}-borgmatic-<name> {{ .Release.Name }}-borgmatic-<name>-manual
+
+Replace <name> with the config name (e.g. main, databases).
+
+To view borgmatic logs from the most recent backup run, run:
+
+    kubectl logs --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "borgmatic.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
+
+For more information on how to use and configure borgmatic, please refer to the official documentation.

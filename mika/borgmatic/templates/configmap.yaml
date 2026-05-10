@@ -1,0 +1,25 @@
+{{- $timezone := .Values.borgmatic.timezone | default "UTC" | toString | quote }}
+{{- $borgmaticConfigs := .Values.borgmatic.configs }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-borgmatic-cm
+  labels:
+    {{- include "borgmatic.labels" . | nindent 4 }}
+data:
+  TZ: {{ $timezone }}
+{{- if $borgmaticConfigs }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-borgmatic-config
+  labels:
+    {{- include "borgmatic.labels" . | nindent 4 }}
+data:
+  {{- range $name, $job := $borgmaticConfigs }}
+  {{ $name }}.yaml: |-
+    {{- $job.content | nindent 4 }}
+  {{- end }}
+{{- end }}
