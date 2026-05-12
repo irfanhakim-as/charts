@@ -1,0 +1,20 @@
+apiVersion: v2
+name: rizz
+description: Rizz is a simple web application that tracks and posts content from RSS Feeds to federated social network.
+type: application
+version: 0.3.2
+appVersion: "0.4.0-stable-r1"
+keywords:
+  - "rss"
+  - "monitor"
+  - "mastodon"
+  - "bluesky"
+home: "https://github.com/irfanhakim-as/rizz"
+icon: "https://irfanhakim-as.github.io/charts/logos/moekai.svg"
+sources:
+  - "https://github.com/irfanhakim-as/rizz"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

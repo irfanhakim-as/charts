@@ -1,0 +1,18 @@
+apiVersion: v2
+name: postgres-agent
+description: Easily create or delete a database and user pair in a remote PostgreSQL instance.
+type: application
+version: 0.3.3
+appVersion: "16.3.0-debian-12-r12"
+keywords:
+  - "postgresql"
+  - "agent"
+  - "job"
+home: "https://github.com/irfanhakim-as/charts"
+icon: "https://irfanhakim-as.github.io/charts/logos/postgres.svg"
+sources:
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"
