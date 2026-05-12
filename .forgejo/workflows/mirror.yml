@@ -1,0 +1,39 @@
+name: Mirror to Remote
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  BRANCHES: master
+  REMOTE_HOST: github.com
+  REMOTE_REPO: irfanhakim-as/charts
+  SSH_PRIVATE_KEY: ${{ secrets.MIRROR_SSH_PRIVATE_KEY }}
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ env.SSH_PRIVATE_KEY }}
+
+      - name: Add remote host to known hosts
+        run: |
+          ssh-keyscan ${REMOTE_HOST} >> ~/.ssh/known_hosts
+
+      - name: Mirror branches to remote
+        run: |
+          git remote add remote git@${REMOTE_HOST}:${REMOTE_REPO}.git
+          for branch in $(echo ${BRANCHES} | tr ',' ' '); do
+            branch=$(echo "${branch}" | xargs)
+            git push remote refs/heads/${branch}:refs/heads/${branch} --force
+          done
