@@ -7,7 +7,7 @@ appVersion: "v1.27.3-ls131"
 keywords:
   - "syncthing"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/syncthing.png"
+icon: "https://charts.moekai.com/logos/syncthing.png"
 sources:
   - "https://github.com/syncthing/syncthing"
   - "https://github.com/linuxserver/docker-syncthing"

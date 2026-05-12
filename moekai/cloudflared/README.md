@@ -34,7 +34,7 @@ cloudflared tunnel route dns $tunnel $hostname
 Add the repo to your local helm client.
 
 ```sh
-helm repo add moekai https://irfanhakim-as.github.io/charts
+helm repo add moekai https://charts.moekai.com
 ```
 
 Update the repo to retrieve the latest versions of the packages.

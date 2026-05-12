@@ -8,7 +8,7 @@ keywords:
   - "linkstack"
   - "linktree"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/linkstack.svg"
+icon: "https://charts.moekai.com/logos/linkstack.svg"
 sources:
   - "https://github.com/LinkStackOrg/LinkStack"
   - "https://github.com/LinkStackOrg/linkstack-docker"

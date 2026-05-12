@@ -45,7 +45,7 @@ Ghost is an independent platform for publishing online by web and email newslett
 1. Add the repo to your local helm client:
 
     ```sh
-    helm repo add moekai https://irfanhakim-as.github.io/charts
+    helm repo add moekai https://charts.moekai.com
     ```
 
 2. Update the repo to retrieve the latest versions of the packages:

@@ -44,7 +44,7 @@ Access your home network remotely via a custom domain name without a static IP!
 1. Add the repo to your local helm client:
 
     ```sh
-    helm repo add moekai https://irfanhakim-as.github.io/charts
+    helm repo add moekai https://charts.moekai.com
     ```
 
 2. Update the repo to retrieve the latest versions of the packages:

@@ -9,10 +9,10 @@ keywords:
   - "Telegram"
   - "Bot"
 home: "https://github.com/irfanhakim-as/vpbot"
-icon: "https://irfanhakim-as.github.io/charts/logos/vpbot.png"
+icon: "https://charts.moekai.com/logos/vpbot.png"
 sources:
   - "https://github.com/irfanhakim-as/vpbot"
-  - "https://irfanhakim-as.github.io/charts/moekai/vpbot"
+  - "https://charts.moekai.com/moekai/vpbot"
 maintainers:
   - name: "Irfan Hakim"
     email: "irfanhakim.as@yahoo.com"

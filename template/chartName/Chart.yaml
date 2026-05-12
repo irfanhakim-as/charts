@@ -7,7 +7,7 @@ appVersion: "0.0.1-r1"
 keywords:
   - "chartName"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/chartName.png"
+icon: "https://charts.moekai.com/logos/chartName.png"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:

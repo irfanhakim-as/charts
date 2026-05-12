@@ -22,7 +22,7 @@ keywords:
   - "radarr"
   - "sonarr"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/flex.png"
+icon: "https://charts.moekai.com/logos/flex.png"
 sources:
   - "https://github.com/plexinc/pms-docker"
   - "https://github.com/linuxserver/docker-bazarr"

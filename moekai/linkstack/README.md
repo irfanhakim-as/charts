@@ -45,7 +45,7 @@ LinkStack is a highly customizable link sharing platform with an intuitive, easy
 1. Add the repo to your local helm client:
 
     ```sh
-    helm repo add moekai https://irfanhakim-as.github.io/charts
+    helm repo add moekai https://charts.moekai.com
     ```
 
 2. Update the repo to retrieve the latest versions of the packages:

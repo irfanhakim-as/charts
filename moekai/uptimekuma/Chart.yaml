@@ -9,7 +9,7 @@ keywords:
   - "kuma"
   - "monitoring"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://irfanhakim-as.github.io/charts/logos/uptimekuma.png"
+icon: "https://charts.moekai.com/logos/uptimekuma.png"
 sources:
   - "https://github.com/louislam/uptime-kuma"
   - "https://github.com/irfanhakim-as/charts"
