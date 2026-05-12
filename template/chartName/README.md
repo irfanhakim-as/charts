@@ -46,7 +46,7 @@ A Helm chart for deploying ChartName.
 1. Add the repo to your local helm client:
 
     ```sh
-    helm repo add mika https://irfanhakim-as.github.io/charts
+    helm repo add moekai https://irfanhakim-as.github.io/charts
     ```
 
 2. Update the repo to retrieve the latest versions of the packages:
@@ -64,7 +64,7 @@ A Helm chart for deploying ChartName.
     Get the latest ChartName chart values file for a new installation:
 
     ```sh
-    helm show values mika/chartName > values.yaml
+    helm show values moekai/chartName > values.yaml
     ```
 
     **Alternatively**, get the values file of an existing ChartName release:
@@ -86,7 +86,7 @@ A Helm chart for deploying ChartName.
 3. Install a new release for ChartName or upgrade an existing ChartName release:
 
     ```sh
-    helm upgrade --install ${releaseName} mika/chartName --namespace ${namespace} --create-namespace --values values.yaml --wait
+    helm upgrade --install ${releaseName} moekai/chartName --namespace ${namespace} --create-namespace --values values.yaml --wait
     ```
 
     Replace `${releaseName}` and `${namespace}` accordingly.
