@@ -34,3 +34,12 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           charts_dir: mika
+
+      - name: Sync gh-pages with master
+        run: |
+          git fetch origin gh-pages
+          git checkout -B gh-pages master
+          git checkout origin/gh-pages -- index.yaml
+          git add index.yaml
+          git diff --staged --quiet || git commit -m "chore: update helm index"
+          git push origin gh-pages --force-with-lease
