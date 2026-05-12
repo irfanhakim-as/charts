@@ -1,0 +1,55 @@
+name: Release Charts (OCI)
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - mika/**
+  workflow_dispatch:
+
+env:
+  CHARTS_DIR: mika
+  REGISTRY_HOST: ${{ vars.REGISTRY_HOST }}
+  REGISTRY_USER: ${{ vars.REGISTRY_USER }}
+  REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.8.1
+
+      - name: Login to registry
+        run: |
+          helm registry login ${REGISTRY_HOST} \
+            --username ${REGISTRY_USER} \
+            --password ${REGISTRY_TOKEN}
+
+      - name: Package and push charts
+        run: |
+          mkdir -p /tmp/charts
+          for chart in ${CHARTS_DIR}/*/; do
+            helm package "${chart}" --destination /tmp/charts
+          done
+          for pkg in /tmp/charts/*.tgz; do
+            helm push "${pkg}" oci://${REGISTRY_HOST}/${REGISTRY_USER}/charts
+          done
+
+      - name: Link charts to repository
+        run: |
+          repo_name="${GITHUB_REPOSITORY#*/}"
+          for chart in ${CHARTS_DIR}/*/; do
+            chart_name=$(basename "${chart}")
+            curl -s -X POST \
+              -H "Authorization: token ${REGISTRY_TOKEN}" \
+              "https://${REGISTRY_HOST}/api/v1/packages/${REGISTRY_USER}/container/charts%2F${chart_name}/-/link/${repo_name}"
+          done
