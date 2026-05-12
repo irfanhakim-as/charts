@@ -1,6 +1,6 @@
-# ChartName
+# Ghost
 
-A Helm chart for deploying ChartName.
+Ghost is an independent platform for publishing online by web and email newsletter.
 
 ## Prerequisites
 
@@ -10,7 +10,6 @@ A Helm chart for deploying ChartName.
 - Kubernetes 1.19+
 - Helm 3.2.0+
 - Longhorn 1.4.1+
-- csi-driver-smb 1.14.0+
 
 ---
 
@@ -59,15 +58,15 @@ A Helm chart for deploying ChartName.
 
 ## How to install or upgrade a chart release
 
-1. Get the values file of the ChartName chart or an existing installation (release).
+1. Get the values file of the Ghost chart or an existing installation (release).
 
-    Get the latest ChartName chart values file for a new installation:
+    Get the latest Ghost chart values file for a new installation:
 
     ```sh
-    helm show values moekai/chartName > values.yaml
+    helm show values moekai/ghost > values.yaml
     ```
 
-    **Alternatively**, get the values file of an existing ChartName release:
+    Alternatively, get the values file of an existing Ghost release:
 
     ```sh
     helm get values ${releaseName} --namespace ${namespace} > values.yaml
@@ -75,7 +74,7 @@ A Helm chart for deploying ChartName.
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-2. Edit your ChartName values file with the intended configurations:
+2. Edit your Ghost values file with the intended configurations:
 
     ```sh
     nano values.yaml
@@ -83,15 +82,15 @@ A Helm chart for deploying ChartName.
 
     Pay extra attention to the descriptions and sample values provided in the chart values file.
 
-3. Install a new release for ChartName or upgrade an existing ChartName release:
+3. Install a new release for Ghost or upgrade an existing Ghost release:
 
     ```sh
-    helm upgrade --install ${releaseName} moekai/chartName --namespace ${namespace} --create-namespace --values values.yaml --wait
+    helm upgrade --install ${releaseName} moekai/ghost --namespace ${namespace} --create-namespace --values values.yaml --wait
     ```
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-4. Verify that your ChartName release has been installed:
+4. Verify that your Ghost release has been installed:
 
     ```sh
     helm ls --namespace ${namespace} | grep "${releaseName}"
@@ -128,31 +127,46 @@ A Helm chart for deploying ChartName.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| chartName.bar | string | `""` | The secret value of the ChartName bar. Default: `"bar"`. |
-| chartName.domain | string | `""` | The ingress domain name that hosts the ChartName server. |
-| chartName.foo | string | `""` | The value of the ChartName foo. Default: `"foo"`. |
-| chartName.initScript | string | `""` | Custom init script to run before the ChartName container starts. |
-| image.chartName.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ChartName container image. Default: `"IfNotPresent"`. |
-| image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"ghcr.io"`. |
-| image.chartName.repository | string | `""` | The name of the repository that contains the ChartName container image used. Default: `"chartName"`. |
-| image.chartName.tag | string | `""` | The tag that specifies the version of the ChartName container image used. Default: `Chart appVersion`. |
+| db.host | string | `""` | The hostname or IP address of the Ghost database server. |
+| db.name | string | `""` | The name of the database being used by Ghost. |
+| db.password | string | `""` | The password associated with the Ghost database user. |
+| db.port | string | `""` | The port number the Ghost database server is listening for connections. Default: `"3306"`. |
+| db.type | string | `""` | The database engine or backend being used by Ghost. Default: `"mysql"`. |
+| db.user | string | `""` | The username or user account for accessing the Ghost database. |
+| ghost.debug | string | `""` | Specifies whether Ghost should run in debug mode. Default: `"false"`. |
+| ghost.domain | string | `""` | The ingress domain name that hosts the Ghost server. Default: `"localhost"`. |
+| ghost.environment | string | `""` | The runtime environment for the Ghost server. Default: `"production"`. |
+| ghost.initScript | string | `""` | Custom init script to run before the Ghost container starts. |
+| ghost.install_dir | string | `""` | The directory where Ghost is installed on the container. Default: `"/home/nonroot/app/ghost"`. |
+| image.ghost.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Ghost container image. Default: `"IfNotPresent"`. |
+| image.ghost.registry | string | `""` | The registry where the Ghost container image is hosted. Default: `"ghcr.io"`. |
+| image.ghost.repository | string | `""` | The name of the repository that contains the Ghost container image used. Default: `"sredevopsorg/ghost-on-kubernetes"`. |
+| image.ghost.tag | string | `""` | The tag that specifies the version of the Ghost container image used. Default: `Chart appVersion`. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
-| image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
+| image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"stable-musl"`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
-| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting ChartName services. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting Ghost services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
-| replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
-| resources.chartName | object | `{}` | ChartName container resources. |
+| mail.enabled | bool | `false` | Specifies whether email support should be enabled for Ghost. |
+| mail.from_email | string | `""` | The email address used as the "from" address for sent emails. Default: `"${.smtp.user}"`. |
+| mail.secure | string | `""` | Specifies whether Ghost should use a secure TLS connection when sending emails. Default: `"true"`. |
+| mail.service | string | `""` | The email service provider used for sending emails. Default: `"Google"`. |
+| mail.smtp.host | string | `""` | The hostname or IP address of the SMTP server for sending emails. Default: `"smtp.gmail.com"`. |
+| mail.smtp.password | string | `""` | The password for authenticating with the SMTP server. |
+| mail.smtp.port | string | `""` | The port number on the SMTP server used for sending emails. Default: `"465"`. |
+| mail.smtp.user | string | `""` | The username for authenticating with the SMTP server. |
+| replicaCount | string | `""` | The desired number of running replicas for Ghost. Default: `"1"`. |
+| resources.ghost | object | `{}` | Ghost container resources. |
 | service.nodePort | string | `""` | The optional node port to expose when the service type is NodePort. |
-| service.port | string | `""` | The port on which the ChartName server should listen for connections. Default: `"80"`. |
-| service.type | string | `""` | The type of service used to expose ChartName services. Default: `"ClusterIP"`. |
+| service.port | string | `""` | The port on which the Ghost server should listen for connections. Default: `"80"`. |
+| service.type | string | `""` | The type of service used to expose Ghost services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"${ghost.install_dir}/content"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |

@@ -1,6 +1,6 @@
-# ChartName
+# [LinkStack](https://github.com/LinkStackOrg/LinkStack)
 
-A Helm chart for deploying ChartName.
+LinkStack is a highly customizable link sharing platform with an intuitive, easy to use user interface.
 
 ## Prerequisites
 
@@ -10,7 +10,6 @@ A Helm chart for deploying ChartName.
 - Kubernetes 1.19+
 - Helm 3.2.0+
 - Longhorn 1.4.1+
-- csi-driver-smb 1.14.0+
 
 ---
 
@@ -59,15 +58,15 @@ A Helm chart for deploying ChartName.
 
 ## How to install or upgrade a chart release
 
-1. Get the values file of the ChartName chart or an existing installation (release).
+1. Get the values file of the LinkStack chart or an existing installation (release).
 
-    Get the latest ChartName chart values file for a new installation:
+    Get the latest LinkStack chart values file for a new installation:
 
     ```sh
-    helm show values moekai/chartName > values.yaml
+    helm show values moekai/linkstack > values.yaml
     ```
 
-    **Alternatively**, get the values file of an existing ChartName release:
+    Alternatively, get the values file of an existing LinkStack release:
 
     ```sh
     helm get values ${releaseName} --namespace ${namespace} > values.yaml
@@ -75,7 +74,7 @@ A Helm chart for deploying ChartName.
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-2. Edit your ChartName values file with the intended configurations:
+2. Edit your LinkStack values file with the intended configurations:
 
     ```sh
     nano values.yaml
@@ -83,15 +82,15 @@ A Helm chart for deploying ChartName.
 
     Pay extra attention to the descriptions and sample values provided in the chart values file.
 
-3. Install a new release for ChartName or upgrade an existing ChartName release:
+3. Install a new release for LinkStack or upgrade an existing LinkStack release:
 
     ```sh
-    helm upgrade --install ${releaseName} moekai/chartName --namespace ${namespace} --create-namespace --values values.yaml --wait
+    helm upgrade --install ${releaseName} moekai/linkstack --namespace ${namespace} --create-namespace --values values.yaml --wait
     ```
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-4. Verify that your ChartName release has been installed:
+4. Verify that your LinkStack release has been installed:
 
     ```sh
     helm ls --namespace ${namespace} | grep "${releaseName}"
@@ -128,31 +127,36 @@ A Helm chart for deploying ChartName.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| chartName.bar | string | `""` | The secret value of the ChartName bar. Default: `"bar"`. |
-| chartName.domain | string | `""` | The ingress domain name that hosts the ChartName server. |
-| chartName.foo | string | `""` | The value of the ChartName foo. Default: `"foo"`. |
-| chartName.initScript | string | `""` | Custom init script to run before the ChartName container starts. |
-| image.chartName.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ChartName container image. Default: `"IfNotPresent"`. |
-| image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"ghcr.io"`. |
-| image.chartName.repository | string | `""` | The name of the repository that contains the ChartName container image used. Default: `"chartName"`. |
-| image.chartName.tag | string | `""` | The tag that specifies the version of the ChartName container image used. Default: `Chart appVersion`. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
-| image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
-| image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
+| image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"linkstackorg/linkstack"`. |
+| image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `Chart appVersion`. |
+| image.linkstack.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the LinkStack container image. Default: `"IfNotPresent"`. |
+| image.linkstack.registry | string | `""` | The registry where the LinkStack container image is hosted. Default: `"docker.io"`. |
+| image.linkstack.repository | string | `""` | The name of the repository that contains the LinkStack container image used. Default: `"linkstackorg/linkstack"`. |
+| image.linkstack.tag | string | `""` | The tag that specifies the version of the LinkStack container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
-| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting ChartName services. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting LinkStack services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
-| replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
-| resources.chartName | object | `{}` | ChartName container resources. |
-| service.nodePort | string | `""` | The optional node port to expose when the service type is NodePort. |
-| service.port | string | `""` | The port on which the ChartName server should listen for connections. Default: `"80"`. |
-| service.type | string | `""` | The type of service used to expose ChartName services. Default: `"ClusterIP"`. |
-| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
+| linkstack.domain | string | `""` | The ingress domain name that hosts the LinkStack server. Default: `"localhost"`. |
+| linkstack.initScript | string | `""` | Custom init script to run before the LinkStack container starts. |
+| linkstack.logLevel | string | `""` | The level of verbosity of the messages recorded in the error log. Default: `"info"`. |
+| linkstack.phpMemLimit | string | `""` | The maximum amount of memory PHP scripts are allowed to allocate. Default: `"256M"`. |
+| linkstack.serverAdmin | string | `""` | The Apache server administrator email address. Default: `"admin@example.com"`. |
+| linkstack.timezone | string | `""` | The timezone of the LinkStack server. Default: `"UTC"`. |
+| linkstack.uploadMaxFilesize | string | `""` | The maximum allowed file size for uploaded files. Default: `"8M"`. |
+| replicaCount | string | `""` | The desired number of running replicas for LinkStack. Default: `"1"`. |
+| resources.linkstack | object | `{}` | LinkStack container resources. |
+| service.http.nodePort | string | `""` | The optional node port to expose for http when the service type is NodePort. |
+| service.http.port | string | `""` | The http port on which the LinkStack server should listen for connections. Default: `"80"`. |
+| service.https.nodePort | string | `""` | The optional node port to expose for https when the service type is NodePort. |
+| service.https.port | string | `""` | The https port on which the LinkStack server should listen for connections. Default: `"443"`. |
+| service.type | string | `""` | The type of service used to expose LinkStack services. Default: `"ClusterIP"`. |
+| storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteOnce"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/htdocs"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |

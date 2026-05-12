@@ -1,0 +1,91 @@
+{{- $bazarr := .Values.bazarr.enabled }}
+{{- $ersatztv := .Values.ersatztv.enabled }}
+{{- $jackett := .Values.jackett.enabled }}
+{{- $jellyfin := .Values.jellyfin.enabled }}
+{{- $jellyseerr := .Values.jellyseerr.enabled }}
+{{- $lidarr := .Values.lidarr.enabled }}
+{{- $overseerr := .Values.overseerr.enabled }}
+{{- $plex := .Values.plex.enabled }}
+{{- $qbt := .Values.qbt.enabled }}
+{{- $radarr := .Values.radarr.enabled }}
+{{- $sonarr := .Values.sonarr.enabled }}
+{{- $ingress := .Values.ingress.enabled }}
+{{- $bazarrIngress := and $bazarr $ingress .Values.bazarr.ingress .Values.bazarr.domains }}
+{{- $ersatztvIngress := and $ersatztv $ingress .Values.ersatztv.ingress .Values.ersatztv.domains }}
+{{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress .Values.jackett.domains }}
+{{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress .Values.jellyfin.domains }}
+{{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress .Values.jellyseerr.domains }}
+{{- $lidarrIngress := and $lidarr $ingress .Values.lidarr.ingress .Values.lidarr.domains }}
+{{- $overseerrIngress := and $overseerr $ingress .Values.overseerr.ingress .Values.overseerr.domains }}
+{{- $plexIngress := and $plex $ingress .Values.plex.ingress .Values.plex.domains }}
+{{- $qbtIngress := and $qbt $ingress .Values.qbt.ingress .Values.qbt.domains }}
+{{- $radarrIngress := and $radarr $ingress .Values.radarr.ingress .Values.radarr.domains }}
+{{- $sonarrIngress := and $sonarr $ingress .Values.sonarr.ingress .Values.sonarr.domains }}
+{{- $bazarrUrls := list }}
+{{- range .Values.bazarr.domains }}{{- if and $bazarrIngress .name }}{{- $tls := ne .tls false }}{{- $bazarrUrls = append $bazarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $ersatztvUrls := list }}
+{{- range .Values.ersatztv.domains }}{{- if and $ersatztvIngress .name }}{{- $tls := ne .tls false }}{{- $ersatztvUrls = append $ersatztvUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $jackettUrls := list }}
+{{- range .Values.jackett.domains }}{{- if and $jackettIngress .name }}{{- $tls := ne .tls false }}{{- $jackettUrls = append $jackettUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $jellyfinUrls := list }}
+{{- range .Values.jellyfin.domains }}{{- if and $jellyfinIngress .name }}{{- $tls := ne .tls false }}{{- $jellyfinUrls = append $jellyfinUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $jellyseerrUrls := list }}
+{{- range .Values.jellyseerr.domains }}{{- if and $jellyseerrIngress .name }}{{- $tls := ne .tls false }}{{- $jellyseerrUrls = append $jellyseerrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $lidarrUrls := list }}
+{{- range .Values.lidarr.domains }}{{- if and $lidarrIngress .name }}{{- $tls := ne .tls false }}{{- $lidarrUrls = append $lidarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $overseerrUrls := list }}
+{{- range .Values.overseerr.domains }}{{- if and $overseerrIngress .name }}{{- $tls := ne .tls false }}{{- $overseerrUrls = append $overseerrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $plexUrls := list }}
+{{- range .Values.plex.domains }}{{- if and $plexIngress .name }}{{- $tls := ne .tls false }}{{- $plexUrls = append $plexUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $qbtUrls := list }}
+{{- range .Values.qbt.domains }}{{- if and $qbtIngress .name }}{{- $tls := ne .tls false }}{{- $qbtUrls = append $qbtUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $radarrUrls := list }}
+{{- range .Values.radarr.domains }}{{- if and $radarrIngress .name }}{{- $tls := ne .tls false }}{{- $radarrUrls = append $radarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- $sonarrUrls := list }}
+{{- range .Values.sonarr.domains }}{{- if and $sonarrIngress .name }}{{- $tls := ne .tls false }}{{- $sonarrUrls = append $sonarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+Flex has been installed and configured for {{ .Release.Name | toString }} 🎉
+
+Visit the following service(s) at the provided address:
+
+{{- if or $bazarrUrls $ersatztvUrls $jackettUrls $jellyfinUrls $jellyseerrUrls $lidarrUrls $overseerrUrls $plexUrls $qbtUrls $radarrUrls $sonarrUrls -}}
+{{- print "\n" }}
+{{- if $bazarrUrls }}
+    - Bazarr: {{ join ", " $bazarrUrls }}
+{{- end }}
+{{- if $ersatztvUrls }}
+    - ErsatzTV: {{ join ", " $ersatztvUrls }}
+{{- end }}
+{{- if $jackettUrls }}
+    - Jackett: {{ join ", " $jackettUrls }}
+{{- end }}
+{{- if $jellyfinUrls }}
+    - Jellyfin: {{ join ", " $jellyfinUrls }}
+{{- end }}
+{{- if $jellyseerrUrls }}
+    - Jellyseerr: {{ join ", " $jellyseerrUrls }}
+{{- end }}
+{{- if $lidarrUrls }}
+    - Lidarr: {{ join ", " $lidarrUrls }}
+{{- end }}
+{{- if $overseerrUrls }}
+    - Overseerr: {{ join ", " $overseerrUrls }}
+{{- end }}
+{{- if $plexUrls }}
+    - Plex: {{ join ", " $plexUrls }}
+{{- end }}
+{{- if $qbtUrls }}
+    - qBittorrent: {{ join ", " $qbtUrls }}
+{{- end }}
+{{- if $radarrUrls }}
+    - Radarr: {{ join ", " $radarrUrls }}
+{{- end }}
+{{- if $sonarrUrls }}
+    - Sonarr: {{ join ", " $sonarrUrls }}
+{{- end }}
+{{- else }}
+
+    ⚠️ This chart may have no accessible services available
+
+{{- end }}
+
+Please follow the instructions in https://github.com/irfanhakim-as/charts/tree/master/moekai/flex#application-configurations to complete the initial setup of each deployed Flex service.

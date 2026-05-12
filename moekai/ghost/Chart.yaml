@@ -1,13 +1,17 @@
 apiVersion: v2
-name: chartName
-description: A Helm chart for deploying ChartName.
+name: ghost
+description: Ghost is an independent platform for publishing online by web and email newsletter.
 type: application
-version: 0.1.0
-appVersion: "0.0.1-r1"
+version: 0.1.2
+appVersion: "v5.118.1"
 keywords:
-  - "chartName"
+  - "ghost"
+  - "web"
+  - "blog"
+  - "newsletter"
+  - "cms"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://charts.moekai.com/logos/chartName.png"
+icon: "https://charts.moekai.com/logos/ghost.png"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:

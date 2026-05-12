@@ -1,13 +1,17 @@
 apiVersion: v2
-name: chartName
-description: A Helm chart for deploying ChartName.
+name: postgres
+description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
 type: application
-version: 0.1.0
-appVersion: "0.0.1-r1"
+version: 0.2.3
+appVersion: "13.3"
 keywords:
-  - "chartName"
+  - "PostgreSQL"
+  - "Postgres"
+  - "SQL"
+  - "Relational"
+  - "Database"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://charts.moekai.com/logos/chartName.png"
+icon: "https://charts.moekai.com/logos/postgres.svg"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:

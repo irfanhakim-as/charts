@@ -1,6 +1,6 @@
-# ChartName
+# [PostgreSQL](https://github.com/postgres/postgres)
 
-A Helm chart for deploying ChartName.
+Easy tool to deploy a PostgreSQL instance on Kubernetes.
 
 ## Prerequisites
 
@@ -10,7 +10,6 @@ A Helm chart for deploying ChartName.
 - Kubernetes 1.19+
 - Helm 3.2.0+
 - Longhorn 1.4.1+
-- csi-driver-smb 1.14.0+
 
 ---
 
@@ -59,15 +58,15 @@ A Helm chart for deploying ChartName.
 
 ## How to install or upgrade a chart release
 
-1. Get the values file of the ChartName chart or an existing installation (release).
+1. Get the values file of the PostgreSQL chart or an existing installation (release).
 
-    Get the latest ChartName chart values file for a new installation:
+    Get the latest PostgreSQL chart values file for a new installation:
 
     ```sh
-    helm show values moekai/chartName > values.yaml
+    helm show values moekai/postgres > values.yaml
     ```
 
-    **Alternatively**, get the values file of an existing ChartName release:
+    Alternatively, get the values file of an existing PostgreSQL release:
 
     ```sh
     helm get values ${releaseName} --namespace ${namespace} > values.yaml
@@ -75,7 +74,7 @@ A Helm chart for deploying ChartName.
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-2. Edit your ChartName values file with the intended configurations:
+2. Edit your PostgreSQL values file with the intended configurations:
 
     ```sh
     nano values.yaml
@@ -83,15 +82,15 @@ A Helm chart for deploying ChartName.
 
     Pay extra attention to the descriptions and sample values provided in the chart values file.
 
-3. Install a new release for ChartName or upgrade an existing ChartName release:
+3. Install a new release for PostgreSQL or upgrade an existing PostgreSQL release:
 
     ```sh
-    helm upgrade --install ${releaseName} moekai/chartName --namespace ${namespace} --create-namespace --values values.yaml --wait
+    helm upgrade --install ${releaseName} moekai/postgres --namespace ${namespace} --create-namespace --values values.yaml --wait
     ```
 
     Replace `${releaseName}` and `${namespace}` accordingly.
 
-4. Verify that your ChartName release has been installed:
+4. Verify that your PostgreSQL release has been installed:
 
     ```sh
     helm ls --namespace ${namespace} | grep "${releaseName}"
@@ -128,31 +127,27 @@ A Helm chart for deploying ChartName.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| chartName.bar | string | `""` | The secret value of the ChartName bar. Default: `"bar"`. |
-| chartName.domain | string | `""` | The ingress domain name that hosts the ChartName server. |
-| chartName.foo | string | `""` | The value of the ChartName foo. Default: `"foo"`. |
-| chartName.initScript | string | `""` | Custom init script to run before the ChartName container starts. |
-| image.chartName.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ChartName container image. Default: `"IfNotPresent"`. |
-| image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"ghcr.io"`. |
-| image.chartName.repository | string | `""` | The name of the repository that contains the ChartName container image used. Default: `"chartName"`. |
-| image.chartName.tag | string | `""` | The tag that specifies the version of the ChartName container image used. Default: `Chart appVersion`. |
-| image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
-| image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
-| image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
-| image.init.tag | string | `""` | The tag that specifies the version of the Init container image used. Default: `"1.36.1"`. |
+| image.postgres.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the PostgreSQL container image. Default: `"IfNotPresent"`. |
+| image.postgres.registry | string | `""` | The registry where the PostgreSQL container image is hosted. Default: `"docker.io"`. |
+| image.postgres.repository | string | `""` | The name of the repository that contains the PostgreSQL container image used. Default: `"postgres"`. |
+| image.postgres.tag | string | `""` | The tag that specifies the version of the PostgreSQL container image used. Default: `Chart appVersion`. |
 | imagePullSecrets | list | `[]` | Credentials used to securely authenticate and authorise the pulling of container images from private registries. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource. Items: `.prefix`, `.name`, `.value`. |
-| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting ChartName services. |
+| ingress.enabled | bool | `false` | Specifies whether Ingress should be enabled for hosting PostgreSQL services. |
 | ingress.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
-| replicaCount | string | `""` | The desired number of running replicas for ChartName. Default: `"1"`. |
-| resources.chartName | object | `{}` | ChartName container resources. |
+| postgres.domain | string | `""` | The ingress domain name that hosts the PostgreSQL server. |
+| postgres.name | string | `""` | The name of the default database of the root PostgreSQL database user. Default: `"default"`. |
+| postgres.password | string | `""` | The password associated with the root PostgreSQL database user. |
+| postgres.user | string | `""` | The root username or user account of the PostgreSQL database server. Default: `"root"`. |
+| replicaCount | string | `""` | The desired number of running replicas for PostgreSQL. Default: `"1"`. |
+| resources.postgres | object | `{}` | PostgreSQL container resources. |
 | service.nodePort | string | `""` | The optional node port to expose when the service type is NodePort. |
-| service.port | string | `""` | The port on which the ChartName server should listen for connections. Default: `"80"`. |
-| service.type | string | `""` | The type of service used to expose ChartName services. Default: `"ClusterIP"`. |
+| service.port | string | `""` | The port on which the PostgreSQL server should listen for connections. Default: `"5432"`. |
+| service.type | string | `""` | The type of service used to expose PostgreSQL services. Default: `"ClusterIP"`. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
-| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/config"`. |
+| storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/var/lib/postgresql/data"`. |
 | storage.data.storage | string | `""` | The default amount of persistent storage allocated for the data storage. Default: `"1Gi"`. |
 | storage.data.storageClassName | string | `""` | The storage class name used for dynamically provisioning a persistent volume for the data storage. Default: `"longhorn"`. |
 | storage.data.subPath | string | `""` | The subpath within the data storage to mount to the container. Leave empty if not required. |

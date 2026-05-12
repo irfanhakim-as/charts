@@ -1,13 +1,15 @@
 apiVersion: v2
-name: chartName
-description: A Helm chart for deploying ChartName.
+name: postgres-agent
+description: Easily create or delete a database and user pair in a remote PostgreSQL instance.
 type: application
-version: 0.1.0
-appVersion: "0.0.1-r1"
+version: 0.3.3
+appVersion: "16.3.0-debian-12-r12"
 keywords:
-  - "chartName"
+  - "postgresql"
+  - "agent"
+  - "job"
 home: "https://github.com/irfanhakim-as/charts"
-icon: "https://charts.moekai.com/logos/chartName.png"
+icon: "https://charts.moekai.com/logos/postgres.svg"
 sources:
   - "https://github.com/irfanhakim-as/charts"
 maintainers:

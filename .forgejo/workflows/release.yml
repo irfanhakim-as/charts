@@ -5,11 +5,11 @@ on:
     branches:
       - master
     paths:
-      - mika/**
+      - moekai/**
   workflow_dispatch:
 
 env:
-  CHARTS_DIR: mika
+  CHARTS_DIR: moekai
   REGISTRY_HOST: ${{ vars.REGISTRY_HOST }}
   REGISTRY_USER: ${{ vars.REGISTRY_USER }}
   REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}

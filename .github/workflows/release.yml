@@ -33,7 +33,7 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          charts_dir: mika
+          charts_dir: moekai
 
       - name: Sync gh-pages with master
         run: |
