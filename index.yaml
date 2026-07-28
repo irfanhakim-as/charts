@@ -1,0 +1,3808 @@
+apiVersion: v1
+entries:
+  borgmatic:
+  - apiVersion: v2
+    appVersion: 1.9.6
+    created: "2026-05-12T07:02:00.437430946Z"
+    description: Simple, configuration-driven backup software for servers and workstations.
+    digest: 7361767b6cf541c70727f0dba6f0f80ac85d643158802dae95a19a4ab08d8419
+    home: https://torsion.org/borgmatic/
+    icon: https://torsion.org/borgmatic/static/borgmatic.png
+    keywords:
+    - borgmatic
+    - backup
+    - borg
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: borgmatic
+    sources:
+    - https://github.com/borgmatic-collective/borgmatic
+    - https://github.com/borgmatic-collective/docker-borgmatic
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/borgmatic-0.1.1/borgmatic-0.1.1.tgz
+    version: 0.1.1
+  clog:
+  - apiVersion: v2
+    appVersion: 0.0.2-stable-r1
+    created: "2026-05-12T07:02:00.629047503Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 383c72b4fe85328294bffb342eb64da6abb471d05c4fd78a869af51f0e6b7b7a
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://charts.moekai.com/logos/clog.png
+    keywords:
+    - clog
+    - blog
+    - money
+    - todo
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.3.1/clog-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 0.0.2-stable-r1
+    created: "2024-11-21T08:34:04.867880636Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: f1cc1b25dd11cbd264fe7ecb386af460c4cdf728f6d71bd3b23bc5f83290b976
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    - blog
+    - money
+    - todo
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.3.0/clog-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 0.0.2-stable-r1
+    created: "2023-12-04T18:39:18.20154457Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: cfa671fd2e79ea4772decf78aed03d8ad85c6ecfc776add970bd32288fb36ed5
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    - blog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.2.3/clog-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2023-11-30T18:33:05.383439559Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 1a8b93804200cd50a9da616b53d85d28d99e6ad271229613e972666ebf46e58d
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    - blog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.2.2/clog-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2023-07-20T09:32:53.620126282Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 6cc7eaef7dcb41750e383d41303baa30998b0c1071ca4c98c54e3f27aa362319
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    - blog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.2.1/clog-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2023-03-09T18:42:41.132590713Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 2f702b6a7ff33dedb1450a69d1dc14d922834c6db732b4c4cb148bbf4f29c9a8
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.10/clog-0.1.10.tgz
+    version: 0.1.10
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2022-12-19T03:17:06.399778271Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: e71dd62645bbc35b90b65e08e22f2de3f9f269fc838da4962bce60f496bc3710
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.9/clog-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 0.0.1-cf
+    created: "2022-12-19T02:32:08.493979658Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: f34e0526cd63ab6ada22e8ac73c7518abc0ee44fec6ad3ace681f3322de40f7a
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.8/clog-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    appVersion: 0.0.1-cf
+    created: "2022-12-19T02:16:33.857268753Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 8b39361a9d001ebe845f51add73bf21a9812e0e3fa0531c20648621c03b7b310
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.7/clog-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2022-12-13T16:37:33.404562777Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 9e303753e0128c0f1901884e842c9f0a0176be53745b1a32f274a6889245d0cb
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.6/clog-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-12-09T16:59:17.681718509Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 12084a06b612e01bba2907099282c9c42b8076b854bd2e369aa5bfafc32a9e81
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.5/clog-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-12-09T16:45:31.85047213Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: e9d065387e511a3510ed03b1460cbbc29c882c9cd91b0b0959748244084d770e
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.4/clog-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-12-09T16:09:09.42655284Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 7a3697b680899520c07d0b75c9569077dd283afae9737e4e7a7aa833983e18cf
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.3/clog-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-12-09T13:05:35.644612144Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: 8a16253a62470ab9f3d260d2b6eb1ca4714dbb1433d335f736ac15ae3d4c6b4b
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.2/clog-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-11-16T10:11:02.943172587Z"
+    description: Creative blog, Career blog, Coin blog, you name it.
+    digest: ca15d61e82377e95cbedd5ad782031b1a86f4007c0fe96246caab6de5174f5b0
+    home: https://github.com/irfanhakim-as/clog
+    icon: https://irfanhakim-as.github.io/charts/logos/clog.png
+    keywords:
+    - clog
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: clog
+    sources:
+    - https://github.com/irfanhakim-as/clog
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/clog-0.1.1/clog-0.1.1.tgz
+    version: 0.1.1
+  cloudflared:
+  - apiVersion: v2
+    appVersion: 2022.3.0
+    created: "2026-05-12T07:02:00.836464304Z"
+    description: Cloudflare Tunnel is a tunneling software that lets you quickly secure
+      and encrypt application traffic to any type of infrastructure.
+    digest: 763a8f9a6d9af623ee32234f0e7cf71c600dfc760264a326f2c86d9048b91c44
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/cloudflare.svg
+    keywords:
+    - cloudflared
+    - cloudflare
+    - tunnel
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflared
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.2.3/cloudflared-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: 2022.3.0
+    created: "2023-08-01T18:24:49.912312841Z"
+    description: Cloudflare Tunnel is a tunneling software that lets you quickly secure
+      and encrypt application traffic to any type of infrastructure.
+    digest: dd5a1409f30cd85b6e327f5c0c5c3d1a0e076c570fd91f38e88cef825c36d4ea
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+    keywords:
+    - cloudflared
+    - cloudflare
+    - tunnel
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflared
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.2.2/cloudflared-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 2022.3.0
+    created: "2023-07-20T09:32:53.725405063Z"
+    description: Cloudflare Tunnel is a tunneling software that lets you quickly secure
+      and encrypt application traffic to any type of infrastructure.
+    digest: 5cf24af366da6750521509435ec89b2c494b3f27454de3fcd810d1f8159be115
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+    keywords:
+    - cloudflared
+    - cloudflare
+    - tunnel
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflared
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.2.1/cloudflared-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 2022.3.0
+    created: "2022-12-18T18:12:12.577789666Z"
+    description: Cloudflare Tunnel is a tunneling software that lets you quickly secure
+      and encrypt application traffic to any type of infrastructure.
+    digest: 13a0966108874ea374d22a97b46fd439148d90736367e3187ab9e48a1f7a557a
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+    keywords:
+    - cloudflared
+    - cloudflare
+    - tunnel
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflared
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
+    version: 0.1.0
+  cloudflareddns:
+  - apiVersion: v2
+    appVersion: 1.0.2-fix-wrong-ip-r3
+    created: "2026-05-12T07:02:01.006595763Z"
+    description: Access your home network remotely via a custom domain name without
+      a static IP!
+    digest: fe1dd8eaafb8dc0dd6b745552ae22771a37ec940844bbd06a2507b5cc136d199
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/cloudflare.svg
+    keywords:
+    - cloudflareddns
+    - cloudflare
+    - ddns
+    - cloudflare-ddns
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflareddns
+    sources:
+    - https://github.com/timothymiller/cloudflare-ddns
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflareddns-0.1.3/cloudflareddns-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-11-21T08:34:04.969991616Z"
+    description: Access your home network remotely via a custom domain name without
+      a static IP!
+    digest: 6c895156a46d48005e07ce15b51f6eaf635351e7542571dc78129aad0e5ea4e1
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.svg
+    keywords:
+    - cloudflareddns
+    - cloudflare
+    - ddns
+    - cloudflare-ddns
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflareddns
+    sources:
+    - https://github.com/timothymiller/cloudflare-ddns
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflareddns-0.1.1/cloudflareddns-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
+    created: "2023-11-30T18:33:05.540652205Z"
+    description: Access your home network remotely via a custom domain name without
+      a static IP!
+    digest: ac83ed4465ebb859103ed8eaefcb0ae08b7676755f7da34622a66417818ca85d
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/cloudflare.png
+    keywords:
+    - cloudflareddns
+    - cloudflare
+    - ddns
+    - cloudflare-ddns
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: cloudflareddns
+    sources:
+    - https://github.com/timothymiller/cloudflare-ddns
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/cloudflareddns-0.1.0/cloudflareddns-0.1.0.tgz
+    version: 0.1.0
+  external-svc:
+  - apiVersion: v2
+    created: "2026-05-12T07:02:01.222698764Z"
+    description: Seamlessly connect external services to your Kubernetes environment.
+    digest: b6d2bb14c1b7c619e89c1bf2be05da34d87480b29aebfb6c1eb1d77518922c68
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/moekai.svg
+    keywords:
+    - external-svc
+    - external
+    - service
+    - ingress
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: external-svc
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/external-svc-0.2.1/external-svc-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    created: "2024-11-27T02:59:55.456007859Z"
+    description: Seamlessly connect external services to your Kubernetes environment.
+    digest: c7b550c148bf8eed8cb191545d6b14746a47d0d51a9f82f124138801cb26bd58
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - external-svc
+    - external
+    - service
+    - ingress
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: external-svc
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/external-svc-0.1.0/external-svc-0.1.0.tgz
+    version: 0.1.0
+  flex:
+  - apiVersion: v2
+    created: "2026-05-12T07:02:01.401019906Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 8bcbb1185f6fcef5f29dead8295b5a327da5a8788b76d9e7be28c7162a51bb35
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - ersatztv
+    - flaresolverr
+    - jackett
+    - jellyfin
+    - jellyplex-watched
+    - jellyseerr
+    - lidarr
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/ErsatzTV/ErsatzTV
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-jellyfin
+    - https://github.com/luigi311/JellyPlex-Watched
+    - https://github.com/fallenbagel/jellyseerr
+    - https://github.com/linuxserver/docker-lidarr
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.4.1/flex-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 1.41.5.9522-a96edc606
+    created: "2025-04-09T03:08:58.555139896Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 9b02b13bc8f5e2200206d8796f88e5493c510dea1b23acddc711ddd7c0e32196
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - ersatztv
+    - flaresolverr
+    - jackett
+    - jellyfin
+    - jellyplex-watched
+    - jellyseerr
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/ErsatzTV/ErsatzTV
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-jellyfin
+    - https://github.com/luigi311/JellyPlex-Watched
+    - https://github.com/fallenbagel/jellyseerr
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.2.1/flex-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 1.41.5.9522-a96edc606
+    created: "2025-04-06T14:03:24.53074515Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: d6c909a77802e2b4cf3720bbaf2935d455a116fd4296cf9d06abdab45bcba42c
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - flaresolverr
+    - jackett
+    - jellyfin
+    - jellyplex-watched
+    - jellyseerr
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-jellyfin
+    - https://github.com/luigi311/JellyPlex-Watched
+    - https://github.com/fallenbagel/jellyseerr
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.2.0/flex-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.40.0.7998-c29d4c0c8
+    created: "2024-03-10T05:09:22.486745173Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 11750663d827a50e5542a2b1d234595bcc9d9ca899bcc473b26747571f894cf1
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - flaresolverr
+    - jackett
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.4/flex-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.40.0.7998-c29d4c0c8
+    created: "2024-02-21T07:22:25.579115807Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 25aed225887b1d325e5e4f77c541aa4d33eb3b5fb6e71e401c5129379ff4d8fc
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - bazarr
+    - flaresolverr
+    - jackett
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/linuxserver/docker-bazarr
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.3/flex-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.40.0.7998-c29d4c0c8
+    created: "2024-02-19T19:58:57.067530994Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 42075ffded9a4eb28c417d22f4fdfd953c7994bf7c79e923ad6bb29747f5b1ff
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - flaresolverr
+    - jackett
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.2/flex-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.32.8.7639-fb6452ebf
+    created: "2024-02-16T09:32:04.680817077Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: e8a54a0c4ab38b7bb2825661a38d7ef246649552646f5c6a3e0360e6141ea954
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - flaresolverr
+    - jackett
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.1/flex-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.32.8.7639-fb6452ebf
+    created: "2024-02-15T04:27:20.337622162Z"
+    description: Flex is a collection of curated services that aims to provide a complete
+      home media server solution.
+    digest: 58e19578533dd5600eb8ffdd84f2d61834595b5617106049693ea2e1ef642087
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/flex.png
+    keywords:
+    - flex
+    - plex
+    - media
+    - server
+    - streaming
+    - flaresolverr
+    - jackett
+    - overseerr
+    - qbittorrent
+    - radarr
+    - sonarr
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: flex
+    sources:
+    - https://github.com/plexinc/pms-docker
+    - https://github.com/FlareSolverr/FlareSolverr
+    - https://github.com/linuxserver/docker-jackett
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/flex-0.1.0/flex-0.1.0.tgz
+    version: 0.1.0
+  ghost:
+  - apiVersion: v2
+    appVersion: v5.118.1
+    created: "2026-05-12T07:02:01.611155622Z"
+    description: Ghost is an independent platform for publishing online by web and
+      email newsletter.
+    digest: 0fbcce446d2b2833b39ada89359bab9d54b155c7d8ee6b2d15ebfdb9048ffa08
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/ghost.png
+    keywords:
+    - ghost
+    - web
+    - blog
+    - newsletter
+    - cms
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: ghost
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/ghost-0.1.2/ghost-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v5.118.1
+    created: "2025-04-29T04:35:31.872570751Z"
+    description: Ghost is an independent platform for publishing online by web and
+      email newsletter.
+    digest: 767da9a935752ffbba15de700e2ca1b92b272c6b591deaef886903dcb2c82ce0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/ghost.png
+    keywords:
+    - ghost
+    - web
+    - blog
+    - newsletter
+    - cms
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: ghost
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/ghost-0.1.1/ghost-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v5.101.6
+    created: "2024-12-11T06:16:37.692232636Z"
+    description: Ghost is an independent platform for publishing online by web and
+      email newsletter.
+    digest: 8d100defee8e87978acaba0435b7a5c76a48bbe452283783bf61a545fea435f0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/ghost.png
+    keywords:
+    - ghost
+    - web
+    - blog
+    - newsletter
+    - cms
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: ghost
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/ghost-0.1.0/ghost-0.1.0.tgz
+    version: 0.1.0
+  grocy:
+  - apiVersion: v2
+    appVersion: v3.3.2
+    created: "2026-05-12T07:02:01.803008473Z"
+    description: Grocy is a web-based self-hosted groceries & household management
+      solution for your home.
+    digest: 8c768e0209d039fda5b117b03bdaa383b54c1637087568e13ef46700bd2b528a
+    home: https://github.com/grocy/grocy
+    icon: https://charts.moekai.com/logos/grocy.svg
+    keywords:
+    - grocy
+    - erp
+    - groceries
+    - household
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: grocy
+    sources:
+    - https://github.com/grocy/grocy
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/grocy-0.1.2/grocy-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v3.3.2
+    created: "2024-11-21T08:34:05.083787961Z"
+    description: Grocy is a web-based self-hosted groceries & household management
+      solution for your home.
+    digest: f42132968b30222c5015883f0954ac6bb8619a08c726c96692fd3664a49d48a9
+    home: https://github.com/grocy/grocy
+    icon: https://irfanhakim-as.github.io/charts/logos/grocy.svg
+    keywords:
+    - grocy
+    - erp
+    - groceries
+    - household
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: grocy
+    sources:
+    - https://github.com/grocy/grocy
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/grocy-0.1.1/grocy-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v3.3.2
+    created: "2023-07-20T09:25:12.154565563Z"
+    description: Grocy is a web-based self-hosted groceries & household management
+      solution for your home.
+    digest: 5ce3d95c125730aa1aaa9c23fae6547512e5e6267419d5cf7485660032e10d9a
+    home: https://github.com/grocy/grocy
+    icon: https://raw.githubusercontent.com/grocy/grocy/master/public/img/logo.svg
+    keywords:
+    - grocy
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: grocy
+    sources:
+    - https://github.com/grocy/grocy
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/grocy-0.1.0/grocy-0.1.0.tgz
+    version: 0.1.0
+  kutt:
+  - apiVersion: v2
+    appVersion: v3.2.3
+    created: "2026-05-12T07:02:02.001243401Z"
+    description: Kutt is a modern URL shortener with support for custom domains. Shorten
+      URLs, manage your links and view the click rate statistics.
+    digest: 0cc1522bdd6ed0cb2dab79776e0f369d9e06fecbe39e2b96534322c08af3d642
+    home: https://github.com/thedevs-network/kutt
+    icon: https://charts.moekai.com/logos/kutt.svg
+    keywords:
+    - kutt
+    - url
+    - shortener
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: kutt
+    sources:
+    - https://github.com/thedevs-network/kutt
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.2.1/kutt-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: v2.7.4
+    created: "2024-11-21T08:34:05.193182103Z"
+    description: Kutt is a modern URL shortener with support for custom domains. Shorten
+      URLs, manage your links and view the click rate statistics.
+    digest: a35e18478ef344043bd7254b2125afb3e2d9895ccf73efcd230caa7825a7c174
+    home: https://github.com/thedevs-network/kutt
+    icon: https://irfanhakim-as.github.io/charts/logos/kutt.svg
+    keywords:
+    - kutt
+    - url
+    - shortener
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: kutt
+    sources:
+    - https://github.com/thedevs-network/kutt
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.1.2/kutt-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v2.7.4
+    created: "2024-02-15T04:32:55.540606824Z"
+    description: Kutt is a modern URL shortener with support for custom domains. Shorten
+      URLs, manage your links and view the click rate statistics.
+    digest: 76181a4854d53d6c0d66db176a054ca0b584816d962bda9dcf17f4b294076dfc
+    home: https://github.com/thedevs-network/kutt
+    icon: https://raw.githubusercontent.com/thedevs-network/kutt/develop/static/images/icons/icon-512x512.png
+    keywords:
+    - kutt
+    - url
+    - shortener
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: kutt
+    sources:
+    - https://github.com/thedevs-network/kutt
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.1.1/kutt-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v2.7.4
+    created: "2024-01-23T12:04:08.114996456Z"
+    description: Kutt is a modern URL shortener with support for custom domains. Shorten
+      URLs, manage your links and view the click rate statistics.
+    digest: dbb9a59180d18a8dc0c2bf9d9d92b74974e9b03c8e04ed5e95c5a7a3a81be0ae
+    home: https://github.com/thedevs-network/kutt
+    icon: https://github.com/thedevs-network/kutt/blob/develop/static/images/logo.svg
+    keywords:
+    - kutt
+    - url
+    - shortener
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: kutt
+    sources:
+    - https://github.com/thedevs-network/kutt
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/kutt-0.1.0/kutt-0.1.0.tgz
+    version: 0.1.0
+  linkding:
+  - apiVersion: v2
+    appVersion: 1.38.0-alpine
+    created: "2026-05-12T07:02:02.213338156Z"
+    description: Linkding is a bookmark manager that you can host yourself. It's designed
+      to be minimal, fast, and easy to set up using Docker.
+    digest: a9f025cbe1013b916328112314a85ede46748cc42daa83fb20fae2e3f79a1617
+    home: https://github.com/sissbruecker/linkding
+    icon: https://raw.githubusercontent.com/sissbruecker/linkding/refs/heads/master/assets/logo.svg
+    keywords:
+    - linkding
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://l.irfanhak.im/links
+    name: linkding
+    sources:
+    - https://github.com/sissbruecker/linkding
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/linkding-0.1.1/linkding-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.38.0-alpine
+    created: "2025-02-19T08:47:30.253521549Z"
+    description: Linkding is a bookmark manager that you can host yourself. It's designed
+      to be minimal, fast, and easy to set up using Docker.
+    digest: 9318e83c9a2d4230ef0ce2673735a6fb1289b76a496848a4d3c37195c0e5af23
+    home: https://github.com/sissbruecker/linkding
+    icon: https://raw.githubusercontent.com/sissbruecker/linkding/refs/heads/master/assets/logo.svg
+    keywords:
+    - linkding
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://l.irfanhak.im/links
+    name: linkding
+    sources:
+    - https://github.com/sissbruecker/linkding
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/linkding-0.1.0/linkding-0.1.0.tgz
+    version: 0.1.0
+  linkstack:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2026-05-12T07:02:02.457209829Z"
+    description: LinkStack is a highly customizable link sharing platform with an
+      intuitive, easy to use user interface.
+    digest: 4b72af2c2d746999979185bc1aaa272a62a354d18ed0b376f9308c775c58a2c2
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/linkstack.svg
+    keywords:
+    - linkstack
+    - linktree
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: linkstack
+    sources:
+    - https://github.com/LinkStackOrg/LinkStack
+    - https://github.com/LinkStackOrg/linkstack-docker
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/linkstack-0.1.2/linkstack-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-12-13T17:42:55.204686821Z"
+    description: LinkStack is a highly customizable link sharing platform with an
+      intuitive, easy to use user interface.
+    digest: 4969f4440e28fceb1cd7be61e3201de670927ea083187f9de7df97d00fdccdd3
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/linkstack.svg
+    keywords:
+    - linkstack
+    - linktree
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: linkstack
+    sources:
+    - https://github.com/LinkStackOrg/LinkStack
+    - https://github.com/LinkStackOrg/linkstack-docker
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/linkstack-0.1.1/linkstack-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-07-13T11:57:27.508910559Z"
+    description: LinkStack is a highly customizable link sharing platform with an
+      intuitive, easy to use user interface.
+    digest: 1d54b381e461fe8eb6a98cd901af507199ce04a1c9a7559d1a715de2015942b9
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/linkstack.svg
+    keywords:
+    - linkstack
+    - linktree
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: linkstack
+    sources:
+    - https://github.com/LinkStackOrg/LinkStack
+    - https://github.com/LinkStackOrg/linkstack-docker
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/linkstack-0.1.0/linkstack-0.1.0.tgz
+    version: 0.1.0
+  littlelink:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2026-05-12T07:02:02.67793011Z"
+    description: The DIY self-hosted LinkTree alternative.
+    digest: adcd9ad446e06fb3d947067ef9fadb17ab7d45ade3eeda4463c44057c14ea6e0
+    home: https://github.com/sethcottle/littlelink
+    icon: https://charts.moekai.com/logos/littlelink.svg
+    keywords:
+    - littlelink
+    - linktree
+    - links
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: littlelink
+    sources:
+    - https://github.com/sethcottle/littlelink
+    - https://github.com/techno-tim/littlelink-server
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/littlelink-0.1.2/littlelink-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-12-15T16:41:46.31970724Z"
+    description: The DIY self-hosted LinkTree alternative.
+    digest: 23b867ea7ccc079a41a2144ffe6d686aa82d52bab02fae5e99880c1916a5197e
+    home: https://github.com/sethcottle/littlelink
+    icon: https://irfanhakim-as.github.io/charts/logos/littlelink.svg
+    keywords:
+    - littlelink
+    - linktree
+    - links
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: littlelink
+    sources:
+    - https://github.com/sethcottle/littlelink
+    - https://github.com/techno-tim/littlelink-server
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/littlelink-0.1.1/littlelink-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-12-15T08:02:39.094521715Z"
+    description: The DIY self-hosted LinkTree alternative.
+    digest: 85510bd8492f3c0ca9bec6282512bfd714c7ff7e0b838562978d3ec230c00b70
+    home: https://github.com/sethcottle/littlelink
+    icon: https://irfanhakim-as.github.io/charts/logos/littlelink.svg
+    keywords:
+    - littlelink
+    - linktree
+    - links
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: littlelink
+    sources:
+    - https://github.com/sethcottle/littlelink
+    - https://github.com/techno-tim/littlelink-server
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/littlelink-0.1.0/littlelink-0.1.0.tgz
+    version: 0.1.0
+  mango:
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2023-07-20T09:32:53.857921502Z"
+    description: Mango is an easy to use Mastodon bot framework built on top of Django.
+    digest: bb433c371528605991fbe904048993fee6431196f438131d2bd8f0191f91a9cc
+    home: https://github.com/irfanhakim-as/mango
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - mango
+    - django
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mango
+    sources:
+    - https://github.com/irfanhakim-as/mango
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mango-0.2.1/mango-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2023-03-09T18:42:41.307516742Z"
+    description: Mango is an easy to use Mastodon bot framework built on top of Django.
+    digest: 20fc40e7766d4c44b04ff27c2585392090e32f154952f1b5f7aa085a82535c02
+    home: https://github.com/irfanhakim-as/mango
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - mango
+    - django
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mango
+    sources:
+    - https://github.com/irfanhakim-as/mango
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mango-0.1.1/mango-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2022-12-29T17:30:52.275283367Z"
+    description: Mango is an easy to use Mastodon bot framework built on top of Django.
+    digest: 46e7f8d71d8d742ffe258f39674cfa0af357076d2d232e391e30dfb89f1bc249
+    home: https://github.com/irfanhakim-as/mango
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - mango
+    - django
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mango
+    sources:
+    - https://github.com/irfanhakim-as/mango
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mango-0.1.0/mango-0.1.0.tgz
+    version: 0.1.0
+  mariadb-agent:
+  - apiVersion: v2
+    appVersion: 11.1.3-debian-11-r0
+    created: "2026-05-12T07:02:02.873377962Z"
+    description: Easily create or delete multiple pairs of databases and users in
+      a remote MariaDB or MySQL instance.
+    digest: 5b99e856aab5028ad295df305fee8f4537130279b1996d9da57455fe3f72f6d5
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/mariadb.svg
+    keywords:
+    - mariadb
+    - mysql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mariadb-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.4/mariadb-agent-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 11.1.3-debian-11-r0
+    created: "2024-12-16T06:40:50.884482343Z"
+    description: Easily create or delete multiple pairs of databases and users in
+      a remote MariaDB or MySQL instance.
+    digest: d334ba97c7d9fddb1002705172857c8a17f161d5e66bc4e65aa3b0347fe9d7c8
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mariadb.svg
+    keywords:
+    - mariadb
+    - mysql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mariadb-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.3/mariadb-agent-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 11.1.3-debian-11-r0
+    created: "2024-11-21T08:34:05.276244682Z"
+    description: Easily create or delete multiple pairs of databases and users in
+      a remote MariaDB instance.
+    digest: 22ee64d83b65e3d0ee50d41028851cc1b2f381616f13baa207d7c1a41102ed14
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mariadb.svg
+    keywords:
+    - mariadb
+    - mysql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mariadb-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.2/mariadb-agent-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 11.1.3-debian-11-r0
+    created: "2023-12-05T02:37:24.502678433Z"
+    description: Easily create or delete multiple pairs of databases and users in
+      a remote MariaDB instance.
+    digest: af40f28a43542daab66ece6a0f6cb7181661de965cb382331bb27673d1fc4983
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mariadb.png
+    keywords:
+    - mariadb
+    - mysql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mariadb-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.1/mariadb-agent-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 11.1.3-debian-11-r0
+    created: "2023-12-04T18:39:18.352609338Z"
+    description: Easily create or delete multiple pairs of databases and users in
+      a remote MariaDB instance.
+    digest: 8b990fe6e2d2fb76602346bf2f59c66b48b2808c53afc4638d8c1d43eb21b73d
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/mariadb.png
+    keywords:
+    - mariadb
+    - mysql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: mariadb-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/mariadb-agent-0.1.0/mariadb-agent-0.1.0.tgz
+    version: 0.1.0
+  postgres:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2026-05-12T07:02:03.082857354Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 3d1c7195ae1d30f69ed0f35a711db1806b1b7a95852d82a2e6f0a0b39ec8056a
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/postgres.svg
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - SQL
+    - Relational
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.2.3/postgres-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2024-11-21T08:34:05.370711536Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 8169c9e4c4ce61080838084e7db91f2d44abec3105be6fcfc28bb710518b0762
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.svg
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - SQL
+    - Relational
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.2.2/postgres-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2023-07-20T09:32:53.964190196Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 1cbaea2ff926cf83fdf00094b3e520714e1508d8c5b64b8553d0eee9225d81a5
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - SQL
+    - Relational
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.2.1/postgres-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-12-31T03:50:05.847502102Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 119affa9ab3efd9a4d5c59ea1e85948bc4a21d450c6407a610118ad462c95579
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.4/postgres-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-11-17T15:10:23.922365272Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: b160a45cadf86e44f2392c576b8f356bde8e0e71d6e0372ff6574f149577d208
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - PostgreSQL
+    - Postgres
+    - Database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.3/postgres-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-11-16T10:11:03.155025028Z"
+    description: Easy tool to deploy a PostgreSQL instance on Kubernetes.
+    digest: 69cd5cee317f0d9610ac8c9e26d466eeeace935acb4bfa5722bff95bd1ad0ec9
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.2/postgres-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-09-24T10:09:12.327213189Z"
+    description: A Helm chart for deploying PostgreSQL
+    digest: 74b25d3fb8710fc3329c76fff81db88b9c9a53b25dff90d60c7758ba694430b5
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.1/postgres-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-09-23T19:21:40.790231849Z"
+    description: A Helm chart for deploying PostgreSQL
+    digest: 51c4b62e8ba87bfa3b936ad532b8d08883439dd76ecc5ff879d8a8e5de8d4498
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - database
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
+    version: 0.1.0
+  postgres-agent:
+  - apiVersion: v2
+    appVersion: 16.3.0-debian-12-r12
+    created: "2026-05-12T07:02:03.328454155Z"
+    description: Easily create or delete a database and user pair in a remote PostgreSQL
+      instance.
+    digest: 36ffc1e8c1ec4110eec5571494f507fcbffa80d2636bc34ee189819caae32cd9
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/postgres.svg
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.3.3/postgres-agent-0.3.3.tgz
+    version: 0.3.3
+  - apiVersion: v2
+    appVersion: 16.3.0-debian-12-r12
+    created: "2024-11-21T08:34:05.514971392Z"
+    description: Easily create or delete a database and user pair in a remote PostgreSQL
+      instance.
+    digest: 3d22be0787f57b69da9d008d043364b7a5a8ce49f850da1877563d641e2c48c1
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.svg
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.3.2/postgres-agent-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 16.3.0-debian-12-r12
+    created: "2024-06-30T09:24:54.469001939Z"
+    description: Easily create or delete a database and user pair in a remote PostgreSQL
+      instance.
+    digest: 1ac0c3d07a6816b173d82553a1cb5cc5ab98c71df1749cb50be364d4692b0f72
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.3.1/postgres-agent-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 16.3.0-debian-12-r12
+    created: "2024-06-30T08:36:31.77380487Z"
+    description: Easily create or delete a database and user pair in a remote PostgreSQL
+      instance.
+    digest: b8bede9113d3fa6bf63de8bd3eb2172bf93bab8f0d6ca0c27d73101d3c35f20b
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.3.0/postgres-agent-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2023-12-04T18:39:18.534532088Z"
+    description: Easily create or delete a database and user pair in a remote PostgreSQL
+      instance.
+    digest: 7b279ce554fd28ede87c2b3a411f30fe10dab970de7312707c2d0b6a32a4806f
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.2.2/postgres-agent-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2023-07-20T09:32:54.088639329Z"
+    description: Easily deploy a database and create a user, or delete a database
+      in a remote PostgreSQL instance.
+    digest: 10523242f48ed1dfdebec28627991b1e70d693a6d480bf5b9ec047312c0cf4f7
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgresql
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.2.1/postgres-agent-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2023-01-05T04:43:42.985307739Z"
+    description: Easily deploy a database and create a user in a remote PostgreSQL
+      instance or delete a database.
+    digest: 1276c9c16f4e62bccc6ecbaf8c5994ceefe0f7df5357b45e1499b0adf820a505
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.1.1/postgres-agent-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-12-30T19:24:46.054740225Z"
+    description: Easily deploy a database and create a user in a remote PostgreSQL
+      instance or delete a database.
+    digest: df0bfb702c9750e2744073938fcf5fc3998af7c10ae1cb865d3d91fcb4c4c69b
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - agent
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-agent
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-agent-0.1.0/postgres-agent-0.1.0.tgz
+    version: 0.1.0
+  postgres-createdb:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-11-16T10:11:03.351382091Z"
+    description: Easily deploy a database and create a user in a remote PostgreSQL
+      instance.
+    digest: 2def0d95e96f8ec269901f1dd80c204f01395415c7a1152356d2ffbda2293635
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.3/postgres-createdb-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-11-15T18:44:52.621681236Z"
+    description: A Helm chart for deploying a database and user in a remote PostgreSQL
+      instance
+    digest: 3107621e3c4011343e7f92fad215e04a57f89cfb2833c4b261cc651ab681aef0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.2/postgres-createdb-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-09-24T10:09:12.462400768Z"
+    description: A Helm chart for deploying createdb job for PostgreSQL
+    digest: 022d2a24014c7864fdc9a9835f971c97af6dcd303400c9da36cf4f4014ceca9e
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.1/postgres-createdb-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-09-23T19:21:41.049636279Z"
+    description: A Helm chart for deploying createdb job for PostgreSQL
+    digest: 1009b8fe2a91ba78ad604950b15771580b9207aad094bb1d8237b23fdb5dbea0
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - createdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-createdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-createdb-0.1.0/postgres-createdb-0.1.0.tgz
+    version: 0.1.0
+  postgres-dropdb:
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-11-16T10:11:03.539530542Z"
+    description: Delete a database easily in a remote PostgreSQL instance.
+    digest: 6704efeb4316b15601436ea1481e3283ee785871f0d04b383ddd0439ad583a43
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - dropdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-dropdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.2/postgres-dropdb-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "13.3"
+    created: "2022-09-24T10:09:12.603078279Z"
+    description: A Helm chart for deploying dropdb job for PostgreSQL
+    digest: 0e50cd1a63720201c8eb0f51ec3b367623582b159373c4a689c4b335e18e926f
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - dropdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-dropdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.1/postgres-dropdb-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2022-09-23T19:21:41.326285741Z"
+    description: A Helm chart for deploying dropdb job for PostgreSQL
+    digest: 25d7ff4964e3c8a8c25a9dc1d595ea799b8ccf84cf53c0e9682dd6323ade7555
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/postgres.png
+    keywords:
+    - postgres
+    - dropdb
+    - job
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: postgres-dropdb
+    sources:
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/postgres-dropdb-0.1.0/postgres-dropdb-0.1.0.tgz
+    version: 0.1.0
+  rizz:
+  - apiVersion: v2
+    appVersion: 0.4.0-stable-r1
+    created: "2026-05-12T07:02:03.576350272Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: bf3e106992f9bf25355c12ee7f3d12a648622332f4d5e747561d2a338b1d7fba
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://charts.moekai.com/logos/moekai.svg
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.3.2/rizz-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 0.2.2-stable-r1
+    created: "2025-03-14T00:58:13.200957123Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: d0f7cdbf970156a0e98f384bd5fdada52bf3dd0ad6ba1d429b145db184eb3874
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.2.5/rizz-0.2.5.tgz
+    version: 0.2.5
+  - apiVersion: v2
+    appVersion: 0.2.1-stable-r1
+    created: "2025-03-06T13:03:03.025056962Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: f3a4ee111898ff8e0a627e8d71fc62f25ab99dadfd6d302a78ca41b7737076dd
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.2.4/rizz-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r5
+    created: "2024-11-24T09:49:07.864551556Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: 31ddbc9e42e8c7d0d7d7da67acdbad4e761ddf41e522fcece2ed749fd58cdc1a
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.2.3/rizz-0.2.3.tgz
+    version: 0.2.3
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r4
+    created: "2024-11-22T01:26:57.118258721Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: 09517d193b726ddbe3d830e24ce931e5a47ca62b13c117a8b1bcd6b72d780fd3
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.2.2/rizz-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r3
+    created: "2024-11-21T14:54:57.408546997Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: c8fd1d2c4416b4d02aced0fb28fd9e357db477a87dcc9698047d948785f07955
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.2.1/rizz-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r2
+    created: "2024-11-21T08:34:05.629403301Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to federated social network.
+    digest: c8904209a61cab2255b9e69c59e748eeaa2e771d1d35c72c0a4bcd04e98d2c56
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.2.0/rizz-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 0.1.1-stable-r1
+    created: "2024-01-11T11:15:03.023705894Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 3526509c58e0dae4834dec074fa086f160d682f771195a050ddb02d24bec3736
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.1.2/rizz-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.1.1-stable-r1
+    created: "2024-01-10T03:50:46.978179985Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 482a33a3d36f224a319b57a29595b6916e487a2055a187c3725387aa6b40ec72
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.1.1/rizz-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.1.0-stable-r1
+    created: "2024-01-09T08:07:35.344766871Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 8a503f3dc54a753ad36efcafeffb53883caa6d01ffd8d5cbee231a7b9083678a
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.1.0/rizz-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
+    appVersion: 0.0.1-stable-r2
+    created: "2023-09-06T18:51:40.665534286Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: d6db093786b02f32fc2182f7e7f55f0a2bfa0e196df08176a4120fc470d9a13e
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.6/rizz-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
+    appVersion: 0.0.1-stable-r1
+    created: "2023-08-04T15:15:28.956660002Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: fccec2a3be967d85934cbf76a27e487ddb680479d97ea112b23bad8f62f3701a
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.5/rizz-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
+    appVersion: 0.0.1-beta-r2
+    created: "2023-08-04T10:08:44.144016898Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 8db718ddcb7057906e63b83bec76c9dfae7e48ecabdfb445f4f0d5b95eedd6ca
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.4/rizz-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 0.0.1-beta-r2
+    created: "2023-08-04T04:42:52.696494004Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 4ea223dcf06488f31be63ae86b3a2da9dd9935f795eb527a20c6e1f3026dda4d
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.3/rizz-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 0.0.1-beta-r2
+    created: "2023-07-20T09:07:24.294324435Z"
+    description: Rizz is a simple web application that tracks and posts content from
+      RSS Feeds to Mastodon.
+    digest: 8edf4b5e049c1b541ccdb6ff736b00348df5120a9cfc7b07a7a0211ce78590fe
+    home: https://github.com/irfanhakim-as/rizz
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - rss
+    - monitor
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: rizz
+    sources:
+    - https://github.com/irfanhakim-as/rizz
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/rizz-0.0.2/rizz-0.0.2.tgz
+    version: 0.0.2
+  snipe-it:
+  - apiVersion: v2
+    appVersion: v8.1.15-alpine
+    created: "2026-05-12T07:02:03.861780555Z"
+    description: Snipe-IT was made for IT asset management, to enable IT departments
+      to track who has which laptop, when it was purchased, which software licenses
+      and accessories are available, and so on.
+    digest: 219609668f82e503a6ec6a518a0d4fea996a52c8d11d0858d3402cb3283838f4
+    home: https://github.com/grokability/snipe-it
+    icon: https://raw.githubusercontent.com/grokability/snipe-it/refs/heads/master/public/img/logo.png
+    keywords:
+    - snipe-it
+    - asset
+    - management
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: snipe-it
+    sources:
+    - https://github.com/grokability/snipe-it
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/snipe-it-0.1.2/snipe-it-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v8.1.15-alpine
+    created: "2025-06-16T16:55:30.823729779Z"
+    description: Snipe-IT was made for IT asset management, to enable IT departments
+      to track who has which laptop, when it was purchased, which software licenses
+      and accessories are available, and so on.
+    digest: 69f96e912dab5a973bedfa434ca1fc5cc543961d6f2deb9dcba01d562c4f55d2
+    home: https://github.com/grokability/snipe-it
+    icon: https://raw.githubusercontent.com/grokability/snipe-it/refs/heads/master/public/img/logo.png
+    keywords:
+    - snipe-it
+    - asset
+    - management
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: snipe-it
+    sources:
+    - https://github.com/grokability/snipe-it
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/snipe-it-0.1.0/snipe-it-0.1.0.tgz
+    version: 0.1.0
+  syncthing:
+  - apiVersion: v2
+    appVersion: v1.27.3-ls131
+    created: "2026-05-12T07:02:04.106050587Z"
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers.
+    digest: d66983449a62c196371694ffffac4a25465c56daccdf7df289234d3b389e8c78
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/syncthing.png
+    keywords:
+    - syncthing
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://github.com/linuxserver/docker-syncthing
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/syncthing-0.1.2/syncthing-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v1.27.3-ls131
+    created: "2024-05-23T08:35:24.652202663Z"
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers.
+    digest: 45799652879f34019d13c6e451459094b70022e6e3ee4b1ba11f85460eecd479
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/syncthing.png
+    keywords:
+    - syncthing
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://github.com/linuxserver/docker-syncthing
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/syncthing-0.1.1/syncthing-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v1.27.3-ls131
+    created: "2024-03-07T16:56:22.389539427Z"
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers.
+    digest: b8a33d3eb3b17f198efbfdf401fa4306bbf01fd6a886e809ed7f65c94024d965
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/syncthing.png
+    keywords:
+    - syncthing
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://github.com/linuxserver/docker-syncthing
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/syncthing-0.1.0/syncthing-0.1.0.tgz
+    version: 0.1.0
+  telego:
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r1
+    created: "2026-05-12T07:02:04.403822139Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 721041ff1d88df9e0afa47a087fc954082eb80244c374ec145b64e7a34f979ef
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://charts.moekai.com/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://charts.moekai.com/moekai/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.4.1/telego-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r1
+    created: "2023-09-06T18:51:40.807926269Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 4264000e2a04616cd0015e3aba97e6641c9605b7f8b71fb194085772f13b80f3
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.4.0/telego-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 0.1.0-stable-r1
+    created: "2023-08-04T04:42:52.805262753Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: d70c648882a9b6f731d3eb21db83232fe3b2830a374ea44b024dbb01f487aef6
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.3.0/telego-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 0.0.3-stable
+    created: "2023-07-20T09:07:24.421082238Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 293c0d75ce6b0fd9d4ab37c75a996fb249a328071513c4f36f01326bb63ce9f0
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.2.1/telego-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.0.3-stable
+    created: "2023-03-09T18:42:41.574703725Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 03a050ff1e5f6b438d85c78b65498fdb1f129859e8129df772ef4c6aae47b109
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.9/telego-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 0.0.3-stable
+    created: "2022-12-29T05:05:18.515168636Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 6a4693f47b06b269dcbd491e43a34b0ec32e7f054589a867f50cac44a32e9fb1
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.8/telego-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    appVersion: 0.0.2-stable
+    created: "2022-12-27T06:29:31.349768985Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: b27ad32cd29f66e2e778eaca235a968495cfeab522830abf1094d63d9624c842
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.7/telego-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: 0.0.2-dev
+    created: "2022-12-23T11:54:09.088754865Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 9cb31287b430f477721cb6df6a29c343f4fbb7fdbbf145e37b790ed906019302
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.6/telego-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 0.0.2-dev
+    created: "2022-12-23T11:41:42.20662224Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: ec5ad16bf7aa148cc40ef2dacf561dd7f763e2340df4cb1ef21c327a48163d7f
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.5/telego-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 0.0.2-dev
+    created: "2022-12-23T09:28:42.455737061Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: e6885101fa3e74959edf6a2295a4dd6f3c249bde6f862160e11e680fa8745bf7
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.4/telego-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2022-11-17T18:24:23.234710479Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 0223ff97b15ea21f531df94056e1fa3b435fa3890da56284d9a5cba915f12d35
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - Telego
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://irfanhakim-as.github.io/charts/mika/telego
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.3/telego-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-11-17T03:51:21.31303573Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: e69cfe781042d6c1580ee70e89029f9cdc9a39c0a0349fa324db434f2fdf8e3b
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - telego
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.2/telego-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-11-16T10:11:03.729750197Z"
+    description: Telego is an easy to use Telegram bot framework built on top of Django.
+    digest: 2264070c200d3bc8fc24f07a3058e79b5d00b329fff3535df17ba9a706ea5b04
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - telego
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.1/telego-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-11-15T12:27:50.066206158Z"
+    description: Telego is a Telegram bot framework built on top of Django.
+    digest: c8a13a98dfe2fd7d490ebb3225016c0b0b29ea475c1aa6187b8a2eb145e53a95
+    home: https://github.com/irfanhakim-as/telego
+    icon: https://irfanhakim-as.github.io/charts/logos/telego.png
+    keywords:
+    - telego
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: telego
+    sources:
+    - https://github.com/irfanhakim-as/telego
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/telego-0.1.0/telego-0.1.0.tgz
+    version: 0.1.0
+  uptimekuma:
+  - apiVersion: v2
+    appVersion: 1.23.13-alpine
+    created: "2026-05-12T07:02:04.669770904Z"
+    description: Uptime Kuma is an easy-to-use self-hosted monitoring tool.
+    digest: 777f70cdd6c3434ef75e4148b0a35438fd4b91d4416897e07f917d056a1f0dbb
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://charts.moekai.com/logos/uptimekuma.png
+    keywords:
+    - uptime
+    - kuma
+    - monitoring
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: uptimekuma
+    sources:
+    - https://github.com/louislam/uptime-kuma
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/uptimekuma-0.1.1/uptimekuma-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.23.13-alpine
+    created: "2024-05-23T08:35:24.806303075Z"
+    description: Uptime Kuma is an easy-to-use self-hosted monitoring tool.
+    digest: 18af1157140623ee9e345c2c12d3feb0ae43bfa3980b4f74d8ba5808e7e27f51
+    home: https://github.com/irfanhakim-as/charts
+    icon: https://irfanhakim-as.github.io/charts/logos/uptimekuma.png
+    keywords:
+    - uptime
+    - kuma
+    - monitoring
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: uptimekuma
+    sources:
+    - https://github.com/louislam/uptime-kuma
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/uptimekuma-0.1.0/uptimekuma-0.1.0.tgz
+    version: 0.1.0
+  vaultwarden:
+  - apiVersion: v2
+    appVersion: 1.37.0-alpine
+    created: "2026-07-28T06:43:50.433096373Z"
+    description: An alternative server implementation of the Bitwarden Client API
+      written in Rust and compatible with official Bitwarden clients.
+    digest: 3b1e9fa39bb72f9f73bcacca3fb8e155dd075ad76336550a0075ec4fe75aad5e
+    home: https://github.com/dani-garcia/vaultwarden
+    icon: https://raw.githubusercontent.com/dani-garcia/vaultwarden/refs/heads/main/resources/vaultwarden-logo.svg
+    keywords:
+    - vaultwarden
+    - bitwarden
+    - password
+    - manager
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vaultwarden-0.1.3/vaultwarden-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.35.0-alpine
+    created: "2026-05-12T07:02:04.938671984Z"
+    description: An alternative server implementation of the Bitwarden Client API
+      written in Rust and compatible with official Bitwarden clients.
+    digest: a18322d474d5f15bccf974eb2628934e971ddf723d3902eded84ccb720f746d5
+    home: https://github.com/dani-garcia/vaultwarden
+    icon: https://raw.githubusercontent.com/dani-garcia/vaultwarden/refs/heads/main/resources/vaultwarden-logo.svg
+    keywords:
+    - vaultwarden
+    - bitwarden
+    - password
+    - manager
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vaultwarden-0.1.2/vaultwarden-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.33.2
+    created: "2025-04-25T13:20:48.014979091Z"
+    description: An alternative server implementation of the Bitwarden Client API
+      written in Rust and compatible with official Bitwarden clients.
+    digest: a2021058cf79128dc50e2f9a74208896850acc2f32db5dcb3893ad87ffabb8c0
+    home: https://github.com/dani-garcia/vaultwarden
+    icon: https://raw.githubusercontent.com/dani-garcia/vaultwarden/refs/heads/main/resources/vaultwarden-logo.svg
+    keywords:
+    - vaultwarden
+    - bitwarden
+    - password
+    - manager
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vaultwarden
+    sources:
+    - https://github.com/dani-garcia/vaultwarden
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vaultwarden-0.1.0/vaultwarden-0.1.0.tgz
+    version: 0.1.0
+  vpbot:
+  - apiVersion: v2
+    appVersion: 0.1.0-preview-r4-1
+    created: "2026-05-12T07:02:05.224610778Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 701b1fdffb9d3bc72e721536edc89f4f7f8627bcb41ca74283620d8c28c8c7f4
+    home: https://github.com/irfanhakim-as/vpbot
+    icon: https://charts.moekai.com/logos/vpbot.png
+    keywords:
+    - Vpbot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/vpbot
+    - https://charts.moekai.com/moekai/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.4.1/vpbot-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 0.1.0-preview-r4-1
+    created: "2023-09-06T18:51:40.949918846Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 096a337de30fbe4ce01e7c00ad17e989899569ade574a5d8c7333531d0709aec
+    home: https://github.com/irfanhakim-as/vpbot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - Vpbot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/vpbot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.4.0/vpbot-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 1.5.6-stable
+    created: "2023-07-20T09:07:24.547726937Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 498ba72d9edeae7f25207b7c7600391fc9d09f71a63e002136494a73afbea161
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - telegram
+    - bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.3.1/vpbot-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 1.5.6-stable
+    created: "2023-03-09T18:42:41.740075172Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: be12921e2d9f8333be3781942c18a0ffdea9533ba373d79ab8ef135e0d1e57c9
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - telegram
+    - bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.2.1/vpbot-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 1.5.6-stable
+    created: "2022-12-30T16:31:39.412775545Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: d71c77cedb63031ca4b61d4ebf067125a0cf0f8cb72225b748a2a2b01cd655df
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - telegram
+    - bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.2.0/vpbot-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.5.5-cf
+    created: "2022-12-19T12:57:36.74843951Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 9172e781623fc37fcb9350c864a154163e6fe2357783622dfa1a59d35e48d2fd
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.9/vpbot-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 1.5.5-stable
+    created: "2022-12-05T19:20:20.910660804Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 10dbb850f356a2cec918788dee56dd0d7bd6a29b2c3afc4eb22e1900e97ca8c1
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.8/vpbot-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
+    appVersion: 1.5.5-dev
+    created: "2022-12-03T19:47:48.989041114Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: fffb81e3eaaa5fde394a99ac9af49caef08436aaef5cae15295334b69d60dd2e
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.7/vpbot-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: 1.5.2-stable
+    created: "2022-11-18T17:45:41.479668061Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 12493780ce49cbae660873b8acb63ae876d6da82bc4189bd1b99be8c4a209316
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.6/vpbot-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 1.5.1-stable
+    created: "2022-11-17T19:54:48.544279433Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 05d26f691ea1d2ae02c8e6209b54a9ce1c7f80e1dc97e9b8006d5b3d3a95933a
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - vpbot
+    - quarantine-bot
+    - Telegram
+    - Bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://irfanhakim-as.github.io/charts/mika/vpbot
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.5/vpbot-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
+    created: "2022-11-16T10:11:03.911826842Z"
+    description: Vpbot is a Telegram bot with support for a number of useful features
+      such as prayer time notifications, COVID-19 statistics, and more.
+    digest: 7f2181a78209c4997ba5017bf6bfef8367f65c9eba5434a4bea9730d5c30bc0f
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.4/vpbot-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
+    created: "2022-09-24T10:09:12.757344513Z"
+    description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+    digest: 91a00e123e4345ce67bce437e689f5355f2c411863862910270ba5ebf6e06b7f
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.3/vpbot-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
+    created: "2022-09-24T06:40:08.877909287Z"
+    description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+    digest: c6dca14bd48210324020f41deccb0b0ac897137656e0d57f3774968bdf753e41
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.2/vpbot-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.5.0-stable
+    created: "2022-09-23T19:21:41.596752725Z"
+    description: A Helm chart for deploying vpbot (formerly known as quarantine-bot)
+    digest: 99cc5009fa14faf78bf2f69b26e358a61a091960709749b6558f5d5bc5f786df
+    home: https://github.com/irfanhakim-as/quarantine-bot
+    icon: https://irfanhakim-as.github.io/charts/logos/vpbot.png
+    keywords:
+    - quarantine-bot
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: vpbot
+    sources:
+    - https://github.com/irfanhakim-as/quarantine-bot
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/vpbot-0.1.1/vpbot-0.1.1.tgz
+    version: 0.1.1
+  waktusolat:
+  - apiVersion: v2
+    appVersion: 0.6.0-stable-r1
+    created: "2026-05-12T07:02:05.497038514Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: 58c9021d20b1a27909297c812eb49187681806b07a7cc78daeaaefbbf71dcba5
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://charts.moekai.com/logos/moekai.svg
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.5.2/waktusolat-0.5.2.tgz
+    version: 0.5.2
+  - apiVersion: v2
+    appVersion: 0.4.2-stable-r1
+    created: "2025-03-14T00:58:13.372510258Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: f89f7254b45f9c8416b8a33a59b88207eb0c5455c2c90b07e1624e876fe5db7f
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.6/waktusolat-0.4.6.tgz
+    version: 0.4.6
+  - apiVersion: v2
+    appVersion: 0.4.1-stable-r1
+    created: "2025-03-06T13:03:03.165173092Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: 7eb7d5f6d1b7e288e7a361d45cd84ec067e6443a0ed37e1371777ce96e3dcb58
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.5/waktusolat-0.4.5.tgz
+    version: 0.4.5
+  - apiVersion: v2
+    appVersion: 0.4.0-stable-r1
+    created: "2025-03-02T13:11:57.771009169Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: c3fe3a2aaff0c312e215fcf833836778cfaedaf01eeedc53834120af38e49e16
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.4/waktusolat-0.4.4.tgz
+    version: 0.4.4
+  - apiVersion: v2
+    appVersion: 0.3.0-stable-r5
+    created: "2024-11-24T09:49:07.95393627Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: 0202ba6a8ee2793890966ddbe864d02243f04fb19f0cff693e4470fd1a7a64aa
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.3/waktusolat-0.4.3.tgz
+    version: 0.4.3
+  - apiVersion: v2
+    appVersion: 0.3.0-stable-r4
+    created: "2024-11-22T01:26:57.260784375Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: 158728280f73b34247f78cc95f0e7f1a6aa54abf56992092c9c0daf441fc4a56
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.2/waktusolat-0.4.2.tgz
+    version: 0.4.2
+  - apiVersion: v2
+    appVersion: 0.3.0-stable-r3
+    created: "2024-11-21T14:54:57.572676091Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: f6e2403bb9783bf9a29e8db88b1aa7117705e2d89eb28e185e54380fea5b13f3
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.1/waktusolat-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
+    appVersion: 0.3.0-stable-r2
+    created: "2024-11-21T08:34:05.733626035Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      to federated social network.
+    digest: 7ef53a6841ee5ed84ab55c989800ab9ce2c751f5d5b47193640276fc1abe155e
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    - bluesky
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.4.0/waktusolat-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 0.2.2-stable-r1
+    created: "2024-03-11T17:32:25.301019466Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: 479334ecb41c2f3c09620cc366b1e9b8296620bbd6dacd496ecd3c3f6abcf6a9
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.3.4/waktusolat-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: 0.2.1-stable-r2
+    created: "2024-03-01T11:14:33.298357659Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: fe523a366958aded1dd1675879dc8e6aeb9f9d4fb89ee4831c58e2b56ed6d029
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.3.3/waktusolat-0.3.3.tgz
+    version: 0.3.3
+  - apiVersion: v2
+    appVersion: 0.2.1-stable-r1
+    created: "2024-01-11T11:15:03.139277682Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: a5a9fd8f58b03c951873592c37fc9743219f3caabf4ba173cf6e60fc7bfafa2a
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.3.2/waktusolat-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: 0.2.1-stable-r1
+    created: "2024-01-10T03:50:47.1565489Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: 13d96166f7dca3491965871326d68a1b6849785d6b9266015179453ee3218b55
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.3.1/waktusolat-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 0.2.0-stable-r1
+    created: "2024-01-09T08:07:35.454495844Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: b0ed3ae97b2221bce8140126e67c95b32e691621f841a07bbd70e4457bc8c86b
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.3.0/waktusolat-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 0.1.0-stable-r1
+    created: "2023-07-20T09:07:24.672240279Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: 4e1fcc8d088011ba34aa30ccbedad43c60da2263bee5ee6baf27910c755622fd
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.2.1/waktusolat-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.0.2-stable
+    created: "2023-03-09T18:58:27.673275552Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: 2533bf4c091f4440b0ca66192c9e7e77e5d7b760e7b322be3528c170bfc5f69b
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.3/waktusolat-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 0.0.2-stable
+    created: "2022-12-29T12:22:22.254886562Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: 84f1405c0f3345a750ddb24de9a66932f9b3615e28ed7089bb10ef3a6f406fe2
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.2/waktusolat-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.0.1-stable
+    created: "2022-12-26T18:45:21.749085325Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: 8161b8e33709ce1ee26b5382d04c0c93c9566b236b1d43d29576821786333a2d
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.1/waktusolat-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.0.1-dev
+    created: "2022-12-24T17:33:24.485376902Z"
+    description: Waktu Solat is a simple web application that posts local prayer times
+      on Mastodon.
+    digest: e90efcabb24137794e18f99672ac3de4271a2a87f9105ce9e4cb411f828ce23a
+    home: https://github.com/irfanhakim-as/waktusolat
+    icon: https://irfanhakim-as.github.io/charts/logos/mika.png
+    keywords:
+    - waktu solat
+    - prayer time
+    - mastodon
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: waktusolat
+    sources:
+    - https://github.com/irfanhakim-as/waktusolat
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/waktusolat-0.1.0/waktusolat-0.1.0.tgz
+    version: 0.1.0
+  yuzu-multiplayer:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2026-05-12T07:02:05.700709215Z"
+    description: Quickly stand up new dedicated multiplayer lobbies that will be broadcasted
+      on yuzu.
+    digest: e45cc3478afff6c4827ddccf906467d6dc378ec94d993168507ff15b3a595dde
+    home: https://github.com/yuzu-emu/yuzu-multiplayer-dedicated
+    icon: https://raw.githubusercontent.com/yuzu-emu/yuzu-assets/master/icons/icon.png
+    keywords:
+    - yuzu
+    - multiplayer
+    - yuzu-multiplayer-dedicated
+    - yuzu Multiplayer Dedicated Lobby
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: yuzu-multiplayer
+    sources:
+    - https://github.com/yuzu-emu/yuzu-multiplayer-dedicated
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.1/yuzu-multiplayer-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
+    created: "2023-08-07T17:44:31.243363271Z"
+    description: Quickly stand up new dedicated multiplayer lobbies that will be broadcasted
+      on yuzu.
+    digest: 3cb7f9abb8742847c64d8567c5fcd709784354d5caea3e939468e816bbcbe18a
+    home: https://github.com/yuzu-emu/yuzu-multiplayer-dedicated
+    icon: https://raw.githubusercontent.com/yuzu-emu/yuzu-assets/master/icons/icon.png
+    keywords:
+    - yuzu
+    - multiplayer
+    - yuzu-multiplayer-dedicated
+    - yuzu Multiplayer Dedicated Lobby
+    maintainers:
+    - email: irfanhakim.as@yahoo.com
+      name: Irfan Hakim
+      url: https://github.com/irfanhakim-as
+    name: yuzu-multiplayer
+    sources:
+    - https://github.com/yuzu-emu/yuzu-multiplayer-dedicated
+    - https://github.com/irfanhakim-as/charts
+    type: application
+    urls:
+    - https://github.com/irfanhakim-as/charts/releases/download/yuzu-multiplayer-0.1.0/yuzu-multiplayer-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-07-28T06:43:50.433586941Z"
