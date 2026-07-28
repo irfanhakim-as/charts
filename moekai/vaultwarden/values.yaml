@@ -6,6 +6,13 @@
 # Default: "1"
 replicaCount: ""
 
+# The update strategy used to replace existing pods with new ones.
+# Note: Set "type" to "Recreate" if data storage is enabled and mounted as "ReadWriteOnce".
+# Example:
+# updateStrategy:
+#   type: "Recreate"
+updateStrategy: {}
+
 # Container images used for Vaultwarden.
 image:
   # Vaultwarden container image configurations.

@@ -227,6 +227,7 @@ A unique, secure admin token (password) is required for each Vaultwarden install
 | tfa.emailTokenSize | string | `""` | The length of the secret 2FA email token. Default: `"6"`. |
 | tfa.expiry | string | `""` | The number of minutes before a pending 2FA-enabled login is considered incomplete. Default: `"3"`. |
 | tfa.rememberDevice | string | `""` | Specifies whether to allow users to remember their device for 2FA sessions. Default: `"true"`. |
+| updateStrategy | object | `{}` | The update strategy used to replace existing pods with new ones. |
 | vaultwarden.adminToken | string | `""` | The secret password for accessing the Vaultwarden admin panel. |
 | vaultwarden.clearTrash | string | `""` | Number of days to retain trashed items before permanent deletion. |
 | vaultwarden.domain | string | `""` | The ingress domain name that hosts the Vaultwarden server. |
