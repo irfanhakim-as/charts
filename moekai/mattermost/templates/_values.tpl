@@ -6,6 +6,13 @@ The desired number of running replicas for Mattermost.
 {{- end }}
 
 {{/*
+Pod-level security context for Mattermost.
+*/}}
+{{- define "mattermost.podSecurityContext" -}}
+{{- toYaml (merge (dict) .Values.podSecurityContext (dict "fsGroup" 2000)) }}
+{{- end }}
+
+{{/*
 Container images used for Mattermost.
 */}}
 {{- define "mattermost.imageRegistry" -}}

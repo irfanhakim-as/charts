@@ -13,7 +13,8 @@ replicaCount: ""
 podAnnotations: {}
 
 # Security context applied at the pod level for Mattermost.
-# Note: Set fsGroup to Mattermost's container UID/GID (2000) so mounted storage volumes are writable.
+# Note: Defaults fsGroup to Mattermost's container UID/GID (2000) for storage volumes to be writable.
+# Default: {"fsGroup": 2000}
 # Example:
 # podSecurityContext:
 #   fsGroup: 2000
