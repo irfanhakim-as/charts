@@ -6,6 +6,12 @@
 # Default: "1"
 replicaCount: ""
 
+# Annotations to be applied to Mattermost pods.
+# Example:
+# podAnnotations:
+#   reloader.stakater.com/auto: "true"
+podAnnotations: {}
+
 # Container images used for Mattermost.
 image:
   # Mattermost container image configurations.
