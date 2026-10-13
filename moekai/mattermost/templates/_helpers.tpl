@@ -166,3 +166,24 @@ readinessProbe:
   {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Ingress annotations
+*/}}
+{{- define "mattermost.ingressAnnotations" -}}
+cert-manager.io/cluster-issuer: {{ include "mattermost.clusterIssuer" . | quote }}
+cert-manager.io/private-key-algorithm: "ECDSA"
+nginx.ingress.kubernetes.io/affinity: "cookie"
+nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+# Mattermost relies on long-lived websocket connections
+nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+nginx.ingress.kubernetes.io/session-cookie-name: "route"
+nginx.org/client-max-body-size: "100m"
+{{- range .Values.ingress.customAnnotations }}
+{{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+{{- end }}
+{{- end }}
