@@ -1,5 +1,3 @@
-{{- $dataPersistence := eq (include "mattermost.dataPersistence" .) "true" }}
-{{- $logPersistence := eq (include "mattermost.logPersistence" .) "true" }}
 {{- $mattermostStartupProbe := .Values.probes.mattermost.startup.enabled }}
 {{- $mattermostStartupProbeSpec := .Values.probes.mattermost.startup.spec }}
 {{- $mattermostLivenessProbe := .Values.probes.mattermost.liveness.enabled }}
@@ -103,16 +101,4 @@ spec:
             - secretRef:
                 name: {{ .Release.Name }}-mattermost-secret
           {{- include "mattermost.volumeMounts" . | nindent 10 }}
-      {{- if or $dataPersistence $logPersistence }}
-      volumes:
-        {{- if $dataPersistence }}
-        - name: {{ .Release.Name }}-mattermost-data
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-mattermost-data-pvc
-        {{- end }}
-        {{- if $logPersistence }}
-        - name: {{ .Release.Name }}-mattermost-log
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-mattermost-log-pvc
-        {{- end }}
-      {{- end }}
+      {{- include "mattermost.volumes" . | nindent 6 }}

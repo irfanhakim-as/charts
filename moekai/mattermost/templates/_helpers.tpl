@@ -87,3 +87,24 @@ volumeMounts:
   {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Volumes for the storage volumes
+*/}}
+{{- define "mattermost.volumes" -}}
+{{- $dataPersistence := eq (include "mattermost.dataPersistence" .) "true" -}}
+{{- $logPersistence := eq (include "mattermost.logPersistence" .) "true" -}}
+{{- if or $dataPersistence $logPersistence -}}
+volumes:
+  {{- if $dataPersistence }}
+  - name: {{ .Release.Name }}-mattermost-data
+    persistentVolumeClaim:
+      claimName: {{ .Release.Name }}-mattermost-data-pvc
+  {{- end }}
+  {{- if $logPersistence }}
+  - name: {{ .Release.Name }}-mattermost-log
+    persistentVolumeClaim:
+      claimName: {{ .Release.Name }}-mattermost-log-pvc
+  {{- end }}
+{{- end }}
+{{- end }}
