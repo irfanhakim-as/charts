@@ -1,0 +1,45 @@
+{{- $domain := include "mattermost.siteDomain" . }}
+{{- $wwwDomain := include "mattermost.wwwDomain" . }}
+{{- if $domain }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-mattermost-ingress
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+  annotations:
+    {{- include "mattermost.ingressAnnotations" . | nindent 4 }}
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ $domain | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-mattermost-svc
+                port:
+                  name: mattermost
+            path: /
+            pathType: Prefix
+  {{- if $wwwDomain }}
+    - host: {{ $wwwDomain | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-mattermost-svc
+                port:
+                  name: mattermost
+            path: /
+            pathType: Prefix
+  {{- end }}
+  tls:
+    - hosts:
+        - {{ $domain | quote }}
+      {{- if $wwwDomain }}
+        - {{ $wwwDomain | quote }}
+      {{- end }}
+      secretName: {{ .Release.Name }}-mattermost-tls-cert
+{{- end }}

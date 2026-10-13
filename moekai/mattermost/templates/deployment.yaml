@@ -1,0 +1,73 @@
+{{- $mattermostRegistry := include "mattermost.imageRegistry" . }}
+{{- $mattermostRepository := include "mattermost.imageRepository" . }}
+{{- $mattermostTag := include "mattermost.imageTag" . }}
+{{- $mattermostPullPolicy := include "mattermost.imagePullPolicy" . | quote }}
+{{- $initRegistry := include "mattermost.initImageRegistry" . }}
+{{- $initRepository := include "mattermost.initImageRepository" . }}
+{{- $initTag := include "mattermost.initImageTag" . }}
+{{- $initPullPolicy := include "mattermost.initImagePullPolicy" . | quote }}
+{{- $replicaCount := include "mattermost.replicaCount" . }}
+{{- $initScript := include "mattermost.initScript" . }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mattermost
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "mattermost.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mattermost.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $initRegistry $initRepository $initTag | quote }}
+          imagePullPolicy: {{ $initPullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              {{- $initScript | nindent 14 }}
+          {{- include "mattermost.volumeMounts" . | nindent 10 }}
+      {{- end }}
+      containers:
+        - name: mattermost
+          image: {{ printf "%s/%s:%s" $mattermostRegistry $mattermostRepository $mattermostTag | quote }}
+          imagePullPolicy: {{ $mattermostPullPolicy }}
+          ports:
+            - name: mattermost
+              containerPort: 8065
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.mattermost | nindent 12 }}
+          {{- with include "mattermost.startupProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "mattermost.livenessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "mattermost.readinessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-mattermost-cm
+            - secretRef:
+                name: {{ .Release.Name }}-mattermost-secret
+          {{- include "mattermost.volumeMounts" . | nindent 10 }}
+      {{- include "mattermost.volumes" . | nindent 6 }}

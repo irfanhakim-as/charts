@@ -1,0 +1,20 @@
+apiVersion: v2
+name: mattermost
+description: Mattermost is an open source platform for secure collaboration across the entire software development lifecycle.
+type: application
+version: 0.1.0
+appVersion: "11.10.0"
+keywords:
+  - "mattermost"
+  - "chat"
+  - "collaboration"
+  - "team"
+home: "https://github.com/mattermost/mattermost"
+icon: "https://raw.githubusercontent.com/mattermost/mattermost/master/webapp/channels/src/images/logo.svg"
+sources:
+  - "https://github.com/mattermost/mattermost"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

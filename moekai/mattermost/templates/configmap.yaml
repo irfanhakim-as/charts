@@ -1,0 +1,48 @@
+{{- $dbType := include "mattermost.dbType" . | quote }}
+{{- $siteUrl := include "mattermost.siteUrl" . }}
+{{- $timezone := include "mattermost.timezone" . }}
+{{- $dataMountPath := include "mattermost.dataMountPath" . }}
+{{- $bleveIndexDir := printf "%s/bleve-indexes" $dataMountPath | quote }}
+{{- $push := include "mattermost.sendPushNotifications" . | quote }}
+{{- $pushServer := include "mattermost.pushNotificationServer" . }}
+{{- $smtpHost := include "mattermost.smtpHost" . }}
+{{- $smtpPort := include "mattermost.smtpPort" . | quote }}
+{{- $feedbackEmail := include "mattermost.feedbackEmail" . | quote }}
+{{- $s3Bucket := include "mattermost.s3Bucket" . | quote }}
+{{- $s3Endpoint := include "mattermost.s3Endpoint" . | quote }}
+{{- $s3Region := include "mattermost.s3Region" . | quote }}
+{{- $s3Ssl := include "mattermost.s3Ssl" . | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-mattermost-cm
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+data:
+  MM_SQLSETTINGS_DRIVERNAME: {{ $dbType }}
+  MM_BLEVESETTINGS_INDEXDIR: {{ $bleveIndexDir }}
+{{- if $timezone }}
+  TZ: {{ $timezone | quote }}
+{{- end }}
+{{- if $siteUrl }}
+  MM_SERVICESETTINGS_SITEURL: {{ $siteUrl | quote }}
+{{- end }}
+  MM_EMAILSETTINGS_SENDPUSHNOTIFICATIONS: {{ $push }}
+{{- if $pushServer }}
+  MM_EMAILSETTINGS_PUSHNOTIFICATIONSERVER: {{ $pushServer | quote }}
+{{- end }}
+{{- if $smtpHost }}
+  MM_EMAILSETTINGS_SMTPSERVER: {{ $smtpHost | quote }}
+  MM_EMAILSETTINGS_SMTPPORT: {{ $smtpPort }}
+  MM_EMAILSETTINGS_ENABLESMTPAUTH: "true"
+  MM_EMAILSETTINGS_CONNECTIONSECURITY: "STARTTLS"
+  MM_EMAILSETTINGS_FEEDBACKEMAIL: {{ $feedbackEmail }}
+  MM_EMAILSETTINGS_REPLYTOADDRESS: {{ $feedbackEmail }}
+{{- end }}
+  MM_FILESETTINGS_DRIVERNAME: "amazons3"
+  MM_FILESETTINGS_AMAZONS3BUCKET: {{ $s3Bucket }}
+  MM_FILESETTINGS_AMAZONS3ENDPOINT: {{ $s3Endpoint }}
+  MM_FILESETTINGS_AMAZONS3REGION: {{ $s3Region }}
+  MM_FILESETTINGS_AMAZONS3SSL: {{ $s3Ssl }}
+  MM_FILESETTINGS_AMAZONS3SIGNV2: "false"

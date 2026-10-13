@@ -1,0 +1,40 @@
+{{- $dataPersistence := eq (include "mattermost.dataPersistence" .) "true" }}
+{{- $dataAccessMode := include "mattermost.dataAccessMode" . | quote }}
+{{- $dataStorage := include "mattermost.dataStorage" . | quote }}
+{{- $dataStorageClassName := include "mattermost.dataStorageClassName" . | quote }}
+{{- $logPersistence := eq (include "mattermost.logPersistence" .) "true" }}
+{{- $logAccessMode := include "mattermost.logAccessMode" . | quote }}
+{{- $logStorage := include "mattermost.logStorage" . | quote }}
+{{- $logStorageClassName := include "mattermost.logStorageClassName" . | quote }}
+{{- if $dataPersistence }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-mattermost-data-pvc
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $dataAccessMode }}
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}
+{{- if $logPersistence }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-mattermost-log-pvc
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $logAccessMode }}
+  resources:
+    requests:
+      storage: {{ $logStorage }}
+  storageClassName: {{ $logStorageClassName }}
+{{- end }}
