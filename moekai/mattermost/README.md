@@ -148,6 +148,7 @@ Setting `ingress.enabled` with a non-empty `mattermost.domain` makes Mattermost'
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| containerSecurityContext | object | `{}` | Security context applied at the Mattermost container level. |
 | db.charset | string | `""` | The character set used for the database connection. Default: `"utf8mb4"`. |
 | db.connectTimeout | string | `""` | The number of seconds to wait before timing out when connecting to the database. Default: `"10"`. |
 | db.host | string | `""` | The hostname or IP address of the Mattermost database server. |
@@ -179,6 +180,7 @@ Setting `ingress.enabled` with a non-empty `mattermost.domain` makes Mattermost'
 | mattermost.initScript | string | `""` | Custom init script to run before the Mattermost container starts. |
 | mattermost.timezone | string | `""` | The timezone used by the Mattermost server for time-based operations. |
 | podAnnotations | object | `{}` | Annotations to be applied to Mattermost pods. |
+| podSecurityContext | object | `{}` | Security context applied at the pod level for Mattermost. Default: `{"fsGroup": 2000}`. |
 | probes.mattermost.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Mattermost container. |
 | probes.mattermost.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Mattermost container health. |
 | probes.mattermost.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Mattermost container. |

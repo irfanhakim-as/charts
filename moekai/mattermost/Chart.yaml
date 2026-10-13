@@ -2,7 +2,7 @@ apiVersion: v2
 name: mattermost
 description: Mattermost is an open source platform for secure collaboration across the entire software development lifecycle.
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "11.10.0"
 keywords:
   - "mattermost"

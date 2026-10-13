@@ -6,6 +6,33 @@ The desired number of running replicas for Mattermost.
 {{- end }}
 
 {{/*
+Annotations to apply to Mattermost pods.
+*/}}
+{{- define "mattermost.podAnnotations" -}}
+{{- with .Values.podAnnotations -}}
+annotations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Pod-level security context for Mattermost.
+*/}}
+{{- define "mattermost.podSecurityContext" -}}
+{{- toYaml (merge (dict) .Values.podSecurityContext (dict "fsGroup" 2000)) }}
+{{- end }}
+
+{{/*
+Container-level security context for Mattermost.
+*/}}
+{{- define "mattermost.containerSecurityContext" -}}
+{{- with .Values.containerSecurityContext -}}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
 Container images used for Mattermost.
 */}}
 {{- define "mattermost.imageRegistry" -}}
@@ -38,6 +65,16 @@ Container images used for Mattermost.
 
 {{- define "mattermost.initImagePullPolicy" -}}
 {{- .Values.image.init.pullPolicy | default "IfNotPresent" | toString }}
+{{- end }}
+
+{{/*
+Credentials for pulling Mattermost container images from private registries.
+*/}}
+{{- define "mattermost.imagePullSecrets" -}}
+{{- with .Values.imagePullSecrets -}}
+imagePullSecrets:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -255,4 +292,12 @@ Storage configurations.
 
 {{- define "mattermost.logStorageClassName" -}}
 {{- .Values.storage.log.storageClassName | default "longhorn" | toString }}
+{{- end }}
+
+{{/*
+Resource requirements and limits for the Mattermost container.
+*/}}
+{{- define "mattermost.resources" -}}
+resources:
+  {{- toYaml .Values.resources.mattermost | nindent 2 }}
 {{- end }}
