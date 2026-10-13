@@ -1,5 +1,5 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $logPersistence := .Values.storage.log.enabled }}
+{{- $dataPersistence := eq (include "mattermost.dataPersistence" .) "true" }}
+{{- $logPersistence := eq (include "mattermost.logPersistence" .) "true" }}
 {{- $mattermostStartupProbe := .Values.probes.mattermost.startup.enabled }}
 {{- $mattermostStartupProbeSpec := .Values.probes.mattermost.startup.spec }}
 {{- $mattermostLivenessProbe := .Values.probes.mattermost.liveness.enabled }}
@@ -15,9 +15,9 @@
 {{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
 {{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
 {{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/mattermost/data" | toString | quote }}
+{{- $dataMountPath := include "mattermost.dataMountPath" . | quote }}
 {{- $dataSubPath := .Values.storage.data.subPath | toString }}
-{{- $logMountPath := .Values.storage.log.mountPath | default "/mattermost/logs" | toString | quote }}
+{{- $logMountPath := include "mattermost.logMountPath" . | quote }}
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
 {{- $initScript := .Values.mattermost.initScript | toString }}
 ---
