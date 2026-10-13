@@ -33,6 +33,10 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if $initScript }}
       initContainers:
         - name: init
@@ -49,6 +53,10 @@ spec:
         - name: mattermost
           image: {{ printf "%s/%s:%s" $mattermostRegistry $mattermostRepository $mattermostTag | quote }}
           imagePullPolicy: {{ $mattermostPullPolicy }}
+          {{- with .Values.containerSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           ports:
             - name: mattermost
               containerPort: 8065
