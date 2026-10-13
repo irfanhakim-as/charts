@@ -1,0 +1,51 @@
+{{- $ingress := .Values.ingress.enabled }}
+{{- $domain := .Values.mattermost.domain | toString }}
+{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $siteUrl := ternary (printf "https://%s" $domain) "" (ne $domain "") }}
+{{- $timezone := .Values.mattermost.timezone | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/mattermost/data" | toString }}
+{{- $bleveIndexDir := printf "%s/bleve-indexes" $dataMountPath | quote }}
+{{- $push := .Values.push.sendPushNotifications | default "false" | toString | quote }}
+{{- $pushServer := .Values.push.pushNotificationServer | toString }}
+{{- $smtpHost := .Values.mail.smtp.host | toString }}
+{{- $smtpPort := .Values.mail.smtp.port | default "587" | toString | quote }}
+{{- $smtpUser := .Values.mail.smtp.user | toString }}
+{{- $feedbackEmail := .Values.mail.feedbackEmail | default $smtpUser | toString | quote }}
+{{- $s3Bucket := .Values.s3.bucket | toString | quote }}
+{{- $s3Endpoint := .Values.s3.endpoint | toString | quote }}
+{{- $s3Region := .Values.s3.region | toString | quote }}
+{{- $s3Ssl := .Values.s3.ssl | default "true" | toString | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-mattermost-cm
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+data:
+  MM_SQLSETTINGS_DRIVERNAME: "postgres"
+  MM_BLEVESETTINGS_INDEXDIR: {{ $bleveIndexDir }}
+{{- if $timezone }}
+  TZ: {{ $timezone | quote }}
+{{- end }}
+{{- if $siteUrl }}
+  MM_SERVICESETTINGS_SITEURL: {{ $siteUrl | quote }}
+{{- end }}
+  MM_EMAILSETTINGS_SENDPUSHNOTIFICATIONS: {{ $push }}
+{{- if $pushServer }}
+  MM_EMAILSETTINGS_PUSHNOTIFICATIONSERVER: {{ $pushServer | quote }}
+{{- end }}
+{{- if $smtpHost }}
+  MM_EMAILSETTINGS_SMTPSERVER: {{ $smtpHost | quote }}
+  MM_EMAILSETTINGS_SMTPPORT: {{ $smtpPort }}
+  MM_EMAILSETTINGS_ENABLESMTPAUTH: "true"
+  MM_EMAILSETTINGS_CONNECTIONSECURITY: "STARTTLS"
+  MM_EMAILSETTINGS_FEEDBACKEMAIL: {{ $feedbackEmail }}
+  MM_EMAILSETTINGS_REPLYTOADDRESS: {{ $feedbackEmail }}
+{{- end }}
+  MM_FILESETTINGS_DRIVERNAME: "amazons3"
+  MM_FILESETTINGS_AMAZONS3BUCKET: {{ $s3Bucket }}
+  MM_FILESETTINGS_AMAZONS3ENDPOINT: {{ $s3Endpoint }}
+  MM_FILESETTINGS_AMAZONS3REGION: {{ $s3Region }}
+  MM_FILESETTINGS_AMAZONS3SSL: {{ $s3Ssl }}
+  MM_FILESETTINGS_AMAZONS3SIGNV2: "false"

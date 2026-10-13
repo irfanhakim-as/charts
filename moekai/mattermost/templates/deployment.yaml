@@ -1,0 +1,154 @@
+{{- $dataPersistence := .Values.storage.data.enabled }}
+{{- $logPersistence := .Values.storage.log.enabled }}
+{{- $mattermostStartupProbe := .Values.probes.mattermost.startup.enabled }}
+{{- $mattermostStartupProbeSpec := .Values.probes.mattermost.startup.spec }}
+{{- $mattermostLivenessProbe := .Values.probes.mattermost.liveness.enabled }}
+{{- $mattermostLivenessProbeSpec := .Values.probes.mattermost.liveness.spec }}
+{{- $mattermostReadinessProbe := .Values.probes.mattermost.readiness.enabled }}
+{{- $mattermostReadinessProbeSpec := .Values.probes.mattermost.readiness.spec }}
+{{- $mattermost_registry := .Values.image.mattermost.registry | default "docker.io" | toString }}
+{{- $mattermost_repository := .Values.image.mattermost.repository | default "mattermost/mattermost-team-edition" | toString }}
+{{- $mattermost_tag := .Values.image.mattermost.tag | default .Chart.AppVersion | toString }}
+{{- $mattermost_pullPolicy := .Values.image.mattermost.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
+{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
+{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
+{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
+{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $dataMountPath := .Values.storage.data.mountPath | default "/mattermost/data" | toString | quote }}
+{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $logMountPath := .Values.storage.log.mountPath | default "/mattermost/logs" | toString | quote }}
+{{- $logSubPath := .Values.storage.log.subPath | toString }}
+{{- $initScript := .Values.mattermost.initScript | toString }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mattermost
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replica_count }}
+  selector:
+    matchLabels:
+      {{- include "mattermost.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mattermost.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
+          imagePullPolicy: {{ $init_pullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              {{- $initScript | nindent 14 }}
+          {{- if or $dataPersistence $logPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-mattermost-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-mattermost-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- end }}
+      containers:
+        - name: mattermost
+          image: {{ printf "%s/%s:%s" $mattermost_registry $mattermost_repository $mattermost_tag | quote }}
+          imagePullPolicy: {{ $mattermost_pullPolicy }}
+          ports:
+            - name: mattermost
+              containerPort: 8065
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources.mattermost | nindent 12 }}
+          {{- if and $mattermostStartupProbe $mattermostStartupProbeSpec }}
+          startupProbe:
+            {{- toYaml $mattermostStartupProbeSpec | nindent 12 }}
+          {{- end }}
+          {{- if $mattermostLivenessProbe }}
+          livenessProbe:
+            {{- if $mattermostLivenessProbeSpec }}
+              {{- toYaml $mattermostLivenessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /api/v4/system/ping
+              port: mattermost
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          {{- if $mattermostReadinessProbe }}
+          readinessProbe:
+            {{- if $mattermostReadinessProbeSpec }}
+              {{- toYaml $mattermostReadinessProbeSpec | nindent 12 }}
+            {{- else }}
+            httpGet:
+              path: /api/v4/system/ping
+              port: mattermost
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 6
+            successThreshold: 1
+            {{- end }}
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-mattermost-cm
+            - secretRef:
+                name: {{ .Release.Name }}-mattermost-secret
+          {{- if or $dataPersistence $logPersistence }}
+          volumeMounts:
+            {{- if $dataPersistence }}
+            - name: {{ .Release.Name }}-mattermost-data
+              mountPath: {{ $dataMountPath }}
+              {{- if $dataSubPath }}
+              subPath: {{ $dataSubPath | quote }}
+              {{- end }}
+            {{- end }}
+            {{- if $logPersistence }}
+            - name: {{ .Release.Name }}-mattermost-log
+              mountPath: {{ $logMountPath }}
+              {{- if $logSubPath }}
+              subPath: {{ $logSubPath | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+      {{- if or $dataPersistence $logPersistence }}
+      volumes:
+        {{- if $dataPersistence }}
+        - name: {{ .Release.Name }}-mattermost-data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-mattermost-data-pvc
+        {{- end }}
+        {{- if $logPersistence }}
+        - name: {{ .Release.Name }}-mattermost-log
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-mattermost-log-pvc
+        {{- end }}
+      {{- end }}
