@@ -1,9 +1,7 @@
-{{- $ingress := .Values.ingress.enabled }}
-{{- $www := and $ingress .Values.ingress.www }}
+{{- $www := and .Values.ingress.enabled .Values.ingress.www }}
 {{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
-{{- $domain := .Values.mattermost.domain | toString }}
-{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $domain := include "mattermost.siteDomain" . }}
 {{- $wwwDomain := printf "www.%s" $domain | toString }}
 {{- $wwwDomain = ternary $wwwDomain "" (and $www (ne $domain "")) }}
 {{- if $domain }}

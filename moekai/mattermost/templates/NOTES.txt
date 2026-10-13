@@ -1,7 +1,5 @@
 {{- $serviceAddress := "" }}
-{{- $ingress := .Values.ingress.enabled }}
-{{- $domain := .Values.mattermost.domain | toString }}
-{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $domain := include "mattermost.siteDomain" . }}
 {{- $port := .Values.service.port | default "8065" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-mattermost-svc" .Release.Name | toString }}

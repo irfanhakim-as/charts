@@ -1,9 +1,7 @@
-{{- $ingress := .Values.ingress.enabled }}
-{{- $domain := .Values.mattermost.domain | toString }}
-{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $domain := include "mattermost.siteDomain" . }}
 {{- $siteUrl := ternary (printf "https://%s" $domain) "" (ne $domain "") }}
 {{- $timezone := .Values.mattermost.timezone | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/mattermost/data" | toString }}
+{{- $dataMountPath := include "mattermost.dataMountPath" . }}
 {{- $bleveIndexDir := printf "%s/bleve-indexes" $dataMountPath | quote }}
 {{- $push := .Values.push.sendPushNotifications | default "false" | toString | quote }}
 {{- $pushServer := .Values.push.pushNotificationServer | toString }}
