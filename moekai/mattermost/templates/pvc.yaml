@@ -1,11 +1,11 @@
 {{- $dataPersistence := eq (include "mattermost.dataPersistence" .) "true" }}
-{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteOnce" | toString | quote }}
-{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
-{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $dataAccessMode := include "mattermost.dataAccessMode" . | quote }}
+{{- $dataStorage := include "mattermost.dataStorage" . | quote }}
+{{- $dataStorageClassName := include "mattermost.dataStorageClassName" . | quote }}
 {{- $logPersistence := eq (include "mattermost.logPersistence" .) "true" }}
-{{- $logAccessMode := .Values.storage.log.accessMode | default "ReadWriteOnce" | toString | quote }}
-{{- $logStorage := .Values.storage.log.storage | default "1Gi" | toString | quote }}
-{{- $logStorageClassName := .Values.storage.log.storageClassName | default "longhorn" | toString | quote }}
+{{- $logAccessMode := include "mattermost.logAccessMode" . | quote }}
+{{- $logStorage := include "mattermost.logStorage" . | quote }}
+{{- $logStorageClassName := include "mattermost.logStorageClassName" . | quote }}
 {{- if $dataPersistence }}
 ---
 apiVersion: v1

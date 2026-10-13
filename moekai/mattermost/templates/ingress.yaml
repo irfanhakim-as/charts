@@ -1,9 +1,7 @@
-{{- $www := and .Values.ingress.enabled .Values.ingress.www }}
-{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
+{{- $clusterIssuer := include "mattermost.clusterIssuer" . | quote }}
 {{- $customAnnotations := .Values.ingress.customAnnotations }}
 {{- $domain := include "mattermost.siteDomain" . }}
-{{- $wwwDomain := printf "www.%s" $domain | toString }}
-{{- $wwwDomain = ternary $wwwDomain "" (and $www (ne $domain "")) }}
+{{- $wwwDomain := include "mattermost.wwwDomain" . }}
 {{- if $domain }}
 ---
 apiVersion: networking.k8s.io/v1

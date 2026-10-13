@@ -6,20 +6,20 @@
 {{- $mattermostLivenessProbeSpec := .Values.probes.mattermost.liveness.spec }}
 {{- $mattermostReadinessProbe := .Values.probes.mattermost.readiness.enabled }}
 {{- $mattermostReadinessProbeSpec := .Values.probes.mattermost.readiness.spec }}
-{{- $mattermost_registry := .Values.image.mattermost.registry | default "docker.io" | toString }}
-{{- $mattermost_repository := .Values.image.mattermost.repository | default "mattermost/mattermost-team-edition" | toString }}
-{{- $mattermost_tag := .Values.image.mattermost.tag | default .Chart.AppVersion | toString }}
-{{- $mattermost_pullPolicy := .Values.image.mattermost.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
-{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
-{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
+{{- $mattermost_registry := include "mattermost.imageRegistry" . }}
+{{- $mattermost_repository := include "mattermost.imageRepository" . }}
+{{- $mattermost_tag := include "mattermost.imageTag" . }}
+{{- $mattermost_pullPolicy := include "mattermost.imagePullPolicy" . | quote }}
+{{- $init_registry := include "mattermost.initImageRegistry" . }}
+{{- $init_repository := include "mattermost.initImageRepository" . }}
+{{- $init_tag := include "mattermost.initImageTag" . }}
+{{- $init_pullPolicy := include "mattermost.initImagePullPolicy" . | quote }}
+{{- $replica_count := include "mattermost.replicaCount" . }}
 {{- $dataMountPath := include "mattermost.dataMountPath" . | quote }}
-{{- $dataSubPath := .Values.storage.data.subPath | toString }}
+{{- $dataSubPath := include "mattermost.dataSubPath" . }}
 {{- $logMountPath := include "mattermost.logMountPath" . | quote }}
-{{- $logSubPath := .Values.storage.log.subPath | toString }}
-{{- $initScript := .Values.mattermost.initScript | toString }}
+{{- $logSubPath := include "mattermost.logSubPath" . }}
+{{- $initScript := include "mattermost.initScript" . }}
 ---
 apiVersion: apps/v1
 kind: Deployment

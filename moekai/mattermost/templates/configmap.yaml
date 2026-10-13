@@ -1,18 +1,16 @@
-{{- $domain := include "mattermost.siteDomain" . }}
-{{- $siteUrl := ternary (printf "https://%s" $domain) "" (ne $domain "") }}
-{{- $timezone := .Values.mattermost.timezone | toString }}
+{{- $siteUrl := include "mattermost.siteUrl" . }}
+{{- $timezone := include "mattermost.timezone" . }}
 {{- $dataMountPath := include "mattermost.dataMountPath" . }}
 {{- $bleveIndexDir := printf "%s/bleve-indexes" $dataMountPath | quote }}
-{{- $push := .Values.push.sendPushNotifications | default "false" | toString | quote }}
-{{- $pushServer := .Values.push.pushNotificationServer | toString }}
-{{- $smtpHost := .Values.mail.smtp.host | toString }}
-{{- $smtpPort := .Values.mail.smtp.port | default "587" | toString | quote }}
-{{- $smtpUser := .Values.mail.smtp.user | toString }}
-{{- $feedbackEmail := .Values.mail.feedbackEmail | default $smtpUser | toString | quote }}
-{{- $s3Bucket := .Values.s3.bucket | toString | quote }}
-{{- $s3Endpoint := .Values.s3.endpoint | toString | quote }}
-{{- $s3Region := .Values.s3.region | toString | quote }}
-{{- $s3Ssl := .Values.s3.ssl | default "true" | toString | quote }}
+{{- $push := include "mattermost.sendPushNotifications" . | quote }}
+{{- $pushServer := include "mattermost.pushNotificationServer" . }}
+{{- $smtpHost := include "mattermost.smtpHost" . }}
+{{- $smtpPort := include "mattermost.smtpPort" . | quote }}
+{{- $feedbackEmail := include "mattermost.feedbackEmail" . | quote }}
+{{- $s3Bucket := include "mattermost.s3Bucket" . | quote }}
+{{- $s3Endpoint := include "mattermost.s3Endpoint" . | quote }}
+{{- $s3Region := include "mattermost.s3Region" . | quote }}
+{{- $s3Ssl := include "mattermost.s3Ssl" . | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
