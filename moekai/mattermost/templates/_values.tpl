@@ -1,35 +1,243 @@
 {{/*
-Resolve the public-facing domain, empty unless Ingress is enabled with a real domain configured.
+The desired number of running replicas for Mattermost.
+*/}}
+{{- define "mattermost.replicaCount" -}}
+{{- .Values.replicaCount | default "1" | toString }}
+{{- end }}
+
+{{/*
+Container images used for Mattermost.
+*/}}
+{{- define "mattermost.imageRegistry" -}}
+{{- .Values.image.mattermost.registry | default "docker.io" | toString }}
+{{- end }}
+
+{{- define "mattermost.imageRepository" -}}
+{{- .Values.image.mattermost.repository | default "mattermost/mattermost-team-edition" | toString }}
+{{- end }}
+
+{{- define "mattermost.imageTag" -}}
+{{- .Values.image.mattermost.tag | default .Chart.AppVersion | toString }}
+{{- end }}
+
+{{- define "mattermost.imagePullPolicy" -}}
+{{- .Values.image.mattermost.pullPolicy | default "IfNotPresent" | toString }}
+{{- end }}
+
+{{- define "mattermost.initImageRegistry" -}}
+{{- .Values.image.init.registry | default "docker.io" | toString }}
+{{- end }}
+
+{{- define "mattermost.initImageRepository" -}}
+{{- .Values.image.init.repository | default "busybox" | toString }}
+{{- end }}
+
+{{- define "mattermost.initImageTag" -}}
+{{- .Values.image.init.tag | default "1.36.1" | toString }}
+{{- end }}
+
+{{- define "mattermost.initImagePullPolicy" -}}
+{{- .Values.image.init.pullPolicy | default "IfNotPresent" | toString }}
+{{- end }}
+
+{{/*
+Mattermost configurations.
 */}}
 {{- define "mattermost.siteDomain" -}}
 {{- $domain := .Values.mattermost.domain | toString }}
 {{- ternary $domain "" (and .Values.ingress.enabled (ne $domain "") (ne $domain "localhost")) }}
 {{- end }}
 
-{{/*
-The mount path for the data storage volume.
-*/}}
-{{- define "mattermost.dataMountPath" -}}
-{{- .Values.storage.data.mountPath | default "/mattermost/data" | toString }}
+{{- define "mattermost.siteUrl" -}}
+{{- $domain := include "mattermost.siteDomain" . }}
+{{- ternary (printf "https://%s" $domain) "" (ne $domain "") }}
+{{- end }}
+
+{{- define "mattermost.timezone" -}}
+{{- .Values.mattermost.timezone | toString }}
+{{- end }}
+
+{{- define "mattermost.initScript" -}}
+{{- .Values.mattermost.initScript | toString }}
 {{- end }}
 
 {{/*
-The mount path for the log storage volume.
+Mail configurations.
 */}}
-{{- define "mattermost.logMountPath" -}}
-{{- .Values.storage.log.mountPath | default "/mattermost/logs" | toString }}
+{{- define "mattermost.smtpHost" -}}
+{{- .Values.mail.smtp.host | toString }}
+{{- end }}
+
+{{- define "mattermost.smtpPort" -}}
+{{- .Values.mail.smtp.port | default "587" | toString }}
+{{- end }}
+
+{{- define "mattermost.smtpUser" -}}
+{{- .Values.mail.smtp.user | toString }}
+{{- end }}
+
+{{- define "mattermost.smtpPassword" -}}
+{{- .Values.mail.smtp.password | toString }}
+{{- end }}
+
+{{- define "mattermost.feedbackEmail" -}}
+{{- .Values.mail.feedbackEmail | default (include "mattermost.smtpUser" .) | toString }}
 {{- end }}
 
 {{/*
-Specifies whether persistent storage is enabled for the data storage volume.
+Push notification configurations.
+*/}}
+{{- define "mattermost.sendPushNotifications" -}}
+{{- .Values.push.sendPushNotifications | default "false" | toString }}
+{{- end }}
+
+{{- define "mattermost.pushNotificationServer" -}}
+{{- .Values.push.pushNotificationServer | toString }}
+{{- end }}
+
+{{/*
+S3-compatible file storage configurations.
+*/}}
+{{- define "mattermost.s3AccessKeyId" -}}
+{{- .Values.s3.accessKeyId | toString }}
+{{- end }}
+
+{{- define "mattermost.s3SecretAccessKey" -}}
+{{- .Values.s3.secretAccessKey | toString }}
+{{- end }}
+
+{{- define "mattermost.s3Bucket" -}}
+{{- .Values.s3.bucket | toString }}
+{{- end }}
+
+{{- define "mattermost.s3Endpoint" -}}
+{{- .Values.s3.endpoint | toString }}
+{{- end }}
+
+{{- define "mattermost.s3Region" -}}
+{{- .Values.s3.region | toString }}
+{{- end }}
+
+{{- define "mattermost.s3Ssl" -}}
+{{- .Values.s3.ssl | default "true" | toString }}
+{{- end }}
+
+{{/*
+Database configurations.
+*/}}
+{{- define "mattermost.dbType" -}}
+{{- .Values.db.type | default "postgres" | toString }}
+{{- end }}
+
+{{- define "mattermost.dbHost" -}}
+{{- .Values.db.host | toString }}
+{{- end }}
+
+{{- define "mattermost.dbPort" -}}
+{{- .Values.db.port | default "5432" | toString }}
+{{- end }}
+
+{{- define "mattermost.dbName" -}}
+{{- .Values.db.name | toString }}
+{{- end }}
+
+{{- define "mattermost.dbUser" -}}
+{{- .Values.db.user | toString }}
+{{- end }}
+
+{{- define "mattermost.dbPassword" -}}
+{{- .Values.db.password | toString }}
+{{- end }}
+
+{{- define "mattermost.dbSslMode" -}}
+{{- .Values.db.sslMode | default "disable" | toString }}
+{{- end }}
+
+{{- define "mattermost.dbConnectTimeout" -}}
+{{- .Values.db.connectTimeout | default "10" | toString }}
+{{- end }}
+
+{{- define "mattermost.dbUrl" -}}
+{{- printf "%s://%s:%s@%s:%s/%s?sslmode=%s&connect_timeout=%s" (include "mattermost.dbType" .) (include "mattermost.dbUser" .) (include "mattermost.dbPassword" .) (include "mattermost.dbHost" .) (include "mattermost.dbPort" .) (include "mattermost.dbName" .) (include "mattermost.dbSslMode" .) (include "mattermost.dbConnectTimeout" .) }}
+{{- end }}
+
+{{/*
+Ingress configurations.
+*/}}
+{{- define "mattermost.clusterIssuer" -}}
+{{- .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString }}
+{{- end }}
+
+{{- define "mattermost.wwwDomain" -}}
+{{- $domain := include "mattermost.siteDomain" . }}
+{{- $www := and .Values.ingress.enabled .Values.ingress.www }}
+{{- ternary (printf "www.%s" $domain) "" (and $www (ne $domain "")) }}
+{{- end }}
+
+{{/*
+Service configurations.
+*/}}
+{{- define "mattermost.serviceNodePort" -}}
+{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- ternary $nodePort "" (and (eq $type "NodePort") (ne $nodePort "")) }}
+{{- end }}
+
+{{- define "mattermost.servicePort" -}}
+{{- .Values.service.port | default "8065" | toString }}
+{{- end }}
+
+{{- define "mattermost.serviceType" -}}
+{{- .Values.service.type | default "ClusterIP" | toString }}
+{{- end }}
+
+{{/*
+Storage configurations.
 */}}
 {{- define "mattermost.dataPersistence" -}}
 {{- .Values.storage.data.enabled }}
 {{- end }}
 
-{{/*
-Specifies whether persistent storage is enabled for the log storage volume.
-*/}}
+{{- define "mattermost.dataAccessMode" -}}
+{{- .Values.storage.data.accessMode | default "ReadWriteOnce" | toString }}
+{{- end }}
+
+{{- define "mattermost.dataMountPath" -}}
+{{- .Values.storage.data.mountPath | default "/mattermost/data" | toString }}
+{{- end }}
+
+{{- define "mattermost.dataSubPath" -}}
+{{- .Values.storage.data.subPath | toString }}
+{{- end }}
+
+{{- define "mattermost.dataStorage" -}}
+{{- .Values.storage.data.storage | default "1Gi" | toString }}
+{{- end }}
+
+{{- define "mattermost.dataStorageClassName" -}}
+{{- .Values.storage.data.storageClassName | default "longhorn" | toString }}
+{{- end }}
+
 {{- define "mattermost.logPersistence" -}}
 {{- .Values.storage.log.enabled }}
+{{- end }}
+
+{{- define "mattermost.logAccessMode" -}}
+{{- .Values.storage.log.accessMode | default "ReadWriteOnce" | toString }}
+{{- end }}
+
+{{- define "mattermost.logMountPath" -}}
+{{- .Values.storage.log.mountPath | default "/mattermost/logs" | toString }}
+{{- end }}
+
+{{- define "mattermost.logSubPath" -}}
+{{- .Values.storage.log.subPath | toString }}
+{{- end }}
+
+{{- define "mattermost.logStorage" -}}
+{{- .Values.storage.log.storage | default "1Gi" | toString }}
+{{- end }}
+
+{{- define "mattermost.logStorageClassName" -}}
+{{- .Values.storage.log.storageClassName | default "longhorn" | toString }}
 {{- end }}
