@@ -1,3 +1,4 @@
+{{- $dbType := include "mattermost.dbType" . | quote }}
 {{- $siteUrl := include "mattermost.siteUrl" . }}
 {{- $timezone := include "mattermost.timezone" . }}
 {{- $dataMountPath := include "mattermost.dataMountPath" . }}
@@ -19,7 +20,7 @@ metadata:
   labels:
     {{- include "mattermost.labels" . | nindent 4 }}
 data:
-  MM_SQLSETTINGS_DRIVERNAME: "postgres"
+  MM_SQLSETTINGS_DRIVERNAME: {{ $dbType }}
   MM_BLEVESETTINGS_INDEXDIR: {{ $bleveIndexDir }}
 {{- if $timezone }}
   TZ: {{ $timezone | quote }}

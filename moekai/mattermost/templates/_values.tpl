@@ -134,7 +134,8 @@ Database configurations.
 {{- end }}
 
 {{- define "mattermost.dbPort" -}}
-{{- .Values.db.port | default "5432" | toString }}
+{{- $defaultPort := ternary "3306" "5432" (eq (include "mattermost.dbType" .) "mysql") -}}
+{{- .Values.db.port | default $defaultPort | toString }}
 {{- end }}
 
 {{- define "mattermost.dbName" -}}
@@ -157,8 +158,22 @@ Database configurations.
 {{- .Values.db.connectTimeout | default "10" | toString }}
 {{- end }}
 
+{{- define "mattermost.dbCharset" -}}
+{{- .Values.db.charset | default "utf8mb4" | toString }}
+{{- end }}
+
 {{- define "mattermost.dbUrl" -}}
-{{- printf "%s://%s:%s@%s:%s/%s?sslmode=%s&connect_timeout=%s" (include "mattermost.dbType" .) (include "mattermost.dbUser" .) (include "mattermost.dbPassword" .) (include "mattermost.dbHost" .) (include "mattermost.dbPort" .) (include "mattermost.dbName" .) (include "mattermost.dbSslMode" .) (include "mattermost.dbConnectTimeout" .) }}
+{{- $type := include "mattermost.dbType" . -}}
+{{- $user := include "mattermost.dbUser" . -}}
+{{- $password := include "mattermost.dbPassword" . -}}
+{{- $host := include "mattermost.dbHost" . -}}
+{{- $port := include "mattermost.dbPort" . -}}
+{{- $name := include "mattermost.dbName" . -}}
+{{- if eq $type "mysql" -}}
+{{- printf "%s:%s@tcp(%s:%s)/%s?charset=%s" $user $password $host $port $name (include "mattermost.dbCharset" .) }}
+{{- else -}}
+{{- printf "%s://%s:%s@%s:%s/%s?sslmode=%s&connect_timeout=%s" $type $user $password $host $port $name (include "mattermost.dbSslMode" .) (include "mattermost.dbConnectTimeout" .) }}
+{{- end }}
 {{- end }}
 
 {{/*

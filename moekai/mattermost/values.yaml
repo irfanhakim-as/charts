@@ -148,7 +148,7 @@ db:
   # host: "mattermost.default.svc.cluster.local"
   host: ""
   # The port number the Mattermost database server is listening for connections.
-  # Default: "5432"
+  # Default: "5432" for postgres, "3306" for mysql
   # Example:
   # port: "3306"
   port: ""
@@ -165,15 +165,23 @@ db:
   # password: "password"
   password: ""
   # Specifies whether to use a secure TLS connection when connecting to the database.
+  # Note: Only applies when db.type is "postgres".
   # Default: "disable"
   # Example:
   # sslMode: "require"
   sslMode: ""
   # The number of seconds to wait before timing out when connecting to the database.
+  # Note: Only applies when db.type is "postgres".
   # Default: "10"
   # Example:
   # connectTimeout: "30"
   connectTimeout: ""
+  # The character set used for the database connection.
+  # Note: Only applies when db.type is "mysql".
+  # Default: "utf8mb4"
+  # Example:
+  # charset: "utf8"
+  charset: ""
 
 # Ingress configurations.
 ingress:

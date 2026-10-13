@@ -148,11 +148,12 @@ Setting `ingress.enabled` with a non-empty `mattermost.domain` makes Mattermost'
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| db.charset | string | `""` | The character set used for the database connection. Default: `"utf8mb4"`. |
 | db.connectTimeout | string | `""` | The number of seconds to wait before timing out when connecting to the database. Default: `"10"`. |
 | db.host | string | `""` | The hostname or IP address of the Mattermost database server. |
 | db.name | string | `""` | The name of the database being used by Mattermost. |
 | db.password | string | `""` | The password associated with the Mattermost database user. |
-| db.port | string | `""` | The port number the Mattermost database server is listening for connections. Default: `"5432"`. |
+| db.port | string | `""` | The port number the Mattermost database server is listening for connections. Default: `"5432"` for postgres, `"3306"` for mysql. |
 | db.sslMode | string | `""` | Specifies whether to use a secure TLS connection when connecting to the database. Default: `"disable"`. |
 | db.type | string | `""` | The database engine or backend being used by Mattermost. Default: `"postgres"`. |
 | db.user | string | `""` | The username or user account for accessing the Mattermost database. |
