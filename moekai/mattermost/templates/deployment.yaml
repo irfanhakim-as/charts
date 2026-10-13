@@ -1,9 +1,3 @@
-{{- $mattermostStartupProbe := .Values.probes.mattermost.startup.enabled }}
-{{- $mattermostStartupProbeSpec := .Values.probes.mattermost.startup.spec }}
-{{- $mattermostLivenessProbe := .Values.probes.mattermost.liveness.enabled }}
-{{- $mattermostLivenessProbeSpec := .Values.probes.mattermost.liveness.spec }}
-{{- $mattermostReadinessProbe := .Values.probes.mattermost.readiness.enabled }}
-{{- $mattermostReadinessProbeSpec := .Values.probes.mattermost.readiness.spec }}
 {{- $mattermost_registry := include "mattermost.imageRegistry" . }}
 {{- $mattermost_repository := include "mattermost.imageRepository" . }}
 {{- $mattermost_tag := include "mattermost.imageTag" . }}
@@ -61,39 +55,14 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources.mattermost | nindent 12 }}
-          {{- if and $mattermostStartupProbe $mattermostStartupProbeSpec }}
-          startupProbe:
-            {{- toYaml $mattermostStartupProbeSpec | nindent 12 }}
+          {{- with include "mattermost.startupProbe" . }}
+          {{- . | nindent 10 }}
           {{- end }}
-          {{- if $mattermostLivenessProbe }}
-          livenessProbe:
-            {{- if $mattermostLivenessProbeSpec }}
-              {{- toYaml $mattermostLivenessProbeSpec | nindent 12 }}
-            {{- else }}
-            httpGet:
-              path: /api/v4/system/ping
-              port: mattermost
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-            successThreshold: 1
-            {{- end }}
+          {{- with include "mattermost.livenessProbe" . }}
+          {{- . | nindent 10 }}
           {{- end }}
-          {{- if $mattermostReadinessProbe }}
-          readinessProbe:
-            {{- if $mattermostReadinessProbeSpec }}
-              {{- toYaml $mattermostReadinessProbeSpec | nindent 12 }}
-            {{- else }}
-            httpGet:
-              path: /api/v4/system/ping
-              port: mattermost
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            timeoutSeconds: 5
-            failureThreshold: 6
-            successThreshold: 1
-            {{- end }}
+          {{- with include "mattermost.readinessProbe" . }}
+          {{- . | nindent 10 }}
           {{- end }}
           envFrom:
             - configMapRef:

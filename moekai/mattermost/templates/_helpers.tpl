@@ -108,3 +108,61 @@ volumes:
   {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Startup probe for the Mattermost container
+*/}}
+{{- define "mattermost.startupProbe" -}}
+{{- $enabled := .Values.probes.mattermost.startup.enabled -}}
+{{- $spec := .Values.probes.mattermost.startup.spec -}}
+{{- if and $enabled $spec -}}
+startupProbe:
+  {{- toYaml $spec | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Liveness probe for the Mattermost container
+*/}}
+{{- define "mattermost.livenessProbe" -}}
+{{- $enabled := .Values.probes.mattermost.liveness.enabled -}}
+{{- $spec := .Values.probes.mattermost.liveness.spec -}}
+{{- if $enabled -}}
+livenessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: /api/v4/system/ping
+    port: mattermost
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Readiness probe for the Mattermost container
+*/}}
+{{- define "mattermost.readinessProbe" -}}
+{{- $enabled := .Values.probes.mattermost.readiness.enabled -}}
+{{- $spec := .Values.probes.mattermost.readiness.spec -}}
+{{- if $enabled -}}
+readinessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: /api/v4/system/ping
+    port: mattermost
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
