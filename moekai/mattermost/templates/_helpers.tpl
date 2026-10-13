@@ -60,3 +60,30 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Volume mounts for the storage volumes
+*/}}
+{{- define "mattermost.volumeMounts" -}}
+{{- $dataPersistence := eq (include "mattermost.dataPersistence" .) "true" -}}
+{{- $logPersistence := eq (include "mattermost.logPersistence" .) "true" -}}
+{{- $dataSubPath := include "mattermost.dataSubPath" . -}}
+{{- $logSubPath := include "mattermost.logSubPath" . -}}
+{{- if or $dataPersistence $logPersistence -}}
+volumeMounts:
+  {{- if $dataPersistence }}
+  - name: {{ .Release.Name }}-mattermost-data
+    mountPath: {{ include "mattermost.dataMountPath" . | quote }}
+    {{- if $dataSubPath }}
+    subPath: {{ $dataSubPath | quote }}
+    {{- end }}
+  {{- end }}
+  {{- if $logPersistence }}
+  - name: {{ .Release.Name }}-mattermost-log
+    mountPath: {{ include "mattermost.logMountPath" . | quote }}
+    {{- if $logSubPath }}
+    subPath: {{ $logSubPath | quote }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- end }}

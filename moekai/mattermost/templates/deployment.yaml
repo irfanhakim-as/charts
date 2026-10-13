@@ -15,10 +15,6 @@
 {{- $init_tag := include "mattermost.initImageTag" . }}
 {{- $init_pullPolicy := include "mattermost.initImagePullPolicy" . | quote }}
 {{- $replica_count := include "mattermost.replicaCount" . }}
-{{- $dataMountPath := include "mattermost.dataMountPath" . | quote }}
-{{- $dataSubPath := include "mattermost.dataSubPath" . }}
-{{- $logMountPath := include "mattermost.logMountPath" . | quote }}
-{{- $logSubPath := include "mattermost.logSubPath" . }}
 {{- $initScript := include "mattermost.initScript" . }}
 ---
 apiVersion: apps/v1
@@ -55,23 +51,7 @@ spec:
             - -c
             - |
               {{- $initScript | nindent 14 }}
-          {{- if or $dataPersistence $logPersistence }}
-          volumeMounts:
-            {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-mattermost-data
-              mountPath: {{ $dataMountPath }}
-              {{- if $dataSubPath }}
-              subPath: {{ $dataSubPath | quote }}
-              {{- end }}
-            {{- end }}
-            {{- if $logPersistence }}
-            - name: {{ .Release.Name }}-mattermost-log
-              mountPath: {{ $logMountPath }}
-              {{- if $logSubPath }}
-              subPath: {{ $logSubPath | quote }}
-              {{- end }}
-            {{- end }}
-          {{- end }}
+          {{- include "mattermost.volumeMounts" . | nindent 10 }}
       {{- end }}
       containers:
         - name: mattermost
@@ -122,23 +102,7 @@ spec:
                 name: {{ .Release.Name }}-mattermost-cm
             - secretRef:
                 name: {{ .Release.Name }}-mattermost-secret
-          {{- if or $dataPersistence $logPersistence }}
-          volumeMounts:
-            {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-mattermost-data
-              mountPath: {{ $dataMountPath }}
-              {{- if $dataSubPath }}
-              subPath: {{ $dataSubPath | quote }}
-              {{- end }}
-            {{- end }}
-            {{- if $logPersistence }}
-            - name: {{ .Release.Name }}-mattermost-log
-              mountPath: {{ $logMountPath }}
-              {{- if $logSubPath }}
-              subPath: {{ $logSubPath | quote }}
-              {{- end }}
-            {{- end }}
-          {{- end }}
+          {{- include "mattermost.volumeMounts" . | nindent 10 }}
       {{- if or $dataPersistence $logPersistence }}
       volumes:
         {{- if $dataPersistence }}
