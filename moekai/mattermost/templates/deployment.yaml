@@ -22,16 +22,14 @@ spec:
       {{- include "mattermost.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
+      {{- with include "mattermost.podAnnotations" . }}
+      {{- . | nindent 6 }}
       {{- end }}
       labels:
         {{- include "mattermost.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      {{- with include "mattermost.imagePullSecrets" . }}
+      {{- . | nindent 6 }}
       {{- end }}
       securityContext:
         {{- include "mattermost.podSecurityContext" . | nindent 8 }}
@@ -51,16 +49,14 @@ spec:
         - name: mattermost
           image: {{ printf "%s/%s:%s" $mattermostRegistry $mattermostRepository $mattermostTag | quote }}
           imagePullPolicy: {{ $mattermostPullPolicy }}
-          {{- with .Values.containerSecurityContext }}
-          securityContext:
-            {{- toYaml . | nindent 12 }}
+          {{- with include "mattermost.containerSecurityContext" . }}
+          {{- . | nindent 10 }}
           {{- end }}
           ports:
             - name: mattermost
               containerPort: 8065
               protocol: TCP
-          resources:
-            {{- toYaml .Values.resources.mattermost | nindent 12 }}
+          {{- include "mattermost.resources" . | nindent 10 }}
           {{- with include "mattermost.startupProbe" . }}
           {{- . | nindent 10 }}
           {{- end }}
