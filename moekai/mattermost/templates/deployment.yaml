@@ -1,12 +1,12 @@
-{{- $mattermost_registry := include "mattermost.imageRegistry" . }}
-{{- $mattermost_repository := include "mattermost.imageRepository" . }}
-{{- $mattermost_tag := include "mattermost.imageTag" . }}
-{{- $mattermost_pullPolicy := include "mattermost.imagePullPolicy" . | quote }}
-{{- $init_registry := include "mattermost.initImageRegistry" . }}
-{{- $init_repository := include "mattermost.initImageRepository" . }}
-{{- $init_tag := include "mattermost.initImageTag" . }}
-{{- $init_pullPolicy := include "mattermost.initImagePullPolicy" . | quote }}
-{{- $replica_count := include "mattermost.replicaCount" . }}
+{{- $mattermostRegistry := include "mattermost.imageRegistry" . }}
+{{- $mattermostRepository := include "mattermost.imageRepository" . }}
+{{- $mattermostTag := include "mattermost.imageTag" . }}
+{{- $mattermostPullPolicy := include "mattermost.imagePullPolicy" . | quote }}
+{{- $initRegistry := include "mattermost.initImageRegistry" . }}
+{{- $initRepository := include "mattermost.initImageRepository" . }}
+{{- $initTag := include "mattermost.initImageTag" . }}
+{{- $initPullPolicy := include "mattermost.initImagePullPolicy" . | quote }}
+{{- $replicaCount := include "mattermost.replicaCount" . }}
 {{- $initScript := include "mattermost.initScript" . }}
 ---
 apiVersion: apps/v1
@@ -16,7 +16,7 @@ metadata:
   labels:
     {{- include "mattermost.labels" . | nindent 4 }}
 spec:
-  replicas: {{ int $replica_count }}
+  replicas: {{ int $replicaCount }}
   selector:
     matchLabels:
       {{- include "mattermost.selectorLabels" . | nindent 6 }}
@@ -36,8 +36,8 @@ spec:
       {{- if $initScript }}
       initContainers:
         - name: init
-          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
-          imagePullPolicy: {{ $init_pullPolicy }}
+          image: {{ printf "%s/%s:%s" $initRegistry $initRepository $initTag | quote }}
+          imagePullPolicy: {{ $initPullPolicy }}
           command: ["/bin/sh"]
           args:
             - -c
@@ -47,8 +47,8 @@ spec:
       {{- end }}
       containers:
         - name: mattermost
-          image: {{ printf "%s/%s:%s" $mattermost_registry $mattermost_repository $mattermost_tag | quote }}
-          imagePullPolicy: {{ $mattermost_pullPolicy }}
+          image: {{ printf "%s/%s:%s" $mattermostRegistry $mattermostRepository $mattermostTag | quote }}
+          imagePullPolicy: {{ $mattermostPullPolicy }}
           ports:
             - name: mattermost
               containerPort: 8065
