@@ -1,7 +1,7 @@
 {{- $serviceAddress := "" }}
 {{- $domain := include "mattermost.siteDomain" . }}
-{{- $port := .Values.service.port | default "8065" | toString }}
-{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $port := include "mattermost.servicePort" . }}
+{{- $type := include "mattermost.serviceType" . }}
 {{- $serviceName := printf "%s-mattermost-svc" .Release.Name | toString }}
 Mattermost has been installed and configured for {{ .Release.Name | toString }} 🎉
 
