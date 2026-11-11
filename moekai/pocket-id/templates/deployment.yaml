@@ -1,0 +1,115 @@
+{{- $pocketidRegistry := include "pocket-id.imageRegistry" . }}
+{{- $pocketidRepository := include "pocket-id.imageRepository" . }}
+{{- $pocketidTag := include "pocket-id.imageTag" . }}
+{{- $pocketidPullPolicy := include "pocket-id.imagePullPolicy" . | quote }}
+{{- $initRegistry := include "pocket-id.initImageRegistry" . }}
+{{- $initRepository := include "pocket-id.initImageRepository" . }}
+{{- $initTag := include "pocket-id.initImageTag" . }}
+{{- $initPullPolicy := include "pocket-id.initImagePullPolicy" . | quote }}
+{{- $replicaCount := include "pocket-id.replicaCount" . }}
+{{- $serviceAccountName := include "pocket-id.serviceAccountName" . }}
+{{- $initScript := include "pocket-id.initScript" . }}
+{{- $existingSecret := include "pocket-id.existingSecret" . }}
+{{- $networkPort := include "pocket-id.networkPort" . }}
+{{- $prometheusEnabled := eq (include "pocket-id.prometheusEnabled" .) "true" }}
+{{- $prometheusPort := include "pocket-id.prometheusPort" . }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pocket-id
+  labels:
+    {{- include "pocket-id.labels" . | nindent 4 }}
+spec:
+  replicas: {{ int $replicaCount }}
+  {{- with .Values.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "pocket-id.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with include "pocket-id.podAnnotations" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      labels:
+        {{- include "pocket-id.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ $serviceAccountName }}
+      {{- with include "pocket-id.imagePullSecrets" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "pocket-id.podSecurityContext" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "pocket-id.nodeSelector" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "pocket-id.tolerations" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "pocket-id.affinity" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- if $initScript }}
+      initContainers:
+        - name: init
+          image: {{ printf "%s/%s:%s" $initRegistry $initRepository $initTag | quote }}
+          imagePullPolicy: {{ $initPullPolicy }}
+          command: ["/bin/sh"]
+          args:
+            - -c
+            - |
+              {{- $initScript | nindent 14 }}
+          {{- with include "pocket-id.volumeMounts" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+      {{- end }}
+      containers:
+        - name: pocket-id
+          image: {{ printf "%s/%s:%s" $pocketidRegistry $pocketidRepository $pocketidTag | quote }}
+          imagePullPolicy: {{ $pocketidPullPolicy }}
+          {{- with include "pocket-id.containerSecurityContext" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ int $networkPort }}
+              protocol: TCP
+            {{- if $prometheusEnabled }}
+            - name: metrics
+              containerPort: {{ int $prometheusPort }}
+              protocol: TCP
+            {{- end }}
+          {{- include "pocket-id.resources" . | nindent 10 }}
+          {{- with include "pocket-id.startupProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "pocket-id.livenessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "pocket-id.readinessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-pocket-id-cm
+            {{- if eq (include "pocket-id.secretEnabled" .) "true" }}
+            - secretRef:
+                name: {{ .Release.Name }}-pocket-id-secret
+            {{- end }}
+            {{- if $existingSecret }}
+            - secretRef:
+                name: {{ $existingSecret | quote }}
+            {{- end }}
+          {{- with include "pocket-id.extraEnv" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "pocket-id.volumeMounts" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+      {{- with include "pocket-id.volumes" . }}
+      {{- . | nindent 6 }}
+      {{- end }}

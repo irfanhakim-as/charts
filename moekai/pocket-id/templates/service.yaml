@@ -1,0 +1,30 @@
+{{- $type := include "pocket-id.serviceType" . }}
+{{- $port := include "pocket-id.servicePort" . }}
+{{- $nodePort := include "pocket-id.serviceNodePort" . }}
+{{- $prometheusEnabled := eq (include "pocket-id.prometheusEnabled" .) "true" }}
+{{- $prometheusPort := include "pocket-id.prometheusPort" . }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-pocket-id-svc
+  labels:
+    {{- include "pocket-id.labels" . | nindent 4 }}
+spec:
+  type: {{ $type }}
+  ports:
+    - port: {{ int $port }}
+      targetPort: http
+    {{- if $nodePort }}
+      nodePort: {{ int $nodePort }}
+    {{- end }}
+      protocol: TCP
+      name: http
+    {{- if $prometheusEnabled }}
+    - port: {{ int $prometheusPort }}
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+    {{- end }}
+  selector:
+    {{- include "pocket-id.selectorLabels" . | nindent 4 }}
