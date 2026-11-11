@@ -363,7 +363,11 @@ Yubico configurations.
 Database configurations.
 */}}
 {{- define "vaultwarden.dbType" -}}
-{{- .Values.db.type | default "sqlite" | toString }}
+{{- $type := .Values.db.type | default "sqlite" | toString -}}
+{{- if not (has $type (list "sqlite" "mysql" "postgresql" "postgres")) -}}
+{{- fail (printf "db.type must be \"sqlite\", \"mysql\", or \"postgresql\", got %q" $type) }}
+{{- end }}
+{{- $type }}
 {{- end }}
 
 {{- define "vaultwarden.dbHost" -}}
@@ -371,7 +375,8 @@ Database configurations.
 {{- end }}
 
 {{- define "vaultwarden.dbPort" -}}
-{{- .Values.db.port | toString }}
+{{- $default := ternary "3306" "5432" (eq (include "vaultwarden.dbType" .) "mysql") }}
+{{- .Values.db.port | default $default | toString }}
 {{- end }}
 
 {{- define "vaultwarden.dbName" -}}
@@ -387,11 +392,13 @@ Database configurations.
 {{- end }}
 
 {{- define "vaultwarden.dbUrl" -}}
-{{- $type := include "vaultwarden.dbType" . }}
-{{- if eq $type "sqlite" }}
-{{- printf "%s/db.sqlite3" (include "vaultwarden.dataMountPath" . | trimPrefix "/") }}
-{{- else }}
-{{- printf "%s://%s:%s@%s:%s/%s" $type (include "vaultwarden.dbUser" .) (include "vaultwarden.dbPassword" .) (include "vaultwarden.dbHost" .) (include "vaultwarden.dbPort" .) (include "vaultwarden.dbName" .) }}
+{{- $type := include "vaultwarden.dbType" . -}}
+{{- $host := include "vaultwarden.dbHost" . -}}
+{{- if and (ne $type "sqlite") $host -}}
+{{- $user := include "vaultwarden.dbUser" . | urlquery | replace "+" "%20" -}}
+{{- $password := include "vaultwarden.dbPassword" . | urlquery | replace "+" "%20" -}}
+{{- $name := include "vaultwarden.dbName" . | urlquery | replace "+" "%20" -}}
+{{- printf "%s://%s:%s@%s:%s/%s" $type $user $password $host (include "vaultwarden.dbPort" .) $name }}
 {{- end }}
 {{- end }}
 

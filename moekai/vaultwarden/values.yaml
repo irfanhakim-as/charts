@@ -258,7 +258,7 @@ mail:
     port: ""
     # The SMTP security protocol used for securing email communication.
     # Default: "starttls"
-    # Example
+    # Example:
     # security: "force_tls"
     security: ""
     # The username for authenticating with the SMTP server.
@@ -387,6 +387,7 @@ yubico:
 # Database configurations.
 db:
   # The database engine or backend being used by Vaultwarden.
+  # Note: Accepts "sqlite", "mysql", or "postgresql".
   # Default: "sqlite"
   # Example:
   # type: "mysql"
@@ -396,8 +397,10 @@ db:
   # host: "vaultwarden.default.svc.cluster.local"
   host: ""
   # The port number the Vaultwarden database server is listening for connections.
+  # Note: Only applies when db.type is "mysql" or "postgresql".
+  # Default: "5432" for postgresql, "3306" for mysql
   # Example:
-  # port: "3306"
+  # port: "5433"
   port: ""
   # The name of the database being used by Vaultwarden.
   # Example:

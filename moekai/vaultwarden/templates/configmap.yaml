@@ -1,4 +1,4 @@
-{{- $dataMountPath := include "vaultwarden.dataMountPath" . | trimPrefix "/" | quote }}
+{{- $dataMountPath := include "vaultwarden.dataMountPath" . | quote }}
 {{- $push := include "vaultwarden.pushEnabled" . | quote }}
 {{- $domain := include "vaultwarden.ingressDomain" . }}
 {{- $serviceAddress := ternary (printf "https://%s" $domain) "http://localhost" (ne $domain "") | quote }}
