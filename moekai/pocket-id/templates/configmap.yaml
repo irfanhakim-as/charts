@@ -38,11 +38,11 @@
 {{- $mailFrom := include "pocket-id.mailFrom" . }}
 {{- $smtpTls := include "pocket-id.smtpTls" . }}
 {{- $smtpSkipCertVerify := include "pocket-id.smtpSkipCertVerify" . }}
-{{- $mailLoginNotificationEnabled := include "pocket-id.mailLoginNotificationEnabled" . }}
+{{- $mailLoginNotificationMode := include "pocket-id.mailLoginNotificationMode" . }}
 {{- $mailOneTimeAccessAsAdminEnabled := include "pocket-id.mailOneTimeAccessAsAdminEnabled" . }}
 {{- $mailOneTimeAccessAsUnauthenticatedEnabled := include "pocket-id.mailOneTimeAccessAsUnauthenticatedEnabled" . }}
 {{- $mailApiKeyExpirationEnabled := include "pocket-id.mailApiKeyExpirationEnabled" . }}
-{{- $mailVerificationEnabled := include "pocket-id.mailVerificationEnabled" . }}
+{{- $mailVerification := include "pocket-id.mailVerification" . }}
 {{- $networkPort := include "pocket-id.networkPort" . }}
 {{- $networkHost := include "pocket-id.networkHost" . }}
 {{- $trustProxy := include "pocket-id.trustProxy" . }}
@@ -214,8 +214,8 @@ data:
 {{- if $smtpSkipCertVerify }}
   SMTP_SKIP_CERT_VERIFY: {{ $smtpSkipCertVerify | quote }}
 {{- end }}
-{{- if $mailLoginNotificationEnabled }}
-  EMAIL_LOGIN_NOTIFICATION_ENABLED: {{ $mailLoginNotificationEnabled | quote }}
+{{- if $mailLoginNotificationMode }}
+  EMAIL_LOGIN_NOTIFICATION_MODE: {{ $mailLoginNotificationMode | quote }}
 {{- end }}
 {{- if $mailOneTimeAccessAsAdminEnabled }}
   EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED: {{ $mailOneTimeAccessAsAdminEnabled | quote }}
@@ -226,8 +226,8 @@ data:
 {{- if $mailApiKeyExpirationEnabled }}
   EMAIL_API_KEY_EXPIRATION_ENABLED: {{ $mailApiKeyExpirationEnabled | quote }}
 {{- end }}
-{{- if $mailVerificationEnabled }}
-  EMAIL_VERIFICATION_ENABLED: {{ $mailVerificationEnabled | quote }}
+{{- if $mailVerification }}
+  EMAIL_VERIFICATION: {{ $mailVerification | quote }}
 {{- end }}
   PORT: {{ $networkPort | quote }}
 {{- if $networkHost }}

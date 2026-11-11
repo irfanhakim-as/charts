@@ -419,12 +419,12 @@ mail:
   # Example:
   # from: "id@example.com"
   from: ""
-  # Specifies whether to email users when they sign in from a new device.
-  # Note: Only applies when ui.configDisabled is "true".
-  # Default: "false"
+  # Specifies when to email users about sign-ins from new devices.
+  # Note: Only applies when ui.configDisabled is "true". Accepts "disabled", "always", "ipAndUserAgent", or "browserRecognition".
+  # Default: "disabled"
   # Example:
-  # loginNotificationEnabled: "true"
-  loginNotificationEnabled: ""
+  # loginNotificationMode: "browserRecognition"
+  loginNotificationMode: ""
   # Specifies whether admins may email a login code to a user.
   # Note: Only applies when ui.configDisabled is "true".
   # Default: "false"
@@ -443,12 +443,12 @@ mail:
   # Example:
   # apiKeyExpirationEnabled: "true"
   apiKeyExpirationEnabled: ""
-  # Specifies whether to email users a link to verify their address when they sign up or change it.
-  # Note: Only applies when ui.configDisabled is "true".
-  # Default: "false"
+  # Specifies whether users must verify their email address with a link sent by email.
+  # Note: Only applies when ui.configDisabled is "true". Accepts "disabled", "optional", or "required", where "required" needs SMTP and does not apply to admins.
+  # Default: "disabled"
   # Example:
-  # verificationEnabled: "true"
-  verificationEnabled: ""
+  # verification: "required"
+  verification: ""
 
 # Network configurations.
 network:

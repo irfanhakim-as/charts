@@ -378,8 +378,8 @@ Mail configurations.
 {{- .Values.mail.from | toString }}
 {{- end }}
 
-{{- define "pocket-id.mailLoginNotificationEnabled" -}}
-{{- .Values.mail.loginNotificationEnabled | toString }}
+{{- define "pocket-id.mailLoginNotificationMode" -}}
+{{- .Values.mail.loginNotificationMode | toString }}
 {{- end }}
 
 {{- define "pocket-id.mailOneTimeAccessAsAdminEnabled" -}}
@@ -394,8 +394,8 @@ Mail configurations.
 {{- .Values.mail.apiKeyExpirationEnabled | toString }}
 {{- end }}
 
-{{- define "pocket-id.mailVerificationEnabled" -}}
-{{- .Values.mail.verificationEnabled | toString }}
+{{- define "pocket-id.mailVerification" -}}
+{{- .Values.mail.verification | toString }}
 {{- end }}
 
 {{/*

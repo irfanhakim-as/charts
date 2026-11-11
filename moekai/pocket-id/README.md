@@ -325,7 +325,7 @@ The settings under **Application Configuration** in the admin interface are stor
 | logging.queryArgs | string | `""` | Specifies whether to include the values of database queries in debug logs and traces. Default: `"false"`. |
 | mail.apiKeyExpirationEnabled | string | `""` | Specifies whether to email users before their API keys expire. Default: `"false"`. |
 | mail.from | string | `""` | The sender address of sent emails. |
-| mail.loginNotificationEnabled | string | `""` | Specifies whether to email users when they sign in from a new device. Default: `"false"`. |
+| mail.loginNotificationMode | string | `""` | Specifies when to email users about sign-ins from new devices. Default: `"disabled"`. |
 | mail.oneTimeAccessAsAdminEnabled | string | `""` | Specifies whether admins may email a login code to a user. Default: `"false"`. |
 | mail.oneTimeAccessAsUnauthenticatedEnabled | string | `""` | Specifies whether users may request a login code by email. Default: `"false"`. |
 | mail.smtp.host | string | `""` | The hostname or IP address of the SMTP server for sending emails. |
@@ -334,7 +334,7 @@ The settings under **Application Configuration** in the admin interface are stor
 | mail.smtp.skipCertVerify | string | `""` | Specifies whether to accept self-signed SMTP server certificates. Default: `"false"`. |
 | mail.smtp.tls | string | `""` | The type of TLS used when connecting to the SMTP server. Default: `"none"`. |
 | mail.smtp.user | string | `""` | The username for authenticating with the SMTP server. |
-| mail.verificationEnabled | string | `""` | Specifies whether to email users a link to verify their address when they sign up or change it. Default: `"false"`. |
+| mail.verification | string | `""` | Specifies whether users must verify their email address with a link sent by email. Default: `"disabled"`. |
 | network.host | string | `""` | The address Pocket ID listens on. Default: `"0.0.0.0"`. |
 | network.localIpv6Ranges | string | `""` | The comma-separated IPv6 ranges treated as local network in the audit log and for outbound requests. |
 | network.port | string | `""` | The port Pocket ID listens on. Default: `"1411"`. |
