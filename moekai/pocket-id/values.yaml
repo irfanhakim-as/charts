@@ -1,0 +1,980 @@
+# Default values for pocket-id.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The desired number of running replicas for Pocket ID.
+# Note: Pocket ID supports only one running instance per database.
+# Default: "1"
+replicaCount: ""
+
+# The update strategy used to replace existing pods with new ones.
+# Note: Set "type" to "Recreate" if data storage is enabled and mounted as "ReadWriteOnce".
+# Example:
+# updateStrategy:
+#   type: "Recreate"
+updateStrategy: {}
+
+# Annotations to be applied to Pocket ID pods.
+# Example:
+# podAnnotations:
+#   reloader.stakater.com/auto: "true"
+podAnnotations: {}
+
+# Security context applied at the pod level for Pocket ID.
+# Note: Set fsGroup for storage volumes to be writable when using the distroless image or a fixed user.
+# Example:
+# podSecurityContext:
+#   fsGroup: 65532
+podSecurityContext: {}
+
+# Security context applied at the Pocket ID container level.
+# Note: Setting a fixed user here requires fsGroup to be set in "podSecurityContext".
+# Example:
+# containerSecurityContext:
+#   runAsUser: 65532
+#   runAsGroup: 65532
+#   runAsNonRoot: true
+containerSecurityContext: {}
+
+# Container images used for Pocket ID.
+image:
+  # Pocket ID container image configurations.
+  # Source: https://github.com/pocket-id/pocket-id/pkgs/container/pocket-id
+  pocketid:
+    # The registry where the Pocket ID container image is hosted.
+    # Default: "ghcr.io"
+    registry: ""
+    # The name of the repository that contains the Pocket ID container image used.
+    # Default: "pocket-id/pocket-id"
+    repository: ""
+    # The tag that specifies the version of the Pocket ID container image used.
+    # Note: Use a "-distroless" suffixed tag for the distroless image.
+    # Default: Chart appVersion
+    # Example:
+    # tag: "v2.19.2-distroless"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Pocket ID container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+  # Init container image configurations.
+  # Source: https://hub.docker.com/_/busybox
+  init:
+    # The registry where the Init container image is hosted.
+    # Default: "docker.io"
+    registry: ""
+    # The name of the repository that contains the Init container image used.
+    # Default: "busybox"
+    repository: ""
+    # The tag that specifies the version of the Init container image used.
+    # Default: "1.36.1"
+    tag: ""
+    # The policy that determines when Kubernetes should pull the Init container image.
+    # Default: "IfNotPresent"
+    pullPolicy: ""
+
+# Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+# Example:
+# imagePullSecrets:
+#   - name: "ghcr-token-secret"
+imagePullSecrets: []
+
+# Service account configurations for Pocket ID pods.
+serviceAccount:
+  # Specifies whether a service account should be created for Pocket ID.
+  # Example:
+  # create: true
+  create: false
+  # The name of the service account used by Pocket ID pods.
+  # Note: Required to use an existing service account when "create" is false.
+  # Default: "${.Release.Name}-pocket-id"
+  # Example:
+  # name: "pocket-id"
+  name: ""
+  # Annotations to be applied to the created service account.
+  # Example:
+  # annotations:
+  #   eks.amazonaws.com/role-arn: "arn:aws:iam::123456789012:role/pocket-id"
+  annotations: {}
+
+# The node labels a node must have for Pocket ID pods to be scheduled onto it.
+# Example:
+# nodeSelector:
+#   kubernetes.io/arch: "amd64"
+nodeSelector: {}
+
+# The tolerations that allow Pocket ID pods to be scheduled onto tainted nodes.
+# Example:
+# tolerations:
+#   - key: "dedicated"
+#     operator: "Equal"
+#     value: "auth"
+#     effect: "NoSchedule"
+tolerations: []
+
+# The scheduling constraints applied to Pocket ID pods.
+# Example:
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: "kubernetes.io/arch"
+#               operator: "In"
+#               values:
+#                 - "amd64"
+affinity: {}
+
+# Additional environment variables to be set on the Pocket ID container.
+# Note: Takes precedence over variables set through the ConfigMap and Secret.
+# Example:
+# extraEnv:
+#   - name: "OTEL_SERVICE_NAME"
+#     value: "pocket-id"
+#   - name: "OTEL_EXPORTER_OTLP_HEADERS"
+#     valueFrom:
+#       secretKeyRef:
+#         name: "otel-secret"
+#         key: "headers"
+extraEnv: []
+
+# Additional volumes to be added to Pocket ID pods.
+# Example:
+# extraVolumes:
+#   - name: "geolite"
+#     configMap:
+#       name: "geolite-config"
+extraVolumes: []
+
+# Additional volume mounts to be added to the Pocket ID container.
+# Example:
+# extraVolumeMounts:
+#   - name: "geolite"
+#     mountPath: "/app/geolite"
+#     readOnly: true
+extraVolumeMounts: []
+
+# Pocket ID configurations.
+pocketid:
+  # The domain name that Pocket ID is served from.
+  # Note: Passkeys are bound to this domain, so changing it later invalidates existing passkeys.
+  # Example:
+  # domain: "id.example.com"
+  domain: ""
+  # The full public URL that Pocket ID is opened at.
+  # Note: Overrides the URL built from "domain" and must not include a path.
+  # Default: "https://${.domain}"
+  # Example:
+  # appUrl: "https://id.example.com"
+  appUrl: ""
+  # The internal URL apps use to reach the token, userinfo, introspection, and JWKS endpoints.
+  # Default: "${.appUrl}"
+  # Example:
+  # internalAppUrl: "http://pocket-id.default.svc.cluster.local:1411"
+  internalAppUrl: ""
+  # The name of an existing Secret to load sensitive environment variables from.
+  # Note: Keys must be the exact environment variable names.
+  # Example:
+  # existingSecret: "pocket-id-secret"
+  existingSecret: ""
+  # The key used to encrypt sensitive data such as the token signing keys.
+  # Note: Required unless "existingSecret" provides it, generate one with "openssl rand -base64 32".
+  # Example:
+  # encryptionKey: "T2VrZ3ZqQ1JoS1o3bW5mRzlQd1lHcmVHbmp5Y0R0Mk4="
+  encryptionKey: ""
+  # An API key with admin rights for declarative setups.
+  # Note: Must be at least 16 characters.
+  # Example:
+  # staticApiKey: "0123456789abcdef"
+  staticApiKey: ""
+  # The timezone used by Pocket ID for time-based operations.
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
+  # The user ID the default image runs Pocket ID as, and which owns the data directory.
+  # Note: Has no effect on the distroless image or when the container is forced to run as a fixed user.
+  # Default: "1000"
+  # Example:
+  # puid: "1001"
+  puid: ""
+  # The group ID the default image runs Pocket ID as, and which owns the data directory.
+  # Note: Has no effect on the distroless image or when the container is forced to run as a fixed user.
+  # Default: "1000"
+  # Example:
+  # pgid: "1001"
+  pgid: ""
+  # Specifies whether an older version may start on a database that a newer version already migrated.
+  # Default: "false"
+  # Example:
+  # allowDowngrade: "true"
+  allowDowngrade: ""
+  # Specifies whether to turn off the daily heartbeat that counts running instances.
+  # Default: "false"
+  # Example:
+  # analyticsDisabled: "true"
+  analyticsDisabled: ""
+  # Specifies whether to turn off the check for new releases.
+  # Default: "false"
+  # Example:
+  # versionCheckDisabled: "true"
+  versionCheckDisabled: ""
+  # The URL the logo picker of OIDC clients searches for icons.
+  # Note: Set to "disabled" to turn the icon search off.
+  # Default: "https://cdn.jsdelivr.net/gh/selfhst/icons@main"
+  # Example:
+  # iconLibraryUrl: "https://icons.example.com"
+  iconLibraryUrl: ""
+  # Custom init script to run before the Pocket ID container starts.
+  # Example:
+  # initScript: >-
+  #   echo "Hello, World!"
+  #   echo "This is a custom init script."
+  initScript: ""
+
+# File storage configurations.
+files:
+  # The backend where uploads such as logos and profile pictures are stored.
+  # Note: Accepts "filesystem", "s3", or "database".
+  # Default: "filesystem"
+  # Example:
+  # backend: "s3"
+  backend: ""
+  # The uploads directory for the filesystem backend, or the key prefix inside the bucket for the S3 backend.
+  # Default: "${.storage.data.mountPath}/uploads"
+  # Example:
+  # uploadPath: "/app/data/uploads"
+  uploadPath: ""
+
+# LDAP configurations.
+ldap:
+  # Specifies whether to sync users and groups from LDAP.
+  # Note: Only applies when ui.configDisabled is "true".
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The URL of the LDAP server.
+  # Example:
+  # url: "ldaps://ldap.example.com:636"
+  url: ""
+  # The DN of the account Pocket ID searches LDAP with.
+  # Example:
+  # bindDn: "cn=pocketid,dc=example,dc=com"
+  bindDn: ""
+  # The password of the account Pocket ID searches LDAP with.
+  # Example:
+  # bindPassword: "password"
+  bindPassword: ""
+  # The base DN of the LDAP search.
+  # Example:
+  # base: "dc=example,dc=com"
+  base: ""
+  # The LDAP filter that selects which entries are users.
+  # Default: "(objectClass=person)"
+  # Example:
+  # userSearchFilter: "(objectClass=inetOrgPerson)"
+  userSearchFilter: ""
+  # The LDAP filter that selects which entries are groups.
+  # Default: "(objectClass=groupOfNames)"
+  # Example:
+  # userGroupSearchFilter: "(objectClass=groupOfUniqueNames)"
+  userGroupSearchFilter: ""
+  # Specifies whether to accept self-signed LDAP server certificates.
+  # Default: "false"
+  # Example:
+  # skipCertVerify: "true"
+  skipCertVerify: ""
+  # Specifies whether to disable users who disappear from LDAP instead of deleting them.
+  # Default: "true"
+  # Example:
+  # softDeleteUsers: "false"
+  softDeleteUsers: ""
+  # The name of the LDAP group whose members become admins.
+  # Example:
+  # adminGroupName: "pocketid-admins"
+  adminGroupName: ""
+  # LDAP attribute mappings.
+  attributes:
+    # The attribute that identifies a user.
+    # Note: Its value must never change.
+    # Example:
+    # userUniqueIdentifier: "uuid"
+    userUniqueIdentifier: ""
+    # The attribute holding the username of a user.
+    # Example:
+    # userUsername: "uid"
+    userUsername: ""
+    # The attribute holding the email address of a user.
+    # Example:
+    # userEmail: "mail"
+    userEmail: ""
+    # The attribute holding the first name of a user.
+    # Example:
+    # userFirstName: "givenName"
+    userFirstName: ""
+    # The attribute holding the last name of a user.
+    # Example:
+    # userLastName: "sn"
+    userLastName: ""
+    # The attribute holding the display name of a user.
+    # Default: "cn"
+    # Example:
+    # userDisplayName: "displayName"
+    userDisplayName: ""
+    # The attribute holding the profile picture of a user.
+    # Example:
+    # userProfilePicture: "jpegPhoto"
+    userProfilePicture: ""
+    # The attribute that lists the members of a group.
+    # Default: "member"
+    # Example:
+    # groupMember: "uniqueMember"
+    groupMember: ""
+    # The attribute that identifies a group.
+    # Note: Its value must never change.
+    # Example:
+    # groupUniqueIdentifier: "uuid"
+    groupUniqueIdentifier: ""
+    # The attribute holding the name of a group.
+    # Example:
+    # groupName: "cn"
+    groupName: ""
+
+# Location configurations.
+location:
+  # The MaxMind license key that lets Pocket ID download the GeoLite2 database to show locations in the audit log.
+  # Example:
+  # maxmindLicenseKey: "licensekey"
+  maxmindLicenseKey: ""
+  # The path where the GeoLite2 database is stored.
+  # Default: "${.storage.data.mountPath}/GeoLite2-City.mmdb"
+  # Example:
+  # geoliteDbPath: "/app/data/GeoLite2-City.mmdb"
+  geoliteDbPath: ""
+  # The URL the GeoLite2 database is downloaded from, where "%s" stands for the license key.
+  # Default: "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=%s&suffix=tar.gz"
+  # Example:
+  # geoliteDbUrl: "https://geolite.example.com/download?key=%s"
+  geoliteDbUrl: ""
+  # Specifies whether to take locations from Cloudflare headers instead of the GeoLite2 database.
+  # Note: Requires network.trustedPlatform to be "CF-Connecting-IP".
+  # Default: "false"
+  # Example:
+  # cloudflareHeaders: "true"
+  cloudflareHeaders: ""
+
+# Logging configurations.
+logging:
+  # The minimum severity of the logs written by Pocket ID.
+  # Default: "info"
+  # Example:
+  # level: "debug"
+  level: ""
+  # Specifies whether to write logs as JSON.
+  # Default: "false"
+  # Example:
+  # json: "true"
+  json: ""
+  # Specifies whether to include the values of database queries in debug logs and traces.
+  # Note: Values can contain personal data so only enable this while troubleshooting.
+  # Default: "false"
+  # Example:
+  # queryArgs: "true"
+  queryArgs: ""
+
+# Mail configurations.
+mail:
+  # SMTP server configurations.
+  # Note: Only applies when ui.configDisabled is "true".
+  smtp:
+    # The hostname or IP address of the SMTP server for sending emails.
+    # Example:
+    # host: "smtp.gmail.com"
+    host: ""
+    # The port number on the SMTP server used for sending emails.
+    # Example:
+    # port: "587"
+    port: ""
+    # The username for authenticating with the SMTP server.
+    # Example:
+    # user: "pocketid@example.com"
+    user: ""
+    # The password for authenticating with the SMTP server.
+    # Example:
+    # password: "password"
+    password: ""
+    # The type of TLS used when connecting to the SMTP server.
+    # Note: Accepts "none", "starttls", or "tls".
+    # Default: "none"
+    # Example:
+    # tls: "starttls"
+    tls: ""
+    # Specifies whether to accept self-signed SMTP server certificates.
+    # Default: "false"
+    # Example:
+    # skipCertVerify: "true"
+    skipCertVerify: ""
+  # The sender address of sent emails.
+  # Note: Only applies when ui.configDisabled is "true".
+  # Example:
+  # from: "id@example.com"
+  from: ""
+  # Specifies whether to email users when they sign in from a new device.
+  # Note: Only applies when ui.configDisabled is "true".
+  # Default: "false"
+  # Example:
+  # loginNotificationEnabled: "true"
+  loginNotificationEnabled: ""
+  # Specifies whether admins may email a login code to a user.
+  # Note: Only applies when ui.configDisabled is "true".
+  # Default: "false"
+  # Example:
+  # oneTimeAccessAsAdminEnabled: "true"
+  oneTimeAccessAsAdminEnabled: ""
+  # Specifies whether users may request a login code by email.
+  # Note: Anyone with access to the email of a user can then sign in as them.
+  # Default: "false"
+  # Example:
+  # oneTimeAccessAsUnauthenticatedEnabled: "true"
+  oneTimeAccessAsUnauthenticatedEnabled: ""
+  # Specifies whether to email users before their API keys expire.
+  # Note: Only applies when ui.configDisabled is "true".
+  # Default: "false"
+  # Example:
+  # apiKeyExpirationEnabled: "true"
+  apiKeyExpirationEnabled: ""
+  # Specifies whether to email users a link to verify their address when they sign up or change it.
+  # Note: Only applies when ui.configDisabled is "true".
+  # Default: "false"
+  # Example:
+  # verificationEnabled: "true"
+  verificationEnabled: ""
+
+# Network configurations.
+network:
+  # The port Pocket ID listens on.
+  # Default: "1411"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The address Pocket ID listens on.
+  # Default: "0.0.0.0"
+  # Example:
+  # host: "::"
+  host: ""
+  # The reverse proxies to take the client IP from, as comma-separated IP addresses or CIDR ranges.
+  # Note: Behind an ingress controller, set this to the CIDR of the controller pods.
+  # Default: "false"
+  # Example:
+  # trustProxy: "10.42.0.0/16"
+  trustProxy: ""
+  # The header that a CDN or platform sets to the client IP.
+  # Example:
+  # trustedPlatform: "CF-Connecting-IP"
+  trustedPlatform: ""
+  # The load balancers that send the PROXY protocol header, as comma-separated IP addresses or CIDR ranges.
+  # Note: Use "true" to expect the header from every address.
+  # Default: "false"
+  # Example:
+  # proxyProtocol: "10.0.0.10"
+  proxyProtocol: ""
+  # The comma-separated IPv6 ranges treated as local network in the audit log and for outbound requests.
+  # Example:
+  # localIpv6Ranges: "2001:db8:1::/48"
+  localIpv6Ranges: ""
+
+# Observability configurations.
+observability:
+  # The exporter used to send logs.
+  # Example:
+  # logsExporter: "otlp"
+  logsExporter: ""
+  # The exporter used to send metrics.
+  # Note: Prometheus is added automatically when "prometheus.enabled" is true.
+  # Example:
+  # metricsExporter: "otlp"
+  metricsExporter: ""
+  # The exporter used to send traces.
+  # Example:
+  # tracesExporter: "otlp"
+  tracesExporter: ""
+  # The endpoint of the OTLP collector that receives exported telemetry.
+  # Example:
+  # otlpEndpoint: "http://otel-collector.monitoring.svc.cluster.local:4318"
+  otlpEndpoint: ""
+  # Prometheus metrics configurations.
+  prometheus:
+    # Specifies whether to expose Prometheus metrics on a dedicated container and service port.
+    # Note: The metrics port is never routed through the Ingress.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The port Prometheus metrics are served on.
+    # Default: "9464"
+    # Example:
+    # port: "9100"
+    port: ""
+    # ServiceMonitor configurations for the Prometheus Operator.
+    serviceMonitor:
+      # Specifies whether to create a ServiceMonitor for scraping Pocket ID metrics.
+      # Note: Requires "prometheus.enabled" and the Prometheus Operator CRDs.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The namespace to create the ServiceMonitor in.
+      # Default: "${.Release.Namespace}"
+      # Example:
+      # namespace: "monitoring"
+      namespace: ""
+      # The interval at which metrics are scraped.
+      # Default: "30s"
+      # Example:
+      # interval: "60s"
+      interval: ""
+      # The time to wait for a scrape before it times out.
+      # Default: "10s"
+      # Example:
+      # scrapeTimeout: "20s"
+      scrapeTimeout: ""
+      # Additional labels to be added to the ServiceMonitor.
+      # Example:
+      # labels:
+      #   release: "prometheus"
+      labels: {}
+
+# S3-compatible file storage configurations.
+s3:
+  # The access key ID used to authenticate with the S3-compatible file storage.
+  # Example:
+  # accessKeyId: "accesskey"
+  accessKeyId: ""
+  # The secret access key used to authenticate with the S3-compatible file storage.
+  # Example:
+  # secretAccessKey: "secretkey"
+  secretAccessKey: ""
+  # The name of the bucket used for storing Pocket ID files.
+  # Example:
+  # bucket: "pocket-id"
+  bucket: ""
+  # The endpoint of the S3-compatible file storage, for storage other than AWS.
+  # Example:
+  # endpoint: "https://s3.example.com"
+  endpoint: ""
+  # The region of the S3-compatible file storage.
+  # Example:
+  # region: "us-east-1"
+  region: ""
+  # Specifies whether to address the bucket in the path instead of the host name.
+  # Note: Required by MinIO and some other providers.
+  # Default: "false"
+  # Example:
+  # forcePathStyle: "true"
+  forcePathStyle: ""
+  # Specifies whether to turn off the checksums sent by newer AWS SDKs.
+  # Note: Only needed for providers that reject them.
+  # Default: "false"
+  # Example:
+  # disableDefaultIntegrityChecks: "true"
+  disableDefaultIntegrityChecks: ""
+
+# Security configurations.
+security:
+  # Specifies whether to allow "http://" callback URLs on hosts other than localhost.
+  # Note: Set to "false" unless a client needs one.
+  # Default: "true"
+  # Example:
+  # allowInsecureCallbackUrls: "false"
+  allowInsecureCallbackUrls: ""
+  # Specifies whether to turn off the built-in rate limits.
+  # Note: Only do this when a reverse proxy limits requests instead.
+  # Default: "false"
+  # Example:
+  # disableRateLimiting: "true"
+  disableRateLimiting: ""
+  # The number of days the audit log keeps events.
+  # Default: "90"
+  # Example:
+  # auditLogRetentionDays: "30"
+  auditLogRetentionDays: ""
+  # The hosts each feature may send outbound requests to, as comma-separated entries.
+  # Note: Entries may be "private", "loopback", "none", an IP address, a CIDR range, or a hostname.
+  outboundAllowedHosts:
+    # The hosts the SCIM endpoint of SCIM clients may connect to.
+    # Default: "private,loopback"
+    # Example:
+    # scim: "private,loopback,scim-app"
+    scim: ""
+    # The hosts the back-channel logout URL of OIDC clients may connect to.
+    # Default: "private,loopback"
+    # Example:
+    # backchannelLogout: "private"
+    backchannelLogout: ""
+    # The hosts the JWKS URL of federated client credentials may connect to.
+    # Default: "private,loopback"
+    # Example:
+    # federatedJwks: "private"
+    federatedJwks: ""
+    # The hosts the logo URLs of OIDC clients may connect to.
+    # Default: "none"
+    # Example:
+    # clientLogo: "private"
+    clientLogo: ""
+    # The hosts client ID metadata documents may be fetched from.
+    # Default: "none"
+    # Example:
+    # clientMetadata: "private"
+    clientMetadata: ""
+    # The hosts profile pictures provided as a URL by LDAP may be fetched from.
+    # Default: "none"
+    # Example:
+    # ldapPicture: "private"
+    ldapPicture: ""
+
+# TLS configurations for serving HTTPS directly from Pocket ID.
+tls:
+  # The PEM certificate Pocket ID serves HTTPS with.
+  # Note: Requires "tls.key" to be set as well.
+  # Example:
+  # cert: |
+  #   -----BEGIN CERTIFICATE-----
+  #   ...
+  #   -----END CERTIFICATE-----
+  cert: ""
+  # The PEM private key Pocket ID serves HTTPS with.
+  # Note: Requires "cert".
+  # Example:
+  # key: |
+  #   -----BEGIN PRIVATE KEY-----
+  #   ...
+  #   -----END PRIVATE KEY-----
+  key: ""
+
+# Admin UI configurations that replace the settings stored in the database.
+ui:
+  # Specifies whether the settings of the admin UI are taken from environment variables.
+  # Note: Required for the "ui", "mail", and "ldap" settings to apply.
+  # Default: "false"
+  # Example:
+  # configDisabled: "true"
+  configDisabled: ""
+  # The name shown in the UI and in emails.
+  # Note: Up to 30 characters.
+  # Default: "Pocket ID"
+  # Example:
+  # appName: "Example ID"
+  appName: ""
+  # The number of minutes a session lasts before users sign in again.
+  # Default: "60"
+  # Example:
+  # sessionDuration: "120"
+  sessionDuration: ""
+  # The page users land on after signing in to Pocket ID itself.
+  # Default: "/settings/account"
+  # Example:
+  # homePageUrl: "/settings/apps"
+  homePageUrl: ""
+  # The accent color of the UI as a CSS color.
+  # Default: "default"
+  # Example:
+  # accentColor: "#0ea5e9"
+  accentColor: ""
+  # Specifies whether to turn off the animations of the UI.
+  # Default: "false"
+  # Example:
+  # disableAnimations: "true"
+  disableAnimations: ""
+  # Specifies whether users may edit their own name and email address.
+  # Default: "true"
+  # Example:
+  # allowOwnAccountEdit: "false"
+  allowOwnAccountEdit: ""
+  # Specifies whether to create a secret that does not expire for every new confidential client.
+  # Default: "true"
+  # Example:
+  # autoCreateOidcClientSecret: "false"
+  autoCreateOidcClientSecret: ""
+  # A JSON array of the client ID metadata document URLs Pocket ID accepts.
+  # Note: An empty array turns the feature off.
+  # Default: "[]"
+  # Example:
+  # cimdUrlAllowlist: '["https://app.example.com/client.json"]'
+  cimdUrlAllowlist: ""
+  # User and signup configurations.
+  users:
+    # Specifies whether every account requires an email address.
+    # Default: "true"
+    # Example:
+    # requireUserEmail: "false"
+    requireUserEmail: ""
+    # Specifies whether to mark email addresses as verified when users sign up or change them.
+    # Default: "false"
+    # Example:
+    # emailsVerified: "true"
+    emailsVerified: ""
+    # The type of user signups allowed.
+    # Note: Accepts "disabled", "withToken", or "open".
+    # Default: "disabled"
+    # Example:
+    # allowUserSignups: "withToken"
+    allowUserSignups: ""
+    # A JSON array of the group IDs new accounts join.
+    # Default: "[]"
+    # Example:
+    # signupDefaultUserGroupIds: '["a3888f2b-4c00-4b23-9c85-a3c8d685eb1f"]'
+    signupDefaultUserGroupIds: ""
+    # A JSON array of the custom claims given to new accounts.
+    # Default: "[]"
+    # Example:
+    # signupDefaultCustomClaims: '[{"key":"plan","value":"free"}]'
+    signupDefaultCustomClaims: ""
+  # Passkey configurations.
+  passkeys:
+    # The user verification level required for passkeys.
+    # Note: Accepts "required", or "preferred" which also allows touch-only security keys.
+    # Default: "required"
+    # Example:
+    # userVerification: "preferred"
+    userVerification: ""
+    # Specifies whether passkeys that sync between devices are allowed.
+    # Default: "true"
+    # Example:
+    # allowSyncedPasskeys: "false"
+    allowSyncedPasskeys: ""
+    # The type of authenticator allowed for passkeys.
+    # Note: Accepts "any", "platform" for device passkeys only, or "cross-platform" for security keys only.
+    # Default: "any"
+    # Example:
+    # authenticatorAttachment: "platform"
+    authenticatorAttachment: ""
+
+# Database configurations.
+db:
+  # The database engine or backend being used by Pocket ID.
+  # Note: Accepts "sqlite" or "postgres".
+  # Default: "sqlite"
+  # Example:
+  # type: "postgres"
+  type: ""
+  # The hostname or IP address of the Pocket ID database server.
+  # Example:
+  # host: "postgres.default.svc.cluster.local"
+  host: ""
+  # The port number the Pocket ID database server is listening for connections.
+  # Default: "5432"
+  # Example:
+  # port: "5433"
+  port: ""
+  # The name of the database being used by Pocket ID.
+  # Example:
+  # name: "pocketid"
+  name: ""
+  # The username or user account for accessing the Pocket ID database.
+  # Example:
+  # user: "pocketid"
+  user: ""
+  # The password associated with the Pocket ID database user.
+  # Example:
+  # password: "password"
+  password: ""
+  # Specifies whether to use a secure TLS connection when connecting to the database.
+  # Note: Only applies when db.type is "postgres".
+  # Default: "disable"
+  # Example:
+  # sslMode: "require"
+  sslMode: ""
+  # The number of seconds to wait before timing out when connecting to the database.
+  # Note: Only applies when db.type is "postgres".
+  # Default: "10"
+  # Example:
+  # connectTimeout: "30"
+  connectTimeout: ""
+  # The path of the SQLite database file.
+  # Note: Only applies when db.type is "sqlite".
+  # Default: "${.storage.data.mountPath}/pocket-id.db"
+  # Example:
+  # sqlitePath: "/app/data/pocket-id.db"
+  sqlitePath: ""
+  # Specifies whether to hide the admin warning about a SQLite database on a network share.
+  # Note: Only applies when db.type is "sqlite" and must be set to "i accept the risks".
+  # Example:
+  # dismissSqliteStorageWarning: "i accept the risks"
+  dismissSqliteStorageWarning: ""
+
+# Ingress configurations.
+ingress:
+  # Specifies whether Ingress should be enabled for hosting Pocket ID services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The class of the ingress controller that handles the Ingress.
+  # Default: "nginx"
+  # Example:
+  # className: "traefik"
+  className: ""
+  # The name of the cluster issuer for Ingress.
+  # Default: "letsencrypt-dns-prod"
+  # Example:
+  # clusterIssuer: "letsencrypt-http-prod"
+  clusterIssuer: ""
+  # The name of the Secret that stores the TLS certificate of the Ingress.
+  # Default: "${.Release.Name}-pocket-id-tls-cert"
+  # Example:
+  # tlsSecretName: "pocket-id-tls"
+  tlsSecretName: ""
+  # Additional configuration annotations to be added to the Ingress resource.
+  # Items: `.prefix`, `.name`, `.value`
+  # Example:
+  # customAnnotations:
+  #   # The prefix of the annotation.
+  #   # Default: "nginx.ingress.kubernetes.io"
+  #   # Example:
+  #   # prefix: "nginx.org"
+  #   - prefix: ""
+  #   # The name of the annotation.
+  #   # Example:
+  #   # name: "proxy-connect-timeout"
+  #     name: ""
+  #   # The value of the annotation.
+  #   # Example:
+  #   # value: "120"
+  #     value: ""
+  customAnnotations: []
+
+# Service configurations.
+service:
+  # The optional node port to expose when the service type is NodePort.
+  # Example:
+  # nodePort: "32000"
+  nodePort: ""
+  # The port on which the Pocket ID server should listen for connections.
+  # Default: "1411"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The type of service used to expose Pocket ID services.
+  # Default: "ClusterIP"
+  # Example:
+  # type: "NodePort"
+  type: ""
+
+# Storage configurations.
+storage:
+  # Data storage configurations.
+  data:
+    # Specifies whether persistent storage should be provisioned for data storage.
+    # Note: Optional when using PostgreSQL with the "s3" or "database" file backend.
+    # Example:
+    # enabled: true
+    enabled: false
+    # The access mode defining how the data storage can be mounted.
+    # Default: "ReadWriteOnce"
+    # Example:
+    # accessMode: "ReadWriteMany"
+    accessMode: ""
+    # The path where the data storage should be mounted on the container.
+    # Default: "/app/data"
+    # Example:
+    # mountPath: "/data"
+    mountPath: ""
+    # The subpath within the data storage to mount to the container. Leave empty if not required.
+    # Example:
+    # subPath: "Data"
+    subPath: ""
+    # The default amount of persistent storage allocated for the data storage.
+    # Default: "1Gi"
+    # Example:
+    # storage: "10Gi"
+    storage: ""
+    # The storage class name used for dynamically provisioning a persistent volume for the data storage.
+    # Note: Avoid NFS or SMB storage classes with SQLite as the database may corrupt.
+    # Default: "longhorn"
+    # Example:
+    # storageClassName: "local-path"
+    storageClassName: ""
+
+# Health probes configurations.
+probes:
+  # Pocket ID container health probes.
+  pocketid:
+    # Startup probe to check if the Pocket ID container has started successfully.
+    startup:
+      # Specifies whether to enable the startup probe for the Pocket ID container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the startup probe checks the Pocket ID container health.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: http
+      #   initialDelaySeconds: 5
+      #   periodSeconds: 5
+      #   timeoutSeconds: 5
+      #   failureThreshold: 30
+      #   successThreshold: 1
+      spec: {}
+    # Liveness probe to check if the Pocket ID container is running properly.
+    liveness:
+      # Specifies whether to enable the liveness probe for the Pocket ID container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the liveness probe checks the Pocket ID container health.
+      # Note: A default probe configuration will be used if not set for the container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: http
+      #   initialDelaySeconds: 10
+      #   periodSeconds: 10
+      #   timeoutSeconds: 5
+      #   failureThreshold: 3
+      #   successThreshold: 1
+      spec: {}
+    # Readiness probe to check if the Pocket ID container is ready to serve requests.
+    readiness:
+      # Specifies whether to enable the readiness probe for the Pocket ID container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the readiness probe checks the Pocket ID container health.
+      # Note: A default probe configuration will be used if not set for the container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /healthz
+      #     port: http
+      #   initialDelaySeconds: 10
+      #   periodSeconds: 5
+      #   timeoutSeconds: 5
+      #   failureThreshold: 6
+      #   successThreshold: 1
+      spec: {}
+
+# Resource requirements and limits for Pocket ID containers.
+resources:
+  # Pocket ID container resources.
+  # Example:
+  # pocketid:
+  #   # The minimum amount of resources required by Pocket ID to run.
+  #   requests:
+  #     # The minimum amount of CPU resources required by Pocket ID.
+  #     # Example:
+  #     # cpu: "10m"
+  #     cpu: "50m"
+  #     # The minimum amount of memory required by Pocket ID.
+  #     # Example:
+  #     # memory: "10Mi"
+  #     memory: "64Mi"
+  #   # The maximum amount of resources allowed for Pocket ID.
+  #   limits:
+  #     # The maximum amount of CPU resources allowed for Pocket ID.
+  #     # Example:
+  #     # cpu: "250m"
+  #     cpu: "500m"
+  #     # The maximum amount of memory allowed for Pocket ID.
+  #     # Example:
+  #     # memory: "250Mi"
+  #     memory: "256Mi"
+  pocketid: {}
