@@ -416,6 +416,14 @@ Ingress configurations.
 {{- ternary $domain "" (and .Values.ingress.enabled (ne $domain "")) }}
 {{- end }}
 
+{{- define "linkding.ingressClassName" -}}
+{{- .Values.ingress.className | default "nginx" | toString }}
+{{- end }}
+
+{{- define "linkding.tlsSecretName" -}}
+{{- .Values.ingress.tlsSecretName | default (printf "%s-linkding-tls-cert" .Release.Name) | toString }}
+{{- end }}
+
 {{- define "linkding.clusterIssuer" -}}
 {{- .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString }}
 {{- end }}

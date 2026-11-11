@@ -122,3 +122,68 @@ Whether the Secret has any data to render
 -}}
 {{- gt (len (compact $values)) 0 }}
 {{- end }}
+
+{{/*
+Startup probe for the Linkding container
+*/}}
+{{- define "linkding.startupProbe" -}}
+{{- $enabled := .Values.probes.linkding.startup.enabled -}}
+{{- $spec := .Values.probes.linkding.startup.spec -}}
+{{- if and $enabled $spec -}}
+startupProbe:
+  {{- toYaml $spec | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Liveness probe for the Linkding container
+*/}}
+{{- define "linkding.livenessProbe" -}}
+{{- $enabled := .Values.probes.linkding.liveness.enabled -}}
+{{- $spec := .Values.probes.linkding.liveness.spec -}}
+{{- if $enabled -}}
+livenessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: {{ include "linkding.probePath" . }}
+    port: linkding
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Readiness probe for the Linkding container
+*/}}
+{{- define "linkding.readinessProbe" -}}
+{{- $enabled := .Values.probes.linkding.readiness.enabled -}}
+{{- $spec := .Values.probes.linkding.readiness.spec -}}
+{{- if $enabled -}}
+readinessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: {{ include "linkding.probePath" . }}
+    port: linkding
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Path of the health endpoint
+*/}}
+{{- define "linkding.probePath" -}}
+{{- printf "/%shealth" (include "linkding.networkContextPath" .) }}
+{{- end }}

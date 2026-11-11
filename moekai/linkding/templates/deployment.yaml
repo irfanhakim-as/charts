@@ -77,6 +77,15 @@ spec:
               containerPort: {{ int ($networkPort | default "9090") }}
               protocol: TCP
           {{- include "linkding.resources" . | nindent 10 }}
+          {{- with include "linkding.startupProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "linkding.livenessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "linkding.readinessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-linkding-cm

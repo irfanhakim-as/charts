@@ -1,4 +1,6 @@
 {{- $domain := include "linkding.ingressDomain" . }}
+{{- $ingressClassName := include "linkding.ingressClassName" . }}
+{{- $tlsSecretName := include "linkding.tlsSecretName" . }}
 {{- $www := eq (include "linkding.ingressWww" .) "true" }}
 {{- $wwwDomain := printf "www.%s" $domain | quote }}
 {{- if $domain }}
@@ -12,7 +14,7 @@ metadata:
   annotations:
     {{- include "linkding.ingressAnnotations" . | nindent 4 }}
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: {{ $ingressClassName | quote }}
   rules:
     - host: {{ $domain | quote }}
       http:
@@ -42,5 +44,5 @@ spec:
       {{- if $www }}
         - {{ $wwwDomain }}
       {{- end }}
-      secretName: {{ .Release.Name }}-linkding-tls-cert
+      secretName: {{ $tlsSecretName | quote }}
 {{- end }}
