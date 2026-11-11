@@ -174,11 +174,11 @@ Vaultwarden configurations.
 {{- end }}
 
 {{- define "vaultwarden.emailUpdate" -}}
-{{- .Values.vaultwarden.emailUpdate | default "true" | toString }}
+{{- .Values.vaultwarden.emailUpdate | toString | replace "<nil>" "" | default "true" }}
 {{- end }}
 
 {{- define "vaultwarden.emergencyAccess" -}}
-{{- .Values.vaultwarden.emergencyAccess | default "true" | toString }}
+{{- .Values.vaultwarden.emergencyAccess | toString | replace "<nil>" "" | default "true" }}
 {{- end }}
 
 {{- define "vaultwarden.expFeatures" -}}
@@ -198,7 +198,7 @@ Vaultwarden configurations.
 {{- end }}
 
 {{- define "vaultwarden.send" -}}
-{{- .Values.vaultwarden.send | default "true" | toString }}
+{{- .Values.vaultwarden.send | toString | replace "<nil>" "" | default "true" }}
 {{- end }}
 
 {{- define "vaultwarden.initScript" -}}
@@ -327,11 +327,11 @@ Two-factor authentication configurations.
 {{- end }}
 
 {{- define "vaultwarden.tfaRememberDevice" -}}
-{{- .Values.tfa.rememberDevice | default "true" | toString }}
+{{- .Values.tfa.rememberDevice | toString | replace "<nil>" "" | default "true" }}
 {{- end }}
 
 {{- define "vaultwarden.tfaAllowTimeDrift" -}}
-{{- .Values.tfa.allowTimeDrift | default "true" | toString }}
+{{- .Values.tfa.allowTimeDrift | toString | replace "<nil>" "" | default "true" }}
 {{- end }}
 
 
