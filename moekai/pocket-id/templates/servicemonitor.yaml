@@ -1,0 +1,28 @@
+{{- if eq (include "pocket-id.serviceMonitorEnabled" .) "true" }}
+{{- $namespace := include "pocket-id.serviceMonitorNamespace" . }}
+{{- $interval := include "pocket-id.serviceMonitorInterval" . }}
+{{- $scrapeTimeout := include "pocket-id.serviceMonitorScrapeTimeout" . }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}-pocket-id-servicemonitor
+  namespace: {{ $namespace }}
+  labels:
+    {{- include "pocket-id.labels" . | nindent 4 }}
+    {{- with include "pocket-id.serviceMonitorLabels" . }}
+    {{- . | nindent 4 }}
+    {{- end }}
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      {{- include "pocket-id.selectorLabels" . | nindent 6 }}
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: {{ $interval }}
+      scrapeTimeout: {{ $scrapeTimeout }}
+{{- end }}

@@ -1,0 +1,21 @@
+apiVersion: v2
+name: pocket-id
+description: The most user-friendly OpenID Connect Certified and OAuth 2.0 provider that lets users sign in to your applications with passkeys.
+type: application
+version: 0.1.0
+appVersion: "v2.19.2"
+keywords:
+  - "pocket-id"
+  - "oidc"
+  - "oauth"
+  - "passkey"
+  - "sso"
+home: "https://github.com/pocket-id/pocket-id"
+icon: "https://raw.githubusercontent.com/pocket-id/pocket-id/main/frontend/static/img/static-logo.svg"
+sources:
+  - "https://github.com/pocket-id/pocket-id"
+  - "https://github.com/irfanhakim-as/charts"
+maintainers:
+  - name: "Irfan Hakim"
+    email: "irfanhakim.as@yahoo.com"
+    url: "https://github.com/irfanhakim-as"

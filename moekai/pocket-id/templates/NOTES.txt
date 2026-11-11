@@ -1,0 +1,53 @@
+{{- $serviceAddress := "" }}
+{{- $domain := include "pocket-id.domain" . }}
+{{- $port := include "pocket-id.servicePort" . }}
+{{- $type := include "pocket-id.serviceType" . }}
+{{- $serviceName := printf "%s-pocket-id-svc" .Release.Name | toString }}
+Pocket ID has been installed and configured for {{ .Release.Name | toString }}
+
+{{- if $domain }}
+    {{- $serviceAddress = printf "https://%s" $domain | toString }}
+{{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
+
+Please run the following command(s) to obtain the right address to the service:
+
+    ```sh
+    {{- if eq $type "ClusterIP" }}
+        {{- $forwardPort := "1411" | toString }}
+        {{- $serviceAddress = printf "http://127.0.0.1:%s" $forwardPort | toString }}
+    export POD_NAME=$(kubectl get pod --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "pocket-id.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} ${POD_NAME} -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+    kubectl port-forward --namespace {{ .Release.Namespace }} ${POD_NAME} {{ $forwardPort }}:${CONTAINER_PORT}
+    {{- else if eq $type "LoadBalancer" }}
+        {{- $serviceAddress = printf "$(echo http://${SERVICE_IP}:%s)" $port | toString }}
+    export SERVICE_IP=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} --template "{{"{{- range (index .status.loadBalancer.ingress 0) }}{{ . }}{{- end }}"}}")
+    {{- else if eq $type "NodePort" }}
+        {{- $serviceAddress = "$(echo http://${NODE_IP}:${NODE_PORT})" | toString }}
+    export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+    export NODE_PORT=$(kubectl get service --namespace {{ .Release.Namespace }} {{ $serviceName }} -o jsonpath="{.spec.ports[0].nodePort}")
+    {{- end }}
+    ```
+
+{{- end }}
+
+Visit the following service(s) at the provided address:
+
+{{- if $serviceAddress }}
+
+    - Pocket ID: {{ $serviceAddress | toString }}
+
+{{- else }}
+
+    WARNING: This chart may have no accessible services available
+
+{{- end }}
+
+{{- if and (not (include "pocket-id.encryptionKey" .)) (not (include "pocket-id.existingSecret" .)) }}
+
+WARNING: No encryption key is set, Pocket ID will not start without one. Set "pocketid.encryptionKey" or provide "ENCRYPTION_KEY" through "pocketid.existingSecret".
+
+{{- end }}
+
+Create the admin account right away by visiting the "/setup" page of the address above, as the first visitor to reach it becomes the admin.
+
+For more information on how to use and configure Pocket ID, please refer to the official documentation at https://pocket-id.org/docs.

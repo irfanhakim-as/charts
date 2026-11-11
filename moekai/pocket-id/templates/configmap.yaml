@@ -1,0 +1,362 @@
+{{- $appUrl := include "pocket-id.appUrl" . }}
+{{- $internalAppUrl := include "pocket-id.internalAppUrl" . }}
+{{- $timezone := include "pocket-id.timezone" . }}
+{{- $puid := include "pocket-id.puid" . }}
+{{- $pgid := include "pocket-id.pgid" . }}
+{{- $allowDowngrade := include "pocket-id.allowDowngrade" . }}
+{{- $analyticsDisabled := include "pocket-id.analyticsDisabled" . }}
+{{- $versionCheckDisabled := include "pocket-id.versionCheckDisabled" . }}
+{{- $iconLibraryUrl := include "pocket-id.iconLibraryUrl" . }}
+{{- $filesBackend := include "pocket-id.filesBackend" . }}
+{{- $filesUploadPath := include "pocket-id.filesUploadPath" . }}
+{{- $ldapEnabled := include "pocket-id.ldapEnabled" . }}
+{{- $ldapUrl := include "pocket-id.ldapUrl" . }}
+{{- $ldapBase := include "pocket-id.ldapBase" . }}
+{{- $ldapUserSearchFilter := include "pocket-id.ldapUserSearchFilter" . }}
+{{- $ldapUserGroupSearchFilter := include "pocket-id.ldapUserGroupSearchFilter" . }}
+{{- $ldapSkipCertVerify := include "pocket-id.ldapSkipCertVerify" . }}
+{{- $ldapSoftDeleteUsers := include "pocket-id.ldapSoftDeleteUsers" . }}
+{{- $ldapAdminGroupName := include "pocket-id.ldapAdminGroupName" . }}
+{{- $ldapAttributeUserUniqueIdentifier := include "pocket-id.ldapAttributeUserUniqueIdentifier" . }}
+{{- $ldapAttributeUserUsername := include "pocket-id.ldapAttributeUserUsername" . }}
+{{- $ldapAttributeUserEmail := include "pocket-id.ldapAttributeUserEmail" . }}
+{{- $ldapAttributeUserFirstName := include "pocket-id.ldapAttributeUserFirstName" . }}
+{{- $ldapAttributeUserLastName := include "pocket-id.ldapAttributeUserLastName" . }}
+{{- $ldapAttributeUserDisplayName := include "pocket-id.ldapAttributeUserDisplayName" . }}
+{{- $ldapAttributeUserProfilePicture := include "pocket-id.ldapAttributeUserProfilePicture" . }}
+{{- $ldapAttributeGroupMember := include "pocket-id.ldapAttributeGroupMember" . }}
+{{- $ldapAttributeGroupUniqueIdentifier := include "pocket-id.ldapAttributeGroupUniqueIdentifier" . }}
+{{- $ldapAttributeGroupName := include "pocket-id.ldapAttributeGroupName" . }}
+{{- $geoliteDbPath := include "pocket-id.geoliteDbPath" . }}
+{{- $geoliteDbUrl := include "pocket-id.geoliteDbUrl" . }}
+{{- $cloudflareHeaders := include "pocket-id.cloudflareHeaders" . }}
+{{- $logLevel := include "pocket-id.logLevel" . }}
+{{- $logJson := include "pocket-id.logJson" . }}
+{{- $logQueryArgs := include "pocket-id.logQueryArgs" . }}
+{{- $smtpHost := include "pocket-id.smtpHost" . }}
+{{- $smtpPort := include "pocket-id.smtpPort" . }}
+{{- $mailFrom := include "pocket-id.mailFrom" . }}
+{{- $smtpTls := include "pocket-id.smtpTls" . }}
+{{- $smtpSkipCertVerify := include "pocket-id.smtpSkipCertVerify" . }}
+{{- $mailLoginNotificationMode := include "pocket-id.mailLoginNotificationMode" . }}
+{{- $mailOneTimeAccessAsAdminEnabled := include "pocket-id.mailOneTimeAccessAsAdminEnabled" . }}
+{{- $mailOneTimeAccessAsUnauthenticatedEnabled := include "pocket-id.mailOneTimeAccessAsUnauthenticatedEnabled" . }}
+{{- $mailApiKeyExpirationEnabled := include "pocket-id.mailApiKeyExpirationEnabled" . }}
+{{- $mailVerification := include "pocket-id.mailVerification" . }}
+{{- $networkPort := include "pocket-id.networkPort" . }}
+{{- $networkHost := include "pocket-id.networkHost" . }}
+{{- $trustProxy := include "pocket-id.trustProxy" . }}
+{{- $trustedPlatform := include "pocket-id.trustedPlatform" . }}
+{{- $proxyProtocol := include "pocket-id.proxyProtocol" . }}
+{{- $localIpv6Ranges := include "pocket-id.localIpv6Ranges" . }}
+{{- $logsExporter := include "pocket-id.logsExporter" . }}
+{{- $metricsExporter := include "pocket-id.metricsExporter" . }}
+{{- $tracesExporter := include "pocket-id.tracesExporter" . }}
+{{- $otlpEndpoint := include "pocket-id.otlpEndpoint" . }}
+{{- $prometheusHost := include "pocket-id.prometheusHost" . }}
+{{- $prometheusPort := include "pocket-id.prometheusPort" . }}
+{{- $s3Bucket := include "pocket-id.s3Bucket" . }}
+{{- $s3Region := include "pocket-id.s3Region" . }}
+{{- $s3Endpoint := include "pocket-id.s3Endpoint" . }}
+{{- $s3ForcePathStyle := include "pocket-id.s3ForcePathStyle" . }}
+{{- $s3DisableDefaultIntegrityChecks := include "pocket-id.s3DisableDefaultIntegrityChecks" . }}
+{{- $allowInsecureCallbackUrls := include "pocket-id.allowInsecureCallbackUrls" . }}
+{{- $disableRateLimiting := include "pocket-id.disableRateLimiting" . }}
+{{- $auditLogRetentionDays := include "pocket-id.auditLogRetentionDays" . }}
+{{- $outboundAllowedHostsScim := include "pocket-id.outboundAllowedHostsScim" . }}
+{{- $outboundAllowedHostsBackchannelLogout := include "pocket-id.outboundAllowedHostsBackchannelLogout" . }}
+{{- $outboundAllowedHostsFederatedJwks := include "pocket-id.outboundAllowedHostsFederatedJwks" . }}
+{{- $outboundAllowedHostsClientLogo := include "pocket-id.outboundAllowedHostsClientLogo" . }}
+{{- $outboundAllowedHostsClientMetadata := include "pocket-id.outboundAllowedHostsClientMetadata" . }}
+{{- $outboundAllowedHostsLdapPicture := include "pocket-id.outboundAllowedHostsLdapPicture" . }}
+{{- $tlsCert := include "pocket-id.tlsCert" . }}
+{{- $uiConfigDisabled := include "pocket-id.uiConfigDisabled" . }}
+{{- $uiAppName := include "pocket-id.uiAppName" . }}
+{{- $uiSessionDuration := include "pocket-id.uiSessionDuration" . }}
+{{- $uiHomePageUrl := include "pocket-id.uiHomePageUrl" . }}
+{{- $uiAccentColor := include "pocket-id.uiAccentColor" . }}
+{{- $uiDisableAnimations := include "pocket-id.uiDisableAnimations" . }}
+{{- $uiAllowOwnAccountEdit := include "pocket-id.uiAllowOwnAccountEdit" . }}
+{{- $uiAutoCreateOidcClientSecret := include "pocket-id.uiAutoCreateOidcClientSecret" . }}
+{{- $uiCimdUrlAllowlist := include "pocket-id.uiCimdUrlAllowlist" . }}
+{{- $uiRequireUserEmail := include "pocket-id.uiRequireUserEmail" . }}
+{{- $uiEmailsVerified := include "pocket-id.uiEmailsVerified" . }}
+{{- $uiAllowUserSignups := include "pocket-id.uiAllowUserSignups" . }}
+{{- $uiSignupDefaultUserGroupIds := include "pocket-id.uiSignupDefaultUserGroupIds" . }}
+{{- $uiSignupDefaultCustomClaims := include "pocket-id.uiSignupDefaultCustomClaims" . }}
+{{- $uiPasskeysUserVerification := include "pocket-id.uiPasskeysUserVerification" . }}
+{{- $uiPasskeysAllowSyncedPasskeys := include "pocket-id.uiPasskeysAllowSyncedPasskeys" . }}
+{{- $uiPasskeysAuthenticatorAttachment := include "pocket-id.uiPasskeysAuthenticatorAttachment" . }}
+{{- $dbDismissSqliteStorageWarning := include "pocket-id.dbDismissSqliteStorageWarning" . }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-pocket-id-cm
+  labels:
+    {{- include "pocket-id.labels" . | nindent 4 }}
+data:
+{{- if $appUrl }}
+  APP_URL: {{ $appUrl | quote }}
+{{- end }}
+{{- if $internalAppUrl }}
+  INTERNAL_APP_URL: {{ $internalAppUrl | quote }}
+{{- end }}
+{{- if $timezone }}
+  TZ: {{ $timezone | quote }}
+{{- end }}
+{{- if $puid }}
+  PUID: {{ $puid | quote }}
+{{- end }}
+{{- if $pgid }}
+  PGID: {{ $pgid | quote }}
+{{- end }}
+{{- if $allowDowngrade }}
+  ALLOW_DOWNGRADE: {{ $allowDowngrade | quote }}
+{{- end }}
+{{- if $analyticsDisabled }}
+  ANALYTICS_DISABLED: {{ $analyticsDisabled | quote }}
+{{- end }}
+{{- if $versionCheckDisabled }}
+  VERSION_CHECK_DISABLED: {{ $versionCheckDisabled | quote }}
+{{- end }}
+{{- if $iconLibraryUrl }}
+  ICON_LIBRARY_URL: {{ $iconLibraryUrl | quote }}
+{{- end }}
+{{- if $filesBackend }}
+  FILE_BACKEND: {{ $filesBackend | quote }}
+{{- end }}
+{{- if $filesUploadPath }}
+  UPLOAD_PATH: {{ $filesUploadPath | quote }}
+{{- end }}
+{{- if $ldapEnabled }}
+  LDAP_ENABLED: {{ $ldapEnabled | quote }}
+{{- end }}
+{{- if $ldapUrl }}
+  LDAP_URL: {{ $ldapUrl | quote }}
+{{- end }}
+{{- if $ldapBase }}
+  LDAP_BASE: {{ $ldapBase | quote }}
+{{- end }}
+{{- if $ldapUserSearchFilter }}
+  LDAP_USER_SEARCH_FILTER: {{ $ldapUserSearchFilter | quote }}
+{{- end }}
+{{- if $ldapUserGroupSearchFilter }}
+  LDAP_USER_GROUP_SEARCH_FILTER: {{ $ldapUserGroupSearchFilter | quote }}
+{{- end }}
+{{- if $ldapSkipCertVerify }}
+  LDAP_SKIP_CERT_VERIFY: {{ $ldapSkipCertVerify | quote }}
+{{- end }}
+{{- if $ldapSoftDeleteUsers }}
+  LDAP_SOFT_DELETE_USERS: {{ $ldapSoftDeleteUsers | quote }}
+{{- end }}
+{{- if $ldapAdminGroupName }}
+  LDAP_ADMIN_GROUP_NAME: {{ $ldapAdminGroupName | quote }}
+{{- end }}
+{{- if $ldapAttributeUserUniqueIdentifier }}
+  LDAP_ATTRIBUTE_USER_UNIQUE_IDENTIFIER: {{ $ldapAttributeUserUniqueIdentifier | quote }}
+{{- end }}
+{{- if $ldapAttributeUserUsername }}
+  LDAP_ATTRIBUTE_USER_USERNAME: {{ $ldapAttributeUserUsername | quote }}
+{{- end }}
+{{- if $ldapAttributeUserEmail }}
+  LDAP_ATTRIBUTE_USER_EMAIL: {{ $ldapAttributeUserEmail | quote }}
+{{- end }}
+{{- if $ldapAttributeUserFirstName }}
+  LDAP_ATTRIBUTE_USER_FIRST_NAME: {{ $ldapAttributeUserFirstName | quote }}
+{{- end }}
+{{- if $ldapAttributeUserLastName }}
+  LDAP_ATTRIBUTE_USER_LAST_NAME: {{ $ldapAttributeUserLastName | quote }}
+{{- end }}
+{{- if $ldapAttributeUserDisplayName }}
+  LDAP_ATTRIBUTE_USER_DISPLAY_NAME: {{ $ldapAttributeUserDisplayName | quote }}
+{{- end }}
+{{- if $ldapAttributeUserProfilePicture }}
+  LDAP_ATTRIBUTE_USER_PROFILE_PICTURE: {{ $ldapAttributeUserProfilePicture | quote }}
+{{- end }}
+{{- if $ldapAttributeGroupMember }}
+  LDAP_ATTRIBUTE_GROUP_MEMBER: {{ $ldapAttributeGroupMember | quote }}
+{{- end }}
+{{- if $ldapAttributeGroupUniqueIdentifier }}
+  LDAP_ATTRIBUTE_GROUP_UNIQUE_IDENTIFIER: {{ $ldapAttributeGroupUniqueIdentifier | quote }}
+{{- end }}
+{{- if $ldapAttributeGroupName }}
+  LDAP_ATTRIBUTE_GROUP_NAME: {{ $ldapAttributeGroupName | quote }}
+{{- end }}
+  GEOLITE_DB_PATH: {{ $geoliteDbPath | quote }}
+{{- if $geoliteDbUrl }}
+  GEOLITE_DB_URL: {{ $geoliteDbUrl | quote }}
+{{- end }}
+{{- if $cloudflareHeaders }}
+  CLOUDFLARE_LOCATION_HEADERS: {{ $cloudflareHeaders | quote }}
+{{- end }}
+{{- if $logLevel }}
+  LOG_LEVEL: {{ $logLevel | quote }}
+{{- end }}
+{{- if $logJson }}
+  LOG_JSON: {{ $logJson | quote }}
+{{- end }}
+{{- if $logQueryArgs }}
+  LOG_QUERY_ARGS: {{ $logQueryArgs | quote }}
+{{- end }}
+{{- if $smtpHost }}
+  SMTP_HOST: {{ $smtpHost | quote }}
+{{- end }}
+{{- if $smtpPort }}
+  SMTP_PORT: {{ $smtpPort | quote }}
+{{- end }}
+{{- if $mailFrom }}
+  SMTP_FROM: {{ $mailFrom | quote }}
+{{- end }}
+{{- if $smtpTls }}
+  SMTP_TLS: {{ $smtpTls | quote }}
+{{- end }}
+{{- if $smtpSkipCertVerify }}
+  SMTP_SKIP_CERT_VERIFY: {{ $smtpSkipCertVerify | quote }}
+{{- end }}
+{{- if $mailLoginNotificationMode }}
+  EMAIL_LOGIN_NOTIFICATION_MODE: {{ $mailLoginNotificationMode | quote }}
+{{- end }}
+{{- if $mailOneTimeAccessAsAdminEnabled }}
+  EMAIL_ONE_TIME_ACCESS_AS_ADMIN_ENABLED: {{ $mailOneTimeAccessAsAdminEnabled | quote }}
+{{- end }}
+{{- if $mailOneTimeAccessAsUnauthenticatedEnabled }}
+  EMAIL_ONE_TIME_ACCESS_AS_UNAUTHENTICATED_ENABLED: {{ $mailOneTimeAccessAsUnauthenticatedEnabled | quote }}
+{{- end }}
+{{- if $mailApiKeyExpirationEnabled }}
+  EMAIL_API_KEY_EXPIRATION_ENABLED: {{ $mailApiKeyExpirationEnabled | quote }}
+{{- end }}
+{{- if $mailVerification }}
+  EMAIL_VERIFICATION: {{ $mailVerification | quote }}
+{{- end }}
+  PORT: {{ $networkPort | quote }}
+{{- if $networkHost }}
+  HOST: {{ $networkHost | quote }}
+{{- end }}
+{{- if $trustProxy }}
+  TRUST_PROXY: {{ $trustProxy | quote }}
+{{- end }}
+{{- if $trustedPlatform }}
+  TRUSTED_PLATFORM: {{ $trustedPlatform | quote }}
+{{- end }}
+{{- if $proxyProtocol }}
+  PROXY_PROTOCOL: {{ $proxyProtocol | quote }}
+{{- end }}
+{{- if $localIpv6Ranges }}
+  LOCAL_IPV6_RANGES: {{ $localIpv6Ranges | quote }}
+{{- end }}
+{{- if $logsExporter }}
+  OTEL_LOGS_EXPORTER: {{ $logsExporter | quote }}
+{{- end }}
+{{- if $metricsExporter }}
+  OTEL_METRICS_EXPORTER: {{ $metricsExporter | quote }}
+{{- end }}
+{{- if $tracesExporter }}
+  OTEL_TRACES_EXPORTER: {{ $tracesExporter | quote }}
+{{- end }}
+{{- if $otlpEndpoint }}
+  OTEL_EXPORTER_OTLP_ENDPOINT: {{ $otlpEndpoint | quote }}
+{{- end }}
+{{- if $prometheusHost }}
+  OTEL_EXPORTER_PROMETHEUS_HOST: {{ $prometheusHost | quote }}
+  OTEL_EXPORTER_PROMETHEUS_PORT: {{ $prometheusPort | quote }}
+{{- end }}
+{{- if $s3Bucket }}
+  S3_BUCKET: {{ $s3Bucket | quote }}
+{{- end }}
+{{- if $s3Region }}
+  S3_REGION: {{ $s3Region | quote }}
+{{- end }}
+{{- if $s3Endpoint }}
+  S3_ENDPOINT: {{ $s3Endpoint | quote }}
+{{- end }}
+{{- if $s3ForcePathStyle }}
+  S3_FORCE_PATH_STYLE: {{ $s3ForcePathStyle | quote }}
+{{- end }}
+{{- if $s3DisableDefaultIntegrityChecks }}
+  S3_DISABLE_DEFAULT_INTEGRITY_CHECKS: {{ $s3DisableDefaultIntegrityChecks | quote }}
+{{- end }}
+{{- if $allowInsecureCallbackUrls }}
+  ALLOW_INSECURE_CALLBACK_URLS: {{ $allowInsecureCallbackUrls | quote }}
+{{- end }}
+{{- if $disableRateLimiting }}
+  DISABLE_RATE_LIMITING: {{ $disableRateLimiting | quote }}
+{{- end }}
+{{- if $auditLogRetentionDays }}
+  AUDIT_LOG_RETENTION_DAYS: {{ $auditLogRetentionDays | quote }}
+{{- end }}
+{{- if $outboundAllowedHostsScim }}
+  OUTBOUND_ALLOWED_HOSTS_SCIM: {{ $outboundAllowedHostsScim | quote }}
+{{- end }}
+{{- if $outboundAllowedHostsBackchannelLogout }}
+  OUTBOUND_ALLOWED_HOSTS_BACKCHANNEL_LOGOUT: {{ $outboundAllowedHostsBackchannelLogout | quote }}
+{{- end }}
+{{- if $outboundAllowedHostsFederatedJwks }}
+  OUTBOUND_ALLOWED_HOSTS_FEDERATED_JWKS: {{ $outboundAllowedHostsFederatedJwks | quote }}
+{{- end }}
+{{- if $outboundAllowedHostsClientLogo }}
+  OUTBOUND_ALLOWED_HOSTS_CLIENT_LOGO: {{ $outboundAllowedHostsClientLogo | quote }}
+{{- end }}
+{{- if $outboundAllowedHostsClientMetadata }}
+  OUTBOUND_ALLOWED_HOSTS_CLIENT_METADATA: {{ $outboundAllowedHostsClientMetadata | quote }}
+{{- end }}
+{{- if $outboundAllowedHostsLdapPicture }}
+  OUTBOUND_ALLOWED_HOSTS_LDAP_PICTURE: {{ $outboundAllowedHostsLdapPicture | quote }}
+{{- end }}
+{{- if $tlsCert }}
+  TLS_CERT: {{ $tlsCert | quote }}
+{{- end }}
+{{- if $uiConfigDisabled }}
+  UI_CONFIG_DISABLED: {{ $uiConfigDisabled | quote }}
+{{- end }}
+{{- if $uiAppName }}
+  APP_NAME: {{ $uiAppName | quote }}
+{{- end }}
+{{- if $uiSessionDuration }}
+  SESSION_DURATION: {{ $uiSessionDuration | quote }}
+{{- end }}
+{{- if $uiHomePageUrl }}
+  HOME_PAGE_URL: {{ $uiHomePageUrl | quote }}
+{{- end }}
+{{- if $uiAccentColor }}
+  ACCENT_COLOR: {{ $uiAccentColor | quote }}
+{{- end }}
+{{- if $uiDisableAnimations }}
+  DISABLE_ANIMATIONS: {{ $uiDisableAnimations | quote }}
+{{- end }}
+{{- if $uiAllowOwnAccountEdit }}
+  ALLOW_OWN_ACCOUNT_EDIT: {{ $uiAllowOwnAccountEdit | quote }}
+{{- end }}
+{{- if $uiAutoCreateOidcClientSecret }}
+  AUTO_CREATE_OIDC_CLIENT_SECRET: {{ $uiAutoCreateOidcClientSecret | quote }}
+{{- end }}
+{{- if $uiCimdUrlAllowlist }}
+  CIMD_URL_ALLOWLIST: {{ $uiCimdUrlAllowlist | quote }}
+{{- end }}
+{{- if $uiRequireUserEmail }}
+  REQUIRE_USER_EMAIL: {{ $uiRequireUserEmail | quote }}
+{{- end }}
+{{- if $uiEmailsVerified }}
+  EMAILS_VERIFIED: {{ $uiEmailsVerified | quote }}
+{{- end }}
+{{- if $uiAllowUserSignups }}
+  ALLOW_USER_SIGNUPS: {{ $uiAllowUserSignups | quote }}
+{{- end }}
+{{- if $uiSignupDefaultUserGroupIds }}
+  SIGNUP_DEFAULT_USER_GROUP_IDS: {{ $uiSignupDefaultUserGroupIds | quote }}
+{{- end }}
+{{- if $uiSignupDefaultCustomClaims }}
+  SIGNUP_DEFAULT_CUSTOM_CLAIMS: {{ $uiSignupDefaultCustomClaims | quote }}
+{{- end }}
+{{- if $uiPasskeysUserVerification }}
+  WEBAUTHN_USER_VERIFICATION: {{ $uiPasskeysUserVerification | quote }}
+{{- end }}
+{{- if $uiPasskeysAllowSyncedPasskeys }}
+  WEBAUTHN_ALLOW_SYNCED_PASSKEYS: {{ $uiPasskeysAllowSyncedPasskeys | quote }}
+{{- end }}
+{{- if $uiPasskeysAuthenticatorAttachment }}
+  WEBAUTHN_AUTHENTICATOR_ATTACHMENT: {{ $uiPasskeysAuthenticatorAttachment | quote }}
+{{- end }}
+{{- if $dbDismissSqliteStorageWarning }}
+  DISMISS_SQLITE_STORAGE_WARNING: {{ $dbDismissSqliteStorageWarning | quote }}
+{{- end }}
