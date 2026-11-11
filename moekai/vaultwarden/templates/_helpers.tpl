@@ -122,6 +122,8 @@ Whether the Secret has any data to render
   (include "vaultwarden.ssoClientSecret" .)
   (ternary (include "vaultwarden.yubicoId" .) "" (eq (include "vaultwarden.yubicoEnabled" .) "true"))
   (ternary (include "vaultwarden.yubicoKey" .) "" (eq (include "vaultwarden.yubicoEnabled" .) "true"))
+  (ternary (include "vaultwarden.duoId" .) "" (eq (include "vaultwarden.duoEnabled" .) "true"))
+  (ternary (include "vaultwarden.duoKey" .) "" (eq (include "vaultwarden.duoEnabled" .) "true"))
   (ternary (include "vaultwarden.smtpUser" .) "" (eq (include "vaultwarden.mailEnabled" .) "true"))
   (ternary (include "vaultwarden.smtpPassword" .) "" (eq (include "vaultwarden.mailEnabled" .) "true"))
 -}}

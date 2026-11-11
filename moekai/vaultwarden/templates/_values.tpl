@@ -454,6 +454,25 @@ Two-factor authentication configurations.
 
 
 {{/*
+Duo configurations.
+*/}}
+{{- define "vaultwarden.duoEnabled" -}}
+{{- .Values.duo.enabled | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.duoId" -}}
+{{- .Values.duo.id | toString }}
+{{- end }}
+
+{{- define "vaultwarden.duoKey" -}}
+{{- .Values.duo.key | toString }}
+{{- end }}
+
+{{- define "vaultwarden.duoHost" -}}
+{{- .Values.duo.host | toString }}
+{{- end }}
+
+{{/*
 Yubico configurations.
 */}}
 {{- define "vaultwarden.yubicoEnabled" -}}

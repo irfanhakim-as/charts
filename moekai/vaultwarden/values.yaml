@@ -213,6 +213,28 @@ vaultwarden:
   #   echo "This is a custom init script."
   initScript: ""
 
+# Duo two-factor authentication (2FA) configurations.
+duo:
+  # Specifies whether to enable Duo 2FA integration for all users.
+  # Note: Users can configure Duo themselves when this is disabled.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The integration key (client ID) of the Duo application.
+  # Note: Please refer to https://help.bitwarden.com/article/setup-two-step-login-duo/ on how to create the Duo application.
+  # Example:
+  # id: "id"
+  id: ""
+  # The secret key (client secret) of the Duo application.
+  # Example:
+  # key: "secret"
+  key: ""
+  # The API hostname of the Duo application.
+  # Example:
+  # host: "api-xxxxxxxx.duosecurity.com"
+  host: ""
+
 # Invitation configurations.
 invitation:
   # Specifies whether to allow organisation admins to send user invitations.

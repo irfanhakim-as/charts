@@ -28,6 +28,8 @@
 {{- $mailFromEmail := include "vaultwarden.mailFromEmail" . }}
 {{- $mailFromName := include "vaultwarden.mailFromName" . | quote }}
 {{- $smtpSecurity := include "vaultwarden.smtpSecurity" . | quote }}
+{{- $duo := eq (include "vaultwarden.duoEnabled" .) "true" }}
+{{- $duoHost := include "vaultwarden.duoHost" . }}
 {{- $mail := eq (include "vaultwarden.mailEnabled" .) "true" }}
 {{- $smtpHost := include "vaultwarden.smtpHost" . }}
 {{- $smtpPort := include "vaultwarden.smtpPort" . | quote }}
@@ -158,4 +160,7 @@ data:
 {{- end }}
 {{- with include "vaultwarden.ssoMasterPasswordPolicy" . }}
   SSO_MASTER_PASSWORD_POLICY: {{ . | quote }}
+{{- end }}
+{{- if and $duo $duoHost }}
+  DUO_HOST: {{ $duoHost | quote }}
 {{- end }}
