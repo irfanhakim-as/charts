@@ -51,6 +51,26 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Whether the Secret has any data to render
+*/}}
+{{- define "pocket-id.secretEnabled" -}}
+{{- $values := list
+  (include "pocket-id.encryptionKey" .)
+  (include "pocket-id.staticApiKey" .)
+  (include "pocket-id.ldapBindDn" .)
+  (include "pocket-id.ldapBindPassword" .)
+  (include "pocket-id.maxmindLicenseKey" .)
+  (include "pocket-id.smtpUser" .)
+  (include "pocket-id.smtpPassword" .)
+  (include "pocket-id.s3AccessKeyId" .)
+  (include "pocket-id.s3SecretAccessKey" .)
+  (include "pocket-id.tlsKey" .)
+  (include "pocket-id.dbUrl" .)
+-}}
+{{- gt (len (compact $values)) 0 }}
+{{- end }}
+
+{{/*
 Volume mounts for the storage volumes
 */}}
 {{- define "pocket-id.volumeMounts" -}}
