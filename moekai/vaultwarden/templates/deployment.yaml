@@ -1,16 +1,13 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $vaultwarden_registry := .Values.image.vaultwarden.registry | default "ghcr.io" | toString }}
-{{- $vaultwarden_repository := .Values.image.vaultwarden.repository | default "dani-garcia/vaultwarden" | toString }}
-{{- $vaultwarden_tag := .Values.image.vaultwarden.tag | default .Chart.AppVersion | toString }}
-{{- $vaultwarden_pullPolicy := .Values.image.vaultwarden.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
-{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
-{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/data" | toString | quote }}
-{{- $dataSubPath := .Values.storage.data.subPath | toString }}
-{{- $initScript := .Values.vaultwarden.initScript | toString }}
+{{- $vaultwardenRegistry := include "vaultwarden.imageRegistry" . }}
+{{- $vaultwardenRepository := include "vaultwarden.imageRepository" . }}
+{{- $vaultwardenTag := include "vaultwarden.imageTag" . }}
+{{- $vaultwardenPullPolicy := include "vaultwarden.imagePullPolicy" . | quote }}
+{{- $initRegistry := include "vaultwarden.initImageRegistry" . }}
+{{- $initRepository := include "vaultwarden.initImageRepository" . }}
+{{- $initTag := include "vaultwarden.initImageTag" . }}
+{{- $initPullPolicy := include "vaultwarden.initImagePullPolicy" . | quote }}
+{{- $replicaCount := include "vaultwarden.replicaCount" . }}
+{{- $initScript := include "vaultwarden.initScript" . }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -19,7 +16,7 @@ metadata:
   labels:
     {{- include "vaultwarden.labels" . | nindent 4 }}
 spec:
-  replicas: {{ int $replica_count }}
+  replicas: {{ int $replicaCount }}
   {{- with .Values.updateStrategy }}
   strategy:
     {{- toYaml . | nindent 4 }}
@@ -29,68 +26,46 @@ spec:
       {{- include "vaultwarden.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
+      {{- with include "vaultwarden.podAnnotations" . }}
+      {{- . | nindent 6 }}
       {{- end }}
       labels:
         {{- include "vaultwarden.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      {{- with include "vaultwarden.imagePullSecrets" . }}
+      {{- . | nindent 6 }}
       {{- end }}
       {{- if $initScript }}
       initContainers:
         - name: init
-          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
-          imagePullPolicy: {{ $init_pullPolicy }}
+          image: {{ printf "%s/%s:%s" $initRegistry $initRepository $initTag | quote }}
+          imagePullPolicy: {{ $initPullPolicy }}
           command: ["/bin/sh"]
           args:
             - -c
             - |
               {{- $initScript | nindent 14 }}
-          {{- if or $dataPersistence }}
-          volumeMounts:
-            {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-vaultwarden-data
-              mountPath: {{ $dataMountPath }}
-              {{- if $dataSubPath }}
-              subPath: {{ $dataSubPath | quote }}
-              {{- end }}
-            {{- end }}
+          {{- with include "vaultwarden.volumeMounts" . }}
+          {{- . | nindent 10 }}
           {{- end }}
       {{- end }}
       containers:
         - name: vaultwarden
-          image: {{ printf "%s/%s:%s" $vaultwarden_registry $vaultwarden_repository $vaultwarden_tag | quote }}
-          imagePullPolicy: {{ $vaultwarden_pullPolicy }}
+          image: {{ printf "%s/%s:%s" $vaultwardenRegistry $vaultwardenRepository $vaultwardenTag | quote }}
+          imagePullPolicy: {{ $vaultwardenPullPolicy }}
           ports:
             - name: vaultwarden
               containerPort: 80
               protocol: TCP
-          resources:
-            {{- toYaml .Values.resources.vaultwarden | nindent 12 }}
+          {{- include "vaultwarden.resources" . | nindent 10 }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-vaultwarden-cm
             - secretRef:
                 name: {{ .Release.Name }}-vaultwarden-secret
-          {{- if or $dataPersistence }}
-          volumeMounts:
-            {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-vaultwarden-data
-              mountPath: {{ $dataMountPath }}
-              {{- if $dataSubPath }}
-              subPath: {{ $dataSubPath | quote }}
-              {{- end }}
-            {{- end }}
+          {{- with include "vaultwarden.volumeMounts" . }}
+          {{- . | nindent 10 }}
           {{- end }}
-      {{- if or $dataPersistence }}
-      volumes:
-        {{- if $dataPersistence }}
-        - name: {{ .Release.Name }}-vaultwarden-data
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-vaultwarden-data-pvc
-        {{- end }}
+      {{- with include "vaultwarden.volumes" . }}
+      {{- . | nindent 6 }}
       {{- end }}

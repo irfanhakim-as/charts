@@ -1,7 +1,6 @@
-{{- $type := .Values.service.type | default "ClusterIP" | toString }}
-{{- $port := .Values.service.port | default "80" | toString }}
-{{- $nodePort := .Values.service.nodePort | toString }}
-{{- $nodePort = ternary $nodePort "" (and (eq $type "NodePort") (ne $nodePort "")) }}
+{{- $type := include "vaultwarden.serviceType" . }}
+{{- $port := include "vaultwarden.servicePort" . }}
+{{- $nodePort := include "vaultwarden.serviceNodePort" . }}
 ---
 apiVersion: v1
 kind: Service

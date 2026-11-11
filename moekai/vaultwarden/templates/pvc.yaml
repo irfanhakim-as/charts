@@ -1,7 +1,7 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteOnce" | toString | quote }}
-{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
-{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $dataPersistence := eq (include "vaultwarden.dataPersistence" .) "true" }}
+{{- $dataAccessMode := include "vaultwarden.dataAccessMode" . | quote }}
+{{- $dataStorage := include "vaultwarden.dataStorage" . | quote }}
+{{- $dataStorageClassName := include "vaultwarden.dataStorageClassName" . | quote }}
 {{- if $dataPersistence }}
 ---
 apiVersion: v1

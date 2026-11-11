@@ -60,3 +60,50 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Volume mounts for the storage volumes
+*/}}
+{{- define "vaultwarden.volumeMounts" -}}
+{{- $dataPersistence := eq (include "vaultwarden.dataPersistence" .) "true" -}}
+{{- $dataSubPath := include "vaultwarden.dataSubPath" . -}}
+{{- if $dataPersistence -}}
+volumeMounts:
+  - name: {{ .Release.Name }}-vaultwarden-data
+    mountPath: {{ include "vaultwarden.dataMountPath" . | quote }}
+    {{- if $dataSubPath }}
+    subPath: {{ $dataSubPath | quote }}
+    {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Volumes for the storage volumes
+*/}}
+{{- define "vaultwarden.volumes" -}}
+{{- $dataPersistence := eq (include "vaultwarden.dataPersistence" .) "true" -}}
+{{- if $dataPersistence -}}
+volumes:
+  - name: {{ .Release.Name }}-vaultwarden-data
+    persistentVolumeClaim:
+      claimName: {{ .Release.Name }}-vaultwarden-data-pvc
+{{- end }}
+{{- end }}
+
+{{/*
+Ingress annotations
+*/}}
+{{- define "vaultwarden.ingressAnnotations" -}}
+cert-manager.io/cluster-issuer: {{ include "vaultwarden.clusterIssuer" . | quote }}
+cert-manager.io/private-key-algorithm: "ECDSA"
+nginx.ingress.kubernetes.io/affinity: "cookie"
+nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+nginx.ingress.kubernetes.io/session-cookie-name: "route"
+nginx.org/client-max-body-size: "100m"
+{{- range .Values.ingress.customAnnotations }}
+{{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+{{- end }}
+{{- end }}
