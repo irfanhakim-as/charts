@@ -1,6 +1,6 @@
-{{- $disableBackgroundTasks := .Values.linkding.disableBackgroundTasks | default "false" | toString | title | quote }}
-{{- $disableUrlValidation := .Values.linkding.disableUrlValidation | default "false" | toString | title | quote }}
-{{- $csrfTrustedOrigins := .Values.linkding.csrfTrustedOrigins | join "," | toString | quote }}
+{{- $disableBackgroundTasks := include "linkding.disableBackgroundTasks" . | quote }}
+{{- $disableUrlValidation := include "linkding.disableUrlValidation" . | quote }}
+{{- $csrfTrustedOrigins := include "linkding.csrfTrustedOrigins" . | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap

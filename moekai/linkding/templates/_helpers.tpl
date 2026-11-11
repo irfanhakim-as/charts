@@ -60,3 +60,50 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Volume mounts for the storage volumes
+*/}}
+{{- define "linkding.volumeMounts" -}}
+{{- $dataPersistence := eq (include "linkding.dataPersistence" .) "true" -}}
+{{- $dataSubPath := include "linkding.dataSubPath" . -}}
+{{- if $dataPersistence -}}
+volumeMounts:
+  - name: {{ .Release.Name }}-linkding-data
+    mountPath: {{ include "linkding.dataMountPath" . | quote }}
+    {{- if $dataSubPath }}
+    subPath: {{ $dataSubPath | quote }}
+    {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Volumes for the storage volumes
+*/}}
+{{- define "linkding.volumes" -}}
+{{- $dataPersistence := eq (include "linkding.dataPersistence" .) "true" -}}
+{{- if $dataPersistence -}}
+volumes:
+  - name: {{ .Release.Name }}-linkding-data
+    persistentVolumeClaim:
+      claimName: {{ .Release.Name }}-linkding-data-pvc
+{{- end }}
+{{- end }}
+
+{{/*
+Ingress annotations
+*/}}
+{{- define "linkding.ingressAnnotations" -}}
+cert-manager.io/cluster-issuer: {{ include "linkding.clusterIssuer" . | quote }}
+cert-manager.io/private-key-algorithm: "ECDSA"
+nginx.ingress.kubernetes.io/affinity: "cookie"
+nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+nginx.ingress.kubernetes.io/session-cookie-name: "route"
+nginx.org/client-max-body-size: "100m"
+{{- range .Values.ingress.customAnnotations }}
+{{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+{{- end }}
+{{- end }}
