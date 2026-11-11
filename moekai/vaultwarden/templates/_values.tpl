@@ -304,6 +304,75 @@ Signup configurations.
 
 
 {{/*
+Single sign-on (SSO) configurations.
+*/}}
+{{- define "vaultwarden.ssoEnabled" -}}
+{{- .Values.sso.enabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoOnly" -}}
+{{- .Values.sso.only | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoSignupsAllowed" -}}
+{{- .Values.sso.signupsAllowed | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoSignupsMatchEmail" -}}
+{{- .Values.sso.signupsMatchEmail | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAllowUnknownEmailVerification" -}}
+{{- .Values.sso.allowUnknownEmailVerification | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAuthority" -}}
+{{- .Values.sso.authority | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoClientId" -}}
+{{- .Values.sso.clientId | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoClientSecret" -}}
+{{- .Values.sso.clientSecret | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoScopes" -}}
+{{- .Values.sso.scopes | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAuthorizeExtraParams" -}}
+{{- .Values.sso.authorizeExtraParams | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoPkce" -}}
+{{- .Values.sso.pkce | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAudienceTrusted" -}}
+{{- .Values.sso.audienceTrusted | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAuthOnlyNotSession" -}}
+{{- .Values.sso.authOnlyNotSession | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoClientCacheExpiration" -}}
+{{- .Values.sso.clientCacheExpiration | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoDebugTokens" -}}
+{{- .Values.sso.debugTokens | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoMasterPasswordPolicy" -}}
+{{- with .Values.sso.masterPasswordPolicy -}}
+{{- toJson . }}
+{{- end }}
+{{- end }}
+
+{{/*
 Two-factor authentication configurations.
 */}}
 {{- define "vaultwarden.tfaExpiry" -}}

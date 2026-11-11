@@ -119,6 +119,7 @@ Whether the Secret has any data to render
   (ternary (include "vaultwarden.pushKey" .) "" (eq (include "vaultwarden.pushEnabled" .) "true"))
   (include "vaultwarden.hibpApiKey" .)
   (include "vaultwarden.adminToken" .)
+  (include "vaultwarden.ssoClientSecret" .)
   (ternary (include "vaultwarden.yubicoId" .) "" (eq (include "vaultwarden.yubicoEnabled" .) "true"))
   (ternary (include "vaultwarden.yubicoKey" .) "" (eq (include "vaultwarden.yubicoEnabled" .) "true"))
   (ternary (include "vaultwarden.smtpUser" .) "" (eq (include "vaultwarden.mailEnabled" .) "true"))

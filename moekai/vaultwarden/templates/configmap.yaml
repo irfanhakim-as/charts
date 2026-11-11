@@ -87,3 +87,48 @@ data:
 {{- if and $yubico $yubicoServer }}
   YUBICO_SERVER: {{ $yubicoServer | quote }}
 {{- end }}
+{{- with include "vaultwarden.ssoEnabled" . }}
+  SSO_ENABLED: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoOnly" . }}
+  SSO_ONLY: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoSignupsAllowed" . }}
+  SSO_SIGNUPS_ALLOWED: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoSignupsMatchEmail" . }}
+  SSO_SIGNUPS_MATCH_EMAIL: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoAllowUnknownEmailVerification" . }}
+  SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoAuthority" . }}
+  SSO_AUTHORITY: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoClientId" . }}
+  SSO_CLIENT_ID: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoScopes" . }}
+  SSO_SCOPES: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoAuthorizeExtraParams" . }}
+  SSO_AUTHORIZE_EXTRA_PARAMS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoPkce" . }}
+  SSO_PKCE: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoAudienceTrusted" . }}
+  SSO_AUDIENCE_TRUSTED: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoAuthOnlyNotSession" . }}
+  SSO_AUTH_ONLY_NOT_SESSION: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoClientCacheExpiration" . }}
+  SSO_CLIENT_CACHE_EXPIRATION: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoDebugTokens" . }}
+  SSO_DEBUG_TOKENS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.ssoMasterPasswordPolicy" . }}
+  SSO_MASTER_PASSWORD_POLICY: {{ . | quote }}
+{{- end }}

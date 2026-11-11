@@ -318,6 +318,94 @@ signup:
   #   - "example.org"
   domainWhitelist: []
 
+# Single sign-on (SSO) configurations using OpenID Connect (OIDC).
+sso:
+  # Specifies whether users can log in through an OIDC provider.
+  # Note: Requires "authority", "clientId", and "clientSecret", and the redirect URI of the provider client must be "https://${.vaultwarden.domain}/identity/connect/oidc-signin".
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # Specifies whether to prevent users from logging in with their email and master password.
+  # Note: Keep this off until signing in with SSO is confirmed to work, otherwise nobody can log in.
+  # Default: "false"
+  # Example:
+  # only: "true"
+  only: ""
+  # Specifies whether the SSO login flow can create new accounts.
+  # Note: Consider turning this off when using a public provider.
+  # Default: "true"
+  # Example:
+  # signupsAllowed: "false"
+  signupsAllowed: ""
+  # Specifies whether a new SSO user is linked to an existing account with the same email address.
+  # Default: "true"
+  # Example:
+  # signupsMatchEmail: "false"
+  signupsMatchEmail: ""
+  # Specifies whether to accept users whose email verification status is unknown to the provider.
+  # Note: Allowing this together with "signupsMatchEmail" opens a potential account takeover.
+  # Default: "false"
+  # Example:
+  # allowUnknownEmailVerification: "true"
+  allowUnknownEmailVerification: ""
+  # The base URL of the OIDC provider, without a trailing slash and the "/.well-known/openid-configuration" path.
+  # Example:
+  # authority: "https://id.example.com"
+  authority: ""
+  # The client ID of the application registered with the OIDC provider.
+  # Example:
+  # clientId: "vaultwarden"
+  clientId: ""
+  # The client secret of the application registered with the OIDC provider.
+  # Example:
+  # clientSecret: "secret"
+  clientSecret: ""
+  # The space-separated scopes requested from the OIDC provider.
+  # Note: The "openid" scope is always requested.
+  # Default: "email profile"
+  # Example:
+  # scopes: "email profile groups"
+  scopes: ""
+  # The additional parameters added to the authorization request.
+  # Example:
+  # authorizeExtraParams: "access_type=offline&prompt=consent"
+  authorizeExtraParams: ""
+  # Specifies whether to use PKCE for the authorization code flow.
+  # Default: "true"
+  # Example:
+  # pkce: "false"
+  pkce: ""
+  # A regular expression matching additional audiences trusted in the ID token.
+  # Note: Only the client ID is trusted by default.
+  # Example:
+  # audienceTrusted: "^other-client$"
+  audienceTrusted: ""
+  # The master password policy applied to users signing in with SSO.
+  # Note: Accepts "enforceOnLogin", "minComplexity" (0 to 4), "minLength", "requireLower", "requireNumbers", "requireSpecial", and "requireUpper".
+  # Example:
+  # masterPasswordPolicy:
+  #   enforceOnLogin: false
+  #   minComplexity: 3
+  #   minLength: 12
+  masterPasswordPolicy: {}
+  # Specifies whether to use SSO only for authentication and keep the default Vaultwarden session lifecycle.
+  # Default: "false"
+  # Example:
+  # authOnlyNotSession: "true"
+  authOnlyNotSession: ""
+  # The number of seconds the OIDC discovery document is cached for, with 0 to disable caching.
+  # Default: "0"
+  # Example:
+  # clientCacheExpiration: "300"
+  clientCacheExpiration: ""
+  # Specifies whether to log all tokens.
+  # Note: Requires the log level to be "debug".
+  # Default: "false"
+  # Example:
+  # debugTokens: "true"
+  debugTokens: ""
+
 # Two-factor authentication (2FA) configurations.
 tfa:
   # Specifies whether to allow small time discrepancies for TOTP code validation.
