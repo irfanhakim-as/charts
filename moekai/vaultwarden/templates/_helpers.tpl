@@ -129,3 +129,68 @@ Whether the Secret has any data to render
 -}}
 {{- gt (len (compact $values)) 0 }}
 {{- end }}
+
+{{/*
+Startup probe for the Vaultwarden container
+*/}}
+{{- define "vaultwarden.startupProbe" -}}
+{{- $enabled := .Values.probes.vaultwarden.startup.enabled -}}
+{{- $spec := .Values.probes.vaultwarden.startup.spec -}}
+{{- if and $enabled $spec -}}
+startupProbe:
+  {{- toYaml $spec | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Liveness probe for the Vaultwarden container
+*/}}
+{{- define "vaultwarden.livenessProbe" -}}
+{{- $enabled := .Values.probes.vaultwarden.liveness.enabled -}}
+{{- $spec := .Values.probes.vaultwarden.liveness.spec -}}
+{{- if $enabled -}}
+livenessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: {{ include "vaultwarden.probePath" . }}
+    port: vaultwarden
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Readiness probe for the Vaultwarden container
+*/}}
+{{- define "vaultwarden.readinessProbe" -}}
+{{- $enabled := .Values.probes.vaultwarden.readiness.enabled -}}
+{{- $spec := .Values.probes.vaultwarden.readiness.spec -}}
+{{- if $enabled -}}
+readinessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: {{ include "vaultwarden.probePath" . }}
+    port: vaultwarden
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Path of the health endpoint
+*/}}
+{{- define "vaultwarden.probePath" -}}
+/alive
+{{- end }}

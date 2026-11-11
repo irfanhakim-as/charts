@@ -1,3 +1,5 @@
+{{- $ingressClassName := include "vaultwarden.ingressClassName" . }}
+{{- $tlsSecretName := include "vaultwarden.tlsSecretName" . }}
 {{- $domain := include "vaultwarden.ingressDomain" . }}
 {{- $wwwDomain := include "vaultwarden.ingressWwwDomain" . }}
 {{- if $domain }}
@@ -11,7 +13,7 @@ metadata:
   annotations:
     {{- include "vaultwarden.ingressAnnotations" . | nindent 4 }}
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: {{ $ingressClassName | quote }}
   rules:
     - host: {{ $domain | quote }}
       http:
@@ -41,5 +43,5 @@ spec:
       {{- if $wwwDomain }}
         - {{ $wwwDomain | quote }}
       {{- end }}
-      secretName: {{ .Release.Name }}-vaultwarden-tls-cert
+      secretName: {{ $tlsSecretName | quote }}
 {{- end }}

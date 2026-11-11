@@ -836,6 +836,14 @@ Ingress configurations.
 {{- ternary (printf "www.%s" $domain) "" (and $www (ne $domain "")) }}
 {{- end }}
 
+{{- define "vaultwarden.ingressClassName" -}}
+{{- .Values.ingress.className | default "nginx" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tlsSecretName" -}}
+{{- .Values.ingress.tlsSecretName | default (printf "%s-vaultwarden-tls-cert" .Release.Name) | toString }}
+{{- end }}
+
 {{- define "vaultwarden.clusterIssuer" -}}
 {{- .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString }}
 {{- end }}

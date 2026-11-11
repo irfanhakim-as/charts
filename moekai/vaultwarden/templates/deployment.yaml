@@ -77,6 +77,15 @@ spec:
               containerPort: {{ int ($networkPort | default "80") }}
               protocol: TCP
           {{- include "vaultwarden.resources" . | nindent 10 }}
+          {{- with include "vaultwarden.startupProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "vaultwarden.livenessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "vaultwarden.readinessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-vaultwarden-cm
