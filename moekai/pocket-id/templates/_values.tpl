@@ -88,7 +88,8 @@ Service account configurations for Pocket ID pods.
 {{- end }}
 
 {{- define "pocket-id.serviceAccountName" -}}
-{{- .Values.serviceAccount.name | default (printf "%s-pocket-id" .Release.Name) | toString }}
+{{- $default := ternary (printf "%s-pocket-id" .Release.Name) "default" .Values.serviceAccount.create }}
+{{- .Values.serviceAccount.name | default $default | toString }}
 {{- end }}
 
 {{- define "pocket-id.serviceAccountAnnotations" -}}
