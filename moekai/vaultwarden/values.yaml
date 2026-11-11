@@ -201,6 +201,11 @@ vaultwarden:
   #   - "autofill-v2"
   #   - "extension-refresh"
   expFeatures: []
+  # The name of an existing Secret to load sensitive environment variables from.
+  # Note: Keys must be the exact environment variable names (e.g. "ADMIN_TOKEN", "DATABASE_URL", "SMTP_PASSWORD").
+  # Example:
+  # existingSecret: "vaultwarden-secret"
+  existingSecret: ""
   # Custom init script to run before the Vaultwarden container starts.
   # Example:
   # initScript: >-

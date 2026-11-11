@@ -185,6 +185,10 @@ Vaultwarden configurations.
 {{- .Values.vaultwarden.expFeatures | join "," | toString }}
 {{- end }}
 
+{{- define "vaultwarden.existingSecret" -}}
+{{- .Values.vaultwarden.existingSecret | toString }}
+{{- end }}
+
 {{- define "vaultwarden.hibpApiKey" -}}
 {{- .Values.vaultwarden.hibpApiKey | toString }}
 {{- end }}

@@ -108,3 +108,21 @@ nginx.org/client-max-body-size: "100m"
 {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
 {{- end }}
 {{- end }}
+
+{{/*
+Whether the Secret has any data to render
+*/}}
+{{- define "vaultwarden.secretEnabled" -}}
+{{- $values := list
+  (include "vaultwarden.dbUrl" .)
+  (ternary (include "vaultwarden.pushId" .) "" (eq (include "vaultwarden.pushEnabled" .) "true"))
+  (ternary (include "vaultwarden.pushKey" .) "" (eq (include "vaultwarden.pushEnabled" .) "true"))
+  (include "vaultwarden.hibpApiKey" .)
+  (include "vaultwarden.adminToken" .)
+  (ternary (include "vaultwarden.yubicoId" .) "" (eq (include "vaultwarden.yubicoEnabled" .) "true"))
+  (ternary (include "vaultwarden.yubicoKey" .) "" (eq (include "vaultwarden.yubicoEnabled" .) "true"))
+  (ternary (include "vaultwarden.smtpUser" .) "" (eq (include "vaultwarden.mailEnabled" .) "true"))
+  (ternary (include "vaultwarden.smtpPassword" .) "" (eq (include "vaultwarden.mailEnabled" .) "true"))
+-}}
+{{- gt (len (compact $values)) 0 }}
+{{- end }}

@@ -8,6 +8,7 @@
 {{- $initPullPolicy := include "vaultwarden.initImagePullPolicy" . | quote }}
 {{- $replicaCount := include "vaultwarden.replicaCount" . }}
 {{- $serviceAccountName := include "vaultwarden.serviceAccountName" . }}
+{{- $existingSecret := include "vaultwarden.existingSecret" . }}
 {{- $initScript := include "vaultwarden.initScript" . }}
 ---
 apiVersion: apps/v1
@@ -78,8 +79,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-vaultwarden-cm
+            {{- if eq (include "vaultwarden.secretEnabled" .) "true" }}
             - secretRef:
                 name: {{ .Release.Name }}-vaultwarden-secret
+            {{- end }}
+            {{- if $existingSecret }}
+            - secretRef:
+                name: {{ $existingSecret | quote }}
+            {{- end }}
           {{- with include "vaultwarden.extraEnv" . }}
           {{- . | nindent 10 }}
           {{- end }}

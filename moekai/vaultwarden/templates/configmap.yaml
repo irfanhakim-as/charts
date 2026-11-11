@@ -29,6 +29,10 @@
 {{- $mailFromName := include "vaultwarden.mailFromName" . | quote }}
 {{- $smtpSecurity := include "vaultwarden.smtpSecurity" . | quote }}
 {{- $mail := eq (include "vaultwarden.mailEnabled" .) "true" }}
+{{- $smtpHost := include "vaultwarden.smtpHost" . }}
+{{- $smtpPort := include "vaultwarden.smtpPort" . | quote }}
+{{- $yubico := eq (include "vaultwarden.yubicoEnabled" .) "true" }}
+{{- $yubicoServer := include "vaultwarden.yubicoServer" . }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -75,4 +79,11 @@ data:
   SMTP_FROM: {{ $mailFromEmail | quote }}
   SMTP_FROM_NAME: {{ $mailFromName }}
   SMTP_SECURITY: {{ $smtpSecurity }}
+{{- end }}
+{{- if $mail }}
+  SMTP_HOST: {{ $smtpHost | quote }}
+  SMTP_PORT: {{ $smtpPort }}
+{{- end }}
+{{- if and $yubico $yubicoServer }}
+  YUBICO_SERVER: {{ $yubicoServer | quote }}
 {{- end }}
