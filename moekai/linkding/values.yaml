@@ -180,6 +180,11 @@ linkding:
   # Example:
   # existingSecret: "linkding-secret"
   existingSecret: ""
+  # The number of seconds a user stays logged in to the web interface.
+  # Default: "1209600"
+  # Example:
+  # sessionCookieAge: "604800"
+  sessionCookieAge: ""
   # The timezone used by Linkding for time-based operations.
   # Default: "UTC"
   # Example:
@@ -267,6 +272,19 @@ network:
   # Example:
   # allowedHost: "linkding.example.com"
   allowedHost: ""
+  # The hosts Linkding may load data from even though they are on an internal network.
+  # Note: Linkding refuses internal hosts by default. Accepts host names, IP addresses, CIDR ranges, and a leading dot for a domain with its subdomains, or "*" to allow all.
+  # Example:
+  # allowedInternalHosts:
+  #   - "nas.local"
+  #   - "192.168.1.0/24"
+  #   - ".home.arpa"
+  allowedInternalHosts: []
+  # The origins that are allowed to call the REST API from a browser.
+  # Example:
+  # corsAllowedOrigins:
+  #   - "https://frontend.example.com"
+  corsAllowedOrigins: []
   # Specifies whether to use the "X-Forwarded-Host" header sent by the reverse proxy.
   # Default: "false"
   # Example:

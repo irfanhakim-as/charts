@@ -176,6 +176,10 @@ Linkding configurations.
 {{- .Values.linkding.csrfTrustedOrigins | join "," | toString }}
 {{- end }}
 
+{{- define "linkding.sessionCookieAge" -}}
+{{- .Values.linkding.sessionCookieAge | toString }}
+{{- end }}
+
 {{- define "linkding.timezone" -}}
 {{- .Values.linkding.timezone | toString }}
 {{- end }}
@@ -254,6 +258,14 @@ Network configurations.
 
 {{- define "linkding.networkAllowedHost" -}}
 {{- .Values.network.allowedHost | toString }}
+{{- end }}
+
+{{- define "linkding.networkAllowedInternalHosts" -}}
+{{- .Values.network.allowedInternalHosts | join "," | toString }}
+{{- end }}
+
+{{- define "linkding.networkCorsAllowedOrigins" -}}
+{{- .Values.network.corsAllowedOrigins | join "," | toString }}
 {{- end }}
 
 {{- define "linkding.networkUseXForwardedHost" -}}

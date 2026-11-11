@@ -23,6 +23,9 @@ data:
   LD_DB_HOST: {{ $dbHost }}
   LD_DB_PORT: {{ $dbPort }}
 {{- end }}
+{{- with include "linkding.sessionCookieAge" . }}
+  LD_SESSION_COOKIE_AGE: {{ . | quote }}
+{{- end }}
 {{- with include "linkding.timezone" . }}
   TZ: {{ . | quote }}
 {{- end }}
@@ -58,6 +61,12 @@ data:
 {{- end }}
 {{- with include "linkding.networkAllowedHost" . }}
   HOST_NAME: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkAllowedInternalHosts" . }}
+  LD_ALLOWED_INTERNAL_HOSTS: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkCorsAllowedOrigins" . }}
+  LD_CORS_ALLOWED_ORIGINS: {{ . | quote }}
 {{- end }}
 {{- with include "linkding.networkUseXForwardedHost" . }}
   LD_USE_X_FORWARDED_HOST: {{ . | quote }}

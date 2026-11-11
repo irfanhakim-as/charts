@@ -78,6 +78,20 @@ linkding:
 
 If the proxy does not forward the original `Host` header, set `network.useXForwardedHost` to `"true"` so Linkding uses the `X-Forwarded-Host` header instead. Set `network.logXForwardedFor` to `"true"` to record client addresses in the request logs.
 
+### Bookmarking internal URLs
+
+Linkding refuses to load data from hosts on internal networks, such as other cluster services or devices on a local network. To bookmark such URLs with their titles and previews, list the hosts in `network.allowedInternalHosts`:
+
+```yaml
+network:
+  allowedInternalHosts:
+    - "nas.local"
+    - "192.168.1.0/24"
+    - ".home.arpa"
+```
+
+A host name that starts with a dot allows the domain and all of its subdomains. A single `*` allows all hosts and turns the protection off.
+
 ### Security context
 
 The image starts as root to prepare the data directory and then runs Linkding as the `www-data` user, so `runAsUser` and `runAsNonRoot` must not be set in `containerSecurityContext`.
@@ -122,6 +136,8 @@ Set `oidc.enabled` to `"true"` along with the endpoints, `oidc.clientId`, and `o
 Linkding matches users to existing accounts by email address, which is also the default username of a new account. Set `oidc.usernameClaim` to use another claim (e.g. `preferred_username`) as the username of new accounts. A user that does not exist yet is created on the first sign-in.
 
 To have an existing admin account matched, create it with the command in [creating the admin user](#create-the-admin-user), since `linkding.admin.user` sets only a username and no email address. Create the account before the first sign-in with OIDC.
+
+API clients such as the browser extension and mobile apps sign in with an API token. When using an authentication proxy, let API requests that carry an `Authorization` header bypass it.
 
 Set `linkding.disableLoginForm` to `"true"` only after confirming that signing in with OIDC works, since the login form is no longer available afterwards.
 
@@ -255,10 +271,13 @@ Set `linkding.disableLoginForm` to `"true"` only after confirming that signing i
 | linkding.domain | string | `""` | The ingress domain name that hosts the Linkding server. |
 | linkding.existingSecret | string | `""` | The name of an existing Secret to load sensitive environment variables from. |
 | linkding.initScript | string | `""` | Custom init script to run before the Linkding container starts. |
+| linkding.sessionCookieAge | string | `""` | The number of seconds a user stays logged in to the web interface. Default: `"1209600"`. |
 | linkding.timezone | string | `""` | The timezone used by Linkding for time-based operations. Default: `"UTC"`. |
 | logging.disableRequestLogs | string | `""` | Specifies whether to disable request logs, except for requests with a client or server error response. Default: `"false"`. |
 | network.allowedHost | string | `""` | The only host name Linkding accepts requests for. Default: `All hosts are accepted`. |
+| network.allowedInternalHosts | list | `[]` | The hosts Linkding may load data from even though they are on an internal network. |
 | network.contextPath | string | `""` | The context path that Linkding is served from. |
+| network.corsAllowedOrigins | list | `[]` | The origins that are allowed to call the REST API from a browser. |
 | network.host | string | `""` | The address the Linkding server binds to inside the container. Default: `"[::]"`. |
 | network.logXForwardedFor | string | `""` | Specifies whether to log the client address from the "X-Forwarded-For" header in request logs. Default: `"false"`. |
 | network.port | string | `""` | The port on which the Linkding server listens inside the container. Default: `"9090"`. |
