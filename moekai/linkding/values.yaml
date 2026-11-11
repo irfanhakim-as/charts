@@ -27,7 +27,7 @@ podAnnotations: {}
 podSecurityContext: {}
 
 # Security context applied at the Linkding container level.
-# Note: The image starts as root to prepare the data directory then drops to the "www-data" user, so avoid "runAsNonRoot" and "runAsUser".
+# Note: Linkding must start as root, so avoid "runAsNonRoot" and "runAsUser".
 # Example:
 # containerSecurityContext:
 #   allowPrivilegeEscalation: false
@@ -156,7 +156,6 @@ linkding:
   disableBackgroundTasks: ""
   # Specifies whether to hide the username and password login form.
   # Note: Requires OIDC or an authentication proxy to be enabled, otherwise nobody can sign in.
-  # Default: "false"
   # Example:
   # disableLoginForm: "true"
   disableLoginForm: ""
@@ -181,12 +180,10 @@ linkding:
   # existingSecret: "linkding-secret"
   existingSecret: ""
   # The number of seconds a user stays logged in to the web interface.
-  # Default: "1209600"
   # Example:
   # sessionCookieAge: "604800"
   sessionCookieAge: ""
   # The timezone used by Linkding for time-based operations.
-  # Default: "UTC"
   # Example:
   # timezone: "Asia/Kuala_Lumpur"
   timezone: ""
@@ -213,12 +210,10 @@ linkding:
 authProxy:
   # Specifies whether to authenticate users through a header set by an authentication proxy.
   # Note: Disables username and password login, only enable behind a trusted proxy that sets the header.
-  # Default: "false"
   # Example:
   # enabled: "true"
   enabled: ""
   # The name of the request header that carries the username set by the authentication proxy.
-  # Default: "REMOTE_USER"
   # Example:
   # usernameHeader: "HTTP_REMOTE_USER"
   usernameHeader: ""
@@ -231,12 +226,10 @@ authProxy:
 favicon:
   # The URL used to download website favicons.
   # Note: Must contain a "{url}" or "{domain}" placeholder.
-  # Default: "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={url}&size=32"
   # Example:
   # provider: "https://icons.duckduckgo.com/ip3/{domain}.ico"
   provider: ""
   # Specifies whether favicons are refreshed daily by a background task.
-  # Default: "true"
   # Example:
   # refreshEnabled: "false"
   refreshEnabled: ""
@@ -244,7 +237,6 @@ favicon:
 # Logging configurations.
 logging:
   # Specifies whether to disable request logs, except for requests with a client or server error response.
-  # Default: "false"
   # Example:
   # disableRequestLogs: "true"
   disableRequestLogs: ""
@@ -258,7 +250,6 @@ network:
   port: ""
   # The address the Linkding server binds to inside the container.
   # Note: The default listens on both IPv4 and IPv6, set "0.0.0.0" for IPv4 only.
-  # Default: "[::]"
   # Example:
   # host: "0.0.0.0"
   host: ""
@@ -268,7 +259,6 @@ network:
   # contextPath: "linkding/"
   contextPath: ""
   # The only host name Linkding accepts requests for.
-  # Default: All hosts are accepted
   # Example:
   # allowedHost: "linkding.example.com"
   allowedHost: ""
@@ -286,23 +276,19 @@ network:
   #   - "https://frontend.example.com"
   corsAllowedOrigins: []
   # Specifies whether to use the "X-Forwarded-Host" header sent by the reverse proxy.
-  # Default: "false"
   # Example:
   # useXForwardedHost: "true"
   useXForwardedHost: ""
   # Specifies whether to log the client address from the "X-Forwarded-For" header in request logs.
-  # Default: "false"
   # Example:
   # logXForwardedFor: "true"
   logXForwardedFor: ""
   # The number of seconds before a request times out.
   # Note: Increase it when importing large bookmark files.
-  # Default: "60"
   # Example:
   # requestTimeout: "120"
   requestTimeout: ""
   # The maximum size in bytes of a POST request.
-  # Default: No limit
   # Example:
   # requestMaxContentLength: "104857600"
   requestMaxContentLength: ""
@@ -311,7 +297,6 @@ network:
 oidc:
   # Specifies whether to enable single sign-on through an OIDC provider.
   # Note: Users are matched to existing users by email address, and created when no match exists.
-  # Default: "false"
   # Example:
   # enabled: "true"
   enabled: ""
@@ -340,28 +325,23 @@ oidc:
   # clientSecret: "secret"
   clientSecret: ""
   # The algorithm the OIDC provider uses to sign ID tokens.
-  # Default: "RS256"
   # Example:
   # signAlgo: "ES256"
   signAlgo: ""
   # The space-separated scopes requested from the OIDC provider.
-  # Default: "openid email profile"
   # Example:
   # scopes: "openid email profile groups"
   scopes: ""
   # Specifies whether to use PKCE for the OIDC flow.
-  # Default: "true"
   # Example:
   # usePkce: "false"
   usePkce: ""
   # Specifies whether to verify the TLS certificate of the OIDC provider.
-  # Default: "true"
   # Example:
   # verifySsl: "false"
   verifySsl: ""
   # The claim used as the username of newly created users.
   # Note: Falls back to the email claim when the claim is missing or empty.
-  # Default: "email"
   # Example:
   # usernameClaim: "preferred_username"
   usernameClaim: ""
@@ -369,7 +349,6 @@ oidc:
 # Preview configurations.
 preview:
   # The maximum size in bytes of a downloaded preview image.
-  # Default: "5242880"
   # Example:
   # maxSize: "10485760"
   maxSize: ""
@@ -378,24 +357,20 @@ preview:
 snapshots:
   # Specifies whether to create local HTML snapshots of bookmarks.
   # Note: Requires an image variant that includes Chromium (e.g. a tag ending in "-plus-alpine").
-  # Default: "false"
   # Example:
   # enabled: "true"
   enabled: ""
   # Specifies whether to disable uploading files to bookmarks.
-  # Default: "false"
   # Example:
   # disableAssetUpload: "true"
   disableAssetUpload: ""
   # The maximum size in bytes of a PDF snapshot.
-  # Default: "15728640"
   # Example:
   # pdfMaxSize: "31457280"
   pdfMaxSize: ""
   # Single-file configurations.
   singlefile:
     # The path of the single-file executable.
-    # Default: "single-file"
     # Example:
     # path: "/usr/local/bin/single-file"
     path: ""
@@ -404,13 +379,11 @@ snapshots:
     # options: "--user-agent=\"Mozilla/5.0\""
     options: ""
     # The options passed to single-file to run the uBlock Origin Lite extension.
-    # Default: The options bundled with the image
     # Example:
     # ublockOptions: "--browser-arg=\"--headless=new\""
     ublockOptions: ""
     # The number of seconds to wait for a snapshot to complete.
     # Note: Increase it on low-powered hardware.
-    # Default: "120"
     # Example:
     # timeout: "180"
     timeout: ""

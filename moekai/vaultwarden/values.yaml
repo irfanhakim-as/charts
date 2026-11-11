@@ -27,7 +27,7 @@ podAnnotations: {}
 podSecurityContext: {}
 
 # Security context applied at the Vaultwarden container level.
-# Note: Running as a non-root user requires a port above 1023 and fsGroup to be set in "podSecurityContext".
+# Note: Running as a non-root user requires a port of 1024 or higher and fsGroup to be set in "podSecurityContext".
 # Example:
 # containerSecurityContext:
 #   runAsUser: 1000
@@ -156,7 +156,7 @@ vaultwarden:
   # Example:
   # adminToken: "password"
   adminToken: ""
-  # Number of days to retain trashed items before permanent deletion.
+  # The number of days to retain trashed items before permanent deletion.
   # Example:
   # clearTrash: "30"
   clearTrash: ""
@@ -207,18 +207,15 @@ vaultwarden:
   # existingSecret: "vaultwarden-secret"
   existingSecret: ""
   # Specifies whether to hide the onboarding dialogs, extension install prompts, and premium upsell modals shown by the clients.
-  # Default: "false"
   # Example:
   # suppressOnboarding: "true"
   suppressOnboarding: ""
   # The base URL of the feed that provides the Fill Assist rules to the clients.
   # Note: Must be an HTTPS URL without credentials, query parameters, or fragments.
-  # Default: "https://fillassist.bitwarden.com"
   # Example:
   # fillAssistRulesUrl: "https://fillassist.example.com"
   fillAssistRulesUrl: ""
   # Specifies whether to serve the web vault.
-  # Default: "true"
   # Example:
   # webVaultEnabled: "false"
   webVaultEnabled: ""
@@ -233,12 +230,10 @@ vaultwarden:
 admin:
   # Specifies whether to bypass the security of the admin panel.
   # Note: Only use it with a separate authentication layer in front of Vaultwarden, otherwise anyone can open the admin panel.
-  # Default: "false"
   # Example:
   # disableToken: "true"
   disableToken: ""
   # The number of minutes an admin session lasts for.
-  # Default: "20"
   # Example:
   # sessionLifetime: "60"
   sessionLifetime: ""
@@ -269,36 +264,30 @@ duo:
 icons:
   # The service that provides website icons.
   # Note: Accepts "internal", "bitwarden", "duckduckgo", "google", or a URL containing "{}" for the domain.
-  # Default: "internal"
   # Example:
   # service: "duckduckgo"
   service: ""
   # The HTTP status code used to redirect to an external icon service.
   # Note: Accepts 301, 302, 307, and 308, and the Bitwarden clients support 301 and 302 best.
-  # Default: "302"
   # Example:
   # redirectCode: "308"
   redirectCode: ""
   # The number of seconds a downloaded icon is considered fresh.
   # Note: Set to "0" to keep icons forever.
-  # Default: "2592000"
   # Example:
   # cacheTtl: "604800"
   cacheTtl: ""
   # The number of seconds before retrying an icon that was not available.
   # Note: Set to "0" to keep the result forever.
-  # Default: "259200"
   # Example:
   # cacheNegativeTtl: "86400"
   cacheNegativeTtl: ""
   # The number of seconds before giving up on downloading an icon.
-  # Default: "10"
   # Example:
   # downloadTimeout: "30"
   downloadTimeout: ""
   # Specifies whether to stop downloading icons and only serve the ones already cached.
   # Note: "cacheTtl" must be "0" as well, otherwise cached icons are eventually deleted and not downloaded again.
-  # Default: "false"
   # Example:
   # disableDownload: "true"
   disableDownload: ""
@@ -326,7 +315,6 @@ invitation:
 jobs:
   # The number of milliseconds between checks for jobs that need to run.
   # Note: Set to "0" to disable all scheduled jobs.
-  # Default: "30000"
   # Example:
   # pollInterval: "60000"
   pollInterval: ""
@@ -334,47 +322,38 @@ jobs:
   # Note: Uses "second minute hour day-of-month month day-of-week" and "disabled" turns a job off.
   schedules:
     # The cron schedule of the job that deletes Sends past their deletion date.
-    # Default: "0 5 * * * *"
     # Example:
     # sendPurge: "0 5 * * * *"
     sendPurge: ""
     # The cron schedule of the job that permanently deletes trashed items.
-    # Default: "0 5 0 * * *"
     # Example:
     # trashPurge: "0 5 0 * * *"
     trashPurge: ""
     # The cron schedule of the job that checks for incomplete two-factor authentication logins.
-    # Default: "30 * * * * *"
     # Example:
     # incomplete2fa: "30 * * * * *"
     incomplete2fa: ""
     # The cron schedule of the job that sends expiration reminders to emergency access grantors.
-    # Default: "0 3 * * * *"
     # Example:
     # emergencyNotificationReminder: "0 3 * * * *"
     emergencyNotificationReminder: ""
     # The cron schedule of the job that grants emergency access requests that have met the required wait time.
-    # Default: "0 7 * * * *"
     # Example:
     # emergencyRequestTimeout: "0 7 * * * *"
     emergencyRequestTimeout: ""
     # The cron schedule of the job that deletes old events.
-    # Default: "0 10 0 * * *"
     # Example:
     # eventCleanup: "0 10 0 * * *"
     eventCleanup: ""
     # The cron schedule of the job that deletes old authentication requests.
-    # Default: "30 * * * * *"
     # Example:
     # authRequestPurge: "30 * * * * *"
     authRequestPurge: ""
     # The cron schedule of the job that deletes expired Duo contexts.
-    # Default: "30 * * * * *"
     # Example:
     # duoContextPurge: "30 * * * * *"
     duoContextPurge: ""
     # The cron schedule of the job that deletes leftovers of incomplete SSO logins.
-    # Default: "0 20 0 * * *"
     # Example:
     # incompleteSsoPurge: "0 20 0 * * *"
     incompleteSsoPurge: ""
@@ -382,23 +361,19 @@ jobs:
 # Limit configurations.
 limits:
   # The maximum attachment storage in kilobytes allowed per user.
-  # Default: No limit
   # Example:
   # userAttachment: "102400"
   userAttachment: ""
   # The maximum attachment storage in kilobytes allowed per organization.
-  # Default: No limit
   # Example:
   # organizationAttachment: "1048576"
   organizationAttachment: ""
   # The maximum Send storage in kilobytes allowed per user.
-  # Default: No limit
   # Example:
   # userSend: "102400"
   userSend: ""
   # Specifies whether to raise the secure note size limit from 10,000 to 100,000 characters.
   # Note: May cause issues with clients, and exports will not work on Bitwarden servers.
-  # Default: "false"
   # Example:
   # increaseNoteSize: "true"
   increaseNoteSize: ""
@@ -406,19 +381,16 @@ limits:
 # Logging configurations.
 logging:
   # Specifies whether to show timestamps and targets in the logs.
-  # Default: "true"
   # Example:
   # extended: "false"
   extended: ""
   # The timestamp format used in extended logging.
   # Note: Accepts the format specifiers of https://docs.rs/chrono/latest/chrono/format/strftime.
-  # Default: "%Y-%m-%d %H:%M:%S.%3f"
   # Example:
   # timestampFormat: "%Y-%m-%dT%H:%M:%S"
   timestampFormat: ""
   # Specifies whether to send the logs to Syslog.
   # Note: Requires extended logging.
-  # Default: "false"
   # Example:
   # syslog: "true"
   syslog: ""
@@ -467,12 +439,10 @@ mail:
     password: ""
     # The authentication mechanisms to use with the SMTP server, separated by commas.
     # Note: Accepts "Plain", "Login", and "Xoauth2".
-    # Default: "Plain" and "Login" for encrypted connections, none otherwise
     # Example:
     # authMechanism: "Login"
     authMechanism: ""
     # The number of seconds before giving up on connecting to the SMTP server.
-    # Default: "15"
     # Example:
     # timeout: "30"
     timeout: ""
@@ -482,25 +452,21 @@ mail:
     # heloName: "vault.example.com"
     heloName: ""
     # Specifies whether to embed images in emails as attachments.
-    # Default: "true"
     # Example:
     # embedImages: "false"
     embedImages: ""
     # Specifies whether to log detailed SMTP messages.
     # Note: The logs may contain usernames and passwords, only enable it while troubleshooting.
-    # Default: "false"
     # Example:
     # debug: "true"
     debug: ""
     # Specifies whether to accept invalid TLS certificates of the SMTP server.
     # Note: Exposes emails to man-in-the-middle attacks, use only as a last resort.
-    # Default: "false"
     # Example:
     # acceptInvalidCerts: "true"
     acceptInvalidCerts: ""
     # Specifies whether to accept TLS certificates of the SMTP server that do not match its host name.
     # Note: Exposes emails to man-in-the-middle attacks, use only as a last resort.
-    # Default: "false"
     # Example:
     # acceptInvalidHostnames: "true"
     acceptInvalidHostnames: ""
@@ -508,12 +474,10 @@ mail:
   sendmail:
     # Specifies whether to send emails with the "sendmail" command.
     # Note: Requires the command to exist in the image, which the default image may not provide.
-    # Default: "false"
     # Example:
     # enabled: "true"
     enabled: ""
     # The path of the "sendmail" command.
-    # Default: "sendmail" from the PATH
     # Example:
     # command: "/usr/sbin/sendmail"
     command: ""
@@ -521,36 +485,31 @@ mail:
 # Network configurations.
 network:
   # The port on which Vaultwarden listens inside the container.
-  # Note: Use a port above 1023 when running as a non-root user.
+  # Note: Use a port of 1024 or higher when running as a non-root user.
   # Default: "80"
   # Example:
   # port: "8080"
   port: ""
   # The address Vaultwarden binds to inside the container.
-  # Default: "0.0.0.0"
   # Example:
   # address: "::"
   address: ""
   # The request header that carries the IP address of the client.
   # Note: Set to "none" to use the address of the connection.
-  # Default: "X-Real-IP"
   # Example:
   # ipHeader: "X-Forwarded-For"
   ipHeader: ""
   # The addresses the client IP header is accepted from.
   # Note: Accepts "local", "all", or a comma-separated list of IP addresses and CIDR ranges.
-  # Default: "local"
   # Example:
   # ipHeaderTrustedProxies: "10.42.0.0/16"
   ipHeaderTrustedProxies: ""
   # Specifies whether to enable websocket notifications.
-  # Default: "true"
   # Example:
   # websocket: "false"
   websocket: ""
   # Specifies whether to resolve IPv6 addresses first and fall back to IPv4.
   # Note: Useful in IPv6-only environments.
-  # Default: "false"
   # Example:
   # dnsPreferIpv6: "true"
   dnsPreferIpv6: ""
@@ -570,30 +529,25 @@ network:
 organization:
   # The users allowed to create organizations.
   # Note: Accepts a list of email addresses, or "none" for nobody.
-  # Default: All users
   # Example:
   # creationUsers:
   #   - "admin@example.com"
   creationUsers: []
   # Specifies whether to log events of organizations.
   # Note: Combine it with "eventsRetainDays" to clean up old events.
-  # Default: "false"
   # Example:
   # eventsEnabled: "true"
   eventsEnabled: ""
   # The number of days events are kept in the database.
-  # Default: Events are kept indefinitely
   # Example:
   # eventsRetainDays: "90"
   eventsRetainDays: ""
   # Specifies whether to enable groups for organizations.
   # Note: A beta feature with known issues.
-  # Default: "false"
   # Example:
   # groupsEnabled: "true"
   groupsEnabled: ""
   # Specifies whether the Single Org policy must be enabled before the Reset Password policy.
-  # Default: "false"
   # Example:
   # enforceSingleOrgWithResetPasswordPolicy: "true"
   enforceSingleOrgWithResetPasswordPolicy: ""
@@ -602,7 +556,6 @@ organization:
 outbound:
   # Specifies whether to refuse connecting to non-global IP addresses.
   # Note: Protects hosts on the internal network.
-  # Default: "true"
   # Example:
   # blockNonGlobalIps: "false"
   blockNonGlobalIps: ""
@@ -615,18 +568,15 @@ outbound:
 password:
   # The number of server-side hashing iterations for the password hash of new users.
   # Note: Existing users are updated on their next login, and the value must be at least 100000.
-  # Default: "600000"
   # Example:
   # iterations: "800000"
   iterations: ""
   # Specifies whether users can set and view password hints.
-  # Default: "true"
   # Example:
   # hintsAllowed: "false"
   hintsAllowed: ""
   # Specifies whether a password hint is shown in the web page when email is not configured and hints are allowed.
   # Note: Gives unauthenticated access to hints, so not recommended for publicly accessible instances.
-  # Default: "false"
   # Example:
   # showHint: "true"
   showHint: ""
@@ -650,13 +600,11 @@ push:
   key: ""
   # The URI of the Bitwarden push relay.
   # Note: Use "https://api.bitwarden.eu" for the European Union data region, and only change it if the implications are understood.
-  # Default: "https://push.bitwarden.com"
   # Example:
   # relayUri: "https://api.bitwarden.eu"
   relayUri: ""
   # The URI of the Bitwarden push identity server.
   # Note: Use "https://identity.bitwarden.eu" for the European Union data region, and only change it if the implications are understood.
-  # Default: "https://identity.bitwarden.com"
   # Example:
   # identityUri: "https://identity.bitwarden.eu"
   identityUri: ""
@@ -666,37 +614,31 @@ rateLimit:
   # Rate limits of login and two-factor authentication requests from the same IP address.
   login:
     # The average number of seconds between requests before rate limiting starts.
-    # Default: "60"
     # Example:
     # seconds: "30"
     seconds: ""
     # The size of the burst of requests allowed on top of the average.
     # Note: Applies to both login and two-factor authentication, so keep it at 2 or more.
-    # Default: "10"
     # Example:
     # maxBurst: "20"
     maxBurst: ""
   # Rate limits of unauthenticated requests (e.g. password hints, account recovery, and Sends) from the same IP address.
   unauthenticated:
     # The average number of seconds between requests before rate limiting starts.
-    # Default: "60"
     # Example:
     # seconds: "30"
     seconds: ""
     # The size of the burst of requests allowed on top of the average.
-    # Default: "50"
     # Example:
     # maxBurst: "100"
     maxBurst: ""
   # Rate limits of admin panel login requests from the same IP address.
   admin:
     # The average number of seconds between requests before rate limiting starts.
-    # Default: "300"
     # Example:
     # seconds: "600"
     seconds: ""
     # The size of the burst of requests allowed on top of the average.
-    # Default: "3"
     # Example:
     # maxBurst: "5"
     maxBurst: ""
@@ -734,31 +676,26 @@ signup:
 # Single sign-on (SSO) configurations using OpenID Connect (OIDC).
 sso:
   # Specifies whether users can log in through an OIDC provider.
-  # Note: Requires "authority", "clientId", and "clientSecret", and the redirect URI of the provider client must be "https://${.vaultwarden.domain}/identity/connect/oidc-signin".
-  # Default: "false"
+  # Note: Requires "authority", "clientId", and "clientSecret", with "https://${.vaultwarden.domain}/identity/connect/oidc-signin" as the redirect URI.
   # Example:
   # enabled: "true"
   enabled: ""
   # Specifies whether to prevent users from logging in with their email and master password.
   # Note: Keep this off until signing in with SSO is confirmed to work, otherwise nobody can log in.
-  # Default: "false"
   # Example:
   # only: "true"
   only: ""
   # Specifies whether the SSO login flow can create new accounts.
   # Note: Consider turning this off when using a public provider.
-  # Default: "true"
   # Example:
   # signupsAllowed: "false"
   signupsAllowed: ""
   # Specifies whether a new SSO user is linked to an existing account with the same email address.
-  # Default: "true"
   # Example:
   # signupsMatchEmail: "false"
   signupsMatchEmail: ""
   # Specifies whether to accept users whose email verification status is unknown to the provider.
   # Note: Allowing this together with "signupsMatchEmail" opens a potential account takeover.
-  # Default: "false"
   # Example:
   # allowUnknownEmailVerification: "true"
   allowUnknownEmailVerification: ""
@@ -777,7 +714,6 @@ sso:
   clientSecret: ""
   # The space-separated scopes requested from the OIDC provider.
   # Note: The "openid" scope is always requested.
-  # Default: "email profile"
   # Example:
   # scopes: "email profile groups"
   scopes: ""
@@ -786,7 +722,6 @@ sso:
   # authorizeExtraParams: "access_type=offline&prompt=consent"
   authorizeExtraParams: ""
   # Specifies whether to use PKCE for the authorization code flow.
-  # Default: "true"
   # Example:
   # pkce: "false"
   pkce: ""
@@ -804,19 +739,16 @@ sso:
   #   minLength: 12
   masterPasswordPolicy: {}
   # Specifies whether to use SSO only for authentication and keep the default Vaultwarden session lifecycle.
-  # Default: "false"
   # Example:
   # authOnlyNotSession: "true"
   authOnlyNotSession: ""
   # The number of seconds the OIDC discovery document is cached for.
   # Note: Set to "0" to disable caching.
-  # Default: "0"
   # Example:
   # clientCacheExpiration: "300"
   clientCacheExpiration: ""
   # Specifies whether to log all tokens.
   # Note: Requires the log level to be "debug".
-  # Default: "false"
   # Example:
   # debugTokens: "true"
   debugTokens: ""
@@ -840,7 +772,6 @@ tfa:
   rememberDevice: ""
   # The number of days before a remembered 2FA login expires.
   # Note: Accepts 1 to 90.
-  # Default: "30"
   # Example:
   # rememberDays: "14"
   rememberDays: ""
@@ -925,38 +856,31 @@ db:
   password: ""
   # Specifies whether Vaultwarden enables write-ahead logging (WAL) on the SQLite database at startup.
   # Note: Only applies when db.type is "sqlite". Turning it off may cause worse performance.
-  # Default: "true"
   # Example:
   # wal: "false"
   wal: ""
   # The number of times to retry the database connection at startup.
   # Note: Set to "0" to retry indefinitely.
-  # Default: "15"
   # Example:
   # connectionRetries: "30"
   connectionRetries: ""
   # The number of seconds to wait when acquiring a database connection.
-  # Default: "30"
   # Example:
   # timeout: "60"
   timeout: ""
   # The number of seconds before an idle database connection is closed.
-  # Default: "600"
   # Example:
   # idleTimeout: "300"
   idleTimeout: ""
   # The maximum size of the database connection pool.
-  # Default: "10"
   # Example:
   # maxConnections: "20"
   maxConnections: ""
   # The minimum size of the database connection pool.
-  # Default: "2"
   # Example:
   # minConnections: "1"
   minConnections: ""
   # The SQL statements to run whenever a new database connection is created.
-  # Default: "PRAGMA busy_timeout = 5000; PRAGMA synchronous = NORMAL;" for sqlite, none otherwise
   # Example:
   # connectionInit: "PRAGMA busy_timeout = 10000;"
   connectionInit: ""

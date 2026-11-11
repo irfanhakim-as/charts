@@ -94,7 +94,7 @@ A host name that starts with a dot allows the domain and all of its subdomains. 
 
 ### Security context
 
-The image starts as root to prepare the data directory and then runs Linkding as the `www-data` user, so `runAsUser` and `runAsNonRoot` must not be set in `containerSecurityContext`.
+Linkding must start as root, so `runAsUser` and `runAsNonRoot` must not be set in `containerSecurityContext`.
 
 ### Managing secrets separately
 
@@ -137,7 +137,7 @@ Linkding matches users to existing accounts by email address, which is also the 
 
 To have an existing admin account matched, create it with the command in [creating the admin user](#create-the-admin-user), since `linkding.admin.user` sets only a username and no email address. Create the account before the first sign-in with OIDC.
 
-API clients such as the browser extension and mobile apps sign in with an API token. When using an authentication proxy, let API requests that carry an `Authorization` header bypass it.
+API clients (e.g. the browser extension and mobile apps) sign in with an API token. When using an authentication proxy, let API requests that carry an `Authorization` header bypass it.
 
 Set `linkding.disableLoginForm` to `"true"` only after confirming that signing in with OIDC works, since the login form is no longer available afterwards.
 
@@ -231,9 +231,9 @@ Set `linkding.disableLoginForm` to `"true"` only after confirming that signing i
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | The scheduling constraints applied to Linkding pods. |
-| authProxy.enabled | string | `""` | Specifies whether to authenticate users through a header set by an authentication proxy. Default: `"false"`. |
+| authProxy.enabled | string | `""` | Specifies whether to authenticate users through a header set by an authentication proxy. |
 | authProxy.logoutUrl | string | `""` | The URL users are redirected to after logging out. |
-| authProxy.usernameHeader | string | `""` | The name of the request header that carries the username set by the authentication proxy. Default: `"REMOTE_USER"`. |
+| authProxy.usernameHeader | string | `""` | The name of the request header that carries the username set by the authentication proxy. |
 | containerSecurityContext | object | `{}` | Security context applied at the Linkding container level. |
 | db.host | string | `""` | The hostname or IP address of the Linkding database server. |
 | db.name | string | `""` | The name of the database being used by Linkding. |
@@ -245,8 +245,8 @@ Set `linkding.disableLoginForm` to `"true"` only after confirming that signing i
 | extraEnv | list | `[]` | Additional environment variables to be set on the Linkding container. |
 | extraVolumeMounts | list | `[]` | Additional volume mounts to be added to the Linkding container. |
 | extraVolumes | list | `[]` | Additional volumes to be added to Linkding pods. |
-| favicon.provider | string | `""` | The URL used to download website favicons. Default: `"https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={url}&size=32"`. |
-| favicon.refreshEnabled | string | `""` | Specifies whether favicons are refreshed daily by a background task. Default: `"true"`. |
+| favicon.provider | string | `""` | The URL used to download website favicons. |
+| favicon.refreshEnabled | string | `""` | Specifies whether favicons are refreshed daily by a background task. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
@@ -266,40 +266,40 @@ Set `linkding.disableLoginForm` to `"true"` only after confirming that signing i
 | linkding.admin.user | string | `""` | The username of the initial admin user for accessing the Linkding portal. |
 | linkding.csrfTrustedOrigins | list | `[]` | A list of trusted origins that will be accepted during CSRF verification even if their headers do not match. |
 | linkding.disableBackgroundTasks | string | `""` | Specifies whether to disable background tasks and task scheduling. Default: `"false"`. |
-| linkding.disableLoginForm | string | `""` | Specifies whether to hide the username and password login form. Default: `"false"`. |
+| linkding.disableLoginForm | string | `""` | Specifies whether to hide the username and password login form. |
 | linkding.disableUrlValidation | string | `""` | Specifies whether to disable URL validation for added bookmarks. Default: `"false"`. |
 | linkding.domain | string | `""` | The ingress domain name that hosts the Linkding server. |
 | linkding.existingSecret | string | `""` | The name of an existing Secret to load sensitive environment variables from. |
 | linkding.initScript | string | `""` | Custom init script to run before the Linkding container starts. |
-| linkding.sessionCookieAge | string | `""` | The number of seconds a user stays logged in to the web interface. Default: `"1209600"`. |
-| linkding.timezone | string | `""` | The timezone used by Linkding for time-based operations. Default: `"UTC"`. |
-| logging.disableRequestLogs | string | `""` | Specifies whether to disable request logs, except for requests with a client or server error response. Default: `"false"`. |
-| network.allowedHost | string | `""` | The only host name Linkding accepts requests for. Default: `All hosts are accepted`. |
+| linkding.sessionCookieAge | string | `""` | The number of seconds a user stays logged in to the web interface. |
+| linkding.timezone | string | `""` | The timezone used by Linkding for time-based operations. |
+| logging.disableRequestLogs | string | `""` | Specifies whether to disable request logs, except for requests with a client or server error response. |
+| network.allowedHost | string | `""` | The only host name Linkding accepts requests for. |
 | network.allowedInternalHosts | list | `[]` | The hosts Linkding may load data from even though they are on an internal network. |
 | network.contextPath | string | `""` | The context path that Linkding is served from. |
 | network.corsAllowedOrigins | list | `[]` | The origins that are allowed to call the REST API from a browser. |
-| network.host | string | `""` | The address the Linkding server binds to inside the container. Default: `"[::]"`. |
-| network.logXForwardedFor | string | `""` | Specifies whether to log the client address from the "X-Forwarded-For" header in request logs. Default: `"false"`. |
+| network.host | string | `""` | The address the Linkding server binds to inside the container. |
+| network.logXForwardedFor | string | `""` | Specifies whether to log the client address from the "X-Forwarded-For" header in request logs. |
 | network.port | string | `""` | The port on which the Linkding server listens inside the container. Default: `"9090"`. |
-| network.requestMaxContentLength | string | `""` | The maximum size in bytes of a POST request. Default: `No limit`. |
-| network.requestTimeout | string | `""` | The number of seconds before a request times out. Default: `"60"`. |
-| network.useXForwardedHost | string | `""` | Specifies whether to use the "X-Forwarded-Host" header sent by the reverse proxy. Default: `"false"`. |
+| network.requestMaxContentLength | string | `""` | The maximum size in bytes of a POST request. |
+| network.requestTimeout | string | `""` | The number of seconds before a request times out. |
+| network.useXForwardedHost | string | `""` | Specifies whether to use the "X-Forwarded-Host" header sent by the reverse proxy. |
 | nodeSelector | object | `{}` | The node labels a node must have for Linkding pods to be scheduled onto it. |
 | oidc.authorizationEndpoint | string | `""` | The authorization endpoint of the OIDC provider. |
 | oidc.clientId | string | `""` | The client ID of the application registered with the OIDC provider. |
 | oidc.clientSecret | string | `""` | The client secret of the application registered with the OIDC provider. |
-| oidc.enabled | string | `""` | Specifies whether to enable single sign-on through an OIDC provider. Default: `"false"`. |
+| oidc.enabled | string | `""` | Specifies whether to enable single sign-on through an OIDC provider. |
 | oidc.jwksEndpoint | string | `""` | The JWKS endpoint of the OIDC provider. |
-| oidc.scopes | string | `""` | The space-separated scopes requested from the OIDC provider. Default: `"openid email profile"`. |
-| oidc.signAlgo | string | `""` | The algorithm the OIDC provider uses to sign ID tokens. Default: `"RS256"`. |
+| oidc.scopes | string | `""` | The space-separated scopes requested from the OIDC provider. |
+| oidc.signAlgo | string | `""` | The algorithm the OIDC provider uses to sign ID tokens. |
 | oidc.tokenEndpoint | string | `""` | The token endpoint of the OIDC provider. |
-| oidc.usePkce | string | `""` | Specifies whether to use PKCE for the OIDC flow. Default: `"true"`. |
+| oidc.usePkce | string | `""` | Specifies whether to use PKCE for the OIDC flow. |
 | oidc.userEndpoint | string | `""` | The user info endpoint of the OIDC provider. |
-| oidc.usernameClaim | string | `""` | The claim used as the username of newly created users. Default: `"email"`. |
-| oidc.verifySsl | string | `""` | Specifies whether to verify the TLS certificate of the OIDC provider. Default: `"true"`. |
+| oidc.usernameClaim | string | `""` | The claim used as the username of newly created users. |
+| oidc.verifySsl | string | `""` | Specifies whether to verify the TLS certificate of the OIDC provider. |
 | podAnnotations | object | `{}` | Annotations to be applied to Linkding pods. |
 | podSecurityContext | object | `{}` | Security context applied at the pod level for Linkding. |
-| preview.maxSize | string | `""` | The maximum size in bytes of a downloaded preview image. Default: `"5242880"`. |
+| preview.maxSize | string | `""` | The maximum size in bytes of a downloaded preview image. |
 | probes.linkding.liveness.enabled | bool | `false` | Specifies whether to enable the liveness probe for the Linkding container. |
 | probes.linkding.liveness.spec | object | `{}` | The specification defining how the liveness probe checks the Linkding container health. |
 | probes.linkding.readiness.enabled | bool | `false` | Specifies whether to enable the readiness probe for the Linkding container. |
@@ -314,13 +314,13 @@ Set `linkding.disableLoginForm` to `"true"` only after confirming that signing i
 | serviceAccount.annotations | object | `{}` | Annotations to be applied to the created service account. |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created for Linkding. |
 | serviceAccount.name | string | `""` | The name of the service account used by Linkding pods. Default: `"${.Release.Name}-linkding"`. |
-| snapshots.disableAssetUpload | string | `""` | Specifies whether to disable uploading files to bookmarks. Default: `"false"`. |
-| snapshots.enabled | string | `""` | Specifies whether to create local HTML snapshots of bookmarks. Default: `"false"`. |
-| snapshots.pdfMaxSize | string | `""` | The maximum size in bytes of a PDF snapshot. Default: `"15728640"`. |
+| snapshots.disableAssetUpload | string | `""` | Specifies whether to disable uploading files to bookmarks. |
+| snapshots.enabled | string | `""` | Specifies whether to create local HTML snapshots of bookmarks. |
+| snapshots.pdfMaxSize | string | `""` | The maximum size in bytes of a PDF snapshot. |
 | snapshots.singlefile.options | string | `""` | Additional options passed to single-file when creating snapshots. |
-| snapshots.singlefile.path | string | `""` | The path of the single-file executable. Default: `"single-file"`. |
-| snapshots.singlefile.timeout | string | `""` | The number of seconds to wait for a snapshot to complete. Default: `"120"`. |
-| snapshots.singlefile.ublockOptions | string | `""` | The options passed to single-file to run the uBlock Origin Lite extension. Default: `The options bundled with the image`. |
+| snapshots.singlefile.path | string | `""` | The path of the single-file executable. |
+| snapshots.singlefile.timeout | string | `""` | The number of seconds to wait for a snapshot to complete. |
+| snapshots.singlefile.ublockOptions | string | `""` | The options passed to single-file to run the uBlock Origin Lite extension. |
 | storage.data.accessMode | string | `""` | The access mode defining how the data storage can be mounted. Default: `"ReadWriteMany"`. |
 | storage.data.enabled | bool | `false` | Specifies whether persistent storage should be provisioned for data storage. |
 | storage.data.mountPath | string | `""` | The path where the data storage should be mounted on the container. Default: `"/etc/linkding/data"`. |
