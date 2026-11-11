@@ -80,9 +80,36 @@ data:
   SMTP_FROM_NAME: {{ $mailFromName }}
   SMTP_SECURITY: {{ $smtpSecurity }}
 {{- end }}
-{{- if $mail }}
+{{- if and $mail $smtpHost }}
   SMTP_HOST: {{ $smtpHost | quote }}
   SMTP_PORT: {{ $smtpPort }}
+{{- end }}
+{{- with include "vaultwarden.smtpAuthMechanism" . }}
+  SMTP_AUTH_MECHANISM: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.smtpTimeout" . }}
+  SMTP_TIMEOUT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.smtpHeloName" . }}
+  HELO_NAME: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.smtpEmbedImages" . }}
+  SMTP_EMBED_IMAGES: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.smtpDebug" . }}
+  SMTP_DEBUG: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.smtpAcceptInvalidCerts" . }}
+  SMTP_ACCEPT_INVALID_CERTS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.smtpAcceptInvalidHostnames" . }}
+  SMTP_ACCEPT_INVALID_HOSTNAMES: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.sendmailEnabled" . }}
+  USE_SENDMAIL: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.sendmailCommand" . }}
+  SENDMAIL_COMMAND: {{ . | quote }}
 {{- end }}
 {{- if and $yubico $yubicoServer }}
   YUBICO_SERVER: {{ $yubicoServer | quote }}

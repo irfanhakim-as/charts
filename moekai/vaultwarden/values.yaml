@@ -269,6 +269,58 @@ mail:
     # Example:
     # password: "password"
     password: ""
+    # The authentication mechanisms to use with the SMTP server, separated by commas.
+    # Note: Accepts "Plain", "Login", and "Xoauth2".
+    # Default: "Plain" and "Login" for encrypted connections, none otherwise
+    # Example:
+    # authMechanism: "Login"
+    authMechanism: ""
+    # The number of seconds before giving up on connecting to the SMTP server.
+    # Default: "15"
+    # Example:
+    # timeout: "30"
+    timeout: ""
+    # The server name sent to the SMTP server during HELO.
+    # Note: Change it if the default, the host name of the container, is rejected by anti-spam filters.
+    # Example:
+    # heloName: "vault.example.com"
+    heloName: ""
+    # Specifies whether to embed images in emails as attachments.
+    # Default: "true"
+    # Example:
+    # embedImages: "false"
+    embedImages: ""
+    # Specifies whether to log detailed SMTP messages.
+    # Note: The logs may contain usernames and passwords, only enable it while troubleshooting.
+    # Default: "false"
+    # Example:
+    # debug: "true"
+    debug: ""
+    # Specifies whether to accept invalid TLS certificates of the SMTP server.
+    # Note: Exposes emails to man-in-the-middle attacks, use only as a last resort.
+    # Default: "false"
+    # Example:
+    # acceptInvalidCerts: "true"
+    acceptInvalidCerts: ""
+    # Specifies whether to accept TLS certificates of the SMTP server that do not match its host name.
+    # Note: Exposes emails to man-in-the-middle attacks, use only as a last resort.
+    # Default: "false"
+    # Example:
+    # acceptInvalidHostnames: "true"
+    acceptInvalidHostnames: ""
+  # Sendmail configurations.
+  sendmail:
+    # Specifies whether to send emails with the "sendmail" command.
+    # Note: Requires the command to exist in the image, which the default image may not provide.
+    # Default: "false"
+    # Example:
+    # enabled: "true"
+    enabled: ""
+    # The path of the "sendmail" command.
+    # Default: "sendmail" from the PATH
+    # Example:
+    # command: "/usr/sbin/sendmail"
+    command: ""
 
 # Bitwarden Push Relay configurations.
 push:

@@ -264,8 +264,46 @@ Mail configurations.
 {{- .Values.mail.fromName | default "Vaultwarden" | toString }}
 {{- end }}
 
+{{- define "vaultwarden.smtpAuthMechanism" -}}
+{{- .Values.mail.smtp.authMechanism | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.smtpTimeout" -}}
+{{- .Values.mail.smtp.timeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.smtpHeloName" -}}
+{{- .Values.mail.smtp.heloName | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.smtpEmbedImages" -}}
+{{- .Values.mail.smtp.embedImages | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.smtpDebug" -}}
+{{- .Values.mail.smtp.debug | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.smtpAcceptInvalidCerts" -}}
+{{- .Values.mail.smtp.acceptInvalidCerts | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.smtpAcceptInvalidHostnames" -}}
+{{- .Values.mail.smtp.acceptInvalidHostnames | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.sendmailEnabled" -}}
+{{- .Values.mail.sendmail.enabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.sendmailCommand" -}}
+{{- .Values.mail.sendmail.command | toString | replace "<nil>" "" }}
+{{- end }}
+
 {{- define "vaultwarden.mailEnabled" -}}
-{{- and (ne (include "vaultwarden.mailFromEmail" .) "") (ne (include "vaultwarden.smtpHost" .) "") }}
+{{- $sender := ne (include "vaultwarden.mailFromEmail" .) "" }}
+{{- $transport := or (ne (include "vaultwarden.smtpHost" .) "") (eq (include "vaultwarden.sendmailEnabled" .) "true") }}
+{{- and $sender $transport }}
 {{- end }}
 
 
