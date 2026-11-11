@@ -1,11 +1,9 @@
 {{- $serviceAddress := "" }}
-{{- $ingress := .Values.ingress.enabled }}
-{{- $domain := .Values.vaultwarden.domain | toString }}
-{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
-{{- $port := .Values.service.port | default "80" | toString }}
-{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $domain := include "vaultwarden.ingressDomain" . }}
+{{- $port := include "vaultwarden.servicePort" . }}
+{{- $type := include "vaultwarden.serviceType" . }}
 {{- $serviceName := printf "%s-vaultwarden-svc" .Release.Name | toString }}
-Vaultwarden has been installed and configured for {{ .Release.Name | toString }} 🎉
+Vaultwarden has been installed and configured for {{ .Release.Name | toString }}
 
 {{- if $domain }}
     {{- $serviceAddress = printf "https://%s" $domain | toString }}
@@ -36,12 +34,32 @@ Visit the following service(s) at the provided address:
 
 {{- if $serviceAddress }}
 
-    - Vaultwarden: {{ printf "%s/admin" $serviceAddress | toString }}
+    - Vaultwarden: {{ $serviceAddress }}
 
 {{- else }}
 
-    ⚠️ This chart may have no accessible services available
+    WARNING: This chart may have no accessible services available
 
 {{- end }}
 
-For more information on how to use and configure Vaultwarden, please refer to the official documentation.
+{{- if include "vaultwarden.adminToken" . }}
+
+The admin panel is available at the "/admin" page of the address above.
+
+{{- else }}
+
+The admin panel is disabled because no admin token is set. Set "vaultwarden.adminToken" to enable it.
+
+{{- end }}
+
+{{- if eq (include "vaultwarden.signupEnabled" .) "true" }}
+
+User registration is open. Set "signup.enabled" to "false" once the accounts you need are registered.
+
+{{- else }}
+
+User registration is closed. Set "signup.enabled" to "true" to register the first account, then set it back to "false".
+
+{{- end }}
+
+For more information on how to use and configure Vaultwarden, please refer to the official documentation at https://github.com/dani-garcia/vaultwarden/wiki.
