@@ -169,6 +169,11 @@ linkding:
   #   - "https://linkding.example.com"
   #   - "https://www.linkding.example.com"
   csrfTrustedOrigins: []
+  # The name of an existing Secret to load sensitive environment variables from.
+  # Note: Keys must be the exact environment variable names (e.g. "LD_SUPERUSER_PASSWORD", "LD_DB_PASSWORD").
+  # Example:
+  # existingSecret: "linkding-secret"
+  existingSecret: ""
   # Custom init script to run before the Linkding container starts.
   # Example:
   # initScript: >-
@@ -178,10 +183,12 @@ linkding:
   # Administration configurations.
   admin:
     # The username of the initial admin user for accessing the Linkding portal.
+    # Note: Skipped when empty or when the user already exists.
     # Example:
     # user: "linkding"
     user: ""
     # The password associated with the initial admin user.
+    # Note: The admin user is created without a usable password when empty.
     # Example:
     # password: "password"
     password: ""
@@ -189,6 +196,7 @@ linkding:
 # Database configurations.
 db:
   # The database engine or backend being used by Linkding.
+  # Note: Accepts "sqlite" or "postgres".
   # Default: "sqlite"
   # Example:
   # type: "postgres"
@@ -198,8 +206,10 @@ db:
   # host: "linkding.default.svc.cluster.local"
   host: ""
   # The port number the Linkding database server is listening for connections.
+  # Note: Only applies when db.type is "postgres".
+  # Default: "5432"
   # Example:
-  # port: "5432"
+  # port: "5433"
   port: ""
   # The name of the database being used by Linkding.
   # Example:

@@ -176,6 +176,10 @@ Linkding configurations.
 {{- .Values.linkding.csrfTrustedOrigins | join "," | toString }}
 {{- end }}
 
+{{- define "linkding.existingSecret" -}}
+{{- .Values.linkding.existingSecret | toString }}
+{{- end }}
+
 {{- define "linkding.initScript" -}}
 {{- .Values.linkding.initScript | toString }}
 {{- end }}
@@ -192,7 +196,11 @@ Linkding configurations.
 Database configurations.
 */}}
 {{- define "linkding.dbType" -}}
-{{- .Values.db.type | default "sqlite" | toString }}
+{{- $type := .Values.db.type | default "sqlite" | toString -}}
+{{- if not (has $type (list "sqlite" "postgres")) -}}
+{{- fail (printf "db.type must be \"sqlite\" or \"postgres\", got %q" $type) }}
+{{- end }}
+{{- $type }}
 {{- end }}
 
 {{- define "linkding.dbHost" -}}
@@ -200,7 +208,7 @@ Database configurations.
 {{- end }}
 
 {{- define "linkding.dbPort" -}}
-{{- .Values.db.port | toString }}
+{{- .Values.db.port | default "5432" | toString }}
 {{- end }}
 
 {{- define "linkding.dbName" -}}

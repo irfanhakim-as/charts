@@ -108,3 +108,16 @@ nginx.org/client-max-body-size: "100m"
 {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
 {{- end }}
 {{- end }}
+
+{{/*
+Whether the Secret has any data to render
+*/}}
+{{- define "linkding.secretEnabled" -}}
+{{- $values := list
+  (include "linkding.adminUser" .)
+  (include "linkding.adminPassword" .)
+  (ternary (include "linkding.dbUser" .) "" (eq (include "linkding.dbType" .) "postgres"))
+  (ternary (include "linkding.dbPassword" .) "" (eq (include "linkding.dbType" .) "postgres"))
+-}}
+{{- gt (len (compact $values)) 0 }}
+{{- end }}

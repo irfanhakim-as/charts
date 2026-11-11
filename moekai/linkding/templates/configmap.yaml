@@ -1,6 +1,11 @@
 {{- $disableBackgroundTasks := include "linkding.disableBackgroundTasks" . | quote }}
 {{- $disableUrlValidation := include "linkding.disableUrlValidation" . | quote }}
 {{- $csrfTrustedOrigins := include "linkding.csrfTrustedOrigins" . | quote }}
+{{- $dbType := include "linkding.dbType" . | quote }}
+{{- $postgres := eq (include "linkding.dbType" .) "postgres" }}
+{{- $dbHost := include "linkding.dbHost" . | quote }}
+{{- $dbPort := include "linkding.dbPort" . | quote }}
+{{- $dbName := include "linkding.dbName" . | quote }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -12,3 +17,9 @@ data:
   LD_DISABLE_BACKGROUND_TASKS: {{ $disableBackgroundTasks }}
   LD_DISABLE_URL_VALIDATION: {{ $disableUrlValidation }}
   LD_CSRF_TRUSTED_ORIGINS: {{ $csrfTrustedOrigins }}
+  LD_DB_ENGINE: {{ $dbType }}
+{{- if $postgres }}
+  LD_DB_DATABASE: {{ $dbName }}
+  LD_DB_HOST: {{ $dbHost }}
+  LD_DB_PORT: {{ $dbPort }}
+{{- end }}
