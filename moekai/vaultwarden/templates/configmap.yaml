@@ -218,3 +218,48 @@ data:
 {{- with include "vaultwarden.rateLimitAdminMaxBurst" . }}
   ADMIN_RATELIMIT_MAX_BURST: {{ . | quote }}
 {{- end }}
+{{- with include "vaultwarden.suppressOnboarding" . }}
+  CLIENT_SUPPRESS_ONBOARDING: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.fillAssistRulesUrl" . }}
+  FILL_ASSIST_RULES_URL: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.limitsUserAttachment" . }}
+  USER_ATTACHMENT_LIMIT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.limitsOrganizationAttachment" . }}
+  ORG_ATTACHMENT_LIMIT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.limitsUserSend" . }}
+  USER_SEND_LIMIT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.limitsIncreaseNoteSize" . }}
+  INCREASE_NOTE_SIZE_LIMIT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.organizationCreationUsers" . }}
+  ORG_CREATION_USERS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.organizationEventsEnabled" . }}
+  ORG_EVENTS_ENABLED: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.organizationEventsRetainDays" . }}
+  EVENTS_DAYS_RETAIN: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.organizationGroupsEnabled" . }}
+  ORG_GROUPS_ENABLED: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.organizationEnforceSingleOrgWithResetPasswordPolicy" . }}
+  ENFORCE_SINGLE_ORG_WITH_RESET_PW_POLICY: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.passwordIterations" . }}
+  PASSWORD_ITERATIONS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.passwordHintsAllowed" . }}
+  PASSWORD_HINTS_ALLOWED: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.passwordShowHint" . }}
+  SHOW_PASSWORD_HINT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.tfaRememberDays" . }}
+  TWO_FACTOR_REMEMBER_DAYS: {{ . | quote }}
+{{- end }}

@@ -209,6 +209,14 @@ Vaultwarden configurations.
 {{- .Values.vaultwarden.initScript | toString }}
 {{- end }}
 
+{{- define "vaultwarden.suppressOnboarding" -}}
+{{- .Values.vaultwarden.suppressOnboarding | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.fillAssistRulesUrl" -}}
+{{- .Values.vaultwarden.fillAssistRulesUrl | toString | replace "<nil>" "" }}
+{{- end }}
+
 
 {{/*
 Invitation configurations.
@@ -225,6 +233,25 @@ Invitation configurations.
 {{- .Values.invitation.organisation | default "Vaultwarden" | toString }}
 {{- end }}
 
+
+{{/*
+Limit configurations.
+*/}}
+{{- define "vaultwarden.limitsUserAttachment" -}}
+{{- .Values.limits.userAttachment | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.limitsOrganizationAttachment" -}}
+{{- .Values.limits.organizationAttachment | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.limitsUserSend" -}}
+{{- .Values.limits.userSend | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.limitsIncreaseNoteSize" -}}
+{{- .Values.limits.increaseNoteSize | toString | replace "<nil>" "" | lower }}
+{{- end }}
 
 {{/*
 Mail configurations.
@@ -308,6 +335,21 @@ Mail configurations.
 
 
 {{/*
+Password configurations.
+*/}}
+{{- define "vaultwarden.passwordIterations" -}}
+{{- .Values.password.iterations | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.passwordHintsAllowed" -}}
+{{- .Values.password.hintsAllowed | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.passwordShowHint" -}}
+{{- .Values.password.showHint | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{/*
 Push notification configurations.
 */}}
 {{- define "vaultwarden.pushEnabled" -}}
@@ -367,6 +409,29 @@ Network configurations.
 
 {{- define "vaultwarden.networkAllowedConnectSrc" -}}
 {{- .Values.network.allowedConnectSrc | join " " | toString }}
+{{- end }}
+
+{{/*
+Organization configurations.
+*/}}
+{{- define "vaultwarden.organizationCreationUsers" -}}
+{{- .Values.organization.creationUsers | join "," | toString }}
+{{- end }}
+
+{{- define "vaultwarden.organizationEventsEnabled" -}}
+{{- .Values.organization.eventsEnabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.organizationEventsRetainDays" -}}
+{{- .Values.organization.eventsRetainDays | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.organizationGroupsEnabled" -}}
+{{- .Values.organization.groupsEnabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.organizationEnforceSingleOrgWithResetPasswordPolicy" -}}
+{{- .Values.organization.enforceSingleOrgWithResetPasswordPolicy | toString | replace "<nil>" "" | lower }}
 {{- end }}
 
 {{/*
@@ -534,6 +599,10 @@ Two-factor authentication configurations.
 
 {{- define "vaultwarden.tfaAllowTimeDrift" -}}
 {{- .Values.tfa.allowTimeDrift | toString | replace "<nil>" "" | default "true" }}
+{{- end }}
+
+{{- define "vaultwarden.tfaRememberDays" -}}
+{{- .Values.tfa.rememberDays | toString | replace "<nil>" "" }}
 {{- end }}
 
 

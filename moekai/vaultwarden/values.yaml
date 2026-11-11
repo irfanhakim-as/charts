@@ -206,6 +206,17 @@ vaultwarden:
   # Example:
   # existingSecret: "vaultwarden-secret"
   existingSecret: ""
+  # Specifies whether to hide the onboarding dialogs, extension install prompts, and premium upsell modals shown by the clients.
+  # Default: "false"
+  # Example:
+  # suppressOnboarding: "true"
+  suppressOnboarding: ""
+  # The base URL of the feed that provides the Fill Assist rules to the clients.
+  # Note: Must be an HTTPS URL without credentials, query parameters, or fragments.
+  # Default: "https://fillassist.bitwarden.com"
+  # Example:
+  # fillAssistRulesUrl: "https://fillassist.example.com"
+  fillAssistRulesUrl: ""
   # Custom init script to run before the Vaultwarden container starts.
   # Example:
   # initScript: >-
@@ -267,6 +278,30 @@ invitation:
   # Example:
   # organisation: "ExampleOrg"
   organisation: ""
+
+# Limit configurations.
+limits:
+  # The maximum attachment storage in kilobytes allowed per user.
+  # Default: No limit
+  # Example:
+  # userAttachment: "102400"
+  userAttachment: ""
+  # The maximum attachment storage in kilobytes allowed per organization.
+  # Default: No limit
+  # Example:
+  # organizationAttachment: "1048576"
+  organizationAttachment: ""
+  # The maximum Send storage in kilobytes allowed per user.
+  # Default: No limit
+  # Example:
+  # userSend: "102400"
+  userSend: ""
+  # Specifies whether to raise the secure note size limit from 10,000 to 100,000 characters.
+  # Note: May cause issues with clients, and exports will not work on Bitwarden servers.
+  # Default: "false"
+  # Example:
+  # increaseNoteSize: "true"
+  increaseNoteSize: ""
 
 # Mail configurations.
 mail:
@@ -405,6 +440,37 @@ network:
   #   - "https://addy.example.com"
   allowedConnectSrc: []
 
+# Organization configurations.
+organization:
+  # The users allowed to create organizations, as a list of email addresses or "none" for nobody.
+  # Default: All users
+  # Example:
+  # creationUsers:
+  #   - "admin@example.com"
+  creationUsers: []
+  # Specifies whether to log events of organizations.
+  # Note: Combine it with "eventsRetainDays" to clean up old events.
+  # Default: "false"
+  # Example:
+  # eventsEnabled: "true"
+  eventsEnabled: ""
+  # The number of days events are kept in the database.
+  # Default: Events are kept indefinitely
+  # Example:
+  # eventsRetainDays: "90"
+  eventsRetainDays: ""
+  # Specifies whether to enable groups for organizations.
+  # Note: A beta feature with known issues.
+  # Default: "false"
+  # Example:
+  # groupsEnabled: "true"
+  groupsEnabled: ""
+  # Specifies whether the Single Org policy must be enabled before the Reset Password policy.
+  # Default: "false"
+  # Example:
+  # enforceSingleOrgWithResetPasswordPolicy: "true"
+  enforceSingleOrgWithResetPasswordPolicy: ""
+
 # Outbound request configurations for the internal HTTP client.
 outbound:
   # Specifies whether to refuse connecting to non-global IP addresses.
@@ -417,6 +483,26 @@ outbound:
   # Example:
   # blockRegex: "^(192\\.168\\.1\\.[0-9]+)$"
   blockRegex: ""
+
+# Password configurations.
+password:
+  # The number of server-side hashing iterations for the password hash of new users.
+  # Note: Existing users are updated on their next login, and the value must be at least 100000.
+  # Default: "600000"
+  # Example:
+  # iterations: "800000"
+  iterations: ""
+  # Specifies whether users can set and view password hints.
+  # Default: "true"
+  # Example:
+  # hintsAllowed: "false"
+  hintsAllowed: ""
+  # Specifies whether a password hint is shown in the web page when email is not configured and hints are allowed.
+  # Note: Gives unauthenticated access to hints, so not recommended for publicly accessible instances.
+  # Default: "false"
+  # Example:
+  # showHint: "true"
+  showHint: ""
 
 # Bitwarden Push Relay configurations.
 push:
@@ -611,6 +697,12 @@ tfa:
   # Example:
   # rememberDevice: "false"
   rememberDevice: ""
+  # The number of days before a remembered 2FA login expires.
+  # Note: Accepts 1 to 90.
+  # Default: "30"
+  # Example:
+  # rememberDays: "14"
+  rememberDays: ""
   # Specifies whether to setup email 2FA upon registration.
   # Default: "false"
   # Example:
