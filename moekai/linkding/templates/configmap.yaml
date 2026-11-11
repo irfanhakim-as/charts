@@ -23,3 +23,111 @@ data:
   LD_DB_HOST: {{ $dbHost }}
   LD_DB_PORT: {{ $dbPort }}
 {{- end }}
+{{- with include "linkding.timezone" . }}
+  TZ: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.disableLoginForm" . }}
+  LD_DISABLE_LOGIN_FORM: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.authProxyEnabled" . }}
+  LD_ENABLE_AUTH_PROXY: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.authProxyUsernameHeader" . }}
+  LD_AUTH_PROXY_USERNAME_HEADER: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.authProxyLogoutUrl" . }}
+  LD_AUTH_PROXY_LOGOUT_URL: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.faviconProvider" . }}
+  LD_FAVICON_PROVIDER: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.faviconRefreshEnabled" . }}
+  LD_ENABLE_REFRESH_FAVICONS: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.loggingDisableRequestLogs" . }}
+  LD_DISABLE_REQUEST_LOGS: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkPort" . }}
+  LD_SERVER_PORT: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkHost" . }}
+  LD_SERVER_HOST: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkContextPath" . }}
+  LD_CONTEXT_PATH: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkAllowedHost" . }}
+  HOST_NAME: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkUseXForwardedHost" . }}
+  LD_USE_X_FORWARDED_HOST: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkLogXForwardedFor" . }}
+  LD_LOG_X_FORWARDED_FOR: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkRequestTimeout" . }}
+  LD_REQUEST_TIMEOUT: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.networkRequestMaxContentLength" . }}
+  LD_REQUEST_MAX_CONTENT_LENGTH: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcEnabled" . }}
+  LD_ENABLE_OIDC: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcAuthorizationEndpoint" . }}
+  OIDC_OP_AUTHORIZATION_ENDPOINT: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcTokenEndpoint" . }}
+  OIDC_OP_TOKEN_ENDPOINT: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcUserEndpoint" . }}
+  OIDC_OP_USER_ENDPOINT: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcJwksEndpoint" . }}
+  OIDC_OP_JWKS_ENDPOINT: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcClientId" . }}
+  OIDC_RP_CLIENT_ID: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcSignAlgo" . }}
+  OIDC_RP_SIGN_ALGO: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcScopes" . }}
+  OIDC_RP_SCOPES: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcUsePkce" . }}
+  OIDC_USE_PKCE: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcVerifySsl" . }}
+  OIDC_VERIFY_SSL: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.oidcUsernameClaim" . }}
+  OIDC_USERNAME_CLAIM: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.previewMaxSize" . }}
+  LD_PREVIEW_MAX_SIZE: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.snapshotsEnabled" . }}
+  LD_ENABLE_SNAPSHOTS: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.snapshotsDisableAssetUpload" . }}
+  LD_DISABLE_ASSET_UPLOAD: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.snapshotsPdfMaxSize" . }}
+  LD_SNAPSHOT_PDF_MAX_SIZE: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.snapshotsSinglefilePath" . }}
+  LD_SINGLEFILE_PATH: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.snapshotsSinglefileOptions" . }}
+  LD_SINGLEFILE_OPTIONS: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.snapshotsSinglefileUblockOptions" . }}
+  LD_SINGLEFILE_UBLOCK_OPTIONS: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.snapshotsSinglefileTimeout" . }}
+  LD_SINGLEFILE_TIMEOUT_SEC: {{ . | quote }}
+{{- end }}
+{{- with include "linkding.dbOptions" . }}
+  LD_DB_OPTIONS: {{ . | quote }}
+{{- end }}

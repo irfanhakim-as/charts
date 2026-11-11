@@ -8,6 +8,7 @@
 {{- $initPullPolicy := include "linkding.initImagePullPolicy" . | quote }}
 {{- $replicaCount := include "linkding.replicaCount" . }}
 {{- $serviceAccountName := include "linkding.serviceAccountName" . }}
+{{- $networkPort := include "linkding.networkPort" . }}
 {{- $initScript := include "linkding.initScript" . }}
 {{- $existingSecret := include "linkding.existingSecret" . }}
 ---
@@ -73,7 +74,7 @@ spec:
           {{- end }}
           ports:
             - name: linkding
-              containerPort: 9090
+              containerPort: {{ int ($networkPort | default "9090") }}
               protocol: TCP
           {{- include "linkding.resources" . | nindent 10 }}
           envFrom:

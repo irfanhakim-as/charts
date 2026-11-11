@@ -176,6 +176,15 @@ Linkding configurations.
 {{- .Values.linkding.csrfTrustedOrigins | join "," | toString }}
 {{- end }}
 
+{{- define "linkding.timezone" -}}
+{{- .Values.linkding.timezone | toString }}
+{{- end }}
+
+{{- define "linkding.disableLoginForm" -}}
+{{- $v := .Values.linkding.disableLoginForm | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
 {{- define "linkding.existingSecret" -}}
 {{- .Values.linkding.existingSecret | toString }}
 {{- end }}
@@ -190,6 +199,172 @@ Linkding configurations.
 
 {{- define "linkding.adminPassword" -}}
 {{- .Values.linkding.admin.password | toString }}
+{{- end }}
+
+{{/*
+Authentication proxy configurations.
+*/}}
+{{- define "linkding.authProxyEnabled" -}}
+{{- $v := .Values.authProxy.enabled | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{- define "linkding.authProxyUsernameHeader" -}}
+{{- .Values.authProxy.usernameHeader | toString }}
+{{- end }}
+
+{{- define "linkding.authProxyLogoutUrl" -}}
+{{- .Values.authProxy.logoutUrl | toString }}
+{{- end }}
+
+{{/*
+Favicon configurations.
+*/}}
+{{- define "linkding.faviconProvider" -}}
+{{- .Values.favicon.provider | toString }}
+{{- end }}
+
+{{- define "linkding.faviconRefreshEnabled" -}}
+{{- $v := .Values.favicon.refreshEnabled | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{/*
+Logging configurations.
+*/}}
+{{- define "linkding.loggingDisableRequestLogs" -}}
+{{- $v := .Values.logging.disableRequestLogs | toString }}
+{{- if $v }}{{ $v | lower }}{{ end }}
+{{- end }}
+
+{{/*
+Network configurations.
+*/}}
+{{- define "linkding.networkPort" -}}
+{{- .Values.network.port | toString }}
+{{- end }}
+
+{{- define "linkding.networkHost" -}}
+{{- .Values.network.host | toString }}
+{{- end }}
+
+{{- define "linkding.networkContextPath" -}}
+{{- .Values.network.contextPath | toString }}
+{{- end }}
+
+{{- define "linkding.networkAllowedHost" -}}
+{{- .Values.network.allowedHost | toString }}
+{{- end }}
+
+{{- define "linkding.networkUseXForwardedHost" -}}
+{{- $v := .Values.network.useXForwardedHost | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{- define "linkding.networkLogXForwardedFor" -}}
+{{- ternary "true" "" (eq (.Values.network.logXForwardedFor | toString | lower) "true") }}
+{{- end }}
+
+{{- define "linkding.networkRequestTimeout" -}}
+{{- .Values.network.requestTimeout | toString }}
+{{- end }}
+
+{{- define "linkding.networkRequestMaxContentLength" -}}
+{{- .Values.network.requestMaxContentLength | toString }}
+{{- end }}
+
+{{/*
+OpenID Connect configurations.
+*/}}
+{{- define "linkding.oidcEnabled" -}}
+{{- $v := .Values.oidc.enabled | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{- define "linkding.oidcAuthorizationEndpoint" -}}
+{{- .Values.oidc.authorizationEndpoint | toString }}
+{{- end }}
+
+{{- define "linkding.oidcTokenEndpoint" -}}
+{{- .Values.oidc.tokenEndpoint | toString }}
+{{- end }}
+
+{{- define "linkding.oidcUserEndpoint" -}}
+{{- .Values.oidc.userEndpoint | toString }}
+{{- end }}
+
+{{- define "linkding.oidcJwksEndpoint" -}}
+{{- .Values.oidc.jwksEndpoint | toString }}
+{{- end }}
+
+{{- define "linkding.oidcClientId" -}}
+{{- .Values.oidc.clientId | toString }}
+{{- end }}
+
+{{- define "linkding.oidcClientSecret" -}}
+{{- .Values.oidc.clientSecret | toString }}
+{{- end }}
+
+{{- define "linkding.oidcSignAlgo" -}}
+{{- .Values.oidc.signAlgo | toString }}
+{{- end }}
+
+{{- define "linkding.oidcScopes" -}}
+{{- .Values.oidc.scopes | toString }}
+{{- end }}
+
+{{- define "linkding.oidcUsePkce" -}}
+{{- $v := .Values.oidc.usePkce | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{- define "linkding.oidcVerifySsl" -}}
+{{- $v := .Values.oidc.verifySsl | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{- define "linkding.oidcUsernameClaim" -}}
+{{- .Values.oidc.usernameClaim | toString }}
+{{- end }}
+
+{{/*
+Preview configurations.
+*/}}
+{{- define "linkding.previewMaxSize" -}}
+{{- .Values.preview.maxSize | toString }}
+{{- end }}
+
+{{/*
+Snapshot configurations.
+*/}}
+{{- define "linkding.snapshotsEnabled" -}}
+{{- $v := .Values.snapshots.enabled | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{- define "linkding.snapshotsDisableAssetUpload" -}}
+{{- $v := .Values.snapshots.disableAssetUpload | toString }}
+{{- if $v }}{{ $v | title }}{{ end }}
+{{- end }}
+
+{{- define "linkding.snapshotsPdfMaxSize" -}}
+{{- .Values.snapshots.pdfMaxSize | toString }}
+{{- end }}
+
+{{- define "linkding.snapshotsSinglefilePath" -}}
+{{- .Values.snapshots.singlefile.path | toString }}
+{{- end }}
+
+{{- define "linkding.snapshotsSinglefileOptions" -}}
+{{- .Values.snapshots.singlefile.options | toString }}
+{{- end }}
+
+{{- define "linkding.snapshotsSinglefileUblockOptions" -}}
+{{- .Values.snapshots.singlefile.ublockOptions | toString }}
+{{- end }}
+
+{{- define "linkding.snapshotsSinglefileTimeout" -}}
+{{- .Values.snapshots.singlefile.timeout | toString }}
 {{- end }}
 
 {{/*
@@ -221,6 +396,12 @@ Database configurations.
 
 {{- define "linkding.dbPassword" -}}
 {{- .Values.db.password | toString }}
+{{- end }}
+
+{{- define "linkding.dbOptions" -}}
+{{- with .Values.db.options -}}
+{{- toJson . }}
+{{- end }}
 {{- end }}
 
 {{/*

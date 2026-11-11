@@ -154,6 +154,12 @@ linkding:
   # Example:
   # disableBackgroundTasks: "true"
   disableBackgroundTasks: ""
+  # Specifies whether to hide the username and password login form.
+  # Note: Requires OIDC or an authentication proxy to be enabled, otherwise nobody can sign in.
+  # Default: "false"
+  # Example:
+  # disableLoginForm: "true"
+  disableLoginForm: ""
   # Specifies whether to disable URL validation for added bookmarks.
   # Default: "false"
   # Example:
@@ -174,6 +180,11 @@ linkding:
   # Example:
   # existingSecret: "linkding-secret"
   existingSecret: ""
+  # The timezone used by Linkding for time-based operations.
+  # Default: "UTC"
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
   # Custom init script to run before the Linkding container starts.
   # Example:
   # initScript: >-
@@ -192,6 +203,199 @@ linkding:
     # Example:
     # password: "password"
     password: ""
+
+# Authentication proxy configurations.
+authProxy:
+  # Specifies whether to authenticate users through a header set by an authentication proxy.
+  # Note: Disables username and password login, only enable behind a trusted proxy that sets the header.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The name of the request header that carries the username set by the authentication proxy.
+  # Default: "REMOTE_USER"
+  # Example:
+  # usernameHeader: "HTTP_REMOTE_USER"
+  usernameHeader: ""
+  # The URL users are redirected to after logging out.
+  # Example:
+  # logoutUrl: "https://auth.example.com/logout"
+  logoutUrl: ""
+
+# Favicon configurations.
+favicon:
+  # The URL used to download website favicons.
+  # Note: Must contain a "{url}" or "{domain}" placeholder.
+  # Default: "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={url}&size=32"
+  # Example:
+  # provider: "https://icons.duckduckgo.com/ip3/{domain}.ico"
+  provider: ""
+  # Specifies whether favicons are refreshed daily by a background task.
+  # Default: "true"
+  # Example:
+  # refreshEnabled: "false"
+  refreshEnabled: ""
+
+# Logging configurations.
+logging:
+  # Specifies whether to disable request logs, except for requests with a client or server error response.
+  # Default: "false"
+  # Example:
+  # disableRequestLogs: "true"
+  disableRequestLogs: ""
+
+# Network configurations.
+network:
+  # The port on which the Linkding server listens inside the container.
+  # Default: "9090"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The address the Linkding server binds to inside the container.
+  # Note: The default listens on both IPv4 and IPv6, set "0.0.0.0" for IPv4 only.
+  # Default: "[::]"
+  # Example:
+  # host: "0.0.0.0"
+  host: ""
+  # The context path that Linkding is served from.
+  # Note: Must end with a slash.
+  # Example:
+  # contextPath: "linkding/"
+  contextPath: ""
+  # The only host name Linkding accepts requests for.
+  # Default: All hosts are accepted
+  # Example:
+  # allowedHost: "linkding.example.com"
+  allowedHost: ""
+  # Specifies whether to use the "X-Forwarded-Host" header sent by the reverse proxy.
+  # Default: "false"
+  # Example:
+  # useXForwardedHost: "true"
+  useXForwardedHost: ""
+  # Specifies whether to log the client address from the "X-Forwarded-For" header in request logs.
+  # Default: "false"
+  # Example:
+  # logXForwardedFor: "true"
+  logXForwardedFor: ""
+  # The number of seconds before a request times out.
+  # Note: Increase it when importing large bookmark files.
+  # Default: "60"
+  # Example:
+  # requestTimeout: "120"
+  requestTimeout: ""
+  # The maximum size in bytes of a POST request.
+  # Default: No limit
+  # Example:
+  # requestMaxContentLength: "104857600"
+  requestMaxContentLength: ""
+
+# OpenID Connect (OIDC) configurations.
+oidc:
+  # Specifies whether to enable single sign-on through an OIDC provider.
+  # Note: Users are matched to existing users by email address, and created when no match exists.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The authorization endpoint of the OIDC provider.
+  # Example:
+  # authorizationEndpoint: "https://id.example.com/authorize"
+  authorizationEndpoint: ""
+  # The token endpoint of the OIDC provider.
+  # Example:
+  # tokenEndpoint: "https://id.example.com/api/oidc/token"
+  tokenEndpoint: ""
+  # The user info endpoint of the OIDC provider.
+  # Example:
+  # userEndpoint: "https://id.example.com/api/oidc/userinfo"
+  userEndpoint: ""
+  # The JWKS endpoint of the OIDC provider.
+  # Example:
+  # jwksEndpoint: "https://id.example.com/.well-known/jwks.json"
+  jwksEndpoint: ""
+  # The client ID of the application registered with the OIDC provider.
+  # Example:
+  # clientId: "linkding"
+  clientId: ""
+  # The client secret of the application registered with the OIDC provider.
+  # Example:
+  # clientSecret: "secret"
+  clientSecret: ""
+  # The algorithm the OIDC provider uses to sign ID tokens.
+  # Default: "RS256"
+  # Example:
+  # signAlgo: "ES256"
+  signAlgo: ""
+  # The space-separated scopes requested from the OIDC provider.
+  # Default: "openid email profile"
+  # Example:
+  # scopes: "openid email profile groups"
+  scopes: ""
+  # Specifies whether to use PKCE for the OIDC flow.
+  # Default: "true"
+  # Example:
+  # usePkce: "false"
+  usePkce: ""
+  # Specifies whether to verify the TLS certificate of the OIDC provider.
+  # Default: "true"
+  # Example:
+  # verifySsl: "false"
+  verifySsl: ""
+  # The claim used as the username of newly created users.
+  # Note: Falls back to the email claim when the claim is missing or empty.
+  # Default: "email"
+  # Example:
+  # usernameClaim: "preferred_username"
+  usernameClaim: ""
+
+# Preview configurations.
+preview:
+  # The maximum size in bytes of a downloaded preview image.
+  # Default: "5242880"
+  # Example:
+  # maxSize: "10485760"
+  maxSize: ""
+
+# Snapshot configurations.
+snapshots:
+  # Specifies whether to create local HTML snapshots of bookmarks.
+  # Note: Requires an image variant that includes Chromium (e.g. a tag ending in "-plus-alpine").
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # Specifies whether to disable uploading files to bookmarks.
+  # Default: "false"
+  # Example:
+  # disableAssetUpload: "true"
+  disableAssetUpload: ""
+  # The maximum size in bytes of a PDF snapshot.
+  # Default: "15728640"
+  # Example:
+  # pdfMaxSize: "31457280"
+  pdfMaxSize: ""
+  # Single-file configurations.
+  singlefile:
+    # The path of the single-file executable.
+    # Default: "single-file"
+    # Example:
+    # path: "/usr/local/bin/single-file"
+    path: ""
+    # Additional options passed to single-file when creating snapshots.
+    # Example:
+    # options: "--user-agent=\"Mozilla/5.0\""
+    options: ""
+    # The options passed to single-file to run the uBlock Origin Lite extension.
+    # Default: The options bundled with the image
+    # Example:
+    # ublockOptions: "--browser-arg=\"--headless=new\""
+    ublockOptions: ""
+    # The number of seconds to wait for a snapshot to complete.
+    # Note: Increase it on low-powered hardware.
+    # Default: "120"
+    # Example:
+    # timeout: "180"
+    timeout: ""
 
 # Database configurations.
 db:
@@ -223,6 +427,11 @@ db:
   # Example:
   # password: "password"
   password: ""
+  # Additional database options passed to the database connection.
+  # Example:
+  # options:
+  #   sslmode: "require"
+  options: {}
 
 # Ingress configurations.
 ingress:
