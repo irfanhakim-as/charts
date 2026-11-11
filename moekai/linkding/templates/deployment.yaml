@@ -7,6 +7,7 @@
 {{- $initTag := include "linkding.initImageTag" . }}
 {{- $initPullPolicy := include "linkding.initImagePullPolicy" . | quote }}
 {{- $replicaCount := include "linkding.replicaCount" . }}
+{{- $serviceAccountName := include "linkding.serviceAccountName" . }}
 {{- $initScript := include "linkding.initScript" . }}
 ---
 apiVersion: apps/v1
@@ -17,6 +18,10 @@ metadata:
     {{- include "linkding.labels" . | nindent 4 }}
 spec:
   replicas: {{ int $replicaCount }}
+  {{- with .Values.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "linkding.selectorLabels" . | nindent 6 }}
@@ -28,7 +33,20 @@ spec:
       labels:
         {{- include "linkding.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ $serviceAccountName }}
       {{- with include "linkding.imagePullSecrets" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.podSecurityContext" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.nodeSelector" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.tolerations" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.affinity" . }}
       {{- . | nindent 6 }}
       {{- end }}
       {{- if $initScript }}
@@ -49,6 +67,9 @@ spec:
         - name: linkding
           image: {{ printf "%s/%s:%s" $linkdingRegistry $linkdingRepository $linkdingTag | quote }}
           imagePullPolicy: {{ $linkdingPullPolicy }}
+          {{- with include "linkding.containerSecurityContext" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           ports:
             - name: linkding
               containerPort: 9090
@@ -59,6 +80,9 @@ spec:
                 name: {{ .Release.Name }}-linkding-cm
             - secretRef:
                 name: {{ .Release.Name }}-linkding-secret
+          {{- with include "linkding.extraEnv" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           {{- with include "linkding.volumeMounts" . }}
           {{- . | nindent 10 }}
           {{- end }}

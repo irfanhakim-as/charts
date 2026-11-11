@@ -6,6 +6,33 @@
 # Default: "1"
 replicaCount: ""
 
+# The update strategy used to replace existing pods with new ones.
+# Note: Set "type" to "Recreate" if data storage is enabled and mounted as "ReadWriteOnce".
+# Example:
+# updateStrategy:
+#   type: "Recreate"
+updateStrategy: {}
+
+# Annotations to be applied to Linkding pods.
+# Example:
+# podAnnotations:
+#   reloader.stakater.com/auto: "true"
+podAnnotations: {}
+
+# Security context applied at the pod level for Linkding.
+# Note: Set fsGroup for the data storage to be writable when the container is forced to run as a non-root user.
+# Example:
+# podSecurityContext:
+#   fsGroup: 33
+podSecurityContext: {}
+
+# Security context applied at the Linkding container level.
+# Note: The image starts as root to prepare the data directory then drops to the "www-data" user, so avoid "runAsNonRoot" and "runAsUser".
+# Example:
+# containerSecurityContext:
+#   allowPrivilegeEscalation: false
+containerSecurityContext: {}
+
 # Container images used for Linkding.
 image:
   # Linkding container image configurations.
@@ -44,6 +71,81 @@ image:
 # imagePullSecrets:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
+
+# Service account configurations for Linkding pods.
+serviceAccount:
+  # Specifies whether a service account should be created for Linkding.
+  # Example:
+  # create: true
+  create: false
+  # The name of the service account used by Linkding pods.
+  # Note: Required to use an existing service account when "create" is false.
+  # Default: "${.Release.Name}-linkding"
+  # Example:
+  # name: "linkding"
+  name: ""
+  # Annotations to be applied to the created service account.
+  # Example:
+  # annotations:
+  #   eks.amazonaws.com/role-arn: "arn:aws:iam::123456789012:role/linkding"
+  annotations: {}
+
+# The node labels a node must have for Linkding pods to be scheduled onto it.
+# Example:
+# nodeSelector:
+#   kubernetes.io/arch: "amd64"
+nodeSelector: {}
+
+# The tolerations that allow Linkding pods to be scheduled onto tainted nodes.
+# Example:
+# tolerations:
+#   - key: "dedicated"
+#     operator: "Equal"
+#     value: "bookmarks"
+#     effect: "NoSchedule"
+tolerations: []
+
+# The scheduling constraints applied to Linkding pods.
+# Example:
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: "kubernetes.io/arch"
+#               operator: "In"
+#               values:
+#                 - "amd64"
+affinity: {}
+
+# Additional environment variables to be set on the Linkding container.
+# Note: Takes precedence over variables set through the ConfigMap and Secret.
+# Example:
+# extraEnv:
+#   - name: "LD_LOG_X_FORWARDED_FOR"
+#     value: "true"
+#   - name: "OIDC_RP_CLIENT_SECRET"
+#     valueFrom:
+#       secretKeyRef:
+#         name: "linkding-oidc"
+#         key: "secret"
+extraEnv: []
+
+# Additional volumes to be added to Linkding pods.
+# Example:
+# extraVolumes:
+#   - name: "certs"
+#     configMap:
+#       name: "ca-certs"
+extraVolumes: []
+
+# Additional volume mounts to be added to the Linkding container.
+# Example:
+# extraVolumeMounts:
+#   - name: "certs"
+#     mountPath: "/etc/ssl/custom"
+#     readOnly: true
+extraVolumeMounts: []
 
 # Linkding configurations.
 linkding:

@@ -51,29 +51,24 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
-*/}}
-{{- define "linkding.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "linkding.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
 Volume mounts for the storage volumes
 */}}
 {{- define "linkding.volumeMounts" -}}
 {{- $dataPersistence := eq (include "linkding.dataPersistence" .) "true" -}}
 {{- $dataSubPath := include "linkding.dataSubPath" . -}}
-{{- if $dataPersistence -}}
+{{- $extraVolumeMounts := include "linkding.extraVolumeMounts" . -}}
+{{- if or $dataPersistence $extraVolumeMounts -}}
 volumeMounts:
+  {{- if $dataPersistence }}
   - name: {{ .Release.Name }}-linkding-data
     mountPath: {{ include "linkding.dataMountPath" . | quote }}
     {{- if $dataSubPath }}
     subPath: {{ $dataSubPath | quote }}
     {{- end }}
+  {{- end }}
+  {{- with $extraVolumeMounts }}
+  {{- . | nindent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}
 
@@ -82,11 +77,17 @@ Volumes for the storage volumes
 */}}
 {{- define "linkding.volumes" -}}
 {{- $dataPersistence := eq (include "linkding.dataPersistence" .) "true" -}}
-{{- if $dataPersistence -}}
+{{- $extraVolumes := include "linkding.extraVolumes" . -}}
+{{- if or $dataPersistence $extraVolumes -}}
 volumes:
+  {{- if $dataPersistence }}
   - name: {{ .Release.Name }}-linkding-data
     persistentVolumeClaim:
       claimName: {{ .Release.Name }}-linkding-data-pvc
+  {{- end }}
+  {{- with $extraVolumes }}
+  {{- . | nindent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}
 

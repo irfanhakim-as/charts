@@ -16,6 +16,26 @@ annotations:
 {{- end }}
 
 {{/*
+Security context applied at the pod level for Linkding.
+*/}}
+{{- define "linkding.podSecurityContext" -}}
+{{- with .Values.podSecurityContext -}}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Security context applied at the Linkding container level.
+*/}}
+{{- define "linkding.containerSecurityContext" -}}
+{{- with .Values.containerSecurityContext -}}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
 Container images used for Linkding.
 */}}
 {{- define "linkding.imageRegistry" -}}
@@ -57,6 +77,83 @@ Credentials used to securely authenticate and authorise the pulling of container
 {{- with .Values.imagePullSecrets -}}
 imagePullSecrets:
   {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Service account configurations for Linkding pods.
+*/}}
+{{- define "linkding.serviceAccountCreate" -}}
+{{- .Values.serviceAccount.create }}
+{{- end }}
+
+{{- define "linkding.serviceAccountName" -}}
+{{- $default := ternary (printf "%s-linkding" .Release.Name) "default" .Values.serviceAccount.create }}
+{{- .Values.serviceAccount.name | default $default | toString }}
+{{- end }}
+
+{{- define "linkding.serviceAccountAnnotations" -}}
+{{- with .Values.serviceAccount.annotations -}}
+annotations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The node labels a node must have for Linkding pods to be scheduled onto it.
+*/}}
+{{- define "linkding.nodeSelector" -}}
+{{- with .Values.nodeSelector -}}
+nodeSelector:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The tolerations that allow Linkding pods to be scheduled onto tainted nodes.
+*/}}
+{{- define "linkding.tolerations" -}}
+{{- with .Values.tolerations -}}
+tolerations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The scheduling constraints applied to Linkding pods.
+*/}}
+{{- define "linkding.affinity" -}}
+{{- with .Values.affinity -}}
+affinity:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional environment variables to be set on the Linkding container.
+*/}}
+{{- define "linkding.extraEnv" -}}
+{{- with .Values.extraEnv -}}
+env:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional volumes to be added to Linkding pods.
+*/}}
+{{- define "linkding.extraVolumes" -}}
+{{- with .Values.extraVolumes -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional volume mounts to be added to the Linkding container.
+*/}}
+{{- define "linkding.extraVolumeMounts" -}}
+{{- with .Values.extraVolumeMounts -}}
+{{- toYaml . }}
 {{- end }}
 {{- end }}
 
