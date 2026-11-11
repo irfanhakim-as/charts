@@ -164,3 +164,57 @@ data:
 {{- if and $duo $duoHost }}
   DUO_HOST: {{ $duoHost | quote }}
 {{- end }}
+{{- with include "vaultwarden.adminDisableToken" . }}
+  DISABLE_ADMIN_TOKEN: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.adminSessionLifetime" . }}
+  ADMIN_SESSION_LIFETIME: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkPort" . }}
+  ROCKET_PORT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkAddress" . }}
+  ROCKET_ADDRESS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkIpHeader" . }}
+  IP_HEADER: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkIpHeaderTrustedProxies" . }}
+  IP_HEADER_TRUSTED_PROXIES: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkWebsocket" . }}
+  ENABLE_WEBSOCKET: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkDnsPreferIpv6" . }}
+  DNS_PREFER_IPV6: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkAllowedIframeAncestors" . }}
+  ALLOWED_IFRAME_ANCESTORS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.networkAllowedConnectSrc" . }}
+  ALLOWED_CONNECT_SRC: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.outboundBlockNonGlobalIps" . }}
+  HTTP_REQUEST_BLOCK_NON_GLOBAL_IPS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.outboundBlockRegex" . }}
+  HTTP_REQUEST_BLOCK_REGEX: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.rateLimitLoginSeconds" . }}
+  LOGIN_RATELIMIT_SECONDS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.rateLimitLoginMaxBurst" . }}
+  LOGIN_RATELIMIT_MAX_BURST: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.rateLimitUnauthenticatedSeconds" . }}
+  UNAUTHENTICATED_RATELIMIT_SECONDS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.rateLimitUnauthenticatedMaxBurst" . }}
+  UNAUTHENTICATED_RATELIMIT_MAX_BURST: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.rateLimitAdminSeconds" . }}
+  ADMIN_RATELIMIT_SECONDS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.rateLimitAdminMaxBurst" . }}
+  ADMIN_RATELIMIT_MAX_BURST: {{ . | quote }}
+{{- end }}

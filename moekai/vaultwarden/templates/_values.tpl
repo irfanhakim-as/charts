@@ -324,6 +324,90 @@ Push notification configurations.
 
 
 {{/*
+Admin panel configurations.
+*/}}
+{{- define "vaultwarden.adminDisableToken" -}}
+{{- .Values.admin.disableToken | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.adminSessionLifetime" -}}
+{{- .Values.admin.sessionLifetime | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
+Network configurations.
+*/}}
+{{- define "vaultwarden.networkPort" -}}
+{{- .Values.network.port | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkAddress" -}}
+{{- .Values.network.address | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkIpHeader" -}}
+{{- .Values.network.ipHeader | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkIpHeaderTrustedProxies" -}}
+{{- .Values.network.ipHeaderTrustedProxies | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkWebsocket" -}}
+{{- .Values.network.websocket | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.networkDnsPreferIpv6" -}}
+{{- .Values.network.dnsPreferIpv6 | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.networkAllowedIframeAncestors" -}}
+{{- .Values.network.allowedIframeAncestors | join " " | toString }}
+{{- end }}
+
+{{- define "vaultwarden.networkAllowedConnectSrc" -}}
+{{- .Values.network.allowedConnectSrc | join " " | toString }}
+{{- end }}
+
+{{/*
+Outbound request configurations.
+*/}}
+{{- define "vaultwarden.outboundBlockNonGlobalIps" -}}
+{{- .Values.outbound.blockNonGlobalIps | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.outboundBlockRegex" -}}
+{{- .Values.outbound.blockRegex | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
+Rate limit configurations.
+*/}}
+{{- define "vaultwarden.rateLimitLoginSeconds" -}}
+{{- .Values.rateLimit.login.seconds | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitLoginMaxBurst" -}}
+{{- .Values.rateLimit.login.maxBurst | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitUnauthenticatedSeconds" -}}
+{{- .Values.rateLimit.unauthenticated.seconds | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitUnauthenticatedMaxBurst" -}}
+{{- .Values.rateLimit.unauthenticated.maxBurst | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitAdminSeconds" -}}
+{{- .Values.rateLimit.admin.seconds | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitAdminMaxBurst" -}}
+{{- .Values.rateLimit.admin.maxBurst | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
 Signup configurations.
 */}}
 {{- define "vaultwarden.signupEnabled" -}}

@@ -213,6 +213,20 @@ vaultwarden:
   #   echo "This is a custom init script."
   initScript: ""
 
+# Admin panel configurations.
+admin:
+  # Specifies whether to bypass the security of the admin panel.
+  # Note: Only use it with a separate authentication layer in front of Vaultwarden, otherwise anyone can open the admin panel.
+  # Default: "false"
+  # Example:
+  # disableToken: "true"
+  disableToken: ""
+  # The number of minutes an admin session lasts for.
+  # Default: "20"
+  # Example:
+  # sessionLifetime: "60"
+  sessionLifetime: ""
+
 # Duo two-factor authentication (2FA) configurations.
 duo:
   # Specifies whether to enable Duo 2FA integration for all users.
@@ -344,6 +358,66 @@ mail:
     # command: "/usr/sbin/sendmail"
     command: ""
 
+# Network configurations.
+network:
+  # The port on which Vaultwarden listens inside the container.
+  # Note: Use a port above 1023 when running as a non-root user.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The address Vaultwarden binds to inside the container.
+  # Default: "0.0.0.0"
+  # Example:
+  # address: "::"
+  address: ""
+  # The request header that carries the IP address of the client, or "none" to use the address of the connection.
+  # Default: "X-Real-IP"
+  # Example:
+  # ipHeader: "X-Forwarded-For"
+  ipHeader: ""
+  # The addresses the client IP header is accepted from, as "local", "all", or a comma-separated list of IP addresses and CIDR ranges.
+  # Note: The client IP is used for rate limits, so list the proxies in front of Vaultwarden (e.g. the ingress controller).
+  # Default: "local"
+  # Example:
+  # ipHeaderTrustedProxies: "10.42.0.0/16"
+  ipHeaderTrustedProxies: ""
+  # Specifies whether to enable websocket notifications.
+  # Default: "true"
+  # Example:
+  # websocket: "false"
+  websocket: ""
+  # Specifies whether to resolve IPv6 addresses first and fall back to IPv4.
+  # Note: Useful in IPv6-only environments.
+  # Default: "false"
+  # Example:
+  # dnsPreferIpv6: "true"
+  dnsPreferIpv6: ""
+  # The domains allowed to embed the web vault in an iframe.
+  # Note: Only enable it if embedding is needed, since it relaxes the frame-ancestors security header.
+  # Example:
+  # allowedIframeAncestors:
+  #   - "https://intranet.example.com"
+  allowedIframeAncestors: []
+  # The additional HTTPS domains that scripts in the web vault may connect to (e.g. email alias services).
+  # Example:
+  # allowedConnectSrc:
+  #   - "https://addy.example.com"
+  allowedConnectSrc: []
+
+# Outbound request configurations for the internal HTTP client.
+outbound:
+  # Specifies whether to refuse connecting to non-global IP addresses.
+  # Note: Protects hosts on the internal network.
+  # Default: "true"
+  # Example:
+  # blockNonGlobalIps: "false"
+  blockNonGlobalIps: ""
+  # A regular expression matching the domains and IP addresses that must not be fetched.
+  # Example:
+  # blockRegex: "^(192\\.168\\.1\\.[0-9]+)$"
+  blockRegex: ""
+
 # Bitwarden Push Relay configurations.
 push:
   # Specifies whether to enable automatic vault sync in all clients using push notifications.
@@ -361,6 +435,46 @@ push:
   # Example:
   # key: "secret"
   key: ""
+
+# Rate limit configurations.
+rateLimit:
+  # Rate limits of login and two-factor authentication requests from the same IP address.
+  login:
+    # The average number of seconds between requests before rate limiting starts.
+    # Default: "60"
+    # Example:
+    # seconds: "30"
+    seconds: ""
+    # The size of the burst of requests allowed on top of the average.
+    # Note: Applies to both login and two-factor authentication, so keep it at 2 or more.
+    # Default: "10"
+    # Example:
+    # maxBurst: "20"
+    maxBurst: ""
+  # Rate limits of unauthenticated requests (e.g. password hints, account recovery, and Sends) from the same IP address.
+  unauthenticated:
+    # The average number of seconds between requests before rate limiting starts.
+    # Default: "60"
+    # Example:
+    # seconds: "30"
+    seconds: ""
+    # The size of the burst of requests allowed on top of the average.
+    # Default: "50"
+    # Example:
+    # maxBurst: "100"
+    maxBurst: ""
+  # Rate limits of admin panel login requests from the same IP address.
+  admin:
+    # The average number of seconds between requests before rate limiting starts.
+    # Default: "300"
+    # Example:
+    # seconds: "600"
+    seconds: ""
+    # The size of the burst of requests allowed on top of the average.
+    # Default: "3"
+    # Example:
+    # maxBurst: "5"
+    maxBurst: ""
 
 # Account registration configurations.
 signup:

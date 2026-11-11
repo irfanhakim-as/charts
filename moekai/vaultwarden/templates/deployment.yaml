@@ -9,6 +9,7 @@
 {{- $replicaCount := include "vaultwarden.replicaCount" . }}
 {{- $serviceAccountName := include "vaultwarden.serviceAccountName" . }}
 {{- $existingSecret := include "vaultwarden.existingSecret" . }}
+{{- $networkPort := include "vaultwarden.networkPort" . }}
 {{- $initScript := include "vaultwarden.initScript" . }}
 ---
 apiVersion: apps/v1
@@ -73,7 +74,7 @@ spec:
           {{- end }}
           ports:
             - name: vaultwarden
-              containerPort: 80
+              containerPort: {{ int ($networkPort | default "80") }}
               protocol: TCP
           {{- include "vaultwarden.resources" . | nindent 10 }}
           envFrom:
