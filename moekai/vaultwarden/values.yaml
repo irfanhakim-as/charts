@@ -217,6 +217,11 @@ vaultwarden:
   # Example:
   # fillAssistRulesUrl: "https://fillassist.example.com"
   fillAssistRulesUrl: ""
+  # Specifies whether to serve the web vault.
+  # Default: "true"
+  # Example:
+  # webVaultEnabled: "false"
+  webVaultEnabled: ""
   # Custom init script to run before the Vaultwarden container starts.
   # Example:
   # initScript: >-
@@ -260,6 +265,44 @@ duo:
   # host: "api-xxxxxxxx.duosecurity.com"
   host: ""
 
+# Icon configurations.
+icons:
+  # The service that provides website icons.
+  # Note: Accepts "internal", "bitwarden", "duckduckgo", "google", or a URL containing "{}" for the domain.
+  # Default: "internal"
+  # Example:
+  # service: "duckduckgo"
+  service: ""
+  # The HTTP status code used to redirect to an external icon service.
+  # Note: Accepts 301, 302, 307, and 308, and the Bitwarden clients support 301 and 302 best.
+  # Default: "302"
+  # Example:
+  # redirectCode: "308"
+  redirectCode: ""
+  # The number of seconds a downloaded icon is considered fresh.
+  # Note: Set to "0" to keep icons forever.
+  # Default: "2592000"
+  # Example:
+  # cacheTtl: "604800"
+  cacheTtl: ""
+  # The number of seconds before retrying an icon that was not available.
+  # Note: Set to "0" to keep the result forever.
+  # Default: "259200"
+  # Example:
+  # cacheNegativeTtl: "86400"
+  cacheNegativeTtl: ""
+  # The number of seconds before giving up on downloading an icon.
+  # Default: "10"
+  # Example:
+  # downloadTimeout: "30"
+  downloadTimeout: ""
+  # Specifies whether to stop downloading icons and only serve the ones already cached.
+  # Note: "cacheTtl" must be "0" as well, otherwise cached icons are eventually deleted and not downloaded again.
+  # Default: "false"
+  # Example:
+  # disableDownload: "true"
+  disableDownload: ""
+
 # Invitation configurations.
 invitation:
   # Specifies whether to allow organisation admins to send user invitations.
@@ -278,6 +321,63 @@ invitation:
   # Example:
   # organisation: "ExampleOrg"
   organisation: ""
+
+# Scheduled job configurations.
+jobs:
+  # The number of milliseconds between checks for jobs that need to run.
+  # Note: Set to "0" to disable all scheduled jobs.
+  # Default: "30000"
+  # Example:
+  # pollInterval: "60000"
+  pollInterval: ""
+  # The cron schedules of the scheduled jobs.
+  # Note: Uses "second minute hour day-of-month month day-of-week" and "disabled" turns a job off.
+  schedules:
+    # The cron schedule of the job that deletes Sends past their deletion date.
+    # Default: "0 5 * * * *"
+    # Example:
+    # sendPurge: "0 5 * * * *"
+    sendPurge: ""
+    # The cron schedule of the job that permanently deletes trashed items.
+    # Default: "0 5 0 * * *"
+    # Example:
+    # trashPurge: "0 5 0 * * *"
+    trashPurge: ""
+    # The cron schedule of the job that checks for incomplete two-factor authentication logins.
+    # Default: "30 * * * * *"
+    # Example:
+    # incomplete2fa: "30 * * * * *"
+    incomplete2fa: ""
+    # The cron schedule of the job that sends expiration reminders to emergency access grantors.
+    # Default: "0 3 * * * *"
+    # Example:
+    # emergencyNotificationReminder: "0 3 * * * *"
+    emergencyNotificationReminder: ""
+    # The cron schedule of the job that grants emergency access requests that have met the required wait time.
+    # Default: "0 7 * * * *"
+    # Example:
+    # emergencyRequestTimeout: "0 7 * * * *"
+    emergencyRequestTimeout: ""
+    # The cron schedule of the job that deletes old events.
+    # Default: "0 10 0 * * *"
+    # Example:
+    # eventCleanup: "0 10 0 * * *"
+    eventCleanup: ""
+    # The cron schedule of the job that deletes old authentication requests.
+    # Default: "30 * * * * *"
+    # Example:
+    # authRequestPurge: "30 * * * * *"
+    authRequestPurge: ""
+    # The cron schedule of the job that deletes expired Duo contexts.
+    # Default: "30 * * * * *"
+    # Example:
+    # duoContextPurge: "30 * * * * *"
+    duoContextPurge: ""
+    # The cron schedule of the job that deletes leftovers of incomplete SSO logins.
+    # Default: "0 20 0 * * *"
+    # Example:
+    # incompleteSsoPurge: "0 20 0 * * *"
+    incompleteSsoPurge: ""
 
 # Limit configurations.
 limits:
@@ -302,6 +402,31 @@ limits:
   # Example:
   # increaseNoteSize: "true"
   increaseNoteSize: ""
+
+# Logging configurations.
+logging:
+  # Specifies whether to show timestamps and targets in the logs.
+  # Default: "true"
+  # Example:
+  # extended: "false"
+  extended: ""
+  # The timestamp format used in extended logging.
+  # Note: Accepts the format specifiers of https://docs.rs/chrono/latest/chrono/format/strftime.
+  # Default: "%Y-%m-%d %H:%M:%S.%3f"
+  # Example:
+  # timestampFormat: "%Y-%m-%dT%H:%M:%S"
+  timestampFormat: ""
+  # Specifies whether to send the logs to Syslog.
+  # Note: Requires extended logging.
+  # Default: "false"
+  # Example:
+  # syslog: "true"
+  syslog: ""
+  # The path of a file to write the logs to.
+  # Note: The path must be writable, e.g. on the data storage.
+  # Example:
+  # file: "/data/vaultwarden.log"
+  file: ""
 
 # Mail configurations.
 mail:
@@ -406,13 +531,14 @@ network:
   # Example:
   # address: "::"
   address: ""
-  # The request header that carries the IP address of the client, or "none" to use the address of the connection.
+  # The request header that carries the IP address of the client.
+  # Note: Set to "none" to use the address of the connection.
   # Default: "X-Real-IP"
   # Example:
   # ipHeader: "X-Forwarded-For"
   ipHeader: ""
-  # The addresses the client IP header is accepted from, as "local", "all", or a comma-separated list of IP addresses and CIDR ranges.
-  # Note: The client IP is used for rate limits, so list the proxies in front of Vaultwarden (e.g. the ingress controller).
+  # The addresses the client IP header is accepted from.
+  # Note: Accepts "local", "all", or a comma-separated list of IP addresses and CIDR ranges.
   # Default: "local"
   # Example:
   # ipHeaderTrustedProxies: "10.42.0.0/16"
@@ -442,7 +568,8 @@ network:
 
 # Organization configurations.
 organization:
-  # The users allowed to create organizations, as a list of email addresses or "none" for nobody.
+  # The users allowed to create organizations.
+  # Note: Accepts a list of email addresses, or "none" for nobody.
   # Default: All users
   # Example:
   # creationUsers:
@@ -521,6 +648,18 @@ push:
   # Example:
   # key: "secret"
   key: ""
+  # The URI of the Bitwarden push relay.
+  # Note: Use "https://api.bitwarden.eu" for the European Union data region, and only change it if the implications are understood.
+  # Default: "https://push.bitwarden.com"
+  # Example:
+  # relayUri: "https://api.bitwarden.eu"
+  relayUri: ""
+  # The URI of the Bitwarden push identity server.
+  # Note: Use "https://identity.bitwarden.eu" for the European Union data region, and only change it if the implications are understood.
+  # Default: "https://identity.bitwarden.com"
+  # Example:
+  # identityUri: "https://identity.bitwarden.eu"
+  identityUri: ""
 
 # Rate limit configurations.
 rateLimit:
@@ -623,7 +762,8 @@ sso:
   # Example:
   # allowUnknownEmailVerification: "true"
   allowUnknownEmailVerification: ""
-  # The base URL of the OIDC provider, without a trailing slash and the "/.well-known/openid-configuration" path.
+  # The base URL of the OIDC provider.
+  # Note: Must not end with a slash or include the "/.well-known/openid-configuration" path.
   # Example:
   # authority: "https://id.example.com"
   authority: ""
@@ -668,7 +808,8 @@ sso:
   # Example:
   # authOnlyNotSession: "true"
   authOnlyNotSession: ""
-  # The number of seconds the OIDC discovery document is cached for, with 0 to disable caching.
+  # The number of seconds the OIDC discovery document is cached for.
+  # Note: Set to "0" to disable caching.
   # Default: "0"
   # Example:
   # clientCacheExpiration: "300"
@@ -782,6 +923,43 @@ db:
   # Example:
   # password: "password"
   password: ""
+  # Specifies whether Vaultwarden enables write-ahead logging (WAL) on the SQLite database at startup.
+  # Note: Only applies when db.type is "sqlite". Turning it off may cause worse performance.
+  # Default: "true"
+  # Example:
+  # wal: "false"
+  wal: ""
+  # The number of times to retry the database connection at startup.
+  # Note: Set to "0" to retry indefinitely.
+  # Default: "15"
+  # Example:
+  # connectionRetries: "30"
+  connectionRetries: ""
+  # The number of seconds to wait when acquiring a database connection.
+  # Default: "30"
+  # Example:
+  # timeout: "60"
+  timeout: ""
+  # The number of seconds before an idle database connection is closed.
+  # Default: "600"
+  # Example:
+  # idleTimeout: "300"
+  idleTimeout: ""
+  # The maximum size of the database connection pool.
+  # Default: "10"
+  # Example:
+  # maxConnections: "20"
+  maxConnections: ""
+  # The minimum size of the database connection pool.
+  # Default: "2"
+  # Example:
+  # minConnections: "1"
+  minConnections: ""
+  # The SQL statements to run whenever a new database connection is created.
+  # Default: "PRAGMA busy_timeout = 5000; PRAGMA synchronous = NORMAL;" for sqlite, none otherwise
+  # Example:
+  # connectionInit: "PRAGMA busy_timeout = 10000;"
+  connectionInit: ""
 
 # Ingress configurations.
 ingress:

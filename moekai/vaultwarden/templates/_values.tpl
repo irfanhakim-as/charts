@@ -209,6 +209,10 @@ Vaultwarden configurations.
 {{- .Values.vaultwarden.initScript | toString }}
 {{- end }}
 
+{{- define "vaultwarden.webVaultEnabled" -}}
+{{- .Values.vaultwarden.webVaultEnabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
 {{- define "vaultwarden.suppressOnboarding" -}}
 {{- .Values.vaultwarden.suppressOnboarding | toString | replace "<nil>" "" | lower }}
 {{- end }}
@@ -217,6 +221,33 @@ Vaultwarden configurations.
 {{- .Values.vaultwarden.fillAssistRulesUrl | toString | replace "<nil>" "" }}
 {{- end }}
 
+
+{{/*
+Icon configurations.
+*/}}
+{{- define "vaultwarden.iconsService" -}}
+{{- .Values.icons.service | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsRedirectCode" -}}
+{{- .Values.icons.redirectCode | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsCacheTtl" -}}
+{{- .Values.icons.cacheTtl | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsCacheNegativeTtl" -}}
+{{- .Values.icons.cacheNegativeTtl | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsDownloadTimeout" -}}
+{{- .Values.icons.downloadTimeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsDisableDownload" -}}
+{{- .Values.icons.disableDownload | toString | replace "<nil>" "" | lower }}
+{{- end }}
 
 {{/*
 Invitation configurations.
@@ -235,6 +266,49 @@ Invitation configurations.
 
 
 {{/*
+Job configurations.
+*/}}
+{{- define "vaultwarden.jobsPollInterval" -}}
+{{- .Values.jobs.pollInterval | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesSendPurge" -}}
+{{- .Values.jobs.schedules.sendPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesTrashPurge" -}}
+{{- .Values.jobs.schedules.trashPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesIncomplete2fa" -}}
+{{- .Values.jobs.schedules.incomplete2fa | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesEmergencyNotificationReminder" -}}
+{{- .Values.jobs.schedules.emergencyNotificationReminder | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesEmergencyRequestTimeout" -}}
+{{- .Values.jobs.schedules.emergencyRequestTimeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesEventCleanup" -}}
+{{- .Values.jobs.schedules.eventCleanup | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesAuthRequestPurge" -}}
+{{- .Values.jobs.schedules.authRequestPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesDuoContextPurge" -}}
+{{- .Values.jobs.schedules.duoContextPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesIncompleteSsoPurge" -}}
+{{- .Values.jobs.schedules.incompleteSsoPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
 Limit configurations.
 */}}
 {{- define "vaultwarden.limitsUserAttachment" -}}
@@ -251,6 +325,25 @@ Limit configurations.
 
 {{- define "vaultwarden.limitsIncreaseNoteSize" -}}
 {{- .Values.limits.increaseNoteSize | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{/*
+Logging configurations.
+*/}}
+{{- define "vaultwarden.loggingExtended" -}}
+{{- .Values.logging.extended | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.loggingTimestampFormat" -}}
+{{- .Values.logging.timestampFormat | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.loggingSyslog" -}}
+{{- .Values.logging.syslog | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.loggingFile" -}}
+{{- .Values.logging.file | toString | replace "<nil>" "" }}
 {{- end }}
 
 {{/*
@@ -362,6 +455,14 @@ Push notification configurations.
 
 {{- define "vaultwarden.pushKey" -}}
 {{- .Values.push.key | toString }}
+{{- end }}
+
+{{- define "vaultwarden.pushRelayUri" -}}
+{{- .Values.push.relayUri | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.pushIdentityUri" -}}
+{{- .Values.push.identityUri | toString | replace "<nil>" "" }}
 {{- end }}
 
 
@@ -675,6 +776,34 @@ Database configurations.
 
 {{- define "vaultwarden.dbPassword" -}}
 {{- .Values.db.password | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dbWal" -}}
+{{- .Values.db.wal | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.dbConnectionRetries" -}}
+{{- .Values.db.connectionRetries | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbTimeout" -}}
+{{- .Values.db.timeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbIdleTimeout" -}}
+{{- .Values.db.idleTimeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbMaxConnections" -}}
+{{- .Values.db.maxConnections | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbMinConnections" -}}
+{{- .Values.db.minConnections | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbConnectionInit" -}}
+{{- .Values.db.connectionInit | toString | replace "<nil>" "" }}
 {{- end }}
 
 {{- define "vaultwarden.dbUrl" -}}

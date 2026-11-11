@@ -263,3 +263,93 @@ data:
 {{- with include "vaultwarden.tfaRememberDays" . }}
   TWO_FACTOR_REMEMBER_DAYS: {{ . | quote }}
 {{- end }}
+{{- with include "vaultwarden.webVaultEnabled" . }}
+  WEB_VAULT_ENABLED: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.iconsService" . }}
+  ICON_SERVICE: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.iconsRedirectCode" . }}
+  ICON_REDIRECT_CODE: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.iconsCacheTtl" . }}
+  ICON_CACHE_TTL: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.iconsCacheNegativeTtl" . }}
+  ICON_CACHE_NEGTTL: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.iconsDownloadTimeout" . }}
+  ICON_DOWNLOAD_TIMEOUT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.iconsDisableDownload" . }}
+  DISABLE_ICON_DOWNLOAD: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.loggingExtended" . }}
+  EXTENDED_LOGGING: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.loggingTimestampFormat" . }}
+  LOG_TIMESTAMP_FORMAT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.loggingSyslog" . }}
+  USE_SYSLOG: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.loggingFile" . }}
+  LOG_FILE: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.dbWal" . }}
+  ENABLE_DB_WAL: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.dbConnectionRetries" . }}
+  DB_CONNECTION_RETRIES: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.dbTimeout" . }}
+  DATABASE_TIMEOUT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.dbIdleTimeout" . }}
+  DATABASE_IDLE_TIMEOUT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.dbMaxConnections" . }}
+  DATABASE_MAX_CONNS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.dbMinConnections" . }}
+  DATABASE_MIN_CONNS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.dbConnectionInit" . }}
+  DATABASE_CONN_INIT: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.pushRelayUri" . }}
+  PUSH_RELAY_URI: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.pushIdentityUri" . }}
+  PUSH_IDENTITY_URI: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsPollInterval" . }}
+  JOB_POLL_INTERVAL_MS: {{ . | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesSendPurge" . }}
+  SEND_PURGE_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesTrashPurge" . }}
+  TRASH_PURGE_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesIncomplete2fa" . }}
+  INCOMPLETE_2FA_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesEmergencyNotificationReminder" . }}
+  EMERGENCY_NOTIFICATION_REMINDER_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesEmergencyRequestTimeout" . }}
+  EMERGENCY_REQUEST_TIMEOUT_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesEventCleanup" . }}
+  EVENT_CLEANUP_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesAuthRequestPurge" . }}
+  AUTH_REQUEST_PURGE_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesDuoContextPurge" . }}
+  DUO_CONTEXT_PURGE_SCHEDULE: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
+{{- with include "vaultwarden.jobsSchedulesIncompleteSsoPurge" . }}
+  PURGE_INCOMPLETE_SSO_AUTH: {{ ternary "" . (eq . "disabled") | quote }}
+{{- end }}
