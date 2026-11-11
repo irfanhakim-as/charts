@@ -1,0 +1,20 @@
+{{- $dataPersistence := eq (include "pocket-id.dataPersistence" .) "true" }}
+{{- $dataAccessMode := include "pocket-id.dataAccessMode" . | quote }}
+{{- $dataStorage := include "pocket-id.dataStorage" . | quote }}
+{{- $dataStorageClassName := include "pocket-id.dataStorageClassName" . | quote }}
+{{- if $dataPersistence }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-pocket-id-data-pvc
+  labels:
+    {{- include "pocket-id.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ $dataAccessMode }}
+  resources:
+    requests:
+      storage: {{ $dataStorage }}
+  storageClassName: {{ $dataStorageClassName }}
+{{- end }}

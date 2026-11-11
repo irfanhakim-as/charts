@@ -1,0 +1,31 @@
+{{- $domain := include "pocket-id.ingressDomain" . }}
+{{- $ingressClassName := include "pocket-id.ingressClassName" . }}
+{{- $tlsSecretName := include "pocket-id.tlsSecretName" . }}
+{{- if $domain }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-pocket-id-ingress
+  labels:
+    {{- include "pocket-id.labels" . | nindent 4 }}
+  annotations:
+    {{- include "pocket-id.ingressAnnotations" . | nindent 4 }}
+spec:
+  ingressClassName: {{ $ingressClassName | quote }}
+  rules:
+    - host: {{ $domain | quote }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Release.Name }}-pocket-id-svc
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - {{ $domain | quote }}
+      secretName: {{ $tlsSecretName | quote }}
+{{- end }}
