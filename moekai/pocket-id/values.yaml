@@ -176,7 +176,7 @@ pocketid:
   # Example:
   # existingSecret: "pocket-id-secret"
   existingSecret: ""
-  # The key used to encrypt sensitive data such as the token signing keys.
+  # The key used to encrypt sensitive data.
   # Note: Required unless "existingSecret" provides it, generate one with "openssl rand -base64 32".
   # Example:
   # encryptionKey: "T2VrZ3ZqQ1JoS1o3bW5mRzlQd1lHcmVHbmp5Y0R0Mk4="
@@ -232,7 +232,7 @@ pocketid:
 
 # File storage configurations.
 files:
-  # The backend where uploads such as logos and profile pictures are stored.
+  # The backend where uploads are stored.
   # Note: Accepts "filesystem", "s3", or "database".
   # Default: "filesystem"
   # Example:
