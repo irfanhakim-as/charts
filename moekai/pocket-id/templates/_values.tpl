@@ -478,8 +478,7 @@ Observability configurations.
 
 {{- define "pocket-id.serviceMonitorLabels" -}}
 {{- with .Values.observability.prometheus.serviceMonitor.labels -}}
-labels:
-  {{- toYaml . | nindent 2 }}
+{{- toYaml . }}
 {{- end }}
 {{- end }}
 
