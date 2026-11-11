@@ -251,12 +251,12 @@ mail:
     # host: "smtp.gmail.com"
     host: ""
     # The port number on the SMTP server used for sending emails.
-    # Note: In most cases, depending on the specified security type, set the SMTP port to 587 (starttls), 465 (force_tls), or 25 (off).
-    # Default: "587"
+    # Default: "587" for starttls, "465" for force_tls, "25" for off
     # Example:
     # port: "465"
     port: ""
     # The SMTP security protocol used for securing email communication.
+    # Note: Accepts "starttls", "force_tls", or "off".
     # Default: "starttls"
     # Example:
     # security: "force_tls"

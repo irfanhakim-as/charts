@@ -234,7 +234,14 @@ Mail configurations.
 {{- end }}
 
 {{- define "vaultwarden.smtpPort" -}}
-{{- .Values.mail.smtp.port | default "587" | toString }}
+{{- $security := include "vaultwarden.smtpSecurity" . }}
+{{- $default := "587" }}
+{{- if eq $security "force_tls" }}
+{{- $default = "465" }}
+{{- else if eq $security "off" }}
+{{- $default = "25" }}
+{{- end }}
+{{- .Values.mail.smtp.port | default $default | toString }}
 {{- end }}
 
 {{- define "vaultwarden.smtpUser" -}}
