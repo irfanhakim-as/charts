@@ -239,6 +239,7 @@ files:
   # backend: "s3"
   backend: ""
   # The uploads directory for the filesystem backend, or the key prefix inside the bucket for the S3 backend.
+  # Note: Only defaulted when files.backend is "filesystem".
   # Default: "${.storage.data.mountPath}/uploads"
   # Example:
   # uploadPath: "/app/data/uploads"
