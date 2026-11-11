@@ -13,6 +13,28 @@ replicaCount: ""
 #   type: "Recreate"
 updateStrategy: {}
 
+# Annotations to be applied to Vaultwarden pods.
+# Example:
+# podAnnotations:
+#   reloader.stakater.com/auto: "true"
+podAnnotations: {}
+
+# Security context applied at the pod level for Vaultwarden.
+# Note: Set fsGroup for the data storage to be writable when the container runs as a non-root user.
+# Example:
+# podSecurityContext:
+#   fsGroup: 1000
+podSecurityContext: {}
+
+# Security context applied at the Vaultwarden container level.
+# Note: Running as a non-root user requires a port above 1023 and fsGroup to be set in "podSecurityContext".
+# Example:
+# containerSecurityContext:
+#   runAsUser: 1000
+#   runAsGroup: 1000
+#   runAsNonRoot: true
+containerSecurityContext: {}
+
 # Container images used for Vaultwarden.
 image:
   # Vaultwarden container image configurations.
@@ -51,6 +73,81 @@ image:
 # imagePullSecrets:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
+
+# Service account configurations for Vaultwarden pods.
+serviceAccount:
+  # Specifies whether a service account should be created for Vaultwarden.
+  # Example:
+  # create: true
+  create: false
+  # The name of the service account used by Vaultwarden pods.
+  # Note: Required to use an existing service account when "create" is false.
+  # Default: "${.Release.Name}-vaultwarden"
+  # Example:
+  # name: "vaultwarden"
+  name: ""
+  # Annotations to be applied to the created service account.
+  # Example:
+  # annotations:
+  #   eks.amazonaws.com/role-arn: "arn:aws:iam::123456789012:role/vaultwarden"
+  annotations: {}
+
+# The node labels a node must have for Vaultwarden pods to be scheduled onto it.
+# Example:
+# nodeSelector:
+#   kubernetes.io/arch: "amd64"
+nodeSelector: {}
+
+# The tolerations that allow Vaultwarden pods to be scheduled onto tainted nodes.
+# Example:
+# tolerations:
+#   - key: "dedicated"
+#     operator: "Equal"
+#     value: "passwords"
+#     effect: "NoSchedule"
+tolerations: []
+
+# The scheduling constraints applied to Vaultwarden pods.
+# Example:
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: "kubernetes.io/arch"
+#               operator: "In"
+#               values:
+#                 - "amd64"
+affinity: {}
+
+# Additional environment variables to be set on the Vaultwarden container.
+# Note: Takes precedence over variables set through the ConfigMap and Secret.
+# Example:
+# extraEnv:
+#   - name: "ORG_EVENTS_ENABLED"
+#     value: "true"
+#   - name: "SSO_CLIENT_SECRET"
+#     valueFrom:
+#       secretKeyRef:
+#         name: "vaultwarden-sso"
+#         key: "secret"
+extraEnv: []
+
+# Additional volumes to be added to Vaultwarden pods.
+# Example:
+# extraVolumes:
+#   - name: "certs"
+#     configMap:
+#       name: "ca-certs"
+extraVolumes: []
+
+# Additional volume mounts to be added to the Vaultwarden container.
+# Example:
+# extraVolumeMounts:
+#   - name: "certs"
+#     mountPath: "/etc/ssl/custom"
+#     readOnly: true
+extraVolumeMounts: []
 
 # Vaultwarden configurations.
 vaultwarden:

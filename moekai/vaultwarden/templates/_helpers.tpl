@@ -51,29 +51,24 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
-*/}}
-{{- define "vaultwarden.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "vaultwarden.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
 Volume mounts for the storage volumes
 */}}
 {{- define "vaultwarden.volumeMounts" -}}
 {{- $dataPersistence := eq (include "vaultwarden.dataPersistence" .) "true" -}}
 {{- $dataSubPath := include "vaultwarden.dataSubPath" . -}}
-{{- if $dataPersistence -}}
+{{- $extraVolumeMounts := include "vaultwarden.extraVolumeMounts" . -}}
+{{- if or $dataPersistence $extraVolumeMounts -}}
 volumeMounts:
+  {{- if $dataPersistence }}
   - name: {{ .Release.Name }}-vaultwarden-data
     mountPath: {{ include "vaultwarden.dataMountPath" . | quote }}
     {{- if $dataSubPath }}
     subPath: {{ $dataSubPath | quote }}
     {{- end }}
+  {{- end }}
+  {{- with $extraVolumeMounts }}
+  {{- . | nindent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}
 
@@ -82,11 +77,17 @@ Volumes for the storage volumes
 */}}
 {{- define "vaultwarden.volumes" -}}
 {{- $dataPersistence := eq (include "vaultwarden.dataPersistence" .) "true" -}}
-{{- if $dataPersistence -}}
+{{- $extraVolumes := include "vaultwarden.extraVolumes" . -}}
+{{- if or $dataPersistence $extraVolumes -}}
 volumes:
+  {{- if $dataPersistence }}
   - name: {{ .Release.Name }}-vaultwarden-data
     persistentVolumeClaim:
       claimName: {{ .Release.Name }}-vaultwarden-data-pvc
+  {{- end }}
+  {{- with $extraVolumes }}
+  {{- . | nindent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}
 

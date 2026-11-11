@@ -16,6 +16,26 @@ annotations:
 {{- end }}
 
 {{/*
+Security context applied at the pod level for Vaultwarden.
+*/}}
+{{- define "vaultwarden.podSecurityContext" -}}
+{{- with .Values.podSecurityContext -}}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Security context applied at the Vaultwarden container level.
+*/}}
+{{- define "vaultwarden.containerSecurityContext" -}}
+{{- with .Values.containerSecurityContext -}}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
 Container images used for Vaultwarden.
 */}}
 {{- define "vaultwarden.imageRegistry" -}}
@@ -57,6 +77,83 @@ Credentials used to securely authenticate and authorise the pulling of container
 {{- with .Values.imagePullSecrets -}}
 imagePullSecrets:
   {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Service account configurations for Vaultwarden pods.
+*/}}
+{{- define "vaultwarden.serviceAccountCreate" -}}
+{{- .Values.serviceAccount.create }}
+{{- end }}
+
+{{- define "vaultwarden.serviceAccountName" -}}
+{{- $default := ternary (printf "%s-vaultwarden" .Release.Name) "default" .Values.serviceAccount.create }}
+{{- .Values.serviceAccount.name | default $default | toString }}
+{{- end }}
+
+{{- define "vaultwarden.serviceAccountAnnotations" -}}
+{{- with .Values.serviceAccount.annotations -}}
+annotations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The node labels a node must have for Vaultwarden pods to be scheduled onto it.
+*/}}
+{{- define "vaultwarden.nodeSelector" -}}
+{{- with .Values.nodeSelector -}}
+nodeSelector:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The tolerations that allow Vaultwarden pods to be scheduled onto tainted nodes.
+*/}}
+{{- define "vaultwarden.tolerations" -}}
+{{- with .Values.tolerations -}}
+tolerations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The scheduling constraints applied to Vaultwarden pods.
+*/}}
+{{- define "vaultwarden.affinity" -}}
+{{- with .Values.affinity -}}
+affinity:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional environment variables to be set on the Vaultwarden container.
+*/}}
+{{- define "vaultwarden.extraEnv" -}}
+{{- with .Values.extraEnv -}}
+env:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional volumes to be added to Vaultwarden pods.
+*/}}
+{{- define "vaultwarden.extraVolumes" -}}
+{{- with .Values.extraVolumes -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional volume mounts to be added to the Vaultwarden container.
+*/}}
+{{- define "vaultwarden.extraVolumeMounts" -}}
+{{- with .Values.extraVolumeMounts -}}
+{{- toYaml . }}
 {{- end }}
 {{- end }}
 

@@ -7,6 +7,7 @@
 {{- $initTag := include "vaultwarden.initImageTag" . }}
 {{- $initPullPolicy := include "vaultwarden.initImagePullPolicy" . | quote }}
 {{- $replicaCount := include "vaultwarden.replicaCount" . }}
+{{- $serviceAccountName := include "vaultwarden.serviceAccountName" . }}
 {{- $initScript := include "vaultwarden.initScript" . }}
 ---
 apiVersion: apps/v1
@@ -32,7 +33,20 @@ spec:
       labels:
         {{- include "vaultwarden.selectorLabels" . | nindent 8 }}
     spec:
+      serviceAccountName: {{ $serviceAccountName }}
       {{- with include "vaultwarden.imagePullSecrets" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "vaultwarden.podSecurityContext" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "vaultwarden.nodeSelector" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "vaultwarden.tolerations" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "vaultwarden.affinity" . }}
       {{- . | nindent 6 }}
       {{- end }}
       {{- if $initScript }}
@@ -53,6 +67,9 @@ spec:
         - name: vaultwarden
           image: {{ printf "%s/%s:%s" $vaultwardenRegistry $vaultwardenRepository $vaultwardenTag | quote }}
           imagePullPolicy: {{ $vaultwardenPullPolicy }}
+          {{- with include "vaultwarden.containerSecurityContext" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           ports:
             - name: vaultwarden
               containerPort: 80
@@ -63,6 +80,9 @@ spec:
                 name: {{ .Release.Name }}-vaultwarden-cm
             - secretRef:
                 name: {{ .Release.Name }}-vaultwarden-secret
+          {{- with include "vaultwarden.extraEnv" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           {{- with include "vaultwarden.volumeMounts" . }}
           {{- . | nindent 10 }}
           {{- end }}
