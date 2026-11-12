@@ -1,7 +1,7 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $dataAccessMode := .Values.storage.data.accessMode | default "ReadWriteMany" | toString | quote }}
-{{- $dataStorage := .Values.storage.data.storage | default "1Gi" | toString | quote }}
-{{- $dataStorageClassName := .Values.storage.data.storageClassName | default "longhorn" | toString | quote }}
+{{- $dataPersistence := eq (include "linkding.dataPersistence" .) "true" }}
+{{- $dataAccessMode := include "linkding.dataAccessMode" . | quote }}
+{{- $dataStorage := include "linkding.dataStorage" . | quote }}
+{{- $dataStorageClassName := include "linkding.dataStorageClassName" . | quote }}
 {{- if $dataPersistence }}
 ---
 apiVersion: v1

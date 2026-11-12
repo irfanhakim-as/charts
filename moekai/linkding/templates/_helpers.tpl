@@ -51,12 +51,139 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Volume mounts for the storage volumes
 */}}
-{{- define "linkding.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "linkding.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- define "linkding.volumeMounts" -}}
+{{- $dataPersistence := eq (include "linkding.dataPersistence" .) "true" -}}
+{{- $dataSubPath := include "linkding.dataSubPath" . -}}
+{{- $extraVolumeMounts := include "linkding.extraVolumeMounts" . -}}
+{{- if or $dataPersistence $extraVolumeMounts -}}
+volumeMounts:
+  {{- if $dataPersistence }}
+  - name: {{ .Release.Name }}-linkding-data
+    mountPath: {{ include "linkding.dataMountPath" . | quote }}
+    {{- if $dataSubPath }}
+    subPath: {{ $dataSubPath | quote }}
+    {{- end }}
+  {{- end }}
+  {{- with $extraVolumeMounts }}
+  {{- . | nindent 2 }}
+  {{- end }}
 {{- end }}
+{{- end }}
+
+{{/*
+Volumes for the storage volumes
+*/}}
+{{- define "linkding.volumes" -}}
+{{- $dataPersistence := eq (include "linkding.dataPersistence" .) "true" -}}
+{{- $extraVolumes := include "linkding.extraVolumes" . -}}
+{{- if or $dataPersistence $extraVolumes -}}
+volumes:
+  {{- if $dataPersistence }}
+  - name: {{ .Release.Name }}-linkding-data
+    persistentVolumeClaim:
+      claimName: {{ .Release.Name }}-linkding-data-pvc
+  {{- end }}
+  {{- with $extraVolumes }}
+  {{- . | nindent 2 }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Ingress annotations
+*/}}
+{{- define "linkding.ingressAnnotations" -}}
+cert-manager.io/cluster-issuer: {{ include "linkding.clusterIssuer" . | quote }}
+cert-manager.io/private-key-algorithm: "ECDSA"
+nginx.ingress.kubernetes.io/affinity: "cookie"
+nginx.ingress.kubernetes.io/affinity-mode: "persistent"
+nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+nginx.ingress.kubernetes.io/session-cookie-name: "route"
+nginx.org/client-max-body-size: "100m"
+{{- range .Values.ingress.customAnnotations }}
+{{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
+Whether the Secret has any data to render
+*/}}
+{{- define "linkding.secretEnabled" -}}
+{{- $values := list
+  (include "linkding.adminUser" .)
+  (include "linkding.adminPassword" .)
+  (ternary (include "linkding.dbUser" .) "" (eq (include "linkding.dbType" .) "postgres"))
+  (ternary (include "linkding.dbPassword" .) "" (eq (include "linkding.dbType" .) "postgres"))
+  (include "linkding.oidcClientSecret" .)
+-}}
+{{- gt (len (compact $values)) 0 }}
+{{- end }}
+
+{{/*
+Startup probe for the Linkding container
+*/}}
+{{- define "linkding.startupProbe" -}}
+{{- $enabled := .Values.probes.linkding.startup.enabled -}}
+{{- $spec := .Values.probes.linkding.startup.spec -}}
+{{- if and $enabled $spec -}}
+startupProbe:
+  {{- toYaml $spec | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Liveness probe for the Linkding container
+*/}}
+{{- define "linkding.livenessProbe" -}}
+{{- $enabled := .Values.probes.linkding.liveness.enabled -}}
+{{- $spec := .Values.probes.linkding.liveness.spec -}}
+{{- if $enabled -}}
+livenessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: {{ include "linkding.probePath" . }}
+    port: linkding
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Readiness probe for the Linkding container
+*/}}
+{{- define "linkding.readinessProbe" -}}
+{{- $enabled := .Values.probes.linkding.readiness.enabled -}}
+{{- $spec := .Values.probes.linkding.readiness.spec -}}
+{{- if $enabled -}}
+readinessProbe:
+  {{- if $spec }}
+  {{- toYaml $spec | nindent 2 }}
+  {{- else }}
+  httpGet:
+    path: {{ include "linkding.probePath" . }}
+    port: linkding
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Path of the health endpoint
+*/}}
+{{- define "linkding.probePath" -}}
+{{- printf "/%shealth" (include "linkding.networkContextPath" .) }}
 {{- end }}

@@ -1,10 +1,9 @@
-{{- $ingress := .Values.ingress.enabled }}
-{{- $www := .Values.ingress.www }}
-{{- $clusterIssuer := .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString | quote }}
-{{- $customAnnotations := .Values.ingress.customAnnotations }}
-{{- $domain := .Values.linkding.domain | toString }}
-{{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
-{{- if and $ingress $domain }}
+{{- $domain := include "linkding.ingressDomain" . }}
+{{- $ingressClassName := include "linkding.ingressClassName" . }}
+{{- $tlsSecretName := include "linkding.tlsSecretName" . }}
+{{- $www := eq (include "linkding.ingressWww" .) "true" }}
+{{- $wwwDomain := printf "www.%s" $domain | quote }}
+{{- if $domain }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -13,20 +12,9 @@ metadata:
   labels:
     {{- include "linkding.labels" . | nindent 4 }}
   annotations:
-    cert-manager.io/cluster-issuer: {{ $clusterIssuer }}
-    cert-manager.io/private-key-algorithm: "ECDSA"
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/affinity-mode: "persistent"
-    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
-    nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
-    nginx.ingress.kubernetes.io/session-cookie-name: "route"
-    nginx.org/client-max-body-size: "100m"
-    {{- range $customAnnotations }}
-    {{ printf "%s/%s" (.prefix | default "nginx.ingress.kubernetes.io") .name }}: {{ .value | quote }}
-    {{- end }}
+    {{- include "linkding.ingressAnnotations" . | nindent 4 }}
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: {{ $ingressClassName | quote }}
   rules:
     - host: {{ $domain | quote }}
       http:
@@ -56,5 +44,5 @@ spec:
       {{- if $www }}
         - {{ $wwwDomain }}
       {{- end }}
-      secretName: {{ .Release.Name }}-linkding-tls-cert
+      secretName: {{ $tlsSecretName | quote }}
 {{- end }}

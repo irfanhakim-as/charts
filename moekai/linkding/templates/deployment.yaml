@@ -1,16 +1,16 @@
-{{- $dataPersistence := .Values.storage.data.enabled }}
-{{- $linkding_registry := .Values.image.linkding.registry | default "docker.io" | toString }}
-{{- $linkding_repository := .Values.image.linkding.repository | default "sissbruecker/linkding" | toString }}
-{{- $linkding_tag := .Values.image.linkding.tag | default .Chart.AppVersion | toString }}
-{{- $linkding_pullPolicy := .Values.image.linkding.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $init_registry := .Values.image.init.registry | default "docker.io" | toString }}
-{{- $init_repository := .Values.image.init.repository | default "busybox" | toString }}
-{{- $init_tag := .Values.image.init.tag | default "1.36.1" | toString }}
-{{- $init_pullPolicy := .Values.image.init.pullPolicy | default "IfNotPresent" | toString | quote }}
-{{- $replica_count := .Values.replicaCount | default "1" | toString }}
-{{- $dataMountPath := .Values.storage.data.mountPath | default "/etc/linkding/data" | toString | quote }}
-{{- $dataSubPath := .Values.storage.data.subPath | toString }}
-{{- $initScript := .Values.linkding.initScript | toString }}
+{{- $linkdingRegistry := include "linkding.imageRegistry" . }}
+{{- $linkdingRepository := include "linkding.imageRepository" . }}
+{{- $linkdingTag := include "linkding.imageTag" . }}
+{{- $linkdingPullPolicy := include "linkding.imagePullPolicy" . | quote }}
+{{- $initRegistry := include "linkding.initImageRegistry" . }}
+{{- $initRepository := include "linkding.initImageRepository" . }}
+{{- $initTag := include "linkding.initImageTag" . }}
+{{- $initPullPolicy := include "linkding.initImagePullPolicy" . | quote }}
+{{- $replicaCount := include "linkding.replicaCount" . }}
+{{- $serviceAccountName := include "linkding.serviceAccountName" . }}
+{{- $networkPort := include "linkding.networkPort" . }}
+{{- $initScript := include "linkding.initScript" . }}
+{{- $existingSecret := include "linkding.existingSecret" . }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -19,74 +19,90 @@ metadata:
   labels:
     {{- include "linkding.labels" . | nindent 4 }}
 spec:
-  replicas: {{ int $replica_count }}
+  replicas: {{ int $replicaCount }}
+  {{- with .Values.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "linkding.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
+      {{- with include "linkding.podAnnotations" . }}
+      {{- . | nindent 6 }}
       {{- end }}
       labels:
         {{- include "linkding.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      serviceAccountName: {{ $serviceAccountName }}
+      {{- with include "linkding.imagePullSecrets" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.podSecurityContext" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.nodeSelector" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.tolerations" . }}
+      {{- . | nindent 6 }}
+      {{- end }}
+      {{- with include "linkding.affinity" . }}
+      {{- . | nindent 6 }}
       {{- end }}
       {{- if $initScript }}
       initContainers:
         - name: init
-          image: {{ printf "%s/%s:%s" $init_registry $init_repository $init_tag | quote }}
-          imagePullPolicy: {{ $init_pullPolicy }}
+          image: {{ printf "%s/%s:%s" $initRegistry $initRepository $initTag | quote }}
+          imagePullPolicy: {{ $initPullPolicy }}
           command: ["/bin/sh"]
           args:
             - -c
             - |
               {{- $initScript | nindent 14 }}
-          {{- if or $dataPersistence }}
-          volumeMounts:
-            {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-linkding-data
-              mountPath: {{ $dataMountPath }}
-              {{- if $dataSubPath }}
-              subPath: {{ $dataSubPath | quote }}
-              {{- end }}
-            {{- end }}
+          {{- with include "linkding.volumeMounts" . }}
+          {{- . | nindent 10 }}
           {{- end }}
       {{- end }}
       containers:
         - name: linkding
-          image: {{ printf "%s/%s:%s" $linkding_registry $linkding_repository $linkding_tag | quote }}
-          imagePullPolicy: {{ $linkding_pullPolicy }}
+          image: {{ printf "%s/%s:%s" $linkdingRegistry $linkdingRepository $linkdingTag | quote }}
+          imagePullPolicy: {{ $linkdingPullPolicy }}
+          {{- with include "linkding.containerSecurityContext" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           ports:
             - name: linkding
-              containerPort: 9090
+              containerPort: {{ int ($networkPort | default "9090") }}
               protocol: TCP
-          resources:
-            {{- toYaml .Values.resources.linkding | nindent 12 }}
+          {{- include "linkding.resources" . | nindent 10 }}
+          {{- with include "linkding.startupProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "linkding.livenessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+          {{- with include "linkding.readinessProbe" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-linkding-cm
+            {{- if eq (include "linkding.secretEnabled" .) "true" }}
             - secretRef:
                 name: {{ .Release.Name }}-linkding-secret
-          {{- if or $dataPersistence }}
-          volumeMounts:
-            {{- if $dataPersistence }}
-            - name: {{ .Release.Name }}-linkding-data
-              mountPath: {{ $dataMountPath }}
-              {{- if $dataSubPath }}
-              subPath: {{ $dataSubPath | quote }}
-              {{- end }}
             {{- end }}
+            {{- if $existingSecret }}
+            - secretRef:
+                name: {{ $existingSecret | quote }}
+            {{- end }}
+          {{- with include "linkding.extraEnv" . }}
+          {{- . | nindent 10 }}
           {{- end }}
-      {{- if or $dataPersistence }}
-      volumes:
-        {{- if $dataPersistence }}
-        - name: {{ .Release.Name }}-linkding-data
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-linkding-data-pvc
-        {{- end }}
+          {{- with include "linkding.volumeMounts" . }}
+          {{- . | nindent 10 }}
+          {{- end }}
+      {{- with include "linkding.volumes" . }}
+      {{- . | nindent 6 }}
       {{- end }}

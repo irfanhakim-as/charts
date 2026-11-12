@@ -6,6 +6,33 @@
 # Default: "1"
 replicaCount: ""
 
+# The update strategy used to replace existing pods with new ones.
+# Note: Set "type" to "Recreate" if data storage is enabled and mounted as "ReadWriteOnce".
+# Example:
+# updateStrategy:
+#   type: "Recreate"
+updateStrategy: {}
+
+# Annotations to be applied to Linkding pods.
+# Example:
+# podAnnotations:
+#   reloader.stakater.com/auto: "true"
+podAnnotations: {}
+
+# Security context applied at the pod level for Linkding.
+# Note: Set fsGroup for the data storage to be writable when the container is forced to run as a non-root user.
+# Example:
+# podSecurityContext:
+#   fsGroup: 33
+podSecurityContext: {}
+
+# Security context applied at the Linkding container level.
+# Note: Linkding must start as root, so avoid "runAsNonRoot" and "runAsUser".
+# Example:
+# containerSecurityContext:
+#   allowPrivilegeEscalation: false
+containerSecurityContext: {}
+
 # Container images used for Linkding.
 image:
   # Linkding container image configurations.
@@ -45,6 +72,81 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
+# Service account configurations for Linkding pods.
+serviceAccount:
+  # Specifies whether a service account should be created for Linkding.
+  # Example:
+  # create: true
+  create: false
+  # The name of the service account used by Linkding pods.
+  # Note: Required to use an existing service account when "create" is false.
+  # Default: "${.Release.Name}-linkding"
+  # Example:
+  # name: "linkding"
+  name: ""
+  # Annotations to be applied to the created service account.
+  # Example:
+  # annotations:
+  #   eks.amazonaws.com/role-arn: "arn:aws:iam::123456789012:role/linkding"
+  annotations: {}
+
+# The node labels a node must have for Linkding pods to be scheduled onto it.
+# Example:
+# nodeSelector:
+#   kubernetes.io/arch: "amd64"
+nodeSelector: {}
+
+# The tolerations that allow Linkding pods to be scheduled onto tainted nodes.
+# Example:
+# tolerations:
+#   - key: "dedicated"
+#     operator: "Equal"
+#     value: "bookmarks"
+#     effect: "NoSchedule"
+tolerations: []
+
+# The scheduling constraints applied to Linkding pods.
+# Example:
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: "kubernetes.io/arch"
+#               operator: "In"
+#               values:
+#                 - "amd64"
+affinity: {}
+
+# Additional environment variables to be set on the Linkding container.
+# Note: Takes precedence over variables set through the ConfigMap and Secret.
+# Example:
+# extraEnv:
+#   - name: "LD_LOG_X_FORWARDED_FOR"
+#     value: "true"
+#   - name: "OIDC_RP_CLIENT_SECRET"
+#     valueFrom:
+#       secretKeyRef:
+#         name: "linkding-oidc"
+#         key: "secret"
+extraEnv: []
+
+# Additional volumes to be added to Linkding pods.
+# Example:
+# extraVolumes:
+#   - name: "certs"
+#     configMap:
+#       name: "ca-certs"
+extraVolumes: []
+
+# Additional volume mounts to be added to the Linkding container.
+# Example:
+# extraVolumeMounts:
+#   - name: "certs"
+#     mountPath: "/etc/ssl/custom"
+#     readOnly: true
+extraVolumeMounts: []
+
 # Linkding configurations.
 linkding:
   # Specifies whether to disable background tasks and task scheduling.
@@ -52,6 +154,11 @@ linkding:
   # Example:
   # disableBackgroundTasks: "true"
   disableBackgroundTasks: ""
+  # Specifies whether to hide the username and password login form.
+  # Note: Requires OIDC or an authentication proxy to be enabled, otherwise nobody can sign in.
+  # Example:
+  # disableLoginForm: "true"
+  disableLoginForm: ""
   # Specifies whether to disable URL validation for added bookmarks.
   # Default: "false"
   # Example:
@@ -67,6 +174,19 @@ linkding:
   #   - "https://linkding.example.com"
   #   - "https://www.linkding.example.com"
   csrfTrustedOrigins: []
+  # The name of an existing Secret to load sensitive environment variables from.
+  # Note: Keys must be the exact environment variable names (e.g. "LD_SUPERUSER_PASSWORD", "LD_DB_PASSWORD").
+  # Example:
+  # existingSecret: "linkding-secret"
+  existingSecret: ""
+  # The number of seconds a user stays logged in to the web interface.
+  # Example:
+  # sessionCookieAge: "604800"
+  sessionCookieAge: ""
+  # The timezone used by Linkding for time-based operations.
+  # Example:
+  # timezone: "Asia/Kuala_Lumpur"
+  timezone: ""
   # Custom init script to run before the Linkding container starts.
   # Example:
   # initScript: >-
@@ -76,17 +196,202 @@ linkding:
   # Administration configurations.
   admin:
     # The username of the initial admin user for accessing the Linkding portal.
+    # Note: Skipped when empty or when the user already exists.
     # Example:
     # user: "linkding"
     user: ""
     # The password associated with the initial admin user.
+    # Note: The admin user is created without a usable password when empty.
     # Example:
     # password: "password"
     password: ""
 
+# Authentication proxy configurations.
+authProxy:
+  # Specifies whether to authenticate users through a header set by an authentication proxy.
+  # Note: Disables username and password login, only enable behind a trusted proxy that sets the header.
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The name of the request header that carries the username set by the authentication proxy.
+  # Example:
+  # usernameHeader: "HTTP_REMOTE_USER"
+  usernameHeader: ""
+  # The URL users are redirected to after logging out.
+  # Example:
+  # logoutUrl: "https://auth.example.com/logout"
+  logoutUrl: ""
+
+# Favicon configurations.
+favicon:
+  # The URL used to download website favicons.
+  # Note: Must contain a "{url}" or "{domain}" placeholder.
+  # Example:
+  # provider: "https://icons.duckduckgo.com/ip3/{domain}.ico"
+  provider: ""
+  # Specifies whether favicons are refreshed daily by a background task.
+  # Example:
+  # refreshEnabled: "false"
+  refreshEnabled: ""
+
+# Logging configurations.
+logging:
+  # Specifies whether to disable request logs, except for requests with a client or server error response.
+  # Example:
+  # disableRequestLogs: "true"
+  disableRequestLogs: ""
+
+# Network configurations.
+network:
+  # The port on which the Linkding server listens inside the container.
+  # Default: "9090"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The address the Linkding server binds to inside the container.
+  # Note: The default listens on both IPv4 and IPv6, set "0.0.0.0" for IPv4 only.
+  # Example:
+  # host: "0.0.0.0"
+  host: ""
+  # The context path that Linkding is served from.
+  # Note: Must end with a slash.
+  # Example:
+  # contextPath: "linkding/"
+  contextPath: ""
+  # The only host name Linkding accepts requests for.
+  # Example:
+  # allowedHost: "linkding.example.com"
+  allowedHost: ""
+  # The hosts Linkding may load data from even though they are on an internal network.
+  # Note: Linkding refuses internal hosts by default. Accepts host names, IP addresses, CIDR ranges, and a leading dot for a domain with its subdomains, or "*" to allow all.
+  # Example:
+  # allowedInternalHosts:
+  #   - "nas.local"
+  #   - "192.168.1.0/24"
+  #   - ".home.arpa"
+  allowedInternalHosts: []
+  # The origins that are allowed to call the REST API from a browser.
+  # Example:
+  # corsAllowedOrigins:
+  #   - "https://frontend.example.com"
+  corsAllowedOrigins: []
+  # Specifies whether to use the "X-Forwarded-Host" header sent by the reverse proxy.
+  # Example:
+  # useXForwardedHost: "true"
+  useXForwardedHost: ""
+  # Specifies whether to log the client address from the "X-Forwarded-For" header in request logs.
+  # Example:
+  # logXForwardedFor: "true"
+  logXForwardedFor: ""
+  # The number of seconds before a request times out.
+  # Note: Increase it when importing large bookmark files.
+  # Example:
+  # requestTimeout: "120"
+  requestTimeout: ""
+  # The maximum size in bytes of a POST request.
+  # Example:
+  # requestMaxContentLength: "104857600"
+  requestMaxContentLength: ""
+
+# OpenID Connect (OIDC) configurations.
+oidc:
+  # Specifies whether to enable single sign-on through an OIDC provider.
+  # Note: Users are matched to existing users by email address, and created when no match exists.
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The authorization endpoint of the OIDC provider.
+  # Example:
+  # authorizationEndpoint: "https://id.example.com/authorize"
+  authorizationEndpoint: ""
+  # The token endpoint of the OIDC provider.
+  # Example:
+  # tokenEndpoint: "https://id.example.com/api/oidc/token"
+  tokenEndpoint: ""
+  # The user info endpoint of the OIDC provider.
+  # Example:
+  # userEndpoint: "https://id.example.com/api/oidc/userinfo"
+  userEndpoint: ""
+  # The JWKS endpoint of the OIDC provider.
+  # Example:
+  # jwksEndpoint: "https://id.example.com/.well-known/jwks.json"
+  jwksEndpoint: ""
+  # The client ID of the application registered with the OIDC provider.
+  # Example:
+  # clientId: "linkding"
+  clientId: ""
+  # The client secret of the application registered with the OIDC provider.
+  # Example:
+  # clientSecret: "secret"
+  clientSecret: ""
+  # The algorithm the OIDC provider uses to sign ID tokens.
+  # Example:
+  # signAlgo: "ES256"
+  signAlgo: ""
+  # The space-separated scopes requested from the OIDC provider.
+  # Example:
+  # scopes: "openid email profile groups"
+  scopes: ""
+  # Specifies whether to use PKCE for the OIDC flow.
+  # Example:
+  # usePkce: "false"
+  usePkce: ""
+  # Specifies whether to verify the TLS certificate of the OIDC provider.
+  # Example:
+  # verifySsl: "false"
+  verifySsl: ""
+  # The claim used as the username of newly created users.
+  # Note: Falls back to the email claim when the claim is missing or empty.
+  # Example:
+  # usernameClaim: "preferred_username"
+  usernameClaim: ""
+
+# Preview configurations.
+preview:
+  # The maximum size in bytes of a downloaded preview image.
+  # Example:
+  # maxSize: "10485760"
+  maxSize: ""
+
+# Snapshot configurations.
+snapshots:
+  # Specifies whether to create local HTML snapshots of bookmarks.
+  # Note: Requires an image variant that includes Chromium (e.g. a tag ending in "-plus-alpine").
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # Specifies whether to disable uploading files to bookmarks.
+  # Example:
+  # disableAssetUpload: "true"
+  disableAssetUpload: ""
+  # The maximum size in bytes of a PDF snapshot.
+  # Example:
+  # pdfMaxSize: "31457280"
+  pdfMaxSize: ""
+  # Single-file configurations.
+  singlefile:
+    # The path of the single-file executable.
+    # Example:
+    # path: "/usr/local/bin/single-file"
+    path: ""
+    # Additional options passed to single-file when creating snapshots.
+    # Example:
+    # options: "--user-agent=\"Mozilla/5.0\""
+    options: ""
+    # The options passed to single-file to run the uBlock Origin Lite extension.
+    # Example:
+    # ublockOptions: "--browser-arg=\"--headless=new\""
+    ublockOptions: ""
+    # The number of seconds to wait for a snapshot to complete.
+    # Note: Increase it on low-powered hardware.
+    # Example:
+    # timeout: "180"
+    timeout: ""
+
 # Database configurations.
 db:
   # The database engine or backend being used by Linkding.
+  # Note: Accepts "sqlite" or "postgres".
   # Default: "sqlite"
   # Example:
   # type: "postgres"
@@ -96,8 +401,10 @@ db:
   # host: "linkding.default.svc.cluster.local"
   host: ""
   # The port number the Linkding database server is listening for connections.
+  # Note: Only applies when db.type is "postgres".
+  # Default: "5432"
   # Example:
-  # port: "5432"
+  # port: "5433"
   port: ""
   # The name of the database being used by Linkding.
   # Example:
@@ -111,6 +418,11 @@ db:
   # Example:
   # password: "password"
   password: ""
+  # Additional database options passed to the database connection.
+  # Example:
+  # options:
+  #   sslmode: "require"
+  options: {}
 
 # Ingress configurations.
 ingress:
@@ -118,6 +430,11 @@ ingress:
   # Example:
   # enabled: true
   enabled: false
+  # The class of the ingress controller that handles the Ingress.
+  # Default: "nginx"
+  # Example:
+  # className: "traefik"
+  className: ""
   # The name of the cluster issuer for Ingress.
   # Default: "letsencrypt-dns-prod"
   # Example:
@@ -127,6 +444,11 @@ ingress:
   # Example:
   # www: true
   www: false
+  # The name of the Secret that stores the TLS certificate of the Ingress.
+  # Default: "${.Release.Name}-linkding-tls-cert"
+  # Example:
+  # tlsSecretName: "linkding-tls"
+  tlsSecretName: ""
   # Additional configuration annotations to be added to the Ingress resource.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
@@ -195,6 +517,67 @@ storage:
     # Example:
     # storageClassName: "smb"
     storageClassName: ""
+
+# Container health probes for Linkding.
+probes:
+  # Linkding container health probes.
+  linkding:
+    # Startup probe to check if the Linkding container has started successfully.
+    startup:
+      # Specifies whether to enable the startup probe for the Linkding container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the startup probe checks the Linkding container health.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /health
+      #     port: linkding
+      #   initialDelaySeconds: 5
+      #   periodSeconds: 5
+      #   timeoutSeconds: 5
+      #   failureThreshold: 30
+      #   successThreshold: 1
+      spec: {}
+    # Liveness probe to check if the Linkding container is running properly.
+    liveness:
+      # Specifies whether to enable the liveness probe for the Linkding container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the liveness probe checks the Linkding container health.
+      # Note: A default probe configuration will be used if not set for the container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /health
+      #     port: linkding
+      #   initialDelaySeconds: 10
+      #   periodSeconds: 10
+      #   timeoutSeconds: 5
+      #   failureThreshold: 3
+      #   successThreshold: 1
+      spec: {}
+    # Readiness probe to check if the Linkding container is ready to serve requests.
+    readiness:
+      # Specifies whether to enable the readiness probe for the Linkding container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the readiness probe checks the Linkding container health.
+      # Note: A default probe configuration will be used if not set for the container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /health
+      #     port: linkding
+      #   initialDelaySeconds: 10
+      #   periodSeconds: 5
+      #   timeoutSeconds: 5
+      #   failureThreshold: 6
+      #   successThreshold: 1
+      spec: {}
 
 # Resource requirements and limits for Linkding containers.
 resources:

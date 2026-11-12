@@ -1,6 +1,6 @@
-{{- $nodePort := .Values.service.nodePort | toString }}
-{{- $port := .Values.service.port | default "9090" | toString }}
-{{- $type := .Values.service.type | default "ClusterIP" | toString }}
+{{- $nodePort := include "linkding.serviceNodePort" . }}
+{{- $port := include "linkding.servicePort" . }}
+{{- $type := include "linkding.serviceType" . }}
 ---
 apiVersion: v1
 kind: Service
@@ -13,7 +13,7 @@ spec:
   ports:
     - port: {{ int $port }}
       targetPort: linkding
-      {{- if and (eq $type "NodePort") $nodePort }}
+      {{- if $nodePort }}
       nodePort: {{ int $nodePort }}
       {{- end }}
       protocol: TCP

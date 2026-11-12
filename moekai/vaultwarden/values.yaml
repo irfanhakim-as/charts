@@ -13,6 +13,28 @@ replicaCount: ""
 #   type: "Recreate"
 updateStrategy: {}
 
+# Annotations to be applied to Vaultwarden pods.
+# Example:
+# podAnnotations:
+#   reloader.stakater.com/auto: "true"
+podAnnotations: {}
+
+# Security context applied at the pod level for Vaultwarden.
+# Note: Set fsGroup for the data storage to be writable when the container runs as a non-root user.
+# Example:
+# podSecurityContext:
+#   fsGroup: 1000
+podSecurityContext: {}
+
+# Security context applied at the Vaultwarden container level.
+# Note: Running as a non-root user requires a port of 1024 or higher and fsGroup to be set in "podSecurityContext".
+# Example:
+# containerSecurityContext:
+#   runAsUser: 1000
+#   runAsGroup: 1000
+#   runAsNonRoot: true
+containerSecurityContext: {}
+
 # Container images used for Vaultwarden.
 image:
   # Vaultwarden container image configurations.
@@ -52,6 +74,81 @@ image:
 #   - name: "ghcr-token-secret"
 imagePullSecrets: []
 
+# Service account configurations for Vaultwarden pods.
+serviceAccount:
+  # Specifies whether a service account should be created for Vaultwarden.
+  # Example:
+  # create: true
+  create: false
+  # The name of the service account used by Vaultwarden pods.
+  # Note: Required to use an existing service account when "create" is false.
+  # Default: "${.Release.Name}-vaultwarden"
+  # Example:
+  # name: "vaultwarden"
+  name: ""
+  # Annotations to be applied to the created service account.
+  # Example:
+  # annotations:
+  #   eks.amazonaws.com/role-arn: "arn:aws:iam::123456789012:role/vaultwarden"
+  annotations: {}
+
+# The node labels a node must have for Vaultwarden pods to be scheduled onto it.
+# Example:
+# nodeSelector:
+#   kubernetes.io/arch: "amd64"
+nodeSelector: {}
+
+# The tolerations that allow Vaultwarden pods to be scheduled onto tainted nodes.
+# Example:
+# tolerations:
+#   - key: "dedicated"
+#     operator: "Equal"
+#     value: "passwords"
+#     effect: "NoSchedule"
+tolerations: []
+
+# The scheduling constraints applied to Vaultwarden pods.
+# Example:
+# affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#             - key: "kubernetes.io/arch"
+#               operator: "In"
+#               values:
+#                 - "amd64"
+affinity: {}
+
+# Additional environment variables to be set on the Vaultwarden container.
+# Note: Takes precedence over variables set through the ConfigMap and Secret.
+# Example:
+# extraEnv:
+#   - name: "ORG_EVENTS_ENABLED"
+#     value: "true"
+#   - name: "SSO_CLIENT_SECRET"
+#     valueFrom:
+#       secretKeyRef:
+#         name: "vaultwarden-sso"
+#         key: "secret"
+extraEnv: []
+
+# Additional volumes to be added to Vaultwarden pods.
+# Example:
+# extraVolumes:
+#   - name: "certs"
+#     configMap:
+#       name: "ca-certs"
+extraVolumes: []
+
+# Additional volume mounts to be added to the Vaultwarden container.
+# Example:
+# extraVolumeMounts:
+#   - name: "certs"
+#     mountPath: "/etc/ssl/custom"
+#     readOnly: true
+extraVolumeMounts: []
+
 # Vaultwarden configurations.
 vaultwarden:
   # The secret password for accessing the Vaultwarden admin panel.
@@ -59,7 +156,7 @@ vaultwarden:
   # Example:
   # adminToken: "password"
   adminToken: ""
-  # Number of days to retain trashed items before permanent deletion.
+  # The number of days to retain trashed items before permanent deletion.
   # Example:
   # clearTrash: "30"
   clearTrash: ""
@@ -104,12 +201,96 @@ vaultwarden:
   #   - "autofill-v2"
   #   - "extension-refresh"
   expFeatures: []
+  # The name of an existing Secret to load sensitive environment variables from.
+  # Note: Keys must be the exact environment variable names (e.g. "ADMIN_TOKEN", "DATABASE_URL", "SMTP_PASSWORD").
+  # Example:
+  # existingSecret: "vaultwarden-secret"
+  existingSecret: ""
+  # Specifies whether to hide the onboarding dialogs, extension install prompts, and premium upsell modals shown by the clients.
+  # Example:
+  # suppressOnboarding: "true"
+  suppressOnboarding: ""
+  # The base URL of the feed that provides the Fill Assist rules to the clients.
+  # Note: Must be an HTTPS URL without credentials, query parameters, or fragments.
+  # Example:
+  # fillAssistRulesUrl: "https://fillassist.example.com"
+  fillAssistRulesUrl: ""
+  # Specifies whether to serve the web vault.
+  # Example:
+  # webVaultEnabled: "false"
+  webVaultEnabled: ""
   # Custom init script to run before the Vaultwarden container starts.
   # Example:
   # initScript: >-
   #   echo "Hello, World!"
   #   echo "This is a custom init script."
   initScript: ""
+
+# Admin panel configurations.
+admin:
+  # Specifies whether to bypass the security of the admin panel.
+  # Note: Only use it with a separate authentication layer in front of Vaultwarden, otherwise anyone can open the admin panel.
+  # Example:
+  # disableToken: "true"
+  disableToken: ""
+  # The number of minutes an admin session lasts for.
+  # Example:
+  # sessionLifetime: "60"
+  sessionLifetime: ""
+
+# Duo two-factor authentication (2FA) configurations.
+duo:
+  # Specifies whether to enable Duo 2FA integration for all users.
+  # Note: Users can configure Duo themselves when this is disabled.
+  # Default: "false"
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # The integration key (client ID) of the Duo application.
+  # Note: Please refer to https://help.bitwarden.com/article/setup-two-step-login-duo/ on how to create the Duo application.
+  # Example:
+  # id: "id"
+  id: ""
+  # The secret key (client secret) of the Duo application.
+  # Example:
+  # key: "secret"
+  key: ""
+  # The API hostname of the Duo application.
+  # Example:
+  # host: "api-xxxxxxxx.duosecurity.com"
+  host: ""
+
+# Icon configurations.
+icons:
+  # The service that provides website icons.
+  # Note: Accepts "internal", "bitwarden", "duckduckgo", "google", or a URL containing "{}" for the domain.
+  # Example:
+  # service: "duckduckgo"
+  service: ""
+  # The HTTP status code used to redirect to an external icon service.
+  # Note: Accepts 301, 302, 307, and 308, and the Bitwarden clients support 301 and 302 best.
+  # Example:
+  # redirectCode: "308"
+  redirectCode: ""
+  # The number of seconds a downloaded icon is considered fresh.
+  # Note: Set to "0" to keep icons forever.
+  # Example:
+  # cacheTtl: "604800"
+  cacheTtl: ""
+  # The number of seconds before retrying an icon that was not available.
+  # Note: Set to "0" to keep the result forever.
+  # Example:
+  # cacheNegativeTtl: "86400"
+  cacheNegativeTtl: ""
+  # The number of seconds before giving up on downloading an icon.
+  # Example:
+  # downloadTimeout: "30"
+  downloadTimeout: ""
+  # Specifies whether to stop downloading icons and only serve the ones already cached.
+  # Note: "cacheTtl" must be "0" as well, otherwise cached icons are eventually deleted and not downloaded again.
+  # Example:
+  # disableDownload: "true"
+  disableDownload: ""
 
 # Invitation configurations.
 invitation:
@@ -130,6 +311,95 @@ invitation:
   # organisation: "ExampleOrg"
   organisation: ""
 
+# Scheduled job configurations.
+jobs:
+  # The number of milliseconds between checks for jobs that need to run.
+  # Note: Set to "0" to disable all scheduled jobs.
+  # Example:
+  # pollInterval: "60000"
+  pollInterval: ""
+  # The cron schedules of the scheduled jobs.
+  # Note: Uses "second minute hour day-of-month month day-of-week" and "disabled" turns a job off.
+  schedules:
+    # The cron schedule of the job that deletes Sends past their deletion date.
+    # Example:
+    # sendPurge: "0 5 * * * *"
+    sendPurge: ""
+    # The cron schedule of the job that permanently deletes trashed items.
+    # Example:
+    # trashPurge: "0 5 0 * * *"
+    trashPurge: ""
+    # The cron schedule of the job that checks for incomplete two-factor authentication logins.
+    # Example:
+    # incomplete2fa: "30 * * * * *"
+    incomplete2fa: ""
+    # The cron schedule of the job that sends expiration reminders to emergency access grantors.
+    # Example:
+    # emergencyNotificationReminder: "0 3 * * * *"
+    emergencyNotificationReminder: ""
+    # The cron schedule of the job that grants emergency access requests that have met the required wait time.
+    # Example:
+    # emergencyRequestTimeout: "0 7 * * * *"
+    emergencyRequestTimeout: ""
+    # The cron schedule of the job that deletes old events.
+    # Example:
+    # eventCleanup: "0 10 0 * * *"
+    eventCleanup: ""
+    # The cron schedule of the job that deletes old authentication requests.
+    # Example:
+    # authRequestPurge: "30 * * * * *"
+    authRequestPurge: ""
+    # The cron schedule of the job that deletes expired Duo contexts.
+    # Example:
+    # duoContextPurge: "30 * * * * *"
+    duoContextPurge: ""
+    # The cron schedule of the job that deletes leftovers of incomplete SSO logins.
+    # Example:
+    # incompleteSsoPurge: "0 20 0 * * *"
+    incompleteSsoPurge: ""
+
+# Limit configurations.
+limits:
+  # The maximum attachment storage in kilobytes allowed per user.
+  # Example:
+  # userAttachment: "102400"
+  userAttachment: ""
+  # The maximum attachment storage in kilobytes allowed per organization.
+  # Example:
+  # organizationAttachment: "1048576"
+  organizationAttachment: ""
+  # The maximum Send storage in kilobytes allowed per user.
+  # Example:
+  # userSend: "102400"
+  userSend: ""
+  # Specifies whether to raise the secure note size limit from 10,000 to 100,000 characters.
+  # Note: May cause issues with clients, and exports will not work on Bitwarden servers.
+  # Example:
+  # increaseNoteSize: "true"
+  increaseNoteSize: ""
+
+# Logging configurations.
+logging:
+  # Specifies whether to show timestamps and targets in the logs.
+  # Example:
+  # extended: "false"
+  extended: ""
+  # The timestamp format used in extended logging.
+  # Note: Accepts the format specifiers of https://docs.rs/chrono/latest/chrono/format/strftime.
+  # Example:
+  # timestampFormat: "%Y-%m-%dT%H:%M:%S"
+  timestampFormat: ""
+  # Specifies whether to send the logs to Syslog.
+  # Note: Requires extended logging.
+  # Example:
+  # syslog: "true"
+  syslog: ""
+  # The path of a file to write the logs to.
+  # Note: The path must be writable, e.g. on the data storage.
+  # Example:
+  # file: "/data/vaultwarden.log"
+  file: ""
+
 # Mail configurations.
 mail:
   # The email address used in the "from" address for sent emails.
@@ -149,14 +419,14 @@ mail:
     # host: "smtp.gmail.com"
     host: ""
     # The port number on the SMTP server used for sending emails.
-    # Note: In most cases, depending on the specified security type, set the SMTP port to 587 (starttls), 465 (force_tls), or 25 (off).
-    # Default: "587"
+    # Default: "587" for starttls, "465" for force_tls, "25" for off
     # Example:
     # port: "465"
     port: ""
     # The SMTP security protocol used for securing email communication.
+    # Note: Accepts "starttls", "force_tls", or "off".
     # Default: "starttls"
-    # Example
+    # Example:
     # security: "force_tls"
     security: ""
     # The username for authenticating with the SMTP server.
@@ -167,6 +437,149 @@ mail:
     # Example:
     # password: "password"
     password: ""
+    # The authentication mechanisms to use with the SMTP server, separated by commas.
+    # Note: Accepts "Plain", "Login", and "Xoauth2".
+    # Example:
+    # authMechanism: "Login"
+    authMechanism: ""
+    # The number of seconds before giving up on connecting to the SMTP server.
+    # Example:
+    # timeout: "30"
+    timeout: ""
+    # The server name sent to the SMTP server during HELO.
+    # Note: Change it if the default, the host name of the container, is rejected by anti-spam filters.
+    # Example:
+    # heloName: "vault.example.com"
+    heloName: ""
+    # Specifies whether to embed images in emails as attachments.
+    # Example:
+    # embedImages: "false"
+    embedImages: ""
+    # Specifies whether to log detailed SMTP messages.
+    # Note: The logs may contain usernames and passwords, only enable it while troubleshooting.
+    # Example:
+    # debug: "true"
+    debug: ""
+    # Specifies whether to accept invalid TLS certificates of the SMTP server.
+    # Note: Exposes emails to man-in-the-middle attacks, use only as a last resort.
+    # Example:
+    # acceptInvalidCerts: "true"
+    acceptInvalidCerts: ""
+    # Specifies whether to accept TLS certificates of the SMTP server that do not match its host name.
+    # Note: Exposes emails to man-in-the-middle attacks, use only as a last resort.
+    # Example:
+    # acceptInvalidHostnames: "true"
+    acceptInvalidHostnames: ""
+  # Sendmail configurations.
+  sendmail:
+    # Specifies whether to send emails with the "sendmail" command.
+    # Note: Requires the command to exist in the image, which the default image may not provide.
+    # Example:
+    # enabled: "true"
+    enabled: ""
+    # The path of the "sendmail" command.
+    # Example:
+    # command: "/usr/sbin/sendmail"
+    command: ""
+
+# Network configurations.
+network:
+  # The port on which Vaultwarden listens inside the container.
+  # Note: Use a port of 1024 or higher when running as a non-root user.
+  # Default: "80"
+  # Example:
+  # port: "8080"
+  port: ""
+  # The address Vaultwarden binds to inside the container.
+  # Example:
+  # address: "::"
+  address: ""
+  # The request header that carries the IP address of the client.
+  # Note: Set to "none" to use the address of the connection.
+  # Example:
+  # ipHeader: "X-Forwarded-For"
+  ipHeader: ""
+  # The addresses the client IP header is accepted from.
+  # Note: Accepts "local", "all", or a comma-separated list of IP addresses and CIDR ranges.
+  # Example:
+  # ipHeaderTrustedProxies: "10.42.0.0/16"
+  ipHeaderTrustedProxies: ""
+  # Specifies whether to enable websocket notifications.
+  # Example:
+  # websocket: "false"
+  websocket: ""
+  # Specifies whether to resolve IPv6 addresses first and fall back to IPv4.
+  # Note: Useful in IPv6-only environments.
+  # Example:
+  # dnsPreferIpv6: "true"
+  dnsPreferIpv6: ""
+  # The domains allowed to embed the web vault in an iframe.
+  # Note: Only enable it if embedding is needed, since it relaxes the frame-ancestors security header.
+  # Example:
+  # allowedIframeAncestors:
+  #   - "https://intranet.example.com"
+  allowedIframeAncestors: []
+  # The additional HTTPS domains that scripts in the web vault may connect to (e.g. email alias services).
+  # Example:
+  # allowedConnectSrc:
+  #   - "https://addy.example.com"
+  allowedConnectSrc: []
+
+# Organization configurations.
+organization:
+  # The users allowed to create organizations.
+  # Note: Accepts a list of email addresses, or "none" for nobody.
+  # Example:
+  # creationUsers:
+  #   - "admin@example.com"
+  creationUsers: []
+  # Specifies whether to log events of organizations.
+  # Note: Combine it with "eventsRetainDays" to clean up old events.
+  # Example:
+  # eventsEnabled: "true"
+  eventsEnabled: ""
+  # The number of days events are kept in the database.
+  # Example:
+  # eventsRetainDays: "90"
+  eventsRetainDays: ""
+  # Specifies whether to enable groups for organizations.
+  # Note: A beta feature with known issues.
+  # Example:
+  # groupsEnabled: "true"
+  groupsEnabled: ""
+  # Specifies whether the Single Org policy must be enabled before the Reset Password policy.
+  # Example:
+  # enforceSingleOrgWithResetPasswordPolicy: "true"
+  enforceSingleOrgWithResetPasswordPolicy: ""
+
+# Outbound request configurations for the internal HTTP client.
+outbound:
+  # Specifies whether to refuse connecting to non-global IP addresses.
+  # Note: Protects hosts on the internal network.
+  # Example:
+  # blockNonGlobalIps: "false"
+  blockNonGlobalIps: ""
+  # A regular expression matching the domains and IP addresses that must not be fetched.
+  # Example:
+  # blockRegex: "^(192\\.168\\.1\\.[0-9]+)$"
+  blockRegex: ""
+
+# Password configurations.
+password:
+  # The number of server-side hashing iterations for the password hash of new users.
+  # Note: Existing users are updated on their next login, and the value must be at least 100000.
+  # Example:
+  # iterations: "800000"
+  iterations: ""
+  # Specifies whether users can set and view password hints.
+  # Example:
+  # hintsAllowed: "false"
+  hintsAllowed: ""
+  # Specifies whether a password hint is shown in the web page when email is not configured and hints are allowed.
+  # Note: Gives unauthenticated access to hints, so not recommended for publicly accessible instances.
+  # Example:
+  # showHint: "true"
+  showHint: ""
 
 # Bitwarden Push Relay configurations.
 push:
@@ -185,6 +598,50 @@ push:
   # Example:
   # key: "secret"
   key: ""
+  # The URI of the Bitwarden push relay.
+  # Note: Use "https://api.bitwarden.eu" for the European Union data region, and only change it if the implications are understood.
+  # Example:
+  # relayUri: "https://api.bitwarden.eu"
+  relayUri: ""
+  # The URI of the Bitwarden push identity server.
+  # Note: Use "https://identity.bitwarden.eu" for the European Union data region, and only change it if the implications are understood.
+  # Example:
+  # identityUri: "https://identity.bitwarden.eu"
+  identityUri: ""
+
+# Rate limit configurations.
+rateLimit:
+  # Rate limits of login and two-factor authentication requests from the same IP address.
+  login:
+    # The average number of seconds between requests before rate limiting starts.
+    # Example:
+    # seconds: "30"
+    seconds: ""
+    # The size of the burst of requests allowed on top of the average.
+    # Note: Applies to both login and two-factor authentication, so keep it at 2 or more.
+    # Example:
+    # maxBurst: "20"
+    maxBurst: ""
+  # Rate limits of unauthenticated requests (e.g. password hints, account recovery, and Sends) from the same IP address.
+  unauthenticated:
+    # The average number of seconds between requests before rate limiting starts.
+    # Example:
+    # seconds: "30"
+    seconds: ""
+    # The size of the burst of requests allowed on top of the average.
+    # Example:
+    # maxBurst: "100"
+    maxBurst: ""
+  # Rate limits of admin panel login requests from the same IP address.
+  admin:
+    # The average number of seconds between requests before rate limiting starts.
+    # Example:
+    # seconds: "600"
+    seconds: ""
+    # The size of the burst of requests allowed on top of the average.
+    # Example:
+    # maxBurst: "5"
+    maxBurst: ""
 
 # Account registration configurations.
 signup:
@@ -216,6 +673,86 @@ signup:
   #   - "example.org"
   domainWhitelist: []
 
+# Single sign-on (SSO) configurations using OpenID Connect (OIDC).
+sso:
+  # Specifies whether users can log in through an OIDC provider.
+  # Note: Requires "authority", "clientId", and "clientSecret", with "https://${.vaultwarden.domain}/identity/connect/oidc-signin" as the redirect URI.
+  # Example:
+  # enabled: "true"
+  enabled: ""
+  # Specifies whether to prevent users from logging in with their email and master password.
+  # Note: Keep this off until signing in with SSO is confirmed to work, otherwise nobody can log in.
+  # Example:
+  # only: "true"
+  only: ""
+  # Specifies whether the SSO login flow can create new accounts.
+  # Note: Consider turning this off when using a public provider.
+  # Example:
+  # signupsAllowed: "false"
+  signupsAllowed: ""
+  # Specifies whether a new SSO user is linked to an existing account with the same email address.
+  # Example:
+  # signupsMatchEmail: "false"
+  signupsMatchEmail: ""
+  # Specifies whether to accept users whose email verification status is unknown to the provider.
+  # Note: Allowing this together with "signupsMatchEmail" opens a potential account takeover.
+  # Example:
+  # allowUnknownEmailVerification: "true"
+  allowUnknownEmailVerification: ""
+  # The base URL of the OIDC provider.
+  # Note: Must not end with a slash or include the "/.well-known/openid-configuration" path.
+  # Example:
+  # authority: "https://id.example.com"
+  authority: ""
+  # The client ID of the application registered with the OIDC provider.
+  # Example:
+  # clientId: "vaultwarden"
+  clientId: ""
+  # The client secret of the application registered with the OIDC provider.
+  # Example:
+  # clientSecret: "secret"
+  clientSecret: ""
+  # The space-separated scopes requested from the OIDC provider.
+  # Note: The "openid" scope is always requested.
+  # Example:
+  # scopes: "email profile groups"
+  scopes: ""
+  # The additional parameters added to the authorization request.
+  # Example:
+  # authorizeExtraParams: "access_type=offline&prompt=consent"
+  authorizeExtraParams: ""
+  # Specifies whether to use PKCE for the authorization code flow.
+  # Example:
+  # pkce: "false"
+  pkce: ""
+  # A regular expression matching additional audiences trusted in the ID token.
+  # Note: Only the client ID is trusted by default.
+  # Example:
+  # audienceTrusted: "^other-client$"
+  audienceTrusted: ""
+  # The master password policy applied to users signing in with SSO.
+  # Note: Accepts "enforceOnLogin", "minComplexity" (0 to 4), "minLength", "requireLower", "requireNumbers", "requireSpecial", and "requireUpper".
+  # Example:
+  # masterPasswordPolicy:
+  #   enforceOnLogin: false
+  #   minComplexity: 3
+  #   minLength: 12
+  masterPasswordPolicy: {}
+  # Specifies whether to use SSO only for authentication and keep the default Vaultwarden session lifecycle.
+  # Example:
+  # authOnlyNotSession: "true"
+  authOnlyNotSession: ""
+  # The number of seconds the OIDC discovery document is cached for.
+  # Note: Set to "0" to disable caching.
+  # Example:
+  # clientCacheExpiration: "300"
+  clientCacheExpiration: ""
+  # Specifies whether to log all tokens.
+  # Note: Requires the log level to be "debug".
+  # Example:
+  # debugTokens: "true"
+  debugTokens: ""
+
 # Two-factor authentication (2FA) configurations.
 tfa:
   # Specifies whether to allow small time discrepancies for TOTP code validation.
@@ -233,6 +770,11 @@ tfa:
   # Example:
   # rememberDevice: "false"
   rememberDevice: ""
+  # The number of days before a remembered 2FA login expires.
+  # Note: Accepts 1 to 90.
+  # Example:
+  # rememberDays: "14"
+  rememberDays: ""
   # Specifies whether to setup email 2FA upon registration.
   # Default: "false"
   # Example:
@@ -285,6 +827,7 @@ yubico:
 # Database configurations.
 db:
   # The database engine or backend being used by Vaultwarden.
+  # Note: Accepts "sqlite", "mysql", or "postgresql".
   # Default: "sqlite"
   # Example:
   # type: "mysql"
@@ -294,8 +837,10 @@ db:
   # host: "vaultwarden.default.svc.cluster.local"
   host: ""
   # The port number the Vaultwarden database server is listening for connections.
+  # Note: Only applies when db.type is "mysql" or "postgresql".
+  # Default: "5432" for postgresql, "3306" for mysql
   # Example:
-  # port: "3306"
+  # port: "5433"
   port: ""
   # The name of the database being used by Vaultwarden.
   # Example:
@@ -309,6 +854,36 @@ db:
   # Example:
   # password: "password"
   password: ""
+  # Specifies whether Vaultwarden enables write-ahead logging (WAL) on the SQLite database at startup.
+  # Note: Only applies when db.type is "sqlite". Turning it off may cause worse performance.
+  # Example:
+  # wal: "false"
+  wal: ""
+  # The number of times to retry the database connection at startup.
+  # Note: Set to "0" to retry indefinitely.
+  # Example:
+  # connectionRetries: "30"
+  connectionRetries: ""
+  # The number of seconds to wait when acquiring a database connection.
+  # Example:
+  # timeout: "60"
+  timeout: ""
+  # The number of seconds before an idle database connection is closed.
+  # Example:
+  # idleTimeout: "300"
+  idleTimeout: ""
+  # The maximum size of the database connection pool.
+  # Example:
+  # maxConnections: "20"
+  maxConnections: ""
+  # The minimum size of the database connection pool.
+  # Example:
+  # minConnections: "1"
+  minConnections: ""
+  # The SQL statements to run whenever a new database connection is created.
+  # Example:
+  # connectionInit: "PRAGMA busy_timeout = 10000;"
+  connectionInit: ""
 
 # Ingress configurations.
 ingress:
@@ -316,6 +891,11 @@ ingress:
   # Example:
   # enabled: true
   enabled: false
+  # The class of the ingress controller that handles the Ingress.
+  # Default: "nginx"
+  # Example:
+  # className: "traefik"
+  className: ""
   # The name of the cluster issuer for Ingress.
   # Default: "letsencrypt-dns-prod"
   # Example:
@@ -325,6 +905,11 @@ ingress:
   # Example:
   # www: true
   www: false
+  # The name of the Secret that stores the TLS certificate of the Ingress.
+  # Default: "${.Release.Name}-vaultwarden-tls-cert"
+  # Example:
+  # tlsSecretName: "vaultwarden-tls"
+  tlsSecretName: ""
   # Additional configuration annotations to be added to the Ingress resource.
   # Items: `.prefix`, `.name`, `.value`
   # Example:
@@ -393,6 +978,67 @@ storage:
     # Example:
     # storageClassName: "smb"
     storageClassName: ""
+
+# Container health probes for Vaultwarden.
+probes:
+  # Vaultwarden container health probes.
+  vaultwarden:
+    # Startup probe to check if the Vaultwarden container has started successfully.
+    startup:
+      # Specifies whether to enable the startup probe for the Vaultwarden container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the startup probe checks the Vaultwarden container health.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /alive
+      #     port: vaultwarden
+      #   initialDelaySeconds: 5
+      #   periodSeconds: 5
+      #   timeoutSeconds: 5
+      #   failureThreshold: 30
+      #   successThreshold: 1
+      spec: {}
+    # Liveness probe to check if the Vaultwarden container is running properly.
+    liveness:
+      # Specifies whether to enable the liveness probe for the Vaultwarden container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the liveness probe checks the Vaultwarden container health.
+      # Note: A default probe configuration will be used if not set for the container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /alive
+      #     port: vaultwarden
+      #   initialDelaySeconds: 10
+      #   periodSeconds: 10
+      #   timeoutSeconds: 5
+      #   failureThreshold: 3
+      #   successThreshold: 1
+      spec: {}
+    # Readiness probe to check if the Vaultwarden container is ready to serve requests.
+    readiness:
+      # Specifies whether to enable the readiness probe for the Vaultwarden container.
+      # Example:
+      # enabled: true
+      enabled: false
+      # The specification defining how the readiness probe checks the Vaultwarden container health.
+      # Note: A default probe configuration will be used if not set for the container.
+      # Example:
+      # spec:
+      #   httpGet:
+      #     path: /alive
+      #     port: vaultwarden
+      #   initialDelaySeconds: 10
+      #   periodSeconds: 5
+      #   timeoutSeconds: 5
+      #   failureThreshold: 6
+      #   successThreshold: 1
+      spec: {}
 
 # Resource requirements and limits for Vaultwarden containers.
 resources:

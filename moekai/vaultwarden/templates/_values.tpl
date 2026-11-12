@@ -1,0 +1,904 @@
+{{/*
+The desired number of running replicas for Vaultwarden.
+*/}}
+{{- define "vaultwarden.replicaCount" -}}
+{{- .Values.replicaCount | default "1" | toString }}
+{{- end }}
+
+{{/*
+Annotations to be applied to Vaultwarden pods.
+*/}}
+{{- define "vaultwarden.podAnnotations" -}}
+{{- with .Values.podAnnotations -}}
+annotations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Security context applied at the pod level for Vaultwarden.
+*/}}
+{{- define "vaultwarden.podSecurityContext" -}}
+{{- with .Values.podSecurityContext -}}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Security context applied at the Vaultwarden container level.
+*/}}
+{{- define "vaultwarden.containerSecurityContext" -}}
+{{- with .Values.containerSecurityContext -}}
+securityContext:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Container images used for Vaultwarden.
+*/}}
+{{- define "vaultwarden.imageRegistry" -}}
+{{- .Values.image.vaultwarden.registry | default "ghcr.io" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.imageRepository" -}}
+{{- .Values.image.vaultwarden.repository | default "dani-garcia/vaultwarden" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.imageTag" -}}
+{{- .Values.image.vaultwarden.tag | default .Chart.AppVersion | toString }}
+{{- end }}
+
+{{- define "vaultwarden.imagePullPolicy" -}}
+{{- .Values.image.vaultwarden.pullPolicy | default "IfNotPresent" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.initImageRegistry" -}}
+{{- .Values.image.init.registry | default "docker.io" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.initImageRepository" -}}
+{{- .Values.image.init.repository | default "busybox" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.initImageTag" -}}
+{{- .Values.image.init.tag | default "1.36.1" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.initImagePullPolicy" -}}
+{{- .Values.image.init.pullPolicy | default "IfNotPresent" | toString }}
+{{- end }}
+
+{{/*
+Credentials used to securely authenticate and authorise the pulling of container images from private registries.
+*/}}
+{{- define "vaultwarden.imagePullSecrets" -}}
+{{- with .Values.imagePullSecrets -}}
+imagePullSecrets:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Service account configurations for Vaultwarden pods.
+*/}}
+{{- define "vaultwarden.serviceAccountCreate" -}}
+{{- .Values.serviceAccount.create }}
+{{- end }}
+
+{{- define "vaultwarden.serviceAccountName" -}}
+{{- $default := ternary (printf "%s-vaultwarden" .Release.Name) "default" .Values.serviceAccount.create }}
+{{- .Values.serviceAccount.name | default $default | toString }}
+{{- end }}
+
+{{- define "vaultwarden.serviceAccountAnnotations" -}}
+{{- with .Values.serviceAccount.annotations -}}
+annotations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The node labels a node must have for Vaultwarden pods to be scheduled onto it.
+*/}}
+{{- define "vaultwarden.nodeSelector" -}}
+{{- with .Values.nodeSelector -}}
+nodeSelector:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The tolerations that allow Vaultwarden pods to be scheduled onto tainted nodes.
+*/}}
+{{- define "vaultwarden.tolerations" -}}
+{{- with .Values.tolerations -}}
+tolerations:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+The scheduling constraints applied to Vaultwarden pods.
+*/}}
+{{- define "vaultwarden.affinity" -}}
+{{- with .Values.affinity -}}
+affinity:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional environment variables to be set on the Vaultwarden container.
+*/}}
+{{- define "vaultwarden.extraEnv" -}}
+{{- with .Values.extraEnv -}}
+env:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional volumes to be added to Vaultwarden pods.
+*/}}
+{{- define "vaultwarden.extraVolumes" -}}
+{{- with .Values.extraVolumes -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Additional volume mounts to be added to the Vaultwarden container.
+*/}}
+{{- define "vaultwarden.extraVolumeMounts" -}}
+{{- with .Values.extraVolumeMounts -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Vaultwarden configurations.
+*/}}
+
+{{- define "vaultwarden.adminToken" -}}
+{{- .Values.vaultwarden.adminToken | toString }}
+{{- end }}
+
+{{- define "vaultwarden.clearTrash" -}}
+{{- .Values.vaultwarden.clearTrash | toString }}
+{{- end }}
+
+{{- define "vaultwarden.domain" -}}
+{{- .Values.vaultwarden.domain | toString }}
+{{- end }}
+
+{{- define "vaultwarden.emailUpdate" -}}
+{{- .Values.vaultwarden.emailUpdate | toString | replace "<nil>" "" | default "true" }}
+{{- end }}
+
+{{- define "vaultwarden.emergencyAccess" -}}
+{{- .Values.vaultwarden.emergencyAccess | toString | replace "<nil>" "" | default "true" }}
+{{- end }}
+
+{{- define "vaultwarden.expFeatures" -}}
+{{- .Values.vaultwarden.expFeatures | join "," | toString }}
+{{- end }}
+
+{{- define "vaultwarden.existingSecret" -}}
+{{- .Values.vaultwarden.existingSecret | toString }}
+{{- end }}
+
+{{- define "vaultwarden.hibpApiKey" -}}
+{{- .Values.vaultwarden.hibpApiKey | toString }}
+{{- end }}
+
+{{- define "vaultwarden.logLevel" -}}
+{{- .Values.vaultwarden.logLevel | default "info" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.notifyNewDevice" -}}
+{{- .Values.vaultwarden.notifyNewDevice | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.send" -}}
+{{- .Values.vaultwarden.send | toString | replace "<nil>" "" | default "true" }}
+{{- end }}
+
+{{- define "vaultwarden.initScript" -}}
+{{- .Values.vaultwarden.initScript | toString }}
+{{- end }}
+
+{{- define "vaultwarden.webVaultEnabled" -}}
+{{- .Values.vaultwarden.webVaultEnabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.suppressOnboarding" -}}
+{{- .Values.vaultwarden.suppressOnboarding | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.fillAssistRulesUrl" -}}
+{{- .Values.vaultwarden.fillAssistRulesUrl | toString | replace "<nil>" "" }}
+{{- end }}
+
+
+{{/*
+Icon configurations.
+*/}}
+{{- define "vaultwarden.iconsService" -}}
+{{- .Values.icons.service | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsRedirectCode" -}}
+{{- .Values.icons.redirectCode | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsCacheTtl" -}}
+{{- .Values.icons.cacheTtl | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsCacheNegativeTtl" -}}
+{{- .Values.icons.cacheNegativeTtl | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsDownloadTimeout" -}}
+{{- .Values.icons.downloadTimeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.iconsDisableDownload" -}}
+{{- .Values.icons.disableDownload | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{/*
+Invitation configurations.
+*/}}
+{{- define "vaultwarden.invitationEnabled" -}}
+{{- .Values.invitation.enabled | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.invitationExpiry" -}}
+{{- .Values.invitation.expiry | default "120" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.invitationOrganisation" -}}
+{{- .Values.invitation.organisation | default "Vaultwarden" | toString }}
+{{- end }}
+
+
+{{/*
+Job configurations.
+*/}}
+{{- define "vaultwarden.jobsPollInterval" -}}
+{{- .Values.jobs.pollInterval | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesSendPurge" -}}
+{{- .Values.jobs.schedules.sendPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesTrashPurge" -}}
+{{- .Values.jobs.schedules.trashPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesIncomplete2fa" -}}
+{{- .Values.jobs.schedules.incomplete2fa | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesEmergencyNotificationReminder" -}}
+{{- .Values.jobs.schedules.emergencyNotificationReminder | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesEmergencyRequestTimeout" -}}
+{{- .Values.jobs.schedules.emergencyRequestTimeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesEventCleanup" -}}
+{{- .Values.jobs.schedules.eventCleanup | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesAuthRequestPurge" -}}
+{{- .Values.jobs.schedules.authRequestPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesDuoContextPurge" -}}
+{{- .Values.jobs.schedules.duoContextPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.jobsSchedulesIncompleteSsoPurge" -}}
+{{- .Values.jobs.schedules.incompleteSsoPurge | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
+Limit configurations.
+*/}}
+{{- define "vaultwarden.limitsUserAttachment" -}}
+{{- .Values.limits.userAttachment | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.limitsOrganizationAttachment" -}}
+{{- .Values.limits.organizationAttachment | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.limitsUserSend" -}}
+{{- .Values.limits.userSend | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.limitsIncreaseNoteSize" -}}
+{{- .Values.limits.increaseNoteSize | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{/*
+Logging configurations.
+*/}}
+{{- define "vaultwarden.loggingExtended" -}}
+{{- .Values.logging.extended | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.loggingTimestampFormat" -}}
+{{- .Values.logging.timestampFormat | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.loggingSyslog" -}}
+{{- .Values.logging.syslog | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.loggingFile" -}}
+{{- .Values.logging.file | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
+Mail configurations.
+*/}}
+{{- define "vaultwarden.smtpHost" -}}
+{{- .Values.mail.smtp.host | toString }}
+{{- end }}
+
+{{- define "vaultwarden.smtpPort" -}}
+{{- $security := include "vaultwarden.smtpSecurity" . }}
+{{- $default := "587" }}
+{{- if eq $security "force_tls" }}
+{{- $default = "465" }}
+{{- else if eq $security "off" }}
+{{- $default = "25" }}
+{{- end }}
+{{- .Values.mail.smtp.port | default $default | toString }}
+{{- end }}
+
+{{- define "vaultwarden.smtpUser" -}}
+{{- .Values.mail.smtp.user | toString }}
+{{- end }}
+
+{{- define "vaultwarden.smtpPassword" -}}
+{{- .Values.mail.smtp.password | toString }}
+{{- end }}
+
+{{- define "vaultwarden.smtpSecurity" -}}
+{{- .Values.mail.smtp.security | default "starttls" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.mailFromEmail" -}}
+{{- .Values.mail.fromEmail | default (include "vaultwarden.smtpUser" .) | toString }}
+{{- end }}
+
+{{- define "vaultwarden.mailFromName" -}}
+{{- .Values.mail.fromName | default "Vaultwarden" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.smtpAuthMechanism" -}}
+{{- .Values.mail.smtp.authMechanism | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.smtpTimeout" -}}
+{{- .Values.mail.smtp.timeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.smtpHeloName" -}}
+{{- .Values.mail.smtp.heloName | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.smtpEmbedImages" -}}
+{{- .Values.mail.smtp.embedImages | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.smtpDebug" -}}
+{{- .Values.mail.smtp.debug | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.smtpAcceptInvalidCerts" -}}
+{{- .Values.mail.smtp.acceptInvalidCerts | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.smtpAcceptInvalidHostnames" -}}
+{{- .Values.mail.smtp.acceptInvalidHostnames | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.sendmailEnabled" -}}
+{{- .Values.mail.sendmail.enabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.sendmailCommand" -}}
+{{- .Values.mail.sendmail.command | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.mailEnabled" -}}
+{{- $sender := ne (include "vaultwarden.mailFromEmail" .) "" }}
+{{- $transport := or (ne (include "vaultwarden.smtpHost" .) "") (eq (include "vaultwarden.sendmailEnabled" .) "true") }}
+{{- and $sender $transport }}
+{{- end }}
+
+
+{{/*
+Password configurations.
+*/}}
+{{- define "vaultwarden.passwordIterations" -}}
+{{- .Values.password.iterations | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.passwordHintsAllowed" -}}
+{{- .Values.password.hintsAllowed | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.passwordShowHint" -}}
+{{- .Values.password.showHint | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{/*
+Push notification configurations.
+*/}}
+{{- define "vaultwarden.pushEnabled" -}}
+{{- .Values.push.enabled | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.pushId" -}}
+{{- .Values.push.id | toString }}
+{{- end }}
+
+{{- define "vaultwarden.pushKey" -}}
+{{- .Values.push.key | toString }}
+{{- end }}
+
+{{- define "vaultwarden.pushRelayUri" -}}
+{{- .Values.push.relayUri | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.pushIdentityUri" -}}
+{{- .Values.push.identityUri | toString | replace "<nil>" "" }}
+{{- end }}
+
+
+{{/*
+Admin panel configurations.
+*/}}
+{{- define "vaultwarden.adminDisableToken" -}}
+{{- .Values.admin.disableToken | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.adminSessionLifetime" -}}
+{{- .Values.admin.sessionLifetime | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
+Network configurations.
+*/}}
+{{- define "vaultwarden.networkPort" -}}
+{{- .Values.network.port | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkAddress" -}}
+{{- .Values.network.address | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkIpHeader" -}}
+{{- .Values.network.ipHeader | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkIpHeaderTrustedProxies" -}}
+{{- .Values.network.ipHeaderTrustedProxies | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.networkWebsocket" -}}
+{{- .Values.network.websocket | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.networkDnsPreferIpv6" -}}
+{{- .Values.network.dnsPreferIpv6 | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.networkAllowedIframeAncestors" -}}
+{{- .Values.network.allowedIframeAncestors | join " " | toString }}
+{{- end }}
+
+{{- define "vaultwarden.networkAllowedConnectSrc" -}}
+{{- .Values.network.allowedConnectSrc | join " " | toString }}
+{{- end }}
+
+{{/*
+Organization configurations.
+*/}}
+{{- define "vaultwarden.organizationCreationUsers" -}}
+{{- .Values.organization.creationUsers | join "," | toString }}
+{{- end }}
+
+{{- define "vaultwarden.organizationEventsEnabled" -}}
+{{- .Values.organization.eventsEnabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.organizationEventsRetainDays" -}}
+{{- .Values.organization.eventsRetainDays | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.organizationGroupsEnabled" -}}
+{{- .Values.organization.groupsEnabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.organizationEnforceSingleOrgWithResetPasswordPolicy" -}}
+{{- .Values.organization.enforceSingleOrgWithResetPasswordPolicy | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{/*
+Outbound request configurations.
+*/}}
+{{- define "vaultwarden.outboundBlockNonGlobalIps" -}}
+{{- .Values.outbound.blockNonGlobalIps | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.outboundBlockRegex" -}}
+{{- .Values.outbound.blockRegex | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
+Rate limit configurations.
+*/}}
+{{- define "vaultwarden.rateLimitLoginSeconds" -}}
+{{- .Values.rateLimit.login.seconds | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitLoginMaxBurst" -}}
+{{- .Values.rateLimit.login.maxBurst | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitUnauthenticatedSeconds" -}}
+{{- .Values.rateLimit.unauthenticated.seconds | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitUnauthenticatedMaxBurst" -}}
+{{- .Values.rateLimit.unauthenticated.maxBurst | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitAdminSeconds" -}}
+{{- .Values.rateLimit.admin.seconds | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.rateLimitAdminMaxBurst" -}}
+{{- .Values.rateLimit.admin.maxBurst | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{/*
+Signup configurations.
+*/}}
+{{- define "vaultwarden.signupEnabled" -}}
+{{- .Values.signup.enabled | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.signupDomainWhitelist" -}}
+{{- .Values.signup.domainWhitelist | join "," | toString }}
+{{- end }}
+
+{{- define "vaultwarden.signupVerification" -}}
+{{- $restricted := or (eq (include "vaultwarden.signupEnabled" .) "true") (ne (include "vaultwarden.signupDomainWhitelist" .) "") }}
+{{- ternary (.Values.signup.verification | default "false" | toString) "false" $restricted }}
+{{- end }}
+
+{{- define "vaultwarden.signupResendInterval" -}}
+{{- .Values.signup.resendInterval | default "3600" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.signupResendLimit" -}}
+{{- .Values.signup.resendLimit | default "6" | toString }}
+{{- end }}
+
+
+{{/*
+Single sign-on (SSO) configurations.
+*/}}
+{{- define "vaultwarden.ssoEnabled" -}}
+{{- .Values.sso.enabled | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoOnly" -}}
+{{- .Values.sso.only | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoSignupsAllowed" -}}
+{{- .Values.sso.signupsAllowed | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoSignupsMatchEmail" -}}
+{{- .Values.sso.signupsMatchEmail | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAllowUnknownEmailVerification" -}}
+{{- .Values.sso.allowUnknownEmailVerification | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAuthority" -}}
+{{- .Values.sso.authority | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoClientId" -}}
+{{- .Values.sso.clientId | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoClientSecret" -}}
+{{- .Values.sso.clientSecret | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoScopes" -}}
+{{- .Values.sso.scopes | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAuthorizeExtraParams" -}}
+{{- .Values.sso.authorizeExtraParams | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoPkce" -}}
+{{- .Values.sso.pkce | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAudienceTrusted" -}}
+{{- .Values.sso.audienceTrusted | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoAuthOnlyNotSession" -}}
+{{- .Values.sso.authOnlyNotSession | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoClientCacheExpiration" -}}
+{{- .Values.sso.clientCacheExpiration | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.ssoDebugTokens" -}}
+{{- .Values.sso.debugTokens | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.ssoMasterPasswordPolicy" -}}
+{{- with .Values.sso.masterPasswordPolicy -}}
+{{- toJson . }}
+{{- end }}
+{{- end }}
+
+{{/*
+Two-factor authentication configurations.
+*/}}
+{{- define "vaultwarden.tfaExpiry" -}}
+{{- .Values.tfa.expiry | default "3" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tfaEmailTokenSize" -}}
+{{- .Values.tfa.emailTokenSize | default "6" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tfaEmailExpiry" -}}
+{{- .Values.tfa.emailExpiry | default "600" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tfaEmailLimit" -}}
+{{- .Values.tfa.emailLimit | default "3" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tfaEmailEnforce" -}}
+{{- .Values.tfa.emailEnforce | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tfaEmailFallback" -}}
+{{- .Values.tfa.emailFallback | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tfaRememberDevice" -}}
+{{- .Values.tfa.rememberDevice | toString | replace "<nil>" "" | default "true" }}
+{{- end }}
+
+{{- define "vaultwarden.tfaAllowTimeDrift" -}}
+{{- .Values.tfa.allowTimeDrift | toString | replace "<nil>" "" | default "true" }}
+{{- end }}
+
+{{- define "vaultwarden.tfaRememberDays" -}}
+{{- .Values.tfa.rememberDays | toString | replace "<nil>" "" }}
+{{- end }}
+
+
+{{/*
+Duo configurations.
+*/}}
+{{- define "vaultwarden.duoEnabled" -}}
+{{- .Values.duo.enabled | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.duoId" -}}
+{{- .Values.duo.id | toString }}
+{{- end }}
+
+{{- define "vaultwarden.duoKey" -}}
+{{- .Values.duo.key | toString }}
+{{- end }}
+
+{{- define "vaultwarden.duoHost" -}}
+{{- .Values.duo.host | toString }}
+{{- end }}
+
+{{/*
+Yubico configurations.
+*/}}
+{{- define "vaultwarden.yubicoEnabled" -}}
+{{- .Values.yubico.enabled | default "false" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.yubicoId" -}}
+{{- .Values.yubico.id | toString }}
+{{- end }}
+
+{{- define "vaultwarden.yubicoKey" -}}
+{{- .Values.yubico.key | toString }}
+{{- end }}
+
+{{- define "vaultwarden.yubicoServer" -}}
+{{- .Values.yubico.server | toString }}
+{{- end }}
+
+
+{{/*
+Database configurations.
+*/}}
+{{- define "vaultwarden.dbType" -}}
+{{- $type := .Values.db.type | default "sqlite" | toString -}}
+{{- if not (has $type (list "sqlite" "mysql" "postgresql" "postgres")) -}}
+{{- fail (printf "db.type must be \"sqlite\", \"mysql\", or \"postgresql\", got %q" $type) }}
+{{- end }}
+{{- $type }}
+{{- end }}
+
+{{- define "vaultwarden.dbHost" -}}
+{{- .Values.db.host | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dbPort" -}}
+{{- $default := ternary "3306" "5432" (eq (include "vaultwarden.dbType" .) "mysql") }}
+{{- .Values.db.port | default $default | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dbName" -}}
+{{- .Values.db.name | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dbUser" -}}
+{{- .Values.db.user | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dbPassword" -}}
+{{- .Values.db.password | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dbWal" -}}
+{{- .Values.db.wal | toString | replace "<nil>" "" | lower }}
+{{- end }}
+
+{{- define "vaultwarden.dbConnectionRetries" -}}
+{{- .Values.db.connectionRetries | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbTimeout" -}}
+{{- .Values.db.timeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbIdleTimeout" -}}
+{{- .Values.db.idleTimeout | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbMaxConnections" -}}
+{{- .Values.db.maxConnections | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbMinConnections" -}}
+{{- .Values.db.minConnections | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbConnectionInit" -}}
+{{- .Values.db.connectionInit | toString | replace "<nil>" "" }}
+{{- end }}
+
+{{- define "vaultwarden.dbUrl" -}}
+{{- $type := include "vaultwarden.dbType" . -}}
+{{- $host := include "vaultwarden.dbHost" . -}}
+{{- if and (ne $type "sqlite") $host -}}
+{{- $user := include "vaultwarden.dbUser" . | urlquery | replace "+" "%20" -}}
+{{- $password := include "vaultwarden.dbPassword" . | urlquery | replace "+" "%20" -}}
+{{- $name := include "vaultwarden.dbName" . | urlquery | replace "+" "%20" -}}
+{{- printf "%s://%s:%s@%s:%s/%s" $type $user $password $host (include "vaultwarden.dbPort" .) $name }}
+{{- end }}
+{{- end }}
+
+
+{{/*
+Ingress configurations.
+*/}}
+{{- define "vaultwarden.ingressEnabled" -}}
+{{- .Values.ingress.enabled }}
+{{- end }}
+
+{{- define "vaultwarden.ingressDomain" -}}
+{{- $domain := include "vaultwarden.domain" . }}
+{{- ternary $domain "" (and .Values.ingress.enabled (ne $domain "") (ne $domain "localhost")) }}
+{{- end }}
+
+{{- define "vaultwarden.ingressWwwDomain" -}}
+{{- $domain := include "vaultwarden.ingressDomain" . }}
+{{- $www := and .Values.ingress.enabled .Values.ingress.www }}
+{{- ternary (printf "www.%s" $domain) "" (and $www (ne $domain "")) }}
+{{- end }}
+
+{{- define "vaultwarden.ingressClassName" -}}
+{{- .Values.ingress.className | default "nginx" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.tlsSecretName" -}}
+{{- .Values.ingress.tlsSecretName | default (printf "%s-vaultwarden-tls-cert" .Release.Name) | toString }}
+{{- end }}
+
+{{- define "vaultwarden.clusterIssuer" -}}
+{{- .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString }}
+{{- end }}
+
+
+{{/*
+Service configurations.
+*/}}
+{{- define "vaultwarden.serviceNodePort" -}}
+{{- $type := include "vaultwarden.serviceType" . }}
+{{- $nodePort := .Values.service.nodePort | toString }}
+{{- ternary $nodePort "" (and (eq $type "NodePort") (ne $nodePort "")) }}
+{{- end }}
+
+{{- define "vaultwarden.servicePort" -}}
+{{- .Values.service.port | default "80" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.serviceType" -}}
+{{- .Values.service.type | default "ClusterIP" | toString }}
+{{- end }}
+
+
+{{/*
+Storage configurations.
+*/}}
+{{- define "vaultwarden.dataPersistence" -}}
+{{- .Values.storage.data.enabled }}
+{{- end }}
+
+{{- define "vaultwarden.dataAccessMode" -}}
+{{- .Values.storage.data.accessMode | default "ReadWriteOnce" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dataMountPath" -}}
+{{- .Values.storage.data.mountPath | default "/data" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dataSubPath" -}}
+{{- .Values.storage.data.subPath | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dataStorage" -}}
+{{- .Values.storage.data.storage | default "1Gi" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.dataStorageClassName" -}}
+{{- .Values.storage.data.storageClassName | default "longhorn" | toString }}
+{{- end }}
+
+
+{{/*
+Resource requirements and limits for Vaultwarden containers.
+*/}}
+{{- define "vaultwarden.resources" -}}
+resources:
+  {{- toYaml .Values.resources.vaultwarden | nindent 2 }}
+{{- end }}
