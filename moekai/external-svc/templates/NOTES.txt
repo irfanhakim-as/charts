@@ -1,4 +1,6 @@
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
+{{- $httpRouteDomains := .Values.httpRoute.domains }}
 {{- $domains := .Values.ingress.domains }}
 {{- $services := .Values.services }}
 External Service has been installed and configured for {{ .Release.Name | toString }} 🎉
@@ -44,6 +46,29 @@ The following are a list of domain(s) you have supplied for the external service
     {{ printf "%s. name=%s | domain=%s | tls=%s | www=%s | custom_annotations=%s" ($index | add1 | toString) $port $name $tls $www $customAnnotations }}
 
     {{- end }}
+
+{{- end }}
+
+{{- if $httpRoute }}
+
+The following are a list of HTTPRoute domain(s) you have supplied for the external service(s):
+
+{{- if not (and $httpRouteDomains $services) }}
+
+    ⚠️ No HTTPRoute domains were supplied for External Service to update
+
+{{- else }}
+
+    {{- range $index, $domain := $httpRouteDomains }}
+        {{- $www := $domain.www | toString }}
+        {{- $name := $domain.name | toString }}
+        {{- $port := $domain.port | toString }}
+
+    {{ printf "%s. name=%s | domain=%s | www=%s" ($index | add1 | toString) $port $name $www }}
+
+    {{- end }}
+
+{{- end }}
 
 {{- end }}
 

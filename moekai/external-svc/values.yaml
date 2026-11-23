@@ -103,3 +103,38 @@ ingress:
   #   #     value: ""
   #     customAnnotations: []
   domains: []
+
+# HTTPRoute configurations.
+httpRoute:
+  # Specifies whether HTTPRoute should be enabled for hosting External Service services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the Gateway that the HTTPRoute resources are attached to.
+  # Default: "envoy-gateway"
+  # Example:
+  # gatewayName: "my-gateway"
+  gatewayName: ""
+  # The namespace of the Gateway that the HTTPRoute resources are attached to.
+  # Default: "envoy-gateway-system"
+  # Example:
+  # gatewayNamespace: "my-namespace"
+  gatewayNamespace: ""
+  # Domain configurations.
+  # Items: `.name`, `.port`, `.www`
+  # Example:
+  # domains:
+  #   # The domain name that hosts the external service.
+  #   # Example:
+  #   # name: "mysvc.example.com"
+  #   - name: ""
+  #   # The name of the service port to route traffic to.
+  #   # Example:
+  #   # port: "mysvc"
+  #     port: ""
+  #   # Specifies whether the WWW subdomain should be enabled.
+  #   # Note: The Gateway must have a listener with a certificate that covers the WWW subdomain.
+  #   # Example:
+  #   # www: true
+  #     www: false
+  domains: []

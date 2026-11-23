@@ -1,0 +1,43 @@
+{{- $httpRoute := .Values.httpRoute.enabled }}
+{{- $domains := .Values.httpRoute.domains }}
+{{- $services := .Values.services }}
+{{- $gatewayName := .Values.httpRoute.gatewayName | default "envoy-gateway" | toString | quote }}
+{{- $gatewayNamespace := .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString | quote }}
+{{- $releaseName := .Release.Name | toString }}
+{{- if and $httpRoute $services $domains }}
+{{- range $domains }}
+{{- $www := .www }}
+{{- $name := .name | toString }}
+{{- $port := .port | toString }}
+{{- $servicePort := 0 }}
+{{- range $services }}
+{{- if eq (.name | toString) $port }}
+{{- $servicePort = .port | int }}
+{{- end }}
+{{- end }}
+{{- if not $servicePort }}
+{{- fail (printf "domain %s routes to service %s, which is not defined in services" $name $port) }}
+{{- end }}
+{{- $wwwDomain := printf "www.%s" $name | toString | quote }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-httproute
+  labels:
+    {{- include "external-svc.labels" $ | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ $gatewayName }}
+      namespace: {{ $gatewayNamespace }}
+  hostnames:
+    - {{ $name | quote }}
+  {{- if $www }}
+    - {{ $wwwDomain }}
+  {{- end }}
+  rules:
+    - backendRefs:
+        - name: {{ $releaseName }}-{{ $port }}-extsvc-svc
+          port: {{ $servicePort }}
+{{- end }}
+{{- end }}
