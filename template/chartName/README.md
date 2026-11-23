@@ -132,6 +132,12 @@ A Helm chart for deploying ChartName.
 | chartName.domain | string | `""` | The ingress domain name that hosts the ChartName server. |
 | chartName.foo | string | `""` | The value of the ChartName foo. Default: `"foo"`. |
 | chartName.initScript | string | `""` | Custom init script to run before the ChartName container starts. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting ChartName services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | image.chartName.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the ChartName container image. Default: `"IfNotPresent"`. |
 | image.chartName.registry | string | `""` | The registry where the ChartName container image is hosted. Default: `"ghcr.io"`. |
 | image.chartName.repository | string | `""` | The name of the repository that contains the ChartName container image used. Default: `"chartName"`. |
