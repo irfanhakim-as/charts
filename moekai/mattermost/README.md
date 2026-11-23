@@ -44,11 +44,11 @@ Mattermost requires an external Postgres (or MySQL) database - this chart does n
 
 ### Websocket ingress timeouts
 
-Mattermost relies on long-lived websocket connections for real-time messaging. This chart's Ingress template already raises `nginx.ingress.kubernetes.io/proxy-read-timeout` and `proxy-send-timeout` to `600` seconds to prevent the default nginx proxy timeouts from silently dropping these connections - no additional configuration is required, but be aware of this deviation if you override Ingress annotations.
+Mattermost relies on long-lived websocket connections for real-time messaging. This chart's Ingress template already raises `nginx.ingress.kubernetes.io/proxy-read-timeout` and `proxy-send-timeout` to `600` seconds to prevent the default nginx proxy timeouts from silently dropping these connections.
 
 ### Setting the site URL
 
-Setting `ingress.enabled` with a non-empty `mattermost.domain` makes Mattermost's own config bootstrap treat the install as an existing one being updated rather than a fresh one, which silently defaults `push.sendPushNotifications` to `"false"` and `push.pushNotificationServer` to empty. Explicitly set both `push.*` settings whenever a domain is configured.
+Setting a non-empty `mattermost.domain` makes Mattermost's own config bootstrap treat the install as an existing one being updated rather than a fresh one, which silently defaults `push.sendPushNotifications` to `"false"` and `push.pushNotificationServer` to empty. Explicitly set both `push.*` settings whenever a domain is configured.
 
 ---
 
@@ -158,6 +158,12 @@ Setting `ingress.enabled` with a non-empty `mattermost.domain` makes Mattermost'
 | db.sslMode | string | `""` | Specifies whether to use a secure TLS connection when connecting to the database. Default: `"disable"`. |
 | db.type | string | `""` | The database engine or backend being used by Mattermost. Default: `"postgres"`. |
 | db.user | string | `""` | The username or user account for accessing the Mattermost database. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Mattermost services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
@@ -176,7 +182,7 @@ Setting `ingress.enabled` with a non-empty `mattermost.domain` makes Mattermost'
 | mail.smtp.password | string | `""` | The password for authenticating with the SMTP server. |
 | mail.smtp.port | string | `""` | The port number on the SMTP server used for sending emails. Default: `"587"`. |
 | mail.smtp.user | string | `""` | The username for authenticating with the SMTP server. |
-| mattermost.domain | string | `""` | The ingress domain name that hosts the Mattermost server. |
+| mattermost.domain | string | `""` | The domain name that hosts the Mattermost server. |
 | mattermost.initScript | string | `""` | Custom init script to run before the Mattermost container starts. |
 | mattermost.timezone | string | `""` | The timezone used by the Mattermost server for time-based operations. |
 | podAnnotations | object | `{}` | Annotations to be applied to Mattermost pods. |
