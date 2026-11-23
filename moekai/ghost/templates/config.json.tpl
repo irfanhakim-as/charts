@@ -5,11 +5,12 @@ Ghost config.json template
 {{- $endpoint := "" }}
 {{- $logLevel := "info" | quote }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $mail := .Values.mail.enabled }}
 {{- $debug := .Values.ghost.debug | default "false" | toString }}
 {{- $domain := .Values.ghost.domain | default "localhost" | toString }}
 {{- $environment := .Values.ghost.environment | default "production" | toString }}
-{{- if and $ingress (not (eq $domain "localhost")) (eq $environment "production") }}
+{{- if and (or $ingress $httpRoute) (not (eq $domain "localhost")) (eq $environment "production") }}
 {{- $endpoint = printf "https://%s" $domain | quote }}
 {{- end }}
 {{- if eq $debug "true" }}

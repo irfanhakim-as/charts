@@ -2,6 +2,7 @@
 {{- $apscheduler := .Values.scheduler.apscheduler }}
 {{- $celery := .Values.scheduler.celery }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $logPersistence := .Values.storage.log.enabled }}
 {{- $rizzStartupProbe := .Values.probes.rizz.startup.enabled }}
 {{- $rizzStartupProbeSpec := .Values.probes.rizz.startup.spec }}
@@ -29,7 +30,7 @@
 {{- $logSubPath := .Values.storage.log.subPath | toString }}
 {{- $allowedHosts := .Values.rizz.allowedHosts | join "," | toString }}
 {{- $domain := .Values.rizz.domain | toString }}
-{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $domain = ternary $domain "localhost" (and (or $ingress $httpRoute) (ne $domain "") (ne $domain "localhost")) }}
 {{- $serviceName := printf "%s-rizz-svc" .Release.Name | toString }}
 {{- $alpineVariant := contains "alpine" ($rizz_repository | lower) }}
 {{- $containerGid := ternary 101 33 $alpineVariant }}

@@ -1,5 +1,5 @@
 {{- $serviceAddress := "" }}
-{{- $domain := include "linkding.ingressDomain" . }}
+{{- $domain := include "linkding.domain" . }}
 {{- $port := include "linkding.servicePort" . }}
 {{- $type := include "linkding.serviceType" . }}
 {{- $serviceName := printf "%s-linkding-svc" .Release.Name | toString }}

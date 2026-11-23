@@ -103,3 +103,105 @@ ingress:
   #   #     value: ""
   #     customAnnotations: []
   domains: []
+
+# HTTPRoute configurations.
+httpRoute:
+  # Specifies whether HTTPRoute should be enabled for hosting External Service services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the Gateway that the HTTPRoute resources are attached to.
+  # Default: "envoy-gateway"
+  # Example:
+  # gatewayName: "my-gateway"
+  gatewayName: ""
+  # The namespace of the Gateway that the HTTPRoute resources are attached to.
+  # Default: "envoy-gateway-system"
+  # Example:
+  # gatewayNamespace: "my-namespace"
+  gatewayNamespace: ""
+  # Additional BackendTrafficPolicy spec to be applied to the HTTPRoute of each external service.
+  # Example:
+  # backendTrafficPolicy:
+  #   timeout:
+  #     http:
+  #       requestTimeout: "1800s"
+  #     tcp:
+  #       connectTimeout: "600s"
+  backendTrafficPolicy: {}
+  # Additional SecurityPolicy spec to be applied to the HTTPRoute of each external service.
+  # Example:
+  # securityPolicy:
+  #   authorization:
+  #     defaultAction: Deny
+  #     rules:
+  #       - action: Allow
+  #         principal:
+  #           clientCIDRs:
+  #             - "192.168.0.0/16"
+  #       - action: Allow
+  #         principal:
+  #           clientIPGeoLocations:
+  #             - country: "MY"
+  securityPolicy: {}
+  # Domain configurations.
+  # Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`, `.securityPolicy`
+  # Example:
+  # domains:
+  #   # The domain name that hosts the external service.
+  #   # Example:
+  #   # name: "mysvc.example.com"
+  #   - name: ""
+  #   # The name of the service port to route traffic to.
+  #   # Example:
+  #   # port: "mysvc"
+  #     port: ""
+  #   # Specifies whether the WWW subdomain should be enabled.
+  #   # Note: The Gateway must have a listener with a certificate that covers the WWW subdomain.
+  #   # Example:
+  #   # www: true
+  #     www: false
+  #   # Additional BackendTrafficPolicy spec to be applied to the HTTPRoute.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec to be applied to the HTTPRoute.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
+  domains: []
+  # TLS configurations for services serving HTTPS that are verified using a CA certificate.
+  # Items: `.service`, `.hostname`, `.caCertificate`, `.validation`
+  # Example:
+  # backendTLS:
+  #   # The name of the service that serves HTTPS.
+  #   # Example:
+  #   # service: "mysvc"
+  #   - service: ""
+  #   # The hostname that is used to verify the certificate of the service.
+  #   # Example:
+  #   # hostname: "mysvc.example.com"
+  #     hostname: ""
+  #   # The CA certificate in PEM format that signed the certificate of the service.
+  #   # Example:
+  #   # caCertificate: |
+  #   #   -----BEGIN CERTIFICATE-----
+  #   #   ...
+  #   #   -----END CERTIFICATE-----
+  #     caCertificate: ""
+  #   # Additional BackendTLSPolicy validation spec to be applied to the service.
+  #   # Example:
+  #   # validation:
+  #   #   wellKnownCACertificates: "System"
+  #     validation: {}
+  backendTLS: []

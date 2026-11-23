@@ -138,6 +138,12 @@ Ghost is an independent platform for publishing online by web and email newslett
 | ghost.environment | string | `""` | The runtime environment for the Ghost server. Default: `"production"`. |
 | ghost.initScript | string | `""` | Custom init script to run before the Ghost container starts. |
 | ghost.install_dir | string | `""` | The directory where Ghost is installed on the container. Default: `"/home/nonroot/app/ghost"`. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Ghost services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | image.ghost.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Ghost container image. Default: `"IfNotPresent"`. |
 | image.ghost.registry | string | `""` | The registry where the Ghost container image is hosted. Default: `"ghcr.io"`. |
 | image.ghost.repository | string | `""` | The name of the repository that contains the Ghost container image used. Default: `"sredevopsorg/ghost-on-kubernetes"`. |

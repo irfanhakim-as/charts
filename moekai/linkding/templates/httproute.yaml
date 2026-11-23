@@ -1,0 +1,28 @@
+{{- $domain := include "linkding.httpRouteDomain" . }}
+{{- $gatewayName := include "linkding.httpRouteGatewayName" . }}
+{{- $gatewayNamespace := include "linkding.httpRouteGatewayNamespace" . }}
+{{- $port := include "linkding.servicePort" . }}
+{{- $www := eq (include "linkding.httpRouteWww" .) "true" }}
+{{- $wwwDomain := printf "www.%s" $domain | quote }}
+{{- if $domain }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ .Release.Name }}-linkding-httproute
+  labels:
+    {{- include "linkding.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ $gatewayName | quote }}
+      namespace: {{ $gatewayNamespace | quote }}
+  hostnames:
+    - {{ $domain | quote }}
+  {{- if $www }}
+    - {{ $wwwDomain }}
+  {{- end }}
+  rules:
+    - backendRefs:
+        - name: {{ .Release.Name }}-linkding-svc
+          port: {{ int $port }}
+{{- end }}

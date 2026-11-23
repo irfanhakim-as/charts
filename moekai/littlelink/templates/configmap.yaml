@@ -3,6 +3,7 @@
 {{- $avatarFile := .Values.littlelink.avatar.file }}
 {{- $faviconFile := .Values.littlelink.favicon.file }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $links := .Values.littlelink.links }}
 {{- range $links }}
   {{- if .custom.enabled }}
@@ -12,7 +13,7 @@
 {{- $author := .Values.littlelink.author | toString | quote }}
 {{- $biography := .Values.littlelink.biography | toString | quote }}
 {{- $domain := .Values.littlelink.domain | default "localhost" | toString }}
-{{- if and $ingress (not (eq $domain "localhost")) }}
+{{- if and (or $ingress $httpRoute) (not (eq $domain "localhost")) }}
 {{- $endpoint = printf "https://%s" $domain | quote }}
 {{- end }}
 {{- $footer := .Values.littlelink.footer | toString | quote }}

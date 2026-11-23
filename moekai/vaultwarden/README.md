@@ -107,6 +107,15 @@ ingress:
   enabled: true
 ```
 
+**Alternatively**, enable the HTTPRoute to serve Vaultwarden through a Gateway:
+
+```yaml
+vaultwarden:
+  domain: "vault.example.com"
+httpRoute:
+  enabled: true
+```
+
 Links in emails and the SSO redirect address are built from this domain.
 
 ---
@@ -127,7 +136,7 @@ updateStrategy:
 
 ### Reverse proxy
 
-Vaultwarden uses the IP address of each client for its rate limits. Behind an ingress controller in the cluster, the default settings take the address from the `X-Real-IP` header. If your proxy sends another header or connects from a public address, set `network.ipHeader` and `network.ipHeaderTrustedProxies` accordingly:
+Vaultwarden uses the IP address of each client for its rate limits. Behind an ingress controller in the cluster, the default settings take the address from the `X-Real-IP` header. A Gateway sends the client address in the `X-Forwarded-For` header and sends no `X-Real-IP` header. If your proxy sends another header or connects from a public address, set `network.ipHeader` and `network.ipHeaderTrustedProxies` accordingly:
 
 ```yaml
 network:
@@ -309,6 +318,12 @@ Set `sso.only` to `"true"` only after confirming that signing in with SSO works,
 | extraEnv | list | `[]` | Additional environment variables to be set on the Vaultwarden container. |
 | extraVolumeMounts | list | `[]` | Additional volume mounts to be added to the Vaultwarden container. |
 | extraVolumes | list | `[]` | Additional volumes to be added to Vaultwarden pods. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Vaultwarden services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | icons.cacheNegativeTtl | string | `""` | The number of seconds before retrying an icon that was not available. |
 | icons.cacheTtl | string | `""` | The number of seconds a downloaded icon is considered fresh. |
 | icons.disableDownload | string | `""` | Specifies whether to stop downloading icons and only serve the ones already cached. |
@@ -453,7 +468,7 @@ Set `sso.only` to `"true"` only after confirming that signing in with SSO works,
 | updateStrategy | object | `{}` | The update strategy used to replace existing pods with new ones. |
 | vaultwarden.adminToken | string | `""` | The secret password for accessing the Vaultwarden admin panel. |
 | vaultwarden.clearTrash | string | `""` | The number of days to retain trashed items before permanent deletion. |
-| vaultwarden.domain | string | `""` | The ingress domain name that hosts the Vaultwarden server. |
+| vaultwarden.domain | string | `""` | The domain name that hosts the Vaultwarden server. |
 | vaultwarden.emailUpdate | string | `""` | Specifies whether to allow users to change their account email address. Default: `"true"`. |
 | vaultwarden.emergencyAccess | string | `""` | Specifies whether to allow enabling emergency access to user accounts. Default: `"true"`. |
 | vaultwarden.existingSecret | string | `""` | The name of an existing Secret to load sensitive environment variables from. |

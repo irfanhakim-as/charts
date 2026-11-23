@@ -720,6 +720,34 @@ Ingress configurations.
 {{- end }}
 
 {{/*
+HTTPRoute configurations.
+*/}}
+{{- define "pocket-id.httpRouteDomain" -}}
+{{- $domain := include "pocket-id.domain" . }}
+{{- ternary $domain "" (and .Values.httpRoute.enabled (ne $domain "") (ne $domain "localhost")) }}
+{{- end }}
+
+{{- define "pocket-id.httpRouteGatewayName" -}}
+{{- .Values.httpRoute.gatewayName | default "envoy-gateway" | toString }}
+{{- end }}
+
+{{- define "pocket-id.httpRouteGatewayNamespace" -}}
+{{- .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString }}
+{{- end }}
+
+{{- define "pocket-id.httpRouteBackendTrafficPolicy" -}}
+{{- with .Values.httpRoute.backendTrafficPolicy -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{- define "pocket-id.httpRouteSecurityPolicy" -}}
+{{- with .Values.httpRoute.securityPolicy -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
 Service configurations.
 */}}
 {{- define "pocket-id.serviceNodePort" -}}

@@ -82,7 +82,7 @@ Mattermost configurations.
 */}}
 {{- define "mattermost.siteDomain" -}}
 {{- $domain := .Values.mattermost.domain | toString }}
-{{- ternary $domain "" (and .Values.ingress.enabled (ne $domain "") (ne $domain "localhost")) }}
+{{- ternary $domain "" (and (ne $domain "") (ne $domain "localhost")) }}
 {{- end }}
 
 {{- define "mattermost.siteUrl" -}}
@@ -216,14 +216,51 @@ Database configurations.
 {{/*
 Ingress configurations.
 */}}
+{{- define "mattermost.ingressDomain" -}}
+{{- ternary (include "mattermost.siteDomain" .) "" .Values.ingress.enabled }}
+{{- end }}
+
 {{- define "mattermost.clusterIssuer" -}}
 {{- .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString }}
 {{- end }}
 
 {{- define "mattermost.wwwDomain" -}}
-{{- $domain := include "mattermost.siteDomain" . }}
+{{- $domain := include "mattermost.ingressDomain" . }}
 {{- $www := and .Values.ingress.enabled .Values.ingress.www }}
 {{- ternary (printf "www.%s" $domain) "" (and $www (ne $domain "")) }}
+{{- end }}
+
+{{/*
+HTTPRoute configurations.
+*/}}
+{{- define "mattermost.httpRouteDomain" -}}
+{{- ternary (include "mattermost.siteDomain" .) "" .Values.httpRoute.enabled }}
+{{- end }}
+
+{{- define "mattermost.httpRouteWwwDomain" -}}
+{{- $domain := include "mattermost.httpRouteDomain" . }}
+{{- $www := and .Values.httpRoute.enabled .Values.httpRoute.www }}
+{{- ternary (printf "www.%s" $domain) "" (and $www (ne $domain "")) }}
+{{- end }}
+
+{{- define "mattermost.httpRouteGatewayName" -}}
+{{- .Values.httpRoute.gatewayName | default "envoy-gateway" | toString }}
+{{- end }}
+
+{{- define "mattermost.httpRouteGatewayNamespace" -}}
+{{- .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString }}
+{{- end }}
+
+{{- define "mattermost.httpRouteBackendTrafficPolicy" -}}
+{{- with .Values.httpRoute.backendTrafficPolicy -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{- define "mattermost.httpRouteSecurityPolicy" -}}
+{{- with .Values.httpRoute.securityPolicy -}}
+{{- toYaml . }}
+{{- end }}
 {{- end }}
 
 {{/*

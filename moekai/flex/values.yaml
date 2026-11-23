@@ -255,8 +255,13 @@ bazarr:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Bazarr service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Bazarr server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -286,6 +291,24 @@ bazarr:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Bazarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -332,8 +355,13 @@ ersatztv:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the ErsatzTV service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the ErsatzTV server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -363,6 +391,24 @@ ersatztv:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the ErsatzTV container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -452,8 +498,13 @@ jackett:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Jackett service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Jackett server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -483,6 +534,24 @@ jackett:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Jackett container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -528,8 +597,13 @@ jellyfin:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Jellyfin service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Jellyfin server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -559,6 +633,24 @@ jellyfin:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Jellyfin container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -727,8 +819,13 @@ jellyseerr:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Jellyseerr service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Jellyseerr server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -758,6 +855,24 @@ jellyseerr:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # The verbosity level of the Jellyseerr logs.
   # Default: "info"
@@ -808,8 +923,13 @@ lidarr:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Lidarr service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Lidarr server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -839,6 +959,24 @@ lidarr:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Lidarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -884,8 +1022,13 @@ overseerr:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Overseerr service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Overseerr server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -915,6 +1058,24 @@ overseerr:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Overseerr container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -965,8 +1126,13 @@ plex:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Plex service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Plex server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -996,6 +1162,24 @@ plex:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Plex container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -1041,8 +1225,13 @@ qbt:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the qBittorrent service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the qBittorrent server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -1072,6 +1261,24 @@ qbt:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the qBittorrent container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -1117,8 +1324,13 @@ radarr:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Radarr service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Radarr server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -1148,6 +1360,24 @@ radarr:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Radarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -1193,8 +1423,13 @@ sonarr:
   # Example:
   # ingress: true
   ingress: false
+  # Specifies whether the Sonarr service should be served publicly using an HTTPRoute.
+  # Note: HTTPRoute must be enabled at the chart level for this setting to be applied.
+  # Example:
+  # httpRoute: true
+  httpRoute: false
   # The list of ingress domain configurations for the Sonarr server.
-  # Items: `.name`, `.tls`, `.customAnnotations`
+  # Items: `.name`, `.tls`, `.customAnnotations`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The ingress domain name that hosts the service.
@@ -1224,6 +1459,24 @@ sonarr:
   #   #   # value: "120"
   #   #     value: ""
   #     customAnnotations: []
+  #   # Additional BackendTrafficPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec applied to the HTTPRoute of this domain.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
   # Optional custom configurations to be mounted as a file inside the Sonarr container.
   # Items: `.mountPath`, `.subPath`, `.config`
@@ -1277,6 +1530,41 @@ ingress:
   #   # value: "120"
   #     value: ""
   customAnnotations: []
+
+# HTTPRoute configurations.
+httpRoute:
+  # Specifies whether HTTPRoute should be enabled for hosting Flex services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the Gateway that the HTTPRoute resources are attached to.
+  # Default: "envoy-gateway"
+  # Example:
+  # gatewayName: "my-gateway"
+  gatewayName: ""
+  # The namespace of the Gateway that the HTTPRoute resources are attached to.
+  # Default: "envoy-gateway-system"
+  # Example:
+  # gatewayNamespace: "my-namespace"
+  gatewayNamespace: ""
+  # Additional BackendTrafficPolicy spec applied to all HTTPRoute resources.
+  # Example:
+  # backendTrafficPolicy:
+  #   timeout:
+  #     http:
+  #       requestTimeout: "1800s"
+  backendTrafficPolicy: {}
+  # Additional SecurityPolicy spec applied to all HTTPRoute resources.
+  # Example:
+  # securityPolicy:
+  #   authorization:
+  #     defaultAction: Deny
+  #     rules:
+  #       - action: Allow
+  #         principal:
+  #           clientCIDRs:
+  #             - "192.168.0.0/16"
+  securityPolicy: {}
 
 # Service configurations.
 service:

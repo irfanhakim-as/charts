@@ -1,0 +1,27 @@
+{{- $domain := include "mattermost.httpRouteDomain" . }}
+{{- $wwwDomain := include "mattermost.httpRouteWwwDomain" . }}
+{{- $gatewayName := include "mattermost.httpRouteGatewayName" . }}
+{{- $gatewayNamespace := include "mattermost.httpRouteGatewayNamespace" . }}
+{{- $port := include "mattermost.servicePort" . }}
+{{- if $domain }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ .Release.Name }}-mattermost-httproute
+  labels:
+    {{- include "mattermost.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ $gatewayName | quote }}
+      namespace: {{ $gatewayNamespace | quote }}
+  hostnames:
+    - {{ $domain | quote }}
+  {{- if $wwwDomain }}
+    - {{ $wwwDomain | quote }}
+  {{- end }}
+  rules:
+    - backendRefs:
+        - name: {{ .Release.Name }}-mattermost-svc
+          port: {{ int $port }}
+{{- end }}

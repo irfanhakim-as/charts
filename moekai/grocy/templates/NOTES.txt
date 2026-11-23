@@ -1,12 +1,13 @@
 {{- $serviceAddress := "" }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $domain := .Values.grocy.domain | toString }}
 {{- $frontend := .Values.service.frontend.port | default "8080" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
 {{- $serviceName := printf "%s-grocy-svc" .Release.Name | toString }}
 Grocy has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-{{- if $ingress }}
+{{- if or $ingress $httpRoute }}
     {{- $serviceAddress = printf "https://%s" $domain | toString }}
 {{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
 

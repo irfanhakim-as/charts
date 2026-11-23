@@ -1,6 +1,7 @@
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $domain := .Values.snipeit.domain | toString }}
-{{- $domain = ternary $domain "" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $domain = ternary $domain "" (and (or $ingress $httpRoute) (ne $domain "") (ne $domain "localhost")) }}
 {{- $port := .Values.service.port | default "8000" | toString }}
 {{- $serviceAddress := ternary (printf "https://%s" $domain) (printf "http://localhost:%s" $port) (ne $domain "") | quote }}
 {{- $environment := .Values.snipeit.environment | default "production" | toString | quote }}

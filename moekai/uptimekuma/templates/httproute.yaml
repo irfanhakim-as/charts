@@ -1,0 +1,56 @@
+{{- $httpRoute := .Values.httpRoute.enabled }}
+{{- $gatewayName := .Values.httpRoute.gatewayName | default "envoy-gateway" | toString | quote }}
+{{- $gatewayNamespace := .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString | quote }}
+{{- $backendTrafficPolicy := .Values.httpRoute.backendTrafficPolicy }}
+{{- $securityPolicy := .Values.httpRoute.securityPolicy }}
+{{- $domain := .Values.uptimekuma.domain | toString }}
+{{- $port := .Values.service.port | default "3001" | toString }}
+{{- if and $httpRoute $domain }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ .Release.Name }}-uptimekuma-httproute
+  labels:
+    {{- include "uptimekuma.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ $gatewayName }}
+      namespace: {{ $gatewayNamespace }}
+  hostnames:
+    - {{ $domain | quote }}
+  rules:
+    - backendRefs:
+        - name: {{ .Release.Name }}-uptimekuma-svc
+          port: {{ int $port }}
+{{- if $backendTrafficPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: {{ .Release.Name }}-uptimekuma-backendtrafficpolicy
+  labels:
+    {{- include "uptimekuma.labels" . | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ .Release.Name }}-uptimekuma-httproute
+  {{- toYaml $backendTrafficPolicy | nindent 2 }}
+{{- end }}
+{{- if $securityPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: {{ .Release.Name }}-uptimekuma-securitypolicy
+  labels:
+    {{- include "uptimekuma.labels" . | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ .Release.Name }}-uptimekuma-httproute
+  {{- toYaml $securityPolicy | nindent 2 }}
+{{- end }}
+{{- end }}

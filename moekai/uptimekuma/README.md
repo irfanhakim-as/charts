@@ -127,6 +127,11 @@ Uptime Kuma is an easy-to-use self-hosted monitoring tool.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Uptime Kuma services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |

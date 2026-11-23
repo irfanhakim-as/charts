@@ -463,7 +463,7 @@ network:
   # host: "::"
   host: ""
   # The reverse proxies to take the client IP from, as comma-separated IP addresses or CIDR ranges.
-  # Note: Behind an ingress controller, set this to the CIDR of the controller pods.
+  # Note: Behind an ingress controller or Gateway, set this to the CIDR of its pods.
   # Default: "false"
   # Example:
   # trustProxy: "10.42.0.0/16"
@@ -505,7 +505,7 @@ observability:
   # Prometheus metrics configurations.
   prometheus:
     # Specifies whether to expose Prometheus metrics on a dedicated container and service port.
-    # Note: The metrics port is never routed through the Ingress.
+    # Note: The metrics port is never routed through the Ingress or HTTPRoute.
     # Example:
     # enabled: true
     enabled: false
@@ -839,6 +839,41 @@ ingress:
   #   # value: "120"
   #     value: ""
   customAnnotations: []
+
+# HTTPRoute configurations.
+httpRoute:
+  # Specifies whether HTTPRoute should be enabled for hosting Pocket ID services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the Gateway that the HTTPRoute is attached to.
+  # Default: "envoy-gateway"
+  # Example:
+  # gatewayName: "my-gateway"
+  gatewayName: ""
+  # The namespace of the Gateway that the HTTPRoute is attached to.
+  # Default: "envoy-gateway-system"
+  # Example:
+  # gatewayNamespace: "my-namespace"
+  gatewayNamespace: ""
+  # Additional BackendTrafficPolicy spec to be applied to the HTTPRoute.
+  # Example:
+  # backendTrafficPolicy:
+  #   timeout:
+  #     http:
+  #       requestTimeout: "1800s"
+  backendTrafficPolicy: {}
+  # Additional SecurityPolicy spec to be applied to the HTTPRoute.
+  # Example:
+  # securityPolicy:
+  #   authorization:
+  #     defaultAction: Deny
+  #     rules:
+  #       - action: Allow
+  #         principal:
+  #           clientCIDRs:
+  #             - "192.168.0.0/16"
+  securityPolicy: {}
 
 # Service configurations.
 service:

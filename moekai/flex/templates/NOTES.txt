@@ -10,39 +10,51 @@
 {{- $radarr := .Values.radarr.enabled }}
 {{- $sonarr := .Values.sonarr.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $bazarrIngress := and $bazarr $ingress .Values.bazarr.ingress .Values.bazarr.domains }}
+{{- $bazarrRoute := and $bazarr $httpRoute .Values.bazarr.httpRoute .Values.bazarr.domains }}
 {{- $ersatztvIngress := and $ersatztv $ingress .Values.ersatztv.ingress .Values.ersatztv.domains }}
+{{- $ersatztvRoute := and $ersatztv $httpRoute .Values.ersatztv.httpRoute .Values.ersatztv.domains }}
 {{- $jackettIngress := and $jackett $ingress .Values.jackett.ingress .Values.jackett.domains }}
+{{- $jackettRoute := and $jackett $httpRoute .Values.jackett.httpRoute .Values.jackett.domains }}
 {{- $jellyfinIngress := and $jellyfin $ingress .Values.jellyfin.ingress .Values.jellyfin.domains }}
+{{- $jellyfinRoute := and $jellyfin $httpRoute .Values.jellyfin.httpRoute .Values.jellyfin.domains }}
 {{- $jellyseerrIngress := and $jellyseerr $ingress .Values.jellyseerr.ingress .Values.jellyseerr.domains }}
+{{- $jellyseerrRoute := and $jellyseerr $httpRoute .Values.jellyseerr.httpRoute .Values.jellyseerr.domains }}
 {{- $lidarrIngress := and $lidarr $ingress .Values.lidarr.ingress .Values.lidarr.domains }}
+{{- $lidarrRoute := and $lidarr $httpRoute .Values.lidarr.httpRoute .Values.lidarr.domains }}
 {{- $overseerrIngress := and $overseerr $ingress .Values.overseerr.ingress .Values.overseerr.domains }}
+{{- $overseerrRoute := and $overseerr $httpRoute .Values.overseerr.httpRoute .Values.overseerr.domains }}
 {{- $plexIngress := and $plex $ingress .Values.plex.ingress .Values.plex.domains }}
+{{- $plexRoute := and $plex $httpRoute .Values.plex.httpRoute .Values.plex.domains }}
 {{- $qbtIngress := and $qbt $ingress .Values.qbt.ingress .Values.qbt.domains }}
+{{- $qbtRoute := and $qbt $httpRoute .Values.qbt.httpRoute .Values.qbt.domains }}
 {{- $radarrIngress := and $radarr $ingress .Values.radarr.ingress .Values.radarr.domains }}
+{{- $radarrRoute := and $radarr $httpRoute .Values.radarr.httpRoute .Values.radarr.domains }}
 {{- $sonarrIngress := and $sonarr $ingress .Values.sonarr.ingress .Values.sonarr.domains }}
+{{- $sonarrRoute := and $sonarr $httpRoute .Values.sonarr.httpRoute .Values.sonarr.domains }}
 {{- $bazarrUrls := list }}
-{{- range .Values.bazarr.domains }}{{- if and $bazarrIngress .name }}{{- $tls := ne .tls false }}{{- $bazarrUrls = append $bazarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.bazarr.domains }}{{- if and (or $bazarrIngress $bazarrRoute) .name }}{{- $tls := or (ne .tls false) $bazarrRoute }}{{- $bazarrUrls = append $bazarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $ersatztvUrls := list }}
-{{- range .Values.ersatztv.domains }}{{- if and $ersatztvIngress .name }}{{- $tls := ne .tls false }}{{- $ersatztvUrls = append $ersatztvUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.ersatztv.domains }}{{- if and (or $ersatztvIngress $ersatztvRoute) .name }}{{- $tls := or (ne .tls false) $ersatztvRoute }}{{- $ersatztvUrls = append $ersatztvUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $jackettUrls := list }}
-{{- range .Values.jackett.domains }}{{- if and $jackettIngress .name }}{{- $tls := ne .tls false }}{{- $jackettUrls = append $jackettUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.jackett.domains }}{{- if and (or $jackettIngress $jackettRoute) .name }}{{- $tls := or (ne .tls false) $jackettRoute }}{{- $jackettUrls = append $jackettUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $jellyfinUrls := list }}
-{{- range .Values.jellyfin.domains }}{{- if and $jellyfinIngress .name }}{{- $tls := ne .tls false }}{{- $jellyfinUrls = append $jellyfinUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.jellyfin.domains }}{{- if and (or $jellyfinIngress $jellyfinRoute) .name }}{{- $tls := or (ne .tls false) $jellyfinRoute }}{{- $jellyfinUrls = append $jellyfinUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $jellyseerrUrls := list }}
-{{- range .Values.jellyseerr.domains }}{{- if and $jellyseerrIngress .name }}{{- $tls := ne .tls false }}{{- $jellyseerrUrls = append $jellyseerrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.jellyseerr.domains }}{{- if and (or $jellyseerrIngress $jellyseerrRoute) .name }}{{- $tls := or (ne .tls false) $jellyseerrRoute }}{{- $jellyseerrUrls = append $jellyseerrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $lidarrUrls := list }}
-{{- range .Values.lidarr.domains }}{{- if and $lidarrIngress .name }}{{- $tls := ne .tls false }}{{- $lidarrUrls = append $lidarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.lidarr.domains }}{{- if and (or $lidarrIngress $lidarrRoute) .name }}{{- $tls := or (ne .tls false) $lidarrRoute }}{{- $lidarrUrls = append $lidarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $overseerrUrls := list }}
-{{- range .Values.overseerr.domains }}{{- if and $overseerrIngress .name }}{{- $tls := ne .tls false }}{{- $overseerrUrls = append $overseerrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.overseerr.domains }}{{- if and (or $overseerrIngress $overseerrRoute) .name }}{{- $tls := or (ne .tls false) $overseerrRoute }}{{- $overseerrUrls = append $overseerrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $plexUrls := list }}
-{{- range .Values.plex.domains }}{{- if and $plexIngress .name }}{{- $tls := ne .tls false }}{{- $plexUrls = append $plexUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.plex.domains }}{{- if and (or $plexIngress $plexRoute) .name }}{{- $tls := or (ne .tls false) $plexRoute }}{{- $plexUrls = append $plexUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $qbtUrls := list }}
-{{- range .Values.qbt.domains }}{{- if and $qbtIngress .name }}{{- $tls := ne .tls false }}{{- $qbtUrls = append $qbtUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.qbt.domains }}{{- if and (or $qbtIngress $qbtRoute) .name }}{{- $tls := or (ne .tls false) $qbtRoute }}{{- $qbtUrls = append $qbtUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $radarrUrls := list }}
-{{- range .Values.radarr.domains }}{{- if and $radarrIngress .name }}{{- $tls := ne .tls false }}{{- $radarrUrls = append $radarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.radarr.domains }}{{- if and (or $radarrIngress $radarrRoute) .name }}{{- $tls := or (ne .tls false) $radarrRoute }}{{- $radarrUrls = append $radarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 {{- $sonarrUrls := list }}
-{{- range .Values.sonarr.domains }}{{- if and $sonarrIngress .name }}{{- $tls := ne .tls false }}{{- $sonarrUrls = append $sonarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
+{{- range .Values.sonarr.domains }}{{- if and (or $sonarrIngress $sonarrRoute) .name }}{{- $tls := or (ne .tls false) $sonarrRoute }}{{- $sonarrUrls = append $sonarrUrls (printf "%s://%s" (ternary "https" "http" $tls) .name) }}{{- end }}{{- end }}
 Flex has been installed and configured for {{ .Release.Name | toString }} 🎉
 
 Visit the following service(s) at the provided address:

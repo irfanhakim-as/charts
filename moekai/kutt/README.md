@@ -151,6 +151,12 @@ A unique, secure secret key is required for each Kutt installation.
 | google.recaptchaSecretKey | string | `""` | The Google reCAPTCHA secret key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | google.recaptchaSiteKey | string | `""` | The Google reCAPTCHA site key used for preventing spam. Refer to https://developers.google.com/recaptcha/intro. |
 | google.safeBrowsingKey | string | `""` | The Google API key used for Google Safe Browsing to prevent malicious links. Refer to https://developers.google.com/safe-browsing/v4/get-started. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Kutt services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | image.kutt.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Kutt container image. Default: `"IfNotPresent"`. |
 | image.kutt.registry | string | `""` | The registry where the Kutt container image is hosted. Default: `"docker.io"`. |
 | image.kutt.repository | string | `""` | The name of the repository that contains the Kutt container image used. Default: `"kutt/kutt"`. |

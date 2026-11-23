@@ -2,6 +2,7 @@
 {{- $celery := .Values.scheduler.celery }}
 {{- $feeds := .Values.waktusolat.feed }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $debug := .Values.waktusolat.debug | default "false" | toString | quote }}
 {{- $scheduler_timezone := .Values.scheduler.timezone | default "Etc/UTC" | toString | quote }}
 {{- $visibility := .Values.waktusolat.visibility | default "public" | toString | quote }}
@@ -15,7 +16,7 @@
 {{- $serviceName := printf "%s-waktusolat-svc" .Release.Name | toString }}
 {{- $redis_service := printf "redis://%s" $serviceName | quote }}
 {{- $domain := .Values.waktusolat.domain | toString }}
-{{- $domain = ternary $domain "localhost" (and $ingress (ne $domain "") (ne $domain "localhost")) }}
+{{- $domain = ternary $domain "localhost" (and (or $ingress $httpRoute) (ne $domain "") (ne $domain "localhost")) }}
 {{- $serverAdmin := .Values.waktusolat.serverAdmin | default "admin@example.com" | toString }}
 ---
 apiVersion: v1

@@ -128,6 +128,11 @@ Syncthing is a continuous file synchronization program. It synchronizes files be
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Syncthing services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
 | image.syncthing.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Syncthing container image. Default: `"IfNotPresent"`. |
 | image.syncthing.registry | string | `""` | The registry where the Syncthing container image is hosted. Default: `"lscr.io"`. |
 | image.syncthing.repository | string | `""` | The name of the repository that contains the Syncthing container image used. Default: `"linuxserver/syncthing"`. |

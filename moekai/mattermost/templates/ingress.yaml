@@ -1,4 +1,4 @@
-{{- $domain := include "mattermost.siteDomain" . }}
+{{- $domain := include "mattermost.ingressDomain" . }}
 {{- $wwwDomain := include "mattermost.wwwDomain" . }}
 {{- if $domain }}
 ---

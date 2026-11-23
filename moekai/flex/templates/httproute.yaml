@@ -1,0 +1,78 @@
+{{- $httpRoute := .Values.httpRoute.enabled }}
+{{- $gatewayName := .Values.httpRoute.gatewayName | default "envoy-gateway" | toString | quote }}
+{{- $gatewayNamespace := .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString | quote }}
+{{- $defaultBackendTrafficPolicy := .Values.httpRoute.backendTrafficPolicy | default dict }}
+{{- $defaultSecurityPolicy := .Values.httpRoute.securityPolicy | default dict }}
+{{- $releaseName := .Release.Name | toString }}
+{{- if $httpRoute }}
+  {{- $services := list
+    (dict "port" (.Values.service.bazarr.port | default "6767") "enabled" .Values.bazarr.enabled "httpRoute" .Values.bazarr.httpRoute "domains" .Values.bazarr.domains)
+    (dict "port" (.Values.service.ersatztv.port | default "8409") "enabled" .Values.ersatztv.enabled "httpRoute" .Values.ersatztv.httpRoute "domains" .Values.ersatztv.domains)
+    (dict "port" (.Values.service.jackett.port | default "9117") "enabled" .Values.jackett.enabled "httpRoute" .Values.jackett.httpRoute "domains" .Values.jackett.domains)
+    (dict "port" (.Values.service.jellyfin.web.port | default "8096") "enabled" .Values.jellyfin.enabled "httpRoute" .Values.jellyfin.httpRoute "domains" .Values.jellyfin.domains)
+    (dict "port" (.Values.service.jellyseerr.port | default "5550") "enabled" .Values.jellyseerr.enabled "httpRoute" .Values.jellyseerr.httpRoute "domains" .Values.jellyseerr.domains)
+    (dict "port" (.Values.service.lidarr.port | default "8686") "enabled" .Values.lidarr.enabled "httpRoute" .Values.lidarr.httpRoute "domains" .Values.lidarr.domains)
+    (dict "port" (.Values.service.overseerr.port | default "5055") "enabled" .Values.overseerr.enabled "httpRoute" .Values.overseerr.httpRoute "domains" .Values.overseerr.domains)
+    (dict "port" (.Values.service.plex.port | default "32400") "enabled" .Values.plex.enabled "httpRoute" .Values.plex.httpRoute "domains" .Values.plex.domains)
+    (dict "port" (.Values.service.qbt.web.port | default "8080") "enabled" .Values.qbt.enabled "httpRoute" .Values.qbt.httpRoute "domains" .Values.qbt.domains)
+    (dict "port" (.Values.service.radarr.port | default "7878") "enabled" .Values.radarr.enabled "httpRoute" .Values.radarr.httpRoute "domains" .Values.radarr.domains)
+    (dict "port" (.Values.service.sonarr.port | default "8989") "enabled" .Values.sonarr.enabled "httpRoute" .Values.sonarr.httpRoute "domains" .Values.sonarr.domains)
+  }}
+  {{- range $services }}
+    {{- $svc := . }}
+    {{- if and $svc.enabled $svc.httpRoute $svc.domains }}
+      {{- range $svc.domains }}
+        {{- $backendTrafficPolicy := mustMergeOverwrite (deepCopy $defaultBackendTrafficPolicy) (.backendTrafficPolicy | default dict) }}
+        {{- $securityPolicy := mustMergeOverwrite (deepCopy $defaultSecurityPolicy) (.securityPolicy | default dict) }}
+        {{- $routeName := printf "%s-%s-flex-httproute" $releaseName (.name | replace "." "-") }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ $routeName }}
+  labels:
+    {{- include "flex.labels" $ | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ $gatewayName }}
+      namespace: {{ $gatewayNamespace }}
+  hostnames:
+    - {{ .name | quote }}
+  rules:
+    - backendRefs:
+        - name: {{ $releaseName }}-flex-svc
+          port: {{ int $svc.port }}
+        {{- if $backendTrafficPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: {{ $releaseName }}-{{ .name | replace "." "-" }}-flex-backendtrafficpolicy
+  labels:
+    {{- include "flex.labels" $ | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ $routeName }}
+  {{- toYaml $backendTrafficPolicy | nindent 2 }}
+        {{- end }}
+        {{- if $securityPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: {{ $releaseName }}-{{ .name | replace "." "-" }}-flex-securitypolicy
+  labels:
+    {{- include "flex.labels" $ | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ $routeName }}
+  {{- toYaml $securityPolicy | nindent 2 }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
