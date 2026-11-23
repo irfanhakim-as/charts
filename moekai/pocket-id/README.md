@@ -78,7 +78,7 @@ pocketid:
   domain: "id.example.com"
 ```
 
-Set `ingress.enabled` to expose Pocket ID through an Ingress with a certificate from cert-manager. Alternatively, expose the `<release name>-pocket-id-svc` Service by other means (e.g. a tunnel) and keep `pocketid.domain` set to the public domain.
+Set `ingress.enabled` to expose Pocket ID through an Ingress with a certificate from cert-manager, or `httpRoute.enabled` to expose it through an HTTPRoute attached to a Gateway. Alternatively, expose the `<release name>-pocket-id-svc` Service by other means (e.g. a tunnel) and keep `pocketid.domain` set to the public domain.
 
 ---
 
@@ -98,7 +98,7 @@ updateStrategy:
 
 ### Trusting the reverse proxy
 
-Pocket ID records the IP address of each client in its audit log and rate limits. Behind an ingress controller, set `network.trustProxy` to the IP address or CIDR range of the controller Pods so the real client IP is used:
+Pocket ID records the IP address of each client in its audit log and rate limits. Behind an ingress controller or Gateway, set `network.trustProxy` to the IP address or CIDR range of its Pods so the real client IP is used:
 
 ```yaml
 network:
@@ -149,7 +149,7 @@ For Postgres, `DB_CONNECTION_STRING` takes the form `postgres://user:password@ho
 
 ### Collecting metrics
 
-Set `observability.prometheus.enabled` to expose Prometheus metrics on a dedicated port of the Service. The metrics port is never exposed through the Ingress. With the Prometheus Operator installed, also set `observability.prometheus.serviceMonitor.enabled` to create a ServiceMonitor for it.
+Set `observability.prometheus.enabled` to expose Prometheus metrics on a dedicated port of the Service. The metrics port is never exposed through the Ingress or HTTPRoute. With the Prometheus Operator installed, also set `observability.prometheus.serviceMonitor.enabled` to create a ServiceMonitor for it.
 
 ---
 
@@ -282,6 +282,11 @@ The settings under **Application Configuration** in the admin interface are stor
 | extraVolumes | list | `[]` | Additional volumes to be added to Pocket ID pods. |
 | files.backend | string | `""` | The backend where uploads are stored. Default: `"filesystem"`. |
 | files.uploadPath | string | `""` | The uploads directory for the filesystem backend, or the key prefix inside the bucket for the S3 backend. Default: `"${.storage.data.mountPath}/uploads"`. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Pocket ID services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |

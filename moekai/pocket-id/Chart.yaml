@@ -2,7 +2,7 @@ apiVersion: v2
 name: pocket-id
 description: The most user-friendly OpenID Connect Certified and OAuth 2.0 provider that lets users sign in to your applications with passkeys.
 type: application
-version: 0.1.0
+version: 0.2.0
 appVersion: "v2.19.2"
 keywords:
   - "pocket-id"
