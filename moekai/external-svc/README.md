@@ -126,7 +126,8 @@ Seamlessly connect external services to your Kubernetes environment.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| httpRoute.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.www`. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute of each external service. |
+| httpRoute.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`. |
 | httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting External Service services. |
 | httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute resources are attached to. Default: `"envoy-gateway"`. |
 | httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute resources are attached to. Default: `"envoy-gateway-system"`. |

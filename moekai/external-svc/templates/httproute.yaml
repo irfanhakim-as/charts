@@ -3,10 +3,12 @@
 {{- $services := .Values.services }}
 {{- $gatewayName := .Values.httpRoute.gatewayName | default "envoy-gateway" | toString | quote }}
 {{- $gatewayNamespace := .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString | quote }}
+{{- $defaultBackendTrafficPolicy := .Values.httpRoute.backendTrafficPolicy | default dict }}
 {{- $releaseName := .Release.Name | toString }}
 {{- if and $httpRoute $services $domains }}
 {{- range $domains }}
 {{- $www := .www }}
+{{- $backendTrafficPolicy := mustMergeOverwrite (deepCopy $defaultBackendTrafficPolicy) (.backendTrafficPolicy | default dict) }}
 {{- $name := .name | toString }}
 {{- $port := .port | toString }}
 {{- $servicePort := 0 }}
@@ -19,11 +21,12 @@
 {{- fail (printf "domain %s routes to service %s, which is not defined in services" $name $port) }}
 {{- end }}
 {{- $wwwDomain := printf "www.%s" $name | toString | quote }}
+{{- $routeName := printf "%s-%s-extsvc-httproute" $releaseName ($name | replace "." "-") }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-httproute
+  name: {{ $routeName }}
   labels:
     {{- include "external-svc.labels" $ | nindent 4 }}
 spec:
@@ -39,5 +42,20 @@ spec:
     - backendRefs:
         - name: {{ $releaseName }}-{{ $port }}-extsvc-svc
           port: {{ $servicePort }}
+{{- if $backendTrafficPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-backendtrafficpolicy
+  labels:
+    {{- include "external-svc.labels" $ | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ $routeName }}
+  {{- toYaml $backendTrafficPolicy | nindent 2 }}
+{{- end }}
 {{- end }}
 {{- end }}

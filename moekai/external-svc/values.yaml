@@ -120,8 +120,17 @@ httpRoute:
   # Example:
   # gatewayNamespace: "my-namespace"
   gatewayNamespace: ""
+  # Additional BackendTrafficPolicy spec to be applied to the HTTPRoute of each external service.
+  # Example:
+  # backendTrafficPolicy:
+  #   timeout:
+  #     http:
+  #       requestTimeout: "1800s"
+  #     tcp:
+  #       connectTimeout: "600s"
+  backendTrafficPolicy: {}
   # Domain configurations.
-  # Items: `.name`, `.port`, `.www`
+  # Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`
   # Example:
   # domains:
   #   # The domain name that hosts the external service.
@@ -137,4 +146,11 @@ httpRoute:
   #   # Example:
   #   # www: true
   #     www: false
+  #   # Additional BackendTrafficPolicy spec to be applied to the HTTPRoute.
+  #   # Example:
+  #   # backendTrafficPolicy:
+  #   #   timeout:
+  #   #     http:
+  #   #       requestTimeout: "3600s"
+  #     backendTrafficPolicy: {}
   domains: []
