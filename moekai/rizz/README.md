@@ -226,6 +226,12 @@ A secure application access token is required for each configured account.
 | db.port | string | `""` | The port number the Rizz database server is listening for connections. Default: `"5432"`. |
 | db.type | string | `""` | The database engine or backend being used by Rizz. Default: `"postgresql"`. |
 | db.user | string | `""` | The username or user account for accessing the Rizz database. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Rizz services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | image.redis.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Redis container image. Default: `"IfNotPresent"`. |
 | image.redis.registry | string | `""` | The registry where the Redis container image is hosted. Default: `"docker.io"`. |
 | image.redis.repository | string | `""` | The name of the repository that contains the Redis container image used. Default: `"redis"`. |
