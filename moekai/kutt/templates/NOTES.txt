@@ -1,6 +1,7 @@
 {{- $serviceAddress := "" }}
 {{- $urlProtocol := "http" | toString }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $domain := .Values.kutt.domain | toString }}
 {{- $port := .Values.service.port | default "80" | toString }}
 {{- $type := .Values.service.type | default "ClusterIP" | toString }}
@@ -11,7 +12,7 @@
 {{- end }}
 Kutt has been installed and configured for {{ .Release.Name | toString }} 🎉
 
-{{- if $ingress }}
+{{- if or $ingress $httpRoute }}
     {{- $serviceAddress = printf "%s://%s" $urlProtocol $domain | toString }}
 {{- else if or (eq $type "ClusterIP") (eq $type "LoadBalancer") (eq $type "NodePort") }}
 

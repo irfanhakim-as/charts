@@ -260,6 +260,45 @@ ingress:
   #     value: ""
   customAnnotations: []
 
+# HTTPRoute configurations.
+httpRoute:
+  # Specifies whether HTTPRoute should be enabled for hosting Kutt services.
+  # Example:
+  # enabled: true
+  enabled: false
+  # The name of the Gateway that the HTTPRoute is attached to.
+  # Default: "envoy-gateway"
+  # Example:
+  # gatewayName: "my-gateway"
+  gatewayName: ""
+  # The namespace of the Gateway that the HTTPRoute is attached to.
+  # Default: "envoy-gateway-system"
+  # Example:
+  # gatewayNamespace: "my-namespace"
+  gatewayNamespace: ""
+  # Specifies whether the WWW subdomain should be enabled.
+  # Example:
+  # www: true
+  www: false
+  # Additional BackendTrafficPolicy spec to be applied to the HTTPRoute.
+  # Example:
+  # backendTrafficPolicy:
+  #   timeout:
+  #     http:
+  #       requestTimeout: "1800s"
+  backendTrafficPolicy: {}
+  # Additional SecurityPolicy spec to be applied to the HTTPRoute.
+  # Example:
+  # securityPolicy:
+  #   authorization:
+  #     defaultAction: Deny
+  #     rules:
+  #       - action: Allow
+  #         principal:
+  #           clientCIDRs:
+  #             - "192.168.0.0/16"
+  securityPolicy: {}
+
 # Service configurations.
 service:
   # The type of service used to expose Kutt services.
