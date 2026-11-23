@@ -247,6 +247,12 @@ Set `linkding.disableLoginForm` to `"true"` only after confirming that signing i
 | extraVolumes | list | `[]` | Additional volumes to be added to Linkding pods. |
 | favicon.provider | string | `""` | The URL used to download website favicons. |
 | favicon.refreshEnabled | string | `""` | Specifies whether favicons are refreshed daily by a background task. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Linkding services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | image.init.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Init container image. Default: `"IfNotPresent"`. |
 | image.init.registry | string | `""` | The registry where the Init container image is hosted. Default: `"docker.io"`. |
 | image.init.repository | string | `""` | The name of the repository that contains the Init container image used. Default: `"busybox"`. |
@@ -268,7 +274,7 @@ Set `linkding.disableLoginForm` to `"true"` only after confirming that signing i
 | linkding.disableBackgroundTasks | string | `""` | Specifies whether to disable background tasks and task scheduling. Default: `"false"`. |
 | linkding.disableLoginForm | string | `""` | Specifies whether to hide the username and password login form. |
 | linkding.disableUrlValidation | string | `""` | Specifies whether to disable URL validation for added bookmarks. Default: `"false"`. |
-| linkding.domain | string | `""` | The ingress domain name that hosts the Linkding server. |
+| linkding.domain | string | `""` | The domain name that hosts the Linkding server. |
 | linkding.existingSecret | string | `""` | The name of an existing Secret to load sensitive environment variables from. |
 | linkding.initScript | string | `""` | Custom init script to run before the Linkding container starts. |
 | linkding.sessionCookieAge | string | `""` | The number of seconds a user stays logged in to the web interface. |

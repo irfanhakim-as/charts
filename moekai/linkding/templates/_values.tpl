@@ -445,6 +445,38 @@ Ingress configurations.
 {{- end }}
 
 {{/*
+HTTPRoute configurations.
+*/}}
+{{- define "linkding.httpRouteDomain" -}}
+{{- $domain := include "linkding.domain" . }}
+{{- ternary $domain "" (and .Values.httpRoute.enabled (ne $domain "")) }}
+{{- end }}
+
+{{- define "linkding.httpRouteWww" -}}
+{{- .Values.httpRoute.www }}
+{{- end }}
+
+{{- define "linkding.httpRouteGatewayName" -}}
+{{- .Values.httpRoute.gatewayName | default "envoy-gateway" | toString }}
+{{- end }}
+
+{{- define "linkding.httpRouteGatewayNamespace" -}}
+{{- .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString }}
+{{- end }}
+
+{{- define "linkding.httpRouteBackendTrafficPolicy" -}}
+{{- with .Values.httpRoute.backendTrafficPolicy -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{- define "linkding.httpRouteSecurityPolicy" -}}
+{{- with .Values.httpRoute.securityPolicy -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
 Service configurations.
 */}}
 {{- define "linkding.serviceNodePort" -}}
