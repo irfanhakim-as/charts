@@ -1,0 +1,52 @@
+{{- $httpRoute := .Values.httpRoute.enabled }}
+{{- $backendTLS := .Values.httpRoute.backendTLS }}
+{{- $services := .Values.services }}
+{{- $releaseName := .Release.Name | toString }}
+{{- if and $httpRoute $services $backendTLS }}
+{{- range $backendTLS }}
+{{- $service := .service | toString }}
+{{- $hostname := .hostname | toString }}
+{{- $caCertificate := .caCertificate | default "" | toString }}
+{{- $validation := dict "hostname" $hostname }}
+{{- if $caCertificate }}
+{{- $_ := set $validation "caCertificateRefs" (list (dict "group" "" "kind" "ConfigMap" "name" (printf "%s-%s-extsvc-ca" $releaseName $service))) }}
+{{- end }}
+{{- $validation = mustMergeOverwrite $validation (.validation | default dict) }}
+{{- $found := false }}
+{{- range $services }}
+{{- if eq (.name | toString) $service }}
+{{- $found = true }}
+{{- end }}
+{{- end }}
+{{- if not $found }}
+{{- fail (printf "backendTLS refers to service %s, which is not defined in services" $service) }}
+{{- end }}
+{{- if $caCertificate }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $releaseName }}-{{ $service }}-extsvc-ca
+  labels:
+    {{- include "external-svc.labels" $ | nindent 4 }}
+data:
+  ca.crt: |
+    {{- $caCertificate | trim | nindent 4 }}
+{{- end }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: BackendTLSPolicy
+metadata:
+  name: {{ $releaseName }}-{{ $service }}-extsvc-backendtlspolicy
+  labels:
+    {{- include "external-svc.labels" $ | nindent 4 }}
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: {{ $releaseName }}-{{ $service }}-extsvc-svc
+      sectionName: {{ $service }}
+  validation:
+    {{- toYaml $validation | nindent 4 }}
+{{- end }}
+{{- end }}

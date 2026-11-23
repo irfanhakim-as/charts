@@ -126,6 +126,7 @@ Seamlessly connect external services to your Kubernetes environment.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| httpRoute.backendTLS | list | `[]` | TLS configurations for services serving HTTPS that are verified using a CA certificate. Items: `.service`, `.hostname`, `.caCertificate`, `.validation`. |
 | httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute of each external service. |
 | httpRoute.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`, `.securityPolicy`. |
 | httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting External Service services. |

@@ -180,3 +180,28 @@ httpRoute:
   #   #             - "192.168.0.0/16"
   #     securityPolicy: {}
   domains: []
+  # TLS configurations for services serving HTTPS that are verified using a CA certificate.
+  # Items: `.service`, `.hostname`, `.caCertificate`, `.validation`
+  # Example:
+  # backendTLS:
+  #   # The name of the service that serves HTTPS.
+  #   # Example:
+  #   # service: "mysvc"
+  #   - service: ""
+  #   # The hostname that is used to verify the certificate of the service.
+  #   # Example:
+  #   # hostname: "mysvc.example.com"
+  #     hostname: ""
+  #   # The CA certificate in PEM format that signed the certificate of the service.
+  #   # Example:
+  #   # caCertificate: |
+  #   #   -----BEGIN CERTIFICATE-----
+  #   #   ...
+  #   #   -----END CERTIFICATE-----
+  #     caCertificate: ""
+  #   # Additional BackendTLSPolicy validation spec to be applied to the service.
+  #   # Example:
+  #   # validation:
+  #   #   wellKnownCACertificates: "System"
+  #     validation: {}
+  backendTLS: []
