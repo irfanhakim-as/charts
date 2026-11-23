@@ -4,11 +4,13 @@
 {{- $gatewayName := .Values.httpRoute.gatewayName | default "envoy-gateway" | toString | quote }}
 {{- $gatewayNamespace := .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString | quote }}
 {{- $defaultBackendTrafficPolicy := .Values.httpRoute.backendTrafficPolicy | default dict }}
+{{- $defaultSecurityPolicy := .Values.httpRoute.securityPolicy | default dict }}
 {{- $releaseName := .Release.Name | toString }}
 {{- if and $httpRoute $services $domains }}
 {{- range $domains }}
 {{- $www := .www }}
 {{- $backendTrafficPolicy := mustMergeOverwrite (deepCopy $defaultBackendTrafficPolicy) (.backendTrafficPolicy | default dict) }}
+{{- $securityPolicy := mustMergeOverwrite (deepCopy $defaultSecurityPolicy) (.securityPolicy | default dict) }}
 {{- $name := .name | toString }}
 {{- $port := .port | toString }}
 {{- $servicePort := 0 }}
@@ -56,6 +58,21 @@ spec:
       kind: HTTPRoute
       name: {{ $routeName }}
   {{- toYaml $backendTrafficPolicy | nindent 2 }}
+{{- end }}
+{{- if $securityPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: {{ $releaseName }}-{{ $name | replace "." "-" }}-extsvc-securitypolicy
+  labels:
+    {{- include "external-svc.labels" $ | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ $routeName }}
+  {{- toYaml $securityPolicy | nindent 2 }}
 {{- end }}
 {{- end }}
 {{- end }}

@@ -127,10 +127,11 @@ Seamlessly connect external services to your Kubernetes environment.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute of each external service. |
-| httpRoute.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`. |
+| httpRoute.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`, `.securityPolicy`. |
 | httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting External Service services. |
 | httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute resources are attached to. Default: `"envoy-gateway"`. |
 | httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute resources are attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute of each external service. |
 | ingress.clusterIssuer | string | `""` | The name of the cluster issuer for Ingress. Default: `"letsencrypt-dns-prod"`. |
 | ingress.customAnnotations | list | `[]` | Additional configuration annotations to be added to the Ingress resource of each external service. Items: `.prefix`, `.name`, `.value`. |
 | ingress.domains | list | `[]` | Domain configurations. Items: `.name`, `.port`, `.tls`, `.www`, `.customAnnotations`. |

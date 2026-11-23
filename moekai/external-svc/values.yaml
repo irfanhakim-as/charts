@@ -129,8 +129,23 @@ httpRoute:
   #     tcp:
   #       connectTimeout: "600s"
   backendTrafficPolicy: {}
+  # Additional SecurityPolicy spec to be applied to the HTTPRoute of each external service.
+  # Example:
+  # securityPolicy:
+  #   authorization:
+  #     defaultAction: Deny
+  #     rules:
+  #       - action: Allow
+  #         principal:
+  #           clientCIDRs:
+  #             - "192.168.0.0/16"
+  #       - action: Allow
+  #         principal:
+  #           clientIPGeoLocations:
+  #             - country: "MY"
+  securityPolicy: {}
   # Domain configurations.
-  # Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`
+  # Items: `.name`, `.port`, `.www`, `.backendTrafficPolicy`, `.securityPolicy`
   # Example:
   # domains:
   #   # The domain name that hosts the external service.
@@ -153,4 +168,15 @@ httpRoute:
   #   #     http:
   #   #       requestTimeout: "3600s"
   #     backendTrafficPolicy: {}
+  #   # Additional SecurityPolicy spec to be applied to the HTTPRoute.
+  #   # Example:
+  #   # securityPolicy:
+  #   #   authorization:
+  #   #     defaultAction: Deny
+  #   #     rules:
+  #   #       - action: Allow
+  #   #         principal:
+  #   #           clientCIDRs:
+  #   #             - "192.168.0.0/16"
+  #     securityPolicy: {}
   domains: []
