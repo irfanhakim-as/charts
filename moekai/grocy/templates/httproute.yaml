@@ -1,0 +1,61 @@
+{{- $httpRoute := .Values.httpRoute.enabled }}
+{{- $gatewayName := .Values.httpRoute.gatewayName | default "envoy-gateway" | toString | quote }}
+{{- $gatewayNamespace := .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString | quote }}
+{{- $backendTrafficPolicy := .Values.httpRoute.backendTrafficPolicy }}
+{{- $securityPolicy := .Values.httpRoute.securityPolicy }}
+{{- $domain := .Values.grocy.domain | toString }}
+{{- $wwwDomain := printf "www.%s" $domain | toString | quote }}
+{{- $www := .Values.httpRoute.www }}
+{{- $port := .Values.service.frontend.port | default "8080" | toString }}
+{{- if and $httpRoute $domain }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ .Release.Name }}-grocy-httproute
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ $gatewayName }}
+      namespace: {{ $gatewayNamespace }}
+  hostnames:
+    - {{ $domain | quote }}
+  {{- if $www }}
+    - {{ $wwwDomain }}
+  {{- end }}
+  rules:
+    - backendRefs:
+        - name: {{ .Release.Name }}-grocy-svc
+          port: {{ int $port }}
+{{- if $backendTrafficPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: {{ .Release.Name }}-grocy-backendtrafficpolicy
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ .Release.Name }}-grocy-httproute
+  {{- toYaml $backendTrafficPolicy | nindent 2 }}
+{{- end }}
+{{- if $securityPolicy }}
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: {{ .Release.Name }}-grocy-securitypolicy
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {{ .Release.Name }}-grocy-httproute
+  {{- toYaml $securityPolicy | nindent 2 }}
+{{- end }}
+{{- end }}
