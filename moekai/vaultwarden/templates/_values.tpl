@@ -170,7 +170,8 @@ Vaultwarden configurations.
 {{- end }}
 
 {{- define "vaultwarden.domain" -}}
-{{- .Values.vaultwarden.domain | toString }}
+{{- $domain := .Values.vaultwarden.domain | toString }}
+{{- ternary $domain "" (and (ne $domain "") (ne $domain "localhost")) }}
 {{- end }}
 
 {{- define "vaultwarden.emailUpdate" -}}
@@ -826,8 +827,7 @@ Ingress configurations.
 {{- end }}
 
 {{- define "vaultwarden.ingressDomain" -}}
-{{- $domain := include "vaultwarden.domain" . }}
-{{- ternary $domain "" (and .Values.ingress.enabled (ne $domain "") (ne $domain "localhost")) }}
+{{- ternary (include "vaultwarden.domain" .) "" .Values.ingress.enabled }}
 {{- end }}
 
 {{- define "vaultwarden.ingressWwwDomain" -}}
@@ -846,6 +846,39 @@ Ingress configurations.
 
 {{- define "vaultwarden.clusterIssuer" -}}
 {{- .Values.ingress.clusterIssuer | default "letsencrypt-dns-prod" | toString }}
+{{- end }}
+
+{{/*
+HTTPRoute configurations.
+*/}}
+{{- define "vaultwarden.httpRouteDomain" -}}
+{{- ternary (include "vaultwarden.domain" .) "" .Values.httpRoute.enabled }}
+{{- end }}
+
+{{- define "vaultwarden.httpRouteWwwDomain" -}}
+{{- $domain := include "vaultwarden.httpRouteDomain" . }}
+{{- $www := and .Values.httpRoute.enabled .Values.httpRoute.www }}
+{{- ternary (printf "www.%s" $domain) "" (and $www (ne $domain "")) }}
+{{- end }}
+
+{{- define "vaultwarden.httpRouteGatewayName" -}}
+{{- .Values.httpRoute.gatewayName | default "envoy-gateway" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.httpRouteGatewayNamespace" -}}
+{{- .Values.httpRoute.gatewayNamespace | default "envoy-gateway-system" | toString }}
+{{- end }}
+
+{{- define "vaultwarden.httpRouteBackendTrafficPolicy" -}}
+{{- with .Values.httpRoute.backendTrafficPolicy -}}
+{{- toYaml . }}
+{{- end }}
+{{- end }}
+
+{{- define "vaultwarden.httpRouteSecurityPolicy" -}}
+{{- with .Values.httpRoute.securityPolicy -}}
+{{- toYaml . }}
+{{- end }}
 {{- end }}
 
 

@@ -1,0 +1,27 @@
+{{- $domain := include "vaultwarden.httpRouteDomain" . }}
+{{- $wwwDomain := include "vaultwarden.httpRouteWwwDomain" . }}
+{{- $gatewayName := include "vaultwarden.httpRouteGatewayName" . }}
+{{- $gatewayNamespace := include "vaultwarden.httpRouteGatewayNamespace" . }}
+{{- $port := include "vaultwarden.servicePort" . }}
+{{- if $domain }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ .Release.Name }}-vaultwarden-httproute
+  labels:
+    {{- include "vaultwarden.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: {{ $gatewayName | quote }}
+      namespace: {{ $gatewayNamespace | quote }}
+  hostnames:
+    - {{ $domain | quote }}
+  {{- if $wwwDomain }}
+    - {{ $wwwDomain | quote }}
+  {{- end }}
+  rules:
+    - backendRefs:
+        - name: {{ .Release.Name }}-vaultwarden-svc
+          port: {{ int $port }}
+{{- end }}

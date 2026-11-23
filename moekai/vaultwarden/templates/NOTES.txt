@@ -1,5 +1,5 @@
 {{- $serviceAddress := "" }}
-{{- $domain := include "vaultwarden.ingressDomain" . }}
+{{- $domain := include "vaultwarden.domain" . }}
 {{- $port := include "vaultwarden.servicePort" . }}
 {{- $type := include "vaultwarden.serviceType" . }}
 {{- $serviceName := printf "%s-vaultwarden-svc" .Release.Name | toString }}
