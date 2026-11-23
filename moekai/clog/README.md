@@ -181,6 +181,12 @@ A unique, secure secret key is required for each Clog installation.
 | db.port | string | `""` | The port number the Clog database server is listening for connections. Default: `"5432"`. |
 | db.type | string | `""` | The database engine or backend being used by Clog. Default: `"postgresql"`. |
 | db.user | string | `""` | The username or user account for accessing the Clog database. |
+| httpRoute.backendTrafficPolicy | object | `{}` | Additional BackendTrafficPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.enabled | bool | `false` | Specifies whether HTTPRoute should be enabled for hosting Clog services. |
+| httpRoute.gatewayName | string | `""` | The name of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway"`. |
+| httpRoute.gatewayNamespace | string | `""` | The namespace of the Gateway that the HTTPRoute is attached to. Default: `"envoy-gateway-system"`. |
+| httpRoute.securityPolicy | object | `{}` | Additional SecurityPolicy spec to be applied to the HTTPRoute. |
+| httpRoute.www | bool | `false` | Specifies whether the WWW subdomain should be enabled. |
 | image.clog.pullPolicy | string | `""` | The policy that determines when Kubernetes should pull the Clog container image. Default: `"IfNotPresent"`. |
 | image.clog.registry | string | `""` | The registry where the Clog container image is hosted. Default: `"ghcr.io"`. |
 | image.clog.repository | string | `""` | The name of the repository that contains the Clog container image used. Default: `"irfanhakim-as/clog"`. |

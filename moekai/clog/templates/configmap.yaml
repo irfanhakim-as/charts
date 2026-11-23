@@ -1,5 +1,6 @@
 {{- $cloudflared := .Values.clog.cloudflared.enabled }}
 {{- $ingress := .Values.ingress.enabled }}
+{{- $httpRoute := .Values.httpRoute.enabled }}
 {{- $ngrok := .Values.clog.ngrok.enabled }}
 {{- $debug := .Values.clog.debug | default "false" | toString | quote }}
 {{- $domain := .Values.clog.domain | default "localhost" | toString }}
@@ -17,7 +18,7 @@ data:
   DEBUG: {{ $debug }}
   NGROK: {{ $ngrok | toString | quote }}
   SITE_NAME: {{ $name }}
-  {{- if or $cloudflared $ingress }}
+  {{- if or $cloudflared $ingress $httpRoute }}
   DOMAIN: {{ $domain | quote }}
   {{- end }}
 ---
